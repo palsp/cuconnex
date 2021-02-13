@@ -1,20 +1,21 @@
-name: deploy-notification
+name: deploy-web
 
 on:
   push:
     branches: 
       - develop
     paths:
-      - 'notification/**'
+      - 'web/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd client && docker build -t palsp/connex-notification . 
+      - run: cd auth && docker build -t palsp/connex-web . 
       - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push palsp/connex-notification
+      - run: docker push palsp/connex-web
+
