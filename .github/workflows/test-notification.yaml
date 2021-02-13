@@ -1,0 +1,16 @@
+
+name: tests-auth
+
+on:
+  pull_request:
+    paths:
+      - 'notification/**'
+
+  
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd notification && npm install && npm run test:ci
