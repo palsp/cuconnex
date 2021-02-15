@@ -14,3 +14,7 @@ metadata:
               backend: 
                 serviceName: auth-srv 
                 servicePort: 3000
+            - path: /api/users/?(.*)
+              backend:
+                serviceName: users-srv 
+                servicePort: 3000
