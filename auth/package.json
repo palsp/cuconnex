@@ -8,14 +8,6 @@
     "test": "jest --watchAll --no-cache",
     "test:ci": "jest"
   },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": ["/node_modules/"],
-    "setupFilesAfterEnv": [
-      "./src/test/setup.ts"
-    ]
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
