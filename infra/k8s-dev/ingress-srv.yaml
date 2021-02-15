@@ -10,4 +10,7 @@ metadata:
       - host: localhost
         http:
           paths:
-            # service mapping
+            - path : /api/auth/?(.*)
+              backend: 
+                serviceName: auth-srv 
+                servicePort: 3000
