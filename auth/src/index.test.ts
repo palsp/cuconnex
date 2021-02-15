@@ -1,1 +1,1 @@
-it('should pass')
+it('should pass', () => { })
