@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "ts-node-dev src/index.ts",
+    "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll --no-cache",
-    "test:ci" : "jest"
+    "test:ci": "jest"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "coveragePathIgnorePatterns": "/node_modules/",
+    "coveragePathIgnorePatterns": ["/node_modules/"],
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
     ]
