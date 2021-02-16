@@ -1,4 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
+import { Role } from './role.model';
+import { User } from './user.model';
 
 const config = require("../config/db.config.ts");
 
@@ -22,10 +24,10 @@ interface DB {
     role: any,
     ROLES: Array<String>,
 }
-const db = (): DB => ({
+export const db = (): DB => ({
     Sequelize: Sequelize,
     sequelize: sequelize,
-    user: "" ,
+    user: '' ,
     role: '',
     ROLES: [],
 });
@@ -33,9 +35,8 @@ const db = (): DB => ({
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("../models/user.model.ts")(sequelize, Sequelize);
-db.role = require("../models/role.model.ts")(sequelize, Sequelize);
+db.user = require("../models/user.model.ts");
+db.role = require("../models/role.model.ts");
 
 db.ROLES = ["user", "admin", "moderator"];
 
-module.exports = db;
