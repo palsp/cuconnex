@@ -12,24 +12,35 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "ts-node-dev": "^1.1.1"
   },
-  "jest" : {
+  "jest": {
     "preset": "ts-jest",
     "verbose": true,
     "testEnvironment": "node",
-    "coveragePathIgnorePatterns": ["/node_modules/"],
-    "setupFilesAfterEnv": ["./src/test/setup.ts"],
-    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "setupFilesAfterEnv": [
+      "./src/test/setup.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
     "transform": {
-        "^.+\\.(ts|tsx)$": "ts-jest",
-        "^.+\\.(js|jsx)$": "babel-jest"
+      "^.+\\.(ts|tsx)$": "ts-jest",
+      "^.+\\.(js|jsx)$": "babel-jest"
     },
     "globals": {
-        "ts-jest": {
-            "tsConfig": "tsconfig.json"
-        }
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
     }
   },
   "devDependencies": {
