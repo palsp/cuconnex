@@ -1,0 +1,6 @@
+.HalfCircleOverlay {
+  position: absolute;
+  z-index: -100;
+  overflow: hidden;
+  height: 812px;
+}
