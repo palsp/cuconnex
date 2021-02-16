@@ -4,6 +4,7 @@ module.exports = {
     USER: "postgres",
     PASSWORD: "123",
     DB: "testdb",
+    MODELS: [],
     dialect: "postgres",
     //Sequelize Pool config
     pool: {

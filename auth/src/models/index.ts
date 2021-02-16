@@ -1,32 +1,25 @@
-import { Model } from "sequelize/types";
-import { UserModelStatic } from './user.model';
-import { RoleModelStatic } from './role.model';
+import { Sequelize } from 'sequelize-typescript';
+
 const config = require("../config/db.config.js");
-const Sequelize = require("sequelize");
+
 
 //Create new sequelize instance with the configured parameters
-const sequelize = new Sequelize(
-    config.DB,
-    config.USER,
-    config.PASSWORD,
-    {
-        host: config.HOST,
-        dialect: config.dialect,
-        operatorsAliases: false,
-
-        pool: {
-            max: config.pool.max,
-            min: config.pool.min,
-            acquire: config.pool.acquire,
-            idle: config.pool.idle
-        }
-    }
-);
+const sequelize = new Sequelize({
+    database: config.DB,
+    dialect: config.dialect,
+    username: config.USER,
+    password: config.PASSWORD,
+    storage: ':memory:',
+    models: [__dirname + '/models/**/*.model.ts'],
+    modelMatch: (filename, member) => {
+        return filename.substring(0, filename.indexOf('.model')) === member.toLowerCase();
+    },
+})
 interface DB {
     Sequelize: any,
     sequelize: any,
-    user: UserModelStatic,
-    role: RoleModelStatic,
+    user: any,
+    role: any,
     ROLES: Array<String>,
 }
 const db = (): DB => ({

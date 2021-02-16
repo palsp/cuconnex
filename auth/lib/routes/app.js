@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
-var express = require('express');
-var path = require('path');
-var cors = require('cors');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 exports.app = express();
 var corsOptions = {
     origin: "http://localhost:3000"
@@ -14,13 +14,13 @@ exports.app.use(cors(corsOptions));
 exports.app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 exports.app.use(bodyParser.urlencoded({ extended: true }));
-var db = require('../models');
-var Role = db.role;
-db.sequelize.sync({ force: true }).then(function () {
+const db = require('../models');
+const Role = db.role;
+db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
     initial();
 });
-exports.app.get('/api', function (req, res) {
+exports.app.get('/api', (req, res) => {
     res.status(200).send("Hello World");
 });
 function initial() {

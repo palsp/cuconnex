@@ -1,30 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var config = require("../config/db.config.js");
-var Sequelize = require("sequelize");
+const sequelize_typescript_1 = require("sequelize-typescript");
+const config = require("../config/db.config.js");
 //Create new sequelize instance with the configured parameters
-var sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
-    host: config.HOST,
+const sequelize = new sequelize_typescript_1.Sequelize({
+    database: config.DB,
     dialect: config.dialect,
-    operatorsAliases: false,
-    pool: {
-        max: config.pool.max,
-        min: config.pool.min,
-        acquire: config.pool.acquire,
-        idle: config.pool.idle
-    }
+    username: config.USER,
+    password: config.PASSWORD,
+    storage: ':memory:',
+    models: [__dirname + '/models/**/*.model.ts'],
+    modelMatch: (filename, member) => {
+        return filename.substring(0, filename.indexOf('.model')) === member.toLowerCase();
+    },
 });
-var db = function () { return ({
-    Sequelize: Sequelize,
+const db = () => ({
+    Sequelize: sequelize_typescript_1.Sequelize,
     sequelize: sequelize,
     user: "",
     role: '',
     ROLES: [],
-}); };
-db.Sequelize = Sequelize;
+});
+db.Sequelize = sequelize_typescript_1.Sequelize;
 db.sequelize = sequelize;
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
+db.user = require("../models/user.model.js")(sequelize, sequelize_typescript_1.Sequelize);
+db.role = require("../models/role.model.js")(sequelize, sequelize_typescript_1.Sequelize);
 db.role.belongsToMany(db.user, {
     through: "user_roles",
     foreignKey: "roleId",

@@ -1,27 +1,29 @@
-import { BuildOptions, Model } from "sequelize/types";
-import * as Sequelize from 'sequelize';
-import { SequelizeAttributes } from '../types/SequelizeAttributes';
-
-export interface UserAttributes extends Model {
+import { Optional } from 'sequelize';
+import { Table, Model, Column, BelongsToMany } from 'sequelize-typescript'
+import { Role } from './role.model';
+import { UserRoles } from './userRoles.model';
+interface UserAttributes {
+    id?: number;
     studentId?: string;
     name: string;
-    email?: string;
     password?: string;
 }
-// Need to declare the static model so `findOne` etc. use correct types.
-export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'studentId' | 'password'> { }
+
+@Table
+export class User extends Model<UserAttributes, UserCreationAttributes> {
+    @Column
+    id!: number;
+
+    @Column
+    studentId!: string;
+
+    @Column
+    name!: string;
+
+    @Column
+    password!: string;
     
-}
-
-
-export const UserFactory = (sequelize: Sequelize.Sequelize): Sequelize.Model<UserInstance, UserAttributes> => {
-    const attributes: SequelizeAttributes<UserAttributes> = {
-        name: {
-            type: Sequelize.STRING
-        }
-    };
-
-    const User = sequelize.define<UserInstance, UserAttributes>('User', attributes);
-
-    return User;
-};
+    @BelongsToMany(() => Role, () => UserRoles)
+    roles?: Role[];
+ }
