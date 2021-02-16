@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var config = require("../config/db.config.js");
 var Sequelize = require("sequelize");
+//Create new sequelize instance with the configured parameters
 var sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     host: config.HOST,
     dialect: config.dialect,

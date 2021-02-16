@@ -1,8 +1,10 @@
 import { Model } from "sequelize/types";
-
+import { UserModelStatic } from './user.model';
+import { RoleModelStatic } from './role.model';
 const config = require("../config/db.config.js");
-
 const Sequelize = require("sequelize");
+
+//Create new sequelize instance with the configured parameters
 const sequelize = new Sequelize(
     config.DB,
     config.USER,
@@ -23,8 +25,8 @@ const sequelize = new Sequelize(
 interface DB {
     Sequelize: any,
     sequelize: any,
-    user: any,
-    role: any,
+    user: UserModelStatic,
+    role: RoleModelStatic,
     ROLES: Array<String>,
 }
 const db = (): DB => ({
