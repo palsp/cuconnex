@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
+    "dev": "nodemon src/index.ts",
     "test": "jest --watchAll --no-cache --testTimeout=10000",
     "test:ci": "jest"
   },

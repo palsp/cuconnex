@@ -27,4 +27,3 @@ app.get('/api', (req: Request, res: Response) => {
     res.status(200).send("Hello World")
 })
 
-module.exports = app;
