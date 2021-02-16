@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 const express = require('express')
-const path = require('path')
+const path = require('path');
+import { db } from '../models';
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-const db = require('../models');
+
 const Role = db.role;
 
 db.sequelize.sync({ force: true }).then(() => {
