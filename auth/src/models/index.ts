@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize-typescript';
 
-const config = require("../config/db.config.js");
+const config = require("../config/db.config.ts");
 
 
 //Create new sequelize instance with the configured parameters
@@ -33,19 +33,8 @@ const db = (): DB => ({
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("../models/user.model.js")(sequelize, Sequelize);
-db.role = require("../models/role.model.js")(sequelize, Sequelize);
-
-db.role.belongsToMany(db.user, {
-    through: "user_roles",
-    foreignKey: "roleId",
-    otherKey: "userId"
-});
-db.user.belongsToMany(db.role, {
-    through: "user_roles",
-    foreignKey: "userId",
-    otherKey: "roleId"
-});
+db.user = require("../models/user.model.ts")(sequelize, Sequelize);
+db.role = require("../models/role.model.ts")(sequelize, Sequelize);
 
 db.ROLES = ["user", "admin", "moderator"];
 
