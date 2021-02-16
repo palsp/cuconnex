@@ -8,9 +8,16 @@ const setup = (initialState = {}) => {
   return wrapper;
 };
 describe("Login Page", () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = setup();
+  });
   it("should render App Logo", () => {
-    const wrapper = setup();
-    const AppLogo = findByTestAttr(wrapper, "app-logo");
-    expect(AppLogo.length).toBe(1);
+    const appLogo = findByTestAttr(wrapper, "app-logo");
+    expect(appLogo.length).toBe(1);
+  });
+  it("should render background", () => {
+    const appBackground = findByTestAttr(wrapper, "app-background");
+    expect(appBackground.length).toBe(1);
   });
 });

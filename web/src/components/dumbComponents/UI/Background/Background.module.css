@@ -1,0 +1,12 @@
+.appBackground {
+  position: absolute;
+  z-index: -1000;
+  width: 390px;
+  height: 844px;
+  overflow: hidden;
+  background: linear-gradient(
+    335deg,
+    #ffc2db 0%,
+    var(--white, rgb(255, 255, 255)) 100%
+  );
+}
