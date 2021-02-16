@@ -15,6 +15,23 @@
     "express": "^4.17.1",
     "ts-node-dev": "^1.1.1"
   },
+  "jest" : {
+    "preset": "ts-jest",
+    "verbose": true,
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": ["/node_modules/"],
+    "setupFilesAfterEnv": ["./src/test/setup.ts"],
+    "moduleFileExtensions": ["ts", "tsx", "js"],
+    "transform": {
+        "^.+\\.(ts|tsx)$": "ts-jest",
+        "^.+\\.(js|jsx)$": "babel-jest"
+    },
+    "globals": {
+        "ts-jest": {
+            "tsConfig": "tsconfig.json"
+        }
+    }
+  },
   "devDependencies": {
     "@types/express": "^4.17.11",
     "@types/jest": "^26.0.20",

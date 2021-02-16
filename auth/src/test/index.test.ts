@@ -4,7 +4,7 @@ const app = require("../routes/app");
 describe('The root path test: ', () => {
     it('should response the GET method with Hello world', () => {
         return request(app)
-            .get("/")
+            .get("/api")
             .then((response) => {
                 expect(response.statusCode).toBe(200);
                 
