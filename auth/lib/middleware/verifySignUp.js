@@ -1,9 +1,9 @@
-
-import { db } from '../models';
-
-const ROLES = db.ROLES;
-const User = db.user;
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.verifySignUp = void 0;
+const models_1 = require("../models");
+const ROLES = models_1.db.ROLES;
+const User = models_1.db.user;
 const checkDuplicateUsernameOrEmail = (req, res, next) => {
     // Username
     User.findOne({
@@ -17,7 +17,6 @@ const checkDuplicateUsernameOrEmail = (req, res, next) => {
             });
             return;
         }
-
         // Email
         User.findOne({
             where: {
@@ -30,12 +29,10 @@ const checkDuplicateUsernameOrEmail = (req, res, next) => {
                 });
                 return;
             }
-
             next();
         });
     });
 };
-
 const checkRolesExisted = (req, res, next) => {
     if (req.body.roles) {
         for (let i = 0; i < req.body.roles.length; i++) {
@@ -47,11 +44,9 @@ const checkRolesExisted = (req, res, next) => {
             }
         }
     }
-
     next();
 };
-
-export const verifySignUp = {
+exports.verifySignUp = {
     checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
     checkRolesExisted: checkRolesExisted
 };

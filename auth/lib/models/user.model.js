@@ -8,23 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
-// interface UserAttributes {
-//     id?: number;
-//     studentId?: string;
-//     name: string;
-//     password?: string;
-// }
-// // Need to declare the static model so `findOne` etc. use correct types.
-// interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'studentId' | 'password'> { }
+const role_model_1 = require("./role.model");
+const userRoles_model_1 = __importDefault(require("./userRoles.model"));
 let User = class User extends sequelize_typescript_1.Model {
 };
 __decorate([
     sequelize_typescript_1.Column,
+    sequelize_typescript_1.PrimaryKey,
     __metadata("design:type", String)
 ], User.prototype, "studentId", void 0);
+__decorate([
+    sequelize_typescript_1.Column,
+    __metadata("design:type", String)
+], User.prototype, "email", void 0);
 __decorate([
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
@@ -33,7 +34,11 @@ __decorate([
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    sequelize_typescript_1.BelongsToMany(() => role_model_1.Role, () => userRoles_model_1.default),
+    __metadata("design:type", Array)
+], User.prototype, "roles", void 0);
 User = __decorate([
     sequelize_typescript_1.Table
 ], User);
-exports.User = User;
+exports.default = User;

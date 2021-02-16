@@ -12,26 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Role = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const user_model_1 = __importDefault(require("./user.model"));
-const userRoles_model_1 = __importDefault(require("./userRoles.model"));
-let Role = class Role extends sequelize_typescript_1.Model {
+const role_model_1 = require("./role.model");
+let UserRoles = class UserRoles extends sequelize_typescript_1.Model {
 };
 __decorate([
+    sequelize_typescript_1.ForeignKey(() => user_model_1.default),
     sequelize_typescript_1.Column,
-    sequelize_typescript_1.PrimaryKey,
     __metadata("design:type", Number)
-], Role.prototype, "id", void 0);
+], UserRoles.prototype, "studentId", void 0);
 __decorate([
+    sequelize_typescript_1.ForeignKey(() => role_model_1.Role),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
-], Role.prototype, "name", void 0);
-__decorate([
-    sequelize_typescript_1.BelongsToMany(() => user_model_1.default, () => userRoles_model_1.default),
-    __metadata("design:type", Array)
-], Role.prototype, "users", void 0);
-Role = __decorate([
+], UserRoles.prototype, "roleId", void 0);
+UserRoles = __decorate([
     sequelize_typescript_1.Table
-], Role);
-exports.Role = Role;
+], UserRoles);
+exports.default = UserRoles;

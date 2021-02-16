@@ -1,18 +1,17 @@
-import { db } from '../models';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authJwt = void 0;
+const models_1 = require("../models");
 const jwt = require("jsonwebtoken");
 const config = require("../config/auth.config.js");
-
-const User = db.user;
-
+const User = models_1.db.user;
 const verifyToken = (req, res, next) => {
     let token = req.headers["x-access-token"];
-
     if (!token) {
         return res.status(403).send({
             message: "No token provided!"
         });
     }
-
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
             return res.status(401).send({
@@ -23,7 +22,6 @@ const verifyToken = (req, res, next) => {
         next();
     });
 };
-
 const isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -33,7 +31,6 @@ const isAdmin = (req, res, next) => {
                     return;
                 }
             }
-
             res.status(403).send({
                 message: "Require Admin Role!"
             });
@@ -41,7 +38,6 @@ const isAdmin = (req, res, next) => {
         });
     });
 };
-
 const isModerator = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -51,14 +47,12 @@ const isModerator = (req, res, next) => {
                     return;
                 }
             }
-
             res.status(403).send({
                 message: "Require Moderator Role!"
             });
         });
     });
 };
-
 const isModeratorOrAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
         user.getRoles().then(roles => {
@@ -67,21 +61,18 @@ const isModeratorOrAdmin = (req, res, next) => {
                     next();
                     return;
                 }
-
                 if (roles[i].name === "admin") {
                     next();
                     return;
                 }
             }
-
             res.status(403).send({
                 message: "Require Moderator or Admin Role!"
             });
         });
     });
 };
-
-export const authJwt = {
+exports.authJwt = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
     isModerator: isModerator,

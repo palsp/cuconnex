@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Role } from './role.model';
-import { User } from './user.model';
+import User from './user.model';
+
 
 const config = require("../config/db.config.ts");
 

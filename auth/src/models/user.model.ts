@@ -1,7 +1,7 @@
 import { Optional } from 'sequelize';
 import { Table, Model, Column, BelongsToMany, PrimaryKey } from 'sequelize-typescript'
 import { Role } from './role.model';
-import { UserRoles } from './userRoles.model';
+import UserRoles from './userRoles.model';
 interface UserAttributes {
     email: string;
     studentId?: string;
@@ -11,11 +11,10 @@ interface UserAttributes {
 interface UserCreationAttributes extends Optional<UserAttributes, 'studentId' | 'password'> { }
 
 @Table
-export class User extends Model<UserAttributes, UserCreationAttributes> {
+export default class User extends Model<UserAttributes, UserCreationAttributes> {
     
-
-    @Column
     @PrimaryKey
+    @Column
     studentId!: string;
     
     @Column
