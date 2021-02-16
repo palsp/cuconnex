@@ -1,6 +1,6 @@
 {
   "name": "@cuconnex/common",
-  "version": "1.0.10",
+  "version": "1.0.13",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "clean": "del ./build/*",
-    "publish": "npm version patch && npm run clean && tsc && npm publish"
+    "build": "npm run clean && tsc",
+    "pub": "npm version patch && npm run clean && npm publish"
   },
   "keywords": [],
   "author": "",
