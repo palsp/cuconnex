@@ -1,11 +1,13 @@
 import express from 'express';
-import { db } from './db';
-
+import { sequelize } from './db';
+import { User } from './models/user.model';
 
 const app = express();
 
 
-db.sync().then(res => {
+
+
+sequelize.sync().then(res => {
     console.log('Connecting to db!!!')
     app.listen(3000);
 
