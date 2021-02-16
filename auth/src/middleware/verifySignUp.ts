@@ -1,10 +1,10 @@
-
+import { Request, Response } from 'express';
 import { db } from '../models';
 
 const ROLES = db.ROLES;
 const User = db.user;
 
-const checkDuplicateUsernameOrEmail = (req, res, next) => {
+const checkDuplicateUsernameOrEmail = (req: Request, res: Response, next) => {
     // Username
     User.findOne({
         where: {
@@ -36,7 +36,7 @@ const checkDuplicateUsernameOrEmail = (req, res, next) => {
     });
 };
 
-const checkRolesExisted = (req, res, next) => {
+const checkRolesExisted = (req: Request, res: Response, next) => {
     if (req.body.roles) {
         for (let i = 0; i < req.body.roles.length; i++) {
             if (!ROLES.includes(req.body.roles[i])) {
