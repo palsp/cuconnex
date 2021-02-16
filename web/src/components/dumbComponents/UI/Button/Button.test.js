@@ -3,6 +3,18 @@ import { shallow } from "enzyme";
 import Button from "./Button";
 import { findByTestAttr } from "../../../../../test/testUtils";
 
-it("should render button", () => {});
+const setup = (props) => {
+  const wrapper = shallow(<Button {...props} />);
+  return wrapper;
+};
+it("should render button", () => {
+  const wrapper = setup({});
+  const button = findByTestAttr(wrapper, "button");
+  expect(button.length).toBe(1);
+});
 
-it("should have value according to props.value", () => {});
+it("should have value according to props.children", () => {
+  const wrapper = setup({ children: "testValue" });
+  const buttonProps = findByTestAttr(wrapper, "button-props-children").text();
+  expect(buttonProps).toBe("testValue");
+});

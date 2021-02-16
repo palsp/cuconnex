@@ -10,7 +10,7 @@ const LoginPage: React.FC = () => {
       <HalfCircleOverlay />
       <Background data-test="app-background" />
       <AppLogo data-test="app-logo" />
-      <Button children="thisdefinitelysignin" />
+      <Button children="Login with Chula SSO" />
     </div>
   );
 };

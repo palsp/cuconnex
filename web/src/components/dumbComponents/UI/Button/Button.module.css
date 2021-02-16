@@ -1,0 +1,14 @@
+.Button {
+  width: 244px;
+  height: 48px;
+  background-color: #f33182;
+  border-radius: 13px;
+  font: inherit;
+  border: none;
+}
+
+.Button p {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
