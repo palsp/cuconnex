@@ -1,5 +1,5 @@
 const request = require("supertest");
-const app = require("./routes/app");
+const app = require("../routes/app");
 
 describe('The root path test: ', () => {
     it('should response the GET method with Hello world', () => {

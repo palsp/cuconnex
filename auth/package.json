@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev src/server.ts",
+    "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll --no-cache --testTimeout=10000",
     "test:ci": "jest"
   },
@@ -14,22 +14,6 @@
   "dependencies": {
     "express": "^4.17.1",
     "ts-node-dev": "^1.1.1"
-  },
-  "jest" : {
-      "preset": "ts-jest",
-    "testEnvironment": "node",
-    "coveragePathIgnorePatterns": ["/node_modules/"],
-    "setupFilesAfterEnv": ["./src/test/setup.ts"],
-    "moduleFileExtensions": ["ts", "tsx", "js"],
-    "transform": {
-        "^.+\\.(ts|tsx)$": "ts-jest",
-        "^.+\\.(js|jsx)$": "babel-jest",
-    },
-    "globals": {
-        "ts-jest": {
-            tsConfig: "tsconfig.json",
-        }
-    }
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
