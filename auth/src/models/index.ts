@@ -7,7 +7,7 @@ const config = require("../config/db.config.ts");
 
 
 //Create new sequelize instance with the configured parameters
-const sequelize = new Sequelize({
+const sequelizeInstance = new Sequelize({
     database: config.DB,
     dialect: config.dialect,
     username: config.USER,
@@ -27,7 +27,7 @@ interface DB {
 }
 export const db = (): DB => ({
     Sequelize: Sequelize,
-    sequelize: sequelize,
+    sequelize: sequelizeInstance,
     user: '' ,
     role: '',
     ROLES: [],
