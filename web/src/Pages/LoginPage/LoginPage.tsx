@@ -59,7 +59,7 @@ const LoginPage: React.FC = () => {
       <Background data-test="login-page-background" />
       <AppLogo data-test="login-page-logo" />
 
-      <h1>{clickLogin.toString()}</h1>
+      {/* <h1>{clickLogin.toString()}</h1> */}
       {loginPrompt}
     </div>
   );
