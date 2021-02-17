@@ -4,8 +4,8 @@ import { Role } from './role.model';
 import UserRoles from './userRoles.model';
 interface UserAttributes {
     email: string;
-    studentId?: string;
-    name: string;
+    studentId: string;
+    name?: string;
     password?: string;
 }
 interface UserCreationAttributes extends Optional<UserAttributes, 'studentId' | 'password'> { }
