@@ -1,6 +1,6 @@
 {
   "name": "@cuconnex/common",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -20,7 +20,6 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
-    "@cuconnex/common": "^1.0.15",
     "express": "^4.17.1",
     "node-nats-streaming": "^0.3.2"
   }

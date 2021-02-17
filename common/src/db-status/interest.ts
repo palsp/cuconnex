@@ -1,4 +1,4 @@
-export enum Interest {
+export enum InterestDescription {
     Developer = "Developer",
     Startup = "Startup",
     Business = "Business",
