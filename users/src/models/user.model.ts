@@ -1,21 +1,31 @@
 import { sequelize } from '../db';
-import { Model, DataTypes } from 'sequelize'
+import { Model, DataTypes, HasManyCreateAssociationMixin, Association, Optional } from 'sequelize'
+import { Interest } from './interest.model'
 
 
+// All attributes in user model
 interface UserAttrs {
     id: number;
     name: string;
 }
 
-interface UserCreationAttrs {
-    id: number;
+interface UserCreationAttrs extends Optional<UserAttrs, "id"> {
     name: string;
 }
+
 
 class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
     public id!: number;
     public name!: string;
+
+    public createInterest!: HasManyCreateAssociationMixin<Interest>
+
+
+    // public static associations: {
+    //     interests: Association<User, Interest>;
+    // }
 }
+
 
 User.init(
     {
@@ -34,6 +44,7 @@ User.init(
         sequelize,
     }
 );
+
 
 
 

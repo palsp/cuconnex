@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandling = void 0;
 var custom_error_1 = require("../errors/custom-error");
-exports.errorHandling = function (err, req, res, next) {
+var errorHandling = function (err, req, res, next) {
     // if error is an instacne of Custom error
     // we return an error message with fix format
     if (err instanceof custom_error_1.CustomError) {
@@ -14,3 +14,4 @@ exports.errorHandling = function (err, req, res, next) {
         errors: [{ message: 'Something Went Wrong' }]
     });
 };
+exports.errorHandling = errorHandling;

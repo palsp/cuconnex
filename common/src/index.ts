@@ -1,7 +1,6 @@
 // middleware 
 export * from './middlewares/error-handling';
 
-
 // db-status
 export * from './db-status/friend';
 export * from './db-status/team';

@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@cuconnex/common": "^1.0.18",
     "@types/express": "^4.17.11",
     "@types/sequelize": "^4.28.9",
     "express": "^4.17.1",

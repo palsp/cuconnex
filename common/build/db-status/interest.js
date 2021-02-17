@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Interest = void 0;
-var Interest;
-(function (Interest) {
-    Interest["Developer"] = "Developer";
-    Interest["Startup"] = "Startup";
-    Interest["Business"] = "Business";
-})(Interest = exports.Interest || (exports.Interest = {}));
+exports.InterestDescription = void 0;
+var InterestDescription;
+(function (InterestDescription) {
+    InterestDescription["Developer"] = "Developer";
+    InterestDescription["Startup"] = "Startup";
+    InterestDescription["Business"] = "Business";
+})(InterestDescription = exports.InterestDescription || (exports.InterestDescription = {}));
