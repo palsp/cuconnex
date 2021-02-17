@@ -12,6 +12,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // middleware 
 __exportStar(require("./middlewares/error-handling"), exports);
+__exportStar(require("./middlewares/validateRequest"), exports);
 // db-status
 __exportStar(require("./db-status/friend"), exports);
 __exportStar(require("./db-status/team"), exports);

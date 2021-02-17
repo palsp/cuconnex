@@ -1,5 +1,5 @@
 import { sequelize } from '../db';
-import { Model, DataTypes, HasManyCreateAssociationMixin, Association, Optional } from 'sequelize'
+import { Model, DataTypes, Optional } from 'sequelize'
 import { Interest } from './interest.model'
 
 
@@ -18,12 +18,12 @@ class User extends Model<UserAttrs, UserCreationAttrs>  {
     public id!: number;
     public name!: string;
 
-    public createInterest!: HasManyCreateAssociationMixin<Interest>
+    // public createInterest!: HasManyCreateAssociationMixin<Interest>
 
 
-    public static associations: {
-        interests: Association<User, Interest>;
-    }
+    // public static associations: {
+    //     interests: Association<User, Interest>;
+    // }
 }
 
 

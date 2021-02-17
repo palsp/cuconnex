@@ -1,5 +1,5 @@
 import { sequelize } from '../db'
-import { Model, DataTypes, Optional } from 'sequelize'
+import { Model, DataTypes } from 'sequelize'
 import { InterestDescription } from '@cuconnex/common'
 
 
@@ -36,6 +36,8 @@ Interest.init({
         sequelize
     }
 );
+
+
 
 export { Interest };
 
