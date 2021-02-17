@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator'
 import { InterestDescription, validateRequest } from '@cuconnex/common'
+import { User } from '../models/user.model'
 
 
 
@@ -26,7 +27,14 @@ const bodyChecker = [body('interests')
 
 // create user for first time login
 router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
+    const { body: interests } = req.body
 
+    const user = await User.create({ name: "PAl" })
+    for (let interest of interests) {
+
+    }
+
+    // 
 });
 
 

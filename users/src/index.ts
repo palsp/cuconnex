@@ -2,18 +2,19 @@ import { app } from './app'
 import { sequelize } from './db'
 import { User } from './models/user.model';
 import { Interest } from './models/interest.model';
-import { UserInterest } from './models/user-interest.model'
 
 
-// describe relation between table
-User.belongsToMany(Interest, { through: UserInterest.tableName })
-Interest.belongsToMany(User, { through: UserInterest.tableName, sourceKey: "interest", foreignKey: "interest" })
 
+
+User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
 
 
 const start = async () => {
     try {
-        await sequelize.sync();
+        await sequelize.sync({ force: true });
+        // const user = await User.create({ name: "Pal" });
+        // await user.createInterests({ interest: InterestDescription.Developer })
+        // await user.destroy();
     } catch (err) {
         console.error(err);
     }
