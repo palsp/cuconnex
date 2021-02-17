@@ -27,3 +27,4 @@ __exportStar(require("./nats/based-publisher"), exports);
 __exportStar(require("./nats/subjects"), exports);
 __exportStar(require("./errors/not-authorized-error"), exports);
 __exportStar(require("./errors/not-found-error"), exports);
+__exportStar(require("./errors/request-validation-error"), exports);
