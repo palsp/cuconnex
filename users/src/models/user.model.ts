@@ -14,16 +14,16 @@ interface UserCreationAttrs extends Optional<UserAttrs, "id"> {
 }
 
 
-class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
+class User extends Model<UserAttrs, UserCreationAttrs>  {
     public id!: number;
     public name!: string;
 
     public createInterest!: HasManyCreateAssociationMixin<Interest>
 
 
-    // public static associations: {
-    //     interests: Association<User, Interest>;
-    // }
+    public static associations: {
+        interests: Association<User, Interest>;
+    }
 }
 
 
