@@ -1,5 +1,6 @@
 // middleware 
 export * from './middlewares/error-handling';
+export * from './middlewares/validateRequest';
 
 // db-status
 export * from './db-status/friend';
