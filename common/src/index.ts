@@ -18,3 +18,5 @@ export * from './nats/based-publisher';
 export * from './nats/subjects';
 
 
+export * from './errors/not-authorized-error';
+export * from './errors/not-found-error';
