@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: users-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: users
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+        - name: users
+          image: palsp/connex-users
+      initContainers:
+        - name: init-wait
+          image: alpine
+          command: ["sh", "-c", "for i in $(seq 1 300); do nc -zvw1 users-mysql-srv 3306 && exit 0 || sleep 3; done; exit 1"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: users-srv
+spec:
+  selector:
+    app: users
+  ports:
+    - name: users
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
