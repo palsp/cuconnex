@@ -10,14 +10,15 @@ const setup = (props) => {
 
 it("should render interest list", () => {
   const wrapper = setup();
-  const interestList = wrapper.findByTestAttr(wrapper, "interest-list");
-  expect(interestList).toBe(1);
+  const interestList = findByTestAttr(wrapper, "interest-list");
+  expect(interestList.length).toBe(1);
 });
 
 it("should have value according to the value props", () => {
   const wrapper = setup({ value: "coding" });
-  const interestListPropValue = wrapper
-    .findByTestAttr(wrapper, "interest-list-props-value")
-    .text();
+  const interestListPropValue = findByTestAttr(
+    wrapper,
+    "interest-list-props-value"
+  ).text();
   expect(interestListPropValue).toBe("coding");
 });

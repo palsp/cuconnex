@@ -1,0 +1,13 @@
+.interestList {
+  background-color: red;
+  border-radius: 164px;
+  margin: 0 30px;
+  width: 164px;
+  height: 164px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+p {
+}

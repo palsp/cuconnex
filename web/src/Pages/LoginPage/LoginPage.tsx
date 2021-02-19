@@ -4,6 +4,7 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import Button from "../../components/dumbComponents/UI/Button/Button";
 import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
 import InputField from "../../components/dumbComponents/UI/InputField/InputField";
+import PageTitle from "../../components/dumbComponents/UI/Heading/Heading";
 import classes from "./LoginPage.module.css";
 
 const LoginPage: React.FC = () => {
@@ -61,6 +62,7 @@ const LoginPage: React.FC = () => {
 
       {/* <h1>{clickLogin.toString()}</h1> */}
       {loginPrompt}
+      <PageTitle value="Business" />
     </div>
   );
 };
