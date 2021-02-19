@@ -13,6 +13,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // middleware 
 __exportStar(require("./middlewares/error-handling"), exports);
 __exportStar(require("./middlewares/validateRequest"), exports);
+__exportStar(require("./middlewares/current-user"), exports);
 // db-status
 __exportStar(require("./db-status/friend"), exports);
 __exportStar(require("./db-status/team"), exports);
