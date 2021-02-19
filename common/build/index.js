@@ -27,6 +27,8 @@ __exportStar(require("./nats/events/team-updated-event"), exports);
 __exportStar(require("./nats/base-listener"), exports);
 __exportStar(require("./nats/based-publisher"), exports);
 __exportStar(require("./nats/subjects"), exports);
+// errors
 __exportStar(require("./errors/not-authorized-error"), exports);
 __exportStar(require("./errors/not-found-error"), exports);
 __exportStar(require("./errors/request-validation-error"), exports);
+__exportStar(require("./errors/bad-request-error"), exports);

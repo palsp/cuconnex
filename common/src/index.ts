@@ -2,6 +2,7 @@
 export * from './middlewares/error-handling';
 export * from './middlewares/validateRequest';
 export * from './middlewares/current-user';
+export * from './middlewares/requireAuth';
 
 // db-status
 export * from './db-status/friend';
