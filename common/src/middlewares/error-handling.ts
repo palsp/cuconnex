@@ -13,7 +13,7 @@ export const errorHandling = (err: Error, req: Request, res: Response, next: Nex
     }
 
     // allow developer to debug error
-    console.error(err)
+    // console.error(err)
 
     res.status(400).send({
         errors: [{ message: 'Something Went Wrong' }]

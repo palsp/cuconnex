@@ -14,6 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./middlewares/error-handling"), exports);
 __exportStar(require("./middlewares/validateRequest"), exports);
 __exportStar(require("./middlewares/current-user"), exports);
+__exportStar(require("./middlewares/requireAuth"), exports);
 // db-status
 __exportStar(require("./db-status/friend"), exports);
 __exportStar(require("./db-status/team"), exports);
