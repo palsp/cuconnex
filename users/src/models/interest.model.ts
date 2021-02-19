@@ -7,7 +7,7 @@ import { User } from './user.model';
 // all atributes interest model has 
 export interface InterestAttrs {
     // id: number;
-    userId: number;
+    userId: string;
     interest: InterestDescription,
 }
 
@@ -18,7 +18,7 @@ export interface InterestCreationAttrs {
 
 
 class Interest extends Model<InterestAttrs, InterestCreationAttrs>  {
-    public userId!: number;
+    public userId!: string;
     public interest!: InterestDescription
 
 }
@@ -26,7 +26,7 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs>  {
 
 Interest.init({
     userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.STRING(10),
         primaryKey: true,
         references: { model: User.tableName }
     },
