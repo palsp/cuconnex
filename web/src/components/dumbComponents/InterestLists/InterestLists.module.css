@@ -1,3 +1,6 @@
 .interestLists {
   display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  overflow-x: auto;
 }

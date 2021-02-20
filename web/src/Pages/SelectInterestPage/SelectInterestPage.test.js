@@ -60,11 +60,11 @@ it("should render interest list design", () => {
 //   expect(backIcon.length).toBe(1);
 // });
 
-// it("should render dot indicating pages", () => {
-//   const wrapper = setup();
-//   const dotIcon = findByTestAttr(wrapper, "dot-icon");
-//   expect(dotIcon.length).toBe(1);
-// });
+it("should render dot indicating pages", () => {
+  const wrapper = setup();
+  const dotIcon = findByTestAttr(wrapper, "dot-icon");
+  expect(dotIcon.length).toBe(1);
+});
 
 // it("should render skip icon", () => {
 //   const wrapper = setup();

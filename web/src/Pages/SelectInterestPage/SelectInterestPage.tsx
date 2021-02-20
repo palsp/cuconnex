@@ -3,22 +3,37 @@ import InterestLists from "../../components/dumbComponents/InterestLists/Interes
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
 import Heading from "../../components/dumbComponents/UI/Heading/Heading";
+import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
+import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
+
+import classes from "./SelectInterestPage.module.css";
 
 const SelectInterestPage: React.FC = () => {
   return (
-    <div>
+    <>
       <HalfCircleOverlay data-test="login-page-halfcircleoverlay" />
       <Background data-test="login-page-background" />
-      <Heading data-test="heading" value="Interests" />
-      <Heading size="medium" value="Business" />
+      <div className={classes.heading}>
+        <Heading data-test="heading" value="Interests" />
+      </div>
+      <>
+        <Subtitle value="Don't worry, you can adjust your interest later." />
+      </>
+      <div className={classes.heading}>
+        <Heading size="small" value="Business" />
+      </div>
       <InterestLists data-test="interest-list-business" type="BUSINESS" />
-      <Heading size="medium" value="Technology" />
+      <div className={classes.heading}>
+        <Heading size="small" value="Technology" />
+      </div>
 
       <InterestLists data-test="interest-list-technology" type="TECHNOLOGY" />
-      <Heading size="medium" value="Design" />
-
+      <div className={classes.heading}>
+        <Heading size="small" value="Design" />
+      </div>
       <InterestLists data-test="interest-list-design" type="DESIGN" />
-    </div>
+      <DotMorePage data-test="dot-icon" amount={2} />
+    </>
   );
 };
 
