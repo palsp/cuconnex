@@ -13,6 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // middleware 
 __exportStar(require("./middlewares/error-handling"), exports);
 __exportStar(require("./middlewares/validateRequest"), exports);
+__exportStar(require("./middlewares/current-user"), exports);
+__exportStar(require("./middlewares/requireAuth"), exports);
 // db-status
 __exportStar(require("./db-status/friend"), exports);
 __exportStar(require("./db-status/team"), exports);
@@ -26,6 +28,8 @@ __exportStar(require("./nats/events/team-updated-event"), exports);
 __exportStar(require("./nats/base-listener"), exports);
 __exportStar(require("./nats/based-publisher"), exports);
 __exportStar(require("./nats/subjects"), exports);
+// errors
 __exportStar(require("./errors/not-authorized-error"), exports);
 __exportStar(require("./errors/not-found-error"), exports);
 __exportStar(require("./errors/request-validation-error"), exports);
+__exportStar(require("./errors/bad-request-error"), exports);

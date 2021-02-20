@@ -1,6 +1,8 @@
 // middleware 
 export * from './middlewares/error-handling';
 export * from './middlewares/validateRequest';
+export * from './middlewares/current-user';
+export * from './middlewares/requireAuth';
 
 // db-status
 export * from './db-status/friend';
@@ -18,7 +20,8 @@ export * from './nats/base-listener';
 export * from './nats/based-publisher';
 export * from './nats/subjects';
 
-
+// errors
 export * from './errors/not-authorized-error';
 export * from './errors/not-found-error';
 export * from './errors/request-validation-error';
+export * from './errors/bad-request-error';

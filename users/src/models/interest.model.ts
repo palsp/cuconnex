@@ -1,5 +1,4 @@
-import { sequelize } from '../db'
-import { Model, DataTypes } from 'sequelize'
+import { Model, DataTypes, Sequelize } from 'sequelize'
 import { InterestDescription } from '@cuconnex/common'
 import { User } from './user.model';
 
@@ -7,7 +6,7 @@ import { User } from './user.model';
 // all atributes interest model has 
 export interface InterestAttrs {
     // id: number;
-    userId: number;
+    userId: string;
     interest: InterestDescription,
 }
 
@@ -18,15 +17,15 @@ export interface InterestCreationAttrs {
 
 
 class Interest extends Model<InterestAttrs, InterestCreationAttrs>  {
-    public userId!: number;
+    public userId!: string;
     public interest!: InterestDescription
 
 }
 
 
-Interest.init({
+const initInterests = (sequelize: Sequelize) => Interest.init({
     userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.STRING(10),
         primaryKey: true,
         references: { model: User.tableName }
     },
@@ -46,5 +45,5 @@ Interest.init({
 
 
 
-export { Interest };
+export { Interest, initInterests };
 
