@@ -1,5 +1,5 @@
 import React from "react";
-import CUConnexLogo from "../../../../assets/cuconnexLogo.png";
+import CUConnexLogo from "../../../../assets/Logo/cuconnexLogo.png";
 
 import classes from "./AppLogo.module.css";
 

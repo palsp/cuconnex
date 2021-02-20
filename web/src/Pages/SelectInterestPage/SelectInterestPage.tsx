@@ -1,17 +1,17 @@
 import React from "react";
 import InterestLists from "../../components/dumbComponents/InterestLists/InterestLists";
 import Background from "../../components/dumbComponents/UI/Background/Background";
-import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
 import Heading from "../../components/dumbComponents/UI/Heading/Heading";
 import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
 import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
 
 import classes from "./SelectInterestPage.module.css";
+import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
+import ArrowRight from "../../components/dumbComponents/UI/Icons/ArrowRight/ArrowRight";
 
 const SelectInterestPage: React.FC = () => {
   return (
     <>
-      <HalfCircleOverlay data-test="login-page-halfcircleoverlay" />
       <Background data-test="login-page-background" />
       <div className={classes.heading}>
         <Heading data-test="heading" value="Interests" />
@@ -32,7 +32,17 @@ const SelectInterestPage: React.FC = () => {
         <Heading size="small" value="Design" />
       </div>
       <InterestLists data-test="interest-list-design" type="DESIGN" />
-      <DotMorePage data-test="dot-icon" amount={2} />
+      <div className={classes.footerNavigation}>
+        <div className={classes.footerIcon}>
+          <ArrowLeft data-test="arrow-left" />
+          <Heading size="small" value="Back" />
+        </div>
+        <DotMorePage data-test="dot-icon" amount={2} />
+        <div className={classes.footerIcon}>
+          <Heading size="small" value="Skip" />
+          <ArrowRight data-test="arrow-right" />
+        </div>
+      </div>
     </>
   );
 };

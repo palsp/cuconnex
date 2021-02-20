@@ -7,19 +7,30 @@ interface Props {
   type: string;
 }
 
+const businessInterestArray = [
+  "Marketing",
+  "BusinessCase",
+  "Startup",
+  "Ecommerce",
+];
+const technologyInterestArray = ["Coding", "WebBuilder", "ChatBot", "FinTech"];
+const designInterestArray = ["Graphic", "UXUI", "Ads", "Fashion"];
+
 const InterestLists: React.FC<Props> = (props) => {
   let InterestLists = null;
   switch (props.type) {
     case "BUSINESS":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          <InterestList data-test="interest-list-business" value="Marketing" />
-          <InterestList
-            data-test="interest-list-business"
-            value="BusinessCase"
-          />
-          <InterestList data-test="interest-list-business" value="Startup" />
-          <InterestList data-test="interest-list-business" value="Ecommerce" />
+          {businessInterestArray.map((interest) => {
+            return (
+              <InterestList
+                data-test="interest-list-business"
+                value={interest}
+                key={interest}
+              />
+            );
+          })}
         </div>
       );
       break;
@@ -27,23 +38,30 @@ const InterestLists: React.FC<Props> = (props) => {
     case "TECHNOLOGY":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          <InterestList data-test="interest-list-technology" value="Coding" />
-          <InterestList
-            data-test="interest-list-technology"
-            value="WebBuilder"
-          />
-          <InterestList data-test="interest-list-technology" value="ChatBot" />
-          <InterestList data-test="interest-list-technology" value="FinTech" />
+          {technologyInterestArray.map((interest) => {
+            return (
+              <InterestList
+                data-test="interest-list-technology"
+                value={interest}
+                key={interest}
+              />
+            );
+          })}
         </div>
       );
       break;
     case "DESIGN":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          <InterestList data-test="interest-list-design" value="Graphic" />
-          <InterestList data-test="interest-list-design" value="UX/UI" />
-          <InterestList data-test="interest-list-design" value="Ads" />
-          <InterestList data-test="interest-list-design" value="Fashion" />
+          {designInterestArray.map((interest) => {
+            return (
+              <InterestList
+                data-test="interest-list-design"
+                value={interest}
+                key={interest}
+              />
+            );
+          })}
         </div>
       );
       break;

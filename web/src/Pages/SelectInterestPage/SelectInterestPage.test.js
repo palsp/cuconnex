@@ -14,15 +14,6 @@ it("should render background", () => {
   const background = findByTestAttr(wrapper, "login-page-background");
   expect(background.length).toBe(1);
 });
-it("should render HalfCircleOverlay", () => {
-  const wrapper = setup();
-
-  const halfCircleOverlay = findByTestAttr(
-    wrapper,
-    "login-page-halfcircleoverlay"
-  );
-  expect(halfCircleOverlay.length).toBe(1);
-});
 
 it("should render heading", () => {
   const wrapper = setup();
@@ -54,11 +45,11 @@ it("should render interest list design", () => {
   expect(interestListDesign.length).toBe(1);
 });
 
-// it("should render back to previous page icon", () => {
-//   const wrapper = setup();
-//   const backIcon = findByTestAttr(wrapper, "back-icon");
-//   expect(backIcon.length).toBe(1);
-// });
+it("should render arrow left icon", () => {
+  const wrapper = setup();
+  const arrowLeft = findByTestAttr(wrapper, "arrow-left");
+  expect(arrowLeft.length).toBe(1);
+});
 
 it("should render dot indicating pages", () => {
   const wrapper = setup();
@@ -66,8 +57,8 @@ it("should render dot indicating pages", () => {
   expect(dotIcon.length).toBe(1);
 });
 
-// it("should render skip icon", () => {
-//   const wrapper = setup();
-//   const skipIcon = findByTestAttr(wrapper, "skip-icon");
-//   expect(skipIcon.length).toBe(1);
-// });
+it("should render arrow right icon", () => {
+  const wrapper = setup();
+  const arrowRight = findByTestAttr(wrapper, "arrow-right");
+  expect(arrowRight.length).toBe(1);
+});
