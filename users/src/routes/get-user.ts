@@ -1,15 +1,13 @@
 import express, { Request, Response } from 'express'
-import { body } from 'express-validator'
-import { validateRequest } from '@cuconnex/common'
 import { User } from '../models/user.model';
-
+import { requireAuth } from '@cuconnex/common'
 
 
 const router = express.Router();
 
 
 
-router.get('/api/users', validateRequest, async (req, res) => {
+router.get('/api/users', requireAuth, async (req: Request, res: Response) => {
 
     const id = req.currentUser!.id;
 
@@ -24,3 +22,4 @@ router.get('/api/users', validateRequest, async (req, res) => {
 
 
 
+export { router as getUserRouter };

@@ -1,7 +1,7 @@
-import { sequelize } from '../db';
-import { Model, DataTypes, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin, Association, } from 'sequelize'
+
+import { Model, DataTypes, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin, Association, Sequelize, } from 'sequelize'
 import { Interest, InterestCreationAttrs } from './interest.model'
-import { InterestDescription } from '@cuconnex/common';
+
 
 
 
@@ -42,7 +42,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
 
 
 
-User.init(
+const initUser = (sequelize: Sequelize) => User.init(
     {
         id: {
             type: DataTypes.STRING(11),
@@ -62,4 +62,4 @@ User.init(
 
 
 
-export { User }
+export { User, initUser }

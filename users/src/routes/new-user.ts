@@ -38,6 +38,7 @@ router.post('/api/users', requireAuth, bodyChecker, validateRequest, async (req:
 
     // remove duplicate interests from an array of interests
     const uniqueInterests = Array.from(new Set<InterestDescription>(interests)).map(interest => ({ interest }));
+
     let createSuccess;
 
     try {
@@ -50,6 +51,9 @@ router.post('/api/users', requireAuth, bodyChecker, validateRequest, async (req:
 
     }
 
+
+    // if something went wrong clear all user information in database
+    // user need to retry from the beginning!!
     if (!createSuccess && user) {
         await user.destroy();
         throw new Error('Something went wrong');

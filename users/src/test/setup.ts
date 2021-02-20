@@ -1,11 +1,12 @@
-import { sequelize } from '../db';
+import { sequelize, initializeDB } from '../db';
 import { User } from '../models/user.model';
 import { Interest } from '../models/interest.model';
+import jwt from 'jsonwebtoken';
+
 
 
 jest.mock('../db');
 
-import jwt from 'jsonwebtoken';
 
 declare global {
     namespace NodeJS {
@@ -17,8 +18,11 @@ declare global {
 
 beforeAll(async () => {
     process.env.JWT_KEY = 'asdfasdfaf';
-    User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
-    await sequelize.sync();
+    // create db if doesn't already existed
+    await initializeDB();
+
+    // User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
+    //await sequelize.sync();
 });
 
 beforeEach(async () => {
