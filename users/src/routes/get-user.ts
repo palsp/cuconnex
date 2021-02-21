@@ -18,6 +18,7 @@ router.get('/api/users', requireAuth, async (req: Request, res: Response) => {
         res.redirect('/userInfo');
     }
 
+
     res.status(200).send(user);
 });
 

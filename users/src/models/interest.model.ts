@@ -43,7 +43,8 @@ const initInterests = (sequelize: Sequelize) => {
             sequelize
         }
     );
-    return Interest;
+
+    return Interest
 }
 
 

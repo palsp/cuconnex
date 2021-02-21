@@ -1,5 +1,6 @@
 
-import { Model, DataTypes, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin, Association, Sequelize, } from 'sequelize'
+import { FriendStatus } from '@cuconnex/common';
+import { Model, DataTypes, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin, Association, Sequelize, } from 'sequelize'
 import { Interest, InterestCreationAttrs } from './interest.model'
 
 
@@ -17,13 +18,15 @@ interface UserCreationAttrs {
 }
 
 
-class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
+class User extends Model<UserAttrs, UserCreationAttrs>  {
     public id!: string;
     public name!: string;
 
 
     public createInterest!: HasManyCreateAssociationMixin<Interest>
     public getInterests!: HasManyGetAssociationsMixin<Interest>
+    public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>
+    public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
     public createInterests(attrs: InterestCreationAttrs) {
         return this.createInterest({ description: attrs.description });
@@ -36,19 +39,22 @@ class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
     }
 
 
+
     public static associations: {
         interests: Association<User, Interest>;
+        friend: Association<User, User>;
     }
 }
 
 
 
 const initUser = (sequelize: Sequelize) => {
-    User.init(
+    User.init<User>(
         {
             id: {
                 type: DataTypes.STRING(11),
-                primaryKey: true
+                primaryKey: true,
+                allowNull: false,
             },
             name: {
                 type: new DataTypes.STRING(255),
@@ -64,6 +70,7 @@ const initUser = (sequelize: Sequelize) => {
 
     return User;
 }
+
 
 
 
