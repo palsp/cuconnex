@@ -16,9 +16,9 @@ const SelectInterestPage: React.FC = () => {
       <div className={classes.heading}>
         <Heading data-test="heading" value="Interests" />
       </div>
-      <>
+      <div className={classes.subtitleDiv}>
         <Subtitle value="Don't worry, you can adjust your interest later." />
-      </>
+      </div>
       <div className={classes.heading}>
         <Heading size="small" value="Business" />
       </div>

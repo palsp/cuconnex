@@ -4,8 +4,10 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import Button from "../../components/dumbComponents/UI/Button/Button";
 import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
 import InputField from "../../components/dumbComponents/UI/InputField/InputField";
-import PageTitle from "../../components/dumbComponents/UI/Heading/Heading";
 import classes from "./LoginPage.module.css";
+import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
+import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
+import Heading from "../../components/dumbComponents/UI/Heading/Heading";
 
 const LoginPage: React.FC = () => {
   const [clickLogin, setClickLogin] = useState(false);
@@ -20,8 +22,14 @@ const LoginPage: React.FC = () => {
         <Button
           data-test="login-page-login-button"
           onClick={loginButtonClickedHandler}
-          children="Login with Chula SSO"
+          children="Log in to an existing account"
         />
+        <div className={classes.textDiv}>
+          <div className={classes.subtitleDiv}>
+            <Subtitle value="Don't have an account yet?" />
+          </div>
+          <Heading value="Sign up" size="small" />
+        </div>
       </div>
     );
   } else {
@@ -50,6 +58,7 @@ const LoginPage: React.FC = () => {
             children="Next"
           />
         </div>
+        <DotMorePage data-test="dot-icon" amount={1} />
       </>
     );
   }
@@ -58,11 +67,11 @@ const LoginPage: React.FC = () => {
     <div>
       <HalfCircleOverlay data-test="login-page-halfcircleoverlay" />
       <Background data-test="login-page-background" />
-      <AppLogo data-test="login-page-logo" />
+      <div className={classes.logoDiv}>
+        <AppLogo data-test="login-page-logo" />
+      </div>
 
-      {/* <h1>{clickLogin.toString()}</h1> */}
       {loginPrompt}
-      <PageTitle value="Business" />
     </div>
   );
 };

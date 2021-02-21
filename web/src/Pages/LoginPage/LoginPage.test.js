@@ -60,5 +60,9 @@ describe("Login Page", () => {
       const loginButton = findByTestAttr(wrapper, "login-page-login-button");
       expect(loginButton.length).toBe(0);
     });
+    it("should render dot icon", () => {
+      const dotIcon = findByTestAttr(wrapper, "dot-icon");
+      expect(dotIcon.length).toBe(1);
+    });
   });
 });

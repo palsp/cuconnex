@@ -4,10 +4,12 @@
   background-color: #f33182;
   border-radius: 13px;
   font: inherit;
+
   border: none;
 }
 
 .Button p {
+  font-weight: 600;
   margin: 0;
   padding: 0;
   color: white;

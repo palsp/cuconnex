@@ -4,7 +4,24 @@
 }
 
 .Button {
-  margin: 5vh;
+  margin: 30px;
 }
 
+.logoDiv {
+  margin: auto;
+  height: 150px;
+  width: 300px;
+  margin-top: 200px;
+}
 
+.textDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.subtitleDiv {
+  height: 54px;
+  margin: 5px;
+}

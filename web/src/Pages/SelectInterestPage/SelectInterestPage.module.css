@@ -13,3 +13,7 @@
   display: flex;
   align-items: center;
 }
+
+.subtitleDiv {
+  margin: -15px 0 0 -8px;
+}
