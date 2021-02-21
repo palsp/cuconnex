@@ -20,7 +20,7 @@ const initializeDB = async () => {
     await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
 
-    myDB.sequelize = new Sequelize(database!, user!, password, { dialect: 'mysql' });
+    myDB.sequelize = new Sequelize(database!, user!, password, { dialect: 'mysql', host, });
 
 
 

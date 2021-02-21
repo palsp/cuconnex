@@ -15,6 +15,18 @@ spec:
       containers:
         - name: users
           image: palsp/connex-users
+          env:
+            - name: DB_HOST
+              value: 'users-mysql-srv'
+            - name: DB_USER
+              value: 'root'
+            - name : DB_SCHEMA
+              value: 'user_db'
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-secret
+                  key: DB_PASSWORD
       initContainers:
         - name: init-wait
           image: alpine
