@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
- 
-      - run : sudo service mysql stop
-       
-      -  uses: mirromutth/mysql-action@master
-         with:
+      - name : Shutdown Ubuntu MySQL(SUDO)
+        run : sudo service mysql stop
+      - name : Set up MySQL 
+        uses: mirromutth/mysql-action@master
+        with:
           mysql root password : ${{secrets.DB_TEST_PASSWORD}}
-      - run: cd users && npm install && npm run test:ci 
+      - name : npm install and test
+        run: cd users && npm install && npm run test:ci --password=${{secrets.DB_TEST_PASSWORD}}
+
 
     
