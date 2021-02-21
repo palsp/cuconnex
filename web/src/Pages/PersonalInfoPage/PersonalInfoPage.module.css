@@ -1,0 +1,29 @@
+.InputFieldDiv {
+  width: 80%;
+  margin: 5vh auto;
+}
+
+.footerNavigation {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footerIcon {
+  display: flex;
+  align-items: center;
+}
+
+.heading {
+  text-align: start;
+  margin: 0 0 0 20px;
+}
+
+.subtitleDiv {
+  margin: -15px 0 0 20px;
+  text-align: start;
+}
+
+.profilePicDiv {
+  margin: 50px auto;
+}

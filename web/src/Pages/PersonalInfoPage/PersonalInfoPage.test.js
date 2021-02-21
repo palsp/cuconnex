@@ -8,6 +8,19 @@ const setup = (props) => {
   return wrapper;
 };
 describe("render Personal Info Page", () => {
+  it("should render Background", () => {
+    const wrapper = setup();
+    const background = findByTestAttr(wrapper, "personal-info-background");
+    expect(background.length).toBe(1);
+  });
+  it("should render halfcircleoverlay", () => {
+    const wrapper = setup();
+    const halfCircleOverlay = findByTestAttr(
+      wrapper,
+      "personal-info-halfcircleoverlay"
+    );
+    expect(halfCircleOverlay.length).toBe(1);
+  });
   it("should render Header", () => {
     const wrapper = setup();
     const header = findByTestAttr(wrapper, "personal-info-header");

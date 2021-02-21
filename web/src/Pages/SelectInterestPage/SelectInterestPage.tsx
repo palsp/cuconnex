@@ -27,7 +27,6 @@ const SelectInterestPage: React.FC = () => {
       <div className={classes.heading}>
         <Heading size="small" value="Technology" />
       </div>
-
       <InterestLists data-test="interest-list-technology" type="TECHNOLOGY" />
       <div className={classes.heading}>
         <Heading size="small" value="Design" />
@@ -41,10 +40,12 @@ const SelectInterestPage: React.FC = () => {
           </div>
         </Link>
         <DotMorePage data-test="dot-icon" amount={2} />
-        <div className={classes.footerIcon}>
-          <Heading size="small" value="Skip" />
-          <ArrowRight data-test="arrow-right" />
-        </div>
+        <Link to="/personalInformation">
+          <div className={classes.footerIcon}>
+            <Heading size="small" value="Skip" />
+            <ArrowRight data-test="arrow-right" />
+          </div>
+        </Link>
       </div>
     </>
   );

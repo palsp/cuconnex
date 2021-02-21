@@ -1,0 +1,24 @@
+.profile {
+  margin: auto;
+  height: 100px;
+  width: 100px;
+}
+.profilePic {
+  background-color: rgb(210, 210, 220);
+  border-radius: 50%;
+  opacity: 0.5;
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pTag {
+  font-weight: 600;
+}
+/* 
+p {
+  position: relative;
+} */
