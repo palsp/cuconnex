@@ -1,12 +1,22 @@
-import express from 'express';
-import { db } from './db';
+import { app } from './app'
+import { initializeDB } from './db'
+
+const start = async () => {
 
 
-const app = express();
+    try {
+        await initializeDB();
+
+    } catch (err) {
+        console.error(err);
+    }
+
+    app.listen(3000, () => {
+        console.log('Listening on port 3000...........')
+    })
+
+}
 
 
-db.sync().then(res => {
-    console.log('Connecting to db!!!')
-    app.listen(3000);
 
-}).catch(err => console.log(err))
+start();
