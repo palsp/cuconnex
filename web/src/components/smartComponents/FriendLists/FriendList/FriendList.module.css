@@ -1,6 +1,6 @@
 .friendList {
   box-sizing: border-box;
-  width: 390px;
+  width: 375px;
   height: 128px;
   overflow: visible;
   border-color: #808080;
@@ -23,6 +23,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  margin-top: -30px;
+  width: 140px;
 }
 
 .divUserInfo {

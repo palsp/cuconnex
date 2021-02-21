@@ -5,7 +5,7 @@ const ProfilePic: React.FC = () => {
   return (
     <div data-test="profile-pic" className={classes.profile}>
       <div className={classes.profilePic}>
-        <p className={classes.pTag}>Add profile Picture</p>
+        {/* <p className={classes.pTag}>Add profile Picture</p> */}
       </div>
     </div>
   );
