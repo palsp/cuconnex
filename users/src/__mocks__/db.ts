@@ -14,26 +14,22 @@ interface myDB {
 const initializeDB = async () => {
     const myDB: myDB = {}
     const { host, user, password } = config;
-    console.log(config);
     const database = randomBytes(4).toString('hex');
-    try {
-        // create db if not exists
-        myDB.connection = await mysql.createConnection({ host, user, password });
-        await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
-        // connect to sequelize 
-        myDB.sequelize = new Sequelize(database, user!, password, { dialect: 'mysql', logging: false });
+    // create db if not exists
+    myDB.connection = await mysql.createConnection({ host, user, password });
+    await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
-        // initialize model
-        initModel(myDB.sequelize);
+    // connect to sequelize 
+    myDB.sequelize = new Sequelize(database, user!, password, { dialect: 'mysql', logging: false });
+
+    // initialize model
+    initModel(myDB.sequelize);
 
 
-        await myDB.sequelize.sync()
+    await myDB.sequelize.sync()
 
-        return myDB;
-    } catch (err) {
-        throw new Error('Initialize database failed')
-    }
+    return myDB;
 
 }
 

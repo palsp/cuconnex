@@ -2,6 +2,7 @@ import { initializeDB, endDB } from '../db';
 import { Sequelize } from 'sequelize'
 import { Connection } from 'mysql2/promise'
 import jwt from 'jsonwebtoken';
+import { test_config as config } from '../config/db.config'
 
 
 
@@ -26,6 +27,7 @@ let testDB: db;
 beforeAll(async () => {
     process.env.JWT_KEY = 'asdfasdfaf';
     // create db if doesn't already existed
+    console.log(config);
     try {
         testDB = await initializeDB();
     } catch (err) {
