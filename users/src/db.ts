@@ -14,7 +14,6 @@ const initializeDB = async () => {
     const myDB: myDB = {}
     const { host, db: database, user, password } = config;
 
-
     myDB.connection = await mysql.createConnection({ host: host, user, password });
 
     await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
@@ -34,8 +33,12 @@ const initializeDB = async () => {
 
 
 const endDB = async (db: myDB) => {
-    if (db.connection) await db.connection.end();
-    if (db.sequelize) await db.sequelize.close();
+    if (db.sequelize) {
+        await db.sequelize.close();
+    }
+    if (db.connection) {
+        await db.connection.end();
+    }
 }
 
 export { initializeDB, endDB };

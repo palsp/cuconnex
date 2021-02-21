@@ -42,8 +42,6 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-    // await testDB.sequelize!.drop();
-    // await testDB.sequelize!.close();
     await endDB(testDB);
 })
 
