@@ -20,7 +20,7 @@ steps:
   entrypoint: /bin/sh
   args:
   - -c
-  - 'pip install flask && python test_app.py -v'
+  - 'pip install flask && python test/test_app.py -v'
 
 # This step builds the container image.
 - name: 'gcr.io/cloud-builders/docker'
