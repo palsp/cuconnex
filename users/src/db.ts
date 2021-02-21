@@ -1,23 +1,45 @@
 import { Sequelize } from 'sequelize';
 import config from './config/db.config';
-import mysql from 'mysql2/promise';
+import mysql, { Connection } from 'mysql2/promise';
 import { initModel } from './models'
 
-const { host, db: database, user, password } = config;
 
-
-const sequelize = new Sequelize(database, user, password, { dialect: 'mysql' });
+interface myDB {
+    sequelize?: Sequelize
+    connection?: Connection
+}
 
 
 const initializeDB = async () => {
-    const connection = await mysql.createConnection({ host, user, password });
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+    const myDB: myDB = {}
+    const { host, db: database, user, password } = config;
+
+    myDB.connection = await mysql.createConnection({ host: host, user, password });
+
+    await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
 
-    initModel(sequelize);
+    myDB.sequelize = new Sequelize(database!, user!, password, { dialect: 'mysql', host, });
 
-    await sequelize.sync()
+
+
+    initModel(myDB.sequelize);
+
+    await myDB.sequelize.sync()
+
+    return myDB;
 }
 
-export { sequelize, initializeDB };
+
+
+const endDB = async (db: myDB) => {
+    if (db.sequelize) {
+        await db.sequelize.close();
+    }
+    if (db.connection) {
+        await db.connection.end();
+    }
+}
+
+export { initializeDB, endDB };
 

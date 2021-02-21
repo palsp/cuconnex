@@ -1,35 +1,44 @@
 import { app } from './app';
 import { initializeDB } from './db';
-import { User } from './models/user.model';
-import { Team } from './models/team.model';
-import { Interest } from './models/interest.model';
-import { InterestDescription } from '@cuconnex/common';
 
-// User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
+const validateEnvAttr = () => {
+  if (!process.env.DB_HOST) {
+    throw new Error('DB_HOST must be defined');
+  }
 
-// const interests = [InterestDescription.Business, InterestDescription.Developer,]
+  if (!process.env.DB_USER) {
+    throw new Error('DB_USER must be defined');
+  }
+
+  if (!process.env.DB_USER) {
+    throw new Error('DB_USER must be defined');
+  }
+
+  if (!process.env.DB_SCHEMA) {
+    throw new Error('DB_SCHEMA must be defined');
+  }
+
+  if (!process.env.DB_SCHEMA) {
+    throw new Error('DB_SCHEMA must be defined');
+  }
+
+  if (!process.env.DB_PASSWORD) {
+    throw new Error('DB_PASSWORD must be defined');
+  }
+};
+
 const start = async () => {
   try {
-    // await sequelize.sync({ force: true });
-    // //     user = await User.create({ id: "6131886621", name: "Pal" });
-    // //     for (let i = 0; i < interests.length; i++) {
-    // //         if (i === 1) {
-    // //             throw new Error('Some thing went wrong')
-    // //         }
+    // check if all required env variable have been declared
+    validateEnvAttr();
 
-    // //         await user.createInterests({ interest: interests[i] });
-    // //     }
-    // //     createSuccess = true;
     await initializeDB();
-
-    // User.create({ id: '6131707021', name: 'dummyUser' });
-    // Team.create({ id: '12345', name: 'dummyTeam });
   } catch (err) {
     console.error(err);
   }
 
   app.listen(3000, () => {
-    console.log('Listening on port 3000...');
+    console.log('Listening on port 3000..');
   });
 };
 

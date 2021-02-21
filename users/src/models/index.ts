@@ -5,10 +5,10 @@ import { Sequelize } from 'sequelize/types';
 import { Member, initMember } from './member.model';
 
 export const initModel = (sequelize: Sequelize) => {
-  initUser(sequelize);
-  initInterests(sequelize);
-  initTeam(sequelize);
-  initMember(sequelize);
+  const User = initUser(sequelize);
+  const Interest = initInterests(sequelize);
+  const Team = initTeam(sequelize);
+  const Member = initMember(sequelize);
 
   User.hasMany(Interest, {
     sourceKey: 'id',
@@ -17,15 +17,14 @@ export const initModel = (sequelize: Sequelize) => {
     onDelete: 'CASCADE'
   });
 
-  // M-M ====
-  Team.belongsToMany(User, {
-    through: 'Members',
-    foreignKey: 'userId'
-  });
-
-  User.belongsToMany(Team, {
-    through: 'Members',
-    foreignKey: 'teamId'
-  });
-  // ====
+  // // M-M ====
+  // Team.belongsToMany(User, {
+  //   through: 'Members',
+  //   foreignKey: 'userId'
+  // });
+  // User.belongsToMany(Team, {
+  //   through: 'Members',
+  //   foreignKey: 'teamId'
+  // });
+  // // ====
 };

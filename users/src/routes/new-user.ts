@@ -39,9 +39,9 @@ router.post(
     }
 
     // remove duplicate interests from an array of interests
-    const uniqueInterests = Array.from(new Set<InterestDescription>(interests)).map(interest => ({
-      interest
-    }));
+    const uniqueInterests = Array.from(
+      new Set<InterestDescription>(interests)
+    ).map(description => ({ description }));
 
     let createSuccess;
 

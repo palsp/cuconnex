@@ -8,20 +8,20 @@ import { nodeInternals } from 'stack-utils';
 export interface InterestAttrs {
   // id: number;
   userId: string;
-  interest: InterestDescription;
+  description: InterestDescription;
 }
 
 // all arguments require to create interest
 export interface InterestCreationAttrs {
-  interest: InterestDescription;
+  description: InterestDescription;
 }
 
 class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   public userId!: string;
-  public interest!: InterestDescription;
+  public description!: InterestDescription;
 }
 
-const initInterests = (sequelize: Sequelize) =>
+const initInterests = (sequelize: Sequelize) => {
   Interest.init(
     {
       userId: {
@@ -29,7 +29,7 @@ const initInterests = (sequelize: Sequelize) =>
         primaryKey: true,
         references: { model: User.tableName }
       },
-      interest: {
+      description: {
         type: DataTypes.ENUM,
         values: Object.values(InterestDescription),
         unique: true,
@@ -41,5 +41,7 @@ const initInterests = (sequelize: Sequelize) =>
       sequelize
     }
   );
+  return Interest;
+};
 
 export { Interest, initInterests };
