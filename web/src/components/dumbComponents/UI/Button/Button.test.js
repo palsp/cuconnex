@@ -13,8 +13,8 @@ it("should render button", () => {
   expect(button.length).toBe(1);
 });
 
-it("should have value according to props.children", () => {
-  const wrapper = setup({ children: "testValue" });
-  const buttonProps = findByTestAttr(wrapper, "button-props-children").text();
+it("should have value according to props.value", () => {
+  const wrapper = setup({ value: "testValue" });
+  const buttonProps = findByTestAttr(wrapper, "button-props-value").text();
   expect(buttonProps).toBe("testValue");
 });

@@ -22,7 +22,7 @@ const LoginPage: React.FC = () => {
         <Button
           data-test="login-page-login-button"
           onClick={loginButtonClickedHandler}
-          children="Log in to an existing account"
+          value="Log in to an existing account"
         />
         <div className={classes.textDiv}>
           <div className={classes.subtitleDiv}>
@@ -55,7 +55,7 @@ const LoginPage: React.FC = () => {
           <Button
             data-test="login-page-next-button"
             onClick={() => {}}
-            children="Next"
+            value="Next"
           />
         </div>
         <DotMorePage data-test="dot-icon" amount={1} />

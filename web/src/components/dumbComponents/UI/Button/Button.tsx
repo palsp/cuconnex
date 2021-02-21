@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Button.module.css";
 interface Props {
-  children: string;
+  value: string;
   onClick: () => void;
 }
 
@@ -12,7 +12,7 @@ const Button: React.FC<Props> = (props) => {
       className={classes.Button}
       onClick={props.onClick}
     >
-      <p data-test="button-props-children">{props.children}</p>
+      <p data-test="button-props-value">{props.value}</p>
     </button>
   );
 };

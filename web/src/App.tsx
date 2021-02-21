@@ -11,7 +11,6 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/" exact component={LoginPage} />
         <Route path="/selectinterests" exact component={SelectInterestPage} />
-
         <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
       </Switch>
     </BrowserRouter>
