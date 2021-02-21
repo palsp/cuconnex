@@ -6,8 +6,8 @@ export default {
 }
 
 export const test_config = {
-  host: process.env.DB_TEST_HOST,
-  user: process.env.DB_TEST_USER,
-  password: process.env.DB_TEST_PASSWORD,
-  db: process.env.DB_TEST_SCHEMA,
+  host: 'localhost',
+  user: 'root',
+  password: require('password'),
+  db: 'testdb',
 }
