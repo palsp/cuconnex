@@ -17,7 +17,7 @@ const FriendLists: React.FC = () => {
     year: 3,
   };
   return (
-    <div>
+    <div data-test="friendLists">
       <FriendList friend={personOne} />
       <FriendList friend={personTwo} />
     </div>

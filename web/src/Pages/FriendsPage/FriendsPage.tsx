@@ -3,7 +3,7 @@ import FriendLists from "../../components/smartComponents/FriendLists/FriendList
 
 const FriendsPage: React.FC = () => {
   return (
-    <div>
+    <div data-test="friends-page">
       <FriendLists />
     </div>
   );

@@ -26,15 +26,20 @@ const FriendList: React.FC<Props> = (props) => {
           <div className={classes.divUserInfo}>
             <Username
               data-test="friend-list-object-name"
-              value={props.friend.name}
+              value={props.friend ? props.friend.name : "test-value"}
             />
           </div>
           <div className={classes.divUserInfo}>
-            <Heading value={props.friend.interest} size="small" />
+            <Heading
+              value={props.friend ? props.friend.interest : "test-value"}
+              size="small"
+            />
           </div>
 
           <div className={classes.divUserInfo}>
-            <Subtitle value={props.friend.major} />
+            <Subtitle
+              value={props.friend ? props.friend.major : "test-value"}
+            />
           </div>
         </div>
 
