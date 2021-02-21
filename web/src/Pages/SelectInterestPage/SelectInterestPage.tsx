@@ -1,5 +1,5 @@
 import React from "react";
-import InterestLists from "../../components/dumbComponents/InterestLists/InterestLists";
+import InterestLists from "../../components/smartComponents/InterestLists/InterestLists";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import Heading from "../../components/dumbComponents/UI/Heading/Heading";
 import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
