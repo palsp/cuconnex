@@ -18,7 +18,7 @@ jobs:
          with:
           mysql user: ${{ secrets.DB_TEST_USER}}
           mysql password : ${{secrets.DB_TEST_PASSWORD}}
-      - run: cd users && npm install && DB_TEST_USER=$DB_TEST_USER DB_TEST_PASSWORD=$DB_TEST_PASSWORD DB_TEST_HOST=$DB_TEST_HOST jest
+      - run: cd users && npm install && npm run test:ci
         env: 
           DB_TEST_USER : ${{ secrets.DB_TEST_USER}}
           DB_TEST_PASSWORD : ${{ secrets.DB_TEST_PASSWORD}}
