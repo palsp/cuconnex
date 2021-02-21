@@ -1,36 +1,48 @@
-// import { Sequelize } from 'sequelize';
-// import { test_config } from '../config/db.config'
-
-
-// export const sequelize = new Sequelize(test_config.db, test_config.user, test_config.password, {
-//     host: test_config.host,
-//     dialect: "mysql",
-//     logging: false,
-// })
-
 import { Sequelize } from 'sequelize';
 import { test_config as config } from '../config/db.config';
-import mysql from 'mysql2/promise';
-import { initModel } from '../models';
+import mysql, { Connection } from 'mysql2/promise';
+import { initModel } from '../models'
 import { randomBytes } from 'crypto'
 
-const { host, user, password } = config;
 
-const database = randomBytes(4).toString('utf-8');
-
-const sequelize = new Sequelize(database, user, password, { dialect: 'mysql', logging: false });
+interface myDB {
+    sequelize?: Sequelize
+    connection?: Connection
+}
 
 
 const initializeDB = async () => {
+    const myDB: myDB = {}
+    const { host, user, password } = config;
+    console.log(config);
+    const database = randomBytes(4).toString('hex');
+    try {
+        // create db if not exists
+        myDB.connection = await mysql.createConnection({ host, user, password });
+        await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
 
-    const connection = await mysql.createConnection({ host, user, password });
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
+        // connect to sequelize 
+        myDB.sequelize = new Sequelize(database, user!, password, { dialect: 'mysql', logging: false });
+
+        // initialize model
+        initModel(myDB.sequelize);
 
 
-    initModel(sequelize);
+        await myDB.sequelize.sync()
 
-    await sequelize.sync()
+        return myDB;
+    } catch (err) {
+        throw new Error('Initialize database failed')
+    }
+
 }
 
-export { sequelize, initializeDB };
+
+
+const endDB = async (db: myDB) => {
+    if (db.sequelize) await db.sequelize.close();
+    if (db.connection) await db.connection.end();
+}
+
+export { initializeDB, endDB };
 

@@ -1,15 +1,13 @@
 export default {
-    host: "localhost",
-    // host: "users-mysql-srv",  // for production
-    user: "root",
-    password: "liulaks123",
-    // password: "password",
-    db: "users",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    db: process.env.DB_SCHEMA,
 }
 
 export const test_config = {
-    host: "localhost",
-    user: "root",
-    password: "liulaks123",
-    db: "testUserDb",
+    host: process.env.DB_TEST_HOST,
+    user: process.env.DB_TEST_USER,
+    password: process.env.DB_TEST_PASSWORD,
+    db: process.env.DB_TEST_SCHEMA,
 }

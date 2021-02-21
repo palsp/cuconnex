@@ -21,11 +21,12 @@ class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
     public id!: string;
     public name!: string;
 
+
     public createInterest!: HasManyCreateAssociationMixin<Interest>
     public getInterests!: HasManyGetAssociationsMixin<Interest>
 
     public createInterests(attrs: InterestCreationAttrs) {
-        return this.createInterest({ interest: attrs.interest });
+        return this.createInterest({ description: attrs.description });
     }
 
     public async createInterestsFromArray(interests: InterestCreationAttrs[]) {
@@ -42,22 +43,27 @@ class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
 
 
 
-const initUser = (sequelize: Sequelize) => User.init(
-    {
-        id: {
-            type: DataTypes.STRING(11),
-            primaryKey: true
+const initUser = (sequelize: Sequelize) => {
+    User.init(
+        {
+            id: {
+                type: DataTypes.STRING(11),
+                primaryKey: true
+            },
+            name: {
+                type: new DataTypes.STRING(255),
+                allowNull: false
+            }
+
         },
-        name: {
-            type: new DataTypes.STRING(255),
-            allowNull: false
+        {
+            tableName: "users",
+            sequelize,
         }
-    },
-    {
-        tableName: "users",
-        sequelize,
-    }
-);
+    );
+
+    return User;
+}
 
 
 

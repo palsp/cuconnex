@@ -1,6 +1,6 @@
-import { sequelize, initializeDB } from '../db';
-import { User } from '../models/user.model';
-import { Interest } from '../models/interest.model';
+import { initializeDB, endDB } from '../db';
+import { Sequelize } from 'sequelize'
+import { Connection } from 'mysql2/promise'
 import jwt from 'jsonwebtoken';
 
 
@@ -16,25 +16,34 @@ declare global {
     }
 }
 
+interface db {
+    connection?: Connection,
+    sequelize?: Sequelize,
+}
+
+let testDB: db;
+
 beforeAll(async () => {
     process.env.JWT_KEY = 'asdfasdfaf';
     // create db if doesn't already existed
-    await initializeDB();
-
-    // User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
-    //await sequelize.sync();
+    try {
+        testDB = await initializeDB();
+    } catch (err) {
+        throw new Error('Initialized databae failed');
+    }
 });
 
 beforeEach(async () => {
-    const models = Object.values(sequelize.models)
+    const models = Object.values(testDB.sequelize!.models)
     for (let model of models) {
         await model.destroy({ where: {} })
     }
 });
 
 afterAll(async () => {
-    await sequelize.drop();
-    await sequelize.close();
+    // await testDB.sequelize!.drop();
+    // await testDB.sequelize!.close();
+    await endDB(testDB);
 })
 
 

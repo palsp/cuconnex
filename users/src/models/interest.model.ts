@@ -7,43 +7,46 @@ import { User } from './user.model';
 export interface InterestAttrs {
     // id: number;
     userId: string;
-    interest: InterestDescription,
+    description: InterestDescription,
 }
 
 // all arguments require to create interest
 export interface InterestCreationAttrs {
-    interest: InterestDescription,
+    description: InterestDescription,
 }
 
 
 class Interest extends Model<InterestAttrs, InterestCreationAttrs>  {
     public userId!: string;
-    public interest!: InterestDescription
+    public description!: InterestDescription
 
 }
 
 
-const initInterests = (sequelize: Sequelize) => Interest.init({
-    userId: {
-        type: DataTypes.STRING(10),
-        primaryKey: true,
-        references: { model: User.tableName }
+const initInterests = (sequelize: Sequelize) => {
+    Interest.init({
+        userId: {
+            type: DataTypes.STRING(10),
+            primaryKey: true,
+            references: { model: User.tableName }
+        },
+        description: {
+            type: DataTypes.ENUM,
+            values: Object.values(InterestDescription),
+            unique: true,
+            primaryKey: true,
+
+        }
     },
-    interest: {
-        type: DataTypes.ENUM,
-        values: Object.values(InterestDescription),
-        unique: true,
-        primaryKey: true,
-
-    }
-},
-    {
-        tableName: "interests",
-        sequelize
-    }
-);
-
+        {
+            tableName: "interests",
+            sequelize
+        }
+    );
+    return Interest;
+}
 
 
 export { Interest, initInterests };
+
 
