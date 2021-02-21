@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
 import AppLogo from "../../components/dumbComponents/UI/AppLogo/AppLogo";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import Button from "../../components/dumbComponents/UI/Button/Button";
@@ -52,11 +54,13 @@ const LoginPage: React.FC = () => {
           />
         </div>
         <div className={classes.Button}>
-          <Button
-            data-test="login-page-next-button"
-            onClick={() => {}}
-            value="Next"
-          />
+          <Link to="/selectInterests">
+            <Button
+              data-test="login-page-next-button"
+              onClick={() => {}}
+              value="Next"
+            />
+          </Link>
         </div>
         <DotMorePage data-test="dot-icon" amount={1} />
       </>

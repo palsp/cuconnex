@@ -8,6 +8,7 @@ import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMoreP
 import classes from "./SelectInterestPage.module.css";
 import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
 import ArrowRight from "../../components/dumbComponents/UI/Icons/ArrowRight/ArrowRight";
+import { Link } from "react-router-dom";
 
 const SelectInterestPage: React.FC = () => {
   return (
@@ -33,10 +34,12 @@ const SelectInterestPage: React.FC = () => {
       </div>
       <InterestLists data-test="interest-list-design" type="DESIGN" />
       <div className={classes.footerNavigation}>
-        <div className={classes.footerIcon}>
-          <ArrowLeft data-test="arrow-left" />
-          <Heading size="small" value="Back" />
-        </div>
+        <Link to="/">
+          <div className={classes.footerIcon}>
+            <ArrowLeft data-test="arrow-left" />
+            <Heading size="small" value="Back" />
+          </div>
+        </Link>
         <DotMorePage data-test="dot-icon" amount={2} />
         <div className={classes.footerIcon}>
           <Heading size="small" value="Skip" />

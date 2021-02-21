@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "./App.css";
 import LoginPage from "./Pages/LoginPage/LoginPage";
+import PersonalInfoPage from "./Pages/PersonalInfoPage/PersonalInfoPage";
 import SelectInterestPage from "./Pages/SelectInterestPage/SelectInterestPage";
 
 const App: React.FC = () => {
@@ -11,6 +12,7 @@ const App: React.FC = () => {
       <Switch>
         <Route path="/" exact component={LoginPage} />
         <Route path="/selectinterests" exact component={SelectInterestPage} />
+        <Route path="/personalInformation" exact component={PersonalInfoPage} />
         <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
       </Switch>
     </BrowserRouter>
