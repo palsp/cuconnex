@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node-dev src/index.ts",
     "test": "jest --watchAll --no-cache",
-    "test:ci": "DB_TEST_USER=test DB_TEST_PASSWORD=password DB_TEST_HOST=localhost jest"
+    "test:ci": "jest"
   },
   "jest": {
     "preset": "ts-jest",

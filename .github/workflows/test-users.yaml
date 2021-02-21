@@ -17,6 +17,6 @@ jobs:
       -  uses: mirromutth/mysql-action@master
          with:
           mysql root password : ${{secrets.DB_TEST_PASSWORD}}
-      - run: cd users && npm install && npm run test:ci -- --password=${{secrets.DB_TEST_PASSWORD}}
+      - run: cd users && npm install && npm run test:ci 
 
     
