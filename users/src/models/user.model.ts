@@ -10,6 +10,7 @@ import { Interest, InterestCreationAttrs } from './interest.model'
 interface UserAttrs {
     id: string;
     name: string;
+    friends?: User[];
 }
 
 interface UserCreationAttrs {
@@ -21,6 +22,7 @@ interface UserCreationAttrs {
 class User extends Model<UserAttrs, UserCreationAttrs>  {
     public id!: string;
     public name!: string;
+    public friends?: User[];
 
 
     public createInterest!: HasManyCreateAssociationMixin<Interest>

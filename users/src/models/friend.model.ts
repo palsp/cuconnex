@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
 import { FriendStatus } from '@cuconnex/common'
-import sequelize from 'sequelize';
+import { TableName } from './types'
+import { User } from './user.model';
 
 
 
@@ -44,11 +45,12 @@ const initFriend = (sequelize: Sequelize) => {
     Friend.init<Friend>({
         senderId: {
             type: DataTypes.STRING(11),
-            primaryKey: true
+            primaryKey: true,
         },
         receiverId: {
             type: DataTypes.STRING(11),
-            primaryKey: true
+            primaryKey: true,
+
         },
         status: {
             type: DataTypes.ENUM,
@@ -57,7 +59,7 @@ const initFriend = (sequelize: Sequelize) => {
             allowNull: false
         }
     }, {
-        tableName: "friendRelations",
+        tableName: "friends",
         sequelize
     });
 
