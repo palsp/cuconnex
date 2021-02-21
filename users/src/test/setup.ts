@@ -2,7 +2,6 @@ import { initializeDB, endDB } from '../db';
 import { Sequelize } from 'sequelize'
 import { Connection } from 'mysql2/promise'
 import jwt from 'jsonwebtoken';
-import { test_config as config } from '../config/db.config'
 
 
 
