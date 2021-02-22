@@ -23,7 +23,7 @@ steps:
   - 'pip install flask && python test/test_app.py -v'
 
 # This step builds the container image.
-- name: 'gcr.io/test/docker'
+- name: 'gcr.io/cloud-builders/docker'
   id: Build
   args:
   - 'build'
@@ -34,7 +34,7 @@ steps:
 # This step pushes the image to Container Registry
 # The PROJECT_ID and SHORT_SHA variables are automatically
 # replaced by Cloud Build.
-- name: 'gcr.io/test/docker'
+- name: 'gcr.io/cloud-builders/docker'
   id: Push
   args:
   - 'push'
