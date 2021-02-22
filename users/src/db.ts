@@ -25,7 +25,7 @@ const initializeDB = async () => {
 
     initModel(myDB.sequelize);
 
-    await myDB.sequelize.sync()
+    await myDB.sequelize.sync({ force: true })
 
     return myDB;
 }

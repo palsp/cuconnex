@@ -40,10 +40,12 @@ const initInterests = (sequelize: Sequelize) => {
     },
         {
             tableName: "interests",
-            sequelize
+            sequelize,
+            timestamps: false,
         }
     );
-    return Interest;
+
+    return Interest
 }
 
 

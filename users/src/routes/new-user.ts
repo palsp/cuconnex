@@ -26,7 +26,7 @@ const bodyChecker = [body('interests')
 ];
 
 // create user for first time login
-router.post('/api/users', requireAuth, bodyChecker, validateRequest, async (req: Request, res: Response) => {
+router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
     const { interests } = req.body
 
 
