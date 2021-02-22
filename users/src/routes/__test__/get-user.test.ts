@@ -60,3 +60,5 @@ it('return user must include interests', async () => {
   expect(res.interests).not.toBeNull();
   expect(res.interests[0].description).toEqual(InterestDescription.Business);
 });
+
+// it('should pass', () => {});

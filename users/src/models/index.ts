@@ -8,7 +8,7 @@ export const initModel = (sequelize: Sequelize) => {
   const User = initUser(sequelize);
   const Interest = initInterests(sequelize);
   const Team = initTeam(sequelize);
-  const Member = initMember(sequelize);
+  // const Member = initMember(sequelize);
 
   // A.hasOne(B, { /* options */ });      one-to-one foreign key in B
   // A.belongsTo(B, { /* options */ });   one-to-one  foreign key in A
@@ -26,17 +26,16 @@ export const initModel = (sequelize: Sequelize) => {
   User.hasMany(Team, {
     sourceKey: 'id',
     foreignKey: 'userId',
-    as: 'owner',
+    as: 'teams',
     onDelete: 'CASCADE'
   });
 
   // M-M
   Team.belongsToMany(User, {
-    through: 'Member',
-    foreignKey: 'userId'
+    through: 'members'
   });
   User.belongsToMany(Team, {
-    through: 'Member',
-    foreignKey: 'teamId'
+    through: 'members',
+    as: 'member'
   });
 };

@@ -41,11 +41,17 @@ class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
   public createTeams(attrs: TeamCreationAttrs) {
-    return this.createTeam({ teamId: attrs.teamId, teamName: attrs.teamName });
+    console.log('this runnnn ----', typeof attrs.userId);
+    return this.createTeam({
+      teamId: attrs.teamId,
+      // userId: attrs.userId,
+      teamName: attrs.teamName
+    });
   }
 
   public static associations: {
     interests: Association<User, Interest>;
+    teams: Association<User, Team>;
   };
 }
 

@@ -17,7 +17,7 @@ export interface TeamAttrs {
 
 export interface TeamCreationAttrs {
   teamId: string;
-  userId: string;
+  // userId: string;
   teamName: string;
 }
 
@@ -25,6 +25,10 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> implements TeamAttrs {
   public teamId!: string;
   public userId!: string;
   public teamName!: string;
+
+  // public addMember(user: UserAttrs) {
+
+  // }
 }
 
 const initTeam = (sequelize: Sequelize) => {

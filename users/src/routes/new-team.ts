@@ -9,47 +9,39 @@ const router = express.Router();
 
 // when user try to create a team
 router.post('/api/teams', validateRequest, async (req: Request, res: Response) => {
-  // must check that req.userId === req.currentUser!.id
-  // const userId = req.currentUser!.id;
+  const { userId, teamId, teamName } = req.body;
 
-  //dummy userId
-  const userId = '6131707021';
+  // if (!userId || userId !== req.currentUser!.id) {
+  //   throw new NotAuthorizedError();
+  // }
+
   const user = await User.findOne({ where: { id: userId } });
   if (!user) {
     throw new NotFoundError();
   }
 
-  console.log('check user 111', user);
-
-  const { teamId, teamName } = req.body;
-
-  if (!userId) {
-    throw new NotAuthorizedError();
-  }
-
   let team = await Team.findOne({ where: { teamName: teamName } });
   if (team) {
-    console.log('err', team);
     throw new BadRequestError('Team name already existed');
   }
-  console.log('team', team);
-
+  console.log('www', req.body);
   let createSuccess;
   try {
-    console.log('eiei');
-    team = await Team.create({ userId, teamId, teamName });
-    // await user.createTeams(team);
-    console.log('check user 2', user);
-    console.log('check team', team);
-
+    // team = await Team.create({ teamId, userId, teamName });
+    // console.log('yes', team._attributes.userId);
+    console.log('yes', team);
+    const eiei = await user.createTeams({ teamId, userId, teamName });
+    // console.log('check eiei ', eiei);
     createSuccess = true;
   } catch (err) {
+    console.log('create failed', err);
     createSuccess = false;
   }
+
   // if something went wrong clear all team information in database
   // user need to retry from the beginning!!
   if (!createSuccess && team) {
-    await team.destroy();
+    // await team.destroy();
     throw new Error('Something went wrong');
   }
 
