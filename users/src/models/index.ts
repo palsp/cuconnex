@@ -21,6 +21,7 @@ export const initModel = (sequelize: Sequelize) => {
         },
     }, { timestamps: false })
 
+
     User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
     User.belongsToMany(User, { as: 'friend', through: frd, foreignKey: "senderId", otherKey: "receiverId" });
 

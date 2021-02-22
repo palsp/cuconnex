@@ -1,9 +1,8 @@
-
-import { BadRequestError, FriendStatus } from '@cuconnex/common';
 import { Model, DataTypes, Op, BelongsToManyAddAssociationMixin, BelongsToManyGetAssociationsMixin, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin, Association, Sequelize, } from 'sequelize'
+import { BadRequestError, FriendStatus, NotFoundError } from '@cuconnex/common';
+import { TableName } from './types';
 import { Interest, InterestCreationAttrs } from './interest.model';
 import { Friend } from './friend.model';
-import { NotFoundError } from '@cuconnex/common';
 
 
 
@@ -127,7 +126,7 @@ const initUser = (sequelize: Sequelize) => {
 
         },
         {
-            tableName: "users",
+            tableName: TableName.users,
             sequelize,
             timestamps: false
         }

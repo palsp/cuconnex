@@ -1,6 +1,7 @@
 import { Model, DataTypes, Sequelize } from 'sequelize'
 import { InterestDescription } from '@cuconnex/common'
 import { User } from './user.model';
+import { TableName } from './types';
 
 
 // all atributes interest model has 
@@ -39,7 +40,7 @@ const initInterests = (sequelize: Sequelize) => {
         }
     },
         {
-            tableName: "interests",
+            tableName: TableName.interests,
             sequelize,
             timestamps: false,
         }
