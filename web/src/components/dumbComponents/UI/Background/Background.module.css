@@ -1,7 +1,7 @@
 .appBackground {
   position: absolute;
   z-index: -1000;
-  width: 390px;
+  width: 375px;
   height: 844px;
   overflow: hidden;
   top: 0;
