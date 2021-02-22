@@ -29,6 +29,8 @@ steps:
   - 'build'
   - '-t'
   - 'gcr.io/$PROJECT_ID/test:$SHORT_SHA'
+  - '-f'
+  - 'test/Dockerfile'
   - '.'
 
 # This step pushes the image to Container Registry
