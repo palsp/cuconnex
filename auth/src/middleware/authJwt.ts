@@ -14,6 +14,7 @@ const verifyToken = (jwtToken: any) => {
     if (!token) {
         return "No token provided!"
     }
+    
 
     jwt.verify(token, secret, (err, decoded) => {
         if (err) {

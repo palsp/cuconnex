@@ -62,7 +62,8 @@ export const signIn = ( req: Request, res: Response ) => {
                     message: "Invalid Password!"
                 });
             }
-
+            
+            //Send this back
             var token = jwt.sign({ id: user.studentId }, secret, {
                 expiresIn: 86400 // 24 hours
             });
