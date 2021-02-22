@@ -7,6 +7,7 @@ import {
   Sequelize
 } from 'sequelize';
 import { Interest, InterestCreationAttrs } from './interest.model';
+import { Team, TeamCreationAttrs } from './team.model';
 
 // All attributes in user model
 interface UserAttrs {
@@ -34,6 +35,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> implements UserAttrs {
     for (let interest of interests) {
       await this.createInterests(interest);
     }
+  }
+
+  public createTeam!: HasManyCreateAssociationMixin<Team>;
+  public getTeams!: HasManyGetAssociationsMixin<Team>;
+
+  public createTeams(attrs: TeamCreationAttrs) {
+    return this.createTeam({ teamId: attrs.teamId, teamName: attrs.teamName });
   }
 
   public static associations: {

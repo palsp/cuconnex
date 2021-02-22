@@ -12,7 +12,7 @@ router.post('/api/members/request', async (req: Request, res: Response, next: Ne
   const { teamId, userId } = req.body;
   console.log(req.body);
   const user = await User.findOne({ where: { id: userId } });
-  const team = await Team.findOne({ where: { id: teamId } });
+  const team = await Team.findOne({ where: { teamId: teamId } });
 
   if (!user || !team) {
     throw new NotFoundError();
@@ -26,7 +26,7 @@ router.post('/api/members/request', async (req: Request, res: Response, next: Ne
   }
 
   Member.create({ userId, teamId, status: TeamStatus.Pending });
-  res.status(201).send({ message: 'Request pending', user: user!.name, team: team!.name });
+  res.status(201).send({ message: 'Request pending', user: user!.name, team: team!.teamName });
 });
 
 export { router as addMemberRouter };

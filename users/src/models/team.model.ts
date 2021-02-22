@@ -9,22 +9,22 @@ import {
 } from 'sequelize';
 
 // keep member array as id of user
-interface TeamAttrs {
+export interface TeamAttrs {
   teamId: string;
   userId: string;
   teamName: string;
 }
 
-interface TeamCreationAttrs {
+export interface TeamCreationAttrs {
   teamId: string;
   userId: string;
   teamName: string;
 }
 
 class Team extends Model<TeamAttrs, TeamCreationAttrs> implements TeamAttrs {
-  teamId!: string;
-  userId!: string;
-  teamName!: string;
+  public teamId!: string;
+  public userId!: string;
+  public teamName!: string;
 }
 
 const initTeam = (sequelize: Sequelize) => {
@@ -47,6 +47,7 @@ const initTeam = (sequelize: Sequelize) => {
       sequelize
     }
   );
+  return Team;
 };
 
 export { Team, initTeam };

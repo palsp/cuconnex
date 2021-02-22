@@ -31,7 +31,7 @@ class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAt
   public status!: TeamStatus;
 }
 
-const initMember = (sequelize: Sequelize) =>
+const initMember = (sequelize: Sequelize) => {
   Member.init(
     {
       teamId: {
@@ -54,5 +54,6 @@ const initMember = (sequelize: Sequelize) =>
       sequelize
     }
   );
-
+  return Member;
+};
 export { Member, initMember };

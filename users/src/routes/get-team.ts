@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/api/teams', async (req: Request, res: Response) => {
   const { teamId } = req.body;
 
-  const team = await Team.findOne({ where: { id: teamId } });
+  const team = await Team.findOne({ where: { teamId: teamId } });
 
   if (!team) {
     throw new NotFoundError();
