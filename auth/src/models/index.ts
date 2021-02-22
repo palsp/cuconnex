@@ -8,9 +8,10 @@ const config = require("../config/db.config");
 //Create new sequelize instance with the configured parameters
 const sequelizeInstance = new Sequelize({
     database: config.DB,
-    dialect: config.dialect,
     username: config.USER,
     password: config.PASSWORD,
+    host: config.HOST,
+    dialect: config.dialect,
     storage: ':memory:',
     models: [__dirname + '/models/**/*.model'],
     modelMatch: (filename, member) => {

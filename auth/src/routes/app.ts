@@ -2,12 +2,11 @@ import { Request, Response } from 'express';
 import { userRoutes } from './user.routes';
 import { authRoutes } from './auth.routes';
 import { db } from '../models';
-import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 
 const express = require('express');
 const path = require('path');
-
+const cors = require('cors')
 export const app = express()
 
 var corsOptions = {
@@ -29,7 +28,7 @@ const Role = db.role;
 
 db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
-    initial();
+    
 });
 
 app.get('/api', (req: Request, res: Response) => {

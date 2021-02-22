@@ -23,10 +23,10 @@ exports.app = void 0;
 const user_routes_1 = require("./user.routes");
 const auth_routes_1 = require("./auth.routes");
 const models_1 = require("../models");
-const cors = __importStar(require("cors"));
 const bodyParser = __importStar(require("body-parser"));
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 exports.app = express();
 var corsOptions = {
     origin: "http://localhost:3000"
@@ -41,7 +41,6 @@ exports.app.use('/api/auth', auth_routes_1.authRoutes);
 const Role = models_1.db.role;
 models_1.db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
-    initial();
 });
 exports.app.get('/api', (req, res) => {
     res.status(200).send("Hello World");
