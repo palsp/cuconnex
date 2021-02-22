@@ -1,8 +1,9 @@
 import { db } from '../models';
 import { Request, Response } from 'express';
 import { ICustomRequestWithUserId } from '../customRequestDefinition';
+import { secret } from '../config/auth.config';
 const jwt = require("jsonwebtoken");
-const config = require("../config/auth.config.js");
+
 
 const User = db.user;
 
@@ -14,7 +15,7 @@ const verifyToken = (jwtToken: any) => {
         return "No token provided!"
     }
 
-    jwt.verify(token, config.secret, (err, decoded) => {
+    jwt.verify(token, secret, (err, decoded) => {
         if (err) {
             return "Unauthorized"
         }

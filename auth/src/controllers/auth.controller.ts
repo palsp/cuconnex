@@ -1,6 +1,6 @@
 import { db } from "../models";
 import { Request, Response } from 'express';
-import * as config from '../config/auth.config';
+import { secret } from '../config/auth.config';
 import * as Sequelize from 'sequelize';
 const User = db.user;
 const Role = db.role;
@@ -63,7 +63,7 @@ export const signIn = ( req: Request, res: Response ) => {
                 });
             }
 
-            var token = jwt.sign({ id: user.studentId }, config.secret, {
+            var token = jwt.sign({ id: user.studentId }, secret, {
                 expiresIn: 86400 // 24 hours
             });
 

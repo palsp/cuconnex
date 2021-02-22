@@ -1,8 +1,8 @@
 module.exports = {
     HOST: "localhost",
-    USER: "Anon Durongpisitkul",
+    USER: "anon",
     PASSWORD: "anon123",
-    DB: "testdb",
+    DB: "anon",
     MODELS: [],
     dialect: "postgres",
     //Sequelize Pool config

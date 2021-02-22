@@ -31,6 +31,15 @@ db.sequelize.sync({ force: true }).then(() => {
     
 });
 
+db.sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
+
 app.get('/api', (req: Request, res: Response) => {
     res.status(200).send("Hello World")
 })

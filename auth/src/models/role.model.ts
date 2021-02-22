@@ -12,7 +12,7 @@ interface RoleCreationAttributes extends Optional<RoleAttributes, 'id'> {
  }
 
 @Table
-export class Role extends Model<RoleAttributes, RoleCreationAttributes> {
+export default class Role extends Model<RoleAttributes, RoleCreationAttributes> {
     
     @PrimaryKey
     @Column 
