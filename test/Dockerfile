@@ -1,6 +1,6 @@
 FROM python:3.7-slim
 RUN pip install flask
-WORKDIR /app
-COPY app.py /app/app.py
+WORKDIR /test/app
+COPY app.py /test/app/app.py
 ENTRYPOINT ["python"]
-CMD ["/app/app.py"]
+CMD ["/test/app/app.py"]
