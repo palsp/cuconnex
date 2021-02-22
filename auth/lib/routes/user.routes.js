@@ -13,6 +13,8 @@ exports.userRoutes.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
     next();
 });
-exports.userRoutes.get("/all", user_controller_1.default.allAccess);
+exports.userRoutes.get("/all", (req, res) => {
+    res.status(200).send("All content");
+});
 exports.userRoutes.get("/user", [middleware_1.authJwt.verifyToken], user_controller_1.default.userBoard);
 exports.userRoutes.get("/admin", [middleware_1.authJwt.verifyToken, middleware_1.authJwt.isAdmin], user_controller_1.default.adminBoard);

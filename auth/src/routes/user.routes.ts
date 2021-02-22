@@ -14,7 +14,9 @@ userRoutes.use(function (req: Request, res: Response, next) {
     next();
 });
 
-userRoutes.get("/all", userController.allAccess);
+userRoutes.get("/all", (req: Request, res: Response) => {
+    res.status(200).send("All content");
+});
 
 userRoutes.get("/user", [authJwt.verifyToken] ,userController.userBoard);
 

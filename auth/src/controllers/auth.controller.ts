@@ -43,6 +43,7 @@ export const signUp = ( req: Request, res: Response ) => {
 export const signIn = ( req: Request, res: Response ) => {
     User.findOne({
         where: {
+            //change back to username
             email: req.body.email
         }
     })
@@ -64,23 +65,11 @@ export const signIn = ( req: Request, res: Response ) => {
             }
             
             //Send this back
+            //Change id to our primary key
             var token = jwt.sign({ id: user.studentId }, secret, {
                 expiresIn: 86400 // 24 hours
             });
-
-            var authorities: string[] = [];
-            user.getRoles().then(roles => {
-                for (let i = 0; i < roles.length; i++) {
-                    authorities.push("ROLE_"+ roles[i].name.toUpperCase());
-                }
-                res.status(200).send({
-                    studentId: user.studentId,
-                    name: user.name,
-                    email: user.email,
-                    roles: authorities,
-                    accessToken: token
-                });
-            });
+            res.status(200).send({ token: token });
         })
         .catch(err => {
             res.status(500).send({ message: err.message });

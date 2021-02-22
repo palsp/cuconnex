@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signIn = exports.signUp = void 0;
 const models_1 = require("../models");
-const config = __importStar(require("../config/auth.config"));
+const auth_config_1 = require("../config/auth.config");
 const Sequelize = __importStar(require("sequelize"));
 const User = models_1.db.user;
 const Role = models_1.db.role;
@@ -63,6 +63,7 @@ exports.signUp = (req, res) => {
 exports.signIn = (req, res) => {
     User.findOne({
         where: {
+            //change back to username
             email: req.body.email
         }
     })
@@ -77,22 +78,11 @@ exports.signIn = (req, res) => {
                 message: "Invalid Password!"
             });
         }
-        var token = jwt.sign({ id: user.studentId }, config.secret, {
+        //Send this back
+        var token = jwt.sign({ id: user.studentId }, auth_config_1.secret, {
             expiresIn: 86400 // 24 hours
         });
-        var authorities = [];
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                authorities.push("ROLE_" + roles[i].name.toUpperCase());
-            }
-            res.status(200).send({
-                studentId: user.studentId,
-                name: user.name,
-                email: user.email,
-                roles: authorities,
-                accessToken: token
-            });
-        });
+        res.status(200).send({ token: token });
     })
         .catch(err => {
         res.status(500).send({ message: err.message });

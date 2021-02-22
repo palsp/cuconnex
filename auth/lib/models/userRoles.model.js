@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
 const user_model_1 = __importDefault(require("./user.model"));
-const role_model_1 = require("./role.model");
+const role_model_1 = __importDefault(require("./role.model"));
 let UserRoles = class UserRoles extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -23,7 +23,7 @@ __decorate([
     __metadata("design:type", Number)
 ], UserRoles.prototype, "studentId", void 0);
 __decorate([
-    sequelize_typescript_1.ForeignKey(() => role_model_1.Role),
+    sequelize_typescript_1.ForeignKey(() => role_model_1.default),
     sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], UserRoles.prototype, "roleId", void 0);

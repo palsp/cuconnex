@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_typescript_1 = require("sequelize-typescript");
-const role_model_1 = require("./role.model");
+const role_model_1 = __importDefault(require("./role.model"));
 const userRoles_model_1 = __importDefault(require("./userRoles.model"));
 let User = class User extends sequelize_typescript_1.Model {
 };
@@ -35,7 +35,7 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
-    sequelize_typescript_1.BelongsToMany(() => role_model_1.Role, () => userRoles_model_1.default),
+    sequelize_typescript_1.BelongsToMany(() => role_model_1.default, () => userRoles_model_1.default),
     __metadata("design:type", Array)
 ], User.prototype, "roles", void 0);
 User = __decorate([

@@ -12,7 +12,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Role = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
 const user_model_1 = __importDefault(require("./user.model"));
 const userRoles_model_1 = __importDefault(require("./userRoles.model"));
@@ -34,4 +33,4 @@ __decorate([
 Role = __decorate([
     sequelize_typescript_1.Table
 ], Role);
-exports.Role = Role;
+exports.default = Role;

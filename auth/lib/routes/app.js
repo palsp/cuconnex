@@ -27,20 +27,36 @@ const bodyParser = __importStar(require("body-parser"));
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 exports.app = express();
 var corsOptions = {
     origin: "http://localhost:3000"
 };
+/*Initialize Middlewares*/
 exports.app.use(cors(corsOptions));
 // parse requests of content-type - application/json
 exports.app.use(bodyParser.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 exports.app.use(bodyParser.urlencoded({ extended: true }));
+//Parses cookies
+exports.app.use(cookieParser());
+/* Initialize all the routes */
 exports.app.use('/api/test', user_routes_1.userRoutes);
 exports.app.use('/api/auth', auth_routes_1.authRoutes);
 const Role = models_1.db.role;
+//Drop and Resync db and also create the initial Roles table
 models_1.db.sequelize.sync({ force: true }).then(() => {
     console.log('Drop and Resync Db');
+    initial();
+});
+//A simple method that tests if sequelize connects to the db properly
+models_1.db.sequelize
+    .authenticate()
+    .then(() => {
+    console.log('Connection has been established successfully.');
+})
+    .catch(err => {
+    console.error('Unable to connect to the database:', err);
 });
 exports.app.get('/api', (req, res) => {
     res.status(200).send("Hello World");
