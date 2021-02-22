@@ -1,14 +1,14 @@
 
 export default {
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'liulaks123',
-  db: process.env.DB_SCHEMA || 'user_db',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  db: process.env.DB_SCHEMA,
 }
 
 export const test_config = {
   host: 'localhost',
   user: 'root',
-  password: 'liulaks123',
+  password: 'password',
   db: 'testdb',
 }
