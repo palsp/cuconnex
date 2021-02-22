@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import "./App.css";
-import LoginPage from "./Pages/LoginPage/LoginPage";
+import AuthPage from "./Pages/AuthPage/AuthPage";
 import PersonalInfoPage from "./Pages/PersonalInfoPage/PersonalInfoPage";
 import SelectInterestPage from "./Pages/SelectInterestPage/SelectInterestPage";
 import FriendsPage from "./Pages/FriendsPage/FriendsPage";
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   let routes = (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={LoginPage} />
+        <Route path="/" exact component={AuthPage} />
         <Route path="/selectinterests" exact component={SelectInterestPage} />
         <Route path="/personalInformation" exact component={PersonalInfoPage} />
         <Route path="/friendlists" exact component={FriendsPage} />

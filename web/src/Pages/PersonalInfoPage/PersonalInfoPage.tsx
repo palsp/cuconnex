@@ -50,10 +50,12 @@ const PersonalInfoPage: React.FC = () => {
           </div>
         </Link>
         <DotMorePage data-test="personal-info-dotIcon" amount={3} />
-        <div className={classes.footerIcon}>
-          <Heading value="Skip" size="small" />
-          <ArrowRight data-test="personal-info-arrowRight" />
-        </div>
+        <Link to="/friendlists">
+          <div className={classes.footerIcon}>
+            <Heading value="Skip" size="small" />
+            <ArrowRight data-test="personal-info-arrowRight" />
+          </div>
+        </Link>
       </div>
     </>
   );
