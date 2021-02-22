@@ -6,7 +6,7 @@ const app = express();
 
 
 db.sync().then(res => {
-    console.log('Connecting to db!!!')
+    console.log('Connecting to db!!!....')
     app.listen(3000);
 
 }).catch(err => console.log(err))
