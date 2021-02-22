@@ -1,5 +1,6 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
 import { FriendStatus } from '@cuconnex/common'
+import { TableName } from './types';
 
 
 
@@ -41,7 +42,7 @@ const initFriend = (sequelize: Sequelize) => {
             allowNull: false,
         }
     }, {
-        tableName: "friends",
+        tableName: TableName.friends,
         sequelize,
         timestamps: false
     });
