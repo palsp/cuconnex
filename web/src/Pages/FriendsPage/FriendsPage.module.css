@@ -1,5 +1,18 @@
 .divHeading {
-  display: flex;
-  align-items: center;
-  margin: 0px 20px;
+  position: relative;
+  width: 375px;
+  height: 150px;
+  z-index: 1;
+}
+
+.divFixed {
+  position: fixed;
+  width: 375px;
+  background-color: white;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 18px;
+  top: 18px;
 }

@@ -8,11 +8,15 @@ const FriendsPage: React.FC = () => {
   return (
     <div data-test="friends-page">
       <div className={classes.divHeading}>
-        <ArrowLeft />
-        <Heading value="My connections" size="medium" />
+        <div className={classes.divFixed}>
+          <div className={classes.relativeArrow}>
+            <ArrowLeft />
+          </div>
+          <Heading value="My connections" size="medium" />
+          <SearchBar value="Search By Name" />
+        </div>
       </div>
 
-      <SearchBar value="Search By Name" />
       <FriendLists />
     </div>
   );
