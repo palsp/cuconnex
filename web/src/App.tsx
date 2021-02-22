@@ -6,6 +6,7 @@ import AuthPage from "./Pages/AuthPage/AuthPage";
 import PersonalInfoPage from "./Pages/PersonalInfoPage/PersonalInfoPage";
 import SelectInterestPage from "./Pages/SelectInterestPage/SelectInterestPage";
 import FriendsPage from "./Pages/FriendsPage/FriendsPage";
+import FindTeamPage from "./Pages/FindTeamPage/FindTeamPage";
 
 const App: React.FC = () => {
   let routes = (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/selectinterests" exact component={SelectInterestPage} />
         <Route path="/personalInformation" exact component={PersonalInfoPage} />
         <Route path="/friendlists" exact component={FriendsPage} />
+        <Route path="/findteams" exact component={FindTeamPage} />
         <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
       </Switch>
     </BrowserRouter>
