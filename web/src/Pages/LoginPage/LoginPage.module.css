@@ -25,3 +25,19 @@
   height: 54px;
   margin: 5px;
 }
+
+.footerNavigation {
+  position: relative;
+}
+
+.backNavigation {
+  position: absolute;
+  top: 8px;
+  left: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.divFooterHeading {
+  margin: 5px 0 0 10px;
+}

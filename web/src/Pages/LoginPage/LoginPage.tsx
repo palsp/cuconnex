@@ -10,12 +10,17 @@ import classes from "./LoginPage.module.css";
 import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
 import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
 import Heading from "../../components/dumbComponents/UI/Heading/Heading";
+import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
 
 const LoginPage: React.FC = () => {
   const [clickLogin, setClickLogin] = useState(false);
 
   const loginButtonClickedHandler = () => {
     setClickLogin(true);
+  };
+
+  const backButtonClickedHandler = () => {
+    setClickLogin(false);
   };
   let loginPrompt = null;
   if (clickLogin === false) {
@@ -55,14 +60,21 @@ const LoginPage: React.FC = () => {
         </div>
         <div className={classes.Button}>
           <Link to="/selectInterests">
-            <Button
-              data-test="login-page-next-button"
-              onClick={() => {}}
-              value="Next"
-            />
+            <Button data-test="login-page-next-button" value="Next" />
           </Link>
         </div>
-        <DotMorePage data-test="dot-icon" amount={1} />
+        <div className={classes.footerNavigation}>
+          <DotMorePage data-test="dot-icon" amount={1} />
+          <div
+            onClick={backButtonClickedHandler}
+            className={classes.backNavigation}
+          >
+            <ArrowLeft />
+            <div className={classes.divFooterHeading}>
+              <Heading value="Back" size="small" />
+            </div>
+          </div>
+        </div>
       </>
     );
   }
