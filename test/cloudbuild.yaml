@@ -62,7 +62,7 @@ steps:
   args:
   - '-c'
   - |
-     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes.yaml.tpl | \
+     sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" test/kubernetes.yaml.tpl | \
      sed "s/COMMIT_SHA/${SHORT_SHA}/g" > cuconnex-env/kubernetes.yaml
 # This step pushes the manifest back to cuconnex-env
 - name: 'gcr.io/cloud-builders/gcloud'
