@@ -64,7 +64,7 @@ steps:
   - |
      sed "s/GOOGLE_CLOUD_PROJECT/${PROJECT_ID}/g" kubernetes.yaml.tpl | \
      sed "s/COMMIT_SHA/${SHORT_SHA}/g" > cuconnex-env/kubernetes.yaml
-# This step pushes the manifest back to hello-cloudbuild-env
+# This step pushes the manifest back to cuconnex-env
 - name: 'gcr.io/cloud-builders/gcloud'
   id: Push manifest
   entrypoint: /bin/sh
