@@ -1,34 +1,51 @@
 import express, { Request, Response } from 'express';
-import { requireAuth } from '@cuconnex/common';
+import { body } from 'express-validator'
+import { validateRequest, FriendStatus } from '@cuconnex/common';
 import { User } from '../models/user.model';
+import { requireUser } from '../middlewares/requireUser';
+import { Friend } from '../models/friend.model';
 
 
 
 const router = express.Router();
 
+const bodyChecker = [
+    body('userId')
+        .notEmpty()
+        .isAlphanumeric()
+];
+
+router.post('/api/users/add-friend', requireUser, bodyChecker, validateRequest, async (req: Request, res: Response) => {
 
 
-router.post('/api/users/:search', requireAuth, async (req: Request, res: Response) => {
+    const addedUser = await User.findUser(req.body.userId)
 
-    const users = await User.findAll({ where: { id: req.params.search, $or: [{ name: req.params.searrch }] } });
+    await req.user!.addUserAsFriend(addedUser);
 
-    res.status(200).send({ lists: users });
-
-});
-
-
-router.post('/api/users/:userId', requireAuth, async (req: Request, res: Response) => {
-
-
-
-
+    res.status(201).send({});
 
 });
 
 
-export { router as addFriendRouter };
 
 
+router.post('/api/users/add-friend/result', requireUser, [
+    body('userId')
+        .notEmpty()
+        .isAlphanumeric()
+        .withMessage('User id is not valid'),
+    body('accepted')
+        .notEmpty()
+        .isBoolean()
+], validateRequest, async (req: Request, res: Response) => {
+    const sendUser = await User.findUser(req.body.userId);
+
+    const status = await req.user!.acceptFriendRequest(sendUser.id, req.body.accepted);
 
 
+    res.status(201).send({ status });
 
+});
+
+
+export { router as addFriendRouter }

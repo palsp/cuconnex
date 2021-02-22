@@ -2,7 +2,6 @@ export enum FriendStatus {
     // No relation yet
     toBeDefined = "toBedefined",
 
-
     // user already accept friend request
     Accept = "Accept",
 

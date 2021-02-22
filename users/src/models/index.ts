@@ -18,8 +18,8 @@ export const initModel = (sequelize: Sequelize) => {
             values: Object.values(FriendStatus),
             defaultValue: FriendStatus.Pending,
             allowNull: false
-        }
-    })
+        },
+    }, { timestamps: false })
 
     User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
     User.belongsToMany(User, { as: 'friend', through: frd, foreignKey: "senderId", otherKey: "receiverId" });

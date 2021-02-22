@@ -1,7 +1,6 @@
 import { Sequelize, Model, DataTypes } from 'sequelize'
 import { FriendStatus } from '@cuconnex/common'
-import { TableName } from './types'
-import { User } from './user.model';
+
 
 
 
@@ -21,25 +20,8 @@ class Friend extends Model<FriendAttrs, FriendCreationAttrs> implements FriendAt
     public senderId!: string;
     public receiverId!: string;
     public status!: FriendStatus;
+
 }
-
-
-
-// const initFriend = (sequelize: Sequelize) => sequelize.define<Friend, FriendAttrs>('friends', {
-//     senderId: {
-//         type: DataTypes.STRING(11),
-//         primaryKey: true
-//     },
-//     receiverId: {
-//         type: DataTypes.STRING(11),
-//         primaryKey: true
-//     },
-//     status: {
-//         type: DataTypes.ENUM,
-//         values: Object.values(FriendStatus),
-//         defaultValue: FriendStatus.Pending
-//     }
-// })
 
 const initFriend = (sequelize: Sequelize) => {
     Friend.init<Friend>({
@@ -56,11 +38,12 @@ const initFriend = (sequelize: Sequelize) => {
             type: DataTypes.ENUM,
             values: Object.values(FriendStatus),
             defaultValue: FriendStatus.Pending,
-            allowNull: false
+            allowNull: false,
         }
     }, {
         tableName: "friends",
-        sequelize
+        sequelize,
+        timestamps: false
     });
 
     return Friend;

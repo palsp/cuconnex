@@ -49,7 +49,6 @@ const start = async () => {
 
         await user1.addFriend(user2);
         const frd = await user1.getFriend({ joinTableAttributes: { exclude: ['senderId'] } });
-
         console.log(frd[0].friends)
 
     } catch (err) {
