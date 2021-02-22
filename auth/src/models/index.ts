@@ -2,7 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import * as originalSequelize from 'sequelize';
 import { Role } from './role.model';
 import User from './user.model';
-const config = require("../config/db.config.ts");
+const config = require("../config/db.config");
 
 
 //Create new sequelize instance with the configured parameters
@@ -12,7 +12,7 @@ const sequelizeInstance = new Sequelize({
     username: config.USER,
     password: config.PASSWORD,
     storage: ':memory:',
-    models: [__dirname + '/models/**/*.model.ts'],
+    models: [__dirname + '/models/**/*.model'],
     modelMatch: (filename, member) => {
         return filename.substring(0, filename.indexOf('.model')) === member.toLowerCase();
     },
@@ -35,8 +35,8 @@ export const db = (): DB => ({
 db.Sequelize = originalSequelize;
 db.sequelize = sequelizeInstance;
 
-db.user = require("../models/user.model.ts");
-db.role = require("../models/role.model.ts");
+db.user = require("../models/user.model");
+db.role = require("../models/role.model");
 
 db.ROLES = ["user", "admin", "moderator"];
 

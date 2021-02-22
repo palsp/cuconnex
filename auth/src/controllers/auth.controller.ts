@@ -8,7 +8,7 @@ const Op = Sequelize.Op;
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs'); //bcrypt used to encrypt password
 
-export const signUp = (req: Request, res: Response ) => {
+export const signUp = ( req: Request, res: Response ) => {
     User.create({
         studentId: req.body.studentId,
         email: req.body.email,
@@ -40,7 +40,7 @@ export const signUp = (req: Request, res: Response ) => {
         });
 }
 
-export const signIn = (req: Request, res: Response) => {
+export const signIn = ( req: Request, res: Response ) => {
     User.findOne({
         where: {
             email: req.body.email

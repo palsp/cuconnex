@@ -18,8 +18,8 @@ const userRoles_model_1 = __importDefault(require("./userRoles.model"));
 let User = class User extends sequelize_typescript_1.Model {
 };
 __decorate([
-    sequelize_typescript_1.Column,
     sequelize_typescript_1.PrimaryKey,
+    sequelize_typescript_1.Column,
     __metadata("design:type", String)
 ], User.prototype, "studentId", void 0);
 __decorate([

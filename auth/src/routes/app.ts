@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
-
+import { userRoutes } from './user.routes';
+import { authRoutes } from './auth.routes';
 import { db } from '../models';
 import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
@@ -20,7 +21,8 @@ app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use('/api/test', userRoutes);
+app.use('/api/auth', authRoutes);
 
 
 const Role = db.role;

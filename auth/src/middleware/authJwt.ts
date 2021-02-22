@@ -7,41 +7,33 @@ const config = require("../config/auth.config.js");
 const User = db.user;
 
 //Verify if jwt token send is valid or not
-const verifyToken = (req: ICustomRequestWithUserId, res: Response, next) => {
-    let token = req.headers["x-access-token"];
-
+const verifyToken = (jwtToken: any) => {
+    let token = jwtToken;
+    let userId: any = "";
     if (!token) {
-        return res.status(403).send({
-            message: "No token provided!"
-        });
+        return "No token provided!"
     }
 
     jwt.verify(token, config.secret, (err, decoded) => {
         if (err) {
-            return res.status(401).send({
-                message: "Unauthorized!"
-            });
+            return "Unauthorized"
         }
-        req.userId = decoded.id;
-        next();
+        userId = decoded.id;
+        isAdmin(userId);
     });
 };
 
 //Checks if the user is an admin
-const isAdmin = (req: ICustomRequestWithUserId, res: Response, next) => {
-    User.findByPk(req.userId).then(user => {
+const isAdmin = (userId: string) => {
+    User.findByPk(userId).then(user => {
         user.getRoles().then(roles => {
             for (let i = 0; i < roles.length; i++) {
                 if (roles[i].name === "admin") {
-                    next();
-                    return;
+                    return "isAdmin";
                 }
             }
 
-            res.status(403).send({
-                message: "Require Admin Role!"
-            });
-            return;
+            return "Not an admin";
         });
     });
 };
