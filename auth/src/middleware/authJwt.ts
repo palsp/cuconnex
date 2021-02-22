@@ -86,5 +86,6 @@ const isAdmin = (req: ICustomRequestWithUserId, res: Response, next) => {
 // };
 
 export const authJwt = {
-    verifyToken: verifyToken
+    verifyToken: verifyToken,
+    isAdmin: isAdmin
 };

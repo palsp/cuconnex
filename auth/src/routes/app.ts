@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
+
+import { db } from '../models';
+import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
+
 const express = require('express');
 const path = require('path');
-import { db } from '../models';
-const cors = require('cors');
-const bodyParser = require('body-parser');
 
 export const app = express()
 
