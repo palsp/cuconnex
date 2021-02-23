@@ -33,6 +33,7 @@ app.use('/api/auth', authRoutes);
 
 
 const Role = db.role;
+const User = db.user;
 
 //Drop and Resync db and also create the initial Roles table
 db.sequelize.sync({ force: true }).then(() => {
@@ -55,6 +56,13 @@ app.get('/api', (req: Request, res: Response) => {
 })
 
 function initial() {
+    User.create({
+        id: 1,
+        username: 'anon123',
+        email: 'example@example123.com',
+        password: '123'
+    });
+
     Role.create({
         id: 1,
         name: "user"

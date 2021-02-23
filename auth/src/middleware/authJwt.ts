@@ -23,25 +23,25 @@ const verifyToken = (req: Request, res: Response, next) => {
                 message: "Unauthorized!"
             });
         }
-        req.userId = decoded.id;
+        req!.userId = decoded.id;
         next();
     });
 };
 
-//Checks if the user is an admin
-const isAdmin = (req: Request, res: Response, next) => {
-    User.findByPk(req!.userId).then(user => {
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "admin") {
-                    return "isAdmin";
-                }
-            }
+// //Checks if the user is an admin
+// const isAdmin = (req: Request, res: Response, next) => {
+//     User.findByPk(req!.userId).then(user => {
+//         user.getRoles().then(roles => {
+//             for (let i = 0; i < roles.length; i++) {
+//                 if (roles[i].name === "admin") {
+//                     return "isAdmin";
+//                 }
+//             }
 
-            return "Not an admin";
-        });
-    });
-};
+//             return "Not an admin";
+//         });
+//     });
+// };
 
 // const isModerator = (req, res, next) => {
 //     User.findByPk(req.userId).then(user => {
@@ -84,5 +84,4 @@ const isAdmin = (req: Request, res: Response, next) => {
 
 export const authJwt = {
     verifyToken: verifyToken,
-    isAdmin: isAdmin
 };

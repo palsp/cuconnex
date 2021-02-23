@@ -21,8 +21,8 @@ userRoutes.get("/all", (req: Request, res: Response) => {
 userRoutes.get("/user", [authJwt.verifyToken] ,userController.userBoard);
 
 
-userRoutes.get(
-    "/admin",
-    [authJwt.verifyToken, authJwt.isAdmin],
-    userController.adminBoard
-);
+// userRoutes.get(
+//     "/admin",
+//     [authJwt.verifyToken, authJwt.isAdmin],
+//     userController.adminBoard
+// );

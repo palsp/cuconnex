@@ -3,14 +3,14 @@ import { Table, Model, Column, BelongsToMany, PrimaryKey } from 'sequelize-types
 import Role from './role.model';
 import UserRoles from './userRoles.model';
 interface UserAttributes {
+    id?: number;
     email: string;
-    studentId: string;
-    name?: string;
+    username?: string;
     password?: string;
 }
-interface UserCreationAttributes extends Optional<UserAttributes, 'studentId' | 'password'> {
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {
+    id: number;
     email: string;
-    studentId: string;
     name: string;
     password: string;
  }
@@ -20,13 +20,13 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     
     @PrimaryKey
     @Column
-    studentId!: string;
+    id!: number;
     
     @Column
     email!: string;
 
     @Column
-    name!: string;
+    username!: string;
 
     @Column
     password!: string;
