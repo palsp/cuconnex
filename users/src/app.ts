@@ -29,23 +29,23 @@ app.use(
   })
 );
 
-app.use(currentUser);
-app.use(requireAuth, fetchUser);
+// app.use(currentUser);
+// app.use(requireAuth, fetchUser);
 
-app.use(newUserRouter);
-app.use(getUserRouter);
-app.use(searchRouter);
-app.use(addFriendRouter);
+// app.use(newUserRouter);
+// app.use(getUserRouter);
+// app.use(searchRouter);
+// app.use(addFriendRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
 
 app.use(newTeamRouter);
-app.use(getTeamRouter);
+// app.use(getTeamRouter);
 
-app.use(memberRouter);
-app.use(addMemberRouter);
+// app.use(memberRouter);
+// app.use(addMemberRouter);
 
 app.use(errorHandling);
 

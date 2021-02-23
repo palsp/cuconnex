@@ -113,11 +113,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
   public createTeams(attrs: TeamCreationAttrs) {
-    console.log('this runnnn ----', typeof attrs.userId);
     return this.createTeam({
-      teamId: attrs.teamId,
-      // userId: attrs.userId,
-      teamName: attrs.teamName
+      name: attrs.name
     });
   }
 

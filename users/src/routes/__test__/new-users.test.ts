@@ -69,4 +69,5 @@
 //     expect(await currentUser?.getInterests()).toHaveLength(1);
 
 // });
+
 it('should pass', () => {});

@@ -26,7 +26,7 @@ router.post('/api/members/request', async (req: Request, res: Response, next: Ne
   }
 
   Member.create({ userId, teamId, status: TeamStatus.Pending });
-  res.status(201).send({ message: 'Request pending', user: user!.name, team: team!.teamName });
+  res.status(201).send({ message: 'Request pending', user: user!.name, team: team!.name });
 });
 
 export { router as addMemberRouter };

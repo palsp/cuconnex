@@ -34,11 +34,11 @@ const validateEnvAttr = () => {
 const start = async () => {
   try {
     // check if all required env variable have been declared
-    validateEnvAttr();
+    // validateEnvAttr();
     await initializeDB();
 
-    const user = await User.create({ id: '6131707021', name: 'Krittamook' });
-    console.log('create dummy user ', user);
+    // const user = await User.create({ id: '6131707021', name: 'Krittamook' });
+    // console.log('create dummy user ', user);
   } catch (err) {
     console.error(err);
   }

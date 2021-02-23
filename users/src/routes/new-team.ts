@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import { validateRequest, NotFoundError } from '@cuconnex/common';
 import { Team } from '../models/team.model';
@@ -8,49 +8,40 @@ import { NotAuthorizedError, BadRequestError, requireAuth } from '@cuconnex/comm
 const router = express.Router();
 
 // when user try to create a team
-router.post('/api/teams', validateRequest, async (req: Request, res: Response) => {
-  const { userId, teamId, teamName } = req.body;
+router.post('/api/teams', requireAuth, async (req: Request, res: Response, next: NextFunction) => {
+  const { name } = req.body;
 
-  // if (!userId || userId !== req.currentUser!.id) {
-  //   throw new NotAuthorizedError();
-  // }
-
-  const user = await User.findOne({ where: { id: userId } });
-  if (!user) {
-    throw new NotFoundError();
+  const userId = req.currentUser!.id;
+  if (!userId) {
+    throw new NotAuthorizedError();
   }
 
-  let team = await Team.findOne({ where: { teamName: teamName } });
-  if (team) {
-    throw new BadRequestError('Team name already existed');
-  }
-  console.log('www', req.body);
-  let createSuccess;
   try {
-    // team = await Team.create({ teamId, userId, teamName });
-    // console.log('yes', team._attributes.userId);
-    console.log('yes', team);
-    const eiei = await user.createTeams({ teamId, userId, teamName });
-    // console.log('check eiei ', eiei);
-    createSuccess = true;
+    const user = await User.findOne({ where: { id: userId } });
+    if (!user) {
+      throw new BadRequestError('User not found!');
+    }
+
+    const team = await Team.findOne({ where: { name } });
+    if (team) {
+      throw new BadRequestError('Team name already existed.');
+    }
+
+    const eiei = await user.createTeams({ name });
+    console.log('check eiei ', eiei);
+
+    // if something went wrong clear all team information in database
+    // user need to retry from the beginning!!
+
+    res.status(201).send({
+      message: `Create team succesfully by ${userId}.`,
+      userId,
+      name: team!.name
+    });
   } catch (err) {
     console.log('create failed', err);
-    createSuccess = false;
+    next(err);
   }
-
-  // if something went wrong clear all team information in database
-  // user need to retry from the beginning!!
-  if (!createSuccess && team) {
-    // await team.destroy();
-    throw new Error('Something went wrong');
-  }
-
-  res.status(201).send({
-    message: `Create team succesfully by ${userId}.`,
-    userId,
-    teamId: team!.teamId,
-    teamName: team!.teamName
-  });
 });
 
 export { router as newTeamRouter };

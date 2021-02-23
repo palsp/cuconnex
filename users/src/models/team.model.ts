@@ -10,21 +10,17 @@ import {
 
 // keep member array as id of user
 export interface TeamAttrs {
-  teamId: string;
+  name: string;
   userId: string;
-  teamName: string;
 }
 
 export interface TeamCreationAttrs {
-  teamId: string;
-  // userId: string;
-  teamName: string;
+  name: string;
 }
 
 class Team extends Model<TeamAttrs, TeamCreationAttrs> implements TeamAttrs {
-  public teamId!: string;
+  public name!: string;
   public userId!: string;
-  public teamName!: string;
 
   // public addMember(user: UserAttrs) {
 
@@ -34,16 +30,13 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> implements TeamAttrs {
 const initTeam = (sequelize: Sequelize) => {
   Team.init(
     {
-      teamId: {
-        type: DataTypes.STRING(11),
+      name: {
+        type: DataTypes.STRING(255),
         primaryKey: true
       },
       userId: {
         type: DataTypes.STRING(11),
         allowNull: false
-      },
-      teamName: {
-        type: DataTypes.STRING(255)
       }
     },
     {
