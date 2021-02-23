@@ -1,8 +1,11 @@
 import { initUser } from './user.model';
-import { initInterests } from './interest.model';
 import { initTeam } from './team.model';
-import { Sequelize } from 'sequelize/types';
 import { initMember } from './member.model';
+import { initInterests } from './interest.model';
+import { initFriend } from './friend.model';
+import { Sequelize, DataTypes } from 'sequelize';
+import { FriendStatus } from '@cuconnex/common';
+import { TableName } from '../models/types';
 
 export const initModel = (sequelize: Sequelize) => {
   const User = initUser(sequelize);
@@ -15,27 +18,38 @@ export const initModel = (sequelize: Sequelize) => {
   // A.hasMany(B, { /* options */ });     one-to-many foreign key in B
   // A.belongsToMany(B, { through: 'C', /* options */ });   many-to-many
 
-  // 1-M
+  // definde relation for friend
+  const frd = sequelize.define(
+    TableName.friends,
+    {
+      status: {
+        type: DataTypes.ENUM,
+        values: Object.values(FriendStatus),
+        defaultValue: FriendStatus.Pending,
+        allowNull: false
+      }
+    },
+    { timestamps: false }
+  );
+
   User.hasMany(Interest, {
     sourceKey: 'id',
     foreignKey: 'userId',
     as: 'interests',
     onDelete: 'CASCADE'
   });
-
-  User.hasMany(Team, {
-    sourceKey: 'id',
-    foreignKey: 'userId',
-    as: 'teams',
-    onDelete: 'CASCADE'
+  User.belongsToMany(User, {
+    as: 'friend',
+    through: frd,
+    foreignKey: 'senderId',
+    otherKey: 'receiverId'
   });
+
+  User.hasMany(Team, { sourceKey: 'id', foreignKey: 'userId', as: 'teams', onDelete: 'CASCADE' });
 
   // M-M
-  Team.belongsToMany(User, {
-    through: 'members'
-  });
-  User.belongsToMany(Team, {
-    through: 'members',
-    as: 'member'
-  });
+  Team.belongsToMany(User, { through: 'members' });
+  User.belongsToMany(Team, { through: 'members', as: 'member' });
+
+  initFriend(sequelize);
 };

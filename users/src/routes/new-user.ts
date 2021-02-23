@@ -24,44 +24,38 @@ const bodyChecker = [
 ];
 
 // create user for first time login
-router.post(
-  '/api/users',
-  requireAuth,
-  bodyChecker,
-  validateRequest,
-  async (req: Request, res: Response) => {
-    const { interests } = req.body;
+router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
+  const { interests } = req.body;
 
-    // Make sure that user does not exist
-    let user = await User.findOne({ where: { id: req.currentUser!.id } });
-    if (user) {
-      throw new BadRequestError('User already existed');
-    }
-
-    // remove duplicate interests from an array of interests
-    const uniqueInterests = Array.from(
-      new Set<InterestDescription>(interests)
-    ).map(description => ({ description }));
-
-    let createSuccess;
-
-    try {
-      user = await User.create({ id: req.currentUser!.id, name: req.currentUser!.username });
-      await user.createInterestsFromArray(uniqueInterests);
-      createSuccess = true;
-    } catch (err) {
-      createSuccess = false;
-    }
-
-    // if something went wrong clear all user information in database
-    // user need to retry from the beginning!!
-    if (!createSuccess && user) {
-      await user.destroy();
-      throw new Error('Something went wrong');
-    }
-
-    res.status(201).send({ id: user!.id, username: user!.name });
+  // Make sure that user does not exist
+  let user = await User.findOne({ where: { id: req.currentUser!.id } });
+  if (user) {
+    throw new BadRequestError('User already existed');
   }
-);
+
+  // remove duplicate interests from an array of interests
+  const uniqueInterests = Array.from(new Set<InterestDescription>(interests)).map(description => ({
+    description
+  }));
+
+  let createSuccess;
+
+  try {
+    user = await User.create({ id: req.currentUser!.id, name: req.currentUser!.username });
+    await user.createInterestsFromArray(uniqueInterests);
+    createSuccess = true;
+  } catch (err) {
+    createSuccess = false;
+  }
+
+  // if something went wrong clear all user information in database
+  // user need to retry from the beginning!!
+  if (!createSuccess && user) {
+    await user.destroy();
+    throw new Error('Something went wrong');
+  }
+
+  res.status(201).send({ id: user!.id, username: user!.name });
+});
 
 export { router as newUserRouter };
