@@ -14,19 +14,19 @@ import { TeamStatus } from '@cuconnex/common';
 
 // keep member array as id of user
 export interface MemberAttrs {
-  teamId: string;
+  teamName: string;
   userId: string;
   status: TeamStatus;
 }
 
 export interface MemberCreationAttrs {
-  teamId: string;
+  teamName: string;
   userId: string;
   status: TeamStatus;
 }
 
 class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAttrs {
-  public teamId!: string;
+  public teamName!: string;
   public userId!: string;
   public status!: TeamStatus;
 }
@@ -34,8 +34,8 @@ class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAt
 const initMember = (sequelize: Sequelize) => {
   Member.init(
     {
-      teamId: {
-        type: DataTypes.STRING(11),
+      teamName: {
+        type: DataTypes.STRING(255),
         primaryKey: true,
         references: { model: Team.tableName }
       },

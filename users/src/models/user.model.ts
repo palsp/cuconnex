@@ -141,8 +141,8 @@ const initUser = (sequelize: Sequelize) => {
     },
     {
       tableName: TableName.users,
-      sequelize,
-      timestamps: false
+      sequelize
+      // timestamps: false
     }
   );
 

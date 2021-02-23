@@ -14,8 +14,9 @@ import { addFriendRouter } from './routes/add-friend';
 import { newTeamRouter } from './routes/new-team';
 import { getTeamRouter } from './routes/get-team';
 
-import { memberRouter } from './routes/status';
 import { addMemberRouter } from './routes/add-member';
+import { getMemberRouter } from './routes/get-member';
+import { memberStatusRouter } from './routes/status';
 
 const app = express();
 
@@ -41,11 +42,12 @@ app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
 
-app.use(newTeamRouter);
+// app.use(newTeamRouter);
 // app.use(getTeamRouter);
 
-// app.use(memberRouter);
-// app.use(addMemberRouter);
+app.use(getMemberRouter);
+app.use(addMemberRouter);
+app.use(memberStatusRouter);
 
 app.use(errorHandling);
 
