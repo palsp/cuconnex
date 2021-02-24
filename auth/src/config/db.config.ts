@@ -1,10 +1,10 @@
 export const db_config = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "liulaks123",
-    DB: "auth_db",
+    HOST: process.env.DB_HOST,
+    USER: process.env.DB_USER,
+    PASSWORD: process.env.DB_PASSWORD,
+    DB: process.env.DB_SCHEMA,
     MODELS: [],
-    dialect: "postgres",
+    dialect: "mysql",
     //Sequelize Pool config
     pool: {
         max: 5, //max no of connection
@@ -17,8 +17,8 @@ export const db_config = {
 export const test_config = {
     host: "localhost",
     user: "root",
-    password: "liulaks123",
+    password: "password",
     db: "test_db",
     MODELS: [],
-    dialect: "postgres",
+    dialect: "mysql",
 }

@@ -11,7 +11,6 @@ var corsOptions = {
     origin: "http://localhost:3000"
 };
 
-process.env.JWT_KEY = "asdfasfad"
 
 /*Initialize Middlewares*/
 

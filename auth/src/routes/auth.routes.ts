@@ -15,10 +15,10 @@ const signupChecker = [
     body('password')
         .notEmpty()
         .withMessage('Password must be supplied'),
-    body('sid')
+    body('id')
         .isAlphanumeric()
         .notEmpty()
-        .withMessage('sid must be supplied')
+        .withMessage('id must be supplied')
 ];
 
 

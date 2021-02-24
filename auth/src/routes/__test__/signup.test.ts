@@ -1,7 +1,6 @@
 import { app } from '../app';
 import request from 'supertest';
 import User from '../../models/user.model';
-import { Password } from '../../services/password';
 
 
 
@@ -11,7 +10,7 @@ describe('Sign up test', () => {
             .post('/api/auth/signup')
             .send({
                 password: "adsfadfasd",
-                sid: "adsfasdfasdf"
+                id: "adsfasdfasdf"
             })
             .expect(400)
 
@@ -23,7 +22,7 @@ describe('Sign up test', () => {
             .send({
                 email: "adfadfa",
                 password: "adsfadfasd",
-                sid: "adsfasdfasdf"
+                id: "adsfasdfasdf"
             })
             .expect(400)
     });
@@ -33,7 +32,7 @@ describe('Sign up test', () => {
             .post('/api/auth/signup')
             .send({
                 email: "test@test.com",
-                sid: "adsfasdfasdf"
+                id: "adsfasdfasdf"
             })
             .expect(400)
     });
@@ -50,7 +49,7 @@ describe('Sign up test', () => {
 
     it('should return 400 if email already existed', async () => {
         await User.create({
-            sid: "6131886621",
+            id: "6131886621",
             email: "test@test.com",
             password: "test",
         });
@@ -60,7 +59,7 @@ describe('Sign up test', () => {
             .send({
                 email: "test@test.com",
                 password: "adsfadfasd",
-                sid: "6131886621"
+                id: "6131886621"
             })
             .expect(400)
 
@@ -72,7 +71,7 @@ describe('Sign up test', () => {
         const userInput = {
             email: "test@test.com",
             password: "adsfadfasd",
-            sid: "6131886621"
+            id: "6131886621"
         }
         const { body: res } = await request(app)
             .post('/api/auth/signup')
@@ -80,7 +79,7 @@ describe('Sign up test', () => {
             .expect(201)
 
         expect(res.email).toEqual(userInput.email);
-        expect(res.sid).toEqual(userInput.sid);
+        expect(res.id).toEqual(userInput.id);
         expect(res.password).not.toBeDefined();
     });
 
@@ -88,7 +87,7 @@ describe('Sign up test', () => {
         const userInput = {
             email: "test@test.com",
             password: "adsfadfasd",
-            sid: "6131886621"
+            id: "6131886621"
         }
         const res = await request(app)
             .post('/api/auth/signup')

@@ -3,21 +3,21 @@ import request from 'supertest';
 
 
 const signup = async () => {
-    const sid = '6131776621'
+    const id = '6131776621'
     const email = 'test@test.com';
     const password = 'password';
 
     const response = await request(app)
         .post('/api/auth/signup')
         .send({
-            sid,
+            id,
             email,
             password
         })
         .expect(201)
 
     const cookie = response.get('Set-Cookie');
-    return { cookie, email, password, sid };
+    return { cookie, email, password, id };
 }
 
 describe('Sign in test', () => {
@@ -76,7 +76,7 @@ describe('Sign in test', () => {
     });
 
     it('should signin user if password match', async () => {
-        const { email, password, sid } = await signup();
+        const { email, password, id } = await signup();
         const { body: res } = await request(app)
             .post('/api/auth/signin')
             .send({
@@ -86,12 +86,12 @@ describe('Sign in test', () => {
             .expect(200);
 
         expect(res.email).toEqual(email);
-        expect(res.sid).toEqual(sid);
+        expect(res.id).toEqual(id);
 
     });
 
     it('should not send user password with the response', async () => {
-        const { email, password, sid } = await signup();
+        const { email, password, id } = await signup();
         const { body: res } = await request(app)
             .post('/api/auth/signin')
             .send({

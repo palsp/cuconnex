@@ -3,12 +3,12 @@ import { values } from 'sequelize/types/lib/operators';
 // import { Table, Column, BelongsToMany, PrimaryKey } from 'sequelize-typescript'
 import { Password } from '../services/password';
 interface UserAttributes {
-    sid: string;
+    id: string;
     email: string;
     password?: string;
 }
 interface UserCreationAttributes {
-    sid: string;
+    id: string;
     email: string;
     password: string;
 }
@@ -34,7 +34,7 @@ interface UserCreationAttributes {
 // }
 
 export default class User extends Model<UserAttributes, UserCreationAttributes> {
-    public sid!: string
+    public id!: string
     public email!: string
     public password!: string
     public toJSON() {
@@ -51,7 +51,7 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
 
 export const userInit = function (sequelize: Sequelize) {
     User.init({
-        sid: {
+        id: {
             type: new DataTypes.STRING(10),
             primaryKey: true,
             allowNull: false,

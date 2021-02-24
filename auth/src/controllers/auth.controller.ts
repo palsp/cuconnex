@@ -6,11 +6,11 @@ import { Password } from '../services/password';
 require('express-async-errors');
 
 interface UserPayload {
-    sid: string,
+    id: string,
 }
 
 export const signUp = async (req: Request, res: Response) => {
-    const { sid, email, password } = req.body
+    const { id, email, password } = req.body
 
     const existingUser = await User.findOne({ where: { email } });
 
@@ -18,13 +18,13 @@ export const signUp = async (req: Request, res: Response) => {
 
 
     const user = await User.create({
-        sid,
+        id,
         email,
         password,
     });
 
     const userPayload: UserPayload = {
-        sid: user.sid,
+        id: user.id,
 
     }
 
@@ -52,7 +52,7 @@ export const signIn = async (req: Request, res: Response) => {
     if (!isMatch) throw new BadRequestError('Invalid credentials');
 
     const userPayload: UserPayload = {
-        sid: existingUser.sid,
+        id: existingUser.id,
     }
 
     const userJwt = jwt.sign(userPayload, process.env.JWT_KEY!);
@@ -62,7 +62,7 @@ export const signIn = async (req: Request, res: Response) => {
         jwt: userJwt,
     };
 
-    res.status(200).send({ email: existingUser.email, sid: existingUser.sid });
+    res.status(200).send({ email: existingUser.email, id: existingUser.id });
 };
 
 

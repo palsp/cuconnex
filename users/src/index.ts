@@ -6,7 +6,7 @@ import { Friend } from './models/friend.model';
 import { TableName } from './models/types'
 
 
-const validateEnvAttr = () => {
+const validateEnvVar = () => {
 
     if (!process.env.DB_HOST) {
         throw new Error('DB_HOST must be defined');
@@ -41,7 +41,7 @@ const start = async () => {
 
     try {
         // check if all required env variable have been declared
-        validateEnvAttr();
+        validateEnvVar();
         await initializeDB();
 
     } catch (err) {
