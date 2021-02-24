@@ -69,7 +69,13 @@ const InterestLists: React.FC<Props> = (props) => {
       InterestLists = <div data-test="interest-lists"></div>;
       break;
   }
-  return <div>{InterestLists}</div>;
+  return (
+    <div className={classes.main}>
+      <div className={classes.container}>
+        {InterestLists}
+      </div>
+    </div>
+  );
 };
 
 export default InterestLists;

@@ -1,7 +1,6 @@
 .HalfCircleOverlay {
   position: fixed;
   overflow: hidden;
-  border: 1px solid blue;
   z-index: -10;
   width: 1294px;
 

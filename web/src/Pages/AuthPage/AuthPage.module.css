@@ -4,44 +4,11 @@
   margin: 0 auto;
 }
 
-@media only screen and (max-width: 320px) {         /* iPhone 5SE */
-  .main {
-    width: 100%;
-    height: 100%
-  }
-
-  .main .container {
-    width: 20rem;
-    height: 35.5rem;
-    border: 1px solid green;
-    margin: 0 auto;
-  }
-
-  .main .container .background {
-    width: 20rem;
-  }
-
-  .main .container .content {
-    width: 15rem;
-    border: 1px solid salmon;
-    margin: 0 auto;
-  }
-
-  .main .container .content .logoDiv {
-    width: 15rem;
-  }
-
-  .main .container .content .Button {
-    width: 12rem;
-  }
-}
-
 @media only screen and (max-width: 375px) {             /* iPhone X */
   @media only screen and (width: 375px) and (height: 812px) {
     .main .container {
       width: 23.4375rem;
       height: 50.75rem;
-      border: 1px solid green;
     }
 
     .main .container .background {
@@ -51,8 +18,6 @@
 
   .main .container {
     width: 100%;
-    height: 100%;
-    border: 1px solid green;
   }
 
   .main .container .background {
@@ -64,12 +29,6 @@
   width: 80%;
   margin: 2vh auto;
 }
-
-/*
-.Button {
-  margin: 30px;
-}
-*/
 
 .logoDiv {
   margin: auto;
@@ -109,3 +68,42 @@
 .divFooterHeading {
   margin: 5px 0 0 10px;
 }
+
+
+@media only screen and (max-width: 20rem) {         /* iPhone 5SE */
+  .main {
+    width: 15rem;
+  }
+
+  .main .container {
+    width: 20rem;
+    height: 35.5rem;
+    margin: 0 auto;
+  }
+
+  .main .container .background {
+    width: 20rem;
+  }
+
+  .main .container .content {
+    width: 15rem;
+    margin: 0 auto;
+  }
+
+  .main .container .content .logoDiv {
+    width: 15rem;
+  }
+
+  .main .container .content .Button {
+    width: 12rem;
+  }
+
+}
+
+/*
+
+.Button {
+  margin: 30px;
+}
+
+*/

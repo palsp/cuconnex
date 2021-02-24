@@ -1,3 +1,4 @@
+import classes from "*.module.css";
 import React from "react";
 import FriendList from "./FriendList/FriendList";
 
@@ -77,7 +78,7 @@ const FriendLists: React.FC = () => {
   return (
     <div data-test="friendLists">
       {personArray.map((person, index) => {
-        return <FriendList key={index} friend={person} />;
+        return <FriendList key={index} friend={person} />
       })}
     </div>
   );
