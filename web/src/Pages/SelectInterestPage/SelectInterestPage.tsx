@@ -13,12 +13,13 @@ import { Link } from "react-router-dom";
 const SelectInterestPage: React.FC = () => {
   return (
     <>
-      <Background data-test="login-page-background" />
-      <div className={classes.heading}>
-        <Heading data-test="heading" value="Interests" />
-      </div>
-      <div className={classes.subtitleDiv}>
-        <Subtitle value="Don't worry, you can adjust your interest later." />
+      <div className={classes.headerDiv}>
+        <div className={classes.heading}>
+          <Heading data-test="heading" value="Interests" />
+        </div>
+        <div className={classes.subtitleDiv}>
+          <Subtitle value="Don't worry, you can adjust your interest later." />
+        </div>
       </div>
       <div className={classes.heading}>
         <Heading size="small" value="Business" />

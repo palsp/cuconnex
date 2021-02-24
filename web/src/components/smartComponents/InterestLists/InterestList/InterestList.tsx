@@ -12,7 +12,9 @@ const InterestList: React.FC<Props> = (props) => {
   };
 
   const imgCSS = [classes.interestImage];
-  imgCSS.push(classes[props.value]);
+  if (props.value) {
+    imgCSS.push(classes[props.value.split(" ").join("")]);
+  }
 
   if (clicked) {
     imgCSS.push(classes["isClicked"]);

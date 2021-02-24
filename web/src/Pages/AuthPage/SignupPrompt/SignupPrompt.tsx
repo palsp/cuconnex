@@ -15,27 +15,31 @@ interface Props {
 const SignupPrompt: React.FC<Props> = (props) => {
   return (
     <>
-      <Heading value="Welcome" data-test="auth-page-signup-header" />
-      <Subtitle
-        value="Let's find your right team in Chula"
-        data-test="auth-page-signup-subtitle"
-      />
+      <div className={classes.divHeader}>
+        <Heading value="Welcome" data-test="auth-page-signup-header" />
+        <div className={classes.divHeaderSubtitle}>
+          <Subtitle
+            value="Let's find your right team in Chula"
+            data-test="auth-page-signup-subtitle"
+          />
+        </div>
+      </div>
       <div className={classes.InputFieldDiv}>
-        <InputField
-          data-test="auth-page-signup-input-fields"
-          value="Username"
-        />
+        <InputField data-test="auth-page-signup-input-fields" value="Email" />
       </div>
       <div className={classes.InputFieldDiv}>
         <InputField
           data-test="auth-page-signup-input-fields"
-          value="Student email"
+          value="Password"
         />
+        <div className={classes.inputFieldSubtitle}>
+          <Subtitle value="must be at least 8 characters" />
+        </div>
       </div>
       <div className={classes.InputFieldDiv}>
         <InputField
           data-test="auth-page-signup-input-fields"
-          value="Password for Chula SSO"
+          value="Confirm your password"
           type="password"
         />
       </div>

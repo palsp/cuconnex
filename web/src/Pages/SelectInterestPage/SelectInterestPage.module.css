@@ -17,3 +17,8 @@
 .subtitleDiv {
   margin: -15px 0 0 -8px;
 }
+
+.headerDiv {
+  border-bottom: 1px solid rgb(163, 163, 187);
+  margin-bottom: 30px;
+}

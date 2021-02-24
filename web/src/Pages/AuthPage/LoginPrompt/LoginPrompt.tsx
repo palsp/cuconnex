@@ -15,12 +15,13 @@ interface Props {
 const LoginPrompt: React.FC<Props> = (props) => {
   return (
     <>
-      <Heading value="Welcome Back!" data-test="auth-page-login-header" />
-      <Subtitle
-        value="Log in with your Chula account"
-        data-test="auth-page-login-subtitle"
-      />
-
+      <div className={classes.divHeader}>
+        <Heading value="Welcome Back!" data-test="auth-page-login-header" />
+        <Subtitle
+          value="Log in with your Chula account"
+          data-test="auth-page-login-subtitle"
+        />
+      </div>
       <div className={classes.InputFieldDiv}>
         <InputField
           data-test="auth-page-login-input-fields"
@@ -35,6 +36,10 @@ const LoginPrompt: React.FC<Props> = (props) => {
           type="password"
         />
       </div>
+      <div className={classes.divSubtitle}>
+        <Subtitle value="Forget your password?" />
+      </div>
+
       <div className={classes.Button}>
         <Link to="/selectInterests">
           <Button data-test="auth-page-login-button" value="Log in" />

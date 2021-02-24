@@ -9,11 +9,11 @@ interface Props {
 
 const businessInterestArray = [
   "Marketing",
-  "BusinessCase",
+  "Business Case",
   "Startup",
   "Ecommerce",
 ];
-const technologyInterestArray = ["Coding", "WebBuilder", "ChatBot", "FinTech"];
+const technologyInterestArray = ["Coding", "Web Builder", "ChatBot", "FinTech"];
 const designInterestArray = ["Graphic", "UXUI", "Ads", "Fashion"];
 
 const InterestLists: React.FC<Props> = (props) => {
@@ -71,9 +71,7 @@ const InterestLists: React.FC<Props> = (props) => {
   }
   return (
     <div className={classes.main}>
-      <div className={classes.container}>
-        {InterestLists}
-      </div>
+      <div className={classes.container}>{InterestLists}</div>
     </div>
   );
 };

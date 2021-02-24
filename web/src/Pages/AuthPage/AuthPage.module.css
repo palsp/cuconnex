@@ -4,7 +4,8 @@
   margin: 0 auto;
 }
 
-@media only screen and (max-width: 375px) {             /* iPhone X */
+@media only screen and (max-width: 375px) {
+  /* iPhone X */
   @media only screen and (width: 375px) and (height: 812px) {
     .main .container {
       width: 23.4375rem;
@@ -22,7 +23,7 @@
 
   .main .container .background {
     width: inherit;
-  }  
+  }
 }
 
 .InputFieldDiv {
@@ -37,7 +38,6 @@
   margin-top: 200px;
 }
 
-
 .textDiv {
   display: flex;
   justify-content: center;
@@ -45,13 +45,10 @@
   flex-wrap: nowrap;
 }
 
-
 .subtitleDiv {
   height: 54px;
   margin: 5px;
 }
-
-
 
 .footerNavigation {
   position: relative;
@@ -69,8 +66,8 @@
   margin: 5px 0 0 10px;
 }
 
-
-@media only screen and (max-width: 20rem) {         /* iPhone 5SE */
+@media only screen and (max-width: 20rem) {
+  /* iPhone 5SE */
   .main {
     width: 15rem;
   }
@@ -97,13 +94,29 @@
   .main .container .content .Button {
     width: 12rem;
   }
-
 }
-
-/*
 
 .Button {
-  margin: 30px;
+  margin: 50px;
 }
 
-*/
+.inputFieldSubtitle {
+  text-align: start;
+  margin-bottom: -15px;
+}
+
+.divHeader {
+  text-align: start;
+  width: 80%;
+  margin: auto;
+}
+
+.divHeaderSubtitle {
+  margin-top: -15px;
+}
+
+.divSubtitle {
+  text-align: start;
+  width: 80%;
+  margin: auto;
+}

@@ -27,3 +27,9 @@
 .profilePicDiv {
   margin: 50px auto;
 }
+
+.usernameDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import Heading from "../../../dumbComponents/UI/Heading/Heading";
-import Send from "../../../dumbComponents/UI/Icons/Send/Send";
+import PlusCircle from "../../../dumbComponents/UI/Icons/PlusCircle/PlusCircle";
 import ProfilePic from "../../../dumbComponents/UI/ProfilePic/ProfilePic";
 import Subtitle from "../../../dumbComponents/UI/Subtitle/Subtitle";
 import Username from "../../../dumbComponents/UI/Username/Username";
@@ -44,7 +44,7 @@ const FriendList: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.divUserInfo}>
-          <Send />
+          <PlusCircle />
         </div>
       </div>
     </div>

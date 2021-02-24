@@ -8,13 +8,6 @@ const setup = () => {
   return wrapper;
 };
 
-it("should render background", () => {
-  const wrapper = setup();
-
-  const background = findByTestAttr(wrapper, "login-page-background");
-  expect(background.length).toBe(1);
-});
-
 it("should render heading", () => {
   const wrapper = setup();
   const heading = findByTestAttr(wrapper, "heading");

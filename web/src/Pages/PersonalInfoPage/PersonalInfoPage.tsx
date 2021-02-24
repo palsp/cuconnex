@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Background from "../../components/dumbComponents/UI/Background/Background";
+import Button from "../../components/dumbComponents/UI/Button/Button";
 import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
 import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
 import Heading from "../../components/dumbComponents/UI/Heading/Heading";
 import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
 import ArrowRight from "../../components/dumbComponents/UI/Icons/ArrowRight/ArrowRight";
+import Edit from "../../components/dumbComponents/UI/Icons/Edit/Edit";
 import InputField from "../../components/dumbComponents/UI/InputField/InputField";
 import ProfilePic from "../../components/dumbComponents/UI/ProfilePic/ProfilePic";
 import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
@@ -32,7 +34,10 @@ const PersonalInfoPage: React.FC = () => {
       <div className={classes.profilePicDiv}>
         <ProfilePic data-test="personal-info-personalImage" />
       </div>
-      <Username data-test="personal-info-username" value="@micky_ngub" />
+      <div className={classes.usernameDiv}>
+        <Username data-test="personal-info-username" value="@micky_ngub" />
+        <Edit />
+      </div>
       <div className={classes.InputFieldDiv}>
         <InputField
           data-test="personal-info-setDisplayedName"
@@ -42,6 +47,7 @@ const PersonalInfoPage: React.FC = () => {
         <InputField data-test="personal-info-setMajor" value="Major" />
         <InputField data-test="personal-info-setYear" value="Year of study" />
       </div>
+      <Button value="Save" />
       <div className={classes.footerNavigation}>
         <Link to="/selectInterests">
           <div className={classes.footerIcon}>
