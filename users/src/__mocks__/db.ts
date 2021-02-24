@@ -22,7 +22,7 @@ const initializeDB = async () => {
     await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${myDB.dbName}\`;`);
 
     // connect to sequelize 
-    myDB.sequelize = new Sequelize(myDB.dbName, user!, password, { dialect: 'mysql', logging: false });
+    myDB.sequelize = new Sequelize(myDB.dbName, user, password, { dialect: 'mysql', logging: false });
 
     // initialize model
     initModel(myDB.sequelize);
@@ -37,14 +37,14 @@ const initializeDB = async () => {
 
 
 const endDB = async (db: myDB) => {
+    if (db) {
 
-    console.log(db);
-
-    if (db.connection) {
-        await db.connection.query(`DROP DATABASE  \`${db.dbName}\`;`);
-        await db.connection.end();
+        if (db.connection) {
+            await db.connection.query(`DROP DATABASE  \`${db.dbName}\`;`);
+            await db.connection.end();
+        }
+        if (db.sequelize) await db.sequelize.close();
     }
-    if (db.sequelize) await db.sequelize.close();
 }
 
 export { initializeDB, endDB };

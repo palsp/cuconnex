@@ -32,7 +32,6 @@ body('name')
 router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
     const { interests, name } = req.body
 
-
     // Make sure that user does not exist
     let user = await User.findOne({ where: { sid: req.currentUser!.sid } });
     if (user) {
@@ -43,7 +42,6 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
     const uniqueInterests = Array.from(new Set<InterestDescription>(interests)).map(description => ({ description }));
 
     let createSuccess;
-
     try {
         user = await User.create({ sid: req.currentUser!.sid, name });
         await user.createInterestsFromArray(uniqueInterests);
@@ -62,7 +60,7 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
         throw new Error('Something went wrong');
     }
 
-    res.status(201).send({ id: user!.sid, username: user!.name });
+    res.status(201).send({ sid: user!.sid, username: user!.name });
 });
 
 

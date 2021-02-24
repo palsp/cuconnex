@@ -9,7 +9,7 @@ import { TableName } from '../models/types'
 
 export const initModel = (sequelize: Sequelize) => {
     const User = initUser(sequelize);
-    const Interest = initInterests(sequelize);
+    // const Interest = initInterests(sequelize);
 
     // definde relation for friend 
     const frd = sequelize.define(TableName.friends, {
@@ -22,8 +22,9 @@ export const initModel = (sequelize: Sequelize) => {
     }, { timestamps: false })
 
 
-    User.hasMany(Interest, { sourceKey: "id", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
-    User.belongsToMany(User, { as: 'friend', through: frd, foreignKey: "senderId", otherKey: "receiverId" });
+    const Interest = initInterests(sequelize);
+    User.hasMany(Interest, { sourceKey: "sid", foreignKey: "userId", as: "interests", onDelete: 'CASCADE' });
+    User.belongsToMany(User, { as: 'friend', through: frd, sourceKey: "sid", targetKey: "sid", foreignKey: "senderId", otherKey: "receiverId" });
 
     initFriend(sequelize);
 }

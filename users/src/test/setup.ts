@@ -26,11 +26,11 @@ let testDB: db;
 beforeAll(async () => {
     process.env.JWT_KEY = 'asdfasdfaf';
     // create db if doesn't already existed
-    try {
-        testDB = await initializeDB();
-    } catch (err) {
-        console.log(err);
-    }
+
+    testDB = await initializeDB();
+
+
+
 });
 
 beforeEach(async () => {

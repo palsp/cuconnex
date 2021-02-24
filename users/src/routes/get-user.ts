@@ -35,7 +35,7 @@ router.get('/api/users', async (req: Request, res: Response) => {
     }
 
     const interests = await req.user.getInterests({ attributes: ['description'] });
-    res.status(200).send({ id: req.user.sid, name: req.user.name, interests });
+    res.status(200).send({ sid: req.user.sid, name: req.user.name, interests });
 });
 
 

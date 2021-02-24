@@ -14,7 +14,7 @@ describe('sending friend request test ', () => {
         const { body: res } = await request(app)
             .post('/api/users/add-friend')
             .set('Cookie', global.signin())
-            .send({ userId: 'adfasdfasfa' })
+            .send({ sid: 'adfasdfasfa' })
             .expect(400);
 
         expect(res.errors[0].message).toEqual('Please fill the information form');
@@ -26,7 +26,7 @@ describe('sending friend request test ', () => {
         const { body: res } = await request(app)
             .post('/api/users/add-friend')
             .set('Cookie', global.signin(user.sid))
-            .send({ userId: 'adfasdfasfa' })
+            .send({ sid: 'adfasdfasfa' })
             .expect(404);
 
     });
@@ -39,7 +39,7 @@ describe('sending friend request test ', () => {
         await request(app)
             .post('/api/users/add-friend')
             .set('Cookie', global.signin(user1.sid))
-            .send({ userId: user2.sid })
+            .send({ sid: user2.sid })
             .expect(201);
 
 
@@ -58,11 +58,11 @@ describe('sending friend request test ', () => {
 
         await sender.addFriend(receiver);
 
-
+        console.log('frd', await sender.getFriend());
         await request(app)
             .post('/api/users/add-friend')
             .set('Cookie', global.signin(receiver.sid))
-            .send({ userId: sender.sid })
+            .send({ sid: sender.sid })
             .expect(201);
 
         const result = await Friend.findOne({ where: { senderId: receiver.sid, receiverId: sender.sid } })
@@ -84,7 +84,7 @@ describe(' accept friend request ', () => {
             .post('/api/users/add-friend/result')
             .set('Cookie', global.signin(receiver.sid))
             .send({
-                userId: sender.sid,
+                sid: sender.sid,
                 accepted: "Hello",
             })
             .expect(400);
@@ -98,7 +98,7 @@ describe(' accept friend request ', () => {
             .post('/api/users/add-friend/result')
             .set('Cookie', global.signin(receiver.sid))
             .send({
-                userId: sender.sid,
+                sid: sender.sid,
                 accepted: true,
             })
             .expect(400);
@@ -114,7 +114,7 @@ describe(' accept friend request ', () => {
             .post('/api/users/add-friend/result')
             .set('Cookie', global.signin(receiver.sid))
             .send({
-                userId: sender.sid,
+                sid: sender.sid,
                 accepted: true,
             })
             .expect(201);
@@ -133,7 +133,7 @@ describe(' accept friend request ', () => {
             .post('/api/users/add-friend/result')
             .set('Cookie', global.signin(receiver.sid))
             .send({
-                userId: sender.sid,
+                sid: sender.sid,
                 accepted: false,
             })
             .expect(201);

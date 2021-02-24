@@ -18,7 +18,7 @@ const bodyChecker = [
 router.post('/api/users/add-friend', requireUser, bodyChecker, validateRequest, async (req: Request, res: Response) => {
 
 
-    const addedUser = await User.findUser(req.body.sid)
+    const addedUser = await User.findUser(req.body.userId)
 
     await req.user!.addUserAsFriend(addedUser);
 
