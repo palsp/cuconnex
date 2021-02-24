@@ -9,7 +9,7 @@ var errorHandling = function (err, req, res, next) {
         res.status(err.statusCode).send({ errors: err.serializeErrors() });
     }
     // allow developer to debug error
-    // console.error(err)
+    console.error(err);
     res.status(400).send({
         errors: [{ message: 'Something Went Wrong' }]
     });
