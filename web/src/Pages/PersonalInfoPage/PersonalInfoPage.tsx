@@ -16,7 +16,8 @@ import classes from "./PersonalInfoPage.module.css";
 
 const PersonalInfoPage: React.FC = () => {
   return (
-    <>
+    <div className={classes.main}>
+      <div className={classes.container}>
       <Background data-test="personal-info-background" />
       <HalfCircleOverlay data-test="personal-info-halfcircleoverlay" />
       <div className={classes.heading}>
@@ -63,7 +64,8 @@ const PersonalInfoPage: React.FC = () => {
           </div>
         </Link>
       </div>
-    </>
+      </div>
+    </div>
   );
 };
 
