@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-mysql-depl
+  name: auth-mysql-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users-mysql
+      app: auth-mysql
   template:
     metadata:
       labels:
-        app: users-mysql
+        app: auth-mysql
     spec:
       containers:
-        - name: users-mysql
+        - name: auth-mysql
           image: mysql
           args:
             - "--default-authentication-plugin=mysql_native_password"
@@ -22,15 +22,15 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               value : password
             - name: MYSQL_DATABASE
-              value : user_db
+              value : auth
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-mysql-srv
+  name: auth-mysql-srv
 spec:
   selector:
-    app: users-mysql
+    app: auth-mysql
   ports:
     - name: db
       port: 3306
