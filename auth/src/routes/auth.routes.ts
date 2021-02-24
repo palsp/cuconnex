@@ -6,6 +6,7 @@ import { validateRequest } from '@cuconnex/common';
 
 const authRoutes = express.Router();
 
+
 const signupChecker = [
     body('email')
         .notEmpty()
@@ -19,6 +20,7 @@ const signupChecker = [
         .notEmpty()
         .withMessage('sid must be supplied')
 ];
+
 
 const signInChecker = [
     body('email')

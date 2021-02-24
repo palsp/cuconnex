@@ -4,6 +4,7 @@
 // const ROLES = db.ROLES;
 // const User = db.user;
 
+
 // const checkDuplicateStudentIdOrEmail = (req: Request, res: Response, next) => {
 //     // StudentId
 //     User.findOne({
@@ -17,6 +18,7 @@
 //             });
 //             return;
 //         }
+
 
 //         // Email
 //         User.findOne({
@@ -55,3 +57,4 @@
 //     checkDuplicateStudentIdOrEmail: checkDuplicateStudentIdOrEmail,
 //     checkRolesExisted: checkRolesExisted
 // };
+
