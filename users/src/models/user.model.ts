@@ -11,20 +11,20 @@ import { Friend } from './friend.model';
 // All attributes in user model
 interface UserAttrs {
     id: string;
-    name: string;
+    username: string;
     interests?: Interest[];
     friends?: User[];
 }
 
 interface UserCreationAttrs {
     id: string,
-    name: string;
+    username: string;
 }
 
 
 class User extends Model<UserAttrs, UserCreationAttrs>  {
     public id!: string;
-    public name!: string;
+    public username!: string;
     public friends?: User[];
     public interests?: Interest[];
 
@@ -118,7 +118,7 @@ const initUser = (sequelize: Sequelize) => {
                 primaryKey: true,
                 allowNull: false,
             },
-            name: {
+            username: {
                 type: new DataTypes.STRING(255),
                 allowNull: false,
                 unique: true
