@@ -23,7 +23,10 @@ app.use(session({
 }));
 
 app.use(currentUser);
-app.use(requireAuth, fetchUser);
+app.use(requireAuth);
+
+app.use(fetchUser);
+
 
 app.use(newUserRouter);
 app.use(getUserRouter);

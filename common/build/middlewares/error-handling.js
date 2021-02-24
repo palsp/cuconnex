@@ -6,7 +6,7 @@ var errorHandling = function (err, req, res, next) {
     // if error is an instacne of Custom error
     // we return an error message with fix format
     if (err instanceof custom_error_1.CustomError) {
-        res.status(err.statusCode).send({ errors: err.serializeErrors() });
+        return res.status(err.statusCode).send({ errors: err.serializeErrors() });
     }
     // allow developer to debug error
     console.error(err);
