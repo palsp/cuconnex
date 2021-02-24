@@ -20,7 +20,7 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
     }
 
     try {
-        const user = await User.findByPk(req.currentUser!.id);
+        const user = await User.findByPk(req.currentUser!.sid);
         req.user = user;
     } catch (err) {
 

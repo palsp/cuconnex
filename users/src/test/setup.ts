@@ -11,7 +11,7 @@ jest.mock('../db');
 declare global {
     namespace NodeJS {
         interface Global {
-            signin(id?: string): string[];
+            signin(sid?: string): string[];
         }
     }
 }
@@ -29,7 +29,7 @@ beforeAll(async () => {
     try {
         testDB = await initializeDB();
     } catch (err) {
-        throw new Error('Initialized databae failed');
+        console.log(err);
     }
 });
 
@@ -46,11 +46,10 @@ afterAll(async () => {
 
 
 
-global.signin = (id?: string) => {
-    // Build JWT payload { id , username }
+global.signin = (sid?: string) => {
+    // Build JWT payload { sid , username }
     const payload = {
-        id: id || "6131707021",
-        username: "birdgloveeiei",
+        sid: sid || "6131707021",
     }
 
     // create the JWT

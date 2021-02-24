@@ -10,20 +10,20 @@ import { Friend } from './friend.model';
 
 // All attributes in user model
 interface UserAttrs {
-    id: string;
+    sid: string;
     name: string;
     interests?: Interest[];
     friends?: User[];
 }
 
 interface UserCreationAttrs {
-    id: string,
+    sid: string,
     name: string;
 }
 
 
 class User extends Model<UserAttrs, UserCreationAttrs>  {
-    public id!: string;
+    public sid!: string;
     public name!: string;
     public friends?: User[];
     public interests?: Interest[];
@@ -45,8 +45,8 @@ class User extends Model<UserAttrs, UserCreationAttrs>  {
     }
 
     public async findRelation(userId: string): Promise<FriendStatus | null> {
-        if (this.id === userId) return null;
-        const constraint = { [Op.or]: [{ senderId: this.id, receiverId: userId }, { senderId: userId, receiverId: this.id }] };
+        if (this.sid === userId) return null;
+        const constraint = { [Op.or]: [{ senderId: this.sid, receiverId: userId }, { senderId: userId, receiverId: this.sid }] };
         const friend = await Friend.findOne({ where: constraint });
         if (!friend) {
             return FriendStatus.toBeDefined;
@@ -57,7 +57,7 @@ class User extends Model<UserAttrs, UserCreationAttrs>  {
     }
 
     public async addUserAsFriend(user: User) {
-        const status = await this.findRelation(user.id);
+        const status = await this.findRelation(user.sid);
 
         // if friend relation is established or alredy send a request 
         if (status === FriendStatus.Accept || status === FriendStatus.Pending) {
@@ -80,7 +80,7 @@ class User extends Model<UserAttrs, UserCreationAttrs>  {
     }
 
     public async acceptFriendRequest(userId: string, accpeted: Boolean): Promise<FriendStatus> {
-        const relation = await Friend.findOne({ where: { senderId: userId, receiverId: this.id } });
+        const relation = await Friend.findOne({ where: { senderId: userId, receiverId: this.sid } });
 
         if (!relation) {
             throw new BadRequestError('User has not send a request yet');
@@ -113,7 +113,7 @@ class User extends Model<UserAttrs, UserCreationAttrs>  {
 const initUser = (sequelize: Sequelize) => {
     User.init<User>(
         {
-            id: {
+            sid: {
                 type: DataTypes.STRING(11),
                 primaryKey: true,
                 allowNull: false,

@@ -11,19 +11,19 @@ import { where } from 'sequelize';
 const router = express.Router();
 
 
-router.get('/api/users/view-profile/:userId', requireUser, async (req: Request, res: Response) => {
+router.get('/api/users/view-profile/:sid', requireUser, async (req: Request, res: Response) => {
 
 
-    const user = await User.findByPk(req.params.userId, { include: { association: User.associations.interests, attributes: ['description'] } })
+    const user = await User.findByPk(req.params.sid, { include: { association: User.associations.interests, attributes: ['description'] } })
 
     if (!user) {
         throw new NotFoundError();
     }
 
-    const status = await user.findRelation(req.user!.id);
+    const status = await user.findRelation(req.user!.sid);
 
 
-    return res.status(200).send({ id: user.id, name: user.name, interests: user.interests, status })
+    return res.status(200).send({ sid: user.sid, name: user.name, interests: user.interests, status })
 
 
 });
@@ -35,7 +35,7 @@ router.get('/api/users', async (req: Request, res: Response) => {
     }
 
     const interests = await req.user.getInterests({ attributes: ['description'] });
-    res.status(200).send({ id: req.user.id, name: req.user.name, interests });
+    res.status(200).send({ id: req.user.sid, name: req.user.name, interests });
 });
 
 

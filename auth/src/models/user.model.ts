@@ -1,36 +1,78 @@
-import { Optional } from 'sequelize';
-import { Table, Model, Column, BelongsToMany, PrimaryKey } from 'sequelize-typescript'
-import Role from './role.model';
-import UserRoles from './userRoles.model';
+import { Model, Sequelize, DataTypes } from 'sequelize';
+import { values } from 'sequelize/types/lib/operators';
+// import { Table, Column, BelongsToMany, PrimaryKey } from 'sequelize-typescript'
+import { Password } from '../services/password';
 interface UserAttributes {
-    id?: number;
+    sid: string;
     email: string;
-    username?: string;
     password?: string;
 }
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {
-    id: number;
+interface UserCreationAttributes {
+    sid: string;
     email: string;
-    name: string;
     password: string;
- }
+}
 
-@Table
+// @Table
+// export default class User extends Model<UserAttributes, UserCreationAttributes> {
+
+//     @PrimaryKey
+//     @Column
+//     id!: number;
+
+//     @Column
+//     email!: string;
+
+//     @Column
+//     username!: string;
+
+//     @Column
+//     password!: string;
+
+//     // @BelongsToMany(() => Role, () => UserRoles)
+//     // roles?: Role[];
+// }
+
 export default class User extends Model<UserAttributes, UserCreationAttributes> {
-    
-    @PrimaryKey
-    @Column
-    id!: number;
-    
-    @Column
-    email!: string;
+    public sid!: string
+    public email!: string
+    public password!: string
+    public toJSON() {
+        const values = { ...this.get() };
+        delete values.password;
+        return values;
+    }
 
-    @Column
-    username!: string;
+    public getPassword() {
+        return this.password
+    }
+}
 
-    @Column
-    password!: string;
-    
-    @BelongsToMany(() => Role, () => UserRoles)
-    roles?: Role[];
- }
+
+export const userInit = function (sequelize: Sequelize) {
+    User.init({
+        sid: {
+            type: new DataTypes.STRING(10),
+            primaryKey: true,
+            allowNull: false,
+        },
+        email: {
+            type: new DataTypes.STRING,
+            unique: true,
+        },
+        password: {
+            type: DataTypes.STRING(255),
+            allowNull: false,
+
+        }
+    }, {
+        tableName: "users",
+        sequelize,
+    });
+
+    User.beforeCreate(async (user) => {
+        const hashedPassword = await Password.toHash(user.password);
+        user.password = hashedPassword;
+    })
+};
+

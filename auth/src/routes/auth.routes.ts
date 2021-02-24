@@ -1,19 +1,37 @@
-import { verifySignUp } from '../middleware';
 import { signUp, signIn } from '../controllers/auth.controller';
-import express, { Request, Response } from 'express';
+import express from 'express';
+import { body } from 'express-validator';
+import { validateRequest } from '@cuconnex/common';
 
 
-export const authRoutes = express.Router();
-authRoutes.use(function (req: Request, res: Response, next) {
-    res.header(
-        "Access-Control-Allow-Headers",
-        "x-access-token, Origin, Content-Type, Accept"
-    );
-    next();
-});
+const authRoutes = express.Router();
 
-authRoutes.post("/signup", [verifySignUp.checkDuplicateStudentIdOrEmail, verifySignUp.checkRolesExisted],
-    signUp
-);
+const signupChecker = [
+    body('email')
+        .notEmpty()
+        .isEmail()
+        .withMessage('Email must be valid'),
+    body('password')
+        .notEmpty()
+        .withMessage('Password must be supplied'),
+    body('sid')
+        .isAlphanumeric()
+        .notEmpty()
+        .withMessage('sid must be supplied')
+];
 
-authRoutes.post("/signin", signIn);
+const signInChecker = [
+    body('email')
+        .notEmpty()
+        .isEmail()
+        .withMessage('Email must be valid'),
+    body('password')
+        .notEmpty()
+        .withMessage('Password must be supplied'),
+]
+
+authRoutes.post("/signup", signupChecker, validateRequest, signUp);
+
+authRoutes.post("/signin", signInChecker, validateRequest, signIn);
+
+export { authRoutes };

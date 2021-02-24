@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import { test_config as config } from '../config/db.config';
 import mysql, { Connection } from 'mysql2/promise';
-import { initModel } from '../models'
+import { userInit } from '../models/user.model'
 import { randomBytes } from 'crypto'
 
 
@@ -25,7 +25,7 @@ const initializeDB = async () => {
     myDB.sequelize = new Sequelize(myDB.dbName, user!, password, { dialect: 'mysql', logging: false });
 
     // initialize model
-    initModel(myDB.sequelize);
+    userInit(myDB.sequelize);
 
 
     await myDB.sequelize.sync()
@@ -38,7 +38,6 @@ const initializeDB = async () => {
 
 const endDB = async (db: myDB) => {
 
-    console.log(db);
 
     if (db.connection) {
         await db.connection.query(`DROP DATABASE  \`${db.dbName}\`;`);

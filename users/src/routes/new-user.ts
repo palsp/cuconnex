@@ -22,16 +22,19 @@ const bodyChecker = [body('interests')
         // expect result to be undefined so the process continue
         return result === undefined;
     })
-    .withMessage('Valid interest must be provided')
+    .withMessage('Valid interest must be provided'),
+body('name')
+    .notEmpty()
+    .withMessage('User name must be supplied')
 ];
 
 // create user for first time login
 router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
-    const { interests } = req.body
+    const { interests, name } = req.body
 
 
     // Make sure that user does not exist
-    let user = await User.findOne({ where: { id: req.currentUser!.id } });
+    let user = await User.findOne({ where: { sid: req.currentUser!.sid } });
     if (user) {
         throw new BadRequestError('User already existed');
     }
@@ -42,7 +45,7 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
     let createSuccess;
 
     try {
-        user = await User.create({ id: req.currentUser!.id, name: req.currentUser!.username });
+        user = await User.create({ sid: req.currentUser!.sid, name });
         await user.createInterestsFromArray(uniqueInterests);
         createSuccess = true;
 
@@ -59,7 +62,7 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
         throw new Error('Something went wrong');
     }
 
-    res.status(201).send({ id: user!.id, username: user!.name });
+    res.status(201).send({ id: user!.sid, username: user!.name });
 });
 
 

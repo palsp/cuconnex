@@ -1,16 +1,16 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator'
-import { validateRequest, FriendStatus } from '@cuconnex/common';
+import { validateRequest } from '@cuconnex/common';
 import { User } from '../models/user.model';
 import { requireUser } from '../middlewares/requireUser';
-import { Friend } from '../models/friend.model';
+
 
 
 
 const router = express.Router();
 
 const bodyChecker = [
-    body('userId')
+    body('sid')
         .notEmpty()
         .isAlphanumeric()
 ];
@@ -18,7 +18,7 @@ const bodyChecker = [
 router.post('/api/users/add-friend', requireUser, bodyChecker, validateRequest, async (req: Request, res: Response) => {
 
 
-    const addedUser = await User.findUser(req.body.userId)
+    const addedUser = await User.findUser(req.body.sid)
 
     await req.user!.addUserAsFriend(addedUser);
 
@@ -30,7 +30,7 @@ router.post('/api/users/add-friend', requireUser, bodyChecker, validateRequest, 
 
 
 router.post('/api/users/add-friend/result', requireUser, [
-    body('userId')
+    body('sid')
         .notEmpty()
         .isAlphanumeric()
         .withMessage('User id is not valid'),
@@ -38,9 +38,9 @@ router.post('/api/users/add-friend/result', requireUser, [
         .notEmpty()
         .isBoolean()
 ], validateRequest, async (req: Request, res: Response) => {
-    const sendUser = await User.findUser(req.body.userId);
+    const sendUser = await User.findUser(req.body.sid);
 
-    const status = await req.user!.acceptFriendRequest(sendUser.id, req.body.accepted);
+    const status = await req.user!.acceptFriendRequest(sendUser.sid, req.body.accepted);
 
 
     res.status(201).send({ status });

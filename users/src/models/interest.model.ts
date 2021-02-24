@@ -7,7 +7,7 @@ import { TableName } from './types';
 // all atributes interest model has 
 export interface InterestAttrs {
     // id: number;
-    userId: string;
+    sid: string;
     description: InterestDescription,
 }
 
@@ -18,7 +18,7 @@ export interface InterestCreationAttrs {
 
 
 class Interest extends Model<InterestAttrs, InterestCreationAttrs>  {
-    public userId!: string;
+    public sid!: string;
     public description!: InterestDescription
 
 }
@@ -26,7 +26,7 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs>  {
 
 const initInterests = (sequelize: Sequelize) => {
     Interest.init({
-        userId: {
+        sid: {
             type: DataTypes.STRING(10),
             primaryKey: true,
             references: { model: User.tableName }
@@ -34,7 +34,6 @@ const initInterests = (sequelize: Sequelize) => {
         description: {
             type: DataTypes.ENUM,
             values: Object.values(InterestDescription),
-            unique: true,
             primaryKey: true,
 
         }

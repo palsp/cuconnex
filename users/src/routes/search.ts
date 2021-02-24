@@ -15,7 +15,7 @@ const MAX_SEARCH = 11;
 
 router.get('/api/users/:search', requireUser, async (req: Request, res: Response) => {
 
-    let users = await User.findAll({ where: { [Op.or]: [{ name: { [Op.startsWith]: req.params.search } }, { id: req.params.search }] } });
+    let users = await User.findAll({ where: { [Op.or]: [{ name: { [Op.startsWith]: req.params.search } }, { sid: req.params.search }] } });
 
     if (users.length > MAX_SEARCH) {
         users = users.slice(0, MAX_SEARCH);
