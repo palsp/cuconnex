@@ -9,7 +9,7 @@ export const errorHandling = (err: Error, req: Request, res: Response, next: Nex
     // if error is an instacne of Custom error
     // we return an error message with fix format
     if (err instanceof CustomError) {
-        res.status(err.statusCode).send({ errors: err.serializeErrors() });
+        return res.status(err.statusCode).send({ errors: err.serializeErrors() });
     }
 
     // allow developer to debug error

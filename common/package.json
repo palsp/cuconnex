@@ -1,6 +1,6 @@
 {
   "name": "@cuconnex/common",
-  "version": "1.0.13",
+  "version": "1.1.5",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "del ./build/*",
     "build": "npm run clean && tsc",
-    "pub": "npm version patch && npm run clean && npm publish"
+    "pub": "npm version patch && npm run build && npm publish"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,11 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
+    "@types/cookie-session": "^2.0.42",
+    "@types/jsonwebtoken": "^8.5.0",
+    "cookie-session": "^1.4.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "node-nats-streaming": "^0.3.2"
   }
 }
