@@ -12,7 +12,7 @@ authRoutes.use(function (req: Request, res: Response, next) {
     next();
 });
 
-authRoutes.post("/signup", [verifySignUp.checkDuplicateStudentIdOrEmail, verifySignUp.checkRolesExisted],
+authRoutes.post("/signup", [verifySignUp.checkDuplicateUsernameOrEmail, verifySignUp.checkRolesExisted],
     signUp
 );
 

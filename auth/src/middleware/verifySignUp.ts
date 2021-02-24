@@ -4,11 +4,11 @@ import { db } from '../models';
 const ROLES = db.ROLES;
 const User = db.user;
 
-const checkDuplicateStudentIdOrEmail = (req: Request, res: Response, next) => {
+const checkDuplicateUsernameOrEmail = (req: Request, res: Response, next) => {
     // StudentId
     User.findOne({
         where: {
-            studentId: req.body.studentId
+            username: req.body.username
         }
     }).then(user => {
         if (user) {
@@ -52,6 +52,6 @@ const checkRolesExisted = (req: Request, res: Response, next) => {
 };
 
 export const verifySignUp = {
-    checkDuplicateStudentIdOrEmail: checkDuplicateStudentIdOrEmail,
+    checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
     checkRolesExisted: checkRolesExisted
 };

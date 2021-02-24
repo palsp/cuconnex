@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs'); //bcrypt used to encrypt password
 
 export const signUp = ( req: Request, res: Response ) => {
     User.create({
-        studentId: req.body.studentId,
+        id: req.body.id,
         email: req.body.email,
         name: req.body.name,
         password: bcrypt.hashSync(req.body.password, 8)
