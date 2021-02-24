@@ -7,9 +7,9 @@
 
 .divFixed {
   position: fixed;
+  display: flex;
   align-items: center;
   justify-content: center;
-  display: flex;
   width: 375px;
   background-color: white;
 }

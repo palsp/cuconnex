@@ -2,11 +2,24 @@ import React from "react";
 import classes from "./Heading.module.css";
 interface Props {
   value: string;
+  color?: string;
   size?: string;
 }
 
 const Heading: React.FC<Props> = (props) => {
-  const cssArray = [classes.titlePage];
+  let cssArray = null;
+  switch (props.color) {
+    case "pink":
+      cssArray = [classes.titlePage];
+      break;
+    case "black":
+      cssArray = [classes.titlePageBlack];
+      break;
+    default:
+      cssArray = [classes.titlePage];
+      break;
+  }
+
   switch (props.size) {
     case "small":
       cssArray.push(classes.smallSize);
