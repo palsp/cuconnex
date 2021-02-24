@@ -70,13 +70,15 @@ const AuthPage: React.FC = () => {
           <HalfCircleOverlay data-test="auth-page-halfcircleoverlay" />
           <Background data-test="auth-page-background" />
         </div>
-        <div className={classes.content}>
-          <div className={classes.logoDiv}>
-            <AppLogo data-test="auth-page-logo" />
-          </div>
 
+        <div className={classes.logoDiv}>
+          <AppLogo data-test="auth-page-logo" />
+        </div>
+
+        <div className={classes.content}>
           {authPrompt}
         </div>
+        
       </div>
     </div>
   );
