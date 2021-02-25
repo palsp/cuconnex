@@ -1,17 +1,26 @@
 import express, { Request, Response, NextFunction } from 'express';
+import { body } from 'express-validator';
 import { Member } from '../models/member.model';
 import { Team } from '../models/team.model';
 import { User } from '../models/user.model';
 import { requireUser } from '../middlewares/requireUser';
 
-import { TeamStatus, BadRequestError } from '@cuconnex/common';
+import { validateRequest, TeamStatus, BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
+
+const bodyChecker1 = [
+  body('teamName')
+    .notEmpty()
+    .isAlphanumeric()
+];
 
 // a user request to join a team
 router.post(
   '/api/members/request',
   requireUser,
+  bodyChecker1,
+  validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user!;
@@ -43,11 +52,20 @@ router.post(
     }
   }
 );
-
+const bodyChecker2 = [
+  body('teamName')
+    .notEmpty()
+    .isAlphanumeric(),
+  body('newMemberId')
+    .notEmpty()
+    .isAlphanumeric()
+];
 // a team member can invite a user to join
 router.post(
   '/api/members/invite',
   requireUser,
+  bodyChecker2,
+  validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
     const user1 = req.user!;
 

@@ -26,6 +26,9 @@ describe('Status Changing Test', () => {
   });
 
   it('should return 400 if team is not found', async () => {
+    const user1 = await User.create({ id: '1', username: 'testName1' });
+    await user1.createInterest({ description: InterestDescription.Business });
+
     const res = await request(app)
       .post('/api/members/status')
       .set('Cookie', global.signin('1'))
