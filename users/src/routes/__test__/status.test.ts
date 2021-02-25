@@ -1,6 +1,5 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Team } from '../../models/team.model';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
 import { InterestDescription } from '@cuconnex/common';

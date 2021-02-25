@@ -4,7 +4,7 @@ import { Team } from '../models/team.model';
 import { User } from '../models/user.model';
 import { requireUser } from '../middlewares/requireUser';
 
-import { TeamStatus, NotAuthorizedError, NotFoundError, BadRequestError } from '@cuconnex/common';
+import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
 
