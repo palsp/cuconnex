@@ -1,8 +1,6 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { InterestDescription } from '@cuconnex/common';
 import { User } from './user.model';
-import { directive, tsConstructorType } from '@babel/types';
-import { nodeInternals } from 'stack-utils';
 import { TableName } from './types';
 
 // all atributes interest model has
