@@ -1,70 +1,64 @@
 import { initializeDB, endDB } from '../db';
-import { Sequelize } from 'sequelize'
-import { Connection } from 'mysql2/promise'
+import { Sequelize } from 'sequelize';
+import { Connection } from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
-
-
 
 jest.mock('../db');
 
-
 declare global {
-    namespace NodeJS {
-        interface Global {
-            signin(id?: string): string[];
-        }
+  namespace NodeJS {
+    interface Global {
+      signin(id?: string): string[];
     }
+  }
 }
 
 interface db {
-    connection?: Connection,
-    sequelize?: Sequelize,
+  connection?: Connection;
+  sequelize?: Sequelize;
 }
 
 let testDB: db;
 
 beforeAll(async () => {
-    process.env.JWT_KEY = 'asdfasdfaf';
-    // create db if doesn't already existed
-    try {
-        testDB = await initializeDB();
-    } catch (err) {
-        throw new Error('Initialized databae failed');
-    }
+  process.env.JWT_KEY = 'asdfasdfaf';
+  // create db if doesn't already existed
+  try {
+    testDB = await initializeDB();
+  } catch (err) {
+    throw new Error('Initialized databae failed');
+  }
 });
 
 beforeEach(async () => {
-    const models = Object.values(testDB.sequelize!.models)
-    for (let model of models) {
-        await model.destroy({ where: {} })
-    }
+  const models = Object.values(testDB.sequelize!.models);
+  for (let model of models) {
+    await model.destroy({ where: {} });
+  }
 });
 
 afterAll(async () => {
-    await endDB(testDB);
-})
-
-
+  await endDB(testDB);
+});
 
 global.signin = (id?: string) => {
-    // Build JWT payload { id , username }
-    const payload = {
-        id: id || "6131707021",
-        username: "birdgloveeiei",
-    }
+  // Build JWT payload { id , username }
+  const payload = {
+    id: id || '6131707021',
+    username: 'birdgloveeiei'
+  };
 
-    // create the JWT
-    const token = jwt.sign(payload, process.env.JWT_KEY!);
+  // create the JWT
+  const token = jwt.sign(payload, process.env.JWT_KEY!);
 
-    // build session 
-    const session = { jwt: token }
+  // build session
+  const session = { jwt: token };
 
-    // Turn into json
-    const sessionJSON = JSON.stringify(session);
+  // Turn into json
+  const sessionJSON = JSON.stringify(session);
 
-    // Take JSON and turn into string base64( cookie )
-    const base64 = Buffer.from(sessionJSON).toString('base64');
+  // Take JSON and turn into string base64( cookie )
+  const base64 = Buffer.from(sessionJSON).toString('base64');
 
-    return [`express:sess=${base64}`];
-
-}
+  return [`express:sess=${base64}`];
+};

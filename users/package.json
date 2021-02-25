@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev src/index.ts",
-    "test": "jest --watchAll --no-cache",
+    "test": "jest --verbose --watchAll --no-cache",
     "test:ci": "jest"
   },
   "jest": {
@@ -13,7 +13,8 @@
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
-    ]
+    ],
+    "testTimeout": 10000
   },
   "keywords": [],
   "author": "",
