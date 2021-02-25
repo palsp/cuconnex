@@ -18,6 +18,9 @@ router.get('/api/members', async (req: Request, res: Response, next: NextFunctio
   }
 
   const members = await Member.findAll({ where: { teamName } });
+
+  //แก้ should return an empty array not error
+
   // not gonna happen since when create team -> there always the team-creator relation
   if (!members) {
     throw new BadRequestError(`No member in this team ${teamName}`);

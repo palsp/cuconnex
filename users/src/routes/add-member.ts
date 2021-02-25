@@ -9,6 +9,10 @@ const router = express.Router();
 
 // a user request to join a team
 router.post('/api/members/request', async (req: Request, res: Response, next: NextFunction) => {
+
+  // แก้ : ใช้ requireUser แล้ว ใช้ req.user แทน
+  // ควร เชค user ก่อน find team 
+  // ------------------------------------------------------------------ 
   try {
     const userId = req.currentUser!.id;
 
@@ -23,6 +27,7 @@ router.post('/api/members/request', async (req: Request, res: Response, next: Ne
 
     if (!user) {
       throw new BadRequestError('User not found!');
+      // ------------------------------------------------------------------ 
     } else if (!team) {
       throw new BadRequestError('Team not found!');
     }

@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator'
-import { validateRequest, FriendStatus } from '@cuconnex/common';
+import { validateRequest } from '@cuconnex/common';
 import { User } from '../models/user.model';
 import { requireUser } from '../middlewares/requireUser';
-import { Friend } from '../models/friend.model';
 
 
 

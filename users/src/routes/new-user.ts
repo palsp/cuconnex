@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { User } from '../models/user.model';
-import { NotAuthorizedError, BadRequestError, requireAuth } from '@cuconnex/common';
+import { BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
 

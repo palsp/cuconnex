@@ -3,7 +3,6 @@ import { User } from '../models/user.model';
 import { Team } from '../models/team.model';
 import { Op } from 'sequelize';
 import { requireUser } from '../middlewares/requireUser';
-import { Interest } from '../models/interest.model';
 
 const router = express.Router();
 
