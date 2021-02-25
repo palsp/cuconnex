@@ -1,3 +1,4 @@
+import { InterestDescription } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
@@ -53,6 +54,20 @@ it('should return a corresponding user(s) for the given id', async () => {
 
 })
 
+it('should include interest in the response', async () => {
+    const user = await User.create({ id: "6131886621", username: "pal" });
+    const user2 = await User.create({ id: "6131776621", username: "bob" });
+    await user.createInterests({ description: InterestDescription.Developer });
+
+    const { body: res } = await request(app)
+        .get(`/api/users/${user.id}`)
+        .set('Cookie', global.signin(user2.id))
+        .send({})
+
+    expect(res[0].interests).toBeDefined();
+    expect(res[0].interests[0].description).toEqual(InterestDescription.Developer);
+
+});
 
 it('should return empty array if the input params does not match any attribute in db', async () => {
     const id = "6131767621";

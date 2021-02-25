@@ -63,7 +63,7 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
         throw new Error('Something went wrong');
     }
 
-    res.status(201).send({ id: user!.id, username: user!.username });
+    res.status(201).send({ id: user!.id, username: user!.username, interests: uniqueInterests });
 });
 
 
