@@ -12,7 +12,7 @@ describe('sending friend request test ', () => {
       .send({ userId: 'adfasdfasfa' })
       .expect(400);
 
-    expect(res.errors[0].message).toEqual('Please fill the information form');
+    expect(res.errors[0].message).toEqual('Please fill the information form first.');
   });
 
   it(`should return 404  if user who is added does not exist`, async () => {

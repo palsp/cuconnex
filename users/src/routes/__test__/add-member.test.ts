@@ -19,7 +19,7 @@ describe('Add member to Team --- Requesting', () => {
     expect(error.message).toEqual('Not Authorized');
   });
 
-  it('should return 401 if userId is not found.', async () => {
+  it('should return 400 if user is not yet fill in the information detail.', async () => {
     const res = await request(app)
       .post('/api/members/request')
       .set('Cookie', global.signin('1'))
@@ -29,7 +29,7 @@ describe('Add member to Team --- Requesting', () => {
       .expect(400);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('User not found!');
+    expect(error.message).toEqual('Please fill the information form first.');
   });
 
   it('should return 401 if team is not found.', async () => {
@@ -103,7 +103,7 @@ describe('Add member to Team --- Invitation', () => {
     expect(error.message).toEqual('Not Authorized');
   });
 
-  it('should return 401 if userId is not found.', async () => {
+  it('should return 400 if user is not yet fill in information detail.', async () => {
     const res = await request(app)
       .post('/api/members/invite')
       .set('Cookie', global.signin('1'))
@@ -114,7 +114,7 @@ describe('Add member to Team --- Invitation', () => {
       .expect(400);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('User not found!');
+    expect(error.message).toEqual('Please fill the information form first.');
   });
 
   it('should return 401 if team is not found.', async () => {

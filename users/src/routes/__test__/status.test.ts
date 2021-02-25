@@ -13,11 +13,6 @@ describe('Status Changing Test', () => {
     const team = await user1.createTeams({ name: 'Team1' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
-    // const user2 = await User.create({ id: '2', name: 'testName2' });
-    // await user2.createInterest({ description: InterestDescription.Business });
-
-    // await Member.create({ userId: user2.id, teamName: 'Team1', status: TeamStatus.Pending });
-
     const res = await request(app)
       .post('/api/members/status')
       .set('Cookie', global.signin('1'))
