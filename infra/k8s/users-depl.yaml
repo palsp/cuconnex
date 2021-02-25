@@ -27,6 +27,11 @@ spec:
                 secretKeyRef:
                   name: user-db-secret
                   key: DB_PASSWORD
+            - name : JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name : jwt-secret
+                  key: JWT_KEY
       initContainers:
         - name: init-wait
           image: alpine

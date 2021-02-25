@@ -15,10 +15,6 @@ const validateEnvAttr = () => {
     throw new Error('DB_USER must be defined');
   }
 
-  if (!process.env.DB_USER) {
-    throw new Error('DB_USER must be defined');
-  }
-
   if (!process.env.DB_SCHEMA) {
     throw new Error('DB_SCHEMA must be defined');
   }
@@ -35,13 +31,13 @@ const validateEnvAttr = () => {
 const start = async () => {
   try {
     // check if all required env variable have been declared
-    // validateEnvAttr();
+    validateEnvAttr();
     await initializeDB();
 
-    const user = await User.create({ id: '6131707021', name: 'Krittamook' });
-    user.createTeams({ name: 'dummy' });
-    const team = await user.createTeams({ name: 'TeamDum' });
-    await Member.create({ userId: user.id, teamName: 'TeamDum', status: TeamStatus.Accept });
+    // const user = await User.create({ id: '6131707021', name: 'Krittamook' });
+    // user.createTeams({ name: 'dummy' });
+    // const team = await user.createTeams({ name: 'TeamDum' });
+    // await Member.create({ userId: user.id, teamName: 'TeamDum', status: TeamStatus.Accept });
     // console.log('create dummy user ', user);
   } catch (err) {
     console.error(err);

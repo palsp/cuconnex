@@ -1,11 +1,8 @@
 import express, { Request, Response } from 'express';
 import { User } from '../models/user.model';
-import { Op } from 'sequelize';
 import { NotFoundError } from '@cuconnex/common';
 import { requireUser } from '../middlewares/requireUser';
-import { Friend } from '../models/friend.model';
-import { Interest } from '../models/interest.model';
-import { where } from 'sequelize';
+
 
 
 const router = express.Router();
@@ -23,7 +20,7 @@ router.get('/api/users/view-profile/:userId', requireUser, async (req: Request, 
     const status = await user.findRelation(req.user!.id);
 
 
-    return res.status(200).send({ id: user.id, name: user.name, interests: user.interests, status })
+    return res.status(200).send({ id: user.id, username: user.username, interests: user.interests, status })
 
 
 });
@@ -35,7 +32,7 @@ router.get('/api/users', async (req: Request, res: Response) => {
     }
 
     const interests = await req.user.getInterests({ attributes: ['description'] });
-    res.status(200).send({ id: req.user.id, name: req.user.name, interests });
+    res.status(200).send({ id: req.user.id, username: req.user.username, interests });
 });
 
 
