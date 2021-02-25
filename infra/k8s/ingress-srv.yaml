@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: 10.104.0.5
+    - host: connex.dev
       http:
         paths:
           - path : /api/auth/?(.*)
