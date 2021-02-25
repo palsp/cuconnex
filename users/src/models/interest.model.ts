@@ -33,7 +33,7 @@ const initInterests = (sequelize: Sequelize) => {
       description: {
         type: DataTypes.ENUM,
         values: Object.values(InterestDescription),
-        unique: true,
+        // unique: true
         primaryKey: true
       }
     },

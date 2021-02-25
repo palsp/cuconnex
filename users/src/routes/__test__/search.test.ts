@@ -32,18 +32,31 @@ describe('Search Test', () => {
     const user = await User.create({ id: '1', name: 'testUser' });
     await user.createTeams({ name: 'testTeam1' });
     await user.createTeams({ name: 'testTeam2' });
+    await user.createTeams({ name: 'testTeam3' });
     await user.createTeams({ name: 'Somsan Tech' });
     await user.createTeams({ name: 'Super Mario' });
 
     const { body: res } = await request(app)
-      .get(`/api/team/testTeam`)
+      .get(`/api/teams/testTeam`)
       .set('Cookie', global.signin(user.id))
       .send({});
 
-    expect(res).toHaveLength(2);
+    expect(res).toHaveLength(3);
     const transformed = res.map((team: { name: string }) => team.name);
     expect(transformed[0]).toEqual('testTeam1');
     expect(transformed[1]).toEqual('testTeam2');
+    expect(transformed[2]).toEqual('testTeam3');
+
+    // -----------------
+    const { body: res2 } = await request(app)
+      .get(`/api/teams/s`)
+      .set('Cookie', global.signin(user.id))
+      .send({});
+
+    expect(res2).toHaveLength(2);
+    const transformed2 = res2.map((team: { name: string }) => team.name);
+    expect(transformed2[0]).toEqual('Somsan Tech');
+    expect(transformed2[1]).toEqual('Super Mario');
   });
 
   it('should return a corresponding user(s) for the given id', async () => {
@@ -74,7 +87,7 @@ describe('Search Test', () => {
     expect(res).toHaveLength(0);
   });
 
-  // for team search
+  //for team search
   it('should return empty array if the input params does not match any attribute in db', async () => {
     const user = await User.create({ id: '1', name: 'testUser' });
     await user.createTeams({ name: 'testTeam1' });

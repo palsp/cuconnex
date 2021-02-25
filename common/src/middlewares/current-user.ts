@@ -1,34 +1,29 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-
 interface UserPayload {
-    id: string;
-    username: string;
+  id: string;
+  username: string;
 }
 
 declare global {
-    namespace Express {
-        interface Request {
-            currentUser?: UserPayload;
-        }
+  namespace Express {
+    interface Request {
+      currentUser?: UserPayload;
     }
+  }
 }
 
-
 export const currentUser = async (req: Request, res: Response, next: NextFunction) => {
+  console.log('currentUser');
+  if (!req.session?.jwt) {
+    return next();
+  }
 
-    if (!req.session?.jwt) {
-        return next();
-    }
+  try {
+    const decodedPayload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
+    req.currentUser = decodedPayload;
+  } catch (err) {}
 
-    try {
-        const decodedPayload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
-        req.currentUser = decodedPayload;
-
-    } catch (err) {
-
-    }
-
-    next();
+  next();
 };

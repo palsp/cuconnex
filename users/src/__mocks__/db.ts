@@ -34,12 +34,11 @@ const initializeDB = async () => {
 };
 
 const endDB = async (db: myDB) => {
-  if (db.sequelize) await db.sequelize.close();
-
   if (db.connection) {
     await db.connection.query(`DROP DATABASE  \`${db.dbName}\`;`);
     await db.connection.end();
   }
+  if (db.sequelize) await db.sequelize.close();
 };
 
 export { initializeDB, endDB };

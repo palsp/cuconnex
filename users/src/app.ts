@@ -30,25 +30,27 @@ app.use(
   })
 );
 
-// app.use(currentUser);
-// app.use(requireAuth, fetchUser);
+app.use(currentUser);
+app.use(requireAuth);
+app.use(fetchUser);
 
-// app.use(newUserRouter);
-// app.use(getUserRouter);
-// app.use(searchRouter);
-// app.use(addFriendRouter);
+app.use(newUserRouter);
+app.use(getUserRouter);
+app.use(searchRouter);
+app.use(addFriendRouter);
 
-app.all('*', async (req, res) => {
-  throw new NotFoundError();
-});
-
-// app.use(newTeamRouter);
-// app.use(getTeamRouter);
+app.use(newTeamRouter);
+app.use(getTeamRouter);
 
 app.use(getMemberRouter);
 app.use(addMemberRouter);
 app.use(memberStatusRouter);
 
-app.use(errorHandling);
+app.all('*', async (req, res) => {
+  throw new NotFoundError();
+});
 
+app.use(errorHandling, () => {
+  console.log('err handling');
+});
 export { app };

@@ -7,6 +7,8 @@ import {
   Sequelize
 } from 'sequelize';
 
+import { TableName } from './types';
+
 import { User } from './user.model';
 import { Team } from './team.model';
 
@@ -46,12 +48,14 @@ const initMember = (sequelize: Sequelize) => {
       },
       status: {
         type: DataTypes.ENUM,
-        values: Object.values(TeamStatus)
+        values: Object.values(TeamStatus),
+        allowNull: false
       }
     },
     {
-      tableName: 'members',
-      sequelize
+      tableName: TableName.members,
+      sequelize,
+      timestamps: false
     }
   );
   return Member;

@@ -135,14 +135,14 @@ const initUser = (sequelize: Sequelize) => {
       },
       name: {
         type: new DataTypes.STRING(255),
-        allowNull: false,
-        unique: true
+        allowNull: false
+        // unique: true
       }
     },
     {
       tableName: TableName.users,
-      sequelize
-      // timestamps: false
+      sequelize,
+      timestamps: false
     }
   );
 

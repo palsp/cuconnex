@@ -10,7 +10,7 @@ const router = express.Router();
 // ดูรายชื่อคนในทีม
 // get user(s) with member status of the team
 router.get('/api/members', async (req: Request, res: Response, next: NextFunction) => {
-  const { teamName, status } = req.body;
+  const { teamName } = req.body;
 
   const team = await Team.findOne({ where: { name: teamName } });
   if (!team) {
@@ -18,16 +18,10 @@ router.get('/api/members', async (req: Request, res: Response, next: NextFunctio
   }
 
   const members = await Member.findAll({ where: { teamName } });
+  // not gonna happen since when create team -> there always the team-creator relation
   if (!members) {
     throw new BadRequestError(`No member in this team ${teamName}`);
   }
-
-  console.log('members', members);
-
-  console.log('eiie come here', req.body);
-  // TODO
-  // return with specific status
-  // if(status === 'Pending' ) {}
 
   res.status(200).send({ message: `Getting members of ${teamName}`, members: members });
 });

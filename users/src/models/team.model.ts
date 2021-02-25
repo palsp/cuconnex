@@ -41,7 +41,8 @@ const initTeam = (sequelize: Sequelize) => {
     },
     {
       tableName: 'teams',
-      sequelize
+      sequelize,
+      timestamps: false
     }
   );
   return Team;

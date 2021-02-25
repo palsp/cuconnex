@@ -28,7 +28,7 @@ router.get('/api/users/:search', requireUser, async (req: Request, res: Response
 router.get('/api/teams/:search', async (req: Request, res: Response) => {
   let teams = await Team.findAll({
     where: {
-      [Op.or]: [{ name: { [Op.startsWith]: req.params.search } }, { id: req.params.search }]
+      [Op.or]: [{ name: { [Op.startsWith]: req.params.search } }]
     }
   });
 
@@ -38,7 +38,6 @@ router.get('/api/teams/:search', async (req: Request, res: Response) => {
   // sort by length from min > max
   teams.sort((a: Team, b: Team) => a.name.length - b.name.length);
 
-  // send back only name interest and ...
   res.status(200).send(teams);
 });
 
