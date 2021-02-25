@@ -14,6 +14,8 @@ import { addFriendRouter } from './routes/add-friend';
 
 const app = express();
 
+app.set('trust proxy' , true);
+
 app.use(json());
 
 app.use(session({

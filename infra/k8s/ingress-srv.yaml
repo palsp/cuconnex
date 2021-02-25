@@ -10,10 +10,10 @@ spec:
     - host: connex.dev
       http:
         paths:
-            # - path : /api/auth/?(.*)
-            #   backend: 
-            #     serviceName: auth-srv 
-            #     servicePort: 3000
+          - path : /api/auth/?(.*)
+            backend: 
+              serviceName: auth-srv 
+              servicePort: 3000
           - path: /api/users/?(.*)
             backend:
               serviceName: users-srv 
