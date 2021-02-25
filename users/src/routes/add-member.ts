@@ -75,6 +75,6 @@ router.post('/api/members/invite', async (req: Request, res: Response, next: Nex
   }
 
   await Member.create({ userId: newMemberId, teamName, status: TeamStatus.Pending });
-  res.status(201).send({ message: 'Invite pending', user: user!.name, team: team!.name });
+  res.status(201).send({ message: 'Invite pending', user: user!.username, team: team!.name });
 });
 export { router as addMemberRouter };

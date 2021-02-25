@@ -17,15 +17,15 @@ import { Friend } from './friend.model';
 
 // All attributes in user model
 interface UserAttrs {
-    id: string;
-    username: string;
-    interests?: Interest[];
-    friends?: User[];
+  id: string;
+  username: string;
+  interests?: Interest[];
+  friends?: User[];
 }
 
 interface UserCreationAttrs {
-    id: string,
-    username: string;
+  id: string;
+  username: string;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
@@ -135,7 +135,7 @@ const initUser = (sequelize: Sequelize) => {
       },
       username: {
         type: new DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
         unique: true
       }
     },

@@ -18,7 +18,7 @@ describe('Get Team Test', () => {
   });
 
   it('should return team detail if it is found', async () => {
-    const user = await User.create({ id: '1', name: 'testName' });
+    const user = await User.create({ id: '1', username: 'testName' });
     await user.createInterest({ description: InterestDescription.Business });
     const team = await user.createTeams({ name: 'testTeam' });
 
