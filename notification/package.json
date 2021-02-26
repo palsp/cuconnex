@@ -1,11 +1,10 @@
 {
-  "name": "auth",
+  "name": "@cuconnex/nats",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
-    "test": "jest --watchAll --no-cache",
-    "test:ci": "jest"
+    "publish": "ts-node-dev --rs --notify false src/publisher.ts",
+    "listen": "ts-node-dev --rs --notify false src/listener.ts"
   },
   "jest": {
     "preset": "ts-jest",
