@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
-import { Team } from '../models/team.model';
-import { NotFoundError, BadRequestError } from '@cuconnex/common';
+import { Team } from '../../models/team.model';
+import { BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
 

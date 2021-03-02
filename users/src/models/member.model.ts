@@ -1,9 +1,6 @@
 import {
   Model,
   DataTypes,
-  HasManyGetAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  Association,
   Sequelize
 } from 'sequelize';
 

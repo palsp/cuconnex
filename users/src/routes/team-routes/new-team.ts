@@ -1,11 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { body } from 'express-validator';
 import { TeamStatus } from '@cuconnex/common';
-import { validateRequest, NotFoundError } from '@cuconnex/common';
-import { Team } from '../models/team.model';
-import { User } from '../models/user.model';
-import { Member } from '../models/member.model';
-import { NotAuthorizedError, BadRequestError, requireAuth } from '@cuconnex/common';
+import { Team } from '../../models/team.model';
+import { User } from '../../models/user.model';
+import { Member } from '../../models/member.model';
+import { NotAuthorizedError, BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
 

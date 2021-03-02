@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
-import { User } from '../models/user.model';
+import { User } from '../../models/user.model';
 import { NotFoundError } from '@cuconnex/common';
-import { requireUser } from '../middlewares/requireUser';
+import { requireUser } from '../../middlewares';
 
 
 
