@@ -2,8 +2,7 @@ import express, { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import { Team } from '../models/team.model';
 import { Op } from 'sequelize';
-import { requireUser } from '../middlewares/requireUser';
-import { Interest } from '../models/interest.model';
+import { requireUser } from '../middlewares';
 
 const router = express.Router();
 
