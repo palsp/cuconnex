@@ -1,12 +1,10 @@
-.container{
-    width:100%;
-    columns:2 auto;
-    margin-top:0%;
-    column-gap:0px;
-
-    
+.container {
+  width: 100%;
+  columns: 2 auto;
+  margin-top: 0%;
+  column-gap: 0px;
 }
 .colcontainer {
-    display: table;
-    width: 100%;
-  }
+  display: table;
+  width: 100%;
+}

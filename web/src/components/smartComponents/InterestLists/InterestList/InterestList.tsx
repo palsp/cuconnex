@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classes from "./InterestList.module.css";
 interface Props {
   value: string;
+  selectInterestHandlerDiv?: any;
 }
 
 const InterestList: React.FC<Props> = (props) => {
@@ -20,7 +21,11 @@ const InterestList: React.FC<Props> = (props) => {
     imgCSS.push(classes["isClicked"]);
   }
   return (
-    <div data-test="interest-list" className={classes.interestList}>
+    <div
+      onClick={() => props.selectInterestHandlerDiv(clicked)}
+      data-test="interest-list"
+      className={classes.interestList}
+    >
       <div onClick={interestClickHandler} className={imgCSS.join(" ")}>
         <p data-test="interest-list-props-value">{props.value}</p>
       </div>

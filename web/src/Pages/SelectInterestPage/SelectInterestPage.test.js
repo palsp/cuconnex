@@ -55,3 +55,13 @@ it("should render arrow right icon", () => {
   const arrowRight = findByTestAttr(wrapper, "arrow-right");
   expect(arrowRight.length).toBe(1);
 });
+
+// it("should render submit button if interest is selected", () => {
+//   const wrapper = setup();
+//   let submitButton = findByTestAttr(wrapper, "submit-button");
+//   expect(submitButton.length).toBe(0);
+//   const interestList = findByTestAttr(wrapper, "interest-list");
+//   interestList.simulate("click");
+//   submitButton = findByTestAttr(wrapper, "submit-button");
+//   expect(submitButton.length).toBe(1);
+// });
