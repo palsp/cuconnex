@@ -11,12 +11,12 @@
     width: 100vw;
   }
 
-  .main .container .logoDiv {
+  .logoDiv {
     margin: auto;
     margin-top: 30vh;
     margin-bottom: 2vh;
     height: 20vh;
-    width: 75vw;
+    width: 70vw;
   }
 
   .main .container .content {
@@ -26,7 +26,65 @@
   }
 
   .Button {
+    margin-top: 5vh;
     width: auto;
+  }
+
+  /* Signup */
+
+  .InputFieldDiv {
+    width: 100%;
+    margin: 1vh auto;
+  }
+
+  .textDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .subtitleDiv {
+    height: 54px;
+    margin: 1vw;
+    font-size: 1rem;
+  }
+
+  .footerNavigation {
+    position: relative;
+    top: 2vh;
+  }
+
+  .backNavigation {
+    position: absolute;
+    top: 0.2rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .divFooterHeading {
+    margin: 1vh 0 0 0.2rem;
+  }
+
+  .inputFieldSubtitle {
+    text-align: start;
+    margin-bottom: -15px;
+  }
+
+  .divHeader {
+    text-align: start;
+    width: 100%;
+    margin: 0 0 1rem;
+  }
+
+  .divHeaderSubtitle {
+    margin-top: 0.1rem;
+  }
+
+  .divSubtitle {
+    text-align: start;
+    width: 100%;
+    margin: auto;
   }
 }
 
@@ -43,7 +101,7 @@
     margin: auto;
     margin-top: 30vh;
     margin-bottom: 2vh;
-    width: 30vw;
+    width: 40vw;
   }
 
   .main .container .content {
@@ -55,6 +113,63 @@
   .Button {
     width: auto;
   }
+
+  .InputFieldDiv {
+    width: 100%;
+    margin: 2vh auto;
+    border: 1px solid green;
+  }
+
+  .textDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .subtitleDiv {
+    height: 54px;
+    margin: 1vw;
+    font-size: 1rem;
+}
+
+  .footerNavigation {
+    position: relative;
+  }
+
+  .backNavigation {
+    position: absolute;
+    top: 8px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+  }
+
+  .divFooterHeading {
+    margin: 5px 0 0 10px;
+  }
+
+  .inputFieldSubtitle {
+    text-align: start;
+    margin-bottom: -15px;
+  }
+
+  .divHeader {
+    text-align: start;
+    width: 80%;
+    margin: auto;
+  }
+
+  .divHeaderSubtitle {
+    margin-top: -15px;
+  }
+
+  .divSubtitle {
+    text-align: start;
+    width: 80%;
+    margin: auto;
+  }
+
 }
 
 @media only screen and (max-width: 320px) {                       /* small mobile */
@@ -86,7 +201,7 @@
   }
 }
 
-
+/*
 .InputFieldDiv {
   width: 80%;
   margin: 2vh auto;
@@ -141,3 +256,4 @@
   width: 80%;
   margin: auto;
 }
+*/

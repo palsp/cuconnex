@@ -29,6 +29,9 @@ const AuthPage: React.FC = () => {
   if (clickSignup === false && clickLogin === false) {
     authPrompt = (
       <div className={classes.Button}>
+        <div className={classes.logoDiv}>
+          <AppLogo data-test="auth-page-logo" />
+        </div>
         <Button
           data-test="auth-page-login-button"
           onClick={loginButtonClickedHandler}
@@ -69,10 +72,6 @@ const AuthPage: React.FC = () => {
         <div className={classes.background}>
           <HalfCircleOverlay data-test="auth-page-halfcircleoverlay" />
           <Background data-test="auth-page-background" />
-        </div>
-
-        <div className={classes.logoDiv}>
-          <AppLogo data-test="auth-page-logo" />
         </div>
 
         <div className={classes.content}>
