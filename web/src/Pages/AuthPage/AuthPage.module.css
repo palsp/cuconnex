@@ -5,7 +5,6 @@
 @media only screen and (max-width: 414px) {                       /* mobile */
   .main .container {
     width: 100vw;
-    border: 1px solid saddlebrown;
   }
 
   .main .container .background {
@@ -24,7 +23,6 @@
     margin: auto;
     font-size: 1rem;
     width: 70vw;
-    border: 1px solid green;
   }
 
   .Button {
@@ -62,7 +60,6 @@
 @media only screen and (max-width: 320px) {                       /* small mobile */
   .main .container {
     width: 100vw;
-    border: 1px solid saddlebrown;
   }
 
   .main .container .background {
@@ -81,7 +78,6 @@
     margin: auto;
     font-size: 1rem;
     width: 65vw;
-    border: 1px solid green;
   }
 
   .Button {
@@ -89,6 +85,7 @@
     width: auto;
   }
 }
+
 
 .InputFieldDiv {
   width: 80%;

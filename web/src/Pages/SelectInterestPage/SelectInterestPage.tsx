@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 const SelectInterestPage: React.FC = () => {
   return (
     <>
+      <div className={classes.main}>
+        <div className={classes.container}>
       <div className={classes.headerDiv}>
         <div className={classes.heading}>
           <Heading data-test="heading" value="Interests" />
@@ -47,6 +49,8 @@ const SelectInterestPage: React.FC = () => {
             <ArrowRight data-test="arrow-right" />
           </div>
         </Link>
+      </div>
+      </div>
       </div>
     </>
   );

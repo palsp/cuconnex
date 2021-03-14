@@ -5,6 +5,7 @@ import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
 import ArrowLeft from "../../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
 import InputField from "../../../components/dumbComponents/UI/InputField/InputField";
 import Subtitle from "../../../components/dumbComponents/UI/Subtitle/Subtitle";
+// import { motion } from "framer-motion";
 
 import classes from "../AuthPage.module.css";
 
