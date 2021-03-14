@@ -1,18 +1,121 @@
-.InputFieldDiv {
-  width: 80%;
-  margin: 5vh auto;
+.main {
+  width: 100vw;
 }
 
-.footerNavigation {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+@media only screen and (max-width: 414px) {                       /* mobile */
+  .main .container {
+    width: 100vw;
+    border: 1px solid saddlebrown;
+  }
+
+  .main .container .heading {
+    text-align: start;
+    margin: 4rem 0 0 2rem;
+  }
+
+  .main .container .subtitleDiv {
+    margin: -1.2rem 0 0 2rem;
+    text-align: start;
+  }
+
+  .main .container .profilePicDiv {
+    margin: 2rem auto;
+  }
+
+  .main .container .InputFieldDiv {
+    width: 70vw;
+    margin: 3vh auto;
+    border: 1px solid green;
+  }
+
+  .main .container .footerNavigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10vh;
+    border: 1px solid red;
+  }
+
+}
+
+@media only screen and (min-width: 415px) {                      /* tablet */
+  .main .container {
+    width: 100vw;
+  }
+
+  .main .container .background {
+    width: 100vw;
+  }
+
+  .main .container .logoDiv {
+    margin: auto;
+    margin-top: 30vh;
+    margin-bottom: 2vh;
+    width: 30vw;
+  }
+
+  .main .container .content {
+    margin: auto;
+    font-size: 1rem;
+    width: 70vw;
+  }
+
+  .Button {
+    width: auto;
+  }
+
+  .footerNavigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+}
+
+@media only screen and (max-width: 320px) {                       /* small mobile */
+  .main .container {
+    width: 100vw;
+    border: 1px solid saddlebrown;
+  }
+
+  .main .container .background {
+    width: 100vw;
+  }
+
+  .main .container .logoDiv {
+    margin: auto;
+    margin-top: 30vh;
+    margin-bottom: 2vh;
+    height: 20vh;
+    width: 60vw;
+  }
+
+  .main .container .content {
+    margin: auto;
+    font-size: 1rem;
+    width: 65vw;
+    border: 1px solid green;
+  }
+
+  .Button {
+    margin: auto;
+    width: auto;
+  }
 }
 
 .footerIcon {
   display: flex;
   align-items: center;
 }
+
+.usernameDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/*
 
 .heading {
   text-align: start;
@@ -24,12 +127,16 @@
   text-align: start;
 }
 
-.profilePicDiv {
-  margin: 50px auto;
+.InputFieldDiv {
+  width: 80%;
+  margin: 5vh auto;
 }
 
-.usernameDiv {
+.footerNavigation {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
+
+
+*/

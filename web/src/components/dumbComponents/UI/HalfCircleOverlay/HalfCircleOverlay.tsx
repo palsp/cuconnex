@@ -5,7 +5,7 @@ const HalfCircleOverlay = () => {
     <svg
       className={classes.HalfCircleOverlay}
       xmlns="http://www.w3.org/2000/svg"
-      width="647"
+      width="1294"
       height="647"
     >
       <path
