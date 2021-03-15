@@ -4,8 +4,9 @@ import { initMember } from './member.model';
 import { initInterests } from './interest.model';
 import { initFriend } from './friend.model';
 import { Sequelize, DataTypes } from 'sequelize';
-import { FriendStatus, TeamStatus } from '@cuconnex/common';
+import { FriendStatus, InterestDescription, TeamStatus } from '@cuconnex/common';
 import { TableName } from '../models/types';
+import { initUserInterest, UserInterest } from './UserInterest.model';
 
 export const initModel = (sequelize: Sequelize) => {
   const User = initUser(sequelize);
@@ -45,12 +46,45 @@ export const initModel = (sequelize: Sequelize) => {
     { timestamps: false }
   );
 
-  User.hasMany(Interest, {
-    sourceKey: 'id',
-    foreignKey: 'userId',
-    as: 'interests',
-    onDelete: 'CASCADE'
-  });
+  const userInterest = sequelize.define(
+    TableName.userInterest,
+    {
+      // description: {
+      //   type: DataTypes.ENUM,
+      //   values: Object.values(InterestDescription),
+      //   // unique: true
+      //   primaryKey: true,
+      //   references: TableName.users
+
+      // },
+      // userId: {
+      //   type: DataTypes.STRING(10),
+      //   primaryKey: true,
+      //   references: TableName.interests
+
+      // }
+    },
+    { timestamps: false }
+  );
+
+  // User.hasMany(Interest, {
+  //   sourceKey: 'id',
+  //   foreignKey: 'userId',
+  //   as: 'interests',
+  //   onDelete: 'CASCADE'
+  // });
+
+  // M-M user and interest 
+  User.belongsToMany(Interest, { through: userInterest, onDelete: 'CASCADE' })
+  Interest.belongsToMany(User, { through: userInterest, as: "interests", foreignKey: "description" })
+
+  // // sync Userinterest model with user-interest relation
+  // initUserInterest(sequelize);
+
+
+
+
+
   User.belongsToMany(User, {
     as: 'friend',
     through: frd,

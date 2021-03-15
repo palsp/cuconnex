@@ -1,5 +1,8 @@
 import { app } from './app';
 import { initializeDB } from './db';
+import { User } from './models/user.model';
+import { Interest } from './models/interest.model'
+import { InterestDescription } from '@cuconnex/common';
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -26,8 +29,12 @@ const validateEnvAttr = () => {
 const start = async () => {
   try {
     // check if all required env variable have been declared
-    validateEnvAttr();
+    // validateEnvAttr();
     await initializeDB();
+
+    const user = await User.create({ id: "6131886621", username: "pallll" })
+    const interest = await Interest.create({ description: InterestDescription.Business });
+
 
   } catch (err) {
     console.error(err);
