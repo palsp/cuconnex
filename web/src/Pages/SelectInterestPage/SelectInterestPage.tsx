@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import InterestLists from "../../components/smartComponents/InterestLists/InterestLists";
-import Heading from "../../components/dumbComponents/UI/Heading/Heading";
-import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
-import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
+import InterestLists from "@smartComponents/InterestLists/InterestLists";
+import Heading from "@dumbComponents/UI/Heading/Heading";
+import Subtitle from "@dumbComponents/UI/Subtitle/Subtitle";
+import DotMorePage from "@dumbComponents/UI/DotMorePage/DotMorePage";
 
 import classes from "./SelectInterestPage.module.css";
-import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
-import ArrowRight from "../../components/dumbComponents/UI/Icons/ArrowRight/ArrowRight";
+import ArrowLeft from "@dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
+import ArrowRight from "@dumbComponents/UI/Icons/ArrowRight/ArrowRight";
 import { Link } from "react-router-dom";
-import Button from "../../components/dumbComponents/UI/Button/Button";
+import Button from "@dumbComponents/UI/Button/Button";
 
 const SelectInterestPage: React.FC = () => {
   const [interestArray, setInterestArray] = useState<Array<string>>([]);
