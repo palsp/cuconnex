@@ -35,6 +35,8 @@ const start = async () => {
     const user = await User.create({ id: "6131886621", username: "pallll" })
     const interest = await Interest.create({ description: InterestDescription.Business });
 
+    await user.addInterest(interest);
+
 
   } catch (err) {
     console.error(err);

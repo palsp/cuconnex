@@ -54,6 +54,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   // add interest from a given arry to user info
   public async addInterestFromArray(interests: InterestCreationAttrs[]) {
+    console.log(interests)
     for (let interest of interests) {
       // find correspondin interest in db 
       const int = await Interest.findOne({ where: { description: interest } });
