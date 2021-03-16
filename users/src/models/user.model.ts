@@ -9,7 +9,7 @@ import {
   Association,
   Sequelize
 } from 'sequelize';
-import { BadRequestError, FriendStatus, NotFoundError } from '@cuconnex/common';
+import { BadRequestError, FriendStatus, InterestDescription, NotFoundError } from '@cuconnex/common';
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
 import { Interest, InterestCreationAttrs } from './interest.model';
@@ -54,13 +54,16 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   // add interest from a given arry to user info
   public async addInterestFromArray(interests: InterestCreationAttrs[]) {
-    console.log(interests)
+
     for (let interest of interests) {
       // find correspondin interest in db 
-      const int = await Interest.findOne({ where: { description: interest } });
+      console.log(interest.description)
+      const int = await Interest.findOne({ where: { description: interest.description } });
 
       // add association between user and interest 
-      if (int) this.addInterest(int);
+      if (int) {
+        await this.addInterest(int);
+      }
     }
 
 

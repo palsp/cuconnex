@@ -3,6 +3,7 @@ import { initializeDB } from './db';
 import { User } from './models/user.model';
 import { Interest } from './models/interest.model'
 import { InterestDescription } from '@cuconnex/common';
+import { convertCompilerOptionsFromJson } from 'typescript';
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -36,6 +37,8 @@ const start = async () => {
     const interest = await Interest.create({ description: InterestDescription.Business });
 
     await user.addInterest(interest);
+
+    const int = await Interest.findOne({ where: { description: InterestDescription.Business } })
 
 
   } catch (err) {
