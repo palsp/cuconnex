@@ -1,11 +1,12 @@
-import classes from "./RecruitMemberPage.module.css";
 import React from "react";
-import Heading from "../../components/dumbComponents/UI/Heading/Heading";
-import RecommendedLists from "../../components/smartComponents/RecommendedLists/RecommendedLists";
-import SearchBar from "../../components/smartComponents/Navigation/SearchBar/SearchBar";
-import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
-import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
 import { Link } from "react-router-dom";
+
+import { Heading, Subtitle } from "@dumbComponents/UI/index";
+import { RecommendedLists, SearchBar } from "@smartComponents/index";
+import { ArrowLeft } from "@icons/index";
+
+import classes from "./RecruitMemberPage.module.css";
+
 const RecruitMember: React.FC = () => {
   let RecruitMemberPrompt = (
     <>

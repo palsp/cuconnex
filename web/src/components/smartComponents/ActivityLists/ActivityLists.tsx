@@ -1,5 +1,5 @@
 import React from "react";
-import ActivityList from "./ActivityList/ActivityList";
+import ActivityList from "@smartComponents/ActivityLists/ActivityList/ActivityList";
 
 const activityArray = [
   {

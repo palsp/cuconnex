@@ -1,5 +1,5 @@
 import React from "react";
-import PicWithText from "../../../dumbComponents/UI/PicWithText/PicWithText";
+import PicWithText from "@dumbComponents/UI/PicWithText/PicWithText";
 import classes from "./ActivityList.module.css";
 
 interface Props {

@@ -1,5 +1,5 @@
 import React from "react";
-import RecommendedList from "./RecommendedList/RecommendedList";
+import RecommendedList from "@smartComponents/RecommendedLists/RecommendedList/RecommendedList";
 import classes from "./RecommendedLists.module.css";
 
 const recommendedArray = [

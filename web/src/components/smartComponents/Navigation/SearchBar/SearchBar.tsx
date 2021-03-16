@@ -3,9 +3,8 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import classes from "./SearchBar.module.css";
-import Search from "../../../dumbComponents/UI/Icons/Search/Search";
-import Send from "../../../dumbComponents/UI/Icons/Send/Send";
-// import AutoComplete from "@material-ui/lab/Autocomplete";
+import { Search } from "@icons/index";
+
 interface Props {
   value: string;
 }

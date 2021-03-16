@@ -1,9 +1,12 @@
 import React from "react";
-import Heading from "../../../dumbComponents/UI/Heading/Heading";
-import PlusCircle from "../../../dumbComponents/UI/Icons/PlusCircle/PlusCircle";
-import ProfilePic from "../../../dumbComponents/UI/ProfilePic/ProfilePic";
-import Subtitle from "../../../dumbComponents/UI/Subtitle/Subtitle";
-import Username from "../../../dumbComponents/UI/Username/Username";
+
+import {
+  Heading,
+  Subtitle,
+  Username,
+  ProfilePic,
+} from "@dumbComponents/UI/index";
+import { PlusCircle } from "@icons/index";
 import classes from "./FriendList.module.css";
 
 interface Props {

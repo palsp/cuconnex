@@ -16,6 +16,16 @@ module.exports = function override(config) {
         "components",
         "dumbComponents"
       ),
+      "@pages": path.resolve(__dirname, "src", "Pages"),
+      "@icons": path.resolve(
+        __dirname,
+        "src",
+        "components",
+        "dumbComponents",
+        "UI",
+        "Icons"
+      ),
+      "@assets": path.resolve(__dirname, "src", "assets"),
     },
   };
 

@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 
-import AppLogo from "../../components/dumbComponents/UI/AppLogo/AppLogo";
-import Background from "../../components/dumbComponents/UI/Background/Background";
-import Button from "../../components/dumbComponents/UI/Button/Button";
-import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
-import classes from "./AuthPage.module.css";
-import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
-import Heading from "../../components/dumbComponents/UI/Heading/Heading";
+import {
+  AppLogo,
+  Background,
+  Button,
+  HalfCircleOverlay,
+  Subtitle,
+  Heading,
+} from "@dumbComponents/UI/index";
+
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
+
+import classes from "./AuthPage.module.css";
 
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState(false);
@@ -75,10 +79,7 @@ const AuthPage: React.FC = () => {
           <AppLogo data-test="auth-page-logo" />
         </div>
 
-        <div className={classes.content}>
-          {authPrompt}
-        </div>
-        
+        <div className={classes.content}>{authPrompt}</div>
       </div>
     </div>
   );

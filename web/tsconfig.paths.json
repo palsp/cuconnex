@@ -4,7 +4,10 @@
     "baseUrl": ".",
     "paths": {
       "@smartComponents/*": ["src/components/smartComponents/*"],
-      "@dumbComponents/*": ["src/components/dumbComponents/*"]
+      "@dumbComponents/*": ["src/components/dumbComponents/*"],
+      "@pages/*": ["src/Pages/*"],
+      "@icons/*": ["src/components/dumbComponents/UI/Icons/*"],
+      "@assets/*": ["src/assets/*"]
     },
 
     "lib": ["dom", "dom.iterable", "esnext"],

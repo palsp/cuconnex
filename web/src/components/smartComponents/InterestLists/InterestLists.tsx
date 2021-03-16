@@ -1,5 +1,5 @@
 import React from "react";
-import InterestList from "./InterestList/InterestList";
+import InterestList from "@smartComponents/InterestLists/InterestList/InterestList";
 
 import classes from "./InterestLists.module.css";
 
