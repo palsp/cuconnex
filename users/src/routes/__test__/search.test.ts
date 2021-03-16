@@ -4,6 +4,13 @@ import { app } from '../../app';
 import { User } from '../../models/user.model';
 
 describe('Search Test', () => {
+
+  beforeEach(async () => {
+    console.log("this is running everytime")
+
+  });
+
+
   it('should return 401 if user is not authenticated', async () => {
     await request(app)
       .get(`/api/users/adsfafasfasdfa`)
