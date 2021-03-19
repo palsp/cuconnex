@@ -10,7 +10,6 @@ build:
   # googleCloudBuild:
   #   projectId: ticketing-dev-303111
   artifacts:
-    
     - image: palsp/connex-users
       context: users
       docker:
@@ -26,4 +25,12 @@ build:
       sync:
         manual:
           - src: 'src/**/*.ts'
+            dest: .
+    - image: palsp/connex-event
+      context: event-services
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.go'
             dest: .
