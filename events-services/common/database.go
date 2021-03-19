@@ -1,4 +1,4 @@
-package models
+package common
 
 import (
 	"fmt"
@@ -9,41 +9,38 @@ import (
 
 var DB *gorm.DB
 
-
-
-
 // InitDB open a database and save the connection to `database` struct
-func InitDB()  ( *gorm.DB , error ){
+func InitDB() (*gorm.DB, error) {
 	var err error
 	dsn := "root:liulaks123@tcp(localhost)/eventdb"
-	db , err := gorm.Open(mysql.Open(dsn) , &gorm.Config{})
-	
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
 	if err != nil {
-		fmt.Println("db err:" , err)
-		return nil , err
+		fmt.Println("db err:", err)
+		return nil, err
 	}
-	
+
 	DB = db
-	return DB , nil
+	return DB, nil
 }
 
 // TestDBInit will create a temporarily database for running testing cases
-func TestDBInit()( *gorm.DB , error ){
+func TestDBInit() (*gorm.DB, error) {
 	dsn := "root:liulaks123@tcp(localhost)/eventdb_test"
-	test_db , err := gorm.Open(mysql.Open(dsn) , &gorm.Config{})
+	test_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		fmt.Println("db err:" ,err)
-		return nil , err
+		fmt.Println("db err:", err)
+		return nil, err
 	}
-	
+
 	DB = test_db
-	return DB , nil
-	
+	return DB, nil
+
 }
 
-// TestDBFree delete the database after running testing case  
+// TestDBFree delete the database after running testing case
 func TestDBFree(test_db *gorm.DB) error {
-	db , err := test_db.DB()
+	db, err := test_db.DB()
 	db.Exec("DROP DATABASE ?", "eventdb_test")
 	db.Close()
 
