@@ -16,16 +16,11 @@ var DB = DBConfig{
 	Password: os.Getenv("DB_PASSWORD"),
 }
 
-// var DB = DBConfig{
-// 	Name: "eventdb",
-// 	Host: "localhost",
-// 	User: "root",
-// 	Password: "liulaks123",
-// }
+
 
 var TestDB = DBConfig{
 	Name: "eventdb_test",
 	Host: "localhost",
 	User : "root",
-	Password: "liulaks123",
+	Password: "password",
 }

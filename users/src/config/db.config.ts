@@ -8,6 +8,6 @@ export default {
 export const test_config = {
   host: 'localhost',
   user: 'root',
-  password: 'liulaks123',
+  password: 'password',
   db: 'testdb'
 };
