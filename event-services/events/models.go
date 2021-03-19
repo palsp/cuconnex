@@ -36,3 +36,11 @@ func SaveOne(data interface{}) error {
 	err := db.Save(data).Error
 	return err
 }
+
+// FindEvents returns events that match a condition
+func FindEvents(condition string , args ...string) ([]EventModel , error) {
+	db := common.GetDB()
+	var models []EventModel
+	result := db.Where(condition , args ).Find(&models)
+	return models , result.Error
+}
