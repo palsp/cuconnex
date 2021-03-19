@@ -43,14 +43,14 @@ func TestDBInit() (*gorm.DB, error) {
 		panic(err)
 	}
 
-	stmt , _ := db.Prepare("CREATE DATABASE IF NOT EXISTS " + config.DB.Name )
+	stmt , _ := db.Prepare("CREATE DATABASE IF NOT EXISTS " + config.TestDB.Name )
 	_ , err = stmt.Exec()
 	if err != nil {
 		fmt.Println("db err : create database failed")
 		panic(err)
 	}
 
-	test_db, err := gorm.Open(mysql.Open(dsn + config.DB.Name), &gorm.Config{})
+	test_db, err := gorm.Open(mysql.Open(dsn + config.TestDB.Name), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("db err:", err)

@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
 import { InterestDescription } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model';
 
 it('should return 400 if users send invalid type of interest list', async () => {
   await request(app)
@@ -48,7 +49,10 @@ it('should return 401 if users is not login', async () => {
     })
     .expect(401);
 });
+
+
 it('should create a users with interests on valid input', async () => {
+  // await Interest.create({ description: InterestDescription.Business })
   await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())
@@ -60,6 +64,8 @@ it('should create a users with interests on valid input', async () => {
 });
 
 it('should not save duplicate interest list', async () => {
+
+  // await Interest.create({ description: InterestDescription.Business })
   const { body: user } = await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())

@@ -27,5 +27,5 @@ var TestDB = DBConfig{
 	Name: "eventdb_test",
 	Host: "localhost",
 	User : "root",
-	Password: "password",
+	Password: "liulaks123",
 }

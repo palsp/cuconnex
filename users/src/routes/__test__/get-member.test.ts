@@ -1,10 +1,12 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Team } from '../../models/team.model';
+
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
 import { InterestDescription } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model'
+
 
 describe('Get Members', () => {
   it('should return "Team not found! if team is not found', async () => {
@@ -23,12 +25,15 @@ describe('Get Members', () => {
 
   it('should return 200: member status detail if get member correctly', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
-    await user1.createInterest({ description: InterestDescription.Business });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
     const team = await user1.createTeams({ name: 'Team1' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
     const user2 = await User.create({ id: '2', username: 'testName2' });
-    await user2.createInterest({ description: InterestDescription.Business });
+    // await user2.createInterest({ description: InterestDescription.Business });
+    await user2.addInterest(interest!)
 
     await Member.create({ userId: user2.id, teamName: 'Team1', status: TeamStatus.Pending });
 
