@@ -17,6 +17,11 @@ type EventModel struct {
 	EndDate   time.Time `gorm:"column:end-date"`
 }
 
+
+
+func (EventModel) TableName() string{
+	return "event"
+}
 // AutoMigrate  Migrate the schema of database if needed
 func AutoMigrate() {
 	db := common.GetDB()
