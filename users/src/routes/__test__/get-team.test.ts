@@ -3,6 +3,7 @@ import { app } from '../../app';
 import { Team } from '../../models/team.model';
 import { User } from '../../models/user.model';
 import { InterestDescription } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model';
 
 describe('Get Team Test', () => {
   it('should return "Team not found!" if team is not found', async () => {
@@ -19,7 +20,9 @@ describe('Get Team Test', () => {
 
   it('should return team detail if it is found', async () => {
     const user = await User.create({ id: '1', username: 'testName' });
-    await user.createInterest({ description: InterestDescription.Business });
+    // await user.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
     const team = await user.createTeams({ name: 'testTeam' });
 
     const res = await request(app)

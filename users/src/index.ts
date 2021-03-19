@@ -3,7 +3,9 @@ import { initializeDB } from './db';
 import { User } from './models/user.model';
 import { Interest } from './models/interest.model'
 import { InterestDescription } from '@cuconnex/common';
-import { convertCompilerOptionsFromJson } from 'typescript';
+import { startInterest } from './models/initDB'
+import { fromPairs } from 'lodash';
+import { UserInterest } from './models/UserInterest.model';
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -33,12 +35,13 @@ const start = async () => {
     // validateEnvAttr();
     await initializeDB();
 
-    const user = await User.create({ id: "6131886621", username: "pallll" })
-    const interest = await Interest.create({ description: InterestDescription.Business });
+    await startInterest();
 
-    await user.addInterest(interest);
-
-    const int = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    const user = await User.create({ id: "6131776621", username: "pal" });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
+    const users = await User.findAll({ where: { id: user.id }, include: { association: "interests", attributes: ["description"] } })
+    console.log(users[0].interests)
 
 
   } catch (err) {

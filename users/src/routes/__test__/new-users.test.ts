@@ -52,7 +52,7 @@ it('should return 401 if users is not login', async () => {
 
 
 it('should create a users with interests on valid input', async () => {
-  await Interest.create({ description: InterestDescription.Business })
+  // await Interest.create({ description: InterestDescription.Business })
   await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())
@@ -65,7 +65,7 @@ it('should create a users with interests on valid input', async () => {
 
 it('should not save duplicate interest list', async () => {
 
-  await Interest.create({ description: InterestDescription.Business })
+  // await Interest.create({ description: InterestDescription.Business })
   const { body: user } = await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())

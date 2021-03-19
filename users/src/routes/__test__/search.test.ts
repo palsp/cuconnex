@@ -1,14 +1,15 @@
 import { InterestDescription } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../app';
+import { Interest } from '../../models/interest.model';
 import { User } from '../../models/user.model';
 
 describe('Search Test', () => {
 
-  beforeEach(async () => {
-    console.log("this is running everytime")
+  // beforeEach(async () => {
+  //   console.log("this is running everytime")
 
-  });
+  // });
 
 
   it('should return 401 if user is not authenticated', async () => {
@@ -97,7 +98,9 @@ describe('Search Test', () => {
   it('should include interest in the response', async () => {
     const user = await User.create({ id: '6131886621', username: 'pal' });
     const user2 = await User.create({ id: '6131776621', username: 'bob' });
-    await user.createInterests({ description: InterestDescription.Developer });
+    // await user.createInterests({ description: InterestDescription.Developer });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
 
     const { body: res } = await request(app)
       .get(`/api/users/${user.id}`)
@@ -105,7 +108,7 @@ describe('Search Test', () => {
       .send({});
 
     expect(res[0].interests).toBeDefined();
-    expect(res[0].interests[0].description).toEqual(InterestDescription.Developer);
+    expect(res[0].interests[0].description).toEqual(InterestDescription.Business);
   });
 
   it('should return a corresponding team(s) for the given name sort by name length', async () => {

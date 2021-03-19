@@ -75,13 +75,13 @@ export const initModel = (sequelize: Sequelize) => {
   // });
 
   // M-M user and interest 
-  User.belongsToMany(Interest, { through: userInterest, onDelete: 'CASCADE' })
+  User.belongsToMany(Interest, { through: userInterest, as: "interests", foreignKey: "userId", onDelete: 'CASCADE' })
   Interest.belongsToMany(User, { through: userInterest, as: "interests", foreignKey: "description" })
 
   // // sync Userinterest model with user-interest relation
   // initUserInterest(sequelize);
 
-
+  initUserInterest(sequelize);
 
 
 

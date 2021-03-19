@@ -4,11 +4,14 @@ import { Team } from '../../models/team.model';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
 import { InterestDescription, TeamStatus } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model';
 
 describe('Create a Team Test', () => {
   it('should return 400 if team name is already existed', async () => {
     const user = await User.create({ id: '1', username: 'testName' });
-    await user.createInterest({ description: InterestDescription.Business });
+    // await user.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
     const team = await user.createTeams({ name: 'testTeam' });
 
     const res = await request(app)
@@ -25,7 +28,9 @@ describe('Create a Team Test', () => {
 
   it('should return 401 if user is not authorized or user is not logged in.', async () => {
     const user = await User.create({ id: '1', username: 'testName' });
-    await user.createInterest({ description: InterestDescription.Business });
+    // await user.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
     const team = await user.createTeams({ name: 'testTeam' });
 
     // no global log in
@@ -40,7 +45,9 @@ describe('Create a Team Test', () => {
 
   it('should return "User not found!" if cannot find user in the database', async () => {
     const user = await User.create({ id: '1', username: 'testName' });
-    await user.createInterest({ description: InterestDescription.Business });
+    // await user.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
     const team = await user.createTeams({ name: 'testTeam' });
 
     const id = '2';
@@ -58,7 +65,9 @@ describe('Create a Team Test', () => {
 
   it('should create team successfully if user is authorized and team name is unique.', async () => {
     const user = await User.create({ id: '1', username: 'testName' });
-    await user.createInterest({ description: InterestDescription.Business });
+    // await user.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
     const team = await user.createTeams({ name: 'testTeam' });
 
     const res = await request(app)

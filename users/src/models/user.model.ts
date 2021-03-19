@@ -70,6 +70,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   public async findRelation(userId: string): Promise<FriendStatus | null> {
+    console.log(this.id, userId)
     if (this.id === userId) return null;
     const constraint = {
       [Op.or]: [
@@ -139,7 +140,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   public static associations: {
-    interests: Association<User, Interest>;
+    interests: Association<Interest>;
     friend: Association<User, User>;
     teams: Association<User, Team>;
   };
