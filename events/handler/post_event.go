@@ -38,6 +38,7 @@ func ( d Date ) GetDate(loc time.Location) time.Time{
 
 // CreateEvent handles the POST
 func CreateEvent(c *gin.Context){
+	DB := models.GetDB()
 	postBody := EventBody{}
 
 	// Pase body to struct
@@ -65,7 +66,7 @@ func CreateEvent(c *gin.Context){
 
 
 
-	models.DB.Create(&event)
+	DB.Create(&event)
 
 	c.JSON(http.StatusCreated, event)
 

@@ -21,3 +21,10 @@ type Event struct {
 func (Event) TableName() string {
 	return "event"
 }
+
+
+func AutoMigrate() {
+	db := GetDB()
+
+	db.AutoMigrate(&Event{})
+}

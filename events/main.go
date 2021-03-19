@@ -10,10 +10,9 @@ import (
 
 func main(){
 	var err error
-	err = models.InitDB()
+	_, err = models.InitDB()
 	if err != nil {
-		log.Println(err)
-		return
+		log.Fatal(err)
 	}
 
 	// Create a router

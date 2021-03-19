@@ -6,7 +6,7 @@ import (
 
 // GetEvent returns event(s) according to search keyword
 func GetEvent(c *gin.Context){
-
+	
 }
 
 
