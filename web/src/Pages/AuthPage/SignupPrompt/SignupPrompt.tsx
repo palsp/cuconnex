@@ -54,11 +54,10 @@ const SignupPrompt: React.FC<Props> = (props) => {
           onClick={props.backButtonClickedHandler}
           className={classes.backNavigation}
           data-test="back-navigation"
-        >
-          <ArrowLeft />
-          <div className={classes.divFooterHeading}>
-            <Heading value="Back" size="small" />
-          </div>
+        ><ArrowLeft />
+        <div className={classes.divFooterHeading}>
+          <Heading value="Back" size="small" />
+        </div>
         </div>
       </div>
     </>

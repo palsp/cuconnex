@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { motion } from 'framer-motion';
 import AppLogo from "../../components/dumbComponents/UI/AppLogo/AppLogo";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import Button from "../../components/dumbComponents/UI/Button/Button";
@@ -28,34 +28,63 @@ const AuthPage: React.FC = () => {
   let authPrompt = null;
   if (clickSignup === false && clickLogin === false) {
     authPrompt = (
-      <div className={classes.Button}>
+      <div className={classes.contentContainer}>
         <div className={classes.logoDiv}>
-          <AppLogo data-test="auth-page-logo" />
-        </div>
-        <Button
-          data-test="auth-page-login-button"
-          onClick={loginButtonClickedHandler}
-          value="Log in to an existing account"
-        />
-        <div className={classes.textDiv}>
-          <div className={classes.subtitleDiv}>
-            <Subtitle value="Don't have an account yet?" />
-          </div>
-          <div
-            data-test="auth-page-signup-button"
-            onClick={signupButtonClickedHandler}
-          >
-            <Heading value="Sign up" size="small" />
+            <AppLogo data-test="auth-page-logo" /></div>
+        <div className={classes.circle_overlay}></div>
+        <div className={classes.Button}>
+          <Button
+            data-test="auth-page-login-button"
+            onClick={loginButtonClickedHandler}
+            value="Log in to an existing account"
+          />
+          <div className={classes.textDiv}>
+            <div className={classes.subtitleDiv}>
+              <Subtitle value="Don't have an account yet?" />
+            </div>
+            <div
+              data-test="auth-page-signup-button"
+              onClick={signupButtonClickedHandler}
+            >
+              <Heading value="Sign up" size="small" />
+            </div>
           </div>
         </div>
       </div>
     );
   } else if (clickSignup === true) {
     authPrompt = (
-      <SignupPrompt
-        data-test="auth-page-signup-prompt"
-        backButtonClickedHandler={backButtonClickedHandler}
-      />
+      <motion.div 
+        animate={{ y: -120 }}
+        transition={{ 
+          type: "spring",
+          delay: 0,
+          stiffness: 270,
+          damping: 29,
+          mass: 3.3,
+        }}
+        className={classes.contentClick}>
+        <div className={classes.logoDiv}>
+          <AppLogo data-test="auth-page-logo" />
+        </div>
+        <motion.div 
+          animate={{ y: -100 }} 
+          transition={{ 
+            type: "spring",
+            delay: 0,
+            stiffness: 270,
+            damping: 29,
+            mass: 3.3,
+          }}
+          className={classes.circle_overlay}>
+        </motion.div>
+        <div className={classes.signupPrompt}>
+          <SignupPrompt
+            data-test="auth-page-signup-prompt"
+            backButtonClickedHandler={backButtonClickedHandler}
+          />
+        </div>
+      </motion.div>
     );
   } else if (clickLogin === true) {
     authPrompt = (
@@ -70,14 +99,10 @@ const AuthPage: React.FC = () => {
     <div className={classes.main}>
       <div className={classes.container}>
         <div className={classes.background}>
-          <HalfCircleOverlay data-test="auth-page-halfcircleoverlay" />
-          <Background data-test="auth-page-background" />
+          <Background data-test="auth-page-background">
+            <div className={classes.content}>{authPrompt}</div>
+          </Background>
         </div>
-
-        <div className={classes.content}>
-          {authPrompt}
-        </div>
-        
       </div>
     </div>
   );

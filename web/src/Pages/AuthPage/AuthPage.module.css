@@ -1,210 +1,80 @@
 .main {
   width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  z-index: 2;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+.circle_overlay {
+  position: absolute;
+  z-index: -1;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  width: 200%;
+  height: 100%;
+  bottom: -33%;
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contentClick {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Button {
+  margin-top: 10%;
+  margin-bottom: 30%;
 }
 
 @media only screen and (max-width: 414px) {                       /* mobile */
-  .main .container {
-    width: 100vw;
-  }
-
-  .main .container .background {
-    width: 100vw;
-  }
-
   .logoDiv {
-    margin: auto;
-    margin-top: 30vh;
-    margin-bottom: 2vh;
-    height: 20vh;
-    width: 70vw;
-  }
-
-  .main .container .content {
-    margin: auto;
-    font-size: 1rem;
-    width: 70vw;
-  }
-
-  .Button {
-    margin-top: 5vh;
-    width: auto;
-  }
-
-  /* Signup */
-
-  .InputFieldDiv {
-    width: 100%;
-    margin: 1vh auto;
-  }
-
-  .textDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-
-  .subtitleDiv {
-    height: 54px;
-    margin: 1vw;
-    font-size: 1rem;
-  }
-
-  .footerNavigation {
-    position: relative;
-    top: 2vh;
-  }
-
-  .backNavigation {
-    position: absolute;
-    top: 0.2rem;
-    display: flex;
-    align-items: center;
-  }
-
-  .divFooterHeading {
-    margin: 1vh 0 0 0.2rem;
-  }
-
-  .inputFieldSubtitle {
-    text-align: start;
-    margin-bottom: -15px;
-  }
-
-  .divHeader {
-    text-align: start;
-    width: 100%;
-    margin: 0 0 1rem;
-  }
-
-  .divHeaderSubtitle {
-    margin-top: 0.1rem;
-  }
-
-  .divSubtitle {
-    text-align: start;
-    width: 100%;
-    margin: auto;
+    margin-top: 60%;
+    margin-bottom: 5%;
+    width: 70%;
   }
 }
 
 @media only screen and (min-width: 415px) {                      /* tablet */
-  .main .container {
-    width: 100vw;
-  }
-
-  .main .container .background {
-    width: 100vw;
-  }
-
-  .main .container .logoDiv {
-    margin: auto;
-    margin-top: 30vh;
-    margin-bottom: 2vh;
-    width: 40vw;
-  }
-
-  .main .container .content {
-    margin: auto;
-    font-size: 1rem;
-    width: 70vw;
-  }
-
-  .Button {
-    width: auto;
-  }
-
-  .InputFieldDiv {
-    width: 100%;
-    margin: 2vh auto;
-    border: 1px solid green;
-  }
-
-  .textDiv {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-
-  .subtitleDiv {
-    height: 54px;
-    margin: 1vw;
-    font-size: 1rem;
-}
-
-  .footerNavigation {
-    position: relative;
-  }
-
-  .backNavigation {
-    position: absolute;
-    top: 8px;
-    left: 30px;
-    display: flex;
-    align-items: center;
-  }
-
-  .divFooterHeading {
-    margin: 5px 0 0 10px;
-  }
-
-  .inputFieldSubtitle {
-    text-align: start;
-    margin-bottom: -15px;
-  }
-
-  .divHeader {
-    text-align: start;
-    width: 80%;
-    margin: auto;
-  }
-
-  .divHeaderSubtitle {
-    margin-top: -15px;
-  }
-
-  .divSubtitle {
-    text-align: start;
-    width: 80%;
-    margin: auto;
+  .logoDiv {
+    margin-top: 30%;
+    margin-bottom: 5%;
+    width: 50%;
   }
 
 }
 
 @media only screen and (max-width: 320px) {                       /* small mobile */
-  .main .container {
-    width: 100vw;
-  }
 
-  .main .container .background {
-    width: 100vw;
-  }
-
-  .main .container .logoDiv {
-    margin: auto;
-    margin-top: 30vh;
-    margin-bottom: 2vh;
-    height: 20vh;
-    width: 60vw;
-  }
-
-  .main .container .content {
-    margin: auto;
-    font-size: 1rem;
-    width: 65vw;
-  }
-
-  .Button {
-    margin: auto;
-    width: auto;
+  .logoDiv {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 60%;
   }
 }
 
-/*
 .InputFieldDiv {
-  width: 80%;
-  margin: 2vh auto;
+  width: 100%;
+  margin: 5% auto;
 }
 
 .textDiv {
@@ -226,8 +96,7 @@
 
 .backNavigation {
   position: absolute;
-  top: 8px;
-  left: 30px;
+  top: 10%;
   display: flex;
   align-items: center;
 }
@@ -238,13 +107,12 @@
 
 .inputFieldSubtitle {
   text-align: start;
-  margin-bottom: -15px;
+  margin-bottom: 5%;
 }
 
 .divHeader {
   text-align: start;
-  width: 80%;
-  margin: auto;
+  width: 100%;
 }
 
 .divHeaderSubtitle {
@@ -253,7 +121,6 @@
 
 .divSubtitle {
   text-align: start;
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
-*/
