@@ -28,3 +28,11 @@ func AutoMigrate() {
 
 	db.AutoMigrate(&EventModel{})
 }
+
+
+// SaveOne save event to db
+func SaveOne(data interface{}) error {
+	db := common.GetDB()
+	err := db.Save(data).Error
+	return err
+}
