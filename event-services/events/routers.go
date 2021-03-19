@@ -1,6 +1,7 @@
 package events
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -30,15 +31,18 @@ func CreateEvent(c *gin.Context) {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"errors" : err.Error(),
 		})
+		return
 	}
 
-	if err := SaveOne(&eventModelValidator.EventModel) ; err != nil {
+	fmt.Println(eventModelValidator)
+	if err := SaveOne(&eventModelValidator.eventModel) ; err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"errors" : err.Error(),
 		})
+		return
 	}
 
-	c.Set("my_event_model" , eventModelValidator.EventModel)
+	c.Set("my_event_model" , eventModelValidator.eventModel)
 	serializer := EventSerializer{c}
 	c.JSON(http.StatusCreated, serializer.Response())
 

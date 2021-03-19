@@ -7,12 +7,16 @@ import (
 	"github.com/palsp/cuconnex/event-services/common"
 )
 
-
+// EventModelValidator contains two part
+// - Validator : write json checking rule
+// - DataModel: fill with data from Validator after invoking common.Bind(c , self)
+// Then, just call Save() after the data is ready in DataModel
 type EventModelValidator struct {
 	Event
-	EventModel `json:"-"`
+	eventModel EventModel `json:"-"`
 }
 
+// EventBody represents expected request body
 type Event struct {
 	EventName string        `json:"event-name"`
 	Bio       string        `json:"bio"`
@@ -26,7 +30,7 @@ type DateForm struct {
 	Month time.Month `json:"month"`
 	Day   int        `json:"day"`
 	Year  int        `json:"year"`
-	Time  *TimeForm     `json:"time"`
+	Time  *TimeForm   `json:"time"`
 }
 
 
@@ -44,22 +48,21 @@ func (d DateForm) GetDate(loc time.Location) time.Time {
 }
 
 
-
+// Bind stores request body into EventModelValidator 
 func (self *EventModelValidator) Bind(c *gin.Context) error{
 	err := common.Bind(c, self)
 	if err != nil {
 		return err
 	}
 
-	self.EventModel.EventName = self.Event.EventName
-	self.EventModel.Bio = self.Event.Bio
-	// fmt.Println(postBody.StartDate.GetDate(postBody.Location))
-	self.EventModel.Location = self.Event.Location.String()
+	self.eventModel.EventName = self.Event.EventName
+	self.eventModel.Bio = self.Event.Bio
+	self.eventModel.Location = self.Event.Location.String()
 	if self.Event.StartDate != nil {
-		self.EventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location)
+		self.eventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location)
 	}
 	if self.Event.EndDate != nil {
-		self.EventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location)
+		self.eventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location)
 	}
 	return nil
 }
