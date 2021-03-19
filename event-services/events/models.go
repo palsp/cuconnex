@@ -3,7 +3,7 @@ package events
 import (
 	"time"
 
-	"github.com/palsp/cuconnex/events-services/common"
+	"github.com/palsp/cuconnex/event-services/common"
 	"gorm.io/gorm"
 )
 

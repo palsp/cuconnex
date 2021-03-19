@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/palsp/cuconnex/events-services/common"
+	"github.com/palsp/cuconnex/event-services/common"
 )
 
 type EventBody struct {

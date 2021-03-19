@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/palsp/cuconnex/events-services/common"
-	"github.com/palsp/cuconnex/events-services/events"
+	"github.com/palsp/cuconnex/event-services/common"
+	"github.com/palsp/cuconnex/event-services/events"
 )
 
 func Migrate() {
