@@ -27,18 +27,18 @@ app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
 
-// user routes
+// user handler
 app.use(router.getUserRouter);
 app.use(router.newUserRouter);
 app.use(router.addFriendRouter);
 
-// team routes
+// team handler
 app.use(router.getTeamRouter);
 app.use(router.newTeamRouter);
 app.use(router.getMemberRouter);
 app.use(router.addMemberRouter);
 
-// other routes
+// other handler
 app.use(router.memberStatusRouter);
 app.use(router.searchRouter)
 

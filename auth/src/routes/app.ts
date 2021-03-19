@@ -31,7 +31,7 @@ app.use(Session({
     secure: false,
 }))
 
-/* Initialize all the routes */
+/* Initialize all the handler */
 // app.use('/api/test', userRoutes);
 app.use('/api/auth', authRoutes);
 
