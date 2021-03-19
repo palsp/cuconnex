@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
 import { FriendStatus, InterestDescription } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model';
 
 describe('get current user', () => {
   it('should return 401 if user is not authenticated', async () => {
@@ -27,7 +28,9 @@ describe('get current user', () => {
   it('should return user information if user already add information', async () => {
     const id = '6131778821';
     const user = await User.create({ username: 'pal', id });
-    await user.createInterests({ description: InterestDescription.Business });
+    // await user.createInterests({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
 
     const { body: res } = await request(app)
       .get('/api/users')
@@ -42,7 +45,9 @@ describe('get current user', () => {
   it('return user must include interests', async () => {
     const id = '6131778821';
     const user = await User.create({ username: 'pal', id });
-    await user.createInterests({ description: InterestDescription.Business });
+    // await user.createInterests({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
 
     const { body: res } = await request(app)
       .get('/api/users')
