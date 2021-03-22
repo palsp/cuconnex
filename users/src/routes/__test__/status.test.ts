@@ -10,7 +10,9 @@ describe('Status Changing Test', () => {
   it('should return 400 if user is not found', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
     // await user1.createInterest({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
@@ -30,7 +32,11 @@ describe('Status Changing Test', () => {
 
   it('should return 400 if team is not found', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
-    await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+
+    await user1.addInterest(interest!);
 
     const res = await request(app)
       .post('/api/members/status')
@@ -47,7 +53,9 @@ describe('Status Changing Test', () => {
 
   it('should return 400 if the requester is not the team creator', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
 
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1' });
@@ -77,7 +85,9 @@ describe('Status Changing Test', () => {
 
   it('should return 400 if the targetId is not yet pending request.', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
@@ -102,13 +112,15 @@ describe('Status Changing Test', () => {
 
   it('should return 200 if the creator can change status successfully.', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
     const user3 = await User.create({ id: '3', username: 'testName3' });
-    await user3.addInterest(interest!)
+    await user3.addInterest(interest!);
     const oldStatus = await Member.create({
       userId: user3.id,
       teamName: 'Team1',

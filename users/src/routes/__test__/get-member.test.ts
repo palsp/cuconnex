@@ -20,23 +20,6 @@ describe('Get Members', () => {
     expect(error.message).toEqual('Team not found!');
   });
 
-  it('should return empty array if team has no member yet', async () => {
-    const user1 = await User.create({ id: '1', username: 'testName1' });
-    await user1.createInterest({ description: InterestDescription.Business });
-    const team = await user1.createTeams({ name: 'Team1' });
-
-    const res = await request(app)
-      .get('/api/members')
-      .set('Cookie', global.signin('1'))
-      .send({
-        teamName: 'Team1'
-      })
-      .expect(200);
-
-    expect(res.body.message).toEqual(`Getting members of ${team.name}`);
-    expect(res.body.members).toEqual([]);
-  });
-
   it('should return 200: member status detail if get member correctly', async () => {
     const user1 = await User.create({ id: '1', username: 'testName1' });
     // await user1.createInterest({ description: InterestDescription.Business });
