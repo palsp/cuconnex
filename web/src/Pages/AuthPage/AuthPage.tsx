@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 import {
   AppLogo,
   Background,
   Button,
-  HalfCircleOverlay,
   Subtitle,
   Heading,
 } from "@dumbComponents/UI/index";
-
 
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
@@ -37,8 +35,12 @@ const AuthPage: React.FC = () => {
     authPrompt = (
       <div className={classes.contentContainer}>
         <div className={classes.logoDiv}>
-            <AppLogo data-test="auth-page-logo" /></div>
-        <div className={classes.circle_overlay}></div>
+          <AppLogo data-test="auth-page-logo" />
+        </div>
+        <div
+          className={classes.circle_overlay}
+          data-test="auth-page-halfcircleoverlay"
+        ></div>
         <div className={classes.Button}>
           <Button
             data-test="auth-page-login-button"
@@ -61,30 +63,31 @@ const AuthPage: React.FC = () => {
     );
   } else if (clickSignup === true) {
     authPrompt = (
-      <motion.div 
+      <motion.div
         animate={{ y: -120 }}
-        transition={{ 
+        transition={{
           type: "spring",
           delay: 0,
           stiffness: 270,
           damping: 29,
           mass: 3.3,
         }}
-        className={classes.contentClick}>
+        className={classes.contentClick}
+      >
         <div className={classes.logoDiv}>
           <AppLogo data-test="auth-page-logo" />
         </div>
-        <motion.div 
-          animate={{ y: -100 }} 
-          transition={{ 
+        <motion.div
+          animate={{ y: -100 }}
+          transition={{
             type: "spring",
             delay: 0,
             stiffness: 270,
             damping: 29,
             mass: 3.3,
           }}
-          className={classes.circle_overlay}>
-        </motion.div>
+          className={classes.circle_overlay}
+        ></motion.div>
         <div className={classes.signupPrompt}>
           <SignupPrompt
             data-test="auth-page-signup-prompt"
@@ -106,12 +109,10 @@ const AuthPage: React.FC = () => {
     <div className={classes.main}>
       <div className={classes.container}>
         <div className={classes.background}>
-
           <Background data-test="auth-page-background">
             <div className={classes.content}>{authPrompt}</div>
           </Background>
         </div>
-
       </div>
     </div>
   );

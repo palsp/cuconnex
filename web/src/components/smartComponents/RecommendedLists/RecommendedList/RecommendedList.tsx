@@ -6,6 +6,7 @@ import {
   Subtitle,
   Username,
 } from "@dumbComponents/UI/index";
+
 import classes from "./RecommendedList.module.css";
 
 interface Props {
