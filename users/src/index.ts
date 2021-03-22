@@ -1,9 +1,9 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { User } from './models/user.model';
-import { Interest } from './models/interest.model'
+import { Interest } from './models/interest.model';
 import { InterestDescription } from '@cuconnex/common';
-import { startInterest } from './models/initDB'
+import { startInterest } from './models/initDB';
 import { fromPairs } from 'lodash';
 import { UserInterest } from './models/UserInterest.model';
 
@@ -37,13 +37,15 @@ const start = async () => {
 
     await startInterest();
 
-    const user = await User.create({ id: "6131776621", username: "pal" });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
-    const users = await User.findAll({ where: { id: user.id }, include: { association: "interests", attributes: ["description"] } })
-    console.log(users[0].interests)
-
-
+    const user = await User.create({ id: '6131776621', username: 'pal' });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
+    const users = await User.findAll({
+      where: { id: user.id },
+      include: { association: 'interests', attributes: ['description'] }
+    });
   } catch (err) {
     console.error(err);
   }

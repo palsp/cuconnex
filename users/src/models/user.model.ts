@@ -60,7 +60,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public async addInterestFromArray(interests: InterestCreationAttrs[]) {
     for (let interest of interests) {
       // find correspondin interest in db
-      console.log(interest.description);
       const int = await Interest.findOne({ where: { description: interest.description } });
 
       // add association between user and interest
@@ -71,7 +70,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   public async findRelation(userId: string): Promise<FriendStatus | null> {
-    console.log(this.id, userId);
     if (this.id === userId) return null;
     const constraint = {
       [Op.or]: [

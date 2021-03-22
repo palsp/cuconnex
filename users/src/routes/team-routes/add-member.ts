@@ -47,7 +47,6 @@ router.post(
       });
       res.status(201).send({ message: 'Request pending', member: newMember });
     } catch (err) {
-      // console.log('request failed.', err);
       next(err);
     }
   }
