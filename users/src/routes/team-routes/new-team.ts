@@ -22,7 +22,7 @@ router.post(
   validateRequest,
   requireUser,
   async (req: Request, res: Response, next: NextFunction) => {
-    const { name } = req.body;
+    const { name, description } = req.body;
     const user = req.user!;
 
     try {
@@ -31,7 +31,7 @@ router.post(
         throw new BadRequestError('Team name already existed.');
       }
 
-      const newTeam = await user.createTeams({ name: name });
+      const newTeam = await user.createTeams({ name, description });
       const status = await Member.create({
         userId: user.id,
         teamName: name,
@@ -42,6 +42,7 @@ router.post(
         message: `Create team successfully by ${user.id}.`,
         userId: user.id,
         name: newTeam!.name,
+        description: newTeam!.description,
         status
       });
     } catch (err) {
