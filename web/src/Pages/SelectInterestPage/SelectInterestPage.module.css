@@ -63,3 +63,7 @@
     border-bottom: 0.1rem solid rgb(163, 163, 187);
   }
 }
+
+.divSaveButton {
+  margin: 20px;
+}

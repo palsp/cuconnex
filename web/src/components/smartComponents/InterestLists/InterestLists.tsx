@@ -1,10 +1,11 @@
 import React from "react";
-import InterestList from "./InterestList/InterestList";
+import InterestList from "@smartComponents/InterestLists/InterestList/InterestList";
 
 import classes from "./InterestLists.module.css";
 
 interface Props {
   type: string;
+  selectInterestHandler: (e: string) => any;
 }
 
 const businessInterestArray = [
@@ -26,6 +27,9 @@ const InterestLists: React.FC<Props> = (props) => {
             return (
               <InterestList
                 data-test="interest-list-business"
+                selectInterestHandlerDiv={(currentState: boolean) => {
+                  props.selectInterestHandler(interest);
+                }}
                 value={interest}
                 key={interest}
               />
@@ -42,6 +46,9 @@ const InterestLists: React.FC<Props> = (props) => {
             return (
               <InterestList
                 data-test="interest-list-technology"
+                selectInterestHandlerDiv={(currentState: boolean) => {
+                  props.selectInterestHandler(interest);
+                }}
                 value={interest}
                 key={interest}
               />
@@ -57,6 +64,9 @@ const InterestLists: React.FC<Props> = (props) => {
             return (
               <InterestList
                 data-test="interest-list-design"
+                selectInterestHandlerDiv={(currentState: boolean) => {
+                  props.selectInterestHandler(interest);
+                }}
                 value={interest}
                 key={interest}
               />

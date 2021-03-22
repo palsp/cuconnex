@@ -1,17 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Background from "../../components/dumbComponents/UI/Background/Background";
-import Button from "../../components/dumbComponents/UI/Button/Button";
-import DotMorePage from "../../components/dumbComponents/UI/DotMorePage/DotMorePage";
-import HalfCircleOverlay from "../../components/dumbComponents/UI/HalfCircleOverlay/HalfCircleOverlay";
-import Heading from "../../components/dumbComponents/UI/Heading/Heading";
-import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
-import ArrowRight from "../../components/dumbComponents/UI/Icons/ArrowRight/ArrowRight";
-import Edit from "../../components/dumbComponents/UI/Icons/Edit/Edit";
-import InputField from "../../components/dumbComponents/UI/InputField/InputField";
-import ProfilePic from "../../components/dumbComponents/UI/ProfilePic/ProfilePic";
-import Subtitle from "../../components/dumbComponents/UI/Subtitle/Subtitle";
-import Username from "../../components/dumbComponents/UI/Username/Username";
+
+import {
+  Background,
+  Button,
+  DotMorePage,
+  HalfCircleOverlay,
+  Heading,
+  InputField,
+  ProfilePic,
+  Subtitle,
+  Username,
+} from "@dumbComponents/UI/index";
+
+import { ArrowLeft, ArrowRight, Edit } from "@icons/index";
+
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from 'framer-motion'; 
 
@@ -19,6 +22,7 @@ const PersonalInfoPage: React.FC = () => {
   return (
     <div className={classes.main}>
       <div className={classes.container}>
+
         <div className={classes.background}>
           <Background data-test="personal-info-background">
             <div className={classes.content}>
@@ -79,6 +83,7 @@ const PersonalInfoPage: React.FC = () => {
               </motion.div>
             </div>
           </Background>
+
         </div>
       </div>
     </div>

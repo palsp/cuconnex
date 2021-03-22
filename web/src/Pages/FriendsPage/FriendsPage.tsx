@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Heading from "../../components/dumbComponents/UI/Heading/Heading";
-import ArrowLeft from "../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
-import FriendLists from "../../components/smartComponents/FriendLists/FriendLists";
-import SearchBar from "../../components/smartComponents/Navigation/SearchBar/SearchBar";
+
+import { FriendLists, SearchBar } from "@smartComponents/index";
+import { Heading } from "@dumbComponents/UI/index";
+import { ArrowLeft } from "@icons/index";
+
 import classes from "./FriendsPage.module.css";
+
 const FriendsPage: React.FC = () => {
   return (
     <div data-test="friends-page">

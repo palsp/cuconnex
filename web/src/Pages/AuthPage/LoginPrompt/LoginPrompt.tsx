@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Button from "../../../components/dumbComponents/UI/Button/Button";
-import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
-import ArrowLeft from "../../../components/dumbComponents/UI/Icons/ArrowLeft/ArrowLeft";
-import InputField from "../../../components/dumbComponents/UI/InputField/InputField";
-import Subtitle from "../../../components/dumbComponents/UI/Subtitle/Subtitle";
-// import { motion } from "framer-motion";
+
+
+import {
+  Button,
+  Heading,
+  InputField,
+  Subtitle,
+} from "@dumbComponents/UI/index";
+import { ArrowLeft } from "@icons/index";
 
 import classes from "../AuthPage.module.css";
 

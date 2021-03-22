@@ -7,13 +7,13 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.7.1",
-    "@types/jest": "^26.0.20",
     "@types/node": "^12.20.1",
     "@types/react": "~16.9.0",
     "@types/react-dom": "~16.9.0",
     "axios": "^0.21.1",
     "framer-motion": "^4.0.0",
     "react": "~16.10.0",
+    "react-app-rewired": "^2.1.8",
     "react-dom": "~16.10.0",
     "react-redux": "^7.2.2",
     "react-router": "^5.2.0",
@@ -25,10 +25,10 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject",
     "test:ci": "CI=true npm run test"
   },
   "eslintConfig": {
@@ -52,11 +52,39 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.8",
     "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.20",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "jest-enzyme": "^7.1.2",
-    "moxios": "^0.4.0"
+    "moxios": "^0.4.0",
+    "ts-jest": "^26.5.3"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "roots": [
+      "src"
+    ],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@pages/(.*)": "<rootDir>/src/Pages/$1",
+      "@dumbComponents/(.*)": "<rootDir>/src/components/dumbComponents/$1",
+      "@smartComponents/(.*)": "<rootDir>/src/components/smartComponents/$1",
+      "@icons/(.*)": "<rootDir>/src/components/dumbComponents/UI/Icons/$1",
+      "@assets/(.*)": "<rootDir>/src/assets/$1"
+    }
   }
 }
