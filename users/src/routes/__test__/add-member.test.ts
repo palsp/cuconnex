@@ -5,6 +5,7 @@ import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
 import { InterestDescription } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model'
 
 describe('Add member to Team --- Requesting', () => {
   it('should return 401 if user is not logged in yet', async () => {
@@ -34,8 +35,10 @@ describe('Add member to Team --- Requesting', () => {
 
   it('should return 401 if team is not found.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
-    const team = await user1.createTeams({ name: 'Team1' });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
+    await user1.createTeams({ name: 'Team1' });
 
     const res = await request(app)
       .post('/api/members/request')
@@ -51,7 +54,9 @@ describe('Add member to Team --- Requesting', () => {
 
   it('should return 400 if member status is already there.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
     const team = await user1.createTeams({ name: 'Team1' });
     const member = await Member.create({
       teamName: 'Team1',
@@ -73,7 +78,9 @@ describe('Add member to Team --- Requesting', () => {
 
   it('should return 200 if user request pending to a team successfully.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
     const team = await user1.createTeams({ name: 'Team1' });
 
     const res = await request(app)
@@ -119,11 +126,14 @@ describe('Add member to Team --- Invitation', () => {
 
   it('should return 401 if team is not found.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
-    const team = await user1.createTeams({ name: 'Team1' });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
+    await user1.createTeams({ name: 'Team1' });
 
     const user2 = await User.create({ id: '2', username: 'user2' });
-    await user2.createInterest({ description: InterestDescription.Business });
+    // await user2.createInterest({ description: InterestDescription.Business });
+    await user2.addInterest(interest!)
 
     const res = await request(app)
       .post('/api/members/invite')
@@ -140,11 +150,14 @@ describe('Add member to Team --- Invitation', () => {
 
   it('should return 400 if member status is already there.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
-    const team = await user1.createTeams({ name: 'Team1' });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
+    await user1.createTeams({ name: 'Team1' });
 
     const user2 = await User.create({ id: '2', username: 'user2' });
-    await user2.createInterest({ description: InterestDescription.Business });
+    // await user2.createInterest({ description: InterestDescription.Business });
+    await user2.addInterest(interest!)
 
     const member1 = await Member.create({
       teamName: 'Team1',
@@ -173,12 +186,14 @@ describe('Add member to Team --- Invitation', () => {
 
   it('should return 400 if the inviter is not a member of the team.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
-    const team = await user1.createTeams({ name: 'Team1' });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
+    await user1.createTeams({ name: 'Team1' });
 
     const user2 = await User.create({ id: '2', username: 'user2' });
-    await user2.createInterest({ description: InterestDescription.Business });
-
+    // await user2.createInterest({ description: InterestDescription.Business });
+    await user2.addInterest(interest!)
     const res = await request(app)
       .post('/api/members/invite')
       .set('Cookie', global.signin('1'))
@@ -194,11 +209,14 @@ describe('Add member to Team --- Invitation', () => {
 
   it('should return 400 if the inviter is not a yet a member of the team but having pending status.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
-    const team = await user1.createTeams({ name: 'Team1' });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
+    await user1.createTeams({ name: 'Team1' });
 
     const user2 = await User.create({ id: '2', username: 'user2' });
-    await user2.createInterest({ description: InterestDescription.Business });
+    // await user2.createInterest({ description: InterestDescription.Business });
+    await user2.addInterest(interest!)
 
     const member1 = await Member.create({
       teamName: 'Team1',
@@ -221,11 +239,14 @@ describe('Add member to Team --- Invitation', () => {
 
   it('should return 201 if invite successfully.', async () => {
     const user1 = await User.create({ id: '1', username: 'user1' });
-    await user1.createInterest({ description: InterestDescription.Business });
+    // await user1.createInterest({ description: InterestDescription.Business });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user1.addInterest(interest!)
     const team = await user1.createTeams({ name: 'Team1' });
 
     const user2 = await User.create({ id: '2', username: 'user2' });
-    await user2.createInterest({ description: InterestDescription.Business });
+    // await user2.createInterest({ description: InterestDescription.Business });
+    await user2.addInterest(interest!)
 
     const member1 = await Member.create({
       teamName: 'Team1',

@@ -2,7 +2,7 @@ import express, { Request, Response } from 'express';
 import { User } from '../models/user.model';
 import { Team } from '../models/team.model';
 import { Op } from 'sequelize';
-import { requireUser } from '../middlewares/requireUser';
+import { requireUser } from '../middlewares';
 
 const router = express.Router();
 
@@ -13,7 +13,7 @@ router.get('/api/users/:search', requireUser, async (req: Request, res: Response
     where: {
       [Op.or]: [{ username: { [Op.startsWith]: req.params.search } }, { id: req.params.search }]
     },
-    include: { association: User.associations.interests, attributes: ['description'] }
+    include: { association: 'interests', attributes: ['description'] }
   });
   if (users.length > MAX_SEARCH) {
     users = users.slice(0, MAX_SEARCH);

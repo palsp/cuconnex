@@ -1,10 +1,11 @@
-import { FriendStatus, TeamStatus } from '@cuconnex/common';
 import { app } from './app';
 import { initializeDB } from './db';
 import { User } from './models/user.model';
-import { Member } from './models/member.model';
-import { Friend } from './models/friend.model';
-import { TableName } from './models/types';
+import { Interest } from './models/interest.model'
+import { InterestDescription } from '@cuconnex/common';
+import { startInterest } from './models/initDB'
+import { fromPairs } from 'lodash';
+import { UserInterest } from './models/UserInterest.model';
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -31,14 +32,18 @@ const validateEnvAttr = () => {
 const start = async () => {
   try {
     // check if all required env variable have been declared
-    validateEnvAttr();
+    // validateEnvAttr();
     await initializeDB();
 
-    // const user = await User.create({ id: '6131707021', name: 'Krittamook' });
-    // user.createTeams({ name: 'dummy' });
-    // const team = await user.createTeams({ name: 'TeamDum' });
-    // await Member.create({ userId: user.id, teamName: 'TeamDum', status: TeamStatus.Accept });
-    // console.log('create dummy user ', user);
+    await startInterest();
+
+    const user = await User.create({ id: "6131776621", username: "pal" });
+    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
+    await user.addInterest(interest!)
+    const users = await User.findAll({ where: { id: user.id }, include: { association: "interests", attributes: ["description"] } })
+    console.log(users[0].interests)
+
+
   } catch (err) {
     console.error(err);
   }

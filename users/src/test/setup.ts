@@ -2,6 +2,7 @@ import { initializeDB, endDB } from '../db';
 import { Sequelize } from 'sequelize';
 import { Connection } from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
+import { startInterest } from '../models/initDB'
 
 jest.mock('../db');
 
@@ -25,6 +26,8 @@ beforeAll(async () => {
   // create db if doesn't already existed
   try {
     testDB = await initializeDB();
+    await startInterest()
+
   } catch (err) {
     throw new Error('Initialized databae failed');
   }
@@ -33,7 +36,9 @@ beforeAll(async () => {
 beforeEach(async () => {
   const models = Object.values(testDB.sequelize!.models);
   for (let model of models) {
-    await model.destroy({ where: {} });
+    if (model.tableName != "interests") {
+      await model.destroy({ where: {} });
+    }
   }
 });
 

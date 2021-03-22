@@ -1,9 +1,11 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
-import { Team } from '../models/team.model';
-import { Member } from '../models/member.model';
-import { validateRequest, TeamStatus, BadRequestError } from '@cuconnex/common';
-import { requireUser } from '../middlewares/requireUser';
+import { requireUser } from '../../middlewares/requireUser';
+import { TeamStatus } from '@cuconnex/common';
+import { Team } from '../../models/team.model';
+import { User } from '../../models/user.model';
+import { Member } from '../../models/member.model';
+import { NotAuthorizedError, BadRequestError, validateRequest } from '@cuconnex/common';
 
 const router = express.Router();
 
