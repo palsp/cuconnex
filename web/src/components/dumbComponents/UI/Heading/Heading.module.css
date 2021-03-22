@@ -25,14 +25,14 @@
 }
 
 .smallSize {
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: 500;
 }
 
 .mediumSize {
-  font-size: 20px;
+  font-size: 2rem;
 }
 
 .bigSize {
-  font-size: 25px;
+  font-size: 3rem;
 }

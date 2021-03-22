@@ -5,7 +5,10 @@
   overflow-x: auto;
 }
 
-@media only screen and (max-width: 375px) {             /* iPhone X */
+
+/*
+
+@media only screen and (max-width: 375px) {             /* iPhone X
   .main {
     width: 100%;
     align-items: center;
@@ -26,10 +29,12 @@
 }
 
 
-@media only screen and (max-width: 20rem) {         /* iPhone 5SE */
+@media only screen and (max-width: 20rem) {         /* iPhone 5SE
   .main {
     width: 15rem;
     align-items: center;
   }
 }
+
+*/
 
