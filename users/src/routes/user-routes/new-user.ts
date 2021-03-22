@@ -50,7 +50,6 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
   } catch (err) {
     createSuccess = false;
   }
-  console.log(createSuccess)
 
   // if something went wrong clear all user information in database
   // user need to retry from the beginning!!

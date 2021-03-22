@@ -1,6 +1,5 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Team } from '../../models/team.model';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
 import { InterestDescription, TeamStatus } from '@cuconnex/common';
@@ -43,7 +42,7 @@ describe('Create a Team Test', () => {
     expect(error.message).toEqual('Not Authorized');
   });
 
-  it('should return "User not found!" if cannot find user in the database', async () => {
+  it('should return 400 if no the requested user does not fill in the information yet. ', async () => {
     const user = await User.create({ id: '1', username: 'testName' });
     // await user.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
@@ -60,7 +59,7 @@ describe('Create a Team Test', () => {
       .expect(400);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('User not found!');
+    expect(error.message).toEqual('Please fill the information form first.');
   });
 
   it('should create team successfully if user is authorized and team name is unique.', async () => {
