@@ -3,6 +3,8 @@ import { initTeam } from './team.model';
 import { initMember } from './member.model';
 import { initInterests } from './interest.model';
 import { initFriend } from './friend.model';
+import { initCategory } from './category.model';
+import { initClassifiedAs } from './classifiedAs.model';
 import { Sequelize, DataTypes } from 'sequelize';
 import { FriendStatus, InterestDescription, TeamStatus } from '@cuconnex/common';
 import { TableName } from '../models/types';
@@ -13,6 +15,8 @@ export const initModel = (sequelize: Sequelize) => {
   const Interest = initInterests(sequelize);
   const Team = initTeam(sequelize);
   const Member = initMember(sequelize);
+  const Category = initCategory(sequelize);
+  const ClassifiedAs = initClassifiedAs(sequelize);
 
   // A.hasOne(B, { /* options */ });      one-to-one foreign key in B
   // A.belongsTo(B, { /* options */ });   one-to-one  foreign key in A
@@ -46,6 +50,8 @@ export const initModel = (sequelize: Sequelize) => {
     { timestamps: false }
   );
 
+  const classifiedAs = sequelize.define(TableName.classifiedAs, {}, { timestamps: false });
+
   const userInterest = sequelize.define(
     TableName.userInterest,
     {
@@ -55,13 +61,11 @@ export const initModel = (sequelize: Sequelize) => {
       //   // unique: true
       //   primaryKey: true,
       //   references: TableName.users
-
       // },
       // userId: {
       //   type: DataTypes.STRING(10),
       //   primaryKey: true,
       //   references: TableName.interests
-
       // }
     },
     { timestamps: false }
@@ -74,16 +78,23 @@ export const initModel = (sequelize: Sequelize) => {
   //   onDelete: 'CASCADE'
   // });
 
-  // M-M user and interest 
-  User.belongsToMany(Interest, { through: userInterest, as: "interests", foreignKey: "userId", onDelete: 'CASCADE' })
-  Interest.belongsToMany(User, { through: userInterest, as: "interests", foreignKey: "description" })
+  // M-M user and interest
+  User.belongsToMany(Interest, {
+    through: userInterest,
+    as: 'interests',
+    foreignKey: 'userId',
+    onDelete: 'CASCADE'
+  });
+  Interest.belongsToMany(User, {
+    through: userInterest,
+    as: 'interests',
+    foreignKey: 'description'
+  });
 
   // // sync Userinterest model with user-interest relation
   // initUserInterest(sequelize);
 
   initUserInterest(sequelize);
-
-
 
   User.belongsToMany(User, {
     as: 'friend',
@@ -99,4 +110,8 @@ export const initModel = (sequelize: Sequelize) => {
   User.belongsToMany(Team, { through: member, as: 'member' });
 
   initFriend(sequelize);
+
+  // M-M
+  Interest.belongsToMany(Category, { through: classifiedAs });
+  Category.belongsToMany(Interest, { through: classifiedAs });
 };
