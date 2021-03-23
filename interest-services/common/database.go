@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"githu.com/palsp/cuconnex/interest-services/config"
+	"github.com/palsp/cuconnex/interest-services/config"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -13,6 +13,7 @@ var DB *gorm.DB
 
 // CreateDSN returns data source name
 func CreateDSN(user,password,host,dbName string) string{
+
 	return fmt.Sprintf("%s:%s@tcp(%s)/%s",user,password,host,dbName)
 }
 
@@ -21,6 +22,7 @@ func CreateDSN(user,password,host,dbName string) string{
 // InitDB open a database and save the connection to `database` struct
 func InitDB() (*gorm.DB, error) {
 	var err error
+
 	dsn := CreateDSN(config.DB.User , config.DB.Password , config.DB.Host , config.DB.Name)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
