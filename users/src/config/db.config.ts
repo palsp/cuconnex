@@ -13,6 +13,5 @@ export const test_config = {
   host: 'localhost',
   user: 'root',
   password: 'password',
-  // password: 'birdza555',
   db: 'testdb'
 };
