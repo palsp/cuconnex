@@ -1,5 +1,7 @@
 package classification
 
+import "gorm.io/gorm"
+
 
 type Category_Interest struct {
 	Category Category 
@@ -40,3 +42,13 @@ var BUSINESS = Category_Interest{
 
 var InitialData = []Category_Interest{TECH , DESIGN , BUSINESS}
 
+
+func InitializeData(db *gorm.DB){
+	for _, cat := range InitialData {
+		db.Create(&cat.Category)
+
+		for _,interest := range cat.Interest {
+			db.Model(&cat.Category).Association("Interests").Append(&interest)
+		}
+	}
+}

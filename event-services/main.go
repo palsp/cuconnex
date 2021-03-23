@@ -6,7 +6,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/palsp/cuconnex/event-services/classification"
-	css "github.com/palsp/cuconnex/event-services/classification"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
 )
@@ -17,7 +16,7 @@ func Migrate() {
 }
 
 func main() {
-	db, err := common.InitDB()
+	_, err := common.InitDB()
 	Migrate()
 	if err != nil {
 		log.Fatalln("db err:", err)
@@ -37,13 +36,6 @@ func main() {
 	events.EventRegister(v1)
 
 
-	for _, cat := range css.InitialData {
-		db.Create(&cat.Category)
-
-		for _,interest := range cat.Interest {
-			db.Model(&cat.Category).Association("Interests").Append(&interest)
-		}
-	}
 	
 
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
