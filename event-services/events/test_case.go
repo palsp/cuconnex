@@ -21,7 +21,7 @@ var RequestTests = []struct {
 		"POST",
 		` {
 		"event-name" : "Test",
-		"description" : "This is great",
+		"bio" : "This is great",
 		"start-date" : {
 				 "month" : 1,
 				 "day" : 18,
