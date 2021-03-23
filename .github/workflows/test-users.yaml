@@ -11,8 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo service mysql stop
+
       - uses: mirromutth/mysql-action@v1.1
         with:
+          mysql user: ${{ secrets.DB_TEST_USER}}
           mysql password: ${{secrets.DB_TEST_PASSWORD}}
       - run: cd users && npm install && npm run test:ci
         env:
