@@ -55,13 +55,11 @@ export const initModel = (sequelize: Sequelize) => {
       //   // unique: true
       //   primaryKey: true,
       //   references: TableName.users
-
       // },
       // userId: {
       //   type: DataTypes.STRING(10),
       //   primaryKey: true,
       //   references: TableName.interests
-
       // }
     },
     { timestamps: false }
@@ -74,16 +72,23 @@ export const initModel = (sequelize: Sequelize) => {
   //   onDelete: 'CASCADE'
   // });
 
-  // M-M user and interest 
-  User.belongsToMany(Interest, { through: userInterest, as: "interests", foreignKey: "userId", onDelete: 'CASCADE' })
-  Interest.belongsToMany(User, { through: userInterest, as: "interests", foreignKey: "description" })
+  // M-M user and interest
+  User.belongsToMany(Interest, {
+    through: userInterest,
+    as: 'interests',
+    foreignKey: 'userId',
+    onDelete: 'CASCADE'
+  });
+  Interest.belongsToMany(User, {
+    through: userInterest,
+    as: 'interests',
+    foreignKey: 'description'
+  });
 
   // // sync Userinterest model with user-interest relation
   // initUserInterest(sequelize);
 
   initUserInterest(sequelize);
-
-
 
   User.belongsToMany(User, {
     as: 'friend',
@@ -92,7 +97,12 @@ export const initModel = (sequelize: Sequelize) => {
     otherKey: 'receiverId'
   });
 
-  User.hasMany(Team, { sourceKey: 'id', foreignKey: 'userId', as: 'teams', onDelete: 'CASCADE' });
+  User.hasMany(Team, {
+    sourceKey: 'id',
+    foreignKey: 'creatorId',
+    as: 'teams',
+    onDelete: 'CASCADE'
+  });
 
   // M-M
   Team.belongsToMany(User, { through: member });

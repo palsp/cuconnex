@@ -24,16 +24,15 @@ router.post(
   validateRequest,
   requireUser,
   async (req: Request, res: Response, next: NextFunction) => {
-    const creatorId = req.user!.id;
     const { targetUserId, teamName, status } = req.body;
 
     const team = await Team.findOne({ where: { name: teamName } });
-    const user = await User.findOne({ where: { id: targetUserId } });
+    const targetUser = await User.findOne({ where: { id: targetUserId } });
     if (!team) {
       throw new BadRequestError('Team not found!');
-    } else if (!user) {
+    } else if (!targetUser) {
       throw new BadRequestError('User not found!');
-    } else if (team.userId !== creatorId) {
+    } else if (team.creatorId !== req.user!.id) {
       throw new BadRequestError('You are not the team creator!');
     }
 
