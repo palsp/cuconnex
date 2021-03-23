@@ -14,7 +14,7 @@ var DB *gorm.DB
 // CreateDSN returns data source name
 func CreateDSN(user,password,host,dbName string) string{
 
-	return fmt.Sprintf("%s:%s@tcp(%s)/%s",user,password,host,dbName)
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true",user,password,host,dbName)
 }
 
 
