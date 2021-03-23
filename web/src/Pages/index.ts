@@ -4,3 +4,4 @@ export { default as FriendsPage } from "@pages/FriendsPage/FriendsPage";
 export { default as RecruitMemberPage } from "@pages/RecruitMemberPage/RecruitMemberPage";
 export { default as PersonalInfoPage } from "@pages/PersonalInfoPage/PersonalInfoPage";
 export { default as SelectInterestPage } from "@pages/SelectInterestPage/SelectInterestPage";
+export { default as TestPage } from "@pages/TestPage/TestPage";
