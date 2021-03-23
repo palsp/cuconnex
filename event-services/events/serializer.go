@@ -21,7 +21,7 @@ type EventResponse struct {
 }
 
 func (self *EventSerializer) Response() EventResponse {
-	EventModel := self.C.MustGet("event_model").(EventModel)
+	EventModel := self.C.MustGet("my_event_model").(EventModel)
 	event := EventResponse{
 		ID:        EventModel.ID,
 		EventName: EventModel.EventName,
