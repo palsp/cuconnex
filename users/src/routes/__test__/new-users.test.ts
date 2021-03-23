@@ -18,7 +18,12 @@ it('should return 400 if users send invalid type of interest list', async () => 
 it('should return 400 if user info already existed', async () => {
   const id = '6131886621';
   const cookies = global.signin(id);
-  await User.create({ id, username: 'test' });
+  await User.create({
+    id: '6131886621',
+    email: 'test1@test.com',
+    password: 'password123',
+    name: 'pal'
+  });
   await request(app)
     .post('/api/users')
     .set('Cookie', cookies)
@@ -50,28 +55,29 @@ it('should return 401 if users is not login', async () => {
     .expect(401);
 });
 
-
 it('should create a users with interests on valid input', async () => {
-  // await Interest.create({ description: InterestDescription.Business })
   await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())
     .send({
-      username: 'test',
-      interests: [InterestDescription.Business]
+      interests: [InterestDescription.Business],
+      name: 'test',
+      email: 'test@test.com',
+      password: 'password123'
     })
     .expect(201);
 });
 
 it('should not save duplicate interest list', async () => {
-
   // await Interest.create({ description: InterestDescription.Business })
   const { body: user } = await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())
     .send({
-      username: 'test',
-      interests: [InterestDescription.Business, InterestDescription.Business]
+      interests: [InterestDescription.Business, InterestDescription.Business],
+      name: 'test',
+      email: 'test@test.com',
+      password: 'password123'
     })
     .expect(201);
 

@@ -37,7 +37,12 @@ const start = async () => {
 
     await startInterest();
 
-    const user = await User.create({ id: '6131776621', username: 'pal' });
+    const user = await User.create({
+      id: '6131776621',
+      email: 'test@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
     const interest = await Interest.findOne({
       where: { description: InterestDescription.Business }
     });

@@ -8,9 +8,15 @@ import { Interest } from '../../models/interest.model';
 
 describe('Get Members', () => {
   it('should return "Team not found! if team is not found', async () => {
+    const user1 = await User.create({
+      id: '6131886621',
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
     const res = await request(app)
       .get('/api/members')
-      .set('Cookie', global.signin('1'))
+      .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team1'
       })
@@ -21,24 +27,33 @@ describe('Get Members', () => {
   });
 
   it('should return 200: member status detail if get member correctly', async () => {
-    const user1 = await User.create({ id: '1', username: 'testName1' });
-    // await user1.createInterest({ description: InterestDescription.Business });
+    const user1 = await User.create({
+      id: '6131886621',
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
+
     const interest = await Interest.findOne({
       where: { description: InterestDescription.Business }
     });
     await user1.addInterest(interest!);
-    const team = await user1.createTeams({ name: 'Team1' });
+    const team = await user1.createTeams({ name: 'Team1', description: '' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
-    const user2 = await User.create({ id: '2', username: 'testName2' });
-    // await user2.createInterest({ description: InterestDescription.Business });
+    const user2 = await User.create({
+      id: '6131886622',
+      email: 'test2@test.com',
+      password: 'password123',
+      name: 'pal2'
+    });
     await user2.addInterest(interest!);
 
     await Member.create({ userId: user2.id, teamName: 'Team1', status: TeamStatus.Pending });
 
     const res = await request(app)
       .get('/api/members')
-      .set('Cookie', global.signin('1'))
+      .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team1'
       })

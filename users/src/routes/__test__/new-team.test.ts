@@ -7,11 +7,18 @@ import { Interest } from '../../models/interest.model';
 
 describe('Create a Team Test', () => {
   it('should return 400 if team name is already existed', async () => {
-    const user = await User.create({ id: '1', username: 'testName' });
+    const user = await User.create({
+      id: '6131886621',
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
     // await user.createInterest({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
-    const team = await user.createTeams({ name: 'testTeam' });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'testTeam', description: '' });
 
     const res = await request(app)
       .post('/api/teams')
@@ -26,11 +33,18 @@ describe('Create a Team Test', () => {
   });
 
   it('should return 401 if user is not authorized or user is not logged in.', async () => {
-    const user = await User.create({ id: '1', username: 'testName' });
+    const user = await User.create({
+      id: '6131886621',
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
     // await user.createInterest({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
-    const team = await user.createTeams({ name: 'testTeam' });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'testTeam', description: '' });
 
     // no global log in
     const res = await request(app)
@@ -43,11 +57,18 @@ describe('Create a Team Test', () => {
   });
 
   it('should return 400 if no the requested user does not fill in the information yet. ', async () => {
-    const user = await User.create({ id: '1', username: 'testName' });
+    const user = await User.create({
+      id: '6131886621',
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
     // await user.createInterest({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
-    const team = await user.createTeams({ name: 'testTeam' });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'testTeam', description: '' });
 
     const id = '2';
     const res = await request(app)
@@ -63,11 +84,18 @@ describe('Create a Team Test', () => {
   });
 
   it('should create team successfully if user is authorized and team name is unique.', async () => {
-    const user = await User.create({ id: '1', username: 'testName' });
+    const user = await User.create({
+      id: '6131886621',
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
     // await user.createInterest({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
-    const team = await user.createTeams({ name: 'testTeam' });
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'testTeam', description: '' });
 
     const res = await request(app)
       .post('/api/teams')
@@ -84,7 +112,7 @@ describe('Create a Team Test', () => {
     expect(status[0].status).toEqual(TeamStatus.Accept);
 
     expect(res.body.message).toEqual(`Create team successfully by ${user.id}.`);
-    expect(res.body.userId).toEqual(user.id);
+    expect(res.body.creatorId).toEqual(user.id);
     expect(res.body.name).toEqual('newTeam');
     expect(res.body.name).toEqual('newTeam');
   });

@@ -45,6 +45,7 @@ router.post(
         teamName,
         status: TeamStatus.Pending
       });
+
       res.status(201).send({ message: 'Request pending', member: newMember });
     } catch (err) {
       next(err);
@@ -93,7 +94,7 @@ router.post(
     }
 
     await Member.create({ userId: newMemberId, teamName, status: TeamStatus.Pending });
-    res.status(201).send({ message: 'Invite pending', user: user2!.username, team: team!.name });
+    res.status(201).send({ message: 'Invite pending', userId: user2!.id, team: team!.name });
   }
 );
 export { router as addMemberRouter };

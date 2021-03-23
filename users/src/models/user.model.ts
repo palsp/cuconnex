@@ -23,19 +23,29 @@ import { Friend } from './friend.model';
 // All attributes in user model
 interface UserAttrs {
   id: string;
-  username: string;
+  email: string;
+  password: string;
+  name: string;
+  imagePath: string;
+  lookingForTeam: boolean;
   interests?: Interest[];
   friends?: User[];
 }
 
 interface UserCreationAttrs {
   id: string;
-  username: string;
+  email: string;
+  password: string;
+  name: string;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
-  public username!: string;
+  public password!: string;
+  public name!: string;
+  public email!: string;
+  public imagePath?: string;
+  public lookingForTeam: boolean = true;
   public friends?: User[];
   public interests?: Interest[];
 
@@ -45,16 +55,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
-
-  // public createInterests(attrs: InterestCreationAttrs) {
-  //   return this.createInterest({ description: attrs.description });
-  // }
-
-  // public async createInterestsFromArray(interests: InterestCreationAttrs[]) {
-  //   for (let interest of interests) {
-  //     await this.createInterests(interest);
-  //   }
-  // }
 
   // add interest from a given arry to user info
   public async addInterestFromArray(interests: InterestCreationAttrs[]) {
@@ -134,7 +134,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
-      name: attrs.name
+      name: attrs.name,
+      description: attrs.description
     });
   }
 
@@ -153,10 +154,25 @@ const initUser = (sequelize: Sequelize) => {
         primaryKey: true,
         allowNull: false
       },
-      username: {
-        type: new DataTypes.STRING(255),
+      password: {
+        type: DataTypes.STRING(12),
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING(255),
         allowNull: false,
         unique: true
+      },
+      name: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+      },
+      imagePath: {
+        type: DataTypes.STRING(255)
+      },
+      lookingForTeam: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
       }
     },
     {

@@ -27,10 +27,17 @@ describe('get current user', () => {
 
   it('should return user information if user already add information', async () => {
     const id = '6131778821';
-    const user = await User.create({ username: 'pal', id });
-    // await user.createInterests({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
+    const user = await User.create({
+      id,
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
+
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
 
     const { body: res } = await request(app)
       .get('/api/users')
@@ -39,15 +46,22 @@ describe('get current user', () => {
       .expect(200);
 
     expect(res.id).toEqual(user.id);
-    expect(res.username).toEqual(user.username);
+    expect(res.name).toEqual(user.name);
   });
 
   it('return user must include interests', async () => {
     const id = '6131778821';
-    const user = await User.create({ username: 'pal', id });
-    // await user.createInterests({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({ where: { description: InterestDescription.Business } })
-    await user.addInterest(interest!)
+    const user = await User.create({
+      id,
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
+
+    const interest = await Interest.findOne({
+      where: { description: InterestDescription.Business }
+    });
+    await user.addInterest(interest!);
 
     const { body: res } = await request(app)
       .get('/api/users')
@@ -56,7 +70,7 @@ describe('get current user', () => {
       .expect(200);
 
     expect(res.id).toEqual(user.id);
-    expect(res.username).toEqual(user.username);
+    expect(res.name).toEqual(user.name);
     expect(res.interests).not.toBeNull();
     expect(res.interests[0].description).toEqual(InterestDescription.Business);
   });
@@ -73,7 +87,12 @@ describe('view user profile', () => {
 
   it('should return 404 if profile of the given user is not exist', async () => {
     const id = '6131772221';
-    await User.create({ id, username: 'Test' });
+    const user = await User.create({
+      id,
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
 
     await request(app)
       .get('/api/users/view-profile/613177221')
@@ -84,7 +103,12 @@ describe('view user profile', () => {
 
   it('should return user information with status null if user view his/her own profile', async () => {
     const id = '6131772221';
-    const user = await User.create({ id, username: 'Test' });
+    const user = await User.create({
+      id,
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
 
     const { body: res } = await request(app)
       .get(`/api/users/view-profile/${id}`)
@@ -92,7 +116,7 @@ describe('view user profile', () => {
       .send({})
       .expect(200);
 
-    expect(res.username).toEqual(user.username);
+    expect(res.name).toEqual(user.name);
     expect(res.id).toEqual(user.id);
     expect(res.interests).toHaveLength(0);
     expect(res.status).toBeNull();
@@ -101,8 +125,18 @@ describe('view user profile', () => {
   it('should return user information with status toBeDefined if they are not friend', async () => {
     const id = '6131772221';
     const id2 = '6131778821';
-    const user = await User.create({ id, username: 'Test' });
-    const user2 = await User.create({ id: id2, username: 'Test2' });
+    const user = await User.create({
+      id: id,
+      email: 'test1@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
+    const user2 = await User.create({
+      id: id2,
+      email: 'test2@test.com',
+      password: 'password123',
+      name: 'pal'
+    });
 
     const { body: res } = await request(app)
       .get(`/api/users/view-profile/${id}`)
@@ -110,7 +144,7 @@ describe('view user profile', () => {
       .send({})
       .expect(200);
 
-    expect(res.username).toEqual(user.username);
+    expect(res.name).toEqual(user.name);
     expect(res.id).toEqual(user.id);
     expect(res.interests).toHaveLength(0);
     expect(res.status).toEqual(FriendStatus.toBeDefined);
