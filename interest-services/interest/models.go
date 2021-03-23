@@ -42,8 +42,11 @@ func AutoMigrate(){
 // GetInterest returns all interest related with the category
 func (model *Category) GetInterest() error {
 	db := common.GetDB()
+	// find all interesets that CategoryID matched with this category id
 	err := db.Where(&Interest{
 		CategoryID: model.ID,
 	}).Find(&model.Interests).Error
+
 	return err
 }
+

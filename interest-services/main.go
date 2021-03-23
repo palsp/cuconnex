@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -15,7 +14,7 @@ func Migrate() {
 }
 
 func main() {
-	db, err := common.InitDB()
+	_, err := common.InitDB()
 	Migrate()
 	if err != nil {
 		log.Fatalln("db err:", err)
@@ -31,25 +30,28 @@ func main() {
 		})
 	})
 
+	v1 := r.Group("/api/events")
+	interest.InterestRegister(v1)
+
 	// v1 := r.Group("/api/events")
 
 	// interest.InitializeData(db)
 
 
-// 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
-	var cats []interest.Category
+	r.Run(":3000") // listen and serve on 0.0.0.0:3000
+	// var cats []interest.Category
 
-	err = db.Find(&cats).Error
-	if err != nil {
-		log.Fatalf("fetch user failed: %v", err)
-	}
-
-	// for _, cat := range cats {
-		
+	// err = db.Find(&cats).Error
+	// if err != nil {
+	// 	log.Fatalf("fetch user failed: %v", err)
 	// }
-	cats[0].GetInterest()
-	fmt.Println(cats[0].Name)
-	for _,v := range cats[0].Interests {
-		fmt.Println(v.Description)
-	}
+
+	// // for _, cat := range cats {
+		
+	// // }
+	// cats[0].GetInterest()
+	// fmt.Println(cats[0].Name)
+	// for _,v := range cats[0].Interests {
+	// 	fmt.Println(v.Description)
+	// }
 }
