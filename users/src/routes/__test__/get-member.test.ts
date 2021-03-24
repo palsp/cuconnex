@@ -10,8 +10,6 @@ describe('Get Members', () => {
   it('should return "Team not found! if team is not found', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     const res = await request(app)
@@ -29,8 +27,6 @@ describe('Get Members', () => {
   it('should return 200: member status detail if get member correctly', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -43,8 +39,6 @@ describe('Get Members', () => {
 
     const user2 = await User.create({
       id: '6131886622',
-      email: 'test2@test.com',
-      password: 'password123',
       name: 'pal2'
     });
     await user2.addInterest(interest!);

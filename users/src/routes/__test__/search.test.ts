@@ -12,34 +12,27 @@ describe('Search Test', () => {
       .expect(401);
   });
 
-  it('should return a corresponding user(s) for the given username sort by username length', async () => {
+  it('should return a corresponding user(s) for the given name sort by name length', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
+
     const user2 = await User.create({
       id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
       name: 'bob'
     });
     const user3 = await User.create({
       id: '6131776631',
-      email: 'test3@test.com',
-      password: 'password123',
       name: 'palllllll'
     });
     const user4 = await User.create({
       id: '6131e76631',
-      email: 'test4@test.com',
-      password: 'password123',
       name: 'palalcc'
     });
 
     const { body: res } = await request(app)
-      .get(`/api/users/${user1.name}`)
+      .get('/api/users/pal')
       .set('Cookie', global.signin(user2.id))
       .send({});
 
@@ -51,11 +44,10 @@ describe('Search Test', () => {
   });
   it('should return a corresponding team(s) for the given name sort by name length', async () => {
     const user = await User.create({
-      id: '1',
-      email: 'test@test.com',
-      password: 'password123',
-      name: 'testUser'
+      id: '6131886621',
+      name: 'pal'
     });
+
     await user.createTeams({ name: 'testTeam1', description: '' });
     await user.createTeams({ name: 'testTeam2', description: '' });
     await user.createTeams({ name: 'testTeam3', description: '' });
@@ -88,20 +80,15 @@ describe('Search Test', () => {
   it('should return a corresponding user(s) for the given id', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
+
     const user2 = await User.create({
       id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
       name: 'bob'
     });
     const user3 = await User.create({
       id: '6131776631',
-      email: 'test3@test.com',
-      password: 'password123',
       name: 'palllllll'
     });
 
@@ -112,21 +99,17 @@ describe('Search Test', () => {
 
     expect(res).toHaveLength(1);
     expect(res[0].id).toEqual(user1.id);
-    expect(res[0].name).toEqual(user1.name);
   });
 
   // for user search
   it('should return empty array if the input params does not match any attribute in db', async () => {
-    const id = '6131767621';
-    const user2 = await User.create({
-      id,
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'bob'
+    const user = await User.create({
+      id: '6131886621',
+      name: 'pal'
     });
     const { body: res } = await request(app)
       .get(`/api/users/adfasdfasdfafds`)
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send({});
 
     expect(res).not.toBeNull();
@@ -136,14 +119,11 @@ describe('Search Test', () => {
   it('should include interest in the response', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
+
     const user2 = await User.create({
       id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
       name: 'bob'
     });
 
@@ -165,9 +145,7 @@ describe('Search Test', () => {
   it('should return a corresponding team(s) for the given name sort by name length', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'testUser'
+      name: 'pal'
     });
 
     await user.createTeams({ name: 'testTeam1', description: '' });
