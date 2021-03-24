@@ -6,7 +6,8 @@ import { validateRequest } from '@cuconnex/common';
 
 const authRoutes = express.Router();
 
-
+//Checks if there is email password and id
+/* TODO add password format */
 const signupChecker = [
     body('email')
         .notEmpty()

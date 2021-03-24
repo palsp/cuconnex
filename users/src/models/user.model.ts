@@ -38,7 +38,6 @@ interface UserCreationAttrs {
   password: string;
   name: string;
 }
-
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public password!: string;
@@ -69,6 +68,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
   }
 
+  //Method for finding a relation attached here to minimize hassle
   public async findRelation(userId: string): Promise<FriendStatus | null> {
     if (this.id === userId) return null;
     const constraint = {
