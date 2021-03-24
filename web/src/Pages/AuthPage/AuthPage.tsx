@@ -63,38 +63,40 @@ const AuthPage: React.FC = () => {
     );
   } else if (clickSignup === true) {
     authPrompt = (
-      <motion.div
-        animate={{ y: -120 }}
-        transition={{
-          type: "spring",
-          delay: 0,
-          stiffness: 270,
-          damping: 29,
-          mass: 3.3,
-        }}
-        className={classes.contentClick}
-      >
-        <div className={classes.logoDiv}>
-          <AppLogo data-test="auth-page-logo" />
-        </div>
-        <motion.div
-          animate={{ y: -100 }}
-          transition={{
-            type: "spring",
-            delay: 0,
-            stiffness: 270,
-            damping: 29,
-            mass: 3.3,
-          }}
-          className={classes.circle_overlay}
-        ></motion.div>
-        <div className={classes.signupPrompt}>
-          <SignupPrompt
-            data-test="auth-page-signup-prompt"
-            backButtonClickedHandler={backButtonClickedHandler}
-          />
-        </div>
-      </motion.div>
+      // <motion.div
+      //   animate={{ y: -120 }}
+      //   transition={{
+      //     type: "spring",
+      //     delay: 0,
+      //     stiffness: 270,
+      //     damping: 29,
+      //     mass: 3.3,
+      //   }}
+      //   className={classes.contentClick}
+      // >
+      //   <div className={classes.logoDiv}>
+      //     <AppLogo data-test="auth-page-logo" />
+      //   </div>
+      //   <motion.div
+      //     animate={{ y: -100 }}
+      //     transition={{
+      //       type: "spring",
+      //       delay: 0,
+      //       stiffness: 270,
+      //       damping: 29,
+      //       mass: 3.3,
+      //     }}
+      //     className={classes.circle_overlay}
+      //   ></motion.div>
+      //   <SignupPrompt
+      //     data-test="auth-page-signup-prompt"
+      //     backButtonClickedHandler={backButtonClickedHandler}
+      //   />
+      // </motion.div>
+      <SignupPrompt
+        data-test="auth-page-signup-prompt"
+        backButtonClickedHandler={backButtonClickedHandler}
+      />
     );
   } else if (clickLogin === true) {
     authPrompt = (

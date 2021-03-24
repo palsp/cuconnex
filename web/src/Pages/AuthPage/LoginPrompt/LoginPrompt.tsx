@@ -1,6 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { Formik, Form } from "formik";
+import * as yup from "yup";
 
 import {
   Button,
@@ -15,8 +16,18 @@ import classes from "../AuthPage.module.css";
 interface Props {
   backButtonClickedHandler: () => void;
 }
-
+const validationSchema = yup.object({
+  email: yup.string().email().required("Email is required"),
+  password: yup
+    .string()
+    .required("No password provided.")
+    .min(8, "password is too short. Need at least 8 characters")
+    .matches(/(?=.*[0-9])/, "Password must contain a number.")
+    .matches(/(?=.*[a-z])/, "Password must contain one lower case letter")
+    .matches(/(?=.*[A-Z])/, "Password must contain one UPPER case letter"),
+});
 const LoginPrompt: React.FC<Props> = (props) => {
+  const [redirect, setRedirect] = useState<any>();
   return (
     <>
       <div className={classes.divHeader}>
@@ -26,29 +37,41 @@ const LoginPrompt: React.FC<Props> = (props) => {
           data-test="auth-page-login-subtitle"
         />
       </div>
-      <div className={classes.InputFieldDiv}>
-        <InputField
-          data-test="auth-page-login-input-fields"
-          value="
-            Email or username"
-        />
-      </div>
-      <div className={classes.InputFieldDiv}>
-        <InputField
-          data-test="auth-page-login-input-fields"
-          value="Password"
-          type="password"
-        />
-      </div>
-      <div className={classes.divSubtitle}>
-        <Subtitle value="Forget your password?" />
-      </div>
+      <Formik
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        onSubmit={(data, { setSubmitting }) => {
+          setSubmitting(true);
+          console.log(data);
+          setSubmitting(false);
+          setTimeout(() => {
+            setRedirect(<Redirect to="selectinterests" />);
+          }, 1500);
+        }}
+        validationSchema={validationSchema}
+      >
+        {({ values, isSubmitting, errors }) => (
+          <Form>
+            <InputField label="Email" name="email" type="input" />
+            <div className={classes.InputFieldDiv}>
+              <InputField label="Password" name="password" type="input" />
+            </div>
+            <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+            <div className={classes.Button}>
+              <Button
+                disabled={isSubmitting}
+                type="submit"
+                onClick={() => {}}
+                data-test="auth-page-login-button"
+                value="Log in"
+              />
+            </div>
+          </Form>
+        )}
+      </Formik>
 
-      <div className={classes.Button}>
-        <Link to="/selectInterests">
-          <Button data-test="auth-page-login-button" value="Log in" />
-        </Link>
-      </div>
       <div className={classes.footerNavigation}>
         <div
           onClick={props.backButtonClickedHandler}
@@ -60,6 +83,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Heading value="Back" size="small" />
           </div>
         </div>
+        {redirect}
       </div>
     </>
   );

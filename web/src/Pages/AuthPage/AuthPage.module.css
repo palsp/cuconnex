@@ -46,7 +46,8 @@
   margin-bottom: 30%;
 }
 
-@media only screen and (max-width: 414px) {                       /* mobile */
+@media only screen and (max-width: 414px) {
+  /* mobile */
   .logoDiv {
     margin-top: 60%;
     margin-bottom: 5%;
@@ -54,16 +55,17 @@
   }
 }
 
-@media only screen and (min-width: 415px) {                      /* tablet */
+@media only screen and (min-width: 415px) {
+  /* tablet */
   .logoDiv {
     margin-top: 30%;
     margin-bottom: 5%;
     width: 50%;
   }
-
 }
 
-@media only screen and (max-width: 320px) {                       /* small mobile */
+@media only screen and (max-width: 320px) {
+  /* small mobile */
 
   .logoDiv {
     margin-top: 50%;

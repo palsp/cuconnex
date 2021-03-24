@@ -16,18 +16,16 @@ import {
 import { ArrowLeft, ArrowRight, Edit } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
-import { motion } from 'framer-motion'; 
+import { motion } from "framer-motion";
 
 const PersonalInfoPage: React.FC = () => {
   return (
     <div className={classes.main}>
       <div className={classes.container}>
-
         <div className={classes.background}>
           <Background data-test="personal-info-background">
             <div className={classes.content}>
               <motion.div className={classes.motion}>
-              
                 <div className={classes.titleDiv}>
                   <Heading
                     data-test="personal-info-header"
@@ -44,12 +42,13 @@ const PersonalInfoPage: React.FC = () => {
                   <ProfilePic data-test="personal-info-personalImage" />
                 </div>
                 <div className={classes.usernameDiv}>
-                  <Username 
-                    data-test="personal-info-username" 
-                    value="@micky_ngub" />
+                  <Username
+                    data-test="personal-info-username"
+                    value="@micky_ngub"
+                  />
                   <Edit />
                 </div>
-                <div className={classes.InputFieldDiv}>
+                {/* <div className={classes.InputFieldDiv}>
                   <InputField
                     data-test="personal-info-setDisplayedName"
                     value="Displayed Name" />
@@ -60,7 +59,7 @@ const PersonalInfoPage: React.FC = () => {
                     value="Major" />
                   <InputField data-test="personal-info-setYear" 
                     value="Year of study" />
-                </div>
+                </div> */}
                 <div className={classes.Button}>
                   <Button value="Save" />
                 </div>
@@ -78,12 +77,10 @@ const PersonalInfoPage: React.FC = () => {
                       <ArrowRight data-test="personal-info-arrowRight" />
                     </div>
                   </Link>
-                </div> 
-
+                </div>
               </motion.div>
             </div>
           </Background>
-
         </div>
       </div>
     </div>
