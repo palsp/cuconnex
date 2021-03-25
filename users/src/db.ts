@@ -25,6 +25,11 @@ const initializeDB = async () => {
   return myDB;
 };
 
+/**Call this function when you want to terminate the current sequelize connection.
+ * If a sequelize instance is present, close all connections used by this sequelize instance by calling Sequelize.close().
+ * 
+ * @param {myDB} db 
+ */
 const endDB = async (db: myDB) => {
   if (db.sequelize) {
     await db.sequelize.close();
