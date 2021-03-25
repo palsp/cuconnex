@@ -37,29 +37,34 @@ describe("render Personal Info Page", () => {
     const username = findByTestAttr(wrapper, "personal-info-username");
     expect(username.length).toBe(1);
   });
-  it("should render setDisplayedName", () => {
+  it("should render form", () => {
     const wrapper = setup();
-    const setDisplayedName = findByTestAttr(
-      wrapper,
-      "personal-info-setDisplayedName"
-    );
-    expect(setDisplayedName.length).toBe(1);
+    const personalForm = findByTestAttr(wrapper, "personal-info-form");
+    expect(personalForm.length).toBe(1);
   });
-  it("should render setFaculty", () => {
-    const wrapper = setup();
-    const setFaculty = findByTestAttr(wrapper, "personal-info-setFaculty");
-    expect(setFaculty.length).toBe(1);
-  });
-  it("should render setMajor", () => {
-    const wrapper = setup();
-    const setMajor = findByTestAttr(wrapper, "personal-info-setMajor");
-    expect(setMajor.length).toBe(1);
-  });
-  it("should render setYear", () => {
-    const wrapper = setup();
-    const setYear = findByTestAttr(wrapper, "personal-info-setYear");
-    expect(setYear.length).toBe(1);
-  });
+  // it("should render setDisplayedName", () => {
+  //   const wrapper = setup();
+  //   const setDisplayedName = findByTestAttr(
+  //     wrapper,
+  //     "personal-info-setDisplayedName"
+  //   );
+  //   expect(setDisplayedName.length).toBe(1);
+  // });
+  // it("should render setFaculty", () => {
+  //   const wrapper = setup();
+  //   const setFaculty = findByTestAttr(wrapper, "personal-info-setFaculty");
+  //   expect(setFaculty.length).toBe(1);
+  // });
+  // it("should render setMajor", () => {
+  //   const wrapper = setup();
+  //   const setMajor = findByTestAttr(wrapper, "personal-info-setMajor");
+  //   expect(setMajor.length).toBe(1);
+  // });
+  // it("should render setYear", () => {
+  //   const wrapper = setup();
+  //   const setYear = findByTestAttr(wrapper, "personal-info-setYear");
+  //   expect(setYear.length).toBe(1);
+  // });
 
   it("should render arrowLeft", () => {
     const wrapper = setup();

@@ -38,6 +38,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
         />
       </div>
       <Formik
+        data-test="auth-page-login-form"
         initialValues={{
           email: "",
           password: "",

@@ -53,6 +53,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
         </div>
       </div>
       <Formik
+        data-test="auth-page-signup-form"
         initialValues={{ email: "", id: "", password: "", confirmPassword: "" }}
         onSubmit={async (data, { setSubmitting }) => {
           console.log(data);

@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Formik, Form, Field } from "formik";
+import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
 
 import {
   Background,
@@ -41,13 +43,48 @@ const PersonalInfoPage: React.FC = () => {
                 <div className={classes.profilePicDiv}>
                   <ProfilePic data-test="personal-info-personalImage" />
                 </div>
-                <div className={classes.usernameDiv}>
+                {/* <div className={classes.usernameDiv}>
                   <Username
                     data-test="personal-info-username"
                     value="@micky_ngub"
                   />
                   <Edit />
-                </div>
+                </div> */}
+                <Formik
+                  initialValues={{ displayName: "", faculty: "" }}
+                  onSubmit={(data) => console.log(data)}
+                >
+                  {({ values, isSubmitting }) => (
+                    <Form>
+                      <div className={classes.inputFieldDiv}>
+                        <InputField
+                          label="Display Name*"
+                          type="input"
+                          name="displayName"
+                        />
+                      </div>
+                      <div className={classes.selectDiv}>
+                        <FormControl style={{ width: "100%" }}>
+                          <InputLabel>Faculty</InputLabel>
+                          <Field
+                            name="faculty"
+                            type="select"
+                            label="Faculty"
+                            as={Select}
+                          >
+                            <MenuItem value="cat">cat</MenuItem>
+                            <MenuItem value="dog">dog</MenuItem>
+                            <MenuItem value="frog">frog</MenuItem>
+                          </Field>
+                        </FormControl>
+                      </div>
+                      <div className={classes.Button}>
+                        <Button value="Save" />
+                      </div>
+                      <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+                    </Form>
+                  )}
+                </Formik>
                 {/* <div className={classes.InputFieldDiv}>
                   <InputField
                     data-test="personal-info-setDisplayedName"
@@ -60,9 +97,7 @@ const PersonalInfoPage: React.FC = () => {
                   <InputField data-test="personal-info-setYear" 
                     value="Year of study" />
                 </div> */}
-                <div className={classes.Button}>
-                  <Button value="Save" />
-                </div>
+
                 <div className={classes.footerNavigation}>
                   <Link to="/selectInterests">
                     <div className={classes.footerIcon}>
