@@ -27,7 +27,11 @@ const FindTeamPage: React.FC = () => {
 
       <div className={classes.divBody}>
         <div className={classes.divFixedLeftWithPadding}>
-          <Heading size="big" value="Let's find the team that matches you" />
+          <Heading
+            size="medium"
+            color="black"
+            value="Let's find the team that matches you"
+          />
         </div>
         <SearchBar
           data-test="find-team-page-search-bar"
