@@ -3,6 +3,31 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Interest } from '../../models/interest.model';
 import { User } from '../../models/user.model';
+import { UserInterest } from '../../models/UserInterest.model';
+
+const setup = async () => {
+  const user1 = await User.create({
+    id: '6131886621',
+    name: 'pal'
+  });
+
+  const user2 = await User.create({
+    id: '6131776621',
+    name: 'bob'
+  });
+  const user3 = await User.create({
+    id: '6131776631',
+    name: 'palllllll'
+  });
+  const user4 = await User.create({
+    id: '6131e76631',
+    name: 'palalcc'
+  });
+
+  return [user1, user2, user3, user4]
+};
+
+
 
 describe('Search Test', () => {
   it('should return 401 if user is not authenticated', async () => {
@@ -13,35 +38,40 @@ describe('Search Test', () => {
   });
 
   it('should return a corresponding user(s) for the given name sort by name length', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
+    // const user1 = await User.create({
+    //   id: '6131886621',
+    //   name: 'pal'
+    // });
 
-    const user2 = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
-    const user3 = await User.create({
-      id: '6131776631',
-      name: 'palllllll'
-    });
-    const user4 = await User.create({
-      id: '6131e76631',
-      name: 'palalcc'
-    });
+    // const user2 = await User.create({
+    //   id: '6131776621',
+    //   name: 'bob'
+    // });
+    // const user3 = await User.create({
+    //   id: '6131776631',
+    //   name: 'palllllll'
+    // });
+    // const user4 = await User.create({
+    //   id: '6131e76631',
+    //   name: 'palalcc'
+    // });
+
+    const users = await setup();
 
     const { body: res } = await request(app)
       .get('/api/users/pal')
-      .set('Cookie', global.signin(user2.id))
+      .set('Cookie', global.signin(users[1].id))
       .send({});
 
     expect(res).toHaveLength(3);
     const transformed = res.map((user: { id: string; name: string }) => user.name);
-    expect(transformed[0]).toEqual(user1.name);
-    expect(transformed[1]).toContain(user4.name);
-    expect(transformed[2]).toContain(user3.name);
+    expect(transformed[0]).toEqual(users[0].name);
+    expect(transformed[1]).toContain(users[3].name);
+    expect(transformed[2]).toContain(users[2].name);
   });
+
+
+
   it('should return a corresponding team(s) for the given name sort by name length', async () => {
     const user = await User.create({
       id: '6131886621',
@@ -78,64 +108,68 @@ describe('Search Test', () => {
   });
 
   it('should return a corresponding user(s) for the given id', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
+    // const user1 = await User.create({
+    //   id: '6131886621',
+    //   name: 'pal'
+    // });
 
-    const user2 = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
-    const user3 = await User.create({
-      id: '6131776631',
-      name: 'palllllll'
-    });
+    // const user2 = await User.create({
+    //   id: '6131776621',
+    //   name: 'bob'
+    // });
+    // const user3 = await User.create({
+    //   id: '6131776631',
+    //   name: 'palllllll'
+    // });
+
+    const users = await setup();
 
     const { body: res } = await request(app)
-      .get(`/api/users/${user1.id}`)
-      .set('Cookie', global.signin(user2.id))
+      .get(`/api/users/${users[0].id}`)
+      .set('Cookie', global.signin(users[1].id))
       .send({});
 
     expect(res).toHaveLength(1);
-    expect(res[0].id).toEqual(user1.id);
+    expect(res[0].id).toEqual(users[0].id);
   });
 
   // for user search
   it('should return empty array if the input params does not match any attribute in db', async () => {
-    const user = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
+    const users = await setup();
+
     const { body: res } = await request(app)
       .get(`/api/users/adfasdfasdfafds`)
-      .set('Cookie', global.signin(user.id))
+      .set('Cookie', global.signin(users[0].id))
       .send({});
 
     expect(res).not.toBeNull();
     expect(res).toHaveLength(0);
   });
 
-  it('should include interest in the response', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
 
-    const user2 = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
+
+  it('should include interest in the response', async () => {
+    // const user1 = await User.create({
+    //   id: '6131886621',
+    //   name: 'pal'
+    // });
+
+    // const user2 = await User.create({
+    //   id: '6131776621',
+    //   name: 'bob'
+    // });
+
+    const users = await setup();
 
     // await user.createInterests({ description: InterestDescription.Developer });
     const interest = await Interest.findOne({
       where: { description: InterestDescription.Business }
     });
-    await user1.addInterest(interest!);
+    await users[0].addInterest(interest!);
 
     const { body: res } = await request(app)
-      .get(`/api/users/${user1.id}`)
-      .set('Cookie', global.signin(user2.id))
+      .get(`/api/users/${users[0].id}`)
+      .set('Cookie', global.signin(users[0].id))
       .send({});
 
     expect(res[0].interests).toBeDefined();
