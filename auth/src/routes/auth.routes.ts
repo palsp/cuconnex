@@ -6,7 +6,12 @@ import { validateRequest } from '@cuconnex/common';
 
 const authRoutes = express.Router();
 
-//Checks if there is email password and id
+/**Checks if there is email password and id within the request body object
+ * @returns {boolean} true if the request body's contains all the required fields, false otherwise.
+ * 
+ * 
+*/
+
 /* TODO add password format */
 const signupChecker = [
     body('email')
@@ -22,7 +27,9 @@ const signupChecker = [
         .withMessage('id must be supplied')
 ];
 
-
+/**Checks if there is email password within the request body object
+ * @returns {boolean} true if the request body's contains all the required fields, false otherwise.
+*/
 const signInChecker = [
     body('email')
         .notEmpty()
