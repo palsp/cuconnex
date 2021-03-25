@@ -8,6 +8,16 @@ interface myDB {
   connection?: Connection;
 }
 
+/** Initializes the database by starting a mySQL connection to the server and then instantiating a 
+ * new Sequelize instance.
+ * 
+ *     The mySQL connection is stored in <strong>myDB.connection</strong>.
+ * 
+ *     The Sequelize instance is stored in myDB.sequelize.
+ * 
+ * @returns {myDB} myDB the database object that contains the sequelize instance and mysql connection
+ */
+
 const initializeDB = async () => {
   const myDB: myDB = {};
   const { host, db: database, user, password } = config;
@@ -27,8 +37,8 @@ const initializeDB = async () => {
 
 /**Call this function when you want to terminate the current sequelize connection.
  * If a sequelize instance is present, close all connections used by this sequelize instance by calling Sequelize.close().
- * 
- * @param {myDB} db 
+ * Then, it checks if there is a mySQL connection, if yes then end all connections with Connection.end()
+ * @param {myDB} db The database Object
  */
 const endDB = async (db: myDB) => {
   if (db.sequelize) {
