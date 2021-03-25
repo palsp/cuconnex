@@ -28,7 +28,7 @@ const bodyChecker = [
 
 // create user for first time login
 router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
-  const { interests, name, email, password } = req.body;
+  const { interests, name } = req.body;
 
   // Make sure that user does not exist
   let user = await User.findOne({ where: { id: req.currentUser!.id } });
@@ -44,7 +44,7 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
   let createSuccess;
 
   try {
-    user = await User.create({ id: req.currentUser!.id, email, name, password });
+    user = await User.create({ id: req.currentUser!.id, name });
 
     await user.addInterestFromArray(uniqueInterests);
     createSuccess = true;
@@ -59,7 +59,7 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
     throw new Error('Something went wrong');
   }
 
-  res.status(201).send({ id: user!.id, name: user!.name, interests: uniqueInterests });
+  res.status(201).send({ id: user!.id, interests: uniqueInterests });
 });
 
 export { router as newUserRouter };

@@ -9,8 +9,6 @@ describe('Create a Team Test', () => {
   it('should return 400 if team name is already existed', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     // await user.createInterest({ description: InterestDescription.Business });
@@ -35,8 +33,6 @@ describe('Create a Team Test', () => {
   it('should return 401 if user is not authorized or user is not logged in.', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     // await user.createInterest({ description: InterestDescription.Business });
@@ -59,8 +55,6 @@ describe('Create a Team Test', () => {
   it('should return 400 if no the requested user does not fill in the information yet. ', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     // await user.createInterest({ description: InterestDescription.Business });
@@ -86,8 +80,6 @@ describe('Create a Team Test', () => {
   it('should create team successfully if user is authorized and team name is unique.', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     // await user.createInterest({ description: InterestDescription.Business });

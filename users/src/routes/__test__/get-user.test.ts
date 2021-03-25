@@ -26,11 +26,8 @@ describe('get current user', () => {
   it.todo('should redirect with specific url');
 
   it('should return user information if user already add information', async () => {
-    const id = '6131778821';
     const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
 
@@ -41,7 +38,7 @@ describe('get current user', () => {
 
     const { body: res } = await request(app)
       .get('/api/users')
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send()
       .expect(200);
 
@@ -50,11 +47,8 @@ describe('get current user', () => {
   });
 
   it('return user must include interests', async () => {
-    const id = '6131778821';
     const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
 
@@ -65,7 +59,7 @@ describe('get current user', () => {
 
     const { body: res } = await request(app)
       .get('/api/users')
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send()
       .expect(200);
 
@@ -86,33 +80,27 @@ describe('view user profile', () => {
   });
 
   it('should return 404 if profile of the given user is not exist', async () => {
-    const id = '6131772221';
     const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
 
     await request(app)
       .get('/api/users/view-profile/613177221')
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send({})
       .expect(404);
   });
 
   it('should return user information with status null if user view his/her own profile', async () => {
-    const id = '6131772221';
     const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131772221',
       name: 'pal'
     });
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${id}`)
-      .set('Cookie', global.signin(id))
+      .get(`/api/users/view-profile/${user.id}`)
+      .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
@@ -123,29 +111,23 @@ describe('view user profile', () => {
   });
 
   it('should return user information with status toBeDefined if they are not friend', async () => {
-    const id = '6131772221';
-    const id2 = '6131778821';
-    const user = await User.create({
-      id: id,
-      email: 'test1@test.com',
-      password: 'password123',
+    const user1 = await User.create({
+      id: '6131772221',
       name: 'pal'
     });
     const user2 = await User.create({
-      id: id2,
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'pal'
+      id: '6131778821',
+      name: 'pal2'
     });
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${id}`)
-      .set('Cookie', global.signin(id2))
+      .get(`/api/users/view-profile/${user1.id}`)
+      .set('Cookie', global.signin(user2.id))
       .send({})
       .expect(200);
 
-    expect(res.name).toEqual(user.name);
-    expect(res.id).toEqual(user.id);
+    expect(res.name).toEqual(user1.name);
+    expect(res.id).toEqual(user1.id);
     expect(res.interests).toHaveLength(0);
     expect(res.status).toEqual(FriendStatus.toBeDefined);
   });

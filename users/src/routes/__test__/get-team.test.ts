@@ -21,8 +21,6 @@ describe('Get Team Test', () => {
   it('should return team detail if it is found', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     const interest = await Interest.findOne({
