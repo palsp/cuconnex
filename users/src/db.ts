@@ -40,6 +40,7 @@ const initializeDB = async () => {
  * If a sequelize instance is present, close all connections used by this sequelize instance by calling Sequelize.close().
  * 
  * Then, it checks if there is a mySQL connection, if yes then end all connections with Connection.end()
+ * 
  * @param {myDB} db The database Object
  */
 const endDB = async (db: myDB) => {
