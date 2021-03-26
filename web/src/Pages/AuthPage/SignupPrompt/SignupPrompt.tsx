@@ -63,7 +63,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
             setRedirect(<Redirect to="/personalinformation" />);
           }, 1500);
           const resultSignup = await axios.post(
-            "https://ingress-nginx-controllerr.ingress-nginx.svc.cluster.local/api/auth/signup",
+            "http://connex.dev/api/auth/signup",
             { email: data.email, id: data.id, password: data.password }
           );
           console.log(resultSignup);
