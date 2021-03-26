@@ -21,16 +21,9 @@ describe("click signup value is equal to true", () => {
     const subtitle = findByTestAttr(wrapper, "auth-page-signup-subtitle");
     expect(subtitle.length).toBe(1);
   });
-  it("should render input fields", () => {
-    const inputFields = findByTestAttr(
-      wrapper,
-      "auth-page-signup-input-fields"
-    );
-    expect(inputFields.length).toBe(3);
-  });
-  it("should render next button", () => {
-    const nextButton = findByTestAttr(wrapper, "auth-page-signup-next-button");
-    expect(nextButton.length).toBe(1);
+  it("should render form", () => {
+    const inputFields = findByTestAttr(wrapper, "auth-page-signup-form");
+    expect(inputFields.length).toBe(1);
   });
   it("should NOT render auth button", () => {
     const authButton = findByTestAttr(wrapper, "auth-page-signup-auth-button");

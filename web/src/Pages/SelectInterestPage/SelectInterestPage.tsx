@@ -39,57 +39,57 @@ const SelectInterestPage: React.FC = () => {
     <>
       <div className={classes.main}>
         <div className={classes.container}>
-      <div className={classes.headerDiv}>
-        <div className={classes.heading}>
-          <Heading data-test="heading" value="Interests" />
-        </div>
-        <div className={classes.subtitleDiv}>
-          <Subtitle value="Don't worry, you can adjust your interest later." />
-        </div>
-      </div>
-
-      <div className={classes.heading}>
-        <Heading size="small" value="Business" />
-      </div>
-      <InterestLists
-        selectInterestHandler={selectInterestHandler}
-        data-test="interest-list-business"
-        type="BUSINESS"
-      />
-      <div className={classes.heading}>
-        <Heading size="small" value="Technology" />
-      </div>
-      <InterestLists
-        selectInterestHandler={selectInterestHandler}
-        data-test="interest-list-technology"
-        type="TECHNOLOGY"
-      />
-      <div className={classes.heading}>
-        <Heading size="small" value="Design" />
-      </div>
-      <InterestLists
-        selectInterestHandler={selectInterestHandler}
-        data-test="interest-list-design"
-        type="DESIGN"
-      />
-      <div className={classes.divSaveButton}>{saveButton}</div>
-
-      <div className={classes.footerNavigation}>
-        <Link to="/">
-          <div className={classes.footerIcon}>
-            <ArrowLeft data-test="arrow-left" />
-            <Heading size="small" value="Back" />
+          <div className={classes.headerDiv}>
+            <div className={classes.heading}>
+              <Heading data-test="heading" value="Interests" />
+            </div>
+            <div className={classes.subtitleDiv}>
+              <Subtitle value="Don't worry, you can adjust your interest later." />
+            </div>
           </div>
-        </Link>
-        <DotMorePage data-test="dot-icon" amount={2} />
-        <Link to="/personalInformation">
-          <div className={classes.footerIcon}>
-            <Heading size="small" value="Skip" />
-            <ArrowRight data-test="arrow-right" />
+
+          <div className={classes.heading}>
+            <Heading size="small" value="Business" />
           </div>
-        </Link>
-      </div>
-      </div>
+          <InterestLists
+            selectInterestHandler={selectInterestHandler}
+            data-test="interest-list-business"
+            type="BUSINESS"
+          />
+          <div className={classes.heading}>
+            <Heading size="small" value="Technology" />
+          </div>
+          <InterestLists
+            selectInterestHandler={selectInterestHandler}
+            data-test="interest-list-technology"
+            type="TECHNOLOGY"
+          />
+          <div className={classes.heading}>
+            <Heading size="small" value="Design" />
+          </div>
+          <InterestLists
+            selectInterestHandler={selectInterestHandler}
+            data-test="interest-list-design"
+            type="DESIGN"
+          />
+          <div className={classes.divSaveButton}>{saveButton}</div>
+
+          <div className={classes.footerNavigation}>
+            <Link to="/personalinformation">
+              <div className={classes.footerIcon}>
+                <ArrowLeft data-test="arrow-left" />
+                <Heading size="small" value="Back" />
+              </div>
+            </Link>
+            <DotMorePage data-test="dot-icon" amount={3} />
+            <Link to="/test">
+              <div className={classes.footerIcon}>
+                <Heading size="small" value="Skip" />
+                <ArrowRight data-test="arrow-right" />
+              </div>
+            </Link>
+          </div>
+        </div>
       </div>
     </>
   );

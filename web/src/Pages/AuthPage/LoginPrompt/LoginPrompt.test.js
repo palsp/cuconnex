@@ -21,14 +21,11 @@ describe("click login value is equal to true", () => {
     const subtitle = findByTestAttr(wrapper, "auth-page-login-subtitle");
     expect(subtitle.length).toBe(1);
   });
-  it("should render input fields", () => {
-    const inputFields = findByTestAttr(wrapper, "auth-page-login-input-fields");
-    expect(inputFields.length).toBe(2);
+  it("should render form", () => {
+    const inputFields = findByTestAttr(wrapper, "auth-page-login-form");
+    expect(inputFields.length).toBe(1);
   });
-  it("should render login button", () => {
-    const nextButton = findByTestAttr(wrapper, "auth-page-login-button");
-    expect(nextButton.length).toBe(1);
-  });
+
   it("should NOT render dot icon", () => {
     const dotIcon = findByTestAttr(wrapper, "dot-icon");
     expect(dotIcon.length).toBe(0);

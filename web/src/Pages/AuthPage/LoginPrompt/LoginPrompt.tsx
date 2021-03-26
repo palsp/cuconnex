@@ -38,6 +38,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
         />
       </div>
       <Formik
+        data-test="auth-page-login-form"
         initialValues={{
           email: "",
           password: "",
@@ -45,10 +46,12 @@ const LoginPrompt: React.FC<Props> = (props) => {
         onSubmit={(data, { setSubmitting }) => {
           setSubmitting(true);
           console.log(data);
-          setSubmitting(false);
           setTimeout(() => {
-            setRedirect(<Redirect to="selectinterests" />);
-          }, 1500);
+            setSubmitting(false);
+          }, 800);
+          setTimeout(() => {
+            setRedirect(<Redirect to="/test" />);
+          }, 1000);
         }}
         validationSchema={validationSchema}
       >
@@ -63,7 +66,6 @@ const LoginPrompt: React.FC<Props> = (props) => {
               <Button
                 disabled={isSubmitting}
                 type="submit"
-                onClick={() => {}}
                 data-test="auth-page-login-button"
                 value="Log in"
               />

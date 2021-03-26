@@ -65,9 +65,14 @@
   margin-bottom: 5%;
 }
 
-.InputFieldDiv {
-  width: 75%;
-  margin: 10% auto;
+.inputFieldDiv {
+  width: 90%;
+  margin: 5vh auto;
+}
+
+.selectDiv {
+  width: 90%;
+  margin: 5vh auto;
 }
 
 .footerNavigation {

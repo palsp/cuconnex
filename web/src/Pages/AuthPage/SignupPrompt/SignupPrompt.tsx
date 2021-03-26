@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
+import axios from "axios";
 import * as yup from "yup";
 
 import {
@@ -56,14 +57,20 @@ const SignupPrompt: React.FC<Props> = (props) => {
         </div>
       </div>
       <Formik
+        data-test="auth-page-signup-form"
         initialValues={{ email: "", id: "", password: "", confirmPassword: "" }}
-        onSubmit={(data, { setSubmitting }) => {
+        onSubmit={async (data, { setSubmitting }) => {
           console.log(data);
           setSubmitting(true);
           setTimeout(() => {
             setSubmitting(false);
-            setRedirect(<Redirect to="/selectinterests" />);
+            setRedirect(<Redirect to="/personalinformation" />);
           }, 1500);
+          const resultSignup = await axios.post(
+            "http://connex.dev/api/auth/signup",
+            { email: data.email, id: data.id, password: data.password }
+          );
+          console.log(resultSignup);
         }}
         validationSchema={validationSchema}
       >
