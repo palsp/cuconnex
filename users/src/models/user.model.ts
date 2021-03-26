@@ -54,7 +54,12 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
-  // add interest from a given array to user info
+  /**
+   * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
+   * 
+   * This is done via calling the `BelongsToManyAddAssociationMixin` on the `<Interest, User>` pair
+   * @param {InterestCreationAttrs[]} interests - The array of interests the user is interested in.
+   */
   public async addInterestFromArray(interests: InterestCreationAttrs[]) {
     for (let interest of interests) {
 
