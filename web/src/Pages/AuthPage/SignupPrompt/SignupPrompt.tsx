@@ -58,10 +58,10 @@ const SignupPrompt: React.FC<Props> = (props) => {
         onSubmit={async (data, { setSubmitting }) => {
           console.log(data);
           setSubmitting(true);
-          // setTimeout(() => {
-          //   setSubmitting(false);
-          //   setRedirect(<Redirect to="/" />);
-          // }, 1500);
+          setTimeout(() => {
+            setSubmitting(false);
+            setRedirect(<Redirect to="/personalinformation" />);
+          }, 1500);
           const resultSignup = await axios.post(
             "http://connex.dev/api/auth/signup",
             { email: data.email, id: data.id, password: data.password }

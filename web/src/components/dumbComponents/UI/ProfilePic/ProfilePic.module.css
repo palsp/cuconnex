@@ -3,6 +3,11 @@
   height: 100px;
   width: 100px;
 }
+.profileBig {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
 .profilePic {
   background-image: url("../../../../assets/tempProfile.png");
   background-repeat: round;
