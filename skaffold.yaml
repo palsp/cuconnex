@@ -40,5 +40,5 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '/**/*.tsx'
-            dest: .
+          - src: '**/*.ts'
+            dest: . 
