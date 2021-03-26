@@ -31,6 +31,9 @@ interface UserAttrs {
 interface UserCreationAttrs {
   id: string;
   name: string;
+  faculty?: string;
+  image?: string;
+  lookingForTeam?: boolean;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {

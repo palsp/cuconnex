@@ -2,14 +2,20 @@ import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
 import { Friend } from '../../models/friend.model';
-import { FriendStatus } from '@cuconnex/common';
+import { FriendStatus, InterestDescription } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model';
 
 describe('sending friend request test ', () => {
   it(`should return 400 with 'Please fill the information form' if user does not fill info`, async () => {
+   
+    const receiver = await User.create({
+      id: '6131886622',
+      name: 'pal2'
+    });
     const { body: res } = await request(app)
       .post('/api/users/add-friend')
       .set('Cookie', global.signin())
-      .send({ userId: 'adfasdfasfa' })
+      .send({ userId: receiver.id })
       .expect(400);
 
     expect(res.errors[0].message).toEqual('Please fill the information form first.');
