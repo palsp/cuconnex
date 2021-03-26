@@ -21,30 +21,30 @@ describe('Add member to Team --- Requesting', () => {
   });
 
   it('should return 400 if user is not yet fill in the information detail.', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
+    // const user1 = await User.create({
+    //   id: '6131886621',
+    //   name: 'pal'
+    // });
 
     const user2 = await User.create({
       id: '6131776621',
       name: 'bob'
     });
 
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user1.addInterest(interest!);
-    await user1.createTeams({ name: 'Team1', description: '' });
+    // const interest = await Interest.findOne({
+    //   where: { description: InterestDescription.Business }
+    // });
+    // await user1.addInterest(interest!);
+    // await user1.createTeams({ name: 'Team1', description: '' });
 
     const res = await request(app)
       .post('/api/members/request')
-      .set('Cookie', global.signin(user2.id))
+      .set('Cookie', global.signin())
       .send({
         teamName: 'Team1'
-      });
-    //.expect(400);
-    console.log('ddd', res.body);
+      })
+    .expect(400);
+
 
     const error = res.body.errors[0];
     expect(error.message).toEqual('Please fill the information form first.');
