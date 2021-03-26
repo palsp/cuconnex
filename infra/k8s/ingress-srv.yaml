@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules:
-    - host: connex.dev
+    - host: connex.test
       http:
         paths:
           - path : /api/auth/?(.*)
@@ -22,7 +22,6 @@ spec:
             backend:
               serviceName: event-srv 
               servicePort: 3000
-              
           - path: /?(.*)
             backend:
               serviceName: web-srv 
