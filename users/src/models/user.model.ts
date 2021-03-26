@@ -32,6 +32,7 @@ interface UserCreationAttrs {
   id: string;
   name: string;
 }
+
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
@@ -50,10 +51,11 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
-  // add interest from a given arry to user info
+  // add interest from a given array to user info
   public async addInterestFromArray(interests: InterestCreationAttrs[]) {
     for (let interest of interests) {
-      // find correspondin interest in db
+
+      // find corresponding interest in db
       const int = await Interest.findOne({ where: { description: interest.description } });
 
       // add association between user and interest
