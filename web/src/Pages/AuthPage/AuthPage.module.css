@@ -1,0 +1,128 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  z-index: 2;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+.circle_overlay {
+  position: absolute;
+  z-index: -1;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  width: 200%;
+  height: 100%;
+  bottom: -33%;
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.contentClick {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Button {
+  margin-top: 10%;
+  margin-bottom: 30%;
+}
+
+@media only screen and (max-width: 414px) {
+  /* mobile */
+  .logoDiv {
+    margin-top: 60%;
+    margin-bottom: 5%;
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 415px) {
+  /* tablet */
+  .logoDiv {
+    margin-top: 30%;
+    margin-bottom: 5%;
+    width: 50%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  /* small mobile */
+
+  .logoDiv {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 60%;
+  }
+}
+
+.InputFieldDiv {
+  width: 100%;
+  margin: 5% auto;
+}
+
+.textDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.subtitleDiv {
+  height: 54px;
+  margin: 1vw;
+  font-size: 1rem;
+}
+
+.footerNavigation {
+  position: relative;
+}
+
+.backNavigation {
+  position: absolute;
+  top: 10%;
+  display: flex;
+  align-items: center;
+}
+
+.divFooterHeading {
+  margin: 5px 0 0 10px;
+}
+
+.inputFieldSubtitle {
+  text-align: start;
+  margin-bottom: 5%;
+}
+
+.divHeader {
+  text-align: start;
+  width: 100%;
+}
+
+.divHeaderSubtitle {
+  margin-top: -15px;
+}
+
+.divSubtitle {
+  text-align: start;
+  width: 100%;
+  margin: auto;
+}

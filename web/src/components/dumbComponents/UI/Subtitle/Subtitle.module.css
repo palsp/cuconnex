@@ -1,0 +1,10 @@
+.subtitle {
+  overflow: visible;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 400;
+  font-style: normal;
+  font-family: inherit;
+  color: #c0bfbf;
+  font-size: 1rem;
+}
