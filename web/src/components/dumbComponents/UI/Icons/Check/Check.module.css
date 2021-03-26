@@ -1,0 +1,19 @@
+.check {
+    margin: auto;
+    height: 10vw;
+    width: 10vw;
+}
+
+.checksolid {
+    background-image: url("../../../../../assets/check-solid.svg"), linear-gradient(rgba(255, 255, 255, 0.5),rgba(255,255,255,0.5));
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgb(69, 179, 69);
+    opacity: 1;
+    position: relative;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

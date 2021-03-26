@@ -1,7 +1,8 @@
 .interestList {
   margin: 1vh 2vw;
-  height: 15vh;
-  width: 15vh;
+  background-color: hsl(0, 0%, 88%);
+  overflow: "visible";
+  border-radius: 10%;
 }
 .interestImage {
   position: relative;
@@ -36,10 +37,7 @@ p {
 }
 
 .Marketing::before {
-  background-image: url(../../../../assets/InterestListImage/marketing.jpg);
-  background-size: 100px 100px, contain;
   content: "";
-  border-radius: 50%;
   position: absolute;
   top: 0px;
   right: 0px;
@@ -48,8 +46,6 @@ p {
   opacity: 0.25;
 }
 .BusinessCase::before {
-  background-image: url(../../../../assets//InterestListImage/business.jpg);
-  background-size: 100px 100px, contain;
   content: "";
   border-radius: 50%;
   position: absolute;

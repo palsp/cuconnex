@@ -5,3 +5,4 @@ export { default as RecruitMemberPage } from "@pages/RecruitMemberPage/RecruitMe
 export { default as PersonalInfoPage } from "@pages/PersonalInfoPage/PersonalInfoPage";
 export { default as SelectInterestPage } from "@pages/SelectInterestPage/SelectInterestPage";
 export { default as TestPage } from "@pages/TestPage/TestPage";
+export { default as SuccessPage } from '@pages/SuccessPage/SuccessPage';

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 
 import {
   AppLogo,
+  Logo,
   Background,
   Button,
   Subtitle,
@@ -63,40 +64,37 @@ const AuthPage: React.FC = () => {
     );
   } else if (clickSignup === true) {
     authPrompt = (
-      // <motion.div
-      //   animate={{ y: -120 }}
-      //   transition={{
-      //     type: "spring",
-      //     delay: 0,
-      //     stiffness: 270,
-      //     damping: 29,
-      //     mass: 3.3,
-      //   }}
-      //   className={classes.contentClick}
-      // >
-      //   <div className={classes.logoDiv}>
-      //     <AppLogo data-test="auth-page-logo" />
-      //   </div>
-      //   <motion.div
-      //     animate={{ y: -100 }}
-      //     transition={{
-      //       type: "spring",
-      //       delay: 0,
-      //       stiffness: 270,
-      //       damping: 29,
-      //       mass: 3.3,
-      //     }}
-      //     className={classes.circle_overlay}
-      //   ></motion.div>
-      //   <SignupPrompt
-      //     data-test="auth-page-signup-prompt"
-      //     backButtonClickedHandler={backButtonClickedHandler}
-      //   />
-      // </motion.div>
-      <SignupPrompt
-        data-test="auth-page-signup-prompt"
-        backButtonClickedHandler={backButtonClickedHandler}
-      />
+      <div className={classes.contentContainer}>
+        <motion.div
+          animate={{ y: -120 }}
+          transition={{
+            type: "spring",
+            delay: 0,
+            stiffness: 270,
+            damping: 29,
+            mass: 3.3,
+          }}
+          className={classes.contentClick}>
+          <div className={classes.logoDiv}>
+            <AppLogo data-test="auth-page-logo" />
+          </div>
+          <motion.div
+            animate={{ y: -100 }}
+            transition={{
+              type: "spring",
+              delay: 0,
+              stiffness: 270,
+              damping: 29,
+              mass: 3.3,
+            }}
+            className={classes.circle_overlay}
+          ></motion.div>
+          <SignupPrompt
+            data-test="auth-page-signup-prompt"
+            backButtonClickedHandler={backButtonClickedHandler}
+          />
+        </motion.div>
+      </div>
     );
   } else if (clickLogin === true) {
     authPrompt = (
@@ -121,3 +119,35 @@ const AuthPage: React.FC = () => {
 };
 
 export default AuthPage;
+
+/*  
+    <motion.div
+      animate={{ y: -120 }}
+      transition={{
+        type: "spring",
+        delay: 0,
+        stiffness: 270,
+        damping: 29,
+        mass: 3.3,
+      }}
+      className={classes.contentClick}
+      <div className={classes.logoDiv}>
+        <AppLogo data-test="auth-page-logo" />
+      </div>
+      <motion.div
+        animate={{ y: -100 }}
+        transition={{
+          type: "spring",
+          delay: 0,
+          stiffness: 270,
+          damping: 29,
+          mass: 3.3,
+        }}
+      className={classes.circle_overlay}
+      ></motion.div>
+    <SignupPrompt
+      data-test="auth-page-signup-prompt"
+      backButtonClickedHandler={backButtonClickedHandler}
+    />
+    </motion.div> 
+*/

@@ -10,6 +10,7 @@ import {
   FindTeamPage,
   RecruitMemberPage,
   TestPage,
+  SuccessPage
 } from "@pages/index";
 
 const App: React.FC = () => {
@@ -23,6 +24,7 @@ const App: React.FC = () => {
         <Route path="/findteams" exact component={FindTeamPage} />
         <Route path="/recruitmembers" exact component={RecruitMemberPage} />
         <Route path="/test" exact component={TestPage} />
+        <Route path="/success" exact component={SuccessPage} />
         <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
       </Switch>
     </BrowserRouter>

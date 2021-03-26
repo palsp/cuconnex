@@ -21,7 +21,10 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  email: yup.string().email().required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .required("Email is required"),
   id: yup
     .string()
     .required("ID is required")
@@ -38,6 +41,7 @@ const validationSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
+
 const SignupPrompt: React.FC<Props> = (props) => {
   const [redirect, setRedirect] = useState<any>();
   return (
