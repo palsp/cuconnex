@@ -3,14 +3,12 @@ require('express-async-errors');
 import Session from 'cookie-session';
 import * as bodyParser from 'body-parser';
 import { errorHandling } from '@cuconnex/common';
-import cors from 'cors';
 
 const express = require('express');
 export const app = express()
 
 
 
-app.use(cors());
 app.set('trust proxy', true);
 
 
