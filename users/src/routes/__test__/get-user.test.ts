@@ -4,6 +4,27 @@ import { User } from '../../models/user.model';
 import { FriendStatus, InterestDescription } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
+
+
+/**
+ *  its return user instance and interest instance 
+ */
+const setup = async () => {
+  const user = await User.create({
+    id: '6131778821',
+    name: 'pal'
+  });
+
+  const interest = await Interest.findOne({
+    where: { description: InterestDescription.Business }
+  });
+
+  await user.addInterest(interest!);
+
+  return { user, interest }
+};
+
+
 describe('get current user', () => {
   it('should return 401 if user is not authenticated', async () => {
     const { body } = await request(app)
@@ -26,15 +47,8 @@ describe('get current user', () => {
   it.todo('should redirect with specific url');
 
   it('should return user information if user already add information', async () => {
-    const user = await User.create({
-      id: '6131778821',
-      name: 'pal'
-    });
 
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user.addInterest(interest!);
+    const { user } = await setup()
 
     const { body: res } = await request(app)
       .get('/api/users')
@@ -47,15 +61,8 @@ describe('get current user', () => {
   });
 
   it('return user must include interests', async () => {
-    const user = await User.create({
-      id: '6131778821',
-      name: 'pal'
-    });
 
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user.addInterest(interest!);
+    const { user } = await setup();
 
     const { body: res } = await request(app)
       .get('/api/users')
@@ -80,10 +87,8 @@ describe('view user profile', () => {
   });
 
   it('should return 404 if profile of the given user is not exist', async () => {
-    const user = await User.create({
-      id: '6131778821',
-      name: 'pal'
-    });
+
+    const { user } = await setup();
 
     await request(app)
       .get('/api/users/view-profile/613177221')
@@ -93,10 +98,7 @@ describe('view user profile', () => {
   });
 
   it('should return user information with status null if user view his/her own profile', async () => {
-    const user = await User.create({
-      id: '6131772221',
-      name: 'pal'
-    });
+    const { user } = await setup();
 
     const { body: res } = await request(app)
       .get(`/api/users/view-profile/${user.id}`)
@@ -106,29 +108,26 @@ describe('view user profile', () => {
 
     expect(res.name).toEqual(user.name);
     expect(res.id).toEqual(user.id);
-    expect(res.interests).toHaveLength(0);
     expect(res.status).toBeNull();
   });
 
   it('should return user information with status toBeDefined if they are not friend', async () => {
-    const user1 = await User.create({
-      id: '6131772221',
-      name: 'pal'
-    });
-    const user2 = await User.create({
-      id: '6131778821',
-      name: 'pal2'
+
+    const { user } = await setup();
+
+    const someone = await User.create({
+      id: '6131778921',
+      name: 'friend'
     });
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${user1.id}`)
-      .set('Cookie', global.signin(user2.id))
+      .get(`/api/users/view-profile/${someone.id}`)
+      .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
-    expect(res.name).toEqual(user1.name);
-    expect(res.id).toEqual(user1.id);
-    expect(res.interests).toHaveLength(0);
+    expect(res.name).toEqual(someone.name);
+    expect(res.id).toEqual(someone.id);
     expect(res.status).toEqual(FriendStatus.toBeDefined);
   });
 });

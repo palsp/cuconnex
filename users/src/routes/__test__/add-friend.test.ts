@@ -5,6 +5,22 @@ import { Friend } from '../../models/friend.model';
 import { FriendStatus, InterestDescription } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
+
+
+const setup = async () => {
+  const sender = await User.create({
+    id: "6131886621",
+    name: "pal"
+  });
+
+  const receiver = await User.create({
+    id: "6131776621",
+    name: "receiver"
+  });
+
+  return { sender, receiver }
+};
+
 describe('sending friend request test ', () => {
   it(`should return 400 with 'Please fill the information form' if user does not fill info`, async () => {
    
@@ -22,36 +38,24 @@ describe('sending friend request test ', () => {
   });
 
   it(`should return 404  if user who is added does not exist`, async () => {
-    const user = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
+    const { sender } = await setup();
 
-    const { body: res } = await request(app)
+    await request(app)
       .post('/api/users/add-friend')
-      .set('Cookie', global.signin(user.id))
+      .set('Cookie', global.signin(sender.id))
       .send({ userId: 'adfasdfasfa' })
       .expect(404);
   });
 
   it('should save added user in friend table with status "Pending" ', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
-
-    const user2 = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
-
+    const { sender, receiver } = await setup();
     await request(app)
       .post('/api/users/add-friend')
-      .set('Cookie', global.signin(user1.id))
-      .send({ userId: user2.id })
+      .set('Cookie', global.signin(sender.id))
+      .send({ userId: receiver.id })
       .expect(201);
 
-    const relation = await Friend.findAll({ where: { senderId: user1.id, receiverId: user2.id } });
+    const relation = await Friend.findAll({ where: { senderId: sender.id, receiverId: receiver.id } });
 
     expect(relation).not.toBeNull();
     expect(relation).toHaveLength(1);
@@ -59,15 +63,7 @@ describe('sending friend request test ', () => {
   });
 
   it('not allows add friend if relation already exist (AB = BA)', async () => {
-    const sender = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
-
-    const receiver = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
+    const { sender, receiver } = await setup();
 
     await sender.addFriend(receiver);
 
@@ -86,15 +82,7 @@ describe('sending friend request test ', () => {
 
 describe(' accept friend request ', () => {
   it('should reject request (return 400) on invalid req parameter', async () => {
-    const sender = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
-
-    const receiver = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
+    const { sender, receiver } = await setup();
 
     await sender.addFriend(receiver);
 
@@ -109,15 +97,7 @@ describe(' accept friend request ', () => {
   });
 
   it('should reject request if relation does not exists', async () => {
-    const sender = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
-
-    const receiver = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
+    const { sender, receiver } = await setup();
 
     await request(app)
       .post('/api/users/add-friend/result')
@@ -130,15 +110,7 @@ describe(' accept friend request ', () => {
   });
 
   it('should update relation status on accepted', async () => {
-    const sender = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
-
-    const receiver = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
+    const { sender, receiver } = await setup();
 
     await sender.addFriend(receiver);
 
@@ -156,15 +128,9 @@ describe(' accept friend request ', () => {
   });
 
   it('should update relation status on rejected', async () => {
-    const sender = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
 
-    const receiver = await User.create({
-      id: '6131776621',
-      name: 'bob'
-    });
+    const { sender, receiver } = await setup();
+
 
     await sender.addFriend(receiver);
 
