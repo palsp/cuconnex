@@ -13,9 +13,7 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { ArrowLeft } from "@icons/index";
-
 import classes from "../AuthPage.module.css";
-import { Input } from "@material-ui/core";
 
 interface Props {
   backButtonClickedHandler: () => void;
@@ -63,7 +61,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
             setRedirect(<Redirect to="/personalinformation" />);
           }, 1500);
           const resultSignup = await axios.post(
-            "http://connex.test/api/auth/signup",
+            "https://connex.test/api/auth/signup",
 
             { email: data.email, id: data.id, password: data.password }
           );

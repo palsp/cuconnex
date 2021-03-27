@@ -43,11 +43,12 @@ const LoginPrompt: React.FC<Props> = (props) => {
           email: "",
           password: "",
         }}
-        onSubmit={(data, { setSubmitting }) => {
+        onSubmit={async (data, { setSubmitting, resetForm }) => {
           setSubmitting(true);
           console.log(data);
           setTimeout(() => {
             setSubmitting(false);
+            resetForm();
           }, 800);
           setTimeout(() => {
             setRedirect(<Redirect to="/test" />);
