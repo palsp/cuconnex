@@ -5,6 +5,7 @@ import { User } from '../../models/user.model';
 import { InterestDescription } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
+import { setFlagsFromString } from 'v8';
 
 describe('Add member to Team --- Requesting', () => {
   it('should return 401 if user is not logged in yet', async () => {
@@ -20,47 +21,50 @@ describe('Add member to Team --- Requesting', () => {
   });
 
   it('should return 400 if user is not yet fill in the information detail.', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'pal'
+    // const user1 = await User.create({
+    //   id: '6131886621',
+    //   name: 'pal'
+    // });
+
+    const user2 = await User.create({
+      id: '6131776621',
+      name: 'bob'
     });
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user1.addInterest(interest!);
-    await user1.createTeams({ name: 'Team1', description: '' });
+
+    // const interest = await Interest.findOne({
+    //   where: { description: InterestDescription.Business }
+    // });
+    // await user1.addInterest(interest!);
+    // await user1.createTeams({ name: 'Team1', description: '' });
 
     const res = await request(app)
       .post('/api/members/request')
-      .set('Cookie', global.signin('6131886622'))
+      .set('Cookie', global.signin())
       .send({
         teamName: 'Team1'
       })
-      .expect(400);
+    .expect(400);
+
 
     const error = res.body.errors[0];
     expect(error.message).toEqual('Please fill the information form first.');
   });
 
   it('should return 401 if team is not found.', async () => {
-    const user1 = await User.create({
+    const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     // await user1.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
       where: { description: InterestDescription.Business }
     });
-    await user1.addInterest(interest!);
-    await user1.createTeams({ name: 'Team1', description: '' });
+    await user.addInterest(interest!);
+    await user.createTeams({ name: 'Team1', description: '' });
 
     const res = await request(app)
       .post('/api/members/request')
-      .set('Cookie', global.signin(user1.id))
+      .set('Cookie', global.signin(user.id))
       .send({
         teamName: 'Team2'
       })
@@ -71,10 +75,8 @@ describe('Add member to Team --- Requesting', () => {
   });
 
   it('should return 400 if member status is already there.', async () => {
-    const user1 = await User.create({
+    const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -82,17 +84,17 @@ describe('Add member to Team --- Requesting', () => {
     const interest = await Interest.findOne({
       where: { description: InterestDescription.Business }
     });
-    await user1.addInterest(interest!);
-    const team = await user1.createTeams({ name: 'Team1', description: '' });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'Team1', description: '' });
     const member = await Member.create({
       teamName: 'Team1',
-      userId: user1.id,
+      userId: user.id,
       status: TeamStatus.Accept
     });
 
     const res = await request(app)
       .post('/api/members/request')
-      .set('Cookie', global.signin(user1.id))
+      .set('Cookie', global.signin(user.id))
       .send({
         teamName: team.name
       })
@@ -103,29 +105,27 @@ describe('Add member to Team --- Requesting', () => {
   });
 
   it('should return 200 if user request pending to a team successfully.', async () => {
-    const user1 = await User.create({
+    const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
     const interest = await Interest.findOne({
       where: { description: InterestDescription.Business }
     });
-    await user1.addInterest(interest!);
-    const team = await user1.createTeams({ name: 'Team1', description: '' });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'Team1', description: '' });
 
     const res = await request(app)
       .post('/api/members/request')
-      .set('Cookie', global.signin(user1.id))
+      .set('Cookie', global.signin(user.id))
       .send({
         teamName: 'Team1'
       })
       .expect(201);
 
     expect(res.body.message).toEqual('Request pending');
-    expect(res.body.member).toEqual({ userId: user1.id, teamName: team.name, status: 'Pending' });
+    expect(res.body.member).toEqual({ userId: user.id, teamName: team.name, status: 'Pending' });
   });
 });
 
@@ -146,8 +146,6 @@ describe('Add member to Team --- Invitation', () => {
   it('should return 400 if user is not yet fill in information detail.', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     const interest = await Interest.findOne({
@@ -163,8 +161,6 @@ describe('Add member to Team --- Invitation', () => {
 
     const user2 = await User.create({
       id: '6131886622',
-      email: 'test2@test.com',
-      password: 'password123',
       name: 'pal2'
     });
 
@@ -184,8 +180,6 @@ describe('Add member to Team --- Invitation', () => {
   it('should return 401 if team is not found.', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -197,10 +191,8 @@ describe('Add member to Team --- Invitation', () => {
     await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
-      id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'bob'
+      id: '6131886622',
+      name: 'pal2'
     });
 
     // await user2.createInterest({ description: InterestDescription.Business });
@@ -222,8 +214,6 @@ describe('Add member to Team --- Invitation', () => {
   it('should return 400 if member status is already there.', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -234,10 +224,8 @@ describe('Add member to Team --- Invitation', () => {
     await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
-      id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'bob'
+      id: '6131886622',
+      name: 'pal2'
     });
 
     await user2.addInterest(interest!);
@@ -270,8 +258,6 @@ describe('Add member to Team --- Invitation', () => {
   it('should return 400 if the inviter is not a member of the team.', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -282,10 +268,8 @@ describe('Add member to Team --- Invitation', () => {
     await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
-      id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'bob'
+      id: '6131886622',
+      name: 'pal2'
     });
     await user2.addInterest(interest!);
 
@@ -305,8 +289,6 @@ describe('Add member to Team --- Invitation', () => {
   it('should return 400 if the inviter is not a yet a member of the team but having pending status.', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -317,10 +299,8 @@ describe('Add member to Team --- Invitation', () => {
     await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
-      id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'bob'
+      id: '6131886622',
+      name: 'pal2'
     });
 
     await user2.addInterest(interest!);
@@ -347,8 +327,6 @@ describe('Add member to Team --- Invitation', () => {
   it('should return 201 if invite successfully.', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
@@ -359,12 +337,9 @@ describe('Add member to Team --- Invitation', () => {
     const team = await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
-      id: '6131776621',
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'bob'
+      id: '6131886622',
+      name: 'pal2'
     });
-
     await user2.addInterest(interest!);
 
     const member1 = await Member.create({

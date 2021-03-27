@@ -18,10 +18,8 @@ it('should return 400 if users send invalid type of interest list', async () => 
 it('should return 400 if user info already existed', async () => {
   const id = '6131886621';
   const cookies = global.signin(id);
-  await User.create({
+  const user = await User.create({
     id: '6131886621',
-    email: 'test1@test.com',
-    password: 'password123',
     name: 'pal'
   });
   await request(app)

@@ -4,6 +4,27 @@ import { User } from '../../models/user.model';
 import { FriendStatus, InterestDescription } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
+
+
+/**
+ *  its return user instance and interest instance 
+ */
+const setup = async () => {
+  const user = await User.create({
+    id: '6131778821',
+    name: 'pal'
+  });
+
+  const interest = await Interest.findOne({
+    where: { description: InterestDescription.Business }
+  });
+
+  await user.addInterest(interest!);
+
+  return { user, interest }
+};
+
+
 describe('get current user', () => {
   it('should return 401 if user is not authenticated', async () => {
     const { body } = await request(app)
@@ -26,22 +47,12 @@ describe('get current user', () => {
   it.todo('should redirect with specific url');
 
   it('should return user information if user already add information', async () => {
-    const id = '6131778821';
-    const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
 
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user.addInterest(interest!);
+    const { user } = await setup()
 
     const { body: res } = await request(app)
       .get('/api/users')
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send()
       .expect(200);
 
@@ -50,22 +61,12 @@ describe('get current user', () => {
   });
 
   it('return user must include interests', async () => {
-    const id = '6131778821';
-    const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
 
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user.addInterest(interest!);
+    const { user } = await setup();
 
     const { body: res } = await request(app)
       .get('/api/users')
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send()
       .expect(200);
 
@@ -86,67 +87,47 @@ describe('view user profile', () => {
   });
 
   it('should return 404 if profile of the given user is not exist', async () => {
-    const id = '6131772221';
-    const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
+
+    const { user } = await setup();
 
     await request(app)
       .get('/api/users/view-profile/613177221')
-      .set('Cookie', global.signin(id))
+      .set('Cookie', global.signin(user.id))
       .send({})
       .expect(404);
   });
 
   it('should return user information with status null if user view his/her own profile', async () => {
-    const id = '6131772221';
-    const user = await User.create({
-      id,
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
+    const { user } = await setup();
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${id}`)
-      .set('Cookie', global.signin(id))
+      .get(`/api/users/view-profile/${user.id}`)
+      .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
     expect(res.name).toEqual(user.name);
     expect(res.id).toEqual(user.id);
-    expect(res.interests).toHaveLength(0);
     expect(res.status).toBeNull();
   });
 
   it('should return user information with status toBeDefined if they are not friend', async () => {
-    const id = '6131772221';
-    const id2 = '6131778821';
-    const user = await User.create({
-      id: id,
-      email: 'test1@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
-    const user2 = await User.create({
-      id: id2,
-      email: 'test2@test.com',
-      password: 'password123',
-      name: 'pal'
+
+    const { user } = await setup();
+
+    const someone = await User.create({
+      id: '6131778921',
+      name: 'friend'
     });
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${id}`)
-      .set('Cookie', global.signin(id2))
+      .get(`/api/users/view-profile/${someone.id}`)
+      .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
-    expect(res.name).toEqual(user.name);
-    expect(res.id).toEqual(user.id);
-    expect(res.interests).toHaveLength(0);
+    expect(res.name).toEqual(someone.name);
+    expect(res.id).toEqual(someone.id);
     expect(res.status).toEqual(FriendStatus.toBeDefined);
   });
 });

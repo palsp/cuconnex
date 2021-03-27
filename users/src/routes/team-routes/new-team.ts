@@ -46,6 +46,7 @@ router.post(
       });
     } catch (err) {
       next(err);
+      // throw new Error(err.message);
     }
   }
 );
