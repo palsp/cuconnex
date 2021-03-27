@@ -31,7 +31,7 @@ const SelectInterestPage: React.FC = () => {
   }, [interestArray]);
   let saveButton = null;
   if (interestArray.length !== 0) {
-    saveButton = <Button value="SAVE" />;
+    saveButton = <Button value="Done" />;
   } else {
     saveButton = null;
   }
@@ -44,7 +44,7 @@ const SelectInterestPage: React.FC = () => {
               <Heading data-test="heading" value="Interests" />
             </div>
             <div className={classes.subtitleDiv}>
-              <Subtitle value="Don't worry, you can adjust your interest later." />
+              <Subtitle value="Please Select at least 1 interest" />
             </div>
           </div>
 

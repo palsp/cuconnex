@@ -7,3 +7,4 @@ export { default as InterestList } from "@smartComponents/InterestLists/Interest
 export { default as SearchBar } from "@smartComponents/Navigation/SearchBar/SearchBar";
 export { default as RecommendedLists } from "@smartComponents/RecommendedLists/RecommendedLists";
 export { default as RecommendedList } from "@smartComponents/RecommendedLists/RecommendedList/RecommendedList";
+export { default as OldInterestList } from '@smartComponents/OldInterestList/OldInterestList';
