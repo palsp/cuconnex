@@ -40,6 +40,8 @@ const validationSchema = yup.object({
 });
 const SignupPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
+  const [redirect, setRedirect] = useState<boolean>(false);
+
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticatedContext
   );
@@ -55,8 +57,11 @@ const SignupPrompt: React.FC<Props> = (props) => {
         </div>
       </div>
 
-      {isAuthenticated ? (
-        <Redirect to="/personalinformation" />
+      {redirect ? (
+        <div>
+          {console.log("before redirect", isAuthenticated)}
+          <Redirect to="/personalinformation" />
+        </div>
       ) : (
         <Formik
           data-test="auth-page-signup-form"
@@ -78,9 +83,8 @@ const SignupPrompt: React.FC<Props> = (props) => {
               console.log(resultSignup);
               console.log("Successfully sent a POST request to signup");
               setIsAuthenticated(true);
-              setTimeout(() => {
-                setSubmitting(false);
-              }, 1500);
+              setRedirect(true);
+              setTimeout(() => {}, 1500);
             } catch (e) {
               setErrorOnScreen("ERRORS occured");
               console.log(e);

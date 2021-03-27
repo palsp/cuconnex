@@ -29,6 +29,7 @@ const validationSchema = yup.object({
 });
 const LoginPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
+  const [redirect, setRedirect] = useState<boolean>(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticatedContext
   );
@@ -42,7 +43,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
           data-test="auth-page-login-subtitle"
         />
       </div>
-      {isAuthenticated ? (
+      {redirect ? (
         <Redirect to="/test" />
       ) : (
         <Formik
@@ -62,6 +63,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
               );
               console.log(resultSignin);
               setIsAuthenticated(true);
+              setRedirect(true);
               console.log("Successfully sent a POST request to signin");
               setTimeout(() => {}, 1500);
             } catch (e) {
