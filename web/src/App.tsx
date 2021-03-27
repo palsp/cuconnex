@@ -12,13 +12,28 @@ import {
   RecruitMemberPage,
   TestPage,
 } from "@pages/index";
+import axios from "axios";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  let routes;
+  let routes: any = null;
   useEffect(() => {
     console.log(isAuthenticated);
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    console.log("fetching data");
+    const fetchUserData = async () => {
+      try {
+        const userData = await axios.get("https://connex.test/api/users");
+        console.log(userData);
+        setIsAuthenticated(true);
+      } catch (e) {
+        console.log("Errors FETCHING", e);
+      }
+    };
+    fetchUserData();
+  }, []);
   if (isAuthenticated) {
     routes = (
       <BrowserRouter>
@@ -41,19 +56,37 @@ const App: React.FC = () => {
   } else if (!isAuthenticated) {
     routes = (
       <BrowserRouter>
-        <Switch>
-          <AuthenticatedContext.Provider
-            value={{ isAuthenticated, setIsAuthenticated }}
-          >
+        <AuthenticatedContext.Provider
+          value={{ isAuthenticated, setIsAuthenticated }}
+        >
+          <Switch>
             <Route path="/" exact component={AuthPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-          </AuthenticatedContext.Provider>
-        </Switch>
+          </Switch>
+        </AuthenticatedContext.Provider>
       </BrowserRouter>
     );
   }
 
-  return <div>{routes}</div>;
+  return (
+    <div>
+      {routes}
+      <button
+        onClick={() => {
+          console.log("show state", isAuthenticated);
+        }}
+      >
+        Show state
+      </button>
+      <button
+        onClick={() => {
+          console.log("show route", routes.props.children);
+        }}
+      >
+        Show route
+      </button>
+    </div>
+  );
 };
 
 export default App;
