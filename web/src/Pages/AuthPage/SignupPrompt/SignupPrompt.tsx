@@ -74,6 +74,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
             setErrorOnScreen("ERRORS occured");
             console.log(e);
           }
+
         }}
         validationSchema={validationSchema}
       >
