@@ -17,9 +17,6 @@ import axios from "axios";
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   let routes: any = null;
-  useEffect(() => {
-    console.log(isAuthenticated);
-  }, [isAuthenticated]);
 
   useEffect(() => {
     console.log("fetching data");
@@ -33,7 +30,8 @@ const App: React.FC = () => {
       }
     };
     fetchUserData();
-  }, []);
+    console.log(isAuthenticated);
+  }, [isAuthenticated]);
   if (isAuthenticated) {
     routes = (
       <BrowserRouter>
