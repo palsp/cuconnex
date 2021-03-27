@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
 import axios from "axios";
@@ -11,12 +11,11 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-
+import { AuthenticatedContext } from "../../../AuthenticatedContext";
 import classes from "../AuthPage.module.css";
 
 interface Props {
   backButtonClickedHandler: () => void;
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const validationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
@@ -31,6 +30,9 @@ const validationSchema = yup.object({
 const LoginPrompt: React.FC<Props> = (props) => {
   const [redirect, setRedirect] = useState<any>();
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticatedContext
+  );
 
   return (
     <>
@@ -57,8 +59,8 @@ const LoginPrompt: React.FC<Props> = (props) => {
               data
             );
             console.log(resultSignin);
+            setIsAuthenticated(true);
             console.log("Successfully sent a POST request to signin");
-            props.setIsAuthenticated(true);
             setTimeout(() => {
               setRedirect(<Redirect to="/test" />);
             }, 1500);
