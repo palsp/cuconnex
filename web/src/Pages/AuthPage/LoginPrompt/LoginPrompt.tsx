@@ -28,7 +28,6 @@ const validationSchema = yup.object({
     .matches(/(?=.*[A-Z])/, "Password must contain one UPPER case letter"),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
-  const [redirect, setRedirect] = useState<any>();
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticatedContext
@@ -43,52 +42,54 @@ const LoginPrompt: React.FC<Props> = (props) => {
           data-test="auth-page-login-subtitle"
         />
       </div>
-      <Formik
-        data-test="auth-page-login-form"
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        onSubmit={async (data, { setSubmitting, resetForm }) => {
-          console.log(data);
-          setSubmitting(true);
-          resetForm();
-          try {
-            const resultSignin = await axios.post(
-              "https://connex.test/api/auth/signin",
-              data
-            );
-            console.log(resultSignin);
-            setIsAuthenticated(true);
-            console.log("Successfully sent a POST request to signin");
-            setTimeout(() => {
-              setRedirect(<Redirect to="/test" />);
-            }, 1500);
-          } catch (e) {
-            setErrorOnScreen("ERRORS occured");
-            console.log(e);
-          }
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ values, isSubmitting, errors }) => (
-          <Form>
-            <InputField label="Email" name="email" type="input" />
-            <div className={classes.InputFieldDiv}>
-              <InputField label="Password" name="password" type="input" />
-            </div>
-            <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-            <div className={classes.Button}>
-              <Button
-                disabled={isSubmitting}
-                type="submit"
-                data-test="auth-page-login-button"
-                value="Log in"
-              />
-            </div>
-          </Form>
-        )}
-      </Formik>
+      {isAuthenticated ? (
+        <Redirect to="/test" />
+      ) : (
+        <Formik
+          data-test="auth-page-login-form"
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          onSubmit={async (data, { setSubmitting, resetForm }) => {
+            console.log(data);
+            setSubmitting(true);
+            resetForm();
+            try {
+              const resultSignin = await axios.post(
+                "https://connex.test/api/auth/signin",
+                data
+              );
+              console.log(resultSignin);
+              setIsAuthenticated(true);
+              console.log("Successfully sent a POST request to signin");
+              setTimeout(() => {}, 1500);
+            } catch (e) {
+              setErrorOnScreen("ERRORS occured");
+              console.log(e);
+            }
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ values, isSubmitting, errors }) => (
+            <Form>
+              <InputField label="Email" name="email" type="input" />
+              <div className={classes.InputFieldDiv}>
+                <InputField label="Password" name="password" type="input" />
+              </div>
+              <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+              <div className={classes.Button}>
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  data-test="auth-page-login-button"
+                  value="Log in"
+                />
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
 
       <div className={classes.footerNavigation}>
         <div
@@ -102,7 +103,6 @@ const LoginPrompt: React.FC<Props> = (props) => {
           </div>
         </div>
         {errorOnScreen}
-        {redirect}
       </div>
     </>
   );
