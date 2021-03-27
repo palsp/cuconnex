@@ -32,11 +32,7 @@ describe("render Personal Info Page", () => {
     );
     expect(personalImage.length).toBe(1);
   });
-  it("should render username", () => {
-    const wrapper = setup();
-    const username = findByTestAttr(wrapper, "personal-info-username");
-    expect(username.length).toBe(1);
-  });
+
   it("should render form", () => {
     const wrapper = setup();
     const personalForm = findByTestAttr(wrapper, "personal-info-form");
@@ -66,11 +62,6 @@ describe("render Personal Info Page", () => {
   //   expect(setYear.length).toBe(1);
   // });
 
-  it("should render arrowLeft", () => {
-    const wrapper = setup();
-    const arrowLeft = findByTestAttr(wrapper, "personal-info-arrowLeft");
-    expect(arrowLeft.length).toBe(1);
-  });
   it("should render dotIcon", () => {
     const wrapper = setup();
     const dotIcon = findByTestAttr(wrapper, "personal-info-dotIcon");
