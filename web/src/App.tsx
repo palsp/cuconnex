@@ -35,20 +35,28 @@ const App: React.FC = () => {
   if (isAuthenticated) {
     routes = (
       <BrowserRouter>
-        <Switch>
-          <Route path="/" exact component={AuthPage} />
-          <Route path="/selectinterests" exact component={SelectInterestPage} />
-          <Route
-            path="/personalInformation"
-            exact
-            component={PersonalInfoPage}
-          />
-          <Route path="/friendlists" exact component={FriendsPage} />
-          <Route path="/findteams" exact component={FindTeamPage} />
-          <Route path="/recruitmembers" exact component={RecruitMemberPage} />
-          <Route path="/test" exact component={TestPage} />
-          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-        </Switch>
+        <AuthenticatedContext.Provider
+          value={{ isAuthenticated, setIsAuthenticated }}
+        >
+          <Switch>
+            <Route path="/" exact component={AuthPage} />
+            <Route
+              path="/selectinterests"
+              exact
+              component={SelectInterestPage}
+            />
+            <Route
+              path="/personalInformation"
+              exact
+              component={PersonalInfoPage}
+            />
+            <Route path="/friendlists" exact component={FriendsPage} />
+            <Route path="/findteams" exact component={FindTeamPage} />
+            <Route path="/recruitmembers" exact component={RecruitMemberPage} />
+            <Route path="/test" exact component={TestPage} />
+            <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+          </Switch>
+        </AuthenticatedContext.Provider>
       </BrowserRouter>
     );
   } else if (!isAuthenticated) {
