@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { AuthenticatedContext } from "./AuthenticatedContext";
 
 import "./App.css";
 import {
@@ -15,6 +16,9 @@ import {
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   let routes;
+  useEffect(() => {
+    console.log(isAuthenticated);
+  }, [isAuthenticated]);
   if (isAuthenticated) {
     routes = (
       <BrowserRouter>
@@ -38,14 +42,12 @@ const App: React.FC = () => {
     routes = (
       <BrowserRouter>
         <Switch>
-          <Route
-            path="/"
-            exact
-            component={() => (
-              <AuthPage setIsAuthenticated={setIsAuthenticated} />
-            )}
-          />
-          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+          <AuthenticatedContext.Provider
+            value={{ isAuthenticated, setIsAuthenticated }}
+          >
+            <Route path="/" exact component={AuthPage} />
+            <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+          </AuthenticatedContext.Provider>
         </Switch>
       </BrowserRouter>
     );

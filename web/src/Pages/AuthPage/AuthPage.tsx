@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { motion } from "framer-motion";
 
@@ -15,10 +15,8 @@ import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
 
-interface Props {
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-}
-const AuthPage: React.FC<Props> = (props) => {
+interface Props {}
+const AuthPage: React.FC<Props> = () => {
   const [clickSignup, setClickSignup] = useState(false);
   const [clickLogin, setClickLogin] = useState(false);
 
@@ -105,7 +103,6 @@ const AuthPage: React.FC<Props> = (props) => {
     authPrompt = (
       <LoginPrompt
         data-test="auth-page-login-prompt"
-        setIsAuthenticated={props.setIsAuthenticated}
         backButtonClickedHandler={backButtonClickedHandler}
       />
     );
