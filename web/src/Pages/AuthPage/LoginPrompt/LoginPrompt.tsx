@@ -16,6 +16,7 @@ import classes from "../AuthPage.module.css";
 
 interface Props {
   backButtonClickedHandler: () => void;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const validationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
@@ -47,7 +48,6 @@ const LoginPrompt: React.FC<Props> = (props) => {
           password: "",
         }}
         onSubmit={async (data, { setSubmitting, resetForm }) => {
-
           console.log(data);
           setSubmitting(true);
           resetForm();
@@ -58,6 +58,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             );
             console.log(resultSignin);
             console.log("Successfully sent a POST request to signin");
+            props.setIsAuthenticated(true);
             setTimeout(() => {
               setRedirect(<Redirect to="/test" />);
             }, 1500);
@@ -65,7 +66,6 @@ const LoginPrompt: React.FC<Props> = (props) => {
             setErrorOnScreen("ERRORS occured");
             console.log(e);
           }
-
         }}
         validationSchema={validationSchema}
       >

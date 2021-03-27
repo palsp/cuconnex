@@ -15,7 +15,10 @@ import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
 
-const AuthPage: React.FC = () => {
+interface Props {
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const AuthPage: React.FC<Props> = (props) => {
   const [clickSignup, setClickSignup] = useState(false);
   const [clickLogin, setClickLogin] = useState(false);
 
@@ -102,6 +105,7 @@ const AuthPage: React.FC = () => {
     authPrompt = (
       <LoginPrompt
         data-test="auth-page-login-prompt"
+        setIsAuthenticated={props.setIsAuthenticated}
         backButtonClickedHandler={backButtonClickedHandler}
       />
     );
