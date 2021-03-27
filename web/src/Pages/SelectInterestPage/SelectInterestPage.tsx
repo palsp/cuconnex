@@ -72,7 +72,10 @@ const SelectInterestPage: React.FC = () => {
             data-test="interest-list-design"
             type="DESIGN"
           />
-          <div className={classes.divSaveButton}>{saveButton}</div>
+          
+          <Link to="/success">
+            <div className={classes.divSaveButton}>{saveButton}</div>
+          </Link>
 
           <div className={classes.footerNavigation}>
             <Link to="/personalinformation">
@@ -82,7 +85,7 @@ const SelectInterestPage: React.FC = () => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <Link to="/test">
+            <Link to="/success">
               <div className={classes.footerIcon}>
                 <Heading size="small" value="Skip" />
                 <ArrowRight data-test="arrow-right" />
