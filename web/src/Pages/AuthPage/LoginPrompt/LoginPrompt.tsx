@@ -47,6 +47,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
           password: "",
         }}
         onSubmit={async (data, { setSubmitting, resetForm }) => {
+
           console.log(data);
           setSubmitting(true);
           resetForm();
@@ -64,6 +65,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             setErrorOnScreen("ERRORS occured");
             console.log(e);
           }
+
         }}
         validationSchema={validationSchema}
       >
