@@ -19,13 +19,7 @@ const App: React.FC = () => {
     routes = (
       <BrowserRouter>
         <Switch>
-          <Route
-            path="/"
-            exact
-            component={() => (
-              <AuthPage setIsAuthenticated={setIsAuthenticated} />
-            )}
-          />
+          <Route path="/" exact component={AuthPage} />
           <Route path="/selectinterests" exact component={SelectInterestPage} />
           <Route
             path="/personalInformation"
@@ -44,7 +38,13 @@ const App: React.FC = () => {
     routes = (
       <BrowserRouter>
         <Switch>
-          <Route path="/" exact component={AuthPage} />
+          <Route
+            path="/"
+            exact
+            component={() => (
+              <AuthPage setIsAuthenticated={setIsAuthenticated} />
+            )}
+          />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>
       </BrowserRouter>
