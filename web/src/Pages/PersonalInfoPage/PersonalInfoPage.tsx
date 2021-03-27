@@ -79,6 +79,7 @@ const PersonalInfoPage: React.FC = () => {
                   <Edit />
                 </div> */}
                 <Formik
+                  data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
                   onSubmit={(data, { setSubmitting }) => {
                     console.log(data);
