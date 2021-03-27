@@ -45,6 +45,7 @@ const facultyArray = [
 ];
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
+
   return (
     <div className={classes.main}>
       <div className={classes.container}>
@@ -86,10 +87,19 @@ const PersonalInfoPage: React.FC = () => {
                     setSubmitting(true);
                     setTimeout(() => {
                       setSubmitting(false);
-                    }, 800);
+                    }, 500);
                     setTimeout(() => {
-                      setRedirect(<Redirect to="/selectinterests" />);
-                    });
+                      setRedirect(
+                        <Redirect
+                          to={{
+                            pathname: "/selectinterests",
+                            state: {
+                              username: data.displayName,
+                            },
+                          }}
+                        />
+                      );
+                    }, 1500);
                   }}
                 >
                   {({ values, isSubmitting }) => (
@@ -138,7 +148,12 @@ const PersonalInfoPage: React.FC = () => {
 
                 <div className={classes.footerNavigation}>
                   <DotMorePage data-test="personal-info-dotIcon" amount={2} />
-                  <Link to="/selectinterests">
+                  <Link
+                    to={{
+                      pathname: "/selectinterests",
+                      state: { username: "" },
+                    }}
+                  >
                     <div className={classes.footerIcon}>
                       <Heading value="Skip" size="small" />
                       <ArrowRight data-test="personal-info-arrowRight" />

@@ -61,12 +61,11 @@ const LoginPrompt: React.FC<Props> = (props) => {
                 data
               );
               console.log(resultSignin);
-              setIsAuthenticated(true);
               console.log("Successfully sent a POST request to signin");
               setTimeout(() => {}, 1500);
             } catch (e) {
               setErrorOnScreen("ERRORS occured");
-              console.log(e);
+              console.log("this is error", e);
             }
           }}
           validationSchema={validationSchema}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 import {
@@ -14,7 +15,15 @@ import { ArrowLeft, ArrowRight } from "@icons/index";
 
 import classes from "./SelectInterestPage.module.css";
 
-const SelectInterestPage: React.FC = () => {
+interface Props {
+  location: {
+    state: {
+      username: string;
+    };
+  };
+}
+
+const SelectInterestPage: React.FC<Props> = (props) => {
   const [interestArray, setInterestArray] = useState<Array<string>>([]);
   const selectInterestHandler = (e: string) => {
     let positionOfE = interestArray.indexOf(e);
@@ -26,12 +35,49 @@ const SelectInterestPage: React.FC = () => {
       setInterestArray(newInterestArray);
     }
   };
+  const setUserData = async () => {
+    console.log("setUserData");
+    try {
+      const result = await axios.post("https://connex.test/api/users", {
+        username: props.location.state.username,
+        interests: interestArray,
+      });
+      console.log(result);
+    } catch (e) {
+      console.log("Error setting users data", e);
+    }
+  };
+  const setEmptyInterest = async () => {
+    console.log("setEmptyInterest");
+    try {
+      const result = await axios.post("https://connex.test/api/users/", {
+        username: props.location.state.username,
+        interests: [],
+      });
+      console.log(result);
+    } catch (e) {
+      console.log("Error setting empty interest", e);
+    }
+  };
   useEffect(() => {
     console.log("this is interestArray", interestArray);
+    console.log("check pass state", props.location.state);
   }, [interestArray]);
   let saveButton = null;
   if (interestArray.length !== 0) {
-    saveButton = <Button value="SAVE" />;
+    saveButton = (
+      <Link
+        to={{
+          pathname: "/test",
+          state: {
+            username: props.location.state.username,
+            interests: interestArray,
+          },
+        }}
+      >
+        <Button onClick={setUserData} value="SAVE" />
+      </Link>
+    );
   } else {
     saveButton = null;
   }
@@ -74,7 +120,7 @@ const SelectInterestPage: React.FC = () => {
           />
           <div className={classes.divSaveButton}>{saveButton}</div>
 
-          <div className={classes.footerNavigation}>
+          <div onClick={setEmptyInterest} className={classes.footerNavigation}>
             <Link to="/personalinformation">
               <div className={classes.footerIcon}>
                 <ArrowLeft data-test="arrow-left" />
