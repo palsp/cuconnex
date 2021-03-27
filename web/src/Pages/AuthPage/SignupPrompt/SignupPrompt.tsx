@@ -64,6 +64,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
           }, 1500);
           const resultSignup = await axios.post(
             "http://connex.test/api/auth/signup",
+
             { email: data.email, id: data.id, password: data.password }
           );
           console.log(resultSignup);
