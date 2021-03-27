@@ -13,9 +13,7 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { ArrowLeft } from "@icons/index";
-
 import classes from "../AuthPage.module.css";
-import { Input } from "@material-ui/core";
 
 interface Props {
   backButtonClickedHandler: () => void;
@@ -41,6 +39,7 @@ const validationSchema = yup.object({
 });
 const SignupPrompt: React.FC<Props> = (props) => {
   const [redirect, setRedirect] = useState<any>();
+  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   return (
     <>
       <div className={classes.divHeader}>
@@ -55,18 +54,26 @@ const SignupPrompt: React.FC<Props> = (props) => {
       <Formik
         data-test="auth-page-signup-form"
         initialValues={{ email: "", id: "", password: "", confirmPassword: "" }}
-        onSubmit={async (data, { setSubmitting }) => {
+        onSubmit={async (data, { setSubmitting, resetForm }) => {
           console.log(data);
           setSubmitting(true);
-          setTimeout(() => {
-            setSubmitting(false);
-            setRedirect(<Redirect to="/personalinformation" />);
-          }, 1500);
-          const resultSignup = await axios.post(
-            "http://connex.dev/api/auth/signup",
-            { email: data.email, id: data.id, password: data.password }
-          );
-          console.log(resultSignup);
+          resetForm();
+          try {
+            const resultSignup = await axios.post(
+              "https://connex.test/api/auth/signup",
+              { email: data.email, id: data.id, password: data.password }
+            );
+            console.log(resultSignup);
+            console.log("Successfully sent a POST request to signup");
+
+            setTimeout(() => {
+              setSubmitting(false);
+              setRedirect(<Redirect to="/personalinformation" />);
+            }, 1500);
+          } catch (e) {
+            setErrorOnScreen("ERRORS occured");
+            console.log(e);
+          }
         }}
         validationSchema={validationSchema}
       >
@@ -104,7 +111,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
           </Form>
         )}
       </Formik>
-
+      {errorOnScreen}
       <div className={classes.footerNavigation}>
         {redirect}
         <DotMorePage data-test="dot-icon" amount={1} />

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
+import axios from "axios";
 import * as yup from "yup";
 
 import {
@@ -28,6 +29,8 @@ const validationSchema = yup.object({
 });
 const LoginPrompt: React.FC<Props> = (props) => {
   const [redirect, setRedirect] = useState<any>();
+  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
+
   return (
     <>
       <div className={classes.divHeader}>
@@ -43,15 +46,24 @@ const LoginPrompt: React.FC<Props> = (props) => {
           email: "",
           password: "",
         }}
-        onSubmit={(data, { setSubmitting }) => {
-          setSubmitting(true);
+        onSubmit={async (data, { setSubmitting, resetForm }) => {
           console.log(data);
-          setTimeout(() => {
-            setSubmitting(false);
-          }, 800);
-          setTimeout(() => {
-            setRedirect(<Redirect to="/test" />);
-          }, 1000);
+          setSubmitting(true);
+          resetForm();
+          try {
+            const resultSignin = await axios.post(
+              "https://connex.test/api/auth/signin",
+              data
+            );
+            console.log(resultSignin);
+            console.log("Successfully sent a POST request to signin");
+            setTimeout(() => {
+              setRedirect(<Redirect to="/test" />);
+            }, 1500);
+          } catch (e) {
+            setErrorOnScreen("ERRORS occured");
+            console.log(e);
+          }
         }}
         validationSchema={validationSchema}
       >
@@ -85,6 +97,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Heading value="Back" size="small" />
           </div>
         </div>
+        {errorOnScreen}
         {redirect}
       </div>
     </>
