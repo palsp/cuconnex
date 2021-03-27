@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
 import axios from "axios";
@@ -12,6 +12,7 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 
+import { AuthenticatedContext } from "../../../AuthenticatedContext";
 import { ArrowLeft } from "@icons/index";
 import classes from "../AuthPage.module.css";
 
@@ -38,8 +39,10 @@ const validationSchema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 const SignupPrompt: React.FC<Props> = (props) => {
-  const [redirect, setRedirect] = useState<any>();
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticatedContext
+  );
   return (
     <>
       <div className={classes.divHeader}>
@@ -51,69 +54,79 @@ const SignupPrompt: React.FC<Props> = (props) => {
           />
         </div>
       </div>
-      <Formik
-        data-test="auth-page-signup-form"
-        initialValues={{ email: "", id: "", password: "", confirmPassword: "" }}
-        onSubmit={async (data, { setSubmitting, resetForm }) => {
-          console.log(data);
-          setSubmitting(true);
-          resetForm();
-          try {
-            const resultSignup = await axios.post(
-              "https://connex.test/api/auth/signup",
-              { email: data.email, id: data.id, password: data.password }
-            );
-            console.log(resultSignup);
-            console.log("Successfully sent a POST request to signup");
 
-            setTimeout(() => {
-              setSubmitting(false);
-              setRedirect(<Redirect to="/personalinformation" />);
-            }, 1500);
-          } catch (e) {
-            setErrorOnScreen("ERRORS occured");
-            console.log(e);
-          }
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ values, isSubmitting, errors }) => (
-          <Form>
-            <InputField label="Email" name="email" type="input" />
-            <div className={classes.InputFieldDiv}>
-              <InputField label="Student ID" name="id" type="input" />
-            </div>
-            <div className={classes.InputFieldDiv}>
-              <InputField label="Password" name="password" type="password" />
-            </div>
-            <div className={classes.InputFieldDiv}>
-              <InputField
-                label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-              />
-            </div>
-            <div className={classes.Button}>
-              <Button
-                data-test="auth-page-signup-next-button"
-                value="Next"
-                disabled={isSubmitting}
-                type="submit"
-                onClick={() => {}}
-              />
-            </div>
-            <p style={{ width: "300px" }}>{JSON.stringify(values.email)}</p>
-            <p style={{ width: "300px" }}>{JSON.stringify(values.id)}</p>
-            <p style={{ width: "300px" }}>{JSON.stringify(values.password)}</p>
-            <p style={{ width: "300px" }}>
-              {JSON.stringify(values.confirmPassword)}
-            </p>
-          </Form>
-        )}
-      </Formik>
+      {isAuthenticated ? (
+        <Redirect to="/personalinformation" />
+      ) : (
+        <Formik
+          data-test="auth-page-signup-form"
+          initialValues={{
+            email: "",
+            id: "",
+            password: "",
+            confirmPassword: "",
+          }}
+          onSubmit={async (data, { setSubmitting, resetForm }) => {
+            console.log(data);
+            setSubmitting(true);
+            resetForm();
+            try {
+              const resultSignup = await axios.post(
+                "https://connex.test/api/auth/signup",
+                { email: data.email, id: data.id, password: data.password }
+              );
+              console.log(resultSignup);
+              console.log("Successfully sent a POST request to signup");
+              setIsAuthenticated(true);
+              setTimeout(() => {
+                setSubmitting(false);
+              }, 1500);
+            } catch (e) {
+              setErrorOnScreen("ERRORS occured");
+              console.log(e);
+            }
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ values, isSubmitting, errors }) => (
+            <Form>
+              <InputField label="Email" name="email" type="input" />
+              <div className={classes.InputFieldDiv}>
+                <InputField label="Student ID" name="id" type="input" />
+              </div>
+              <div className={classes.InputFieldDiv}>
+                <InputField label="Password" name="password" type="password" />
+              </div>
+              <div className={classes.InputFieldDiv}>
+                <InputField
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                />
+              </div>
+              <div className={classes.Button}>
+                <Button
+                  data-test="auth-page-signup-next-button"
+                  value="Next"
+                  disabled={isSubmitting}
+                  type="submit"
+                  onClick={() => {}}
+                />
+              </div>
+              <p style={{ width: "300px" }}>{JSON.stringify(values.email)}</p>
+              <p style={{ width: "300px" }}>{JSON.stringify(values.id)}</p>
+              <p style={{ width: "300px" }}>
+                {JSON.stringify(values.password)}
+              </p>
+              <p style={{ width: "300px" }}>
+                {JSON.stringify(values.confirmPassword)}
+              </p>
+            </Form>
+          )}
+        </Formik>
+      )}
       {errorOnScreen}
       <div className={classes.footerNavigation}>
-        {redirect}
         <DotMorePage data-test="dot-icon" amount={1} />
         <div
           onClick={props.backButtonClickedHandler}
