@@ -30,7 +30,7 @@ const App: React.FC = () => {
       }
     };
     fetchUserData();
-    console.log(isAuthenticated);
+    console.log("Am I Authen?", isAuthenticated);
   }, [isAuthenticated]);
   if (isAuthenticated) {
     routes = (
