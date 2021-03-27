@@ -36,21 +36,6 @@ const start = async () => {
     await initializeDB();
 
     await startInterest();
-
-    const user = await User.create({
-      id: '6131776621',
-      email: 'test@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user.addInterest(interest!);
-    const users = await User.findAll({
-      where: { id: user.id },
-      include: { association: 'interests', attributes: ['description'] }
-    });
   } catch (err) {
     console.error(err);
   }
