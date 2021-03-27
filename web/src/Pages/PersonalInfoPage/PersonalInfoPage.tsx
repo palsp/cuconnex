@@ -94,7 +94,7 @@ const PersonalInfoPage: React.FC = () => {
                           to={{
                             pathname: "/selectinterests",
                             state: {
-                              username: data.displayName,
+                              name: data.displayName,
                             },
                           }}
                         />
@@ -151,7 +151,7 @@ const PersonalInfoPage: React.FC = () => {
                   <Link
                     to={{
                       pathname: "/selectinterests",
-                      state: { username: "" },
+                      state: { name: "" },
                     }}
                   >
                     <div className={classes.footerIcon}>

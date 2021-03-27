@@ -18,7 +18,7 @@ import classes from "./SelectInterestPage.module.css";
 interface Props {
   location: {
     state: {
-      username: string;
+      name: string;
     };
   };
 }
@@ -38,10 +38,11 @@ const SelectInterestPage: React.FC<Props> = (props) => {
   const setUserData = async () => {
     console.log("setUserData");
     try {
-      const result = await axios.post("https://connex.test/api/users", {
-        username: props.location.state.username,
+      let data = {
+        name: props.location.state.name,
         interests: interestArray,
-      });
+      };
+      const result = await axios.post("https://connex.test/api/users", data);
       console.log(result);
     } catch (e) {
       console.log("Error setting users data", e);
@@ -51,7 +52,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
     console.log("setEmptyInterest");
     try {
       const result = await axios.post("https://connex.test/api/users/", {
-        username: props.location.state.username,
+        name: props.location.state.name,
         interests: [],
       });
       console.log(result);
@@ -70,7 +71,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
         to={{
           pathname: "/test",
           state: {
-            username: props.location.state.username,
+            name: props.location.state.name,
             interests: interestArray,
           },
         }}
