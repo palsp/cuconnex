@@ -14,7 +14,7 @@ const personArray = [
   {
     name: "Loong",
     profilePic: "",
-    interest: "AI, Machine learning",
+    interest: "AI, ",
     major: "Engineering",
     year: 3,
   },

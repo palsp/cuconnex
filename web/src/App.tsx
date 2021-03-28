@@ -15,7 +15,7 @@ import {
 } from "@pages/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   // const [numUseEffect, setNumUseEffect] = useState<number>(0);
   let routes: any = null;
 
@@ -41,6 +41,15 @@ const App: React.FC = () => {
       console.log("SUCCESS testFetchData", resultGET);
     } catch (e) {
       console.log("testFetchData error", e);
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      const resultLogout = await axios.post("/api/auth/signout");
+      setIsAuthenticated(false);
+      console.log("SUCCESSFULLY Logout", resultLogout);
+    } catch (e) {
+      console.log("logout ERROR", e);
     }
   };
   if (isAuthenticated) {
@@ -109,6 +118,13 @@ const App: React.FC = () => {
         }}
       >
         FETCH
+      </button>
+      <button
+        onClick={() => {
+          handleLogout();
+        }}
+      >
+        LOGOUT
       </button>
       {/* {numUseEffect} */}
     </div>
