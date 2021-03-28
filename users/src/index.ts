@@ -1,13 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
-import { User } from './models/user.model';
-import { Interest } from './models/interest.model';
-import { InterestDescription, Technology } from '@cuconnex/common';
-// import { startInterest } from './models/initDB';
-import { fromPairs } from 'lodash';
-import { UserInterest } from './models/UserInterest.model';
-import { Category } from './models/category.model';
+
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -34,20 +28,14 @@ const validateEnvAttr = () => {
 const start = async () => {
   try {
     // check if all required env variable have been declared
+    validateEnvAttr();
+
+
     // validateEnvAttr();
     await initializeDB();
 
 
-
-    // const category = await Category.create({ category: "Technology" });
-    // // const int = await Interest.create({ description: Technology.ChatBot });
-
-
-    // category.createInterest({ description: Technology.Coding });
-
-
-    // await startInterest();
-
+    // initial data for interest and category 
     await startDB();
   } catch (err) {
     console.log(err);

@@ -1,9 +1,9 @@
-import { InterestDescription } from '@cuconnex/common';
+import { Technology } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { Interest } from '../../models/interest.model';
 import { User } from '../../models/user.model';
-import { UserInterest } from '../../models/UserInterest.model';
+
 
 const setup = async () => {
   const user1 = await User.create({
@@ -38,23 +38,6 @@ describe('Search Test', () => {
   });
 
   it('should return a corresponding user(s) for the given name sort by name length', async () => {
-    // const user1 = await User.create({
-    //   id: '6131886621',
-    //   name: 'pal'
-    // });
-
-    // const user2 = await User.create({
-    //   id: '6131776621',
-    //   name: 'bob'
-    // });
-    // const user3 = await User.create({
-    //   id: '6131776631',
-    //   name: 'palllllll'
-    // });
-    // const user4 = await User.create({
-    //   id: '6131e76631',
-    //   name: 'palalcc'
-    // });
 
     const users = await setup();
 
@@ -108,19 +91,7 @@ describe('Search Test', () => {
   });
 
   it('should return a corresponding user(s) for the given id', async () => {
-    // const user1 = await User.create({
-    //   id: '6131886621',
-    //   name: 'pal'
-    // });
 
-    // const user2 = await User.create({
-    //   id: '6131776621',
-    //   name: 'bob'
-    // });
-    // const user3 = await User.create({
-    //   id: '6131776631',
-    //   name: 'palllllll'
-    // });
 
     const users = await setup();
 
@@ -149,21 +120,14 @@ describe('Search Test', () => {
 
 
   it('should include interest in the response', async () => {
-    // const user1 = await User.create({
-    //   id: '6131886621',
-    //   name: 'pal'
-    // });
-
-    // const user2 = await User.create({
-    //   id: '6131776621',
-    //   name: 'bob'
-    // });
 
     const users = await setup();
 
     // await user.createInterests({ description: InterestDescription.Developer });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: {
+        description: Technology.Coding,
+      }
     });
     await users[0].addInterest(interest!);
 
@@ -173,7 +137,7 @@ describe('Search Test', () => {
       .send({});
 
     expect(res[0].interests).toBeDefined();
-    expect(res[0].interests[0].description).toEqual(InterestDescription.Business);
+    expect(res[0].interests[0].description).toEqual(Technology.Coding);
   });
 
   it('should return a corresponding team(s) for the given name sort by name length', async () => {

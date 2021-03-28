@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
-import { FriendStatus, InterestDescription } from '@cuconnex/common';
+import { FriendStatus, Business } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
 
@@ -16,7 +16,7 @@ const setup = async () => {
   });
 
   const interest = await Interest.findOne({
-    where: { description: InterestDescription.Business }
+    where: { description: Business.BusinessCase }
   });
 
   await user.addInterest(interest!);
@@ -73,7 +73,7 @@ describe('get current user', () => {
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
     expect(res.interests).not.toBeNull();
-    expect(res.interests[0].description).toEqual(InterestDescription.Business);
+    expect(res.interests[0].description).toEqual(Business.BusinessCase);
   });
 });
 

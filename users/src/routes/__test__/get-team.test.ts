@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Team } from '../../models/team.model';
+
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
 describe('Get Team Test', () => {
@@ -24,7 +24,7 @@ describe('Get Team Test', () => {
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
 
     await user.addInterest(interest!);

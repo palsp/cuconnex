@@ -67,6 +67,7 @@ export const initModel = (sequelize: Sequelize) => {
   // M-M user and interest
   User.belongsToMany(Interest, {
     through: userInterest,
+    as: "interests",
     foreignKey: 'userId',
     onDelete: 'CASCADE'
   });

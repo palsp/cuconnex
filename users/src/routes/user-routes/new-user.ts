@@ -4,7 +4,6 @@ import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model'
 import { User } from '../../models/user.model';
 import { BadRequestError } from '@cuconnex/common';
-import { Category } from '../../models/category.model';
 
 const router = express.Router();
 
@@ -56,7 +55,6 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
       // 
       // select only valid interest description 
       interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
-      // console.log(interests[category]);
       await user.addInterestFromArray(interests[category]);
 
     }

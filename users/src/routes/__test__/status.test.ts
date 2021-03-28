@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
@@ -12,8 +12,9 @@ describe('Status Changing Test', () => {
       id: '6131778821',
       name: 'pal'
     });
+
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
@@ -38,7 +39,7 @@ describe('Status Changing Test', () => {
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
 
     await user1.addInterest(interest!);
@@ -62,9 +63,8 @@ describe('Status Changing Test', () => {
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
-
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
@@ -102,7 +102,7 @@ describe('Status Changing Test', () => {
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
@@ -135,7 +135,7 @@ describe('Status Changing Test', () => {
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
