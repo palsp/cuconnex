@@ -37,6 +37,7 @@ const App: React.FC = () => {
   const testFetchData = async () => {
     try {
       const resultGET = await axios.get("/api/users");
+      setIsAuthenticated(true);
       console.log("SUCCESS testFetchData", resultGET);
     } catch (e) {
       console.log("testFetchData error", e);
