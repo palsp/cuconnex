@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "axios";
+import axios from "@src/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -57,10 +57,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             setSubmitting(true);
             resetForm();
             try {
-              const resultSignin = await axios.post(
-                "https://connex.test/api/auth/signin",
-                data
-              );
+              const resultSignin = await axios.post("/api/auth/signin", data);
               console.log(resultSignin);
               setIsAuthenticated(true);
               setRedirect(true);

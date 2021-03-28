@@ -26,6 +26,7 @@ module.exports = function override(config) {
         "Icons"
       ),
       "@assets": path.resolve(__dirname, "src", "assets"),
+      "@src": path.resolve(__dirname, "src"),
     },
   };
 
