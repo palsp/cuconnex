@@ -1,20 +1,39 @@
 .interestList {
-  margin: 2%;
-  background-color: hsl(0, 0%, 88%);
+  margin: 2vw;
   border-radius: 10%;
-  height: 30px;
+  height: 100%;
+  margin-right: 5vw;
+}
+
+.interest {
+  background-color: hsl(0, 0%, 88%);
+  display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 10%;
+  width: 120%;
+}
+
+.icon {
+  margin-left: 3%;
+  margin-right: 5%;
+  position: relative;
+  align-items: flex-start;
+  width: 20px;
+  height: 20px;
 }
 
 .text {
   position: relative;
-  height: inherit;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: fit-content;
 }
+
+.isClicked {
+  background-color: #f33182;
+  border-radius: 10%;
+  color: white;
+}
+
+/*
 
 .interestImage {
   position: relative;
@@ -23,29 +42,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good */
-
-/* .interestImage::before {
-  content: "";
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
-} */
-/* 
-p {
-  position: relative;
-} */
-
-.isClicked {
-  background-color: #f33182;
-  border-radius: 10%;
-  color: white;
 }
 
 .Marketing::before {
@@ -98,6 +94,7 @@ p {
   left: 0px;
   opacity: 0.25;
 }
+
 .WebBuilder::before {
   content: "";
   position: absolute;
@@ -107,6 +104,7 @@ p {
   left: 0px;
   opacity: 0.25;
 }
+
 .ChatBot::before {
   content: "";
   position: absolute;
@@ -161,3 +159,22 @@ p {
   left: 0px;
   opacity: 0.25;
 }
+
+/* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good
+
+/* .interestImage::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 50%;
+}
+
+/* 
+p {
+  position: relative;
+}
+
+*/

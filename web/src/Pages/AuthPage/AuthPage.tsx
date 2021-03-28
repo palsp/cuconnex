@@ -75,9 +75,10 @@ const AuthPage: React.FC<Props> = () => {
             damping: 29,
             mass: 3.3,
           }}
-          className={classes.contentClick}>
-          <div className={classes.logoDiv}>
-            <AppLogo data-test="auth-page-logo" />
+          className={classes.contentClick}
+        >
+          <div className={classes.logo}>
+            <Logo />
           </div>
           <motion.div
             animate={{ y: -100 }}
@@ -99,10 +100,38 @@ const AuthPage: React.FC<Props> = () => {
     );
   } else if (clickLogin === true) {
     authPrompt = (
-      <LoginPrompt
-        data-test="auth-page-login-prompt"
-        backButtonClickedHandler={backButtonClickedHandler}
-      />
+      <div className={classes.contentContainer}>
+        <motion.div
+          animate={{ y: -70 }}
+          transition={{
+            type: "spring",
+            delay: 0,
+            stiffness: 270,
+            damping: 29,
+            mass: 3.3,
+          }}
+          className={classes.contentClick}
+        >
+          <div className={classes.logo}>
+            <Logo />
+          </div>
+          <motion.div
+            animate={{ y: -100 }}
+            transition={{
+              type: "spring",
+              delay: 0,
+              stiffness: 270,
+              damping: 29,
+              mass: 3.3,
+            }}
+            className={classes.circle_overlay}
+          ></motion.div>
+          <LoginPrompt
+            data-test="auth-page-login-prompt"
+            backButtonClickedHandler={backButtonClickedHandler}
+          />
+        </motion.div>
+      </div>
     );
   }
 
@@ -120,35 +149,3 @@ const AuthPage: React.FC<Props> = () => {
 };
 
 export default AuthPage;
-
-/*  
-    <motion.div
-      animate={{ y: -120 }}
-      transition={{
-        type: "spring",
-        delay: 0,
-        stiffness: 270,
-        damping: 29,
-        mass: 3.3,
-      }}
-      className={classes.contentClick}
-      <div className={classes.logoDiv}>
-        <AppLogo data-test="auth-page-logo" />
-      </div>
-      <motion.div
-        animate={{ y: -100 }}
-        transition={{
-          type: "spring",
-          delay: 0,
-          stiffness: 270,
-          damping: 29,
-          mass: 3.3,
-        }}
-      className={classes.circle_overlay}
-      ></motion.div>
-    <SignupPrompt
-      data-test="auth-page-signup-prompt"
-      backButtonClickedHandler={backButtonClickedHandler}
-    />
-    </motion.div> 
-*/

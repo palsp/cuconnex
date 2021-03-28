@@ -33,18 +33,24 @@
 }
 
 .divHeader {
+  margin-bottom: 5%;
+}
+
+.check {
+  position: relative;
   margin-bottom: 30%;
 }
 
 .Button {
   margin-top: 10%;
+  width: 70%;
 }
 
-@media only screen and (max-width: 414px) {
-  /* mobile */
-  .logoDiv {
-    margin-top: 60%;
-    margin-bottom: 5%;
-    width: 70%;
-  }
+.logoDiv {
+  margin-top: 90%;
+  margin-bottom: 5%;
+  width: 30%;
+}
+
+@media only screen and (max-width: 414px) {                       /* mobile */
 }
