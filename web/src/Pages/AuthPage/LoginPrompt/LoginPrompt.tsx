@@ -49,7 +49,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             "IsAuthenticated in loginPrompt before redirect",
             isAuthenticated
           )}
-          <Redirect to="/test" />
+          <Redirect to="/landing" />
         </div>
       ) : (
         <Formik

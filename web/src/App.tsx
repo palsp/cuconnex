@@ -16,8 +16,6 @@ import {
 
 import LandingPage from "@pages/LandingPage/LandingPage";
 
-
-
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<any>();

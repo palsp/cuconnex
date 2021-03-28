@@ -37,7 +37,7 @@ const SuccessPage: React.FC = () => {
                 ></Subtitle>
                 <Check></Check>
               </div>
-              <Link to="/test">
+              <Link to="/landing">
                 <div className={classes.button}>
                   <Button
                     data-test="success-page-button"
