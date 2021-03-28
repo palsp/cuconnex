@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { AuthenticatedContext } from "./AuthenticatedContext";
 import axios from "@src/axiosInstance/axiosInstance";
 import "./App.css";
@@ -15,7 +15,8 @@ import {
 } from "@pages/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState<any>();
   // const [numUseEffect, setNumUseEffect] = useState<number>(0);
   let routes: any = null;
 
@@ -47,6 +48,7 @@ const App: React.FC = () => {
     try {
       const resultLogout = await axios.post("/api/auth/signout");
       setIsAuthenticated(false);
+      setRedirect(<Redirect to="/" />);
       console.log("SUCCESSFULLY Logout", resultLogout);
     } catch (e) {
       console.log("logout ERROR", e);
@@ -88,6 +90,7 @@ const App: React.FC = () => {
         >
           <Switch>
             <Route path="/" exact component={AuthPage} />
+            {redirect}
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>
         </AuthenticatedContext.Provider>
@@ -126,6 +129,7 @@ const App: React.FC = () => {
       >
         LOGOUT
       </button>
+
       {/* {numUseEffect} */}
     </div>
   );
