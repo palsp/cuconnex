@@ -35,7 +35,6 @@ const AuthPage: React.FC<Props> = () => {
         console.log("Successfully GET userData", userData);
         setIsAuthenticated(true);
         setRedirect(true);
-        console.log("Am I Authen?", isAuthenticated);
       } catch (e) {
         console.log("Errors FETCHING userData", e);
         console.log("Am I Authen?", isAuthenticated);
