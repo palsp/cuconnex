@@ -16,7 +16,7 @@ import {
 import axios from "@src/axiosInstance/axiosInstance";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [numUseEffect, setNumUseEffect] = useState<number>(0);
   let routes: any = null;
 
