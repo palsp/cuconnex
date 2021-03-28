@@ -98,6 +98,7 @@ const PersonalInfoPage: React.FC = () => {
                             pathname: "/selectinterests",
                             state: {
                               name: data.displayName,
+                              faculty: data.faculty,
                             },
                           }}
                         />
@@ -125,7 +126,9 @@ const PersonalInfoPage: React.FC = () => {
                             as={Select}
                           >
                             {facultyArray.map((faculty) => (
-                              <MenuItem value={faculty}>{faculty}</MenuItem>
+                              <MenuItem key={faculty} value={faculty}>
+                                {faculty}
+                              </MenuItem>
                             ))}
                           </Field>
                         </FormControl>
