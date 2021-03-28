@@ -8,6 +8,7 @@ import SelectInterestPage from "./Pages/SelectInterestPage/SelectInterestPage";
 import FriendsPage from "./Pages/FriendsPage/FriendsPage";
 import FindTeamPage from "./Pages/FindTeamPage/FindTeamPage";
 import RecruitMember from "./Pages/RecruitMemberPage/RecruitMemberPage";
+import LandingPage from "./Pages/LandingPage/LandingPage";
 
 const App: React.FC = () => {
   let routes = (
@@ -19,6 +20,7 @@ const App: React.FC = () => {
         <Route path="/friendlists" exact component={FriendsPage} />
         <Route path="/findteams" exact component={FindTeamPage} />
         <Route path="/recruitmembers" exact component={RecruitMember} />
+        <Route path="/landing" exact component={LandingPage} />
         <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
       </Switch>
     </BrowserRouter>
