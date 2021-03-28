@@ -2,25 +2,34 @@ import { Sequelize, Model, DataTypes } from 'sequelize';
 import { InterestDescription } from '@cuconnex/common';
 import { TableName } from './types';
 
+let desc: any[] = [];
+
+for (let key in InterestDescription) {
+  const interest = Object.values(InterestDescription[key]);
+  desc = desc.concat(interest)
+}
+
+
 interface UserInterestAttrs {
-  description: string;
+
+  interest: string;
   userId: string;
 }
 
-interface UserInterestCreationAttrs {}
+interface UserInterestCreationAttrs { }
 
 class UserInterest extends Model<UserInterestAttrs, UserInterestCreationAttrs>
   implements UserInterestAttrs {
-  public description!: string;
+  public interest!: string;
   public userId!: string;
 }
 
 const initUserInterest = (sequelize: Sequelize) => {
   UserInterest.init<UserInterest>(
     {
-      description: {
+      interest: {
         type: DataTypes.ENUM,
-        values: Object.values(InterestDescription),
+        values: desc,
         primaryKey: true
       },
       userId: {

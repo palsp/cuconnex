@@ -2,8 +2,8 @@ import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
 import { Friend } from '../../models/friend.model';
-import { FriendStatus, InterestDescription } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { FriendStatus, } from '@cuconnex/common';
+
 
 
 
@@ -23,7 +23,7 @@ const setup = async () => {
 
 describe('sending friend request test ', () => {
   it(`should return 400 with 'Please fill the information form' if user does not fill info`, async () => {
-   
+
     const receiver = await User.create({
       id: '6131886622',
       name: 'pal2'

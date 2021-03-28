@@ -9,7 +9,7 @@ import {
   Association,
   Sequelize
 } from 'sequelize';
-import { BadRequestError, NotFoundError, FriendStatus } from '@cuconnex/common';
+import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuconnex/common';
 
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
@@ -54,16 +54,30 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
-  // add interest from a given arry to user info
-  public async addInterestFromArray(interests: InterestCreationAttrs[]) {
-    for (let interest of interests) {
-      // find correspondin interest in db
-      const int = await Interest.findOne({ where: { description: interest.description } });
+  // // add interest from a given arry to user info
+  // public async addInterestFromArray(interests: InterestCreationAttrs[]) {
+  //   for (let interest of interests) {
+  //     // find correspondin interest in db
+  //     const int = await Interest.findOne({ where: { description: interest.description } });
 
-      // add association between user and interest
-      if (int) {
-        await this.addInterest(int);
+  //     // add association between user and interest
+  //     if (int) {
+  //       await this.addInterest(int);
+  //     }
+  //   }
+  // }
+
+  public async addInterestFromArray(interests: Description[]) {
+    for (let interest of interests) {
+      try {
+        // find interest in db
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
+
+        await this.addInterest(addedInterest!);
+      } catch (err) {
+        console.log(err);
       }
+
     }
   }
 

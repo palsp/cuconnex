@@ -16,6 +16,7 @@ router.get('/api/users/:search', requireUser, async (req: Request, res: Response
     },
     include: { association: 'interests', attributes: ['description'] }
   });
+
   if (users.length > MAX_SEARCH) {
     users = users.slice(0, MAX_SEARCH);
   }

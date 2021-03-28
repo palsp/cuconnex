@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
@@ -31,7 +31,7 @@ describe('Get Members', () => {
     });
 
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
