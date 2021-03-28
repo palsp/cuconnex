@@ -18,3 +18,27 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: palsp/connex-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+    - image: palsp/connex-event
+      context: event-services
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.go'
+            dest: .
+    - image: palsp/connex-web
+      context: web
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.ts'
+            dest: . 

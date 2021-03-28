@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "@src/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
 import {
@@ -14,8 +15,17 @@ import { ArrowLeft, ArrowRight } from "@icons/index";
 
 import classes from "./SelectInterestPage.module.css";
 
-const SelectInterestPage: React.FC = () => {
+interface Props {
+  location: {
+    state: {
+      name: string;
+    };
+  };
+}
+
+const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   const [interestArray, setInterestArray] = useState<Array<string>>([]);
+  let name = "";
   const selectInterestHandler = (e: string) => {
     let positionOfE = interestArray.indexOf(e);
     if (positionOfE === -1) {
@@ -26,12 +36,63 @@ const SelectInterestPage: React.FC = () => {
       setInterestArray(newInterestArray);
     }
   };
+  const setUserData = async () => {
+    if (props.location) {
+      name = props.location.state.name;
+    }
+    let data = {
+      name: name,
+      interests: interestArray,
+    };
+    console.log("POST /api/users", data);
+    try {
+      const result = await axios.post("/api/users", data);
+      console.log("POST to /api/users is successful", result);
+    } catch (e) {
+      console.log("SelectInterestPage Error setting users data", e);
+    }
+  };
+  const setEmptyInterest = async () => {
+    if (props.location) {
+      name = props.location.state.name;
+    }
+    let data = {
+      name: name,
+      interest: [],
+    };
+    console.log("Empty Interest POST /api/users", data);
+
+    try {
+      const result = await axios.post("/api/users/", data);
+      console.log("POST Empty interests to /api/users is successful", result);
+    } catch (e) {
+      console.log("SelectInterestPage Error setting empty interest", e);
+    }
+  };
   useEffect(() => {
-    console.log("this is interestArray", interestArray);
+    console.log("Items in interestArray", interestArray);
   }, [interestArray]);
+  useEffect(() => {
+    console.log(
+      "State passed from PersonalInformationPage",
+      props.location.state
+    );
+  }, []);
   let saveButton = null;
-  if (interestArray.length !== 0) {
-    saveButton = <Button value="Done" />;
+  if (interestArray.length !== 0 && props) {
+    saveButton = (
+      <Link
+        to={{
+          pathname: "/success",
+          state: {
+            name: props.location.state.name,
+            interests: interestArray,
+          },
+        }}
+      >
+        <Button onClick={setUserData} value="SAVE" />
+      </Link>
+    );
   } else {
     saveButton = null;
   }
@@ -72,7 +133,7 @@ const SelectInterestPage: React.FC = () => {
             data-test="interest-list-design"
             type="DESIGN"
           />
-          
+
           <Link to="/success">
             <div className={classes.divSaveButton}>{saveButton}</div>
           </Link>
@@ -85,17 +146,27 @@ const SelectInterestPage: React.FC = () => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <Link to="/success">
-              <div className={classes.footerIcon}>
-                <Heading size="small" value="Skip" />
-                <ArrowRight data-test="arrow-right" />
-              </div>
-            </Link>
+            <div onClick={setEmptyInterest}>
+              <Link to="/success">
+                <div className={classes.footerIcon}>
+                  <Heading size="small" value="Skip" />
+                  <ArrowRight data-test="arrow-right" />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 };
+
+// SelectInterestPage.defaultProps = {
+//   location: {
+//     state: {
+//       name: "Micky",
+//     },
+//   },
+// };
 
 export default SelectInterestPage;

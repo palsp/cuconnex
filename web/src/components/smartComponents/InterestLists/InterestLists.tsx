@@ -8,7 +8,12 @@ interface Props {
   selectInterestHandler: (e: string) => any;
 }
 
-const businessInterestArray = ["Marketing", "Business Case", "Startup", "Ecommerce", "Finance", "DDDDDDDDDDDD", "Swewew", "yooyoyoyyo"];
+const businessInterestArray = [
+  "Marketing",
+  "Business Case",
+  "Startup",
+  "Ecommerce",
+];
 const technologyInterestArray = ["Coding", "Web Builder", "ChatBot", "FinTech"];
 const designInterestArray = ["Graphic", "UXUI", "Ads", "Fashion"];
 

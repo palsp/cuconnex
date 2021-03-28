@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { motion } from "framer-motion";
 
@@ -16,7 +16,8 @@ import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
 
-const AuthPage: React.FC = () => {
+interface Props {}
+const AuthPage: React.FC<Props> = () => {
   const [clickSignup, setClickSignup] = useState(false);
   const [clickLogin, setClickLogin] = useState(false);
 
