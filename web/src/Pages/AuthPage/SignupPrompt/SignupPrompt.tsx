@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "axios";
+import axios from "@src/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -76,10 +76,11 @@ const SignupPrompt: React.FC<Props> = (props) => {
             setSubmitting(true);
             resetForm();
             try {
-              const resultSignup = await axios.post(
-                "https://connex.test/api/auth/signup",
-                { email: data.email, id: data.id, password: data.password }
-              );
+              const resultSignup = await axios.post("/api/auth/signup", {
+                email: data.email,
+                id: data.id,
+                password: data.password,
+              });
               console.log(resultSignup);
               console.log("Successfully sent a POST request to signup");
               setIsAuthenticated(true);

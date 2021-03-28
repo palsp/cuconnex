@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "@src/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
 import {
@@ -42,7 +42,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
         name: props.location.state.name,
         interests: interestArray,
       };
-      const result = await axios.post("https://connex.test/api/users", data);
+      const result = await axios.post("/api/users", data);
       console.log(result);
     } catch (e) {
       console.log("Error setting users data", e);
@@ -51,7 +51,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
   const setEmptyInterest = async () => {
     console.log("setEmptyInterest");
     try {
-      const result = await axios.post("https://connex.test/api/users/", {
+      const result = await axios.post("/api/users/", {
         name: props.location.state.name,
         interests: [],
       });

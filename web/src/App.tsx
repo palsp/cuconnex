@@ -12,7 +12,7 @@ import {
   RecruitMemberPage,
   TestPage,
 } from "@pages/index";
-import axios from "axios";
+import axios from "@src/axiosInstance/axiosInstance";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -22,7 +22,7 @@ const App: React.FC = () => {
     console.log("fetching data");
     const fetchUserData = async () => {
       try {
-        const userData = await axios.get("https://connex.test/api/users");
+        const userData = await axios.get("/api/users");
         console.log(userData);
         setIsAuthenticated(true);
       } catch (e) {

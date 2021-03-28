@@ -9,11 +9,11 @@ const TestPage = () => {
     //   const result = await getUsers();
     //   console.log(result);
     // })();
-    const getUsers = async () => {
-      const result = await axios.get("https://connex.dev/api/users");
-      console.log(result);
-    };
-    getUsers();
+    // const getUsers = async () => {
+    //   const result = await axios.get("https://connex.dev/api/users");
+    //   console.log(result);
+    // };
+    // getUsers();
 
     console.log("testpage is working!");
   }, []);
