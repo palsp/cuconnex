@@ -71,7 +71,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
                 resultSignin
               );
               try {
-                const fetchUserDataSignin = await axios.get("/api/user");
+                const fetchUserDataSignin = await axios.get("/api/users");
                 console.log(
                   "fetchUserDataSign successfully",
                   fetchUserDataSignin
@@ -90,7 +90,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
-                <InputField label="Password" name="password" type="input" />
+                <InputField label="Password" name="password" type="password" />
               </div>
               <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
               <div className={classes.Button}>
