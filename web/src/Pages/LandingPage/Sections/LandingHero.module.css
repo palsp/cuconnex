@@ -1,0 +1,32 @@
+.buttonmainDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.findteamDiv {
+  margin-top: 40%;
+  margin-right: 4%;
+  size: 100%;
+}
+.recruitmemberDiv {
+  margin-top: 40%;
+  margin-left: 4%;
+  size: 100%;
+}
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+}
+.subtitleDiv {
+  width: 200px;
+  height: 15px;
+  text-align: left;
+  margin-left: 4%;
+}
+.headingDiv {
+  width: 200px;
+  height: 15px;
+  text-align: left;
+  margin-left: 4%;
+}
