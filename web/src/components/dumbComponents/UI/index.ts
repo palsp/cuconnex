@@ -9,3 +9,4 @@ export { default as PicWithText } from "@dumbComponents/UI/PicWithText/PicWithTe
 export { default as ProfilePic } from "@dumbComponents/UI/ProfilePic/ProfilePic";
 export { default as InputField } from "@dumbComponents/UI/InputField/InputField";
 export { default as Username } from "@dumbComponents/UI/Username/Username";
+export { default as Logo } from '@dumbComponents/UI/Logo/Logo';

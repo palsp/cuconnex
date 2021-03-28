@@ -96,7 +96,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
               <Heading data-test="heading" value="Interests" />
             </div>
             <div className={classes.subtitleDiv}>
-              <Subtitle value="Don't worry, you can adjust your interest later." />
+              <Subtitle value="Please Select at least 1 interest" />
             </div>
           </div>
 
@@ -124,7 +124,10 @@ const SelectInterestPage: React.FC<Props> = (props) => {
             data-test="interest-list-design"
             type="DESIGN"
           />
-          <div className={classes.divSaveButton}>{saveButton}</div>
+
+          <Link to="/success">
+            <div className={classes.divSaveButton}>{saveButton}</div>
+          </Link>
 
           <div onClick={setEmptyInterest} className={classes.footerNavigation}>
             <Link to="/personalinformation">
@@ -134,7 +137,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <Link to="/test">
+            <Link to="/success">
               <div className={classes.footerIcon}>
                 <Heading size="small" value="Skip" />
                 <ArrowRight data-test="arrow-right" />

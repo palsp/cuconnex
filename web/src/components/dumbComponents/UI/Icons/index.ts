@@ -4,3 +4,4 @@ export { default as Edit } from "@icons/Edit/Edit";
 export { default as PlusCircle } from "@icons/PlusCircle/PlusCircle";
 export { default as Search } from "@icons/Search/Search";
 export { default as Send } from "@icons/Send/Send";
+export { default as Check } from '@icons/Check/Check';

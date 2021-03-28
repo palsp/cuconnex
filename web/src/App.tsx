@@ -11,6 +11,7 @@ import {
   FindTeamPage,
   RecruitMemberPage,
   TestPage,
+  SuccessPage,
 } from "@pages/index";
 import axios from "@src/axiosInstance/axiosInstance";
 
