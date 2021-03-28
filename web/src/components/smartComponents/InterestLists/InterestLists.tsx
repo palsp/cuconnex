@@ -13,8 +13,15 @@ const businessInterestArray = [
   "Business Case",
   "Startup",
   "Ecommerce",
+  // "Finance",
 ];
-const technologyInterestArray = ["Coding", "Web Builder", "ChatBot", "FinTech"];
+const technologyInterestArray = [
+  "Coding",
+  "Web Builder",
+  "Chatbot",
+  "FinTech",
+  // "Blockchain",
+];
 const designInterestArray = ["Graphic", "UXUI", "Ads", "Fashion"];
 
 const InterestLists: React.FC<Props> = (props) => {

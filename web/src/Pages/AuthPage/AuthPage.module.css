@@ -9,6 +9,8 @@
   height: 100%;
 }
 
+/* Background */
+
 .content {
   z-index: 2;
 }
@@ -41,37 +43,22 @@
   flex-direction: column;
 }
 
+/* Content */
+
 .Button {
   margin-top: 10%;
-  margin-bottom: 30%;
+  margin-bottom: -10%;
 }
 
-@media only screen and (max-width: 414px) {
-  /* mobile */
-  .logoDiv {
-    margin-top: 60%;
-    margin-bottom: 5%;
-    width: 70%;
-  }
+.LoginButton {
+  margin-top: 20%;
+  margin-bottom: 35%;
 }
 
-@media only screen and (min-width: 415px) {
-  /* tablet */
-  .logoDiv {
-    margin-top: 30%;
-    margin-bottom: 5%;
-    width: 50%;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  /* small mobile */
-
-  .logoDiv {
-    margin-top: 50%;
-    margin-bottom: 5%;
-    width: 60%;
-  }
+.logo {
+  margin-top: 70%;
+  margin-bottom: 5%;
+  width: 25%;
 }
 
 .InputFieldDiv {
@@ -92,21 +79,6 @@
   font-size: 1rem;
 }
 
-.footerNavigation {
-  position: relative;
-}
-
-.backNavigation {
-  position: absolute;
-  top: 10%;
-  display: flex;
-  align-items: center;
-}
-
-.divFooterHeading {
-  margin: 5px 0 0 10px;
-}
-
 .inputFieldSubtitle {
   text-align: start;
   margin-bottom: 5%;
@@ -125,4 +97,43 @@
   text-align: start;
   width: 100%;
   margin: auto;
+}
+
+/* Footer */
+
+.footerNavigation {
+  position: relative;
+  width: 110%;
+}
+
+.backNavigation {
+  position: absolute;
+  top: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divFooterHeading {
+  margin: 5px 0 0 10px;
+}
+
+/* @media */
+
+@media only screen and (max-width: 414px) {
+  /* mobile */
+  .logoDiv {
+    margin-top: 60%;
+    margin-bottom: 5%;
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 415px) {
+  /* tablet */
+  .logoDiv {
+    margin-top: 30%;
+    margin-bottom: 5%;
+    width: 50%;
+  }
 }
