@@ -9,8 +9,12 @@ import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
 const LandingHero: React.FC = () => {
   return (
     <div className={classes.mainDiv}>
-        <div className={classes.subtitleDiv}><Subtitle value="Now you interact as  "></Subtitle></div>
-      <div className={classes.headingDiv}><Heading  value="Suki Tee Noi"></Heading>    </div>
+      <div className={classes.subtitleDiv}>
+        <Subtitle color="black" value="Now you interact as  "></Subtitle>
+      </div>
+      <div className={classes.headingDiv}>
+        <Heading size="small  " value="Suki Tee Noi"></Heading>{" "}
+      </div>
       <div className={classes.buttonmainDiv}>
         <div className={classes.findteamDiv}>
           <FindteamLogo />

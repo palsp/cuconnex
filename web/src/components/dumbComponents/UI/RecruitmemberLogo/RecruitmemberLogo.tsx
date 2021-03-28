@@ -5,12 +5,13 @@ import classes from "./RecruitmemberLogo.module.css";
 
 const RecruitMemberLogo: React.FC = () => {
   return (
-    <div>
+    <div className={classes.main}>
       <img
         className={classes.appLogo}
         src={recruitMemberLogo}
         alt="RECRUIT MEMBER LOGO"
       />
+      <div className={classes.space}>Recruit Member</div>
     </div>
   );
 };

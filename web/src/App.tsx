@@ -14,9 +14,10 @@ import {
   SuccessPage,
 } from "@pages/index";
 import axios from "@src/axiosInstance/axiosInstance";
+import LandingPage from "@pages/LandingPage/LandingPage";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [numUseEffect, setNumUseEffect] = useState<number>(0);
   let routes: any = null;
 
@@ -57,6 +58,7 @@ const App: React.FC = () => {
             <Route path="/findteams" exact component={FindTeamPage} />
             <Route path="/recruitmembers" exact component={RecruitMemberPage} />
             <Route path="/success" exact component={SuccessPage} />
+            <Route path="/landing" exact component={LandingPage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>
