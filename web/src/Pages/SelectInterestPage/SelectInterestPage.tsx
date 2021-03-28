@@ -71,9 +71,6 @@ const SelectInterestPage: React.FC<Props> = (props) => {
   }, [interestArray]);
   let saveButton = null;
   if (interestArray.length !== 0) {
-<<<<<<< HEAD
-    saveButton = <Button value="Done" />;
-=======
     saveButton = (
       <Link
         to={{
@@ -87,7 +84,6 @@ const SelectInterestPage: React.FC<Props> = (props) => {
         <Button onClick={setUserData} value="SAVE" />
       </Link>
     );
->>>>>>> feature/web
   } else {
     saveButton = null;
   }
@@ -128,7 +124,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
             data-test="interest-list-design"
             type="DESIGN"
           />
-          
+
           <Link to="/success">
             <div className={classes.divSaveButton}>{saveButton}</div>
           </Link>
