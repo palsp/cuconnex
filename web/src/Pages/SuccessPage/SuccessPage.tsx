@@ -35,10 +35,13 @@ const SuccessPage: React.FC = () => {
                   data-test="success-page-subtitle"
                   value="Your sign up is successful" />
               </div>
+
               <div className={classes.check}>
                   <Check></Check>
                 </div>
-              <Link to="/test">
+         
+
+              <Link to="/landing">
                 <div className={classes.button}>
                   <Button
                     data-test="success-page-button"
