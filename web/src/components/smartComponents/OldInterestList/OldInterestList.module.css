@@ -1,20 +1,20 @@
 .interestList {
-    margin: 1vh 2vw;
-    height: 15vh;
-    width: 15vh;
-  }
-  .interestImage {
-    position: relative;
-    width: inherit;
-    height: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  /* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good */
-  
-  /* .interestImage::before {
+  margin: 1vh 2vw;
+  height: 15vh;
+  width: 15vh;
+}
+.interestImage {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good */
+
+/* .interestImage::before {
     content: "";
     position: absolute;
     top: 0px;
@@ -24,17 +24,17 @@
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.2);
   } */
-  /* 
+/* 
   p {
     position: relative;
   } */
-  
-  .isClicked {
-    background-color: rgba(255, 0, 34, 0.685);
-    border-radius: 50%;
-    color: white;
-  }
-  
+
+.isClicked {
+  background-color: rgba(255, 0, 34, 0.685);
+  border-radius: 50%;
+  color: white;
+}
+/*   
   .Marketing::before {
     background-image: url(../../../assets/InterestListImage/marketing.jpg);
     background-size: 100px 100px, contain;
@@ -181,4 +181,4 @@
     left: 0px;
     opacity: 0.25;
   }
-  
+   */

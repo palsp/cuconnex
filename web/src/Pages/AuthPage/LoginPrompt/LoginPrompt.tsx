@@ -93,7 +93,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
                 <InputField label="Password" name="password" type="password" />
               </div>
               <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-              <div className={classes.Button}>
+              <div className={classes.LoginButton}>
                 <Button
                   disabled={isSubmitting}
                   type="submit"
