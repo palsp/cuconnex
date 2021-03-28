@@ -17,11 +17,13 @@ import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { Redirect } from "react-router";
 
 interface Props {}
 const AuthPage: React.FC<Props> = () => {
   const [clickSignup, setClickSignup] = useState(false);
   const [clickLogin, setClickLogin] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticatedContext
   );
@@ -32,12 +34,14 @@ const AuthPage: React.FC<Props> = () => {
         const userData = await axios.get("/api/users");
         console.log("Successfully GET userData", userData);
         setIsAuthenticated(true);
+        setRedirect(true);
+        console.log("Am I Authen?", isAuthenticated);
       } catch (e) {
         console.log("Errors FETCHING userData", e);
+        console.log("Am I Authen?", isAuthenticated);
       }
     };
     fetchUserData();
-    console.log("Am I Authen?", isAuthenticated);
   }, []);
 
   const signupButtonClickedHandler = () => {
@@ -51,6 +55,10 @@ const AuthPage: React.FC<Props> = () => {
     setClickSignup(false);
     setClickLogin(false);
   };
+  let routeRedirect = null;
+  if (redirect) {
+    routeRedirect = <Redirect to="/test" />;
+  }
   let authPrompt = null;
   if (clickSignup === false && clickLogin === false) {
     authPrompt = (
@@ -132,6 +140,7 @@ const AuthPage: React.FC<Props> = () => {
         <div className={classes.background}>
           <Background data-test="auth-page-background">
             <div className={classes.content}>{authPrompt}</div>
+            {routeRedirect}
           </Background>
         </div>
       </div>
