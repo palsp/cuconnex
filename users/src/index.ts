@@ -3,7 +3,7 @@ import { initializeDB } from './db';
 import { User } from './models/user.model';
 import { Interest } from './models/interest.model';
 import { InterestDescription } from '@cuconnex/common';
-import { startInterest } from './models/initDB';
+// import { startInterest } from './models/initDB';
 import { fromPairs } from 'lodash';
 import { UserInterest } from './models/UserInterest.model';
 
@@ -35,7 +35,7 @@ const start = async () => {
     // validateEnvAttr();
     await initializeDB();
 
-    await startInterest();
+    // await startInterest();
   } catch (err) {
     console.error(err);
   }

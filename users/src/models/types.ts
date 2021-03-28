@@ -3,5 +3,6 @@ export enum TableName {
   interests = 'interests',
   friends = 'friends',
   members = 'members',
-  userInterest = 'userInterests'
+  userInterest = 'userInterests',
+  category = 'categories',
 }

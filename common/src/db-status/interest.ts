@@ -37,6 +37,7 @@ export enum Design {
 
 export type Description = Technology | Design | Business;
 
+
 /**
  * Description for interest database
  */
@@ -46,12 +47,5 @@ export const InterestDescription: { [key: string]: any } = {
     "Design": Design,
 }
 
-let desc: any[] = [];
 
-for (let key in InterestDescription) {
-    const interest = Object.values(InterestDescription[key]);
-    desc = desc.concat(interest)
-}
-
-console.log(desc);
 
