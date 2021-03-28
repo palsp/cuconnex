@@ -4,7 +4,7 @@ import { findByTestAttr } from "../../../test/testUtils";
 import SelectInterestPage from "./SelectInterestPage";
 
 const setup = () => {
-  const wrapper = shallow(<SelectInterestPage />);
+  const wrapper = shallow(<SelectInterestPage location />);
   return wrapper;
 };
 
