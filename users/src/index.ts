@@ -47,15 +47,13 @@ const start = async () => {
 
 
     // await startInterest();
-    try {
-      await startDB();
-    } catch (err) {
-      console.log(err);
-    }
 
+    await startDB();
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
+
+
 
   app.listen(3000, () => {
     console.log('Listening on port 3000..');

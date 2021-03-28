@@ -9,7 +9,7 @@ import {
   Association,
   Sequelize
 } from 'sequelize';
-import { BadRequestError, NotFoundError, FriendStatus } from '@cuconnex/common';
+import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuconnex/common';
 
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
@@ -67,11 +67,18 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   //   }
   // }
 
-  public async addInterestFromCategory(interests: { [key: string]: [] }) {
+  public async addInterestFromArray(interests: Description[]) {
+    for (let interest of interests) {
+      try {
+        // find interest in db
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
 
+        await this.addInterest(addedInterest!);
+      } catch (err) {
+        console.log(err);
+      }
 
-
-
+    }
   }
 
   public async findRelation(userId: string): Promise<FriendStatus | null> {

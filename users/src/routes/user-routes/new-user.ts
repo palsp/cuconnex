@@ -12,15 +12,17 @@ const bodyChecker = [
   body('interests')
     .not()
     .isEmpty()
-
-    .custom((input: Object) => {
-
+    .custom((input: { [key: string]: any }) => {
       // check for validity
       let valid = true;
 
       // check if key in interests filed is existed in InterestDescription
       for (let key in input) {
         valid = valid && (key in InterestDescription)
+
+        if (input[key]) {
+          valid = valid && Array.isArray(input[key])
+        }
       }
 
       // expect valid to be true so the process continue
@@ -36,35 +38,41 @@ const bodyChecker = [
 router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
   const { interests, name, faculty } = req.body;
 
-  for (let category in interests) {
-    // select only valid interest description 
-    interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
-
-    const categoryInstance = await Category.findOne({ where: { category }, include: "interests" })
-
-    console.log(categoryInstance);
-  }
-
 
   // // Make sure that user does not exist
-  // let user = await User.findOne({ where: { id: req.currentUser!.id } });
-  // if (user) {
-  //   throw new BadRequestError('User already existed');
-  // }
-
-  // create users 
-  try {
-    const user = await User.create({ id: "6131776621", name: "pal" });
-    console.log(user)
-  } catch (err) {
-
+  let user = await User.findOne({ where: { id: req.currentUser!.id } });
+  if (user) {
+    throw new BadRequestError('User already existed');
   }
 
 
+  let createsuccess = false;
+  // create users 
 
-  User.destroy({ where: {} });
-  // res.status(201).send({ id: user!.id, interests: uniqueInterests });
-  res.status(201).send({});
+  try {
+    user = await User.create({ id: req.currentUser!.id, name, faculty: faculty || "" });
+
+    for (let category in interests) {
+      // 
+      // select only valid interest description 
+      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      // console.log(interests[category]);
+      await user.addInterestFromArray(interests[category]);
+
+    }
+
+    createsuccess = true;
+
+  } catch (err) {
+    createsuccess = false;
+  }
+
+  if (!createsuccess && user) {
+    await user.destroy();
+    throw new BadRequestError('Create User Failed');
+  }
+  res.status(201).send({ id: user!.id, interests });
+
 });
 
 export { router as newUserRouter };

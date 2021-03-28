@@ -50,7 +50,8 @@ export const initModel = (sequelize: Sequelize) => {
 
   const userInterest = sequelize.define(
     TableName.userInterest,
-    {},
+    {
+    },
     { timestamps: false }
   );
 
@@ -70,12 +71,12 @@ export const initModel = (sequelize: Sequelize) => {
     onDelete: 'CASCADE'
   });
 
-
   // Interest.belongsToMany(User, {
   //   through: userInterest,
   //   as: "categories",
   //   sourceKey: "category_id",
   //   foreignKey: "category_id"
+
   // });
 
 
@@ -88,7 +89,7 @@ export const initModel = (sequelize: Sequelize) => {
   // // sync Userinterest model with user-interest relation
   // initUserInterest(sequelize);
 
-  // initUserInterest(sequelize);
+  initUserInterest(sequelize);
 
   User.belongsToMany(User, {
     as: 'friend',

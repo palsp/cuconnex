@@ -1,5 +1,6 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
-import { InterestDescription, Description } from '@cuconnex/common';
+import { Description } from '@cuconnex/common';
+import { InterestEnumVal } from './types'
 import { TableName } from './types';
 
 
@@ -47,27 +48,21 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
  *  VALID interest description 
  *  used for description enum in interest database
  */
-let desc: any[] = [];
-
-for (let key in InterestDescription) {
-  const interest = Object.values(InterestDescription[key]);
-  desc = desc.concat(interest)
-}
 
 
 const initInterests = (sequelize: Sequelize) => {
   Interest.init({
+    description: {
+      type: DataTypes.ENUM,
+      values: InterestEnumVal,
+      // unique: true
+      primaryKey: true,
+    },
     category_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: { model: TableName.category }
     },
-    description: {
-      type: DataTypes.ENUM,
-      values: desc,
-      // unique: true
-      primaryKey: true,
-    }
   },
     {
       tableName: TableName.interests,
