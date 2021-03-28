@@ -44,7 +44,13 @@ const LoginPrompt: React.FC<Props> = (props) => {
         />
       </div>
       {redirect ? (
-        <Redirect to="/test" />
+        <div>
+          {console.log(
+            "IsAuthenticated in loginPrompt before redirect",
+            isAuthenticated
+          )}
+          <Redirect to="/test" />
+        </div>
       ) : (
         <Formik
           data-test="auth-page-login-form"
@@ -53,19 +59,20 @@ const LoginPrompt: React.FC<Props> = (props) => {
             password: "",
           }}
           onSubmit={async (data, { setSubmitting, resetForm }) => {
-            console.log(data);
+            console.log("POST /api/auth/signin", data);
             setSubmitting(true);
             resetForm();
             try {
               const resultSignin = await axios.post("/api/auth/signin", data);
-              console.log(resultSignin);
               setIsAuthenticated(true);
               setRedirect(true);
-              console.log("Successfully sent a POST request to signin");
-              setTimeout(() => {}, 1500);
+              console.log(
+                "Successfully sent a POST request to signin",
+                resultSignin
+              );
             } catch (e) {
-              setErrorOnScreen("ERRORS occured");
-              console.log("this is error", e);
+              setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
+              console.log("ERRORS occured while POST /api/auth/signin", e);
             }
           }}
           validationSchema={validationSchema}
