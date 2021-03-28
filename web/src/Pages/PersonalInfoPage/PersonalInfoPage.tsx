@@ -45,6 +45,7 @@ const facultyArray = [
 ];
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
+
   return (
     <div className={classes.main}>
       <div className={classes.container}>
@@ -79,16 +80,26 @@ const PersonalInfoPage: React.FC = () => {
                   <Edit />
                 </div> */}
                 <Formik
+                  data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
                   onSubmit={(data, { setSubmitting }) => {
-                    console.log(data);
+                    console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
                     setTimeout(() => {
                       setSubmitting(false);
-                    }, 800);
+                    }, 500);
                     setTimeout(() => {
-                      setRedirect(<Redirect to="/selectinterests" />);
-                    });
+                      setRedirect(
+                        <Redirect
+                          to={{
+                            pathname: "/selectinterests",
+                            state: {
+                              name: data.displayName,
+                            },
+                          }}
+                        />
+                      );
+                    }, 1500);
                   }}
                 >
                   {({ values, isSubmitting }) => (
@@ -137,7 +148,12 @@ const PersonalInfoPage: React.FC = () => {
 
                 <div className={classes.footerNavigation}>
                   <DotMorePage data-test="personal-info-dotIcon" amount={2} />
-                  <Link to="/selectinterests">
+                  <Link
+                    to={{
+                      pathname: "/selectinterests",
+                      state: { name: "" },
+                    }}
+                  >
                     <div className={classes.footerIcon}>
                       <Heading value="Skip" size="small" />
                       <ArrowRight data-test="personal-info-arrowRight" />

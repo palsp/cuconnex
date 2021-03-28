@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
+import axios from "@src/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -10,7 +11,7 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-
+import { AuthenticatedContext } from "../../../AuthenticatedContext";
 import classes from "../AuthPage.module.css";
 
 interface Props {
@@ -27,7 +28,12 @@ const validationSchema = yup.object({
     .matches(/(?=.*[A-Z])/, "Password must contain one UPPER case letter"),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
-  const [redirect, setRedirect] = useState<any>();
+  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
+  const [redirect, setRedirect] = useState<boolean>(false);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticatedContext
+  );
+
   return (
     <>
       <div className={classes.divHeader}>
@@ -37,42 +43,59 @@ const LoginPrompt: React.FC<Props> = (props) => {
           data-test="auth-page-login-subtitle"
         />
       </div>
-      <Formik
-        data-test="auth-page-login-form"
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        onSubmit={(data, { setSubmitting }) => {
-          setSubmitting(true);
-          console.log(data);
-          setTimeout(() => {
-            setSubmitting(false);
-          }, 800);
-          setTimeout(() => {
-            setRedirect(<Redirect to="/test" />);
-          }, 1000);
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ values, isSubmitting, errors }) => (
-          <Form>
-            <InputField label="Email" name="email" type="input" />
-            <div className={classes.InputFieldDiv}>
-              <InputField label="Password" name="password" type="input" />
-            </div>
-            <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-            <div className={classes.Button}>
-              <Button
-                disabled={isSubmitting}
-                type="submit"
-                data-test="auth-page-login-button"
-                value="Log in"
-              />
-            </div>
-          </Form>
-        )}
-      </Formik>
+      {redirect ? (
+        <div>
+          {console.log(
+            "IsAuthenticated in loginPrompt before redirect",
+            isAuthenticated
+          )}
+          <Redirect to="/test" />
+        </div>
+      ) : (
+        <Formik
+          data-test="auth-page-login-form"
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          onSubmit={async (data, { setSubmitting, resetForm }) => {
+            console.log("POST /api/auth/signin", data);
+            setSubmitting(true);
+            resetForm();
+            try {
+              const resultSignin = await axios.post("/api/auth/signin", data);
+              setIsAuthenticated(true);
+              setRedirect(true);
+              console.log(
+                "Successfully sent a POST request to signin",
+                resultSignin
+              );
+            } catch (e) {
+              setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
+              console.log("ERRORS occured while POST /api/auth/signin", e);
+            }
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ values, isSubmitting, errors }) => (
+            <Form>
+              <InputField label="Email" name="email" type="input" />
+              <div className={classes.InputFieldDiv}>
+                <InputField label="Password" name="password" type="input" />
+              </div>
+              <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+              <div className={classes.Button}>
+                <Button
+                  disabled={isSubmitting}
+                  type="submit"
+                  data-test="auth-page-login-button"
+                  value="Log in"
+                />
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
 
       <div className={classes.footerNavigation}>
         <div
@@ -85,7 +108,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Heading value="Back" size="small" />
           </div>
         </div>
-        {redirect}
+        {errorOnScreen}
       </div>
     </>
   );

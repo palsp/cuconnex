@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "@src/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
 import {
@@ -14,7 +15,15 @@ import { ArrowLeft, ArrowRight } from "@icons/index";
 
 import classes from "./SelectInterestPage.module.css";
 
-const SelectInterestPage: React.FC = () => {
+interface Props {
+  location: {
+    state: {
+      name: string;
+    };
+  };
+}
+
+const SelectInterestPage: React.FC<Props> = (props) => {
   const [interestArray, setInterestArray] = useState<Array<string>>([]);
   const selectInterestHandler = (e: string) => {
     let positionOfE = interestArray.indexOf(e);
@@ -26,12 +35,59 @@ const SelectInterestPage: React.FC = () => {
       setInterestArray(newInterestArray);
     }
   };
+  const setUserData = async () => {
+    let data = {
+      name: props.location.state.name,
+      interests: interestArray,
+    };
+    console.log("POST /api/users", data);
+    try {
+      const result = await axios.post("/api/users", data);
+      console.log("POST to /api/users is successful", result);
+    } catch (e) {
+      console.log("SelectInterestPage Error setting users data", e);
+    }
+  };
+  const setEmptyInterest = async () => {
+    let data = {
+      name: props.location.state.name,
+      interest: [],
+    };
+    console.log("Empty Interest POST /api/users", data);
+
+    try {
+      const result = await axios.post("/api/users/", data);
+      console.log("POST Empty interests to /api/users is successful", result);
+    } catch (e) {
+      console.log("SelectInterestPage Error setting empty interest", e);
+    }
+  };
   useEffect(() => {
-    console.log("this is interestArray", interestArray);
+    console.log("Items in interestArray", interestArray);
+    console.log(
+      "State passed from PersonalInformationPage",
+      props.location.state
+    );
   }, [interestArray]);
   let saveButton = null;
   if (interestArray.length !== 0) {
+<<<<<<< HEAD
     saveButton = <Button value="Done" />;
+=======
+    saveButton = (
+      <Link
+        to={{
+          pathname: "/test",
+          state: {
+            name: props.location.state.name,
+            interests: interestArray,
+          },
+        }}
+      >
+        <Button onClick={setUserData} value="SAVE" />
+      </Link>
+    );
+>>>>>>> feature/web
   } else {
     saveButton = null;
   }
@@ -77,7 +133,7 @@ const SelectInterestPage: React.FC = () => {
             <div className={classes.divSaveButton}>{saveButton}</div>
           </Link>
 
-          <div className={classes.footerNavigation}>
+          <div onClick={setEmptyInterest} className={classes.footerNavigation}>
             <Link to="/personalinformation">
               <div className={classes.footerIcon}>
                 <ArrowLeft data-test="arrow-left" />
