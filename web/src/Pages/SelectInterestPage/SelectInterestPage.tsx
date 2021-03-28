@@ -37,7 +37,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
   const setUserData = async () => {
-    if (props.location) {
+    if (props.location.state) {
       name = props.location.state.name;
     }
     let data = {
@@ -53,7 +53,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
   const setEmptyInterest = async () => {
-    if (props.location) {
+    if (props.location.state) {
       name = props.location.state.name;
     }
     let data = {
@@ -79,7 +79,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     );
   }, []);
   let saveButton = null;
-  if (interestArray.length !== 0 && props) {
+  if (interestArray.length !== 0 && props.location.state) {
     saveButton = (
       <Link
         to={{
@@ -134,9 +134,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             type="DESIGN"
           />
 
-          <Link to="/success">
-            <div className={classes.divSaveButton}>{saveButton}</div>
-          </Link>
+          <div className={classes.divSaveButton}>{saveButton}</div>
 
           <div className={classes.footerNavigation}>
             <Link to="/personalinformation">
