@@ -13,14 +13,14 @@ const businessInterestArray = [
   "Business Case",
   "Startup",
   "Ecommerce",
-  "Finance",
+  // "Finance",
 ];
 const technologyInterestArray = [
   "Coding",
   "Web Builder",
   "Chatbot",
   "FinTech",
-  "Blockchain",
+  // "Blockchain",
 ];
 const designInterestArray = ["Graphic", "UXUI", "Ads", "Fashion"];
 
