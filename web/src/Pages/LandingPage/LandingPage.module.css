@@ -1,0 +1,30 @@
+.headerDiv{
+    position:fixed; 
+    top:2%;
+    left:5%;
+}
+.flexDiv{
+  display:flex;
+  flex-direction: column;
+}   
+@media only screen and (max-width: 375px) {
+    /* iPhone X */
+    @media only screen and (width: 375px) and (height: 812px) {
+      .main .container {
+        width: 23.4375rem;
+        height: 50.75rem;
+      }
+  
+      .main .container .background {
+        width: inherit;
+      }
+    }
+  
+    .main .container {
+      width: 100%;
+    }
+  
+    .main .container .background {
+      width: inherit;
+    }
+  }

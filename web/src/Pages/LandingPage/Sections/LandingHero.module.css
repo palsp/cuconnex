@@ -1,0 +1,24 @@
+.buttonmainDiv{
+    display:flex;
+    flex-direction: row;
+}
+.findteamDiv{
+}
+.recruitmemberDiv{  
+}
+.mainDiv{
+    display:flex;
+    flex-direction: column;
+}
+.subtitleDiv{
+    width: 200px;
+    height:19px;
+    text-align: left;
+    margin-left:15%;
+}
+.headingDiv{
+    width: 200px;
+    height:19px;
+    text-align: left;
+    margin-left:15%;
+}

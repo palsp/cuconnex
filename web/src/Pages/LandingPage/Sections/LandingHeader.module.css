@@ -1,0 +1,29 @@
+.subtitleDiv{
+    width: 20%;
+    height: auto;
+    overflow: visible;
+    letter-spacing: 0px;
+    line-height: 1.2;
+    color: var(--grey_text, #484747);
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Nunito", serif;
+    font-size: 10px;
+    margin-left:5%;
+    margin-top:4%;
+  }
+.mailDiv{
+    margin-left:65%;
+    zoom:250%;    
+}
+.toggleDiv{
+    margin-left:2%;
+    margin-top:3%;
+}
+.hamburgerDiv{
+    margin-left:5%;
+}
+.mainDiv{
+    display:flex;
+    flex-direction: row;    
+}
