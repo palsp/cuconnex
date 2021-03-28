@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "axios";
+import axios from "@src/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -21,7 +21,10 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  email: yup.string().email().required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .required("Email is required"),
   id: yup
     .string()
     .required("ID is required")
@@ -38,6 +41,7 @@ const validationSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
+
 const SignupPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
@@ -59,7 +63,10 @@ const SignupPrompt: React.FC<Props> = (props) => {
 
       {redirect ? (
         <div>
-          {console.log("before redirect", isAuthenticated)}
+          {console.log(
+            "IsAuthenticated in signupPrompt before redirect",
+            isAuthenticated
+          )}
           <Redirect to="/personalinformation" />
         </div>
       ) : (
@@ -72,22 +79,24 @@ const SignupPrompt: React.FC<Props> = (props) => {
             confirmPassword: "",
           }}
           onSubmit={async (data, { setSubmitting, resetForm }) => {
-            console.log(data);
+            console.log("POST /api/auth/signup", data);
             setSubmitting(true);
             resetForm();
             try {
-              const resultSignup = await axios.post(
-                "https://connex.test/api/auth/signup",
-                { email: data.email, id: data.id, password: data.password }
+              const resultSignup = await axios.post("/api/auth/signup", {
+                email: data.email,
+                id: data.id,
+                password: data.password,
+              });
+              console.log(
+                "Successfully sent a POST request to signup",
+                resultSignup
               );
-              console.log(resultSignup);
-              console.log("Successfully sent a POST request to signup");
               setIsAuthenticated(true);
               setRedirect(true);
-              setTimeout(() => {}, 1500);
             } catch (e) {
-              setErrorOnScreen("ERRORS occured");
-              console.log(e);
+              setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
+              console.log("ERRORS occured while POST /api/auth/signup", e);
             }
           }}
           validationSchema={validationSchema}

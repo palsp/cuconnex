@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "axios";
+import axios from "@src/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -44,7 +44,13 @@ const LoginPrompt: React.FC<Props> = (props) => {
         />
       </div>
       {redirect ? (
-        <Redirect to="/test" />
+        <div>
+          {console.log(
+            "IsAuthenticated in loginPrompt before redirect",
+            isAuthenticated
+          )}
+          <Redirect to="/test" />
+        </div>
       ) : (
         <Formik
           data-test="auth-page-login-form"
@@ -53,22 +59,29 @@ const LoginPrompt: React.FC<Props> = (props) => {
             password: "",
           }}
           onSubmit={async (data, { setSubmitting, resetForm }) => {
-            console.log(data);
+            console.log("POST /api/auth/signin", data);
             setSubmitting(true);
             resetForm();
             try {
-              const resultSignin = await axios.post(
-                "https://connex.test/api/auth/signin",
-                data
-              );
-              console.log(resultSignin);
+              const resultSignin = await axios.post("/api/auth/signin", data);
               setIsAuthenticated(true);
               setRedirect(true);
-              console.log("Successfully sent a POST request to signin");
-              setTimeout(() => {}, 1500);
+              console.log(
+                "Successfully sent a POST request to signin",
+                resultSignin
+              );
+              try {
+                const fetchUserDataSignin = await axios.get("/api/users");
+                console.log(
+                  "fetchUserDataSign successfully",
+                  fetchUserDataSignin
+                );
+              } catch (e) {
+                console.log("POST signin success but failed GET fetching");
+              }
             } catch (e) {
-              setErrorOnScreen("ERRORS occured");
-              console.log("this is error", e);
+              setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
+              console.log("ERRORS occured while POST /api/auth/signin", e);
             }
           }}
           validationSchema={validationSchema}
@@ -77,7 +90,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
-                <InputField label="Password" name="password" type="input" />
+                <InputField label="Password" name="password" type="password" />
               </div>
               <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
               <div className={classes.Button}>

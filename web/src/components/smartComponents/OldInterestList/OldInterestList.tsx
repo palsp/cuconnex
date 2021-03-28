@@ -1,12 +1,11 @@
-import { AppLogo, Logo } from "@dumbComponents/UI";
 import React, { useState } from "react";
-import classes from "./InterestList.module.css";
+import classes from "./OldInterestList.module.css";
 interface Props {
   value: string;
   selectInterestHandlerDiv?: any;
 }
 
-const InterestList: React.FC<Props> = (props) => {
+const OldInterestList: React.FC<Props> = (props) => {
   const [clicked, setClicked] = useState(false);
 
   const interestClickHandler = () => {
@@ -28,12 +27,10 @@ const InterestList: React.FC<Props> = (props) => {
       className={classes.interestList}
     >
       <div onClick={interestClickHandler} className={imgCSS.join(" ")}>
-        <div className={classes.text}>
-          <p data-test="interest-list-props-value">{props.value}</p>
-        </div>
+        <p data-test="interest-list-props-value">{props.value}</p>
       </div>
     </div>
   );
 };
 
-export default InterestList;
+export default OldInterestList;

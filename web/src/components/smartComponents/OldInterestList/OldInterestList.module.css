@@ -1,0 +1,184 @@
+.interestList {
+    margin: 1vh 2vw;
+    height: 15vh;
+    width: 15vh;
+  }
+  .interestImage {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good */
+  
+  /* .interestImage::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+  } */
+  /* 
+  p {
+    position: relative;
+  } */
+  
+  .isClicked {
+    background-color: rgba(255, 0, 34, 0.685);
+    border-radius: 50%;
+    color: white;
+  }
+  
+  .Marketing::before {
+    background-image: url(../../../assets/InterestListImage/marketing.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .BusinessCase::before {
+    background-image: url(../../../assets//InterestListImage/business.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .Startup::before {
+    background-image: url(../../../assets//InterestListImage/startup.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .Ecommerce::before {
+    background-image: url(../../../assets//InterestListImage/ecommerce.jpg);
+    background-size: 100px 100px, contain;
+  
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .Coding::before {
+    background-image: url(../../../assets/InterestListImage/coding.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .WebBuilder::before {
+    background-image: url(../../../assets//InterestListImage/webbuilder.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .ChatBot::before {
+    background-image: url(../../../assets//InterestListImage/chatbot.jpg);
+    background-size: 100px 100px, contain;
+  
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .FinTech::before {
+    background-image: url(../../../assets//InterestListImage/fintech.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .Graphic::before {
+    background-image: url(../../../assets/InterestListImage/graphic.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .UXUI::before {
+    background-image: url(../../../assets/InterestListImage/uxui.png);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .Ads::before {
+    background-image: url(../../../assets/InterestListImage/ads.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  .Fashion::before {
+    background-image: url(../../../assets/InterestListImage/fashion.jpg);
+    background-size: 100px 100px, contain;
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.25;
+  }
+  

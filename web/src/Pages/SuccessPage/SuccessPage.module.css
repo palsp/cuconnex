@@ -1,0 +1,50 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+.circle_overlay {
+  position: absolute;
+  z-index: -1;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  width: 200%;
+  height: 100%;
+  bottom: -33%;
+}
+
+.contentContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.divHeader {
+  margin-bottom: 30%;
+}
+
+.Button {
+  margin-top: 10%;
+}
+
+@media only screen and (max-width: 414px) {
+  /* mobile */
+  .logoDiv {
+    margin-top: 60%;
+    margin-bottom: 5%;
+    width: 70%;
+  }
+}

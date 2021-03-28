@@ -2,20 +2,19 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
+import * as yup from "yup";
 
 import {
   Background,
   Button,
   DotMorePage,
-  HalfCircleOverlay,
   Heading,
   InputField,
   ProfilePic,
   Subtitle,
-  Username,
 } from "@dumbComponents/UI/index";
 
-import { ArrowLeft, ArrowRight, Edit } from "@icons/index";
+import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
@@ -43,6 +42,10 @@ const facultyArray = [
   "Integrated Innovation",
   "Agricultural Resources",
 ];
+
+const validationSchema = yup.object({
+  displayName: yup.string().required("Display name is required"),
+});
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
 
@@ -83,7 +86,7 @@ const PersonalInfoPage: React.FC = () => {
                   data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
                   onSubmit={(data, { setSubmitting }) => {
-                    console.log(data);
+                    console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
                     setTimeout(() => {
                       setSubmitting(false);
@@ -101,8 +104,9 @@ const PersonalInfoPage: React.FC = () => {
                       );
                     }, 1500);
                   }}
+                  validationSchema={validationSchema}
                 >
-                  {({ values, isSubmitting }) => (
+                  {({ values, handleSubmit }) => (
                     <Form>
                       <div className={classes.inputFieldDiv}>
                         <InputField
@@ -121,7 +125,9 @@ const PersonalInfoPage: React.FC = () => {
                             as={Select}
                           >
                             {facultyArray.map((faculty) => (
-                              <MenuItem value={faculty}>{faculty}</MenuItem>
+                              <MenuItem key={faculty} value={faculty}>
+                                {faculty}
+                              </MenuItem>
                             ))}
                           </Field>
                         </FormControl>
@@ -130,6 +136,19 @@ const PersonalInfoPage: React.FC = () => {
                         <Button value="Save" />
                       </div>
                       <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+                      <div className={classes.footerNavigation}>
+                        <DotMorePage
+                          data-test="personal-info-dotIcon"
+                          amount={2}
+                        />
+
+                        <button type="submit" className={classes.noStyleButton}>
+                          <div className={classes.footerIcon}>
+                            <Heading value="Skip" size="small" />
+                            <ArrowRight data-test="personal-info-arrowRight" />
+                          </div>
+                        </button>
+                      </div>
                     </Form>
                   )}
                 </Formik>
@@ -145,21 +164,6 @@ const PersonalInfoPage: React.FC = () => {
                   <InputField data-test="personal-info-setYear" 
                     value="Year of study" />
                 </div> */}
-
-                <div className={classes.footerNavigation}>
-                  <DotMorePage data-test="personal-info-dotIcon" amount={2} />
-                  <Link
-                    to={{
-                      pathname: "/selectinterests",
-                      state: { name: "" },
-                    }}
-                  >
-                    <div className={classes.footerIcon}>
-                      <Heading value="Skip" size="small" />
-                      <ArrowRight data-test="personal-info-arrowRight" />
-                    </div>
-                  </Link>
-                </div>
               </motion.div>
             </div>
             {redirect}
