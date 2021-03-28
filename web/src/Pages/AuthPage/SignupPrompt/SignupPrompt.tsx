@@ -21,7 +21,10 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  email: yup.string().email().required("Email is required"),
+  email: yup
+    .string()
+    .email()
+    .required("Email is required"),
   id: yup
     .string()
     .required("ID is required")
@@ -38,6 +41,7 @@ const validationSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
+
 const SignupPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
@@ -59,7 +63,10 @@ const SignupPrompt: React.FC<Props> = (props) => {
 
       {redirect ? (
         <div>
-          {console.log("before redirect", isAuthenticated)}
+          {console.log(
+            "IsAuthenticated in signupPrompt before redirect",
+            isAuthenticated
+          )}
           <Redirect to="/personalinformation" />
         </div>
       ) : (
@@ -72,7 +79,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
             confirmPassword: "",
           }}
           onSubmit={async (data, { setSubmitting, resetForm }) => {
-            console.log(data);
+            console.log("POST /api/auth/signup", data);
             setSubmitting(true);
             resetForm();
             try {
@@ -81,14 +88,15 @@ const SignupPrompt: React.FC<Props> = (props) => {
                 id: data.id,
                 password: data.password,
               });
-              console.log(resultSignup);
-              console.log("Successfully sent a POST request to signup");
+              console.log(
+                "Successfully sent a POST request to signup",
+                resultSignup
+              );
               setIsAuthenticated(true);
               setRedirect(true);
-              setTimeout(() => {}, 1500);
             } catch (e) {
-              setErrorOnScreen("ERRORS occured");
-              console.log(e);
+              setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
+              console.log("ERRORS occured while POST /api/auth/signup", e);
             }
           }}
           validationSchema={validationSchema}

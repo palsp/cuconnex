@@ -36,33 +36,38 @@ const SelectInterestPage: React.FC<Props> = (props) => {
     }
   };
   const setUserData = async () => {
-    console.log("setUserData");
+    let data = {
+      name: props.location.state.name,
+      interests: interestArray,
+    };
+    console.log("POST /api/users", data);
     try {
-      let data = {
-        name: props.location.state.name,
-        interests: interestArray,
-      };
       const result = await axios.post("/api/users", data);
-      console.log(result);
+      console.log("POST to /api/users is successful", result);
     } catch (e) {
-      console.log("Error setting users data", e);
+      console.log("SelectInterestPage Error setting users data", e);
     }
   };
   const setEmptyInterest = async () => {
-    console.log("setEmptyInterest");
+    let data = {
+      name: props.location.state.name,
+      interest: [],
+    };
+    console.log("Empty Interest POST /api/users", data);
+
     try {
-      const result = await axios.post("/api/users/", {
-        name: props.location.state.name,
-        interests: [],
-      });
-      console.log(result);
+      const result = await axios.post("/api/users/", data);
+      console.log("POST Empty interests to /api/users is successful", result);
     } catch (e) {
-      console.log("Error setting empty interest", e);
+      console.log("SelectInterestPage Error setting empty interest", e);
     }
   };
   useEffect(() => {
-    console.log("this is interestArray", interestArray);
-    console.log("check pass state", props.location.state);
+    console.log("Items in interestArray", interestArray);
+    console.log(
+      "State passed from PersonalInformationPage",
+      props.location.state
+    );
   }, [interestArray]);
   let saveButton = null;
   if (interestArray.length !== 0) {
@@ -91,7 +96,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
               <Heading data-test="heading" value="Interests" />
             </div>
             <div className={classes.subtitleDiv}>
-              <Subtitle value="Don't worry, you can adjust your interest later." />
+              <Subtitle value="Please Select at least 1 interest" />
             </div>
           </div>
 
@@ -119,7 +124,10 @@ const SelectInterestPage: React.FC<Props> = (props) => {
             data-test="interest-list-design"
             type="DESIGN"
           />
-          <div className={classes.divSaveButton}>{saveButton}</div>
+
+          <Link to="/success">
+            <div className={classes.divSaveButton}>{saveButton}</div>
+          </Link>
 
           <div onClick={setEmptyInterest} className={classes.footerNavigation}>
             <Link to="/personalinformation">
@@ -129,7 +137,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <Link to="/test">
+            <Link to="/success">
               <div className={classes.footerIcon}>
                 <Heading size="small" value="Skip" />
                 <ArrowRight data-test="arrow-right" />

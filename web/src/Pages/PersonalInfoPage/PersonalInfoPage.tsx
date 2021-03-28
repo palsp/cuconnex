@@ -83,7 +83,7 @@ const PersonalInfoPage: React.FC = () => {
                   data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
                   onSubmit={(data, { setSubmitting }) => {
-                    console.log(data);
+                    console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
                     setTimeout(() => {
                       setSubmitting(false);

@@ -86,7 +86,8 @@
       "@dumbComponents/(.*)": "<rootDir>/src/components/dumbComponents/$1",
       "@smartComponents/(.*)": "<rootDir>/src/components/smartComponents/$1",
       "@icons/(.*)": "<rootDir>/src/components/dumbComponents/UI/Icons/$1",
-      "@assets/(.*)": "<rootDir>/src/assets/$1"
+      "@assets/(.*)": "<rootDir>/src/assets/$1",
+      "@src/(.*)": "<rootDir>/src/$1"
     }
   }
 }
