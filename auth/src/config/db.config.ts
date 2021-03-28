@@ -17,7 +17,7 @@ export const db_config = {
 export const test_config = {
     host: "localhost",
     user: "root",
-    password: "liulaks123",
+    password: "password",
     db: "test_db",
     MODELS: [],
     dialect: "mysql",
