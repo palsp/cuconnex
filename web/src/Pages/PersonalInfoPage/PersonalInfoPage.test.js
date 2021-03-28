@@ -64,12 +64,15 @@ describe("render Personal Info Page", () => {
 
   it("should render dotIcon", () => {
     const wrapper = setup();
-    const dotIcon = findByTestAttr(wrapper, "personal-info-dotIcon");
+    const wrapperDive = findByTestAttr(wrapper, "personal-info-form").dive();
+    const dotIcon = findByTestAttr(wrapperDive, "personal-info-dotIcon");
     expect(dotIcon.length).toBe(1);
   });
   it("should render arrowRight", () => {
     const wrapper = setup();
-    const arrowRight = findByTestAttr(wrapper, "personal-info-arrowRight");
+    const wrapperDive = findByTestAttr(wrapper, "personal-info-form").dive();
+    const arrowRight = findByTestAttr(wrapperDive, "personal-info-arrowRight");
+
     expect(arrowRight.length).toBe(1);
   });
 });
