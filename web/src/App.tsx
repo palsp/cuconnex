@@ -13,28 +13,27 @@ import {
   TestPage,
   SuccessPage,
 } from "@pages/index";
-import axios from "@src/axiosInstance/axiosInstance";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [numUseEffect, setNumUseEffect] = useState<number>(0);
+  // const [numUseEffect, setNumUseEffect] = useState<number>(0);
   let routes: any = null;
 
-  useEffect(() => {
-    console.log("Fetching data GET /api/users");
-    const fetchUserData = async () => {
-      try {
-        const userData = await axios.get("/api/users");
-        console.log("Successfully GET userData", userData);
-        setIsAuthenticated(true);
-      } catch (e) {
-        console.log("Errors FETCHING userData", e);
-      }
-    };
-    fetchUserData();
-    console.log("Am I Authen?", isAuthenticated);
-    setNumUseEffect((old) => old + 1);
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   console.log("Fetching data GET /api/users");
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const userData = await axios.get("/api/users");
+  //       console.log("Successfully GET userData", userData);
+  //       setIsAuthenticated(true);
+  //     } catch (e) {
+  //       console.log("Errors FETCHING userData", e);
+  //     }
+  //   };
+  //   fetchUserData();
+  //   console.log("Am I Authen?", isAuthenticated);
+  //   setNumUseEffect((old) => old + 1);
+  // }, [isAuthenticated]);
   if (isAuthenticated) {
     routes = (
       <BrowserRouter>
@@ -95,7 +94,7 @@ const App: React.FC = () => {
       >
         Show route
       </button>
-      {numUseEffect}
+      {/* {numUseEffect} */}
     </div>
   );
 };
