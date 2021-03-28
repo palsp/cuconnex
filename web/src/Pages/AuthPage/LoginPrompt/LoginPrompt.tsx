@@ -70,6 +70,15 @@ const LoginPrompt: React.FC<Props> = (props) => {
                 "Successfully sent a POST request to signin",
                 resultSignin
               );
+              try {
+                const fetchUserDataSignin = await axios.get("/api/user");
+                console.log(
+                  "fetchUserDataSign successfully",
+                  fetchUserDataSignin
+                );
+              } catch (e) {
+                console.log("POST signin success but failed GET fetching");
+              }
             } catch (e) {
               setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
               console.log("ERRORS occured while POST /api/auth/signin", e);

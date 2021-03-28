@@ -1,6 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { motion } from "framer-motion";
+import axios from "@src/axiosInstance/axiosInstance";
 
 import {
   AppLogo,
@@ -15,11 +16,29 @@ import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 
 interface Props {}
 const AuthPage: React.FC<Props> = () => {
   const [clickSignup, setClickSignup] = useState(false);
   const [clickLogin, setClickLogin] = useState(false);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticatedContext
+  );
+  useEffect(() => {
+    console.log("Fetching data GET /api/users");
+    const fetchUserData = async () => {
+      try {
+        const userData = await axios.get("/api/users");
+        console.log("Successfully GET userData", userData);
+        setIsAuthenticated(true);
+      } catch (e) {
+        console.log("Errors FETCHING userData", e);
+      }
+    };
+    fetchUserData();
+    console.log("Am I Authen?", isAuthenticated);
+  }, []);
 
   const signupButtonClickedHandler = () => {
     setClickSignup(true);
@@ -75,7 +94,8 @@ const AuthPage: React.FC<Props> = () => {
             damping: 29,
             mass: 3.3,
           }}
-          className={classes.contentClick}>
+          className={classes.contentClick}
+        >
           <div className={classes.logoDiv}>
             <AppLogo data-test="auth-page-logo" />
           </div>
