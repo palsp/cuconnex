@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { AuthenticatedContext } from "./AuthenticatedContext";
-
+import axios from "@src/axiosInstance/axiosInstance";
 import "./App.css";
 import {
   AuthPage,
@@ -34,6 +34,14 @@ const App: React.FC = () => {
   //   console.log("Am I Authen?", isAuthenticated);
   //   setNumUseEffect((old) => old + 1);
   // }, [isAuthenticated]);
+  const testFetchData = async () => {
+    try {
+      const resultGET = await axios.get("/api/users");
+      console.log("SUCCESS testFetchData", resultGET);
+    } catch (e) {
+      console.log("testFetchData error", e);
+    }
+  };
   if (isAuthenticated) {
     routes = (
       <BrowserRouter>
@@ -93,6 +101,13 @@ const App: React.FC = () => {
         }}
       >
         Show route
+      </button>
+      <button
+        onClick={() => {
+          testFetchData();
+        }}
+      >
+        FETCH
       </button>
       {/* {numUseEffect} */}
     </div>
