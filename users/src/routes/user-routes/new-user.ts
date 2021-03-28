@@ -4,6 +4,7 @@ import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model'
 import { User } from '../../models/user.model';
 import { BadRequestError } from '@cuconnex/common';
+import { Category } from '../../models/category.model';
 
 const router = express.Router();
 
@@ -38,17 +39,30 @@ router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res
   for (let category in interests) {
     // select only valid interest description 
     interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+
+    const categoryInstance = await Category.findOne({ where: { category }, include: "interests" })
+
+    console.log(categoryInstance);
   }
 
-  console.log(interests);
-  // Make sure that user does not exist
+
+  // // Make sure that user does not exist
   // let user = await User.findOne({ where: { id: req.currentUser!.id } });
   // if (user) {
   //   throw new BadRequestError('User already existed');
   // }
 
+  // create users 
+  try {
+    const user = await User.create({ id: "6131776621", name: "pal" });
+    console.log(user)
+  } catch (err) {
+
+  }
 
 
+
+  User.destroy({ where: {} });
   // res.status(201).send({ id: user!.id, interests: uniqueInterests });
   res.status(201).send({});
 });

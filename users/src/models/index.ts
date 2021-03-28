@@ -50,13 +50,14 @@ export const initModel = (sequelize: Sequelize) => {
 
   const userInterest = sequelize.define(
     TableName.userInterest,
-    {
-    },
+    {},
     { timestamps: false }
   );
 
+
   Category.hasMany(Interest, {
     sourceKey: "id",
+    as: "interests",
     foreignKey: "category_id",
     onDelete: "CASCADE",
   });
@@ -65,20 +66,29 @@ export const initModel = (sequelize: Sequelize) => {
   // M-M user and interest
   User.belongsToMany(Interest, {
     through: userInterest,
-    as: 'interests',
     foreignKey: 'userId',
     onDelete: 'CASCADE'
   });
+
+
+  // Interest.belongsToMany(User, {
+  //   through: userInterest,
+  //   as: "categories",
+  //   sourceKey: "category_id",
+  //   foreignKey: "category_id"
+  // });
+
+
   Interest.belongsToMany(User, {
     through: userInterest,
-    as: 'interests',
-    foreignKey: 'description'
+    as: "interests",
+    sourceKey: "description",
+    foreignKey: "interest",
   });
-
   // // sync Userinterest model with user-interest relation
   // initUserInterest(sequelize);
 
-  initUserInterest(sequelize);
+  // initUserInterest(sequelize);
 
   User.belongsToMany(User, {
     as: 'friend',

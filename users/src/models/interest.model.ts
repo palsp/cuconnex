@@ -6,7 +6,6 @@ import { TableName } from './types';
 // all atributes interest model has
 export interface InterestAttrs {
   // description: InterestDescription;
-  id: number,
   category_id: number,
   description: Description,
 }
@@ -18,7 +17,6 @@ export interface InterestCreationAttrs {
 
 class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   // public description!: InterestDescription;
-  public id!: number
   public category_id!: number
   public description!: Description
 
@@ -39,7 +37,7 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   /**
    * returns array which duplicate values are removed from the input array
    */
-  public  removeDuplicate(interests : any[]) : any[] {
+  public static removeDuplicate(interests: any[]): any[] {
     return Array.from(new Set(interests))
   }
 }
@@ -49,38 +47,34 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
  *  VALID interest description 
  *  used for description enum in interest database
  */
-// let desc: any[] = [];
+let desc: any[] = [];
 
-// for (let key in InterestDescription) {
-//   const interest = Object.values(InterestDescription[key]);
-//   desc = desc.concat(interest)
-// }
+for (let key in InterestDescription) {
+  const interest = Object.values(InterestDescription[key]);
+  desc = desc.concat(interest)
+}
 
 
 const initInterests = (sequelize: Sequelize) => {
-  // Interest.init({
-  //   id: {
-  //     type: DataTypes.INTEGER,
-  //     primaryKey: true,
-  //     autoIncrement: true
-  //   },
-  //   category_id: {
-  //     type: DataTypes.INTEGER,
-  //     primaryKey: true
-
-  //   },
-  //   description: {
-  //     type: DataTypes.ENUM,
-  //     values: desc,
-  //     // unique: true
-  //   }
-  // },
-  //   {
-  //     tableName: TableName.interests,
-  //     sequelize,
-  //     timestamps: false
-  //   }
-  // );
+  Interest.init({
+    category_id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: { model: TableName.category }
+    },
+    description: {
+      type: DataTypes.ENUM,
+      values: desc,
+      // unique: true
+      primaryKey: true,
+    }
+  },
+    {
+      tableName: TableName.interests,
+      sequelize,
+      timestamps: false
+    }
+  );
 
   return Interest;
 };

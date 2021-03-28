@@ -1,7 +1,7 @@
-import { Model, DataTypes, Sequelize, HasManyAddAssociationMixin, Association } from 'sequelize';
+import { Model, DataTypes, Sequelize, HasManyAddAssociationMixin, Association, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin } from 'sequelize';
 import { InterestDescription, Description } from '@cuconnex/common';
 import { TableName } from './types';
-import { Interest } from './interest.model';
+import { Interest, InterestCreationAttrs } from './interest.model';
 
 
 // all atributes interest model has
@@ -21,6 +21,30 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
 
 
     public addInterest!: HasManyAddAssociationMixin<Interest, "id">;
+    public getInterests!: HasManyGetAssociationsMixin<Interest>;
+    public createInterest!: HasManyCreateAssociationMixin<Interest>;
+
+
+    /**
+     * To add type cheking for interest creation from category
+     * This function will ensure that all parameters required to create 
+     * interest is provided
+     * @param interest 
+     */
+    public async createInterestToCategory(interest: InterestCreationAttrs) {
+        await this.createInterest({
+            description: interest.description
+        });
+    }
+
+
+
+
+
+
+    public static associations: {
+        interests: Association<Category, Interest>
+    }
 
 }
 
