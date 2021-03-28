@@ -23,19 +23,64 @@ interface Props {
   };
 }
 
+// interface InterestListsArray {
+//   Technology: string[];
+//   Business: string[];
+//   Design: string[];
+// }
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
-  const [interestArray, setInterestArray] = useState<Array<string>>([]);
+  const [interestArray, setInterestArray] = useState<any>({
+    Technology: [],
+    Business: [],
+    Design: [],
+  });
   let name = "";
-  const selectInterestHandler = (e: string) => {
-    let positionOfE = interestArray.indexOf(e);
+  const selectTechnologyInterestHandler = (e: string) => {
+    let positionOfE = interestArray.Technology.indexOf(e);
     if (positionOfE === -1) {
-      setInterestArray([...interestArray, e]);
+      // let { Technology } = interestArray;
+      // Technology.push(e);
+      // setInterestArray({ Technology: Technology });
+      setInterestArray({
+        ...interestArray,
+        Technology: [...interestArray.Technology, e],
+      });
     } else {
-      let newInterestArray = [...interestArray];
+      let newInterestArray = [...interestArray.Technology];
       newInterestArray.splice(positionOfE, 1);
-      setInterestArray(newInterestArray);
+      setInterestArray({
+        ...interestArray,
+        Technology: newInterestArray,
+      });
     }
   };
+  const selectBusinessInterestHandler = (e: string) => {
+    let positionOfE = interestArray.Business.indexOf(e);
+    if (positionOfE === -1) {
+      setInterestArray({
+        ...interestArray,
+        Business: [...interestArray.Business, e],
+      });
+    } else {
+      let newInterestArray = [...interestArray.Business];
+      newInterestArray.splice(positionOfE, 1);
+      setInterestArray({ ...interestArray, Business: newInterestArray });
+    }
+  };
+  const selectDesignInterestHandler = (e: string) => {
+    let positionOfE = interestArray.Design.indexOf(e);
+    if (positionOfE === -1) {
+      setInterestArray({
+        ...interestArray,
+        Design: [...interestArray.Design, e],
+      });
+    } else {
+      let newInterestArray = [...interestArray.Design];
+      newInterestArray.splice(positionOfE, 1);
+      setInterestArray({ ...interestArray, Design: newInterestArray });
+    }
+  };
+
   const setUserData = async () => {
     if (props.location.state) {
       name = props.location.state.name;
@@ -52,23 +97,23 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("SelectInterestPage Error setting users data", e);
     }
   };
-  const setEmptyInterest = async () => {
-    if (props.location.state) {
-      name = props.location.state.name;
-    }
-    let data = {
-      name: name,
-      interest: [],
-    };
-    console.log("Empty Interest POST /api/users", data);
+  // const setEmptyInterest = async () => {
+  //   if (props.location.state) {
+  //     name = props.location.state.name;
+  //   }
+  //   let data = {
+  //     name: name,
+  //     interest: [],
+  //   };
+  //   console.log("Empty Interest POST /api/users", data);
 
-    try {
-      const result = await axios.post("/api/users/", data);
-      console.log("POST Empty interests to /api/users is successful", result);
-    } catch (e) {
-      console.log("SelectInterestPage Error setting empty interest", e);
-    }
-  };
+  //   try {
+  //     const result = await axios.post("/api/users/", data);
+  //     console.log("POST Empty interests to /api/users is successful", result);
+  //   } catch (e) {
+  //     console.log("SelectInterestPage Error setting empty interest", e);
+  //   }
+  // };
   useEffect(() => {
     console.log("Items in interestArray", interestArray);
   }, [interestArray]);
@@ -113,7 +158,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Business" />
           </div>
           <InterestLists
-            selectInterestHandler={selectInterestHandler}
+            selectInterestHandler={selectBusinessInterestHandler}
             data-test="interest-list-business"
             type="BUSINESS"
           />
@@ -121,7 +166,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Technology" />
           </div>
           <InterestLists
-            selectInterestHandler={selectInterestHandler}
+            selectInterestHandler={selectTechnologyInterestHandler}
             data-test="interest-list-technology"
             type="TECHNOLOGY"
           />
@@ -129,7 +174,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Design" />
           </div>
           <InterestLists
-            selectInterestHandler={selectInterestHandler}
+            selectInterestHandler={selectDesignInterestHandler}
             data-test="interest-list-design"
             type="DESIGN"
           />
@@ -144,7 +189,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <div onClick={setEmptyInterest}>
+            <div onClick={setUserData}>
               <Link to="/success">
                 <div className={classes.footerIcon}>
                   <Heading size="small" value="Skip" />

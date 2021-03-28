@@ -70,6 +70,15 @@ const LoginPrompt: React.FC<Props> = (props) => {
                 "Successfully sent a POST request to signin",
                 resultSignin
               );
+              try {
+                const fetchUserDataSignin = await axios.get("/api/users");
+                console.log(
+                  "fetchUserDataSign successfully",
+                  fetchUserDataSignin
+                );
+              } catch (e) {
+                console.log("POST signin success but failed GET fetching");
+              }
             } catch (e) {
               setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
               console.log("ERRORS occured while POST /api/auth/signin", e);
@@ -81,7 +90,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
-                <InputField label="Password" name="password" type="input" />
+                <InputField label="Password" name="password" type="password" />
               </div>
               <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
               <div className={classes.Button}>

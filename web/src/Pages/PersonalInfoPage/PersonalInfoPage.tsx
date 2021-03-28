@@ -98,6 +98,7 @@ const PersonalInfoPage: React.FC = () => {
                             pathname: "/selectinterests",
                             state: {
                               name: data.displayName,
+                              faculty: data.faculty,
                             },
                           }}
                         />
