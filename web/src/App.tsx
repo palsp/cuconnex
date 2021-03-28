@@ -56,6 +56,7 @@ const App: React.FC = () => {
             <Route path="/friendlists" exact component={FriendsPage} />
             <Route path="/findteams" exact component={FindTeamPage} />
             <Route path="/recruitmembers" exact component={RecruitMemberPage} />
+            <Route path="/success" exact component={SuccessPage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>

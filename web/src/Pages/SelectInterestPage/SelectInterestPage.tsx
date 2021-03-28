@@ -23,8 +23,9 @@ interface Props {
   };
 }
 
-const SelectInterestPage: React.FC<Props> = (props) => {
+const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   const [interestArray, setInterestArray] = useState<Array<string>>([]);
+  let name = "";
   const selectInterestHandler = (e: string) => {
     let positionOfE = interestArray.indexOf(e);
     if (positionOfE === -1) {
@@ -36,8 +37,11 @@ const SelectInterestPage: React.FC<Props> = (props) => {
     }
   };
   const setUserData = async () => {
+    if (props.location) {
+      name = props.location.state.name;
+    }
     let data = {
-      name: props.location.state.name,
+      name: name,
       interests: interestArray,
     };
     console.log("POST /api/users", data);
@@ -49,8 +53,11 @@ const SelectInterestPage: React.FC<Props> = (props) => {
     }
   };
   const setEmptyInterest = async () => {
+    if (props.location) {
+      name = props.location.state.name;
+    }
     let data = {
-      name: props.location.state.name,
+      name: name,
       interest: [],
     };
     console.log("Empty Interest POST /api/users", data);
@@ -64,17 +71,19 @@ const SelectInterestPage: React.FC<Props> = (props) => {
   };
   useEffect(() => {
     console.log("Items in interestArray", interestArray);
+  }, [interestArray]);
+  useEffect(() => {
     console.log(
       "State passed from PersonalInformationPage",
       props.location.state
     );
-  }, [interestArray]);
+  }, []);
   let saveButton = null;
-  if (interestArray.length !== 0) {
+  if (interestArray.length !== 0 && props) {
     saveButton = (
       <Link
         to={{
-          pathname: "/test",
+          pathname: "/success",
           state: {
             name: props.location.state.name,
             interests: interestArray,
@@ -129,7 +138,7 @@ const SelectInterestPage: React.FC<Props> = (props) => {
             <div className={classes.divSaveButton}>{saveButton}</div>
           </Link>
 
-          <div onClick={setEmptyInterest} className={classes.footerNavigation}>
+          <div className={classes.footerNavigation}>
             <Link to="/personalinformation">
               <div className={classes.footerIcon}>
                 <ArrowLeft data-test="arrow-left" />
@@ -137,17 +146,27 @@ const SelectInterestPage: React.FC<Props> = (props) => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <Link to="/success">
-              <div className={classes.footerIcon}>
-                <Heading size="small" value="Skip" />
-                <ArrowRight data-test="arrow-right" />
-              </div>
-            </Link>
+            <div onClick={setEmptyInterest}>
+              <Link to="/success">
+                <div className={classes.footerIcon}>
+                  <Heading size="small" value="Skip" />
+                  <ArrowRight data-test="arrow-right" />
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </>
   );
 };
+
+// SelectInterestPage.defaultProps = {
+//   location: {
+//     state: {
+//       name: "Micky",
+//     },
+//   },
+// };
 
 export default SelectInterestPage;
