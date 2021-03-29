@@ -1,0 +1,8 @@
+.main {
+  display: flex;
+  margin-top: 100%;
+  flex-direction: column;
+}
+.MenuDiv {
+  margin-top: 10%;
+}

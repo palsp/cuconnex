@@ -1,5 +1,5 @@
 .Button {
-  width: 68vw;
+  width: 70vw;
   height: 7vh;
   background-color: rgb(243, 48, 129);
   border-radius: 13px; 
@@ -13,15 +13,4 @@
   margin: 0;
   padding: 0;
   color: white;
-}
-
-@media only screen and (max-width: 320px) {                       /* small mobile */
-  .Button {
-    width: 60vw;
-  }
-
-  .Button p {
-    font-weight: 140;
-    font-size: 1rem;
-  }
 }

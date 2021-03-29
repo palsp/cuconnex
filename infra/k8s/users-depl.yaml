@@ -23,11 +23,17 @@ spec:
             - name: DB_SCHEMA
               value: "user_db"
             - name: DB_PASSWORD
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: user-db-secret
-              #     key: DB_PASSWORD
-              value: password
+
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-secret
+                  key: DB_PASSWORD
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+
       initContainers:
         - name: init-wait
           image: alpine

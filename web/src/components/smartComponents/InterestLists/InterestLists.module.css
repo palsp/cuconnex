@@ -1,40 +1,5 @@
 .interestLists {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   flex-direction: row;
-  overflow-x: auto;
 }
-
-
-/*
-
-@media only screen and (max-width: 375px) {             /* iPhone X
-  .main {
-    width: 100%;
-    align-items: center;
-  }
-
-  .main .container {
-    width: 100%;
-    height: 100%;
-  }
-
-  .interestLists {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-}
-
-
-@media only screen and (max-width: 20rem) {         /* iPhone 5SE
-  .main {
-    width: 15rem;
-    align-items: center;
-  }
-}
-
-*/
-
