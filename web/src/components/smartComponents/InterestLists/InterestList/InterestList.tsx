@@ -30,13 +30,17 @@ const InterestList: React.FC<Props> = (props) => {
     setClicked((prevState) => !prevState);
   };
 
-  const imgCSS = [classes.interestImage];
-  if (props.value) {
-    imgCSS.push(classes[props.value.split(" ").join("")]);
-  }
+  // const imgCSS = [classes.interestImage];
+  // if (props.value) {
+  //   imgCSS.push(classes[props.value.split(" ").join("")]);
+  // }
 
+  // if (clicked) {
+  //   imgCSS.push(classes["isClicked"]);
+  // }
+  const btnCSS = [classes.interest];
   if (clicked) {
-    imgCSS.push(classes["isClicked"]);
+    btnCSS.push(classes["isClicked"]);
   }
 
   if (props.value === "Ads") {
@@ -75,10 +79,10 @@ const InterestList: React.FC<Props> = (props) => {
       data-test="interest-list"
       className={classes.interestList}
     >
-      <div onClick={interestClickHandler} className={classes.interest}>
+      <div onClick={interestClickHandler} className={btnCSS.join(" ")}>
         <div className={classes.icon}>{icon}</div>
         <div className={classes.text}>
-          <p data-test="interest-list-props-value">{props.value}</p>
+          <p data-test="interest-list-props-value">{props.value + " "}</p>
         </div>
       </div>
     </div>

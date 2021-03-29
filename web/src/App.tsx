@@ -15,6 +15,7 @@ import {
 } from "@pages/index";
 
 import LandingPage from "@pages/LandingPage/LandingPage";
+import classes from "*.module.css";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -107,6 +108,13 @@ const App: React.FC = () => {
       {routes}
       <button
         onClick={() => {
+          setIsAuthenticated(true);
+        }}
+      >
+        LOG IN
+      </button>
+      <button
+        onClick={() => {
           console.log("show state", isAuthenticated);
         }}
       >
@@ -133,7 +141,6 @@ const App: React.FC = () => {
       >
         LOGOUT
       </button>
-
       {/* {numUseEffect} */}
     </div>
   );

@@ -2,7 +2,6 @@
   margin: 2vw;
   border-radius: 10%;
   height: 100%;
-  margin-right: 5vw;
 }
 
 .interest {
@@ -11,11 +10,11 @@
   justify-content: center;
   align-items: center;
   border-radius: 10%;
-  width: 120%;
+  height: 40px;
 }
 
 .icon {
-  margin-left: 3%;
+  margin-left: 5%;
   margin-right: 5%;
   position: relative;
   align-items: flex-start;
@@ -24,7 +23,17 @@
 }
 
 .text {
-  position: relative;
+  margin: 0;
+  /* position: relative; */
+}
+
+p::after {
+  content: " ";
+  white-space: pre;
+}
+p::before {
+  content: " ";
+  white-space: pre;
 }
 
 .isClicked {
