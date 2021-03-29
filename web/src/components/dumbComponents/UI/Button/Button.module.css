@@ -1,0 +1,16 @@
+.Button {
+  width: 70vw;
+  height: 7vh;
+  background-color: rgb(243, 48, 129);
+  border-radius: 13px; 
+  font: inherit;
+  border: none;
+}
+
+.Button p {
+  font-weight: 140;
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0;
+  color: white;
+}

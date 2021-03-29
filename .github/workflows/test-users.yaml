@@ -4,22 +4,19 @@ on:
   pull_request:
     paths:
       - 'users/**'
-  
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run : sudo service mysql stop
+      - run: sudo service mysql stop
 
       -  uses: mirromutth/mysql-action@v1.1
          with:
             mysql root password : ${{secrets.DB_TEST_PASSWORD}}
       - run: cd users && npm install && npm run test:ci
-        env: 
-          DB_TEST_USER : ${{ secrets.DB_TEST_USER}}
-          DB_TEST_PASSWORD : ${{ secrets.DB_TEST_PASSWORD}}
+        env:
+          DB_TEST_USER: ${{ secrets.DB_TEST_USER}}
+          DB_TEST_PASSWORD: ${{ secrets.DB_TEST_PASSWORD}}
           DB_TEST_HOST: ${{ secrets.DB_TEST_HOST }}
-          
-    
