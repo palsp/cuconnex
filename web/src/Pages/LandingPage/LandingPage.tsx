@@ -19,27 +19,23 @@ const LandingPage: React.FC<Props> = () => {
   let LandingPrompt = null;
   if (!clickHamburger) {
     LandingPrompt = (
-      <div className={classes.main}>
-        <div className={classes.flexDiv}>
-          <div className={classes.container}>
-            <div className={classes.headerDiv}>
-              <div className={classes.toggleDiv}>
-                <ProfilePic size="small" />
-              </div>
-              <div className={classes.mailDiv}>
-                <Mail />
-              </div>
-              <div
-                onClick={hamburgerClickedHandler}
-                className={classes.hamburgerDiv}
-              >
-                <Hamburger />
-              </div>
-            </div>
-            <div className={classes.heroDiv}>
-              <LandingHero />
-            </div>
+      <div className={classes.flexDiv}>
+        <div className={classes.headerDiv}>
+          <div className={classes.toggleDiv}>
+            <ProfilePic size="small" />
           </div>
+          <div className={classes.mailDiv}>
+            <Mail />
+          </div>
+          <div
+            onClick={hamburgerClickedHandler}
+            className={classes.hamburgerDiv}
+          >
+            <Hamburger />
+          </div>
+        </div>
+        <div className={classes.heroDiv}>
+          <LandingHero />
         </div>
       </div>
     );
@@ -56,11 +52,13 @@ const LandingPage: React.FC<Props> = () => {
     );
   }
   return (
-    <div>
-      <div className={classes.background}>
-        <Background>
-          <div>{LandingPrompt}</div>
-        </Background>
+    <div className={classes.main}>
+      <div className={classes.container}>
+        <div className={classes.background}>
+          <Background>
+            <div>{LandingPrompt}</div>
+          </Background>
+        </div>
       </div>
     </div>
   );
