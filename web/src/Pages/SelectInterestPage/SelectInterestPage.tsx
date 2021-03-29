@@ -127,7 +127,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   }, []);
   if (
     (interestArray.Technology.length !== 0 ||
-      interestArray.Business.length! === 0 ||
+      interestArray.Business.length !== 0 ||
       interestArray.Design.length !== 0) &&
     props.location.state
   ) {
