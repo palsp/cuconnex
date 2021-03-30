@@ -6,7 +6,6 @@ export { default as HalfCircleOverlay } from "@dumbComponents/UI/HalfCircleOverl
 export { default as Heading } from "@dumbComponents/UI/Heading/Heading";
 export { default as Subtitle } from "@dumbComponents/UI/Subtitle/Subtitle";
 export { default as PicWithText } from "@dumbComponents/UI/PicWithText/PicWithText";
-export { default as ProfilePic } from "@dumbComponents/UI/ProfilePic/ProfilePic";
 export { default as InputField } from "@dumbComponents/UI/InputField/InputField";
 export { default as Username } from "@dumbComponents/UI/Username/Username";
 export { default as Logo } from '@dumbComponents/UI/Logo/Logo';

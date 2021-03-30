@@ -1,4 +1,4 @@
-import { ProfilePic } from "@dumbComponents/UI";
+import { ProfilePic } from "@smartComponents/index";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
 import { ArrowRight } from "@dumbComponents/UI/Icons";
 import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
