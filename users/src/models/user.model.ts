@@ -74,6 +74,17 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   //Method for finding a relation attached here to minimize hassle
+  /**A method to check if the current user has a relationship with the user with specified id.
+   * This is done by querying the Friend database for any ones with `senderId` equal to current user id 
+   * and `receiverId` equal to the specified id or vice versa.
+   * 
+   * If a relationship is found, returns the friendship status between the two users
+   * 
+   * else, returns `FriendStatus.toBeDefined`
+   * 
+   * @param {string} userId - The id of the user we wish to check for a relationship with the current user id.
+   * @returns {FriendStatus} friend.status - The friend status between the two users, if the relationship exists
+   */
   public async findRelation(userId: string): Promise<FriendStatus | null> {
     if (this.id === userId) return null;
     const constraint = {
@@ -89,6 +100,17 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
     return friend.status;
   }
+
+  /**A method for adding a user as a friend. 
+   * 
+   * It first checks if their exists a relation of any kind between the two users.
+   * If the two users are already friends or current user have already send the friend request, it returns nothing.
+   * 
+   * If not, it calls the `addFriend()` method on the passed in user object.
+   * 
+   * @param {User} user - the user to add as a friend to the current user.
+   * @returns the result of calling `this.addFriend(user)` with the specified user, if the relationship is not already established, returns **null** otherwise.
+   */
 
   public async addUserAsFriend(user: User) {
     const status = await this.findRelation(user.id);
