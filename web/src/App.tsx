@@ -15,7 +15,7 @@ import {
 } from "@pages/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<any>();
   // const [numUseEffect, setNumUseEffect] = useState<number>(0);
   let routes: any = null;
