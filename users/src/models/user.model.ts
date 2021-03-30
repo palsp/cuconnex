@@ -123,6 +123,15 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.addFriend(user);
   }
 
+  /**
+   * Method for finding a user with the specified userId.
+   * Returns a promise that resolves if a user is found.
+   * 
+   * if the user is not found, throws a new NotFoundError
+   * @param userId - The id of the user we wish to find
+   * @throws {NotFoundError} - if the user is not found
+   * @return {User}`user` - the found user, if it exists 
+   */
   public static async findUser(userId: string): Promise<User> {
     const user = await User.findByPk(userId);
 
