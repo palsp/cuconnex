@@ -14,10 +14,14 @@ import {
   SuccessPage,
 } from "@pages/index";
 
+import LandingPage from "@pages/LandingPage/LandingPage";
+import classes from "*.module.css";
+
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<any>();
   // const [numUseEffect, setNumUseEffect] = useState<number>(0);
+
   let routes: any = null;
 
   // useEffect(() => {
@@ -76,6 +80,7 @@ const App: React.FC = () => {
             <Route path="/findteams" exact component={FindTeamPage} />
             <Route path="/recruitmembers" exact component={RecruitMemberPage} />
             <Route path="/success" exact component={SuccessPage} />
+            <Route path="/landing" exact component={LandingPage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>
@@ -101,6 +106,13 @@ const App: React.FC = () => {
   return (
     <div>
       {routes}
+      <button
+        onClick={() => {
+          setIsAuthenticated(true);
+        }}
+      >
+        LOG IN
+      </button>
       <button
         onClick={() => {
           console.log("show state", isAuthenticated);
@@ -129,7 +141,6 @@ const App: React.FC = () => {
       >
         LOGOUT
       </button>
-
       {/* {numUseEffect} */}
     </div>
   );

@@ -8,3 +8,28 @@
   color: #c0bfbf;
   font-size: 1rem;
 }
+
+.subtitlePageBlack {
+  /* width: 106px; */
+  overflow: visible;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 200;
+  font-style: normal;
+  font-family: inherit;
+  color: #000000;
+  font-size: 1rem;
+}
+
+.smallSize {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.mediumSize {
+  font-size: 2rem;
+}
+
+.bigSize {
+  font-size: 3rem;
+}

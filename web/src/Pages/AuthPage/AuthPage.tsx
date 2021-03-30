@@ -56,7 +56,7 @@ const AuthPage: React.FC<Props> = () => {
   };
   let routeRedirect = null;
   if (redirect) {
-    routeRedirect = <Redirect to="/test" />;
+    routeRedirect = <Redirect to="/landing" />;
   }
   let authPrompt = null;
   if (clickSignup === false && clickLogin === false) {

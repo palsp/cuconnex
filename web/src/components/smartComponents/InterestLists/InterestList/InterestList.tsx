@@ -30,40 +30,44 @@ const InterestList: React.FC<Props> = (props) => {
     setClicked((prevState) => !prevState);
   };
 
-  const imgCSS = [classes.interestImage];
-  if (props.value) {
-    imgCSS.push(classes[props.value.split(" ").join("")]);
-  }
+  // const imgCSS = [classes.interestImage];
+  // if (props.value) {
+  //   imgCSS.push(classes[props.value.split(" ").join("")]);
+  // }
 
+  // if (clicked) {
+  //   imgCSS.push(classes["isClicked"]);
+  // }
+  const btnCSS = [classes.interest];
   if (clicked) {
-    imgCSS.push(classes["isClicked"]);
+    btnCSS.push(classes["isClicked"]);
   }
 
   if (props.value === "Ads") {
     icon = <Ads />;
   } else if (props.value === "Web Builder") {
     icon = <WebBuilder />;
-  } else if (props.value == "Chatbot") {
+  } else if (props.value === "Chatbot") {
     icon = <Chatbot />;
   } else if (props.value === "Coding") {
     icon = <Coding />;
-  } else if (props.value == "FinTech") {
+  } else if (props.value === "FinTech") {
     icon = <FinTech />;
-  } else if (props.value == "Graphic") {
+  } else if (props.value === "Graphic") {
     icon = <Graphic />;
   } else if (props.value === "Fashion") {
     icon = <Fashion />;
-  } else if (props.value == "Marketing") {
+  } else if (props.value === "Marketing") {
     icon = <Marketing />;
-  } else if (props.value == "Business Case") {
+  } else if (props.value === "Business Case") {
     icon = <Case />;
   } else if (props.value === "Startup") {
     icon = <Startup />;
-  } else if (props.value == "Ecommerce") {
+  } else if (props.value === "Ecommerce") {
     icon = <Ecommerce />;
-  } else if (props.value == "UXUI") {
+  } else if (props.value === "UXUI") {
     icon = <UXUI />;
-  } else if (props.value == "Finance") {
+  } else if (props.value === "Finance") {
     icon = <Finance />;
   } else {
     icon = <Blockchain />;
@@ -75,10 +79,10 @@ const InterestList: React.FC<Props> = (props) => {
       data-test="interest-list"
       className={classes.interestList}
     >
-      <div onClick={interestClickHandler} className={classes.interest}>
+      <div onClick={interestClickHandler} className={btnCSS.join(" ")}>
         <div className={classes.icon}>{icon}</div>
         <div className={classes.text}>
-          <p data-test="interest-list-props-value">{props.value}</p>
+          <p data-test="interest-list-props-value">{props.value + " "}</p>
         </div>
       </div>
     </div>
