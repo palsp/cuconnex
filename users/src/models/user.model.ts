@@ -7,7 +7,7 @@ import {
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
   Association,
-  Sequelize
+  Sequelize,
 } from 'sequelize';
 import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuconnex/common';
 
@@ -77,7 +77,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       } catch (err) {
         console.log(err);
       }
-
     }
   }
 
@@ -86,8 +85,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     const constraint = {
       [Op.or]: [
         { senderId: this.id, receiverId: userId },
-        { senderId: userId, receiverId: this.id }
-      ]
+        { senderId: userId, receiverId: this.id },
+      ],
     };
     const friend = await Friend.findOne({ where: constraint });
     if (!friend) {
@@ -147,7 +146,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
       name: attrs.name,
-      description: attrs.description
+      description: attrs.description,
     });
   }
 
@@ -164,27 +163,27 @@ const initUser = (sequelize: Sequelize) => {
       id: {
         type: DataTypes.STRING(10),
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
       },
       name: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
       },
       faculty: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
       },
       image: {
-        type: DataTypes.STRING(255)
+        type: DataTypes.STRING(255),
       },
       lookingForTeam: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
-      }
+        allowNull: false,
+      },
     },
     {
       tableName: TableName.users,
       sequelize,
-      timestamps: false
+      timestamps: false,
     }
   );
 
