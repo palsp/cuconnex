@@ -143,6 +143,15 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return user;
   }
 
+  /**
+   * A function for accepting the friend request. It first checks if the user whose id was passed in has sent 
+   * a friend request to the current user or not. If so, then it changes the friendStatus of the two according to the 
+   * passed in accepted parameter. 
+   * @param userId - the user who send the friend request
+   * @param accepted - whether or not the current user accepts the friend request
+   * @returns 
+   */
+
   public async acceptFriendRequest(userId: string, accepted: Boolean): Promise<FriendStatus> {
     const relation = await Friend.findOne({ where: { senderId: userId, receiverId: this.id } });
 
