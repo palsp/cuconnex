@@ -168,6 +168,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
+  /**
+   * Creates Team with the specified name and description
+   * @param {TeamCreationAttrs} attrs - A TeamCreationAttrs object consisting of the team name and description
+   * @param {string} attrs.name - The name of the team
+   * @param {string} attrs.description - A description of the team
+   * @returns 
+   */
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
       name: attrs.name,
