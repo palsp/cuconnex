@@ -143,14 +143,14 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return user;
   }
 
-  public async acceptFriendRequest(userId: string, accpeted: Boolean): Promise<FriendStatus> {
+  public async acceptFriendRequest(userId: string, accepted: Boolean): Promise<FriendStatus> {
     const relation = await Friend.findOne({ where: { senderId: userId, receiverId: this.id } });
 
     if (!relation) {
       throw new BadRequestError('User has not send a request yet');
     }
 
-    if (accpeted) {
+    if (accepted) {
       relation.status = FriendStatus.Accept;
     } else {
       relation.status = FriendStatus.Reject;
