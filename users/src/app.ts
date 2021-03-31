@@ -4,10 +4,8 @@ import session from 'cookie-session';
 import { json } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 
-
 import { fetchUser } from './middlewares';
 import * as router from './routes';
-
 
 const app = express();
 
@@ -18,7 +16,7 @@ app.use(json());
 app.use(
   session({
     signed: false,
-    secure: false
+    secure: false,
     // httpOnly : true,
   })
 );
@@ -31,6 +29,8 @@ app.use(fetchUser);
 app.use(router.getUserRouter);
 app.use(router.newUserRouter);
 app.use(router.addFriendRouter);
+app.use(router.notificationUserRouter);
+app.use(router.manageStatusRouter);
 
 // team handler
 app.use(router.getTeamRouter);
@@ -40,8 +40,7 @@ app.use(router.addMemberRouter);
 
 // other handler
 app.use(router.memberStatusRouter);
-app.use(router.searchRouter)
-
+app.use(router.searchRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

@@ -9,11 +9,7 @@ import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from
 
 const router = express.Router();
 
-const bodyChecker1 = [
-  body('teamName')
-    .notEmpty()
-    .isAlphanumeric()
-];
+const bodyChecker1 = [body('teamName').notEmpty().isAlphanumeric()];
 
 // a user request to join a team
 router.post(
@@ -24,7 +20,6 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = req.user!;
-      console.log(user);
 
       const { teamName } = req.body;
 
@@ -44,7 +39,7 @@ router.post(
       const newMember = await Member.create({
         userId: user.id,
         teamName,
-        status: TeamStatus.Pending
+        status: TeamStatus.Pending,
       });
 
       res.status(201).send({ message: 'Request pending', member: newMember });
@@ -54,12 +49,8 @@ router.post(
   }
 );
 const bodyChecker2 = [
-  body('teamName')
-    .notEmpty()
-    .isAlphanumeric(),
-  body('newMemberId')
-    .notEmpty()
-    .isAlphanumeric()
+  body('teamName').notEmpty().isAlphanumeric(),
+  body('newMemberId').notEmpty().isAlphanumeric(),
 ];
 
 // a team member can invite a user to join
