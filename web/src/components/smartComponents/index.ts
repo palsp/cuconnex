@@ -8,3 +8,5 @@ export { default as SearchBar } from "@smartComponents/Navigation/SearchBar/Sear
 export { default as RecommendedLists } from "@smartComponents/RecommendedLists/RecommendedLists";
 export { default as RecommendedList } from "@smartComponents/RecommendedLists/RecommendedList/RecommendedList";
 export { default as OldInterestList } from '@smartComponents/OldInterestList/OldInterestList';
+export { default as TeamLists } from "@smartComponents/TeamLists/TeamLists";
+export { default as TeamList } from "@smartComponents/TeamLists/TeamList/TeamList";

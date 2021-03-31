@@ -5,7 +5,7 @@
 }
 
 .interest {
-  background-color: hsl(0, 0%, 88%);
+  background-color: hsl(0, 29%, 59%);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,7 +171,7 @@ p::before {
 
 /* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good
 
-/* .interestImage::before {
+.interestImage::before {
   content: "";
   position: absolute;
   top: 0px;
@@ -181,7 +181,6 @@ p::before {
   border-radius: 50%;
 }
 
-/* 
 p {
   position: relative;
 }

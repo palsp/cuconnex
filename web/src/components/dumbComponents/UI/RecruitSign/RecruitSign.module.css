@@ -1,0 +1,13 @@
+.recruiting {
+  width: 15vw;
+  height: 2vh;
+  background-color: rgb(80, 184, 80);
+  border-radius: 13px;
+  font: inherit;
+}
+
+.recruiting p {
+  font-size: 0.7rem;
+  color: white;
+  margin: 0;
+}

@@ -10,3 +10,5 @@ export { default as ProfilePic } from "@dumbComponents/UI/ProfilePic/ProfilePic"
 export { default as InputField } from "@dumbComponents/UI/InputField/InputField";
 export { default as Username } from "@dumbComponents/UI/Username/Username";
 export { default as Logo } from '@dumbComponents/UI/Logo/Logo';
+export { default as Tab } from '@dumbComponents/UI/Tab/Tab';
+export { default as RecruitSign } from '@dumbComponents/UI/RecruitSign/RecruitSign';
