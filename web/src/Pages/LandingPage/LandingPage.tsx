@@ -1,13 +1,13 @@
 import { ProfilePic } from "@dumbComponents/UI";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
-import { ArrowRight } from "@dumbComponents/UI/Icons";
+import { ArrowRight, Search } from "@dumbComponents/UI/Icons";
 import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
 import Toggles from "@dumbComponents/UI/Toggles/Toggles";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
-import LandingHeader from "./Sections/LandingHeader";
 import LandingHero from "./Sections/LandingHero";
 
 interface Props {}
@@ -23,8 +23,11 @@ const LandingPage: React.FC<Props> = () => {
         <div className={classes.flexDiv}>
           <div className={classes.container}>
             <div className={classes.headerDiv}>
-              <div className={classes.toggleDiv}>
-                <ProfilePic size="small" />
+              <div className={classes.toggleDiv}></div>
+              <div className={classes.searchDiv}>
+                <Link to="/search">
+                  <Search />
+                </Link>
               </div>
               <div className={classes.mailDiv}>
                 <Mail />

@@ -18,8 +18,9 @@
   zoom: 250%;
 }
 .toggleDiv {
-  margin-left: 2%;
+  text-align: left;
   margin-top: 3%;
+  margin-left: 5%;
 }
 .hamburgerDiv {
   margin-top: 3%;
@@ -39,6 +40,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.searchDiv {
+  margin-top: 4%;
+  zoom: 150%;
 }
 @media only screen and (max-width: 375px) {
   /* iPhone X */

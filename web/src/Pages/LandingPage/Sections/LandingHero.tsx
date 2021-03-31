@@ -5,22 +5,28 @@ import FindteamLogo from "../../../components/dumbComponents/UI/FindteamLogo/Fin
 import RecruitMemberLogo from "../../../components/dumbComponents/UI/RecruitmemberLogo/RecruitmemberLogo";
 import Subtitle from "../../../components/dumbComponents/UI/Subtitle/Subtitle";
 import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
+import { ProfilePic, Username } from "@dumbComponents/UI";
 
 const LandingHero: React.FC = () => {
   return (
     <div className={classes.mainDiv}>
-      <div className={classes.subtitleDiv}>
-        <Subtitle color="black" value="Now you interact as  "></Subtitle>
-      </div>
-      <div className={classes.headingDiv}>
-        <Heading size="small  " value="Suki Tee Noi"></Heading>{" "}
+      <div className={classes.upperpartDiv}>
+        <ProfilePic size="small" />
+        <div className={classes.subupperpartDiv}>
+          <div className={classes.subtitleDiv}>
+            Welcome,
+            <div className={classes.headingDiv}>
+              <Username value="Pichayada mizzy" />
+            </div>
+          </div>
+        </div>
       </div>
       <div className={classes.buttonmainDiv}>
-        <div className={classes.findteamDiv}>
-          <FindteamLogo />
-        </div>
         <div className={classes.recruitmemberDiv}>
           <RecruitMemberLogo />
+        </div>
+        <div className={classes.findteamDiv}>
+          <FindteamLogo />
         </div>
       </div>
     </div>

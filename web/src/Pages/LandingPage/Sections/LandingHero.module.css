@@ -6,13 +6,13 @@
 }
 .findteamDiv {
   margin-top: 40%;
-  margin-right: 4%;
+  margin-left: 4%;
   size: 100%;
 }
 .recruitmemberDiv {
   margin-top: 40%;
-  margin-left: 4%;
   size: 100%;
+  margin-right: 4%;
 }
 .mainDiv {
   display: flex;
@@ -20,13 +20,18 @@
 }
 .subtitleDiv {
   width: 200px;
-  height: 15px;
+  height: 19px;
   text-align: left;
-  margin-left: 4%;
 }
 .headingDiv {
   width: 200px;
-  height: 15px;
   text-align: left;
-  margin-left: 4%;
+}
+.upperpartDiv {
+  display: flex;
+  flex-direction: row;
+}
+.subupperpartDiv {
+  display: flex;
+  flex-direction: column;
 }
