@@ -4,7 +4,6 @@ import { Formik, Form, Field } from "formik";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
 import * as yup from "yup";
 
-import { ProfilePic } from "@smartComponents/index";
 import {
   Background,
   Button,
