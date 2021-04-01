@@ -11,7 +11,7 @@ const LandingHero: React.FC = () => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
-        <ProfilePic size="small" />
+        <div className={classes.profileDiv}><ProfilePic size="small" /></div>
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
             Welcome,
