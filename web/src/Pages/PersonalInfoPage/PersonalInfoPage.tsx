@@ -14,6 +14,7 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 
+import { ProfilePic } from "@smartComponents/index";
 import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
