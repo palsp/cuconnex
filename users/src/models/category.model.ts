@@ -37,11 +37,6 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
         });
     }
 
-
-
-
-
-
     public static associations: {
         interests: Association<Category, Interest>
     }

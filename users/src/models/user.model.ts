@@ -54,18 +54,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
-  // // add interest from a given arry to user info
-  // public async addInterestFromArray(interests: InterestCreationAttrs[]) {
-  //   for (let interest of interests) {
-  //     // find correspondin interest in db
-  //     const int = await Interest.findOne({ where: { description: interest.description } });
-
-  //     // add association between user and interest
-  //     if (int) {
-  //       await this.addInterest(int);
-  //     }
-  //   }
-  // }
 
   public async addInterestFromArray(interests: Description[]) {
     for (let interest of interests) {
