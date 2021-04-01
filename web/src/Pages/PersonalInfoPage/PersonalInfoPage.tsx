@@ -4,13 +4,13 @@ import { Formik, Form, Field } from "formik";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
 import * as yup from "yup";
 
+import { ProfilePic } from "@smartComponents/index";
 import {
   Background,
   Button,
   DotMorePage,
   Heading,
   InputField,
-  ProfilePic,
   Subtitle,
 } from "@dumbComponents/UI/index";
 
@@ -18,6 +18,7 @@ import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
+import { convertCompilerOptionsFromJson } from "typescript";
 
 const facultyArray = [
   "Allied Health Sciences",
@@ -46,8 +47,21 @@ const facultyArray = [
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
 });
+
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
+
+  const [image, setImage] = useState({ preview: "", raw: "" });
+
+  const handleChange = (e: any) => {
+    console.log(e.target.files);
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+      });
+    }
+  };
 
   return (
     <div className={classes.main}>
@@ -69,10 +83,44 @@ const PersonalInfoPage: React.FC = () => {
                     value="Setting up your profile"
                   />
                 </div>
-                <div className={classes.profilePicDiv}>
-                  <ProfilePic
-                    size="big"
-                    data-test="personal-info-personalImage"
+                <div
+                  className={classes.profilePicDiv}
+                  onChange={() => console.log(image.preview)}
+                >
+                  <label htmlFor="upload-button">
+                    {/* <ProfilePic
+                      size="big"
+                      uploadedProfile={true}
+                      data-test="personal-info-personalImage"
+                    /> */}
+                    {image.preview ? (
+                      <img
+                        src={image.preview}
+                        alt="dummy"
+                        width="300"
+                        height="300"
+                      />
+                    ) : (
+                      // <ProfilePic
+                      //   size="big"
+                      //   data-test="personal-info-personalImage"
+                      //   uploadedProfile={true}
+                      //   PicUrl={image.preview}
+                      // />
+                      <>
+                        <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                        />
+                      </>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="upload-button"
+                    style={{ display: "none" }}
+                    onChange={handleChange}
                   />
                 </div>
                 {/* <div className={classes.usernameDiv}>
