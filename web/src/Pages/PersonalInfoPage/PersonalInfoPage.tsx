@@ -93,21 +93,35 @@ const PersonalInfoPage: React.FC = () => {
                       uploadedProfile={true}
                       data-test="personal-info-personalImage"
                     /> */}
-                    {image.preview ? (
-                      <img
-                        src={image.preview}
-                        alt="dummy"
-                        width="300"
-                        height="300"
-                      />
-                    ) : (
-                      // <ProfilePic
-                      //   size="big"
-                      //   data-test="personal-info-personalImage"
-                      //   uploadedProfile={true}
-                      //   PicUrl={image.preview}
-                      // />
+                    {image.preview !== "" ? (
                       <>
+                        {/* <img
+                          src={image.preview}
+                          alt="dummy"
+                          style={{
+                            width: "300px",
+                            height: "300px",
+                            borderRadius: "50%",
+                          }}
+                        /> */}
+                        <div
+                          style={{
+                            width: "300px",
+                            height: "300px",
+                            borderRadius: "50%",
+                          }}
+                        >
+                          <ProfilePic
+                            size="big"
+                            data-test="personal-info-personalImage"
+                            PicUrl={image.preview}
+                            uploadedProfile={true}
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <h1>else case</h1>
                         <ProfilePic
                           size="big"
                           data-test="personal-info-personalImage"

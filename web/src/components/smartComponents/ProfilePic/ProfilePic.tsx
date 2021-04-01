@@ -17,7 +17,7 @@ const ProfilePic: React.FC<Props> = (props) => {
     cssArray = [classes.profile];
   }
 
-  if (props.uploadedProfile == true) {
+  if (props.uploadedProfile === true) {
     console.log("here");
     console.log("src: ", props.PicUrl);
     profileArray = [classes.profilePic];
@@ -29,7 +29,20 @@ const ProfilePic: React.FC<Props> = (props) => {
   return (
     <div data-test="profile-pic" className={cssArray.join(" ")}>
       <div className={profileArray.join("")}></div>
-      {/* <img src={"../../../assets/tempProfile.png"} />; */}
+      {props.PicUrl ? (
+        <img
+          src={props.PicUrl}
+          style={{
+            objectFit: "contain",
+            width: "300px",
+            height: "300px",
+            borderRadius: "50%",
+          }}
+          alt="profilepic"
+        />
+      ) : (
+        ""
+      )}
       {/* <p className={classes.pTag}>Add profile Picture</p> */}
     </div>
   );
