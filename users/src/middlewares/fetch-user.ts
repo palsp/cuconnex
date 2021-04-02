@@ -9,7 +9,14 @@ declare global {
     }
   }
 }
-
+/** 
+ * A middleware function used to fetch user data from MySQL.
+ * 
+ * First checks if the request object's `currentUser` field is defined.
+ * If so then fetch the user's information from the database and stores it in `req.user`
+ * @throws {NotAuthorizedError} if `req.currentUser` does not exist or is otherwise undefined
+ * 
+ */
 export const fetchUser = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.currentUser) {
     throw new NotAuthorizedError();

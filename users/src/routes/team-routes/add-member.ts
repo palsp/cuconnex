@@ -62,6 +62,7 @@ router.post(
 
     const { teamName, newMemberId } = req.body;
 
+    //Find if there is a user in the database with the id we want to invite, and if their exists a team to add.
     const receiver = await User.findOne({ where: { id: newMemberId } });
     const team = await Team.findOne({ where: { name: teamName } });
 

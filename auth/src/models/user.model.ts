@@ -37,6 +37,7 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     public id!: string
     public email!: string
     public password!: string
+    //Called whenever model is changed to JSON
     public toJSON() {
         const values = { ...this.get() };
         delete values.password;
@@ -48,7 +49,7 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     }
 }
 
-
+//Initializes the user model
 export const userInit = function (sequelize: Sequelize) {
     User.init({
         id: {

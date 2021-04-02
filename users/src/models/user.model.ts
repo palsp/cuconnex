@@ -96,16 +96,16 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
 
   /**
-   * It is expected to recieved array of interests from the request.
-   * This method will add all of the interest that existed in the db 
-   * to user
-   * @param interests 
+   * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
+   * 
+   * This is done via calling the `BelongsToManyAddAssociationMixin` on the `<Interest, User>` pair
+   * @param {Description[]} interests - The array of interests the user is interested in.
    */
   public async addInterestFromArray(interests: Description[]) {
     for (let interest of interests) {
-      try {
-        // find interest in db
-        const addedInterest = await Interest.findOne({ where: { description: interest } });
+        try {
+      // find corresponding interest in db
+      const addedInterest = await Interest.findOne({ where: { description: interest } });
 
         await this.addInterest(addedInterest!);
       } catch (err) {
@@ -114,13 +114,17 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
   }
 
-
-
-
-  /**
-   * It will return connection type between this and a given user
-   * @param userId 
-   * @returns {FriendStatus | null}
+  //Method for finding a relation attached here to minimize hassle
+  /**A method to check if the current user has a relationship with the user with specified id.
+   * This is done by querying the Friend database for any ones with `senderId` equal to current user id 
+   * and `receiverId` equal to the specified id or vice versa.
+   * 
+   * If a relationship is found, returns the friendship status between the two users
+   * 
+   * else, returns `FriendStatus.toBeDefined`
+   * 
+   * @param {string} userId - The id of the user we wish to check for a relationship with the current user id.
+   * @returns {FriendStatus | null} friend.status - The friend status between the two users, if the relationship exists
    */
   public async findRelation(userId: string): Promise<FriendStatus | null> {
     if (this.id === userId) return null;
@@ -144,8 +148,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   /**
    * addConnection with additional logic to check whether the connection is established.
    * if not, this method will and connection to db. otherwise, it will reject the addConnection
-   * @param user 
-   * @returns 
+   * @param {User} user - the user to add as a friend to the current user.
+   * @returns the result of calling `this.addConnection(user)` with the specified user, if the relationship is not already established, returns **null** otherwise.
    */
   public async requestConnection(user: User) {
     const status = await this.findRelation(user.id);
@@ -158,13 +162,14 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.addConnection(user);
   }
 
-
-
-
   /**
-   * Find User with specific if in the database
-   * @param userId 
-   * @returns 
+   * Method for finding a user with the specified userId.
+   * Returns a promise that resolves if a user is found.
+   * 
+   * if the user is not found, throws a new NotFoundError
+   * @param userId - The id of the user we wish to find
+   * @throws {NotFoundError} - if the user is not found
+   * @return {User}`user` - the found user, if it exists 
    */
   public static async findUser(userId: string): Promise<User> {
     const user = await User.findByPk(userId);
@@ -177,17 +182,23 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return user;
   }
 
+  /**
+   * A function for accepting the friend request. It first checks if the user whose id was passed in has sent 
+   * a friend request to the current user or not. If so, then it changes the friendStatus of the two according to the 
+   * passed in accepted parameter. 
+   * @param userId - the user who send the friend request
+   * @param accepted - whether or not the current user accepts the friend request
+   * @returns 
+   */
 
-
-
-  public async acceptConnection(userId: string, accpeted: Boolean): Promise<FriendStatus> {
-    const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
+    public async acceptConnection(userId: string, accepted: Boolean): Promise<FriendStatus> {
+        const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
 
     if (!relation) {
       throw new BadRequestError('User has not send a request yet');
     }
 
-    if (accpeted) {
+    if (accepted) {
       relation.status = FriendStatus.Accept;
     } else {
       relation.status = FriendStatus.Reject;
@@ -205,6 +216,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
+  /**
+   * Creates Team with the specified name and description
+   * @param {TeamCreationAttrs} attrs - A TeamCreationAttrs object consisting of the team name and description
+   * @param {string} attrs.name - The name of the team
+   * @param {string} attrs.description - A description of the team
+   * @returns 
+   */
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
       name: attrs.name,
