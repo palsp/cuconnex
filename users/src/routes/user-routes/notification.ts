@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { requireUser } from '../../middlewares/requireUser';
-import { Member } from '../../models/member.model';
+import { Member } from '../../models';
 
-import { validateRequest, TeamStatus, requireAuth, BadRequestError } from '@cuconnex/common';
+import { validateRequest, TeamStatus, } from '@cuconnex/common';
 
 const router = express.Router();
 

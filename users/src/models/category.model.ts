@@ -31,6 +31,31 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
   public createInterest!: HasManyCreateAssociationMixin<Interest>;
 
   /**
+   * Automatically migrate schema, to keep your schema up to date.
+   * @param sequelize 
+   */
+  public static autoMigrate(sequelize: Sequelize) {
+    Category.init(
+      {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
+        category: {
+          type: DataTypes.ENUM,
+          values: Object.keys(InterestDescription),
+          primaryKey: true,
+        },
+      },
+      {
+        tableName: TableName.category,
+        sequelize,
+        timestamps: false,
+      }
+    );
+  }
+  /**
    * To add type cheking for interest creation from category
    * This function will ensure that all parameters required to create
    * interest is provided
@@ -47,28 +72,6 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
   };
 }
 
-const initCategory = (sequelize: Sequelize) => {
-  Category.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      category: {
-        type: DataTypes.ENUM,
-        values: Object.keys(InterestDescription),
-        primaryKey: true,
-      },
-    },
-    {
-      tableName: TableName.category,
-      sequelize,
-      timestamps: false,
-    }
-  );
 
-  return Category;
-};
 
-export { Category, initCategory };
+export { Category };

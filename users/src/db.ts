@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import config from './config/db.config';
 import mysql, { Connection } from 'mysql2/promise';
-import { initModel } from './models';
+import { autoMigrate } from './models';
 
 interface myDB {
   sequelize?: Sequelize;
@@ -18,7 +18,7 @@ const initializeDB = async () => {
 
   myDB.sequelize = new Sequelize(database!, user!, password, { dialect: 'mysql', host });
 
-  initModel(myDB.sequelize);
+  autoMigrate(myDB.sequelize);
 
   await myDB.sequelize.sync({ force: true });
 
