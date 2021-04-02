@@ -6,6 +6,9 @@ import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconne
 
 import { fetchUser } from './middlewares';
 import * as router from './routes';
+import { upload } from './config/multer.config';
+
+
 
 const app = express();
 

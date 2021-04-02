@@ -1,8 +1,10 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { User, Interest } from '../../models';
+import { requireFile } from '../../middlewares';
 import { BadRequestError } from '@cuconnex/common';
+import { upload } from '../../config/multer.config';
 
 const router = express.Router();
 
@@ -33,8 +35,9 @@ const bodyChecker = [
 ];
 
 // create user for first time login
-router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
+router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'), requireFile, async (req: Request, res: Response, next: NextFunction) => {
   const { interests, name, faculty } = req.body;
+  const file = req.file;
 
 
   // // Make sure that user does not exist
