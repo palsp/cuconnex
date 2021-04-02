@@ -1,0 +1,9 @@
+.mainDiv{
+    display:flex;
+    flex-direction: column;
+    width:390px;    
+    height:128px;
+}
+.listDiv{
+    border-bottom: 0.5px solid grey;
+}

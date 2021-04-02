@@ -1,0 +1,34 @@
+.mainDiv {
+  width: 390px;
+  display: flex;
+  flex-direction: column;
+  height: 900px;
+}
+.headerContainer {
+  display: flex;
+  flex-direction: row;
+  height: 88px;
+  width: 390px;
+  border-bottom: solid 0.5px grey;
+  justify-content: center;
+  align-items: center;
+}
+.arrowDiv {
+  position: absolute;
+  left: 5%;
+  margin-top:1%;    
+  zoom: 130%;
+}
+.headingDiv {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  color: var(--main_pink, #f33182);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 22px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}

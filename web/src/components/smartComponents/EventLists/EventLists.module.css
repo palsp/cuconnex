@@ -1,0 +1,26 @@
+.mainDiv{
+    display:flex;
+    flex-direction: column;
+    width: 375px;
+    height: 812px;
+}
+.headingcontainerDiv{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.listDiv{
+    width:375px;
+    height:103px;
+    border-bottom: 0.5px solid grey;
+    border-top: 0.5px solid grey;
+}
+.arrowDiv{
+    zoom:150%;
+    width: 28px;
+    height:28px;
+    position:fixed;
+    left:5%;
+    top:3.3%;
+}
