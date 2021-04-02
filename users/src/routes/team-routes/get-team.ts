@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import { Team } from '../../models/team.model';
 import { BadRequestError, validateRequest } from '@cuconnex/common';
 import { body } from 'express-validator';
-import { requireUser } from '../../middlewares/requireUser';
 
 const router = express.Router();
 

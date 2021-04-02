@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
-import { User } from '../../models/user.model';
 import { NotFoundError } from '@cuconnex/common';
 import { requireUser } from '../../middlewares';
-import { UserInterest } from '../../models/UserInterest.model';
+import { UserInterest, User } from '../../models/';
 
 const router = express.Router();
 

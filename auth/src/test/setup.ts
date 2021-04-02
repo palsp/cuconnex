@@ -46,13 +46,16 @@ afterAll(async () => {
 })
 
 
-global.signup = async () => {
+global.signup = async (id?: string) => {
+
+
     const email = 'test@test.com';
     const password = 'password';
 
     const response = await request(app)
-        .post('/api/users/signup')
+        .post('/api/auth/signup')
         .send({
+            id: id || "613776621",
             email,
             password
         })
@@ -60,4 +63,5 @@ global.signup = async () => {
 
     const cookie = response.get('Set-Cookie');
     return cookie;
+
 };

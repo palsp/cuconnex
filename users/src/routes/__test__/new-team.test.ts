@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
-import { InterestDescription, TeamStatus } from '@cuconnex/common';
+import { Business, TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
 describe('Create a Team Test', () => {
@@ -11,9 +11,8 @@ describe('Create a Team Test', () => {
       id: '6131886621',
       name: 'pal'
     });
-    // await user.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
@@ -37,7 +36,7 @@ describe('Create a Team Test', () => {
     });
     // await user.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
@@ -59,7 +58,7 @@ describe('Create a Team Test', () => {
     });
     // await user.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
@@ -84,7 +83,7 @@ describe('Create a Team Test', () => {
     });
     // await user.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });

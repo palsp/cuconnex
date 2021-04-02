@@ -1,0 +1,37 @@
+.profile {
+  margin: auto;
+  height: 100px;
+  width: 100px;
+}
+.profileBig {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
+.profileSmall {
+  margin: auto;
+  height: 40px;
+  width: 40px;
+}
+.profilePic {
+  background-image: url("../../../../assets/tempProfile.png");
+  background-repeat: round;
+  background-size: contain;
+
+  border-radius: 50%;
+  opacity: 1;
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pTag {
+  font-weight: 600;
+}
+/* 
+p {
+  position: relative;
+} */

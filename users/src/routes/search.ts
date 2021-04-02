@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
-import { User } from '../models/user.model';
-import { Team } from '../models/team.model';
+import { User, Team } from '../models';
 import { Op } from 'sequelize';
 import { requireUser } from '../middlewares';
 
@@ -16,6 +15,7 @@ router.get('/api/users/:search', requireUser, async (req: Request, res: Response
     },
     include: { association: 'interests', attributes: ['description'] }
   });
+
   if (users.length > MAX_SEARCH) {
     users = users.slice(0, MAX_SEARCH);
   }

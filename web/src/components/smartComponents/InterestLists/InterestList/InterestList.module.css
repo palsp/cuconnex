@@ -1,0 +1,189 @@
+.interestList {
+  margin: 2vw;
+  border-radius: 10%;
+  height: 100%;
+}
+
+.interest {
+  background-color: hsl(0, 0%, 88%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10%;
+  height: 40px;
+}
+
+.icon {
+  margin-left: 5%;
+  margin-right: 5%;
+  position: relative;
+  align-items: flex-start;
+  width: 20px;
+  height: 20px;
+}
+
+.text {
+  margin: 0;
+  /* position: relative; */
+}
+
+p::after {
+  content: " ";
+  white-space: pre;
+}
+p::before {
+  content: " ";
+  white-space: pre;
+}
+
+.isClicked {
+  background-color: #f33182;
+  border-radius: 10%;
+  color: white;
+}
+
+/*
+
+.interestImage {
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Marketing::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.BusinessCase::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.Startup::before {
+  background-size: 100px 100px, contain;
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.Ecommerce::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.Coding::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.WebBuilder::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+.ChatBot::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+.FinTech::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+.Graphic::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+.UXUI::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+.Ads::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+.Fashion::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.25;
+}
+
+/* Alternative for reducing opacity is to add overlay for opacity, this way the css will be shorter. However the effect is not good
+
+/* .interestImage::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 50%;
+}
+
+/* 
+p {
+  position: relative;
+}
+
+*/

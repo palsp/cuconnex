@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 import { setFlagsFromString } from 'v8';
@@ -43,7 +43,7 @@ describe('Add member to Team --- Requesting', () => {
       .send({
         teamName: 'Team1'
       })
-    .expect(400);
+      .expect(400);
 
 
     const error = res.body.errors[0];
@@ -57,7 +57,7 @@ describe('Add member to Team --- Requesting', () => {
     });
     // await user1.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     await user.createTeams({ name: 'Team1', description: '' });
@@ -82,7 +82,7 @@ describe('Add member to Team --- Requesting', () => {
 
     // await user1.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'Team1', description: '' });
@@ -111,7 +111,7 @@ describe('Add member to Team --- Requesting', () => {
     });
 
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'Team1', description: '' });
@@ -149,7 +149,7 @@ describe('Add member to Team --- Invitation', () => {
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
@@ -185,7 +185,7 @@ describe('Add member to Team --- Invitation', () => {
 
     // await user1.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
@@ -218,7 +218,7 @@ describe('Add member to Team --- Invitation', () => {
     });
 
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
@@ -262,7 +262,7 @@ describe('Add member to Team --- Invitation', () => {
     });
 
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
@@ -293,7 +293,7 @@ describe('Add member to Team --- Invitation', () => {
     });
 
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
@@ -329,9 +329,8 @@ describe('Add member to Team --- Invitation', () => {
       id: '6131886621',
       name: 'pal'
     });
-
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });

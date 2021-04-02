@@ -1,4 +1,4 @@
-import { signUp, signIn } from '../controllers/auth.controller';
+import { signUp, signIn, signOut } from '../controllers/auth.controller';
 import express from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '@cuconnex/common';
@@ -43,5 +43,8 @@ const signInChecker = [
 authRoutes.post("/signup", signupChecker, validateRequest, signUp);
 
 authRoutes.post("/signin", signInChecker, validateRequest, signIn);
+
+authRoutes.post("/signout", signOut);
+
 
 export { authRoutes };

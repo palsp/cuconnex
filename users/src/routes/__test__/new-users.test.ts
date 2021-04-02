@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { InterestDescription, Technology } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
 it('should return 400 if users send invalid type of interest list', async () => {
@@ -18,39 +18,67 @@ it('should return 400 if users send invalid type of interest list', async () => 
 it('should return 400 if user info already existed', async () => {
   const id = '6131886621';
   const cookies = global.signin(id);
-  const user = await User.create({
+  await User.create({
     id: '6131886621',
     name: 'pal'
   });
-  await request(app)
+  const { body } = await request(app)
     .post('/api/users')
     .set('Cookie', cookies)
     .send({
-      username: 'test',
-      interests: [InterestDescription.Business]
+      name: 'test',
+      interests: {
+        Technology: [],
+      }
     })
     .expect(400);
+
+  expect(body.errors[0].message).toEqual('User already existed');
 });
 
-it('should return 400 if users send interests list with valid interest description', async () => {
-  await request(app)
+it('should return 400 if users send interests list with invalid category field', async () => {
+  const { body } = await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())
     .send({
-      username: 'test',
-      interests: [InterestDescription.Business, 'Hello']
+      name: 'test',
+      interests: {
+        invalid: [],
+      }
     })
     .expect(400);
+
+  expect(body.errors[0].message).toEqual('Valid interest must be provided');
 });
 
+
+it('should return 400 if users send valid category name but value is not array', async () => {
+  const { body } = await request(app)
+    .post('/api/users')
+    .set('Cookie', global.signin())
+    .send({
+      name: 'test',
+      interests: {
+        Technology: "Hello",
+      }
+    })
+    .expect(400);
+
+  expect(body.errors[0].message).toEqual('Valid interest must be provided');
+})
+
 it('should return 401 if users is not login', async () => {
-  await request(app)
+  const { body } = await request(app)
     .post('/api/users')
     .send({
-      username: 'test',
-      interests: [InterestDescription.Business]
+      name: 'test',
+      interests: {
+        Technology: []
+      }
     })
     .expect(401);
+
+  expect(body.errors[0].message).toEqual('Not Authorized');
 });
 
 it('should create a users with interests on valid input', async () => {
@@ -58,27 +86,30 @@ it('should create a users with interests on valid input', async () => {
     .post('/api/users')
     .set('Cookie', global.signin())
     .send({
-      interests: [InterestDescription.Business],
+      interests: {
+        Technology: [Technology.Coding]
+      },
       name: 'test',
-      email: 'test@test.com',
-      password: 'password123'
     })
     .expect(201);
 });
 
 it('should not save duplicate interest list', async () => {
-  // await Interest.create({ description: InterestDescription.Business })
   const { body: user } = await request(app)
     .post('/api/users')
     .set('Cookie', global.signin())
     .send({
-      interests: [InterestDescription.Business, InterestDescription.Business],
+      interests: {
+        Technology: [Technology.Coding, Technology.Coding]
+      },
       name: 'test',
-      email: 'test@test.com',
-      password: 'password123'
+
     })
     .expect(201);
 
   const currentUser = await User.findOne({ where: { id: user.id } });
   expect(await currentUser?.getInterests()).toHaveLength(1);
 });
+
+
+it.todo('add interest by category');

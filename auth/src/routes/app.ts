@@ -7,9 +7,7 @@ import { errorHandling } from '@cuconnex/common';
 const express = require('express');
 export const app = express()
 
-var corsOptions = {
-    origin: "http://localhost:3000"
-};
+
 
 app.set('trust proxy', true);
 
