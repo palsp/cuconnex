@@ -5,14 +5,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/palsp/cuconnex/event-services/classification"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
 )
 
 func Migrate() {
 	events.AutoMigrate()
-	classification.AutoMigrate()
 }
 
 func main() {

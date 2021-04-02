@@ -14,13 +14,14 @@ type DBConfig struct {
 // 	Password: os.Getenv("DB_PASSWORD"),
 // }
 
-
 var DB = DBConfig{
-	Name: "eventdb",
+	Name:  "eventdb",
 	Host: "localhost",
 	User: "root",
 	Password: "liulaks123",
 }
+
+
 
 
 

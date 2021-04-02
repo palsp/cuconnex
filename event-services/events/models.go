@@ -15,7 +15,6 @@ type EventModel struct {
 	Location  string    `gorm:"column:location"`
 	StartDate time.Time `gorm:"column:start-date"`
 	EndDate   time.Time `gorm:"column:end-date"`
-	CategoryID int
 }
 
 
