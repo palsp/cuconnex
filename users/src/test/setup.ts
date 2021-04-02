@@ -32,6 +32,7 @@ beforeAll(async () => {
     await startDB();
 
   } catch (err) {
+    console.log(err);
     throw new Error('Initialized databae failed');
   }
 });
@@ -46,7 +47,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await endDB(testDB);
+  // await endDB(testDB);
 });
 
 global.signin = (id?: string) => {

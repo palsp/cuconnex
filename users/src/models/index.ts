@@ -10,64 +10,15 @@ import { Connection } from './connection.model';
 import { Team } from './team.model';
 import { Member } from './member.model';
 
-
-
-
-// export const initModel = (sequelize: Sequelize) => {
-//   const User = initUser(sequelize);
-//   const Interest = initInterests(sequelize);
-//   const Team = initTeam(sequelize);
-//   const Category = initCategory(sequelize);
-//   const Member = initMember(sequelize);
-
-//   // A.hasOne(B, { /* options */ });      one-to-one foreign key in B
-//   // A.belongsTo(B, { /* options */ });   one-to-one  foreign key in A
-//   // A.hasMany(B, { /* options */ });     one-to-many foreign key in B
-//   // A.belongsToMany(B, { through: 'C', /* options */ });   many-to-many
-
-
-//   const member = sequelize.define(
-//     TableName.members,
-//     {
-//       status: {
-//         type: DataTypes.ENUM,
-//         values: Object.values(TeamStatus),
-//         defaultValue: TeamStatus.Pending,
-//         allowNull: false
-//       }
-//     },
-//     { timestamps: false }
-//   );
-
-
-
-//   User.belongsToMany(User, {
-//     as: 'friend',
-//     through: frd,
-//     foreignKey: 'senderId',
-//     otherKey: 'receiverId'
-//   });
-
-//   User.hasMany(Team, {
-//     sourceKey: 'id',
-//     foreignKey: 'creatorId',
-//     as: 'teams',
-//     onDelete: 'CASCADE'
-//   });
-
-//   // M-M
-//   Team.belongsToMany(User, { through: member });
-//   User.belongsToMany(Team, { through: member, as: 'member' });
-
-// };
-
-
 export const initModel = (sequelize: Sequelize) => {
 
   // -------------------- User and Interest -----------------------------------
   User.autoMigrate(sequelize);
   Interest.autoMigrate(sequelize);
   Team.autoMigrate(sequelize);
+  Category.autoMigrate(sequelize);
+
+  Member.autoMigrate(sequelize);
 
 
   const userInterest = sequelize.define(
@@ -102,7 +53,7 @@ export const initModel = (sequelize: Sequelize) => {
   UserInterest.autoMigrate(sequelize);
 
   // -------------------- Interest and Category ----------------------------------- 
-  Category.autoMigrate(sequelize);
+
 
   Category.hasMany(Interest, {
     sourceKey: "id",
@@ -160,8 +111,7 @@ export const initModel = (sequelize: Sequelize) => {
   });
 
   // M-M
-  Team.belongsToMany(User, { through: member });
-  User.belongsToMany(Team, { through: member, as: 'member' });
+  Team.belongsToMany(User, { through: member, sourceKey: "name", foreignKey: "teamName" });
+  User.belongsToMany(Team, { through: member, as: 'member', sourceKey: "id", foreignKey: "userId" });
 
-  Member.autoMigrate(sequelize);
 }
