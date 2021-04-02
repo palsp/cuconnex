@@ -14,7 +14,7 @@ import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuco
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
 import { Interest, InterestCreationAttrs } from './interest.model';
-import { Friend } from './friend.model';
+import { Connection } from './connection.model';
 
 // All attributes in user model
 interface UserAttrs {
@@ -47,6 +47,47 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public interests?: Interest[];
   public friends?: User[];
 
+
+
+
+
+  /**
+   * Automatically migrate schema, to keep your schema up to date.
+   * @param {Sequelize} sequelize
+   */
+  public static autoMigrate(sequelize: Sequelize) {
+    User.init<User>(
+      {
+        id: {
+          type: DataTypes.STRING(10),
+          primaryKey: true,
+          allowNull: false,
+        },
+        name: {
+          type: DataTypes.STRING(255),
+          allowNull: false,
+        },
+        faculty: {
+          type: DataTypes.STRING(255),
+        },
+        image: {
+          type: DataTypes.STRING(255),
+        },
+        lookingForTeam: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false,
+        },
+      },
+      {
+        tableName: TableName.users,
+        sequelize,
+        timestamps: false,
+      }
+    );
+  }
+
+
+
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
@@ -54,18 +95,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
-  // // add interest from a given arry to user info
-  // public async addInterestFromArray(interests: InterestCreationAttrs[]) {
-  //   for (let interest of interests) {
-  //     // find correspondin interest in db
-  //     const int = await Interest.findOne({ where: { description: interest.description } });
-
-  //     // add association between user and interest
-  //     if (int) {
-  //       await this.addInterest(int);
-  //     }
-  //   }
-  // }
 
   public async addInterestFromArray(interests: Description[]) {
     for (let interest of interests) {
@@ -80,6 +109,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
   }
 
+
   public async findRelation(userId: string): Promise<FriendStatus | null> {
     if (this.id === userId) return null;
     const constraint = {
@@ -88,7 +118,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         { senderId: userId, receiverId: this.id },
       ],
     };
-    const friend = await Friend.findOne({ where: constraint });
+    const friend = await Connection.findOne({ where: constraint });
     if (!friend) {
       return FriendStatus.toBeDefined;
     }
@@ -119,7 +149,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   public async acceptFriendRequest(userId: string, accpeted: Boolean): Promise<FriendStatus> {
-    const relation = await Friend.findOne({ where: { senderId: userId, receiverId: this.id } });
+    const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
 
     if (!relation) {
       throw new BadRequestError('User has not send a request yet');
@@ -157,37 +187,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   };
 }
 
-const initUser = (sequelize: Sequelize) => {
-  User.init<User>(
-    {
-      id: {
-        type: DataTypes.STRING(10),
-        primaryKey: true,
-        allowNull: false,
-      },
-      name: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-      },
-      faculty: {
-        type: DataTypes.STRING(255),
-      },
-      image: {
-        type: DataTypes.STRING(255),
-      },
-      lookingForTeam: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-    },
-    {
-      tableName: TableName.users,
-      sequelize,
-      timestamps: false,
-    }
-  );
 
-  return User;
-};
 
-export { User, initUser };
+export { User };

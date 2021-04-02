@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
-import { Friend } from '../../models/friend.model';
+import { Connection } from '../../models/connection.model';
 import { FriendStatus, } from '@cuconnex/common';
 
 
@@ -55,7 +55,7 @@ describe('sending friend request test ', () => {
       .send({ userId: receiver.id })
       .expect(201);
 
-    const relation = await Friend.findAll({ where: { senderId: sender.id, receiverId: receiver.id } });
+    const relation = await Connection.findAll({ where: { senderId: sender.id, receiverId: receiver.id } });
 
     expect(relation).not.toBeNull();
     expect(relation).toHaveLength(1);
@@ -73,7 +73,7 @@ describe('sending friend request test ', () => {
       .send({ userId: sender.id })
       .expect(201);
 
-    const result = await Friend.findOne({
+    const result = await Connection.findOne({
       where: { senderId: receiver.id, receiverId: sender.id }
     });
     expect(result).toBeNull();

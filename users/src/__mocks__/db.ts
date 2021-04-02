@@ -28,6 +28,7 @@ const initializeDB = async () => {
   // initialize model
   initModel(myDB.sequelize);
 
+
   await myDB.sequelize.sync();
 
   return myDB;

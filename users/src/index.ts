@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
+import { User } from './models/user.model';
 
 
 const validateEnvAttr = () => {
@@ -28,15 +29,17 @@ const validateEnvAttr = () => {
 const start = async () => {
   try {
     // check if all required env variable have been declared
-    validateEnvAttr();
+    // validateEnvAttr();
 
 
     // validateEnvAttr();
     await initializeDB();
 
+    await User.create({ id: '6131886621', name: 'pal' })
+
 
     // initial data for interest and category 
-    await startDB();
+    // await startDB();
   } catch (err) {
     console.log(err);
   }
