@@ -42,6 +42,8 @@ app.use(router.addMemberRouter);
 app.use(router.memberStatusRouter);
 app.use(router.searchRouter);
 
+
+
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
