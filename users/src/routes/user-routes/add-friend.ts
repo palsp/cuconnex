@@ -20,7 +20,7 @@ router.post(
   async (req: Request, res: Response) => {
     const addedUser = await User.findUser(req.body.userId);
 
-    await req.user!.addUserAsFriend(addedUser);
+    await req.user!.requestConnection(addedUser);
 
     res.status(201).send({});
   }
@@ -42,7 +42,7 @@ router.post(
   async (req: Request, res: Response) => {
     const sendUser = await User.findUser(req.body.userId);
 
-    const status = await req.user!.acceptFriendRequest(sendUser.id, req.body.accepted);
+    const status = await req.user!.acceptConnection(sendUser.id, req.body.accepted);
 
     res.status(201).send({ status });
   }

@@ -13,7 +13,7 @@ import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuco
 
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
-import { Interest, InterestCreationAttrs } from './interest.model';
+import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 
 // All attributes in user model
@@ -92,10 +92,15 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
 
-  public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
-  public getFriend!: BelongsToManyGetAssociationsMixin<User>;
+  public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
+  public getConnection!: BelongsToManyGetAssociationsMixin<User>;
 
-
+  /**
+   * It is expected to recieved array of interests from the request.
+   * This method will add all of the interest that existed in the db 
+   * to user
+   * @param interests 
+   */
   public async addInterestFromArray(interests: Description[]) {
     for (let interest of interests) {
       try {
@@ -110,6 +115,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
 
+
+
+  /**
+   * It will return connection type between this and a given user
+   * @param userId 
+   * @returns {FriendStatus | null}
+   */
   public async findRelation(userId: string): Promise<FriendStatus | null> {
     if (this.id === userId) return null;
     const constraint = {
@@ -126,7 +138,16 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return friend.status;
   }
 
-  public async addUserAsFriend(user: User) {
+
+
+
+  /**
+   * addConnection with additional logic to check whether the connection is established.
+   * if not, this method will and connection to db. otherwise, it will reject the addConnection
+   * @param user 
+   * @returns 
+   */
+  public async requestConnection(user: User) {
     const status = await this.findRelation(user.id);
 
     // if friend relation is established or alredy send a request
@@ -134,9 +155,17 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       return;
     }
 
-    return this.addFriend(user);
+    return this.addConnection(user);
   }
 
+
+
+
+  /**
+   * Find User with specific if in the database
+   * @param userId 
+   * @returns 
+   */
   public static async findUser(userId: string): Promise<User> {
     const user = await User.findByPk(userId);
 
@@ -148,7 +177,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return user;
   }
 
-  public async acceptFriendRequest(userId: string, accpeted: Boolean): Promise<FriendStatus> {
+
+
+
+  public async acceptConnection(userId: string, accpeted: Boolean): Promise<FriendStatus> {
     const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
 
     if (!relation) {
@@ -184,6 +216,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     interests: Association<Interest>;
     friend: Association<User, User>;
     teams: Association<User, Team>;
+    member: Association<User, Team>;
   };
 }
 

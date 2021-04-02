@@ -47,7 +47,7 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  // await endDB(testDB);
+  await endDB(testDB);
 });
 
 global.signin = (id?: string) => {

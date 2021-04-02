@@ -10,15 +10,17 @@ import { Connection } from './connection.model';
 import { Team } from './team.model';
 import { Member } from './member.model';
 
-export const initModel = (sequelize: Sequelize) => {
+
+export { User, Interest, UserInterest, Category, Team, Member };
+
+export const autoMigrate = (sequelize: Sequelize) => {
 
   // -------------------- User and Interest -----------------------------------
   User.autoMigrate(sequelize);
   Interest.autoMigrate(sequelize);
   Team.autoMigrate(sequelize);
   Category.autoMigrate(sequelize);
-
-  Member.autoMigrate(sequelize);
+  // Member.autoMigrate(sequelize);
 
 
   const userInterest = sequelize.define(
@@ -112,6 +114,7 @@ export const initModel = (sequelize: Sequelize) => {
 
   // M-M
   Team.belongsToMany(User, { through: member, sourceKey: "name", foreignKey: "teamName" });
-  User.belongsToMany(Team, { through: member, as: 'member', sourceKey: "id", foreignKey: "userId" });
+  User.belongsToMany(Team, { through: member, foreignKey: "userId" });
 
+  Member.autoMigrate(sequelize);
 }

@@ -39,12 +39,12 @@ class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAt
         teamName: {
           type: DataTypes.STRING(255),
           primaryKey: true,
-          references: { model: Team.tableName }
+          // references: { model: Team.tableName }
         },
         userId: {
           type: DataTypes.STRING(11),
           primaryKey: true,
-          references: { model: User.tableName }
+          // references: { model: User.tableName }
         },
         status: {
           type: DataTypes.ENUM,
