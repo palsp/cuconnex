@@ -3,21 +3,20 @@
   flex-direction: row;
   justify-content: flex-start;
   text-align: left;
-
 }
 .textbodyDiv {
   display: flex;
   flex-direction: column;
   width: 333px;
-  height:108px;
-  margin-top:3%;
+  height: 108px;
+  margin-top: 3%;
 }
-.profileContainer{
-  margin-left:5%;
-  margin-right:5%;
-    display:flex;
-    justify-content: center;
-    align-items: center;
+.profileContainer {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .profileDiv {
   background-image: url("../../../assets/tempProfile.png");
@@ -58,7 +57,7 @@
   word-wrap: break-word;
 }
 .eventstatusDiv {
-  margin-top:5%;
+  margin-top: 5%;
   width: 105px;
   height: 16px;
   background-color: var(--main_pink, #f33182);
@@ -73,7 +72,7 @@
   color: var(--white, #ffffff);
   font-size: 10px;
 }
-.teamnameDiv{
+.teamnameDiv {
   text-align: left;
   width: auto;
   height: auto;
@@ -87,7 +86,7 @@
   font-size: 20px;
   color: var(--main_pink, #f33182);
 }
-.projectnameDiv{
+.projectnameDiv {
   text-align: left;
   width: auto;
   height: auto;
@@ -101,7 +100,7 @@
   line-height: 1.2;
   color: var(--search_bar, #c2c2c2);
 }
-.teamstatusDiv{
+.teamstatusDiv {
   text-align: left;
   width: auto;
   height: auto;
@@ -115,15 +114,15 @@
   font-size: 10px;
   color: var(--border_grey, #636363);
 }
-.compatibilityContainer{
-  display:flex;
+.compatibilityContainer {
+  display: flex;
   flex-direction: row;
 }
-.categoryContainer{
-  display:flex;
+.categoryContainer {
+  display: flex;
   flex-direction: row;
 }
-.verycompatibleDiv{
+.verycompatibleDiv {
   width: auto;
   height: auto;
   overflow: visible;
@@ -137,7 +136,7 @@
   font-size: 10px;
   color: var(--green_toggle, #00c300);
 }
-.compatibleDiv{
+.compatibleDiv {
   width: auto;
   height: auto;
   overflow: visible;
@@ -166,7 +165,7 @@
   color: var(--green_toggle, #c31d00);
 }
 .techcategoryDiv {
-  margin-top:5%;
+  margin-top: 5%;
   background-color: var(--main_pink, #f33182);
   border-radius: 5px;
   overflow: visible;
@@ -185,7 +184,7 @@
   border-radius: 5px;
 }
 .businesscategoryDiv {
-  margin-top:5%;
+  margin-top: 5%;
   width: 54px;
   height: 16px;
   background-color: var(--main_pink, #f33182);
@@ -202,11 +201,11 @@
   background-color: var(--edit_grey, #767474);
   overflow: visible;
   border-radius: 5px;
-  margin-left:2%;
-  margin-right:2%;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 .designcategoryDiv {
-  margin-top:5%;
+  margin-top: 5%;
   width: 45px;
   height: 16px;
   background-color: var(--main_pink, #f33182);
@@ -223,12 +222,10 @@
   background-color: var(--edit_grey, #767474);
   overflow: visible;
   border-radius: 5px;
-  margin-left:2%;
-  margin-right:2%;
+  margin-left: 2%;
 }
-.upcomingDiv{
-  
-  margin-top:5%;
+.upcomingDiv {
+  margin-top: 5%;
   width: 53px;
   height: 16px;
   background-color: var(--green_toggle, #00c300);
@@ -244,8 +241,8 @@
   color: var(--white, #ffffff);
   font-size: 10px;
 }
-.closedDiv{
-  margin-top:5%;
+.closedDiv {
+  margin-top: 5%;
   width: 46px;
   height: 16px;
   background-color: var(--edit_grey, #767474);
