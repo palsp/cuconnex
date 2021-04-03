@@ -53,7 +53,7 @@ const PersonalInfoPage: React.FC = () => {
 
   const [image, setImage] = useState({ preview: "", raw: "" });
 
-  const handleChange = (e: any) => {
+  const handleUploadedImage = (e: any) => {
     console.log(e.target.files);
     if (e.target.files.length) {
       setImage({
@@ -134,7 +134,7 @@ const PersonalInfoPage: React.FC = () => {
                     accept="image/*"
                     id="upload-button"
                     style={{ display: "none" }}
-                    onChange={handleChange}
+                    onChange={handleUploadedImage}
                   />
                 </div>
                 {/* <div className={classes.usernameDiv}>

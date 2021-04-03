@@ -28,22 +28,23 @@ const ProfilePic: React.FC<Props> = (props) => {
 
   return (
     <div data-test="profile-pic" className={cssArray.join(" ")}>
-      <div className={profileArray.join("")}></div>
-      {props.PicUrl ? (
-        <img
-          src={props.PicUrl}
-          style={{
-            objectFit: "contain",
-            width: "300px",
-            height: "300px",
-            borderRadius: "50%",
-          }}
-          alt="profilepic"
-        />
-      ) : (
-        ""
-      )}
-      {/* <p className={classes.pTag}>Add profile Picture</p> */}
+      <div className={profileArray.join("")}>
+        {props.PicUrl ? (
+          <img
+            src={props.PicUrl}
+            style={{
+              objectFit: "contain",
+              width: "300px",
+              height: "300px",
+              borderRadius: "50%",
+            }}
+            alt="profilepic"
+          />
+        ) : (
+          ""
+        )}
+        {/* <p className={classes.pTag}>Add profile Picture</p> */}
+      </div>
     </div>
   );
 };
