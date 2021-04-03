@@ -34,8 +34,8 @@ const ProfilePic: React.FC<Props> = (props) => {
             src={props.PicUrl}
             style={{
               objectFit: "contain",
-              width: "300px",
-              height: "300px",
+              width: "200px",
+              height: "200px",
               borderRadius: "50%",
             }}
             alt="profilepic"

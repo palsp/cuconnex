@@ -104,24 +104,24 @@ const PersonalInfoPage: React.FC = () => {
                             borderRadius: "50%",
                           }}
                         /> */}
-                        <div
+                        {/* <div
                           style={{
                             width: "300px",
                             height: "300px",
                             borderRadius: "50%",
                           }}
-                        >
-                          <ProfilePic
-                            size="big"
-                            data-test="personal-info-personalImage"
-                            PicUrl={image.preview}
-                            uploadedProfile={true}
-                          />
-                        </div>
+                        > */}
+                        <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                          PicUrl={image.preview}
+                          uploadedProfile={true}
+                        />
+                        {/* </div> */}
                       </>
                     ) : (
                       <>
-                        <h1>else case</h1>
+                        {/* <h1>else case</h1> */}
                         <ProfilePic
                           size="big"
                           data-test="personal-info-personalImage"
