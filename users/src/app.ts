@@ -24,8 +24,8 @@ app.use(
   })
 );
 
-app.use(currentUser);
-app.use(requireAuth);
+// app.use(currentUser);
+// app.use(requireAuth);
 app.use(fetchUser);
 
 // user handler
