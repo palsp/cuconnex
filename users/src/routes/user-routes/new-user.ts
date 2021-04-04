@@ -77,10 +77,13 @@ router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'),
 
 /*TODO: remove this route after development, it's only for testing that uploading file works */
 router.post('/api/upload', upload.single('myFile'), requireFile, async (req: Request, res: Response, next: NextFunction) => {
-    const file = req.file;
-    if (req.file) {
-        res.status(200).send(file);
-    }
+  const file = req.file;
+  console.log(req.headers)
+  
+  if (file) {
+      console.log(file);
+      res.status(200).send(file);
+  }
    
 })
 
