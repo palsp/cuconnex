@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { body } from 'express-validator';
-import { InterestDescription, requireAuth, validateRequest } from '@cuconnex/common';
+import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { User, Interest } from '../../models';
 import { requireFile } from '../../middlewares';
 import { BadRequestError } from '@cuconnex/common';
@@ -75,10 +75,10 @@ router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'),
 
 });
 
-router.post('/api/upload', requireAuth, upload.single('myFile'), requireFile, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/api/upload', upload.single('myFile'), requireFile, async (req: Request, res: Response, next: NextFunction) => {
     const file = req.file;
     if (req.file) {
-        res.status(200).send(file)
+        res.status(200).send(file);
     }
    
 })
