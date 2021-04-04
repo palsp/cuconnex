@@ -22,7 +22,7 @@ describe('The /api/upload', () => {
                 expect(response.body.errors[0].message).toEqual("Image uploaded is not of type jpg/jpeg or png")
             });
             
-        
+         
     });
     it('should return 200 if there is a valid file uploaded', async () => {
         await request(app)
