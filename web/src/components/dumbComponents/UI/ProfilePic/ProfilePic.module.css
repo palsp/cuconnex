@@ -3,11 +3,19 @@
   height: 100px;
   width: 100px;
 }
+
 .profileBig {
   margin: auto;
   height: 200px;
   width: 200px;
 }
+
+.profileMedium {
+  margin: auto;
+  height: 125px;
+  width: 125px;
+}
+
 .profileSmall {
   margin: auto;
   height: 40px;

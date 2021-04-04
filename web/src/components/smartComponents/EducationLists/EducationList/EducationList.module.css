@@ -1,36 +1,35 @@
-.activityList {
+.educationList {
   display: flex;
   width: 100vw;
   justify-content: center;
 }
 
-.activityContainer {
+.educationContainer {
   width: 85%;
   display: flex;
   margin-bottom: 5%;
 }
 
-.activityLogo {
+.educationLogo {
   width: 60px;
   height: 60px;
   margin-top: 3%;
-  margin-right: 15%;
+  margin-right: 10%;
 }
 
-.activityInfo {
+.educationInfo {
   text-align: start;
 }
 
-.name {
+.faculty {
   font-size: 0.9rem;
   font-weight: 700;
-  margin-top: 5%;
+  margin-top: 7%;
   margin-bottom: 3%;
 }
 
-.role {
+.major {
   font-size: 0.7rem;
   font-weight: 500;
-  margin-bottom: 7%;
   color: #c0bfbf;
 }

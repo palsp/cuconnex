@@ -13,6 +13,7 @@ import {
   TestPage,
   SuccessPage,
   MyTeamPage,
+  ProfilePage,
 } from "@pages/index";
 
 import LandingPage from "@pages/LandingPage/LandingPage";
@@ -83,6 +84,7 @@ const App: React.FC = () => {
             <Route path="/success" exact component={SuccessPage} />
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/myteam" exact component={MyTeamPage} />
+            <Route path="/profile" exact component={ProfilePage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>

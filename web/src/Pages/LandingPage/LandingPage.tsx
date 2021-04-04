@@ -9,6 +9,7 @@ import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHeader from "./Sections/LandingHeader";
 import LandingHero from "./Sections/LandingHero";
+import { Link } from "react-router-dom";
 
 interface Props {}
 const LandingPage: React.FC<Props> = () => {
@@ -22,7 +23,9 @@ const LandingPage: React.FC<Props> = () => {
       <div className={classes.flexDiv}>
         <div className={classes.headerDiv}>
           <div className={classes.toggleDiv}>
-            <ProfilePic size="small" />
+            <Link to="/profile">
+              <ProfilePic size="small" />
+            </Link>
           </div>
           <div className={classes.mailDiv}>
             <Mail />

@@ -7,3 +7,4 @@ export { default as SelectInterestPage } from "@pages/SelectInterestPage/SelectI
 export { default as TestPage } from "@pages/TestPage/TestPage";
 export { default as SuccessPage } from '@pages/SuccessPage/SuccessPage';
 export { default as MyTeamPage } from "@pages/MyTeamPage/MyTeamPage";
+export { default as ProfilePage } from "@pages/ProfilePage/ProfilePage"; 

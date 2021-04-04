@@ -4,10 +4,26 @@
   background-color: rgb(80, 184, 80);
   border-radius: 13px;
   font: inherit;
+  text-align: center;
 }
 
 .recruiting p {
   font-size: 0.7rem;
+  color: white;
+  margin: 0;
+}
+
+.owner {
+  width: 17vw;
+  height: 2vh;
+  background-color: #f33182;
+  border-radius: 13px;
+  font: inherit;
+  text-align: center;
+}
+
+.owner p {
+  font-size: 0.6rem;
   color: white;
   margin: 0;
 }

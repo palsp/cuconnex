@@ -12,3 +12,5 @@ export { default as Username } from "@dumbComponents/UI/Username/Username";
 export { default as Logo } from '@dumbComponents/UI/Logo/Logo';
 export { default as Tab } from '@dumbComponents/UI/Tab/Tab';
 export { default as RecruitSign } from '@dumbComponents/UI/RecruitSign/RecruitSign';
+export { default as CoverPic } from "@dumbComponents/UI/CoverPic/CoverPic";
+export { default as Toggles } from "@dumbComponents/UI/Toggles/Toggles";
