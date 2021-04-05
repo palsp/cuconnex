@@ -1,26 +1,36 @@
 import React from "react";
 import ActivityList from "@smartComponents/ActivityLists/ActivityList/ActivityList";
-import classes from "./ActivityLists.module.css";
 
 const activityArray = [
   {
+    activityName: "Technology",
     activityPic: "",
-    name: "Sasin Business Case",
-    role: "Developer",
-    status: "Team owner",
   },
   {
+    activityName: "Buisness",
     activityPic: "",
-    name: "CUCONNEX",
-    role: "Project Manager",
-    status: "Team owner",
+  },
+  {
+    activityName: "Law",
+    activityPic: "",
+  },
+  {
+    activityName: "Digital Margeting",
+    activityPic: "",
+  },
+  {
+    activityName: "CSR",
+    activityPic: "",
+  },
+  {
+    activityName: "Engergy",
+    activityPic: "",
   },
 ];
 
 const ActivityLists: React.FC = () => {
   return (
-    <div data-test="education-lists">
-      <div className={classes.heading}>Current Activities</div>
+    <div data-test="activity-lists">
       {activityArray.map((activity, index) => {
         return <ActivityList key={index} activityBox={activity} />;
       })}

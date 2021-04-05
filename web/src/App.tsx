@@ -12,15 +12,13 @@ import {
   RecruitMemberPage,
   TestPage,
   SuccessPage,
-  MyTeamPage,
-  ProfilePage,
 } from "@pages/index";
 
 import LandingPage from "@pages/LandingPage/LandingPage";
 import classes from "*.module.css";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<any>();
   // const [numUseEffect, setNumUseEffect] = useState<number>(0);
 
@@ -83,8 +81,6 @@ const App: React.FC = () => {
             <Route path="/recruitmembers" exact component={RecruitMemberPage} />
             <Route path="/success" exact component={SuccessPage} />
             <Route path="/landing" exact component={LandingPage} />
-            <Route path="/myteam" exact component={MyTeamPage} />
-            <Route path="/profile" exact component={ProfilePage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>
