@@ -10,7 +10,7 @@ const Subtitle: React.FC<Props> = (props) => {
   let cssArray = null;
   switch (props.color) {
     case "pink":
-      cssArray = [classes.subtitle];
+      cssArray = [classes.subtitlePagePink];
       break;
     case "black":
       cssArray = [classes.subtitlePageBlack];
