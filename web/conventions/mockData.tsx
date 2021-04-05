@@ -1,5 +1,6 @@
+//always use real data model from models folder
 import {User, SomeValueEnum} from "./Models";
-//always create model for mock data!!
+
 const mockUsers: User[] = [
   {
     id: "123456",
