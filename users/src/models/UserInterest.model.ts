@@ -22,29 +22,33 @@ class UserInterest extends Model<UserInterestAttrs, UserInterestCreationAttrs>
   implements UserInterestAttrs {
   public interest!: string;
   public userId!: string;
+
+  /**
+   *  Automatically migrate schema, to keep your schema up to date.
+   * @param sequelize 
+   */
+  public static autoMigrate(sequelize: Sequelize) {
+    UserInterest.init<UserInterest>(
+      {
+        interest: {
+          type: DataTypes.ENUM,
+          values: desc,
+          primaryKey: true
+        },
+        userId: {
+          type: DataTypes.STRING(10),
+          primaryKey: true
+        }
+      },
+      {
+        tableName: TableName.userInterest,
+        sequelize,
+        timestamps: false
+      }
+    );
+  }
 }
 
-const initUserInterest = (sequelize: Sequelize) => {
-  UserInterest.init<UserInterest>(
-    {
-      interest: {
-        type: DataTypes.ENUM,
-        values: desc,
-        primaryKey: true
-      },
-      userId: {
-        type: DataTypes.STRING(10),
-        primaryKey: true
-      }
-    },
-    {
-      tableName: TableName.userInterest,
-      sequelize,
-      timestamps: false
-    }
-  );
 
-  return UserInterest;
-};
 
-export { UserInterest, initUserInterest };
+export { UserInterest };

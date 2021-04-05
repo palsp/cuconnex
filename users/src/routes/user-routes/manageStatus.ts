@@ -1,10 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import { requireUser } from '../../middlewares/requireUser';
-import { Member } from '../../models/member.model';
 
-import { validateRequest, TeamStatus, requireAuth, BadRequestError } from '@cuconnex/common';
-import { Team } from '../../models/team.model';
+import { validateRequest, TeamStatus, BadRequestError } from '@cuconnex/common';
+import { Team, Member } from '../../models';
 
 const router = express.Router();
 

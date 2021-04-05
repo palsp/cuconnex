@@ -1,8 +1,6 @@
 import { InterestDescription, Description } from '@cuconnex/common'
 import { Category } from './category.model'
 
-import { Interest } from './interest.model'
-
 /**
  *  startInterest create interests for the first time
  */

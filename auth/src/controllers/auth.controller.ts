@@ -9,10 +9,11 @@ interface UserPayload {
     id: string,
 }
 
+//Finds if user with email exists, if yes throws error 
 export const signUp = async (req: Request, res: Response) => {
     const { id, email, password } = req.body
 
-    const existingUser = await User.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { email } }); //This works too because email is unique
 
     if (existingUser) throw new BadRequestError('User existed');
 
@@ -28,7 +29,7 @@ export const signUp = async (req: Request, res: Response) => {
 
     }
 
-    const userJwt = jwt.sign(userPayload, process.env.JWT_KEY!);
+    const userJwt = jwt.sign(userPayload, process.env.JWT_KEY!); //Needs exclamation mark because typescript doesn't know if we already have a key
 
     req.session = {
         jwt: userJwt

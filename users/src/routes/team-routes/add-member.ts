@@ -1,9 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import { requireUser } from '../../middlewares/requireUser';
-import { Member } from '../../models/member.model';
-import { Team } from '../../models/team.model';
-import { User } from '../../models/user.model';
+import { User, Team, Member } from '../../models';
 
 import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
 
@@ -64,6 +62,7 @@ router.post(
 
     const { teamName, newMemberId } = req.body;
 
+    //Find if there is a user in the database with the id we want to invite, and if their exists a team to add.
     const receiver = await User.findOne({ where: { id: newMemberId } });
     const team = await Team.findOne({ where: { name: teamName } });
 
