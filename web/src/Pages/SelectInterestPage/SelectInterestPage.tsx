@@ -23,13 +23,13 @@ interface Props {
   };
 }
 
-// interface InterestListsArray {
-//   Technology: string[];
-//   Business: string[];
-//   Design: string[];
-// }
+interface InterestListsArray {
+  Technology: string[];
+  Business: string[];
+  Design: string[];
+}
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
-  const [interestArray, setInterestArray] = useState<any>({
+  const [interestArray, setInterestArray] = useState<InterestListsArray>({
     Technology: [],
     Business: [],
     Design: [],
