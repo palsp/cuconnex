@@ -17,7 +17,9 @@ import {
 } from "@pages/index";
 
 import LandingPage from "@pages/LandingPage/LandingPage";
-import classes from "*.module.css";
+
+import SelectEventPage from "@pages/SelectEventPage/SelectEventPage";
+import SelectTeamPage from "@pages/SelectTeamPage/SelectTeamPage";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
@@ -85,6 +87,8 @@ const App: React.FC = () => {
             <Route path="/landing" exact component={LandingPage} />
             <Route path="/myteam" exact component={MyTeamPage} />
             <Route path="/profile" exact component={ProfilePage} />
+            <Route path="/selectevent" exact component={SelectEventPage} />
+            <Route path="/selectteam" exact component={SelectTeamPage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>

@@ -1,32 +1,93 @@
-.buttonmainDiv {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+
+@media only screen and (max-width: 375px) {
+  /* iPhone X */
+  @media only screen and (width: 375px) and (height: 812px) {
+    .buttonmainDiv {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-top:40%;
+    }
+    .findteamDiv {
+      margin-left: 4%;
+      size: 100%;
+    }
+    .recruitmemberDiv {
+      size: 100%;
+      margin-right: 4%;
+    }
+    .mainDiv {
+      display: flex;
+      flex-direction: column;
+    }
+    .subtitleDiv {
+      width: 200px;
+      height: 19px;
+      text-align: left;
+    }
+    .headingDiv {
+      width: 200px;
+      text-align: left;
+    }
+    .upperpartDiv {
+      display: flex;
+      flex-direction: row;
+      margin:auto;
+    }
+    .subupperpartDiv {
+      display: flex;
+      flex-direction: column;
+    }
+    .profileDiv{
+      margin-right:4%;
+    }
+  }
 }
-.findteamDiv {
-  margin-top: 40%;
-  margin-right: 4%;
-  size: 100%;
+@media only screen and (min-width: 414px) {
+  .buttonmainDiv {
+    display: flex;
+    flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    margin-top:5%;
+  }
+  .findteamDiv {
+    margin-left: 4%;
+    size: 100%;
+    zoom:150%;
+  }
+  .recruitmemberDiv {
+    size: 100%;
+    zoom:150%;
+    margin-right: 4%;
+  }
+  .mainDiv {
+    display: flex;
+    flex-direction: column;
+  }
+  .subtitleDiv {
+    width: 100vw;
+    height: 19px;
+    text-align: left;
+  }
+  .headingDiv {
+    width: 100vw;
+    text-align: left;
+  }
+  .upperpartDiv {
+    display: flex;
+    flex-direction: row;
+    margin-left:20vw;
+    zoom:150%;
+  }
+  .subupperpartDiv {
+    display: flex;
+    flex-direction: column;
+  }
+  .profileDiv{
+    margin-right:4%;
+    margin-top:1%;
+  }
 }
-.recruitmemberDiv {
-  margin-top: 40%;
-  margin-left: 4%;
-  size: 100%;
-}
-.mainDiv {
-  display: flex;
-  flex-direction: column;
-}
-.subtitleDiv {
-  width: 200px;
-  height: 15px;
-  text-align: left;
-  margin-left: 4%;
-}
-.headingDiv {
-  width: 200px;
-  height: 15px;
-  text-align: left;
-  margin-left: 4%;
-}
+

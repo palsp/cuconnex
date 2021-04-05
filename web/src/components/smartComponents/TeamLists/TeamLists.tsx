@@ -1,18 +1,61 @@
-import React from "react";
-import TeamList from "@smartComponents/TeamLists/TeamList/TeamList";
 import classes from "./TeamLists.module.css";
-
-const teamArray = [
-  { name: "Suki Tee Noi", event: "CUCONNEX Project", status: "Recruiting" },
-  { name: "Nature", event: "Park Sa Mart", status: "Recruiting" },
-  { name: "BMP", event: "Smart Toilet", status: "" },
+import React from "react";
+import GeneralLists from "@smartComponents/GeneralLists/GeneralLists";
+const eventArray = [
+  {
+    name: "ISE Hackathon",
+    compatibility: "Very compatible with you!",
+    projectname: "CU CONNEX Project",
+    status: "We are looking for",
+    category: {
+      technology: true,
+      business: true,
+      design: true,
+    },
+  },
+  {
+    name: "ISE Hackathon",
+    compatibility: "Very compatible with you!",
+    projectname: "CU CONNEX Project",
+    status: "We are looking for",
+    category: {
+      technology: true,
+      business: true,
+      design: true,
+    },
+  },
+  {
+    name: "ISE Hackathon",
+    compatibility: "Not so compatible!",
+    projectname: "CU CONNEX Project",
+    status: "We are looking for",
+    category: {
+      technology: true,
+      business: true,
+      design: true,
+    },
+  },
+  {
+    name: "ISE Hackathon",
+    compatibility: "Compatible with you!",
+    projectname: "CU CONNEX Project",
+    status: "We are looking for",
+    category: {
+      technology: true,
+      business: true,
+      design: true,
+    },
+  },
 ];
-
 const TeamLists: React.FC = () => {
   return (
-    <div className={classes.container} data-test="teamLists">
-      {teamArray.map((team, index) => {
-        return <TeamList key={index} team={team} />;
+    <div className={classes.mainDiv}>
+      {eventArray.map((sampleteam, index) => {
+        return (
+          <div className={classes.listDiv}>
+            <GeneralLists key={index} team={sampleteam} />
+          </div>
+        );
       })}
     </div>
   );

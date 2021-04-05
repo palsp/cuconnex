@@ -1,3 +1,9 @@
-.teamLists {
-  width: 100%;
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+  width: 375px;
+  height: 128px;
+}
+.listDiv {
+  border-bottom: 0.5px solid grey;
 }

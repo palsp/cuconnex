@@ -13,7 +13,7 @@ import {
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 
-import { TeamLists } from "@smartComponents/index";
+import { MyTeamLists } from "@smartComponents/index";
 
 import classes from "./MyTeamPage.module.css";
 
@@ -64,7 +64,7 @@ const MyTeamPage: React.FC<Props> = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <TeamLists data-test="myteam-page-team-lists" />
+          <MyTeamLists data-test="myteam-page-team-lists" />
         </div>
       </div>
     );
@@ -96,7 +96,7 @@ const MyTeamPage: React.FC<Props> = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <TeamLists data-test="myteam-page-team-lists" />
+          <MyTeamLists data-test="myteam-page-team-lists" />
         </div>
       </div>
     );
