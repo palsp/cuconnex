@@ -38,7 +38,6 @@ const InterestList: React.FC<Props> = (props) => {
   // if (clicked) {
   //   imgCSS.push(classes["isClicked"]);
   // }
-
   const btnCSS = [classes.interest];
   if (clicked) {
     btnCSS.push(classes["isClicked"]);
@@ -91,3 +90,37 @@ const InterestList: React.FC<Props> = (props) => {
 };
 
 export default InterestList;
+
+/*
+
+if (props.value === "Ads") {
+    icon = <Ads />;
+  } else if (props.value === "Web Builder") {
+    icon = <Blockchain />;
+  } else if (props.value == "Chatbot") {
+    icon = <Chatbot />;
+  } else if (props.value === "Coding") {
+    icon = <Coding />;
+  } else if (props.value == "FinTech") {
+    icon = <FinTech />;
+  } else if (props.value == "Graphic") {
+    icon = <Graphic />;
+  } else if (props.value === "Fashion") {
+    icon = <Fashion />;
+  } else if (props.value == "Marketing") {
+    icon = <Marketing />;
+  } else if (props.value == "Business Case") {
+    icon = <Case />;
+  } else if (props.value === "Startup") {
+    icon = <Startup />;
+  } else if (props.value == "ECommerce") {
+    icon = <Ecommerce />;
+  } else if (props.value == "UXUI") {
+    icon = <UXUI />;
+  } else if (props.value == "Finance") {
+    icon = <Finance />;
+  } else {
+    icon = <Blockchain />;
+  }
+
+*/
