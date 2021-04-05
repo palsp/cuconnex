@@ -23,12 +23,12 @@
   border-bottom: 0.1rem solid rgb(163, 163, 187);
 }
 
-
 .divSaveButton {
-  margin: 20%;
+  margin: 10%;
 }
 
-@media only screen and (max-width: 414px) {                       /* mobile */
+@media only screen and (max-width: 414px) {
+  /* mobile */
   .footerNavigation {
     display: flex;
     justify-content: space-around;
@@ -42,7 +42,8 @@
   }
 }
 
-@media only screen and (min-width: 415px) {                       /* tablet */
+@media only screen and (min-width: 415px) {
+  /* tablet */
   .footerNavigation {
     display: flex;
     justify-content: space-around;
@@ -55,7 +56,6 @@
     display: flex;
     align-items: center;
   }
-
   .subtitleDiv {
     margin: -1vh 0 0 2vw;
   }

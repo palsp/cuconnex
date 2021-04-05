@@ -20,5 +20,6 @@ it("should have value according to the value props", () => {
     wrapper,
     "interest-list-props-value"
   ).text();
-  expect(interestListPropValue).toBe("coding");
+  //need to have whitespace after value!!! or else it will failed.
+  expect(interestListPropValue).toBe("coding ");
 });

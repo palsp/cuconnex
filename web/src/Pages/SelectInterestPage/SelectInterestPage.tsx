@@ -35,6 +35,8 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Design: [],
   });
   let name = "";
+  let saveButton = null;
+
   const selectTechnologyInterestHandler = (e: string) => {
     let positionOfE = interestArray.Technology.indexOf(e);
     if (positionOfE === -1) {
@@ -97,23 +99,23 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("SelectInterestPage Error setting users data", e);
     }
   };
-  // const setEmptyInterest = async () => {
-  //   if (props.location.state) {
-  //     name = props.location.state.name;
-  //   }
-  //   let data = {
-  //     name: name,
-  //     interest: [],
-  //   };
-  //   console.log("Empty Interest POST /api/users", data);
+  const setEmptyInterest = async () => {
+    if (props.location.state) {
+      name = props.location.state.name;
+    }
+    let data = {
+      name: name,
+      interest: { Technology: [], Business: [], Design: [] },
+    };
+    console.log("Empty Interest POST /api/users", data);
 
-  //   try {
-  //     const result = await axios.post("/api/users/", data);
-  //     console.log("POST Empty interests to /api/users is successful", result);
-  //   } catch (e) {
-  //     console.log("SelectInterestPage Error setting empty interest", e);
-  //   }
-  // };
+    try {
+      const result = await axios.post("/api/users/", data);
+      console.log("POST Empty interests to /api/users is successful", result);
+    } catch (e) {
+      console.log("SelectInterestPage Error setting empty interest", e);
+    }
+  };
   useEffect(() => {
     console.log("Items in interestArray", interestArray);
   }, [interestArray]);
@@ -123,8 +125,12 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       props.location.state
     );
   }, []);
-  let saveButton = null;
-  if (interestArray.length !== 0 && props.location.state) {
+  if (
+    (interestArray.Technology.length !== 0 ||
+      interestArray.Business.length !== 0 ||
+      interestArray.Design.length !== 0) &&
+    props.location.state
+  ) {
     saveButton = (
       <Link
         to={{
@@ -189,7 +195,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
               </div>
             </Link>
             <DotMorePage data-test="dot-icon" amount={3} />
-            <div onClick={setUserData}>
+            <div onClick={setEmptyInterest}>
               <Link to="/success">
                 <div className={classes.footerIcon}>
                   <Heading size="small" value="Skip" />

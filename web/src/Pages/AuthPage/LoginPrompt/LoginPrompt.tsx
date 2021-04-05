@@ -49,7 +49,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
             "IsAuthenticated in loginPrompt before redirect",
             isAuthenticated
           )}
-          <Redirect to="/test" />
+          <Redirect to="/landing" />
         </div>
       ) : (
         <Formik
@@ -93,7 +93,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
                 <InputField label="Password" name="password" type="password" />
               </div>
               <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-              <div className={classes.Button}>
+              <div className={classes.LoginButton}>
                 <Button
                   disabled={isSubmitting}
                   type="submit"

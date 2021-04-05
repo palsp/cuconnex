@@ -138,6 +138,8 @@ const PersonalInfoPage: React.FC = () => {
                       </div>
                       <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
                       <div className={classes.footerNavigation}>
+                        {/*  This div is for centering footer navigation*/}
+                        <div style={{ width: "80px" }}></div>
                         <DotMorePage
                           data-test="personal-info-dotIcon"
                           amount={2}

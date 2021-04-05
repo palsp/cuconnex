@@ -7,6 +7,7 @@ import {
   Background,
   Button,
   Subtitle,
+  Logo,
   Heading,
 } from "@dumbComponents/UI/index";
 
@@ -20,7 +21,7 @@ const SuccessPage: React.FC = () => {
           <Background data-test="auth-page-background">
             <div className={classes.contentContainer}>
               <div className={classes.logoDiv}>
-                <AppLogo data-test="auth-page-logo" />
+                <Logo />
               </div>
               <div
                 className={classes.circle_overlay}
@@ -29,15 +30,18 @@ const SuccessPage: React.FC = () => {
               <div className={classes.divHeader}>
                 <Heading
                   data-test="success-page-header"
-                  value="Welcome Suki!"
-                />
+                  value="Welcome Suki!" />
                 <Subtitle
                   data-test="success-page-subtitle"
-                  value="Your sign up is successful"
-                ></Subtitle>
-                <Check></Check>
+                  value="Your sign up is successful" />
               </div>
-              <Link to="/test">
+
+              <div className={classes.check}>
+                  <Check></Check>
+                </div>
+         
+
+              <Link to="/landing">
                 <div className={classes.button}>
                   <Button
                     data-test="success-page-button"

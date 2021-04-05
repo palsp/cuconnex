@@ -15,8 +15,11 @@ import {
 } from "@pages/index";
 
 import LandingPage from "@pages/LandingPage/LandingPage";
+
 import SelectEventPage from "@pages/SelectEventPage/SelectEventPage";
 import SelectTeamPage from "@pages/SelectTeamPage/SelectTeamPage";
+
+
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
@@ -111,6 +114,13 @@ const App: React.FC = () => {
       {routes}
       <button
         onClick={() => {
+          setIsAuthenticated(true);
+        }}
+      >
+        LOG IN
+      </button>
+      <button
+        onClick={() => {
           console.log("show state", isAuthenticated);
         }}
       >
@@ -137,7 +147,6 @@ const App: React.FC = () => {
       >
         LOGOUT
       </button>
-
       {/* {numUseEffect} */}
     </div>
   );

@@ -19,6 +19,7 @@ const LandingPage: React.FC<Props> = () => {
   let LandingPrompt = null;
   if (!clickHamburger) {
     LandingPrompt = (
+
         <div className={classes.flexDiv}>
             <div className={classes.headerDiv}>
               <div className={classes.searchDiv}>
@@ -40,6 +41,7 @@ const LandingPage: React.FC<Props> = () => {
               <LandingHero />
             </div>
           </div>
+
     );
   } else {
     LandingPrompt = (
@@ -56,10 +58,12 @@ const LandingPage: React.FC<Props> = () => {
   return (
     <div className={classes.main}>
       <div className={classes.container}>
+
       <div className={classes.background}>
         <Background>
           <div>{LandingPrompt}</div>
         </Background>
+
       </div>
       </div>
     </div>
