@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "@src/api/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -12,8 +11,10 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 
-import { AuthenticatedContext } from "../../../AuthenticatedContext";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import { ArrowLeft } from "@icons/index";
+import { userSignupAPI } from "@src/api/";
+import { IUserSignup } from "@src/models";
 import classes from "../AuthPage.module.css";
 
 interface Props {
@@ -46,6 +47,21 @@ const SignupPrompt: React.FC<Props> = (props) => {
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticatedContext
   );
+
+  const signupHandler = async (userData: IUserSignup) => {
+    try {
+      const resultSignup = await userSignupAPI(userData);
+      console.log("Successfully sent a POST request to signup", resultSignup);
+      setIsAuthenticated(true);
+      setRedirect(true);
+      // const resultSignup = await axios.post("/api/auth/signup", {
+
+      // });
+    } catch (e) {
+      setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
+      console.log("ERRORS occured while POST /api/auth/signup", e);
+    }
+  };
   return (
     <>
       <div className={classes.divHeader}>
@@ -75,26 +91,16 @@ const SignupPrompt: React.FC<Props> = (props) => {
             password: "",
             confirmPassword: "",
           }}
-          onSubmit={async (data, { setSubmitting, resetForm }) => {
+          onSubmit={(data, { setSubmitting, resetForm }) => {
+            const userSignupData = {
+              email: data.email,
+              id: data.id,
+              password: data.password,
+            };
+            signupHandler(userSignupData);
             console.log("POST /api/auth/signup", data);
             setSubmitting(true);
             resetForm();
-            try {
-              const resultSignup = await axios.post("/api/auth/signup", {
-                email: data.email,
-                id: data.id,
-                password: data.password,
-              });
-              console.log(
-                "Successfully sent a POST request to signup",
-                resultSignup
-              );
-              setIsAuthenticated(true);
-              setRedirect(true);
-            } catch (e) {
-              setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
-              console.log("ERRORS occured while POST /api/auth/signup", e);
-            }
           }}
           validationSchema={validationSchema}
         >

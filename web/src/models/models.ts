@@ -1,24 +1,24 @@
-// Auth Service
+// Auth Services
 
-export interface BodyPOSTSignup {
+export interface IUserSignup {
   email: string;
   password: string;
   id: string;
 }
 
-export interface ResultPOSTSignup {
+export interface IResultSigninSignup {
   email: string;
   id: string;
 }
 
-export interface PostSignin {
+export interface IUserSignin {
   email: string;
   password: string;
 }
 
-// User Service
+// User Services
 
-export interface FetchUserData {
+export interface IFetchUserData {
   id: string;
   name: string;
   interests: {
@@ -29,7 +29,7 @@ export interface FetchUserData {
   faculty: string;
 }
 
-export interface CreateUserData {
+export interface ICreateUserData {
   name: string;
   interests: {
     Technology: string[];

@@ -1,16 +1,33 @@
 import { AxiosResponse } from "axios";
 import axios from "@src/api/axiosInstance/axiosInstance";
-import { FetchUserData } from "@src/models/index";
+import {
+  ICreateUserData,
+  IFetchUserData,
+  IUserSignin,
+  IUserSignup,
+  IResultSigninSignup,
+} from "@src/models";
 
-const fetchUserData = async (): Promise<AxiosResponse<FetchUserData>> => {
-  const userData: AxiosResponse<FetchUserData> = await axios.get<FetchUserData>(
+//Auth Services
+const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
+  const userData: AxiosResponse<IFetchUserData> = await axios.get<IFetchUserData>(
     "/api/users"
   );
 
   return userData;
 };
 
-const userLogout = async (): Promise<void> => {
+const userSignupAPI = async (
+  signupUserData: IUserSignup
+): Promise<AxiosResponse<IResultSigninSignup>> => {
+  const userSignupData: AxiosResponse<IResultSigninSignup> = await axios.post<IUserSignup>(
+    "/api/users",
+    signupUserData
+  );
+  return userSignupData;
+};
+
+const userLogoutAPI = async (): Promise<void> => {
   await axios.post("/api/auth/signout");
 };
-export { fetchUserData, userLogout };
+export { fetchUserDataAPI, userLogoutAPI, userSignupAPI };

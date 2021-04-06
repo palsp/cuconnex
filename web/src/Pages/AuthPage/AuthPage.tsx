@@ -13,7 +13,7 @@ import {
 } from "@dumbComponents/UI/index";
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
 
-import { fetchUserData } from "@src/api/";
+import { fetchUserDataAPI } from "@src/api/";
 
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
@@ -27,7 +27,7 @@ const AuthPage: React.FC = () => {
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const fetchDataHandler = async () => {
     try {
-      const userData = await fetchUserData();
+      const userData = await fetchUserDataAPI();
       console.log("SUCCESS fetchDataHandler", userData);
       setIsAuthenticated(true);
       setRedirect(true);

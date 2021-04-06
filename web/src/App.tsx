@@ -18,7 +18,7 @@ import {
   SelectTeamPage,
 } from "@pages/index";
 
-import { fetchUserData, userLogout } from "@src/api/";
+import { fetchUserDataAPI, userLogoutAPI } from "@src/api/";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   const fetchDataHandler = async () => {
     try {
-      const userData = await fetchUserData();
+      const userData = await fetchUserDataAPI();
       setIsAuthenticated(true);
       console.log("SUCCESS fetchDataHandler", userData);
     } catch (e) {
@@ -35,7 +35,7 @@ const App: React.FC = () => {
   };
   const logoutHandler = async () => {
     try {
-      await userLogout();
+      await userLogoutAPI();
       setIsAuthenticated(false);
       setRedirect(<Redirect to="/" />);
     } catch (e) {
