@@ -35,23 +35,27 @@ const bodyChecker = [
 ];
 
 // create user for first time login
-router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'), requireFile, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'), async (req: Request, res: Response, next: NextFunction) => {
   const { interests, name, faculty } = req.body;
+  console.log(req.body);
   const file = req.file;
-
+  
 
   // // Make sure that user does not exist
   let user = await User.findOne({ where: { id: req.currentUser!.id } });
   if (user) {
     throw new BadRequestError('User already existed');
   }
-
+  
 
   let createsuccess = false;
   // create users 
 
   try {
-    user = await User.create({ id: req.currentUser!.id, name, faculty: faculty || "" });
+    if (file) {
+      user = await User.create({ id: req.currentUser!.id, name, faculty: faculty || "", image: file!.path })
+    }
+    user = await User.create({ id: req.currentUser!.id, name, faculty: faculty || "", image: '' });
 
     for (let category in interests) {
       // 
@@ -71,7 +75,7 @@ router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'),
     await user.destroy();
     throw new BadRequestError('Create User Failed');
   }
-  res.status(201).send({ id: user!.id, interests, file: file.originalname });
+  res.status(201).send({ id: user!.id, interests });
 
 });
 

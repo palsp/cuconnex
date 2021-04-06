@@ -7,6 +7,7 @@ describe('The /api/upload', () => {
     it('should return 400 if there is no file uploaded', async () => {
         await request(app)
             .post('/api/upload')
+            .set('Cookie', global.signin())
             .send({ username: 'test' })
             .expect(400)
             .then(response => {
@@ -16,6 +17,7 @@ describe('The /api/upload', () => {
     it('should return 400 if the file uploaded is of the wrong type', async () => {
         await request(app)
             .post('/api/upload')
+            .set('Cookie', global.signin())
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg.zip')
             .expect(400)
             .then(response => {
@@ -27,9 +29,23 @@ describe('The /api/upload', () => {
     it('should return 200 if there is a valid file uploaded', async () => {
         await request(app)
             .post('/api/upload')
+            .set('Cookie', global.signin())
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
             .field({name: 'Anon'})
             .expect(200)
             .then(res => expect(res.body).toEqual("You've successfully uploaded the file: testImage.jpg It is now stored as Unknown_profile_pic.jpeg"));
     })
-})
+});
+
+describe('The /api/users endpoint with files', () => {
+    it('should return 201 without interests', async () => {
+        await request(app)
+            .post('/api/users')
+            .set('Cookie', global.signin())
+            .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
+            .field({ name: 'test' })
+            .then(res => {
+             
+            });
+    });
+});

@@ -29,7 +29,12 @@ const fileFilter = (req: any, file: any, cb: any) => {
 
         
     } else {
-        cb(new BadRequestError("Image uploaded is not of type jpg/jpeg or png"),false);
+        if(max_size > 1000000000) {
+            cb(new BadRequestError("Max file size exceeded!!!"), false);
+        } else {
+            cb(new BadRequestError("Image uploaded is not of type jpg/jpeg or png"), false);
+        }
+        
     }
 }
 
