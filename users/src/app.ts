@@ -3,7 +3,7 @@ require('express-async-errors');
 import session from 'cookie-session';
 import { json } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
-
+// import cors from 'cors';
 import { fetchUser } from './middlewares';
 import * as router from './routes';
 import { upload } from './config/multer.config';
@@ -15,6 +15,7 @@ const app = express();
 app.set('trust proxy', true);
 
 app.use(json());
+// app.use(cors());
 
 app.use(
   session({
@@ -23,10 +24,10 @@ app.use(
     // httpOnly : true,
   })
 );
-
+/*TODO: uncomment these three lines after development */
 // app.use(currentUser);
 // app.use(requireAuth);
-app.use(fetchUser);
+//app.use(fetchUser);
 
 // user handler
 app.use(router.getUserRouter);
