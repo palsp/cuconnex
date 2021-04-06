@@ -7,6 +7,7 @@ describe('The /api/upload', () => {
     it('should return 400 if there is no file uploaded', async () => {
         await request(app)
             .post('/api/upload')
+            .set('Cookie', global.signin())
             .send({ username: 'test' })
             .expect(400)
             .then(response => {
@@ -42,9 +43,6 @@ describe('The /api/users endpoint with files', () => {
             .post('/api/users')
             .set('Cookie', global.signin())
             .field({
-                interests: {
-                    Technology: [Technology.Coding]
-                },
                 name: 'test' })
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
             .then(res => {
