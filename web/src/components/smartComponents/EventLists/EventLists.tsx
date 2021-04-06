@@ -41,7 +41,7 @@ interface Props {
   };
 }
 const EventLists: React.FC<Props> = (props) => {
-  console.log(props.event?.name)
+  console.log(props.event?.name);
   let mapped = (
     <div className={classes.mainDiv}>
       {eventArray.map((sampleevent, index) => {
@@ -52,7 +52,7 @@ const EventLists: React.FC<Props> = (props) => {
                 pathname: "/selectteam",
                 state: {
                   event: {
-                    name: props.event?.name,
+                    name: eventArray[0].name,
                     description: props.event?.description,
                     status: props.event?.status,
                   },
@@ -60,8 +60,7 @@ const EventLists: React.FC<Props> = (props) => {
               }}
             >
               <div className={classes.listDiv}>
-                <GeneralLists key={index} event={sampleevent}>
-                </GeneralLists>
+                <GeneralLists key={index} event={sampleevent}></GeneralLists>
               </div>
             </Link>
           </div>
