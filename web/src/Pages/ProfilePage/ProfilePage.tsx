@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import {
   AppLogo,
@@ -9,15 +9,11 @@ import {
   Subtitle,
   Heading,
   ProfilePic,
-  RecruitSign,
-  PicWithText,
-  CoverPic,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
 
 import classes from "./ProfilePage.module.css";
-import { Redirect } from "react-router";
 import {
   ActivityLists,
   Biography,
@@ -41,7 +37,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEdit(false);
   };
 
-  let isMyProfile = false; // Is it my profile ?
+  let isMyProfile = true; // Is it my profile ?
 
   let profilePrompt = null;
 
@@ -88,8 +84,18 @@ const ProfilePage: React.FC<Props> = (props) => {
         <div className={classes.interest}>
           <div className={classes.interestHeader}>
             <div className={classes.heading}>Interests</div>
+
             <div className={classes.addIcon}>
-              {isMyProfile ? <PlusCircle /> : <div />}
+              {isMyProfile ? (
+                <Link
+                  data-test="profile-page-edit-interests"
+                  to="/selectinterests"
+                >
+                  <PlusCircle />
+                </Link>
+              ) : (
+                <div />
+              )}
             </div>
           </div>
           <div className={classes.interestLists}>

@@ -21,6 +21,7 @@ interface Props {
       name: string;
     };
   };
+  page?: string;
 }
 
 // interface InterestListsArray {
@@ -34,6 +35,9 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Business: [],
     Design: [],
   });
+
+  const [fromProfile, setFromProfile] = useState<any>();
+  console.log("FromProfile: ", fromProfile);
   let name = "";
   let saveButton = null;
 
@@ -83,7 +87,17 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
+  const fetchUserData = async () => {
+    console.log("GET /api/users");
+    try {
+      const response = await axios.get("/api/users/123");
+    } catch (e) {
+      console.log("SelectInterestPage Error getting users data", e);
+    }
+  };
+
   const setUserData = async () => {
+    // firstTimeLogin
     if (props.location.state) {
       name = props.location.state.name;
     }
@@ -204,6 +218,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
               </Link>
             </div>
           </div>
+          <Button value="Save" />
         </div>
       </div>
     </>

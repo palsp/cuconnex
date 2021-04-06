@@ -13,7 +13,6 @@ const LandingHero: React.FC = () => {
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
-          <ProfilePic size="small" />
           <Link to="/profile">
             <ProfilePic size="small" />
           </Link>
@@ -32,7 +31,9 @@ const LandingHero: React.FC = () => {
           <RecruitMemberLogo />
         </div>
         <div className={classes.findteamDiv}>
-          <FindteamLogo />
+          <Link to="/recruitmembers">
+            <FindteamLogo />
+          </Link>
         </div>
       </div>
     </div>
