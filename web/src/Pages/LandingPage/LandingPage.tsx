@@ -8,8 +8,7 @@ import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
 
-// interface Props {}
-const LandingPage: React.FC<Props> = () => {
+const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState(false);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);

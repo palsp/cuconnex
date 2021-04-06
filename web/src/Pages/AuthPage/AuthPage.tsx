@@ -19,8 +19,7 @@ import classes from "./AuthPage.module.css";
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import { Redirect } from "react-router";
 
-interface Props {}
-const AuthPage: React.FC<Props> = () => {
+const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState(false);
   const [clickLogin, setClickLogin] = useState(false);
   const [redirect, setRedirect] = useState(false);

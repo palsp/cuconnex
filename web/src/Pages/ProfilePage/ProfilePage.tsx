@@ -40,8 +40,8 @@ const ProfilePage: React.FC<Props> = (props) => {
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
-
-  let isMyProfile = false; // Is it my profile ?
+  // Is it my profile ?
+  const isMyProfile = false;
 
   let profilePrompt = null;
 

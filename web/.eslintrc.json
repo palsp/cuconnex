@@ -14,15 +14,13 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "indent": ["error", 4],
-    "linebreak-style": ["error", "unix"],
+    "react/prop-types": 0,
     "quotes": ["error", "double"],
     "semi": ["error", "always"]
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "plugin:@typescript-eslint/recommended"
   ]
 }
