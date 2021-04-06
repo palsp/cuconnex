@@ -27,10 +27,11 @@ const validateEnvAttr = () => {
 };
 
 const start = async () => {
+  validateEnvAttr();
+
+
   try {
     // check if all required env variable have been declared
-    // validateEnvAttr();
-
 
     // validateEnvAttr();
     await initializeDB();
