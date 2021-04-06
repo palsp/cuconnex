@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
@@ -10,8 +10,6 @@ describe('Get Members', () => {
   it('should return "Team not found! if team is not found', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     const res = await request(app)
@@ -29,13 +27,11 @@ describe('Get Members', () => {
   it('should return 200: member status detail if get member correctly', async () => {
     const user1 = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
 
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
@@ -43,8 +39,6 @@ describe('Get Members', () => {
 
     const user2 = await User.create({
       id: '6131886622',
-      email: 'test2@test.com',
-      password: 'password123',
       name: 'pal2'
     });
     await user2.addInterest(interest!);
