@@ -71,7 +71,7 @@ router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'),
     await user.destroy();
     throw new BadRequestError('Create User Failed');
   }
-  res.status(201).send({ id: user!.id, interests });
+  res.status(201).send({ id: user!.id, interests, file: file.originalname });
 
 });
 
