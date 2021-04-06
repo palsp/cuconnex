@@ -1,8 +1,7 @@
 import classes from "./EventLists.module.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import GeneralLists from "@smartComponents/GeneralLists/GeneralLists";
-import { Heading } from "@dumbComponents/UI";
-import { ArrowLeft } from "@dumbComponents/UI/Icons";
+import { Link } from "react-router-dom";
 const eventArray = [
   {
     name: "ISE Hackathon",
@@ -11,36 +10,67 @@ const eventArray = [
     status: "Open for application",
   },
   {
-    name: "ISE Hackathon2",
+    name: "BASCI Hackathon2",
     description:
       "The biggest Chula's business case competition with more than 100 million baht awards",
     status: "Open for application",
   },
   {
-    name: "ISE Hackathon3",
+    name: "BSAC Hackathon",
     description:
       "The biggest Chula's business case competition with more than 100 million baht awards",
     status: "Closed",
   },
   {
-    name: "ISE Hackathon4",
+    name: "BBA Hackathon",
     description:
       "The biggest Chula's business case competition with more than 100 million baht awards",
     status: "Upcoming",
   },
 ];
-const EventLists: React.FC = () => {
-  return (
+interface Props {
+  event?: {
+    name: string;
+    description: string;
+    status: string;
+  };
+  selectedevent?: {
+    name: string;
+    description: string;
+    status: string;
+  };
+}
+const EventLists: React.FC<Props> = (props) => {
+  console.log(props.event?.name)
+  let mapped = (
     <div className={classes.mainDiv}>
       {eventArray.map((sampleevent, index) => {
         return (
-          <div className={classes.listDiv}>
-            <GeneralLists key={index} event={sampleevent} />
+          <div className={classes.deleteunderlineDiv}>
+            <Link
+              to={{
+                pathname: "/selectteam",
+                state: {
+                  event: {
+                    name: props.event?.name,
+                    description: props.event?.description,
+                    status: props.event?.status,
+                  },
+                },
+              }}
+            >
+              <div className={classes.listDiv}>
+                <GeneralLists key={index} event={sampleevent}>
+                </GeneralLists>
+              </div>
+            </Link>
           </div>
         );
       })}
     </div>
   );
+  console.log(mapped.props);
+  return <div>{mapped}</div>;
 };
 
 export default EventLists;
