@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-import {test_config} from './config/db.config';
+import config from './config/db.config';
 import mysql, { Connection } from 'mysql2/promise';
 import { autoMigrate } from './models';
 
@@ -20,7 +20,7 @@ interface myDB {
 
 const initializeDB = async () => {
   const myDB: myDB = {};
-  const { host, db: database, user, password } = test_config;
+  const { host, db: database, user, password } = config;
 
   myDB.connection = await mysql.createConnection({ host: host, user, password });
 
