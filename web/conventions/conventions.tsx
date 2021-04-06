@@ -1,10 +1,11 @@
-import {AxiosResponse} from "axios";
-import {useEffect} from "react";
-import {getData, setData} from "./Api";
+import { AxiosResponse } from "axios";
+import { useEffect } from "react";
+import { getData, setData } from "./Api";
+import React from "react";
 
 //when using mock data always create a new file call mockData.tsx and store mock data there. Import when necessary
 import mockUsers from "./mockData";
-import {User, WriteResult} from "./Models";
+import { User, WriteResult } from "./Models";
 mockUsers.map((user: User): string => user.name);
 
 interface Props {
@@ -15,14 +16,14 @@ interface MockComponentProps {
   call: () => void;
 }
 const MockComponent: React.FC<MockComponentProps> = (props) => {
-  const {call} = props;
+  const { call } = props;
   return <div></div>;
 };
 
 //When declaring props,
 const Convention: React.FC<Props> = (props) => {
   //declaring props using const and object destructuring
-  const {passedValue} = props;
+  const { passedValue } = props;
   //When declaring variable that depends on only 2 values, for example, a boolean value, in react functional components use:
   const boolean = true;
   const componentA = boolean ? "a" : "b";
@@ -39,7 +40,9 @@ const Convention: React.FC<Props> = (props) => {
     //do something
     addData("micky", "ngub");
   };
-  const someCompThatCallFunctions = <MockComponent call={callHandler}></MockComponent>;
+  const someCompThatCallFunctions = (
+    <MockComponent call={callHandler}></MockComponent>
+  );
 
   //Do not use axios directly in react component!! always create api call functions in API folder and import them.
   const fetchData = async () => {
@@ -48,8 +51,11 @@ const Convention: React.FC<Props> = (props) => {
     //do smth else
   };
 
-  const addData = async (name: string, id: string): Promise<AxiosResponse<WriteResult>> => {
-    const res = await setData({name: name, id: id});
+  const addData = async (
+    name: string,
+    id: string
+  ): Promise<AxiosResponse<WriteResult>> => {
+    const res = await setData({ name: name, id: id });
     return res;
     //do smth else
   };

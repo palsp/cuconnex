@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "@src/axiosInstance/axiosInstance";
+import axios from "@src/api/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -80,13 +80,13 @@ const LoginPrompt: React.FC<Props> = (props) => {
           }}
           validationSchema={validationSchema}
         >
-          {({ values, isSubmitting, errors }) => (
+          {({ isSubmitting }) => (
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
                 <InputField label="Password" name="password" type="password" />
               </div>
-              <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+              {/* <p style={{ width: "300px" }}>{JSON.stringify(values)}</p> */}
               <div className={classes.LoginButton}>
                 <Button
                   disabled={isSubmitting}

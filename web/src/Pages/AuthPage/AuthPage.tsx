@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import { motion } from "framer-motion";
-import axios from "@src/axiosInstance/axiosInstance";
+import { Redirect } from "react-router";
 
 import {
   AppLogo,
@@ -11,35 +11,32 @@ import {
   Subtitle,
   Heading,
 } from "@dumbComponents/UI/index";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
+
+import { fetchUserData } from "@src/api/";
 
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
-import { Redirect } from "react-router";
 
 const AuthPage: React.FC = () => {
-  const [clickSignup, setClickSignup] = useState(false);
-  const [clickLogin, setClickLogin] = useState(false);
-  const [redirect, setRedirect] = useState(false);
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
+  const [clickSignup, setClickSignup] = useState<boolean>(false);
+  const [clickLogin, setClickLogin] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState<boolean>(false);
+  const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const fetchDataHandler = async () => {
+    try {
+      const userData = await fetchUserData();
+      console.log("SUCCESS fetchDataHandler", userData);
+      setIsAuthenticated(true);
+      setRedirect(true);
+    } catch (e) {
+      console.log("fetchDataHandler error", e);
+    }
+  };
   useEffect(() => {
-    console.log("Fetching data GET /api/users");
-    const fetchUserData = async () => {
-      try {
-        const userData = await axios.get("/api/users");
-        console.log("Successfully GET userData", userData);
-        setIsAuthenticated(true);
-        setRedirect(true);
-      } catch (e) {
-        console.log("Errors FETCHING userData", e);
-        console.log("Am I Authen?", isAuthenticated);
-      }
-    };
-    fetchUserData();
+    fetchDataHandler();
   }, []);
 
   const signupButtonClickedHandler = () => {

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "@src/axiosInstance/axiosInstance";
+import axios from "@src/api/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -98,7 +98,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
           }}
           validationSchema={validationSchema}
         >
-          {({ values, isSubmitting, errors }) => (
+          {({ isSubmitting }) => (
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
@@ -122,14 +122,14 @@ const SignupPrompt: React.FC<Props> = (props) => {
                   type="submit"
                 />
               </div>
-              <p style={{ width: "300px" }}>{JSON.stringify(values.email)}</p>
+              {/* <p style={{ width: "300px" }}>{JSON.stringify(values.email)}</p>
               <p style={{ width: "300px" }}>{JSON.stringify(values.id)}</p>
               <p style={{ width: "300px" }}>
                 {JSON.stringify(values.password)}
               </p>
               <p style={{ width: "300px" }}>
                 {JSON.stringify(values.confirmPassword)}
-              </p>
+              </p> */}
             </Form>
           )}
         </Formik>
