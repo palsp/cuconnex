@@ -7,7 +7,6 @@ describe('The /api/upload', () => {
     it('should return 400 if there is no file uploaded', async () => {
         await request(app)
             .post('/api/upload')
-            .set('Cookie', global.signin())
             .send({ username: 'test' })
             .expect(400)
             .then(response => {
@@ -30,10 +29,10 @@ describe('The /api/upload', () => {
         await request(app)
             .post('/api/upload')
             .set('Cookie', global.signin())
+            .field({ name: 'Anon' })
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
-            .field({name: 'Anon'})
             .expect(200)
-            .then(res => expect(res.body).toEqual("You've successfully uploaded the file: testImage.jpg It is now stored as Unknown_profile_pic.jpeg"));
+            .then(res => expect(res.body).toEqual("You've successfully uploaded the file: testImage.jpg It is now stored as Anon_profile_pic.jpeg"));
     })
 });
 
@@ -42,10 +41,14 @@ describe('The /api/users endpoint with files', () => {
         await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
+            .field({
+                interests: {
+                    Technology: [Technology.Coding]
+                },
+                name: 'test' })
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
-            .field({ name: 'test' })
             .then(res => {
-             
+              expect(res.body.errors).toEqual(null);
             });
     });
 });
