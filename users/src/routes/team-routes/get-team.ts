@@ -15,7 +15,7 @@ const bodyChecker = [
 router.get('/api/teams', bodyChecker, validateRequest, async (req: Request, res: Response) => {
   const { name } = req.body;
 
-  const team = await Team.findOne({ where: { name: name } });
+  const team = await Team.findOne({ where: { name } });
 
   if (!team) {
     throw new BadRequestError('Team not found!');

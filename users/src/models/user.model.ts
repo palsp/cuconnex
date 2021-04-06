@@ -9,12 +9,8 @@ import {
   Association,
   Sequelize
 } from 'sequelize';
-import {
-  BadRequestError,
-  FriendStatus,
-  InterestDescription,
-  NotFoundError
-} from '@cuconnex/common';
+import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuconnex/common';
+
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
 import { Interest, InterestCreationAttrs } from './interest.model';
@@ -23,10 +19,10 @@ import { Friend } from './friend.model';
 // All attributes in user model
 interface UserAttrs {
   id: string;
-  email: string;
-  password: string;
   name: string;
-  imagePath: string;
+  // faculty: Faculty;
+  faculty: string;
+  image: string;
   lookingForTeam: boolean;
   interests?: Interest[];
   friends?: User[];
@@ -34,20 +30,22 @@ interface UserAttrs {
 
 interface UserCreationAttrs {
   id: string;
-  email: string;
-  password: string;
   name: string;
+  faculty?: string;
+  image?: string;
+  lookingForTeam?: boolean;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
-  public password!: string;
   public name!: string;
-  public email!: string;
-  public imagePath?: string;
+
+  public faculty?: string;
+  public image?: string;
   public lookingForTeam: boolean = true;
-  public friends?: User[];
+
   public interests?: Interest[];
+  public friends?: User[];
 
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
@@ -56,16 +54,30 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addFriend!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getFriend!: BelongsToManyGetAssociationsMixin<User>;
 
-  // add interest from a given arry to user info
-  public async addInterestFromArray(interests: InterestCreationAttrs[]) {
-    for (let interest of interests) {
-      // find correspondin interest in db
-      const int = await Interest.findOne({ where: { description: interest.description } });
+  // // add interest from a given arry to user info
+  // public async addInterestFromArray(interests: InterestCreationAttrs[]) {
+  //   for (let interest of interests) {
+  //     // find correspondin interest in db
+  //     const int = await Interest.findOne({ where: { description: interest.description } });
 
-      // add association between user and interest
-      if (int) {
-        await this.addInterest(int);
+  //     // add association between user and interest
+  //     if (int) {
+  //       await this.addInterest(int);
+  //     }
+  //   }
+  // }
+
+  public async addInterestFromArray(interests: Description[]) {
+    for (let interest of interests) {
+      try {
+        // find interest in db
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
+
+        await this.addInterest(addedInterest!);
+      } catch (err) {
+        console.log(err);
       }
+
     }
   }
 
@@ -150,24 +162,18 @@ const initUser = (sequelize: Sequelize) => {
   User.init<User>(
     {
       id: {
-        type: DataTypes.STRING(11),
+        type: DataTypes.STRING(10),
         primaryKey: true,
         allowNull: false
-      },
-      password: {
-        type: DataTypes.STRING(12),
-        allowNull: false
-      },
-      email: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        unique: true
       },
       name: {
         type: DataTypes.STRING(255),
         allowNull: false
       },
-      imagePath: {
+      faculty: {
+        type: DataTypes.STRING(255)
+      },
+      image: {
         type: DataTypes.STRING(255)
       },
       lookingForTeam: {

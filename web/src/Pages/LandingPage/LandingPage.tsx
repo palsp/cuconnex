@@ -1,8 +1,6 @@
-import { ProfilePic } from "@dumbComponents/UI";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
 import { ArrowRight, Search } from "@dumbComponents/UI/Icons";
 import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
-import Toggles from "@dumbComponents/UI/Toggles/Toggles";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Background from "../../components/dumbComponents/UI/Background/Background";
