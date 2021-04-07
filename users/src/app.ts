@@ -1,7 +1,7 @@
 import express from 'express';
 require('express-async-errors');
 import session from 'cookie-session';
-import { json } from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 // import cors from 'cors';
 import { fetchUser } from './middlewares';
@@ -15,6 +15,7 @@ const app = express();
 app.set('trust proxy', true);
 
 app.use(json());
+app.use(urlencoded({ extended: true }))
 // app.use(cors());
 
 app.use(
@@ -25,9 +26,9 @@ app.use(
   })
 );
 /*TODO: uncomment these three lines after development */
-app.use(currentUser);
-app.use(requireAuth);
-app.use(fetchUser);
+// app.use(currentUser);
+// app.use(requireAuth);
+// app.use(fetchUser);
 
 // user handler
 app.use(router.getUserRouter);
