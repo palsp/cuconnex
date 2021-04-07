@@ -13,9 +13,9 @@ import {
 
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import { ArrowLeft } from "@icons/index";
-import { userSignupAPI } from "@src/api/";
-import { IUserSignup } from "@src/models";
-import classes from "../AuthPage.module.css";
+import { userSignupAPI } from "@api/index";
+import { IUserSignup } from "@models/index";
+import classes from "@pages/AuthPage/AuthPage.module.css";
 
 interface Props {
   backButtonClickedHandler: () => void;
@@ -101,7 +101,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
           }}
           validationSchema={validationSchema}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, values }) => (
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
@@ -125,14 +125,6 @@ const SignupPrompt: React.FC<Props> = (props) => {
                   type="submit"
                 />
               </div>
-              {/* <p style={{ width: "300px" }}>{JSON.stringify(values.email)}</p>
-              <p style={{ width: "300px" }}>{JSON.stringify(values.id)}</p>
-              <p style={{ width: "300px" }}>
-                {JSON.stringify(values.password)}
-              </p>
-              <p style={{ width: "300px" }}>
-                {JSON.stringify(values.confirmPassword)}
-              </p> */}
             </Form>
           )}
         </Formik>

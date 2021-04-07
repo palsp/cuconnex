@@ -13,7 +13,7 @@ import {
 } from "@dumbComponents/UI/index";
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
 
-import { fetchUserDataAPI } from "@src/api/";
+import { fetchUserDataAPI } from "@api/index";
 
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";

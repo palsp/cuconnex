@@ -10,10 +10,10 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-import { AuthenticatedContext } from "../../../AuthenticatedContext";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import classes from "../AuthPage.module.css";
-import { IUserSignin } from "@src/models";
-import { userSigninAPI, fetchUserDataAPI } from "@src/api/";
+import { IUserSignin } from "@models/index";
+import { userSigninAPI, fetchUserDataAPI } from "@api/index";
 
 interface Props {
   backButtonClickedHandler: () => void;

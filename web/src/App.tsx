@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { AuthenticatedContext } from "./AuthenticatedContext";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import "./App.css";
 import {
   AuthPage,
@@ -18,7 +18,7 @@ import {
   SelectTeamPage,
 } from "@pages/index";
 
-import { fetchUserDataAPI, userLogoutAPI } from "@src/api/";
+import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
