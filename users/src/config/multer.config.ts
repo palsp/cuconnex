@@ -11,7 +11,10 @@ export const storage = multer.diskStorage({
         if(req.body.name){
             fileName = req.body.name + "_profile_pic";
         } else {
-            fileName = "Unknown_profile_pic";
+            if(req.currentUser) {
+                fileName = req.currentUser!.id + "_profile_pic";
+            }
+            
         }
         cb(null, fileName + extension)
     }
