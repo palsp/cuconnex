@@ -19,6 +19,7 @@ import { ArrowRight } from "@icons/index";
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
 import { convertCompilerOptionsFromJson } from "typescript";
+import { IncomingMessage } from "node:http";
 
 const facultyArray = [
   "Allied Health Sciences",
@@ -51,7 +52,7 @@ const validationSchema = yup.object({
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
 
-  const [image, setImage] = useState({ preview: "", raw: "" });
+  const [image, setImage] = useState({ preview: "", raw: "", filename: "" });
 
   const handleUploadedImage = (e: any) => {
     console.log(e.target.files);
@@ -59,7 +60,10 @@ const PersonalInfoPage: React.FC = () => {
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0],
+        filename: e.target.files[0].name,
       });
+      // console.log("type of raw: ", typeof image.raw);
+      // console.log("file name: ", image.filename);
     }
   };
 
@@ -132,6 +136,7 @@ const PersonalInfoPage: React.FC = () => {
                   <input
                     type="file"
                     accept="image/*"
+                    name="myFile"
                     id="upload-button"
                     style={{ display: "none" }}
                     onChange={handleUploadedImage}
@@ -161,6 +166,8 @@ const PersonalInfoPage: React.FC = () => {
                             state: {
                               name: data.displayName,
                               faculty: data.faculty,
+                              profilePic: image.raw,
+                              filename: image.filename,
                             },
                           }}
                         />

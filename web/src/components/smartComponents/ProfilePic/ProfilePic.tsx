@@ -18,7 +18,7 @@ const ProfilePic: React.FC<Props> = (props) => {
   }
 
   if (props.uploadedProfile === true) {
-    console.log("here");
+    // console.log("here");
     console.log("src: ", props.PicUrl);
     profileArray = [classes.profilePic];
   } else {
