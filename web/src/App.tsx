@@ -101,27 +101,9 @@ const App: React.FC = () => {
       >
         Show state
       </button>
-      <button
-        onClick={() => {
-          console.log("show route", routes.props.children);
-        }}
-      >
-        Show route
-      </button>
-      <button
-        onClick={() => {
-          fetchDataHandler();
-        }}
-      >
-        FETCH
-      </button>
-      <button
-        onClick={() => {
-          logoutHandler();
-        }}
-      >
-        LOGOUT
-      </button>
+
+      <button onClick={fetchDataHandler}>FETCH</button>
+      <button onClick={logoutHandler}>LOGOUT</button>
       {/* {numUseEffect} */}
     </div>
   );

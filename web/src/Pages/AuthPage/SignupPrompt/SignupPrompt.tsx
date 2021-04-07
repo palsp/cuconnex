@@ -48,15 +48,12 @@ const SignupPrompt: React.FC<Props> = (props) => {
     AuthenticatedContext
   );
 
-  const signupHandler = async (userData: IUserSignup) => {
+  const signupHandler = async (signupData: IUserSignup) => {
     try {
-      const resultSignup = await userSignupAPI(userData);
+      const resultSignup = await userSignupAPI(signupData);
       console.log("Successfully sent a POST request to signup", resultSignup);
       setIsAuthenticated(true);
       setRedirect(true);
-      // const resultSignup = await axios.post("/api/auth/signup", {
-
-      // });
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
       console.log("ERRORS occured while POST /api/auth/signup", e);
