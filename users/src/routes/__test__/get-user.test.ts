@@ -4,42 +4,33 @@ import { User } from '../../models/user.model';
 import { FriendStatus, Business } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
-
-
 /**
- *  its return user instance and interest instance 
+ *  its return user instance and interest instance
  */
 const setup = async () => {
   const user = await User.create({
     id: '6131778821',
-    name: 'pal'
+    name: 'pal',
   });
 
   const interest = await Interest.findOne({
-    where: { description: Business.BusinessCase }
+    where: { description: Business.BusinessCase },
   });
 
   await user.addInterest(interest!);
 
-  return { user, interest }
+  return { user, interest };
 };
-
 
 describe('get current user', () => {
   it('should return 401 if user is not authenticated', async () => {
-    const { body } = await request(app)
-      .get('/api/users')
-      .send()
-      .expect(401);
+    const { body } = await request(app).get('/api/users').send().expect(401);
 
     expect(body.errors[0].message).toEqual('Not Authorized');
   });
 
   it('should redirect user to add information page if user does not exist', async () => {
-    const { headers } = await request(app)
-      .get('/api/users')
-      .set('Cookie', global.signin())
-      .send();
+    const { headers } = await request(app).get('/api/users').set('Cookie', global.signin()).send();
 
     expect(headers.location).not.toBeNull();
   });
@@ -47,8 +38,7 @@ describe('get current user', () => {
   it.todo('should redirect with specific url');
 
   it('should return user information if user already add information', async () => {
-
-    const { user } = await setup()
+    const { user } = await setup();
 
     const { body: res } = await request(app)
       .get('/api/users')
@@ -61,7 +51,6 @@ describe('get current user', () => {
   });
 
   it('return user must include interests', async () => {
-
     const { user } = await setup();
 
     const { body: res } = await request(app)
@@ -87,7 +76,6 @@ describe('view user profile', () => {
   });
 
   it('should return 404 if profile of the given user is not exist', async () => {
-
     const { user } = await setup();
 
     await request(app)
@@ -112,12 +100,11 @@ describe('view user profile', () => {
   });
 
   it('should return user information with status toBeDefined if they are not friend', async () => {
-
     const { user } = await setup();
 
     const someone = await User.create({
       id: '6131778921',
-      name: 'friend'
+      name: 'friend',
     });
 
     const { body: res } = await request(app)

@@ -34,6 +34,7 @@ func main() {
 	events.EventRegister(v1)
 
 
+	
 
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
 }

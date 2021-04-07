@@ -29,7 +29,7 @@ func TestCreateEvent(t *testing.T) {
 	for _, testData := range RequestTests {
 		bodyData := testData.bodyData
 		req, err := http.NewRequest(testData.method, testData.url, bytes.NewBufferString(bodyData))
-		req.Header.Set("Content-type", "application.json")
+		req.Header.Set("Content-type", "application/json")
 		assert.NoError(t, err, "Should send a request successfully")
 
 		// testData.init(req)

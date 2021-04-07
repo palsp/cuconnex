@@ -22,6 +22,34 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   public description!: Description
 
   /**
+    * Automatically migrate schema, to keep your schema up to date.
+    * @param {Sequelize} sequelize
+    */
+  public static autoMigrate(sequelize: Sequelize) {
+    Interest.init({
+      description: {
+        type: DataTypes.ENUM,
+        values: InterestEnumVal,
+        // unique: true
+        primaryKey: true,
+      },
+      category_id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        references: { model: TableName.category }
+      },
+    },
+      {
+        tableName: TableName.interests,
+        sequelize,
+        timestamps: false
+      }
+    );
+  }
+
+
+
+  /**
    * This function return new array which values 
    * from interests array that exists in category array
    * @param interests 
@@ -50,28 +78,6 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
  */
 
 
-const initInterests = (sequelize: Sequelize) => {
-  Interest.init({
-    description: {
-      type: DataTypes.ENUM,
-      values: InterestEnumVal,
-      // unique: true
-      primaryKey: true,
-    },
-    category_id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      references: { model: TableName.category }
-    },
-  },
-    {
-      tableName: TableName.interests,
-      sequelize,
-      timestamps: false
-    }
-  );
 
-  return Interest;
-};
 
-export { Interest, initInterests };
+export { Interest };
