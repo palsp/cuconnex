@@ -3,7 +3,7 @@ import React from "react";
 import GeneralLists from "@smartComponents/GeneralLists/GeneralLists";
 const eventArray = [
   {
-    name: "ISE Hackathon",
+    name: "Lawtech",
     compatibility: "Very compatible with you!",
     projectname: "CU CONNEX Project",
     status: "We are looking for",
@@ -14,7 +14,7 @@ const eventArray = [
     },
   },
   {
-    name: "ISE Hackathon",
+    name: "Laika",
     compatibility: "Very compatible with you!",
     projectname: "CU CONNEX Project",
     status: "We are looking for",
@@ -25,7 +25,7 @@ const eventArray = [
     },
   },
   {
-    name: "ISE Hackathon",
+    name: "Nature",
     compatibility: "Not so compatible!",
     projectname: "CU CONNEX Project",
     status: "We are looking for",
@@ -36,7 +36,7 @@ const eventArray = [
     },
   },
   {
-    name: "ISE Hackathon",
+    name: "Suki",
     compatibility: "Compatible with you!",
     projectname: "CU CONNEX Project",
     status: "We are looking for",
