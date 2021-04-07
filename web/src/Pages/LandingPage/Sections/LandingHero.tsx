@@ -6,12 +6,17 @@ import RecruitMemberLogo from "../../../components/dumbComponents/UI/Recruitmemb
 import Subtitle from "../../../components/dumbComponents/UI/Subtitle/Subtitle";
 import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
 import { ProfilePic, Username } from "@dumbComponents/UI";
+import { Link } from "react-router-dom";
 
 const LandingHero: React.FC = () => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
-        <div className={classes.profileDiv}><ProfilePic size="small" /></div>
+        <div className={classes.profileDiv}>
+          <Link to="/profile">
+            <ProfilePic size="small" />
+          </Link>
+        </div>
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
             Welcome,

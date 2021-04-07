@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { string } from "yup/lib/locale";
 import classes from "./Tag.module.css";
 const Tag: React.FC = () => {
   const [clickAllTag, setClickAllTag] = useState(true);

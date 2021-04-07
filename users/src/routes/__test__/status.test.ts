@@ -2,21 +2,19 @@ import request from 'supertest';
 import { app } from '../../app';
 import { Member } from '../../models/member.model';
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
 describe('Status Changing Test', () => {
   it('should return 400 if user is not found', async () => {
     const user1 = await User.create({
-      id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
-    // await user1.createInterest({ description: InterestDescription.Business });
+
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
@@ -37,13 +35,11 @@ describe('Status Changing Test', () => {
 
   it('should return 400 if team is not found', async () => {
     const user1 = await User.create({
-      id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
 
     await user1.addInterest(interest!);
@@ -63,32 +59,25 @@ describe('Status Changing Test', () => {
 
   it('should return 400 if the requester is not the team creator', async () => {
     const user1 = await User.create({
-      id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
-
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
     const user2 = await User.create({
-      id: '6131886622',
-      email: 'test2@test.com',
-      password: 'password123',
+      id: '6131778822',
       name: 'pal2'
     });
     await user2.addInterest(interest!);
     await Member.create({ userId: user2.id, teamName: 'Team1', status: TeamStatus.Accept });
 
     const user3 = await User.create({
-      id: '6131886623',
-      email: 'test3@test.com',
-      password: 'password123',
+      id: '6131778823',
       name: 'pal3'
     });
     await user3.addInterest(interest!);
@@ -109,22 +98,18 @@ describe('Status Changing Test', () => {
 
   it('should return 400 if the targetId is not yet pending request.', async () => {
     const user1 = await User.create({
-      id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
     const user3 = await User.create({
-      id: '6131886623',
-      email: 'test3@test.com',
-      password: 'password123',
+      id: '6131778823',
       name: 'pal3'
     });
     await user3.addInterest(interest!);
@@ -146,22 +131,18 @@ describe('Status Changing Test', () => {
 
   it('should return 200 if the creator can change status successfully.', async () => {
     const user1 = await User.create({
-      id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
+      id: '6131778821',
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
     await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
 
     const user3 = await User.create({
-      id: '6131886623',
-      email: 'test3@test.com',
-      password: 'password123',
+      id: '6131778823',
       name: 'pal3'
     });
     await user3.addInterest(interest!);

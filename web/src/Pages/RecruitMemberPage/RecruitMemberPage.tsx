@@ -8,7 +8,7 @@ import { ArrowLeft } from "@icons/index";
 import classes from "./RecruitMemberPage.module.css";
 
 const RecruitMember: React.FC = () => {
-  let RecruitMemberPrompt = (
+  const RecruitMemberPrompt = (
     <>
       <div className={classes.relativeArrow}>
         <Link data-test="recruit-member-page-back-link" to="/Homepage">

@@ -14,7 +14,6 @@ declare global {
 }
 
 export const currentUser = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('currentUser');
   if (!req.session?.jwt) {
     return next();
   }
@@ -22,7 +21,7 @@ export const currentUser = async (req: Request, res: Response, next: NextFunctio
   try {
     const decodedPayload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
     req.currentUser = decodedPayload;
-  } catch (err) {}
+  } catch (err) { }
 
   next();
 };

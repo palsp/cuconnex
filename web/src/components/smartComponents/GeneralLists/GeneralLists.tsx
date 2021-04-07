@@ -108,7 +108,6 @@ const GeneralLists: React.FC<Props> = (props) => {
         <div className={classes.designcategoryDiv}>Design</div>
       </div>
     );
-  } else {
   }
   return (
     <div className={classes.mainDiv}>

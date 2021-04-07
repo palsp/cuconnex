@@ -50,10 +50,14 @@ const eventArray = [
 const TeamLists: React.FC = () => {
   return (
     <div className={classes.mainDiv}>
-        {eventArray.map((sampleteam, index) => {
-          return <div className={classes.listDiv}><GeneralLists key={index} team={sampleteam} /></div>;
-        })}
-      </div>
+      {eventArray.map((sampleteam, index) => {
+        return (
+          <div key={index} className={classes.listDiv}>
+            <GeneralLists team={sampleteam} />
+          </div>
+        );
+      })}
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "@src/axiosInstance/axiosInstance";
+import axios from "@src/api/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -19,13 +19,7 @@ interface Props {
 }
 const validationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
-  password: yup
-    .string()
-    .required("No password provided.")
-    .min(8, "password is too short. Need at least 8 characters")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
-    .matches(/(?=.*[a-z])/, "Password must contain one lower case letter")
-    .matches(/(?=.*[A-Z])/, "Password must contain one UPPER case letter"),
+  password: yup.string().required("No password provided."),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
@@ -86,13 +80,13 @@ const LoginPrompt: React.FC<Props> = (props) => {
           }}
           validationSchema={validationSchema}
         >
-          {({ values, isSubmitting, errors }) => (
+          {({ isSubmitting }) => (
             <Form>
               <InputField label="Email" name="email" type="input" />
               <div className={classes.InputFieldDiv}>
                 <InputField label="Password" name="password" type="password" />
               </div>
-              <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+              {/* <p style={{ width: "300px" }}>{JSON.stringify(values)}</p> */}
               <div className={classes.LoginButton}>
                 <Button
                   disabled={isSubmitting}
