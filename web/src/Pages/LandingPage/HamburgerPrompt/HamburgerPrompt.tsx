@@ -1,12 +1,17 @@
-import classes from "./HamburgerPrompt.module.css";
-import { Heading, Subtitle } from "@dumbComponents/UI";
 import React from "react";
-import { ArrowRight } from "@dumbComponents/UI/Icons";
+import { Link } from "react-router-dom";
+import classes from "./HamburgerPrompt.module.css";
+import { Heading } from "@dumbComponents/UI";
+
 const HamburgerPrompt: React.FC = () => {
   return (
     <div className={classes.main}>
-      <Heading value="My Teams" />
-      <Heading value="My Connections" />
+      <Link style={{ textDecoration: "none" }} to="/myteams">
+        <Heading value="My Teams" />
+      </Link>
+      <Link style={{ textDecoration: "none" }} to="/friendlists">
+        <Heading value="My Connections" />
+      </Link>
       <Heading value="Account Setting" />
     </div>
   );

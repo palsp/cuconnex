@@ -61,10 +61,10 @@ const App: React.FC = () => {
           <Route path="/recruitmembers" exact component={RecruitMemberPage} />
           <Route path="/success" exact component={SuccessPage} />
           <Route path="/landing" exact component={LandingPage} />
-          <Route path="/myteam" exact component={MyTeamPage} />
+          <Route path="/myteams" exact component={MyTeamPage} />
           <Route path="/profile" exact component={ProfilePage} />
-          <Route path="/selectevent" exact component={SelectEventPage} />
-          <Route path="/selectteam" exact component={SelectTeamPage} />
+          <Route path="/selectevents" exact component={SelectEventPage} />
+          <Route path="/selectteams" exact component={SelectTeamPage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>

@@ -1,23 +1,11 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  AppLogo,
-  Logo,
-  Background,
-  Button,
-  Subtitle,
-  Heading,
-  ProfilePic,
-  RecruitSign,
-  PicWithText,
-  CoverPic,
-} from "@dumbComponents/UI/index";
+import { Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
 
 import classes from "./ProfilePage.module.css";
-import { Redirect } from "react-router";
 import {
   ActivityLists,
   Biography,
@@ -26,12 +14,7 @@ import {
   ProfileInfo,
 } from "@smartComponents/index";
 
-interface Props {
-  type: string;
-  selectInterestHandler: (e: string) => any;
-}
-
-const ProfilePage: React.FC<Props> = (props) => {
+const ProfilePage: React.FC = () => {
   const [clickEditProfile, setClickEdit] = useState(false);
 
   const EditButtonClickedHandler = () => {
@@ -41,7 +24,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEdit(false);
   };
   // Is it my profile ?
-  const isMyProfile = false;
+  const isMyProfile = true;
 
   let profilePrompt = null;
 
@@ -85,26 +68,33 @@ const ProfilePage: React.FC<Props> = (props) => {
         <div className={classes.activity}>
           <ActivityLists />
         </div>
+        {/* Interests should be fetched for it to dynamically render */}
         <div className={classes.interest}>
           <div className={classes.interestHeader}>
             <div className={classes.heading}>Interests</div>
             <div className={classes.addIcon}>
-              {isMyProfile ? <PlusCircle /> : <div />}
+              {isMyProfile ? (
+                <Link to="/selectinterests">
+                  <PlusCircle />{" "}
+                </Link>
+              ) : (
+                <div />
+              )}
             </div>
           </div>
           <div className={classes.interestLists}>
             <InterestList
               data-test="interest-list-business"
-              selectInterestHandlerDiv={(currentState: boolean) => {
-                props.selectInterestHandler("Marketing");
+              selectInterestHandlerDiv={() => {
+                return;
               }}
               value="Marketing"
               key="Marketing"
             />
             <InterestList
               data-test="interest-list-business"
-              selectInterestHandlerDiv={(currentState: boolean) => {
-                props.selectInterestHandler("Ecommerce");
+              selectInterestHandlerDiv={() => {
+                return;
               }}
               value="Ecommerce"
               key="Ecommerce"
