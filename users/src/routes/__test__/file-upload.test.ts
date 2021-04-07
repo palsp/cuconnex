@@ -14,6 +14,8 @@ describe('The /api/upload', () => {
             .set('Cookie', global.signin())
             .field('interests', JSON.stringify({ Technology: [Technology.Coding] }))
             .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
+
+        console.log(body)
     });
 
     //         it('should return 400 if there is no file uploaded', async () => {

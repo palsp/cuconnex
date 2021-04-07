@@ -34,10 +34,17 @@ const bodyChecker = [
     .withMessage('Name must be supplied')
 ];
 
+const transformReq = (req: Request, res: Response, next: NextFunction) => {
+  req.body = JSON.parse(JSON.stringify(req.body));
+  console.log(req.body)
+  next();
+}
+
 // create user for first time login
-router.post('/api/users', /*bodyChecker, validateRequest,*/ upload.single('image'), async (req: Request, res: Response, next: NextFunction) => {
-  const { interests, name, faculty } = req.body;
-  console.log(JSON.parse(interests));
+router.post('/api/users', transformReq, bodyChecker, validateRequest, upload.single('image'), async (req: Request, res: Response, next: NextFunction) => {
+  // const { interests, name, faculty } = req.body;
+  console.log(req.body);
+  // console.log(interests, name)
   const file = req.file;
 
 
