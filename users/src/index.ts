@@ -33,7 +33,6 @@ const start = async () => {
   try {
     // check if all required env variable have been declared
 
-    // validateEnvAttr();
     await initializeDB();
 
     await User.create({ id: '6131886621', name: 'pal' })
@@ -41,15 +40,13 @@ const start = async () => {
 
     // initial data for interest and category 
     // await startDB();
+    app.listen(3000, () => {
+      console.log('Listening on port 3000..');
+    });
+
   } catch (err) {
     console.log(err);
   }
-
-
-
-  app.listen(3000, () => {
-    console.log('Listening on port 3000..');
-  });
 };
 
 start();
