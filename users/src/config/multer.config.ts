@@ -5,16 +5,16 @@ import { BadRequestError } from '@cuconnex/common';
 export const storage = multer.diskStorage({
     destination: 'assets',
     filename: function (req, file, cb) {
-        console.log(req.body);
-        let extension = '.'+ file.mimetype.split('/')[1];
+        // console.log(req.body);
+        let extension = '.' + file.mimetype.split('/')[1];
         let fileName;
-        if(req.body.name){
+        if (req.body.name) {
             fileName = req.body.name + "_profile_pic";
         } else {
-            if(req.currentUser) {
+            if (req.currentUser) {
                 fileName = req.currentUser!.id + "_profile_pic";
             }
-            
+
         }
         cb(null, fileName + extension)
     }
@@ -27,17 +27,17 @@ const fileFilter = (req: any, file: any, cb: any) => {
     if (file.mimetype === "image/jpg" ||
         file.mimetype === "image/jpeg" ||
         file.mimetype === "image/png" && file.size <= max_size) {
-        
+
         cb(null, true);
 
-        
+
     } else {
-        if(max_size > 1000000000) {
+        if (max_size > 1000000000) {
             cb(new BadRequestError("Max file size exceeded!!!"), false);
         } else {
             cb(new BadRequestError("Image uploaded is not of type jpg/jpeg or png"), false);
         }
-        
+
     }
 }
 
