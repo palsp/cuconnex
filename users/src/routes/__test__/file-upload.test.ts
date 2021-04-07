@@ -42,8 +42,7 @@ describe('The /api/users endpoint with files', () => {
         await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
-            .field({
-                name: 'test' })
+            .field({ name: 'test' })
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
             .then(res => {
               expect(res.body.errors).toEqual(null);
