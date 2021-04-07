@@ -34,19 +34,26 @@ const bodyChecker = [
     .withMessage('Name must be supplied')
 ];
 
+const transformReq = (req: Request, res: Response, next: NextFunction) => {
+  req.body = JSON.parse(JSON.stringify(req.body));
+  console.log(req.body)
+  next();
+}
+
 // create user for first time login
-router.post('/api/users', bodyChecker, validateRequest, upload.single('myfile'), async (req: Request, res: Response, next: NextFunction) => {
-  const { interests, name, faculty } = req.body;
+router.post('/api/users', transformReq, bodyChecker, validateRequest, upload.single('image'), async (req: Request, res: Response, next: NextFunction) => {
+  // const { interests, name, faculty } = req.body;
   console.log(req.body);
+  // console.log(interests, name)
   const file = req.file;
-  
+
 
   // // Make sure that user does not exist
   let user = await User.findOne({ where: { id: req.currentUser!.id } });
   if (user) {
     throw new BadRequestError('User already existed');
   }
-  
+
 
   let createsuccess = false;
   // create users 
@@ -85,7 +92,7 @@ router.post('/api/upload', upload.single('myFile'), requireFile, async (req: Req
   console.log('req.body: ', req.body.name)
   console.log(file);
   res.status(200).json("You've successfully uploaded the file: " + file.originalname + " It is now stored as " + file.filename);
-   
+
 })
 
 export { router as newUserRouter };
