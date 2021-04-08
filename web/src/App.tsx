@@ -22,7 +22,7 @@ import SelectEventPage from "@pages/SelectEventPage/SelectEventPage";
 import SelectTeamPage from "@pages/SelectTeamPage/SelectTeamPage";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<any>();
   // const [numUseEffect, setNumUseEffect] = useState<number>(0);
 
