@@ -41,11 +41,11 @@ interface Props {
   };
 }
 const EventLists: React.FC<Props> = (props) => {
-  let mappeddefault = (
+  const mappeddefault = (
     <div className={classes.mainDiv}>
       {eventArray.map((sampleevent, index) => {
         return (
-          <div className={classes.deleteunderlineDiv}>
+          <div key={index} className={classes.deleteunderlineDiv}>
             <Link
               to={{
                 pathname: "/selectteam",

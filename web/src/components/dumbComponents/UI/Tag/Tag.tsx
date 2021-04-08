@@ -54,7 +54,6 @@ const Tag: React.FC = () => {
   } else {
     cssArrayClosed = [classes.disableclosedtagDiv];
   }
-  let tagprompt=null;
   return (
     <div className={classes.mainDiv}>
         <div onClick={allTagClickedHandler} className={cssArrayAll.join(" ")}>
