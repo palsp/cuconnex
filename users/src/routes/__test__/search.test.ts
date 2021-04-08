@@ -29,6 +29,7 @@ const setup = async () => {
 
 
 
+
 describe('Search Test', () => {
   it('should return 401 if user is not authenticated', async () => {
     await request(app)
@@ -161,4 +162,73 @@ describe('Search Test', () => {
   });
 
   it.todo('should send data in specific pattern');
+});
+
+describe('General Search', () => {
+  it('retuens corresponding user matched with given name as a keyword', async () => {
+    const users = (await setup());
+    await users[0].createTeams({ name: 'testTeam1', description: '' });
+    await users[0].createTeams({ name: 'testTeam2', description: '' });
+    await users[0].createTeams({ name: 'testTeam3', description: '' });
+
+    const { body } = await request(app)
+      .get(`/api/users/general/${users[0].name}`)
+      .set('Cookie', global.signin())
+      .send({})
+      .expect(200);
+
+    expect(body.users).toHaveLength(3);
+    expect(body.team).toHaveLength(0);
+  });
+
+  it('retuens corresponding user matched with given id as a keyword', async () => {
+    const users = (await setup());
+    await users[0].createTeams({ name: 'testTeam1', description: '' });
+    await users[0].createTeams({ name: 'testTeam2', description: '' });
+    await users[0].createTeams({ name: 'testTeam3', description: '' });
+
+    const { body } = await request(app)
+      .get(`/api/users/general/${users[0].id}`)
+      .set('Cookie', global.signin())
+      .send({})
+      .expect(200);
+
+    expect(body.users).toHaveLength(1);
+    expect(body.team).toHaveLength(0);
+  });
+
+  it('retuens corresponding team matched with given keyword', async () => {
+    const users = (await setup());
+    await users[0].createTeams({ name: 'testTeam1', description: '' });
+    await users[0].createTeams({ name: 'testTeam2', description: '' });
+    await users[0].createTeams({ name: 'testTeam3', description: '' });
+
+    const { body } = await request(app)
+      .get(`/api/users/general/test`)
+      .set('Cookie', global.signin())
+      .send({})
+      .expect(200);
+
+    expect(body.users).toHaveLength(0);
+    expect(body.team).toHaveLength(3);
+
+
+  });
+
+  it('retuens corresponding user and team matched with given keyword', async () => {
+    const users = (await setup());
+    await users[0].createTeams({ name: 'palteam1', description: '' });
+    await users[0].createTeams({ name: 'palteam2', description: '' });
+    await users[0].createTeams({ name: 'bobteam1', description: '' });
+
+    const { body } = await request(app)
+      .get(`/api/users/general/${users[0].name}`)
+      .set('Cookie', global.signin())
+      .send({})
+      .expect(200);
+
+    expect(body.users).toHaveLength(3);
+    expect(body.team).toHaveLength(2);
+  });
+
 });
