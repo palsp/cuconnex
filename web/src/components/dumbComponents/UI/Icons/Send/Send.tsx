@@ -11,11 +11,11 @@ const Send: React.FC = () => {
       <path
         d="M 22 2 L 11 13 M 22 2 L 15 22 L 11 13 L 2 9 Z"
         fill="transparent"
-        stroke-width="2"
+        strokeWidth="2"
         stroke="rgb(0,0,0)"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-dasharray=""
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeDasharray=""
       ></path>
     </svg>
   );

@@ -8,6 +8,16 @@
   color: #c0bfbf;
   font-size: 1rem;
 }
+.subtitlePagePink {
+  overflow: visible;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 400;
+  font-style: normal;
+  font-family: inherit;
+  color: #f33182;
+  font-size: 1rem;
+}
 
 .subtitlePageBlack {
   /* width: 106px; */
@@ -24,6 +34,7 @@
 .smallSize {
   font-size: 1rem;
   font-weight: 500;
+  height: 19px;
 }
 
 .mediumSize {

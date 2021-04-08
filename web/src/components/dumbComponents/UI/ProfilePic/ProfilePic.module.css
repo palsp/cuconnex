@@ -3,16 +3,31 @@
   height: 100px;
   width: 100px;
 }
+
 .profileBig {
   margin: auto;
   height: 200px;
   width: 200px;
 }
+
+.profileMedium {
+  margin: auto;
+  height: 125px;
+  width: 125px;
+}
+
 .profileSmall {
   margin: auto;
   height: 40px;
   width: 40px;
 }
+
+.profileMini {
+  margin: auto;
+  height: 30px;
+  width: 30px;
+}
+
 .profilePic {
   background-image: url("../../../../assets/tempProfile.png");
   background-repeat: round;

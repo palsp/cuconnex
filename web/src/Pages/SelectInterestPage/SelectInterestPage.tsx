@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "@src/axiosInstance/axiosInstance";
+import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
 import {
@@ -23,13 +23,13 @@ interface Props {
   };
 }
 
-// interface InterestListsArray {
-//   Technology: string[];
-//   Business: string[];
-//   Design: string[];
-// }
+interface InterestListsArray {
+  Technology: string[];
+  Business: string[];
+  Design: string[];
+}
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
-  const [interestArray, setInterestArray] = useState<any>({
+  const [interestArray, setInterestArray] = useState<InterestListsArray>({
     Technology: [],
     Business: [],
     Design: [],
@@ -38,7 +38,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   let saveButton = null;
 
   const selectTechnologyInterestHandler = (e: string) => {
-    let positionOfE = interestArray.Technology.indexOf(e);
+    const positionOfE = interestArray.Technology.indexOf(e);
     if (positionOfE === -1) {
       // let { Technology } = interestArray;
       // Technology.push(e);
@@ -48,7 +48,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
         Technology: [...interestArray.Technology, e],
       });
     } else {
-      let newInterestArray = [...interestArray.Technology];
+      const newInterestArray = [...interestArray.Technology];
       newInterestArray.splice(positionOfE, 1);
       setInterestArray({
         ...interestArray,
@@ -57,27 +57,27 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
   const selectBusinessInterestHandler = (e: string) => {
-    let positionOfE = interestArray.Business.indexOf(e);
+    const positionOfE = interestArray.Business.indexOf(e);
     if (positionOfE === -1) {
       setInterestArray({
         ...interestArray,
         Business: [...interestArray.Business, e],
       });
     } else {
-      let newInterestArray = [...interestArray.Business];
+      const newInterestArray = [...interestArray.Business];
       newInterestArray.splice(positionOfE, 1);
       setInterestArray({ ...interestArray, Business: newInterestArray });
     }
   };
   const selectDesignInterestHandler = (e: string) => {
-    let positionOfE = interestArray.Design.indexOf(e);
+    const positionOfE = interestArray.Design.indexOf(e);
     if (positionOfE === -1) {
       setInterestArray({
         ...interestArray,
         Design: [...interestArray.Design, e],
       });
     } else {
-      let newInterestArray = [...interestArray.Design];
+      const newInterestArray = [...interestArray.Design];
       newInterestArray.splice(positionOfE, 1);
       setInterestArray({ ...interestArray, Design: newInterestArray });
     }
@@ -87,7 +87,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     if (props.location.state) {
       name = props.location.state.name;
     }
-    let data = {
+    const data = {
       name: name,
       interests: interestArray,
     };
@@ -103,7 +103,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     if (props.location.state) {
       name = props.location.state.name;
     }
-    let data = {
+    const data = {
       name: name,
       interest: { Technology: [], Business: [], Design: [] },
     };
