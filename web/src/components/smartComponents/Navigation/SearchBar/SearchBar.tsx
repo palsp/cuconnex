@@ -4,18 +4,45 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
+import useDebounce from "@src/hooks/useDebounce";
 
 interface Props {
   value: string;
 }
 const SearchBar: React.FC<Props> = (props) => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [searchResult, setSearchResult] = useState<string[]>([]);
+  const debouncedTerm = useDebounce(searchTerm, 1000);
+
+  const onChangeHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const mockAPI = async (term: string) => {
+    await setTimeout(() => {
+      console.log("wait mockAPI");
+    }, 1000);
+    return term;
+  };
+
+  useEffect(() => {
+    mockAPI(debouncedTerm).then((res) => {
+      setSearchResult([res]);
+    });
+  }, [debouncedTerm]);
+
   return (
     <div data-test="search-bar" className={classes.searchBar}>
+      {searchResult}
+      {console.log(searchResult)}
       <TextField
         className={classes.textField}
         label={props.value}
         variant="filled"
         fullWidth
+        onChange={onChangeHandler}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

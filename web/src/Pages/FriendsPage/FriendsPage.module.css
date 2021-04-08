@@ -1,18 +1,18 @@
 .divHeading {
   position: relative;
-  width: 375px;
+  width: 100vw;
   height: 150px;
   z-index: 1;
 }
 
 .divFixed {
   position: fixed;
-  width: 375px;
+  width: 100vw;
   background-color: white;
 }
 
 .relativeArrow {
   position: absolute;
   left: 18px;
-  top: 18px;
+  top: 5vh;
 }
