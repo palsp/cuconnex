@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { AuthenticatedContext } from "./AuthenticatedContext";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import "./App.css";
 import {
   AuthPage,
@@ -18,7 +18,7 @@ import {
   SelectTeamPage,
 } from "@pages/index";
 
-import { fetchUserDataAPI, userLogoutAPI } from "@src/api/";
+import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -61,10 +61,10 @@ const App: React.FC = () => {
           <Route path="/recruitmembers" exact component={RecruitMemberPage} />
           <Route path="/success" exact component={SuccessPage} />
           <Route path="/landing" exact component={LandingPage} />
-          <Route path="/myteam" exact component={MyTeamPage} />
+          <Route path="/myteams" exact component={MyTeamPage} />
           <Route path="/profile" exact component={ProfilePage} />
-          <Route path="/selectevent" exact component={SelectEventPage} />
-          <Route path="/selectteam" exact component={SelectTeamPage} />
+          <Route path="/selectevents" exact component={SelectEventPage} />
+          <Route path="/selectteams" exact component={SelectTeamPage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>
@@ -101,27 +101,9 @@ const App: React.FC = () => {
       >
         Show state
       </button>
-      <button
-        onClick={() => {
-          console.log("show route", routes.props.children);
-        }}
-      >
-        Show route
-      </button>
-      <button
-        onClick={() => {
-          fetchDataHandler();
-        }}
-      >
-        FETCH
-      </button>
-      <button
-        onClick={() => {
-          logoutHandler();
-        }}
-      >
-        LOGOUT
-      </button>
+
+      <button onClick={fetchDataHandler}>FETCH</button>
+      <button onClick={logoutHandler}>LOGOUT</button>
       {/* {numUseEffect} */}
     </div>
   );

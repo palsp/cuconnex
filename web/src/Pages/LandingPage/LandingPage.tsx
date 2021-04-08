@@ -1,5 +1,5 @@
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
-import { ArrowRight, Search } from "@dumbComponents/UI/Icons";
+import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
 import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ const LandingPage: React.FC = () => {
   ) : (
     <div className={classes.promptDiv}>
       <div onClick={hamburgerClickedHandler} className={classes.arrowDiv}>
-        <ArrowRight />
+        <ArrowLeft />
       </div>
       <div className={classes.hamburgerPromptDiv}>
         <HamburgerPrompt />

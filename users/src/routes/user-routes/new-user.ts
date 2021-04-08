@@ -1,8 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { InterestDescription, validateRequest } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model'
-import { User } from '../../models/user.model';
+import { User, Interest } from '../../models';
 import { BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();

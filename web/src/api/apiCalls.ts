@@ -10,9 +10,7 @@ import {
 
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
-  const userData: AxiosResponse<IFetchUserData> = await axios.get<IFetchUserData>(
-    "/api/users"
-  );
+  const userData: AxiosResponse<IFetchUserData> = await axios.get("/api/users");
 
   return userData;
 };
@@ -20,14 +18,23 @@ const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
 const userSignupAPI = async (
   signupUserData: IUserSignup
 ): Promise<AxiosResponse<IResultSigninSignup>> => {
-  const userSignupData: AxiosResponse<IResultSigninSignup> = await axios.post<IUserSignup>(
-    "/api/users",
+  const userSignupData: AxiosResponse<IResultSigninSignup> = await axios.post(
+    "/api/auth/signup",
     signupUserData
   );
   return userSignupData;
 };
 
+const userSigninAPI = async (
+  signinUserData: IUserSignin
+): Promise<AxiosResponse<IResultSigninSignup>> => {
+  const userSigninData: AxiosResponse<IResultSigninSignup> = await axios.post(
+    "/api/auth/signin",
+    signinUserData
+  );
+  return userSigninData;
+};
 const userLogoutAPI = async (): Promise<void> => {
   await axios.post("/api/auth/signout");
 };
-export { fetchUserDataAPI, userLogoutAPI, userSignupAPI };
+export { fetchUserDataAPI, userLogoutAPI, userSignupAPI, userSigninAPI };

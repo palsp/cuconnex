@@ -13,7 +13,7 @@ const FriendsPage: React.FC = () => {
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
           <div className={classes.relativeArrow}>
-            <Link data-test="friends-page-back-link" to="/">
+            <Link data-test="friends-page-back-link" to="/landing">
               <ArrowLeft data-test="friends-page-arrow-left" />
             </Link>
           </div>

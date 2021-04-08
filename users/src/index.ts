@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
+import { User } from './models/user.model';
 
 
 const validateEnvAttr = () => {
@@ -26,14 +27,11 @@ const validateEnvAttr = () => {
 };
 
 const start = async () => {
+  // check if all required env variable have been declared
+  validateEnvAttr();
+
   try {
-    // check if all required env variable have been declared
-    validateEnvAttr();
-
-
-    // validateEnvAttr();
     await initializeDB();
-
 
     // initial data for interest and category 
     await startDB();
