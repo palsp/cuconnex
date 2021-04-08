@@ -29,6 +29,7 @@ func InitDB() (*gorm.DB, error) {
 		return nil, err
 	}
 
+
 	DB = db
 	return DB, nil
 }

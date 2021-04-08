@@ -1,6 +1,5 @@
 import express, { Request, Response } from 'express';
-import { User } from '../models/user.model';
-import { Team } from '../models/team.model';
+import { User, Team } from '../models';
 import { Op } from 'sequelize';
 import { requireUser } from '../middlewares';
 

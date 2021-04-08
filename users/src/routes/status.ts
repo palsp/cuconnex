@@ -1,12 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
-import { Member } from '../models/member.model';
-import { User } from '../models/user.model';
-import { Team } from '../models/team.model';
+import { User, Team, Member } from '../models';
 import { requireUser } from '../middlewares/requireUser';
 import { validateRequest, BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
+/**
+ * Uses express-validator to check for validity of the `targetUserId`, `teamName`, and `status` fields of the request object
+ * 
+ */
 const bodyChecker = [
   body('targetUserId')
     .notEmpty()

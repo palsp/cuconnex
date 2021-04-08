@@ -28,33 +28,37 @@ class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAt
   public teamName!: string;
   public userId!: string;
   public status!: TeamStatus;
+
+  /**
+   * Automatically migrate schema, to keep your schema up to date.
+   * @param sequelize 
+   */
+  public static autoMigrate(sequelize: Sequelize) {
+    Member.init(
+      {
+        teamName: {
+          type: DataTypes.STRING(255),
+          primaryKey: true,
+          // references: { model: Team.tableName }
+        },
+        userId: {
+          type: DataTypes.STRING(11),
+          primaryKey: true,
+          // references: { model: User.tableName }
+        },
+        status: {
+          type: DataTypes.ENUM,
+          values: Object.values(TeamStatus),
+          allowNull: false
+        }
+      },
+      {
+        tableName: TableName.members,
+        sequelize,
+        timestamps: false
+      }
+    );
+  }
 }
 
-const initMember = (sequelize: Sequelize) => {
-  Member.init(
-    {
-      teamName: {
-        type: DataTypes.STRING(255),
-        primaryKey: true,
-        references: { model: Team.tableName }
-      },
-      userId: {
-        type: DataTypes.STRING(11),
-        primaryKey: true,
-        references: { model: User.tableName }
-      },
-      status: {
-        type: DataTypes.ENUM,
-        values: Object.values(TeamStatus),
-        allowNull: false
-      }
-    },
-    {
-      tableName: TableName.members,
-      sequelize,
-      timestamps: false
-    }
-  );
-  return Member;
-};
-export { Member, initMember };
+export { Member };
