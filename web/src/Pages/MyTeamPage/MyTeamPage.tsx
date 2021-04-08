@@ -10,9 +10,7 @@ import { MyTeamLists } from "@smartComponents/index";
 
 import classes from "./MyTeamPage.module.css";
 
-interface Props {}
-
-const MyTeamPage: React.FC<Props> = () => {
+const MyTeamPage: React.FC = () => {
   const [clickOngoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
 

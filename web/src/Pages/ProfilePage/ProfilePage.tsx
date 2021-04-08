@@ -36,8 +36,8 @@ const ProfilePage: React.FC<Props> = (props) => {
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
-
-  let isMyProfile = true; // Is it my profile ?
+  // Is it my profile ?
+  const isMyProfile = true;
 
   let profilePrompt = null;
 
@@ -68,11 +68,12 @@ const ProfilePage: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.about}>
-          <Biography
-            nickname="home"
-            detail="I love coding and Korean girl"
-            isMyProfile={isMyProfile}
-          />
+          <div className={classes.bio}>
+            <Biography nickname="home" detail="I love coding and Korean girl" />
+          </div>
+          <div className={classes.editAbout} onClick={EditButtonClickedHandler}>
+            {isMyProfile ? <Edit /> : <div />}
+          </div>
         </div>
 
         <div className={classes.education}>
@@ -89,7 +90,12 @@ const ProfilePage: React.FC<Props> = (props) => {
               {isMyProfile ? (
                 <Link
                   data-test="profile-page-edit-interests"
-                  to="/selectinterests"
+                  to={{
+                    pathname: "/selectinterests",
+                    state: {
+                      interests: { Business: ["Ecommerce", "Marketing"] },
+                    },
+                  }}
                 >
                   <PlusCircle />
                 </Link>

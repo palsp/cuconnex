@@ -52,8 +52,8 @@ const TeamLists: React.FC = () => {
     <div className={classes.mainDiv}>
       {eventArray.map((sampleteam, index) => {
         return (
-          <div className={classes.listDiv}>
-            <GeneralLists key={index} team={sampleteam} />
+          <div key={index} className={classes.listDiv}>
+            <GeneralLists team={sampleteam} />
           </div>
         );
       })}

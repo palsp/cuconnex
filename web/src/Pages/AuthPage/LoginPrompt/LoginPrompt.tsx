@@ -19,13 +19,7 @@ interface Props {
 }
 const validationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
-  password: yup
-    .string()
-    .required("No password provided.")
-    .min(8, "password is too short. Need at least 8 characters")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
-    .matches(/(?=.*[a-z])/, "Password must contain one lower case letter")
-    .matches(/(?=.*[A-Z])/, "Password must contain one UPPER case letter"),
+  password: yup.string().required("No password provided."),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");

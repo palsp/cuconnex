@@ -7,11 +7,13 @@ import { Sequelize, DataTypes } from 'sequelize';
 import { FriendStatus, InterestDescription, TeamStatus } from '@cuconnex/common';
 import { TableName } from '../models/types';
 import { initUserInterest, UserInterest } from './UserInterest.model';
+import { initCategory } from './category.model';
 
 export const initModel = (sequelize: Sequelize) => {
   const User = initUser(sequelize);
   const Interest = initInterests(sequelize);
   const Team = initTeam(sequelize);
+  const Category = initCategory(sequelize);
   const Member = initMember(sequelize);
 
   // A.hasOne(B, { /* options */ });      one-to-one foreign key in B
@@ -49,42 +51,42 @@ export const initModel = (sequelize: Sequelize) => {
   const userInterest = sequelize.define(
     TableName.userInterest,
     {
-      // description: {
-      //   type: DataTypes.ENUM,
-      //   values: Object.values(InterestDescription),
-      //   // unique: true
-      //   primaryKey: true,
-      //   references: TableName.users
-      // },
-      // userId: {
-      //   type: DataTypes.STRING(10),
-      //   primaryKey: true,
-      //   references: TableName.interests
-      // }
     },
     { timestamps: false }
   );
 
-  // User.hasMany(Interest, {
-  //   sourceKey: 'id',
-  //   foreignKey: 'userId',
-  //   as: 'interests',
-  //   onDelete: 'CASCADE'
-  // });
+
+  Category.hasMany(Interest, {
+    sourceKey: "id",
+    as: "interests",
+    foreignKey: "category_id",
+    onDelete: "CASCADE",
+  });
+
 
   // M-M user and interest
   User.belongsToMany(Interest, {
     through: userInterest,
-    as: 'interests',
+    as: "interests",
     foreignKey: 'userId',
     onDelete: 'CASCADE'
   });
+
+  // Interest.belongsToMany(User, {
+  //   through: userInterest,
+  //   as: "categories",
+  //   sourceKey: "category_id",
+  //   foreignKey: "category_id"
+
+  // });
+
+
   Interest.belongsToMany(User, {
     through: userInterest,
-    as: 'interests',
-    foreignKey: 'description'
+    as: "interests",
+    sourceKey: "description",
+    foreignKey: "interest",
   });
-
   // // sync Userinterest model with user-interest relation
   // initUserInterest(sequelize);
 

@@ -1,0 +1,23 @@
+export declare enum Faculty {
+    AlliedHealthSciences = "Allied Health Sciences",
+    Architecture = "Architecture",
+    Arts = "Arts",
+    CommunicationArts = "Communication Arts",
+    CommerceAndAccountancy = "Commerce and Accountancy",
+    Dentistry = "Dentistry",
+    Economics = "Economics",
+    Education = "Education",
+    Engineering = "Engineering",
+    FineAndAppliedArts = "Fine and Applied Arts",
+    Law = "Law",
+    Medicine = "Medicine",
+    Nursing = "Nursing",
+    PharmaceuticalSciences = "Pharmaceutical Sciences",
+    PoliticalSciences = "Political Sciences",
+    Psychology = "Psychology",
+    Science = "Science",
+    SportsScience = "Sports Science",
+    VeterinaryScience = "VeterinaryScience",
+    IntegratedInnovation = "Integrated Innovation",
+    AgriculturalResources = "Agricultural Resources"
+}

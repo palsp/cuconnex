@@ -34,8 +34,8 @@ const EventLists: React.FC = () => {
     <div className={classes.mainDiv}>
       {eventArray.map((sampleevent, index) => {
         return (
-          <div className={classes.listDiv}>
-            <GeneralLists key={index} event={sampleevent} />
+          <div key={index} className={classes.listDiv}>
+            <GeneralLists event={sampleevent} />
           </div>
         );
       })}

@@ -21,10 +21,7 @@ interface Props {
 }
 
 const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email()
-    .required("Email is required"),
+  email: yup.string().email().required("Email is required"),
   id: yup
     .string()
     .required("ID is required")
@@ -123,7 +120,6 @@ const SignupPrompt: React.FC<Props> = (props) => {
                   value="Next"
                   disabled={isSubmitting}
                   type="submit"
-                  onClick={() => {}}
                 />
               </div>
               <p style={{ width: "300px" }}>{JSON.stringify(values.email)}</p>

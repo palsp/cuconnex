@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import classes from "./Tag.module.css";
-interface Props {}
-const Tag: React.FC<Props> = () => {
+const Tag: React.FC = () => {
   const [clickAllTag, setClickAllTag] = useState(false);
   const [clickOngoingTag, setClickOngoingTag] = useState(false);
   const [clickUpcomingTag, setClickUpcomingTag] = useState(false);
@@ -49,9 +48,24 @@ const Tag: React.FC<Props> = () => {
       <div onClick={allTagClickedHandler} className={cssArrayAll.join(" ")}>
         All
       </div>
-      <div onClick={ongoingTagClickedHandler} className={cssArrayOngoing.join(" ")}>Ongoing</div>
-      <div onClick={upcomingTagClickedHandler} className={cssArrayUpcoming.join(" ")}>Upcoming</div>
-      <div onClick={closedTagClickedHandler} className={cssArrayClosed.join(" ")}>Closed</div>
+      <div
+        onClick={ongoingTagClickedHandler}
+        className={cssArrayOngoing.join(" ")}
+      >
+        Ongoing
+      </div>
+      <div
+        onClick={upcomingTagClickedHandler}
+        className={cssArrayUpcoming.join(" ")}
+      >
+        Upcoming
+      </div>
+      <div
+        onClick={closedTagClickedHandler}
+        className={cssArrayClosed.join(" ")}
+      >
+        Closed
+      </div>
     </div>
   );
 };
