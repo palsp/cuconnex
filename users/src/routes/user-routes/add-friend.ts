@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { validateRequest } from '@cuconnex/common';
-import { User } from '../../models/user.model';
+import { User } from '../../models';
 import { requireUser } from '../../middlewares';
 
 const router = express.Router();
@@ -20,7 +20,7 @@ router.post(
   async (req: Request, res: Response) => {
     const addedUser = await User.findUser(req.body.userId);
 
-    await req.user!.addUserAsFriend(addedUser);
+    await req.user!.requestConnection(addedUser);
 
     res.status(201).send({});
   }
@@ -42,7 +42,7 @@ router.post(
   async (req: Request, res: Response) => {
     const sendUser = await User.findUser(req.body.userId);
 
-    const status = await req.user!.acceptFriendRequest(sendUser.id, req.body.accepted);
+    const status = await req.user!.acceptConnection(sendUser.id, req.body.accepted);
 
     res.status(201).send({ status });
   }

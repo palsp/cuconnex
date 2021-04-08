@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { AuthenticatedContext } from "./AuthenticatedContext";
-import axios from "@src/axiosInstance/axiosInstance";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import "./App.css";
 import {
   AuthPage,
@@ -14,102 +13,76 @@ import {
   SuccessPage,
   MyTeamPage,
   ProfilePage,
+  LandingPage,
+  SelectEventPage,
+  SelectTeamPage,
 } from "@pages/index";
 
-import LandingPage from "@pages/LandingPage/LandingPage";
-
-import SelectEventPage from "@pages/SelectEventPage/SelectEventPage";
-import SelectTeamPage from "@pages/SelectTeamPage/SelectTeamPage";
+import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
-  const [redirect, setRedirect] = useState<any>();
-  // const [numUseEffect, setNumUseEffect] = useState<number>(0);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState<JSX.Element>();
 
-  let routes: any = null;
-
-  // useEffect(() => {
-  //   console.log("Fetching data GET /api/users");
-  //   const fetchUserData = async () => {
-  //     try {
-  //       const userData = await axios.get("/api/users");
-  //       console.log("Successfully GET userData", userData);
-  //       setIsAuthenticated(true);
-  //     } catch (e) {
-  //       console.log("Errors FETCHING userData", e);
-  //     }
-  //   };
-  //   fetchUserData();
-  //   console.log("Am I Authen?", isAuthenticated);
-  //   setNumUseEffect((old) => old + 1);
-  // }, [isAuthenticated]);
-  const testFetchData = async () => {
+  const fetchDataHandler = async () => {
     try {
-      const resultGET = await axios.get("/api/users");
+      const userData = await fetchUserDataAPI();
       setIsAuthenticated(true);
-      console.log("SUCCESS testFetchData", resultGET);
+      console.log("SUCCESS fetchDataHandler", userData);
     } catch (e) {
-      console.log("testFetchData error", e);
+      console.log("fetchDataHandler error", e);
     }
   };
-  const handleLogout = async () => {
+  const logoutHandler = async () => {
     try {
-      const resultLogout = await axios.post("/api/auth/signout");
+      await userLogoutAPI();
       setIsAuthenticated(false);
       setRedirect(<Redirect to="/" />);
-      console.log("SUCCESSFULLY Logout", resultLogout);
     } catch (e) {
-      console.log("logout ERROR", e);
+      console.log("FAILED loggingout", e);
     }
   };
-  if (isAuthenticated) {
-    routes = (
-      <BrowserRouter>
-        <AuthenticatedContext.Provider
-          value={{ isAuthenticated, setIsAuthenticated }}
-        >
-          <Switch>
-            <Route path="/" exact component={AuthPage} />
-            <Route
-              path="/selectinterests"
-              exact
-              component={SelectInterestPage}
-            />
-            <Route
-              path="/personalInformation"
-              exact
-              component={PersonalInfoPage}
-            />
-            <Route path="/friendlists" exact component={FriendsPage} />
-            <Route path="/findteams" exact component={FindTeamPage} />
-            <Route path="/recruitmembers" exact component={RecruitMemberPage} />
-            <Route path="/success" exact component={SuccessPage} />
-            <Route path="/landing" exact component={LandingPage} />
-            <Route path="/myteam" exact component={MyTeamPage} />
-            <Route path="/profile" exact component={ProfilePage} />
-            <Route path="/selectevent" exact component={SelectEventPage} />
-            <Route path="/selectteam" exact component={SelectTeamPage} />
-            <Route path="/test" exact component={TestPage} />
-            <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-          </Switch>
-        </AuthenticatedContext.Provider>
-      </BrowserRouter>
-    );
-  } else if (!isAuthenticated) {
-    routes = (
-      <BrowserRouter>
-        <AuthenticatedContext.Provider
-          value={{ isAuthenticated, setIsAuthenticated }}
-        >
-          <Switch>
-            <Route path="/" exact component={AuthPage} />
-            {redirect}
-            <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-          </Switch>
-        </AuthenticatedContext.Provider>
-      </BrowserRouter>
-    );
-  }
+
+  const routes = isAuthenticated ? (
+    <BrowserRouter>
+      <AuthenticatedContext.Provider
+        value={{ isAuthenticated, setIsAuthenticated }}
+      >
+        <Switch>
+          <Route path="/" exact component={AuthPage} />
+          <Route path="/selectinterests" exact component={SelectInterestPage} />
+          <Route
+            path="/personalInformation"
+            exact
+            component={PersonalInfoPage}
+          />
+          <Route path="/friendlists" exact component={FriendsPage} />
+          <Route path="/findteams" exact component={FindTeamPage} />
+          <Route path="/recruitmembers" exact component={RecruitMemberPage} />
+          <Route path="/success" exact component={SuccessPage} />
+          <Route path="/landing" exact component={LandingPage} />
+          <Route path="/myteams" exact component={MyTeamPage} />
+          <Route path="/profile" exact component={ProfilePage} />
+          <Route path="/selectevents" exact component={SelectEventPage} />
+          <Route path="/selectteams" exact component={SelectTeamPage} />
+          <Route path="/test" exact component={TestPage} />
+          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+        </Switch>
+      </AuthenticatedContext.Provider>
+    </BrowserRouter>
+  ) : (
+    <BrowserRouter>
+      <AuthenticatedContext.Provider
+        value={{ isAuthenticated, setIsAuthenticated }}
+      >
+        <Switch>
+          <Route path="/" exact component={AuthPage} />
+          {redirect}
+          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+        </Switch>
+      </AuthenticatedContext.Provider>
+    </BrowserRouter>
+  );
 
   return (
     <div>
@@ -128,27 +101,9 @@ const App: React.FC = () => {
       >
         Show state
       </button>
-      <button
-        onClick={() => {
-          console.log("show route", routes.props.children);
-        }}
-      >
-        Show route
-      </button>
-      <button
-        onClick={() => {
-          testFetchData();
-        }}
-      >
-        FETCH
-      </button>
-      <button
-        onClick={() => {
-          handleLogout();
-        }}
-      >
-        LOGOUT
-      </button>
+
+      <button onClick={fetchDataHandler}>FETCH</button>
+      <button onClick={logoutHandler}>LOGOUT</button>
       {/* {numUseEffect} */}
     </div>
   );

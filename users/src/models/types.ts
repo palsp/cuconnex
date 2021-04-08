@@ -3,10 +3,11 @@ import { InterestDescription } from '@cuconnex/common'
 export enum TableName {
   users = 'users',
   interests = 'interests',
-  friends = 'friends',
+  connections = 'connections',
   members = 'members',
   userInterest = 'userInterests',
   category = 'categories',
+  teams = 'teams',
 }
 
 /**

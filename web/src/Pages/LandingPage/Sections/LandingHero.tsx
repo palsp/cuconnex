@@ -31,7 +31,7 @@ const LandingHero: React.FC = () => {
           <RecruitMemberLogo />
         </div>
         <div className={classes.findteamDiv}>
-          <Link to="/recruitmembers">
+          <Link style={{ textDecoration: "none" }} to="/selectevents">
             <FindteamLogo />
           </Link>
         </div>

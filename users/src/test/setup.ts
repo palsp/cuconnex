@@ -32,6 +32,7 @@ beforeAll(async () => {
     await startDB();
 
   } catch (err) {
+    console.log(err);
     throw new Error('Initialized databae failed');
   }
 });

@@ -8,3 +8,6 @@ export { default as TestPage } from "@pages/TestPage/TestPage";
 export { default as SuccessPage } from "@pages/SuccessPage/SuccessPage";
 export { default as MyTeamPage } from "@pages/MyTeamPage/MyTeamPage";
 export { default as ProfilePage } from "@pages/ProfilePage/ProfilePage";
+export { default as LandingPage } from "@pages/LandingPage/LandingPage";
+export { default as SelectEventPage } from "@pages/SelectEventPage/SelectEventPage";
+export { default as SelectTeamPage } from "@pages/SelectTeamPage/SelectTeamPage";
