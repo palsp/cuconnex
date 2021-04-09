@@ -14,3 +14,4 @@ export { default as Tab } from "@dumbComponents/UI/Tab/Tab";
 export { default as RecruitSign } from "@dumbComponents/UI/RecruitSign/RecruitSign";
 export { default as CoverPic } from "@dumbComponents/UI/CoverPic/CoverPic";
 export { default as Toggles } from "@dumbComponents/UI/Toggles/Toggles";
+export { default as CheckBox } from "@dumbComponents/UI/CheckBox/CheckBox";
