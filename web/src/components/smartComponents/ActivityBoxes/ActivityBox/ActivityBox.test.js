@@ -1,10 +1,10 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { findByTestAttr } from "../../../../../test/testUtils";
-import ActivityList from "./ActivityList";
+import ActivityBox from "./ActivityBox";
 
 const setup = (props) => {
-  const wrapper = shallow(<ActivityList {...props} />);
+  const wrapper = shallow(<ActivityBox {...props} />);
   return wrapper;
 };
 
@@ -13,17 +13,17 @@ const activityBox = {
   activityPic: "",
 };
 
-it("should render activity list", () => {
+it("should render activity box", () => {
   const wrapper = setup(activityBox);
-  const activityList = findByTestAttr(wrapper, "activity-list");
-  expect(activityList.length).toBe(1);
+  const activityBoxRender = findByTestAttr(wrapper, "activity-box");
+  expect(activityBoxRender.length).toBe(1);
 });
 
 it("should have value according to the value props", () => {
   const wrapper = setup(activityBox);
-  const activityListPropValue = findByTestAttr(
+  const activityBoxPropValue = findByTestAttr(
     wrapper,
-    "activity-list-props-value"
+    "activity-box-props-value"
   ).text();
-  expect(activityListPropValue).toBe("<PicWithText />");
+  expect(activityBoxPropValue).toBe("<PicWithText />");
 });

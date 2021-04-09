@@ -1,8 +1,6 @@
-import React from "react";
-import ActivityList from "@smartComponents/ActivityLists/ActivityList/ActivityList";
-import classes from "./ActivityLists.module.css";
+import { ActivityBoxes } from "./Models/models";
 
-const activityArray = [
+const mockActivityBoxes: ActivityBoxes[] = [
   {
     activityName: "Technology",
     activityPic: "",
@@ -53,14 +51,4 @@ const activityArray = [
   },
 ];
 
-const ActivityLists: React.FC = () => {
-  return (
-    <div data-test="activity-lists" className={classes.container}>
-      {activityArray.map((activity, index) => {
-        return <ActivityList key={index} activityBox={activity} />;
-      })}
-    </div>
-  );
-};
-
-export default ActivityLists;
+export default mockActivityBoxes;

@@ -33,7 +33,7 @@ const ProfilePic: React.FC<Props> = (props) => {
           <img
             src={props.PicUrl}
             style={{
-              objectFit: "contain",
+              objectFit: "cover",
               width: "200px",
               height: "200px",
               borderRadius: "50%",
