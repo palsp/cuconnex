@@ -36,7 +36,10 @@ const bodyChecker = [
 
 const transformReq = (req: Request, res: Response, next: NextFunction) => {
   req.body = JSON.parse(JSON.stringify(req.body));
-  req.body.interests = JSON.parse(req.body.interests); 
+  if(req.body.interests) {
+    req.body.interests = JSON.parse(JSON.stringify(req.body.interests));
+  }
+   
   next();
 }
 
