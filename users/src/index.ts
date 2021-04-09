@@ -27,7 +27,7 @@ const validateEnvAttr = () => {
 
 const start = async () => {
 
-  // validateEnvAttr();
+  validateEnvAttr();
 
   try {
     // check if all required env variable have been declared
@@ -42,7 +42,7 @@ const start = async () => {
   }
   console.log(__dirname);
   app.listen(3000, () => {
-    console.log('Listening on port 3000..');
+    console.log('Listening on port 3000...');
   });
 };
 
