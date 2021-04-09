@@ -17,7 +17,7 @@ app.set('trust proxy', true);
 
 /*Initialize Middlewares*/
 
-// app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(json());
