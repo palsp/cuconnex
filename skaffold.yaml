@@ -8,8 +8,6 @@ deploy:
 build:
   local:
     push: false
-  # googleCloudBuild:
-  #   projectId: ticketing-dev-303111
   artifacts:
     - image: palsp/connex-users
       context: users

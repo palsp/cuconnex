@@ -35,12 +35,8 @@ const start = async () => {
 
     await initializeDB();
 
-    await User.create({ id: '6131886621', name: 'pal' })
-
-
     // initial data for interest and category 
-    // await startDB();
-
+    await startDB();
   } catch (err) {
     console.log(err);
   }

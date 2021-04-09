@@ -1,3 +1,4 @@
+import { SearchBar } from "@smartComponents/index";
 import React, { useState, useEffect } from "react";
 const TestPage = () => {
   const [interestArray, setInterestArray] = useState<any>({
@@ -26,7 +27,12 @@ const TestPage = () => {
 
     console.log("testpage is working!");
   }, []);
-  return <div>This is testpage</div>;
+  return (
+    <div>
+      <SearchBar value="test" />
+      This is testpage
+    </div>
+  );
 };
 
 export default TestPage;

@@ -9,13 +9,15 @@ describe('The /api/upload', () => {
 
     it('should return 201 on valid input', async () => {
 
-        const { body } = await request(app)
+        await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
-            .field('interests', JSON.stringify({ Technology: [Technology.Coding] }))
-            .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
-
-        console.log(body)
+            .field({interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon'})
+            .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
+            .then(res => {
+                console.log(res.body);
+                expect(res.status).toEqual(201);
+            })
     });
 
     //         it('should return 400 if there is no file uploaded', async () => {

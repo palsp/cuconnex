@@ -1,12 +1,36 @@
-.flexboxContainer {
-  display: inline-flex;
+.activityList {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
 }
 
-.flexboxItem {
-  width: 350px;
-  height: 125px;
-  margin: 10px;
-  /* border: 3px solid #333; */
-  border-radius: 20px;
-  background-color: #dfdfdf;
+.activityContainer {
+  width: 85%;
+  display: flex;
+  margin-bottom: 5%;
+}
+
+.activityLogo {
+  width: 60px;
+  height: 60px;
+  margin-top: 3%;
+  margin-right: 15%;
+}
+
+.activityInfo {
+  text-align: start;
+}
+
+.name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-top: 5%;
+  margin-bottom: 3%;
+}
+
+.role {
+  font-size: 0.7rem;
+  font-weight: 500;
+  margin-bottom: 7%;
+  color: #c0bfbf;
 }

@@ -102,6 +102,7 @@
 /* Footer */
 
 .footerNavigation {
+  margin-top: 10vh;
   position: relative;
   width: 110%;
 }
