@@ -39,16 +39,20 @@ type EventsSerializer struct {
 	C *gin.Context
 }
 
-// EventResponse declares response schema
+// EventsResponse declares response schema
 type EventsResponse struct {
 	Events []EventResponse `json:"events"`
 }
 
+
+// Response convert all events into specific format
+// before sending response to the user
 func (self *EventsSerializer) Response() EventsResponse {
 	EventsModel := self.C.MustGet("my_events_model").([]EventModel)
 	eventChan := make(chan EventResponse)
 	var response []EventResponse
 	for _, eventModel := range EventsModel {
+		// Each serializer run in its own go routine
 		go func(model EventModel) {
 			eventChan <- EventResponse{
 				ID:        model.ID,

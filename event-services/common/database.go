@@ -1,6 +1,7 @@
 package common
 
 import (
+	"database/sql"
 	"fmt"
 
 	"github.com/palsp/cuconnex/event-services/config"
@@ -35,28 +36,29 @@ func InitDB() (*gorm.DB, error) {
 
 // TestDBInit will create a temporarily database for running testing cases
 func TestDBInit() (*gorm.DB, error) {
-	dsn := CreateDSN(config.TestDB.User, config.TestDB.Password,config.TestDB.Host,config.TestDB.Name)
-	test_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	dsn := CreateDSN(config.TestDB.User, config.TestDB.Password,config.TestDB.Host,"")
+	//test_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	//
+	//if err != nil {
+	//	fmt.Println("db err:", err)
+	//	return nil, err
+	//}
 
+	db , err := sql.Open("mysql" , dsn)
 	if err != nil {
-		fmt.Println("db err:", err)
-		return nil, err
+		fmt.Println("db err : connecting to mysql")
+		panic(err)
 	}
 
-	//db , err := sql.Open("mysql" , dsn)
-	//if err != nil {
-	//	fmt.Println("db err : connecting to mysql")
-	//	panic(err)
-	//}
+	stmt , _ := db.Prepare("CREATE DATABASE IF NOT EXISTS " + config.TestDB.Name )
+	_ , err = stmt.Exec()
+	if err != nil {
+		fmt.Println("db err : create database failed")
+		panic(err)
+	}
 
-	//stmt , _ := db.Prepare("CREATE DATABASE IF NOT EXISTS " + config.TestDB.Name )
-	//_ , err = stmt.Exec()
-	//if err != nil {
-	//	fmt.Println("db err : create database failed")
-	//	panic(err)
-	//}
-
-	//test_db, err := gorm.Open(mysql.Open(dsn + config.TestDB.Name), &gorm.Config{})
+	 dsn = CreateDSN(config.TestDB.User, config.TestDB.Password,config.TestDB.Host,config.TestDB.Name)
+	test_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("db err:", err)
