@@ -1,5 +1,88 @@
-@media only screen and (max-width: 375px) {
-  /* iPhone X */
+.main {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content .heroDiv {
+  margin-top: 25%;
+}
+
+.content .searchDiv {
+  zoom: 160%;
+  margin-left: -10%;
+  margin-right: 50%;
+}
+
+.flexDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerDiv {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.flexDiv .searchDiv {
+  zoom: 160%;
+  margin-left: -20%;
+  margin-right: 50%;
+}
+
+.mailDiv {
+  zoom: 250%;
+}
+
+.hamburgerDiv {
+  margin-left: 5%;
+}
+
+.flexDiv .heroDiv {
+  margin-top: 60%;
+}
+
+.arrowDiv {
+  align-items: flex-end;
+  position: fixed;
+  top: 5vh;
+  left: 10vw;
+}
+
+.promptDiv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+.hamburgerPromptDiv {
+  display: flex;
+}
+
+/* @media only screen and (max-width: 375px) {
+  /* iPhone X 
 
   .main .container {
     width: 100vw;
@@ -99,3 +182,5 @@
     height: 100%;
   }
 }
+
+*/

@@ -27,3 +27,18 @@
   color: white;
   margin: 0;
 }
+
+.awaiting {
+  width: 15vw;
+  height: 2vh;
+  background-color: #c2c2c2;
+  border-radius: 13px;
+  font: inherit;
+  text-align: center;
+}
+
+.awaiting p {
+  font-size: 0.7rem;
+  color: white;
+  margin: 0;
+}

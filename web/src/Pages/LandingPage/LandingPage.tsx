@@ -14,8 +14,12 @@ const LandingPage: React.FC = () => {
     setClickHamburger(!clickHamburger);
   };
 
+  const firstTime = false;
+  let cssArray = [classes.content];
+  if (firstTime) cssArray = [classes.flexDiv];
+
   const LandingPrompt = !clickHamburger ? (
-    <div className={classes.flexDiv}>
+    <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
         <div className={classes.searchDiv}>
           <Link to="/search">
@@ -30,7 +34,7 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero />
+        <LandingHero firstTime={firstTime} />
       </div>
     </div>
   ) : (

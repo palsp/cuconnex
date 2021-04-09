@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "@src/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
 import { Heading, Tab } from "@dumbComponents/UI/index";

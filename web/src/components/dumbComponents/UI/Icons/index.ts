@@ -22,3 +22,6 @@ export { default as Ecommerce } from "@icons/InterestList/Business/Ecommerce/Eco
 export { default as Finance } from "@icons/InterestList/Business/Finance/Finance";
 export { default as Marketing } from "@icons/InterestList/Business/Marketing/Marketing";
 export { default as Startup } from "@icons/InterestList/Business/Startup/Startup";
+
+export { default as Group } from "@icons/Group/Group";
+export { default as Plus } from "@icons/Plus/Plus";
