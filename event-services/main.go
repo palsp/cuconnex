@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
@@ -22,6 +23,10 @@ func main() {
 
 	// Create a router
 	r := gin.Default()
+
+	// Allow All Origin
+	// TODO: should be removed in production
+	r.Use(cors.Default())
 
 	testEvent := r.Group("/api/ping")
 	testEvent.GET("/", func(c *gin.Context) {
