@@ -32,3 +32,40 @@ func (self *EventSerializer) Response() EventResponse {
 	}
 	return event
 }
+
+
+
+type EventsSerializer struct {
+	C *gin.Context
+}
+
+// EventResponse declares response schema
+type EventsResponse struct {
+	Events []EventResponse `json:"events"`
+}
+
+func (self *EventsSerializer) Response() EventsResponse {
+	EventsModel := self.C.MustGet("my_events_model").([]EventModel)
+	eventChan := make(chan EventResponse)
+	var response []EventResponse
+	for _, eventModel := range EventsModel {
+		go func(model EventModel) {
+			eventChan <- EventResponse{
+				ID:        model.ID,
+				EventName: model.EventName,
+				Bio:       model.Bio,
+				Location:  model.Location,
+				StartDate: model.StartDate,
+				EndDate:   model.EndDate,
+			}
+		}(eventModel)
+	}
+
+	for i := 0 ; i < len(EventsModel) ; i++ {
+		response = append(response , <- eventChan)
+	}
+
+	return EventsResponse{
+		Events: response,
+	}
+}

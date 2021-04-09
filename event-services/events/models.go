@@ -37,6 +37,17 @@ func SaveOne(data interface{}) error {
 	return err
 }
 
+
+// GetAllEvents return all events store in database
+func GetAllEvents() ([]EventModel , error) {
+	db := common.GetDB()
+	var models []EventModel
+	err := db.Find(&models).Error
+	return models , err
+
+}
+
+
 // FindEvents returns events that match a condition
 func FindEvents(condition string , args ...string) ([]EventModel , error) {
 	db := common.GetDB()
