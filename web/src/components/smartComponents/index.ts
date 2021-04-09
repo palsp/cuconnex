@@ -1,5 +1,5 @@
-export { default as OldActivityLists } from "@smartComponents/OldActivityLists/ActivityLists";
-export { default as OldActivityList } from "@smartComponents/OldActivityLists/ActivityList/ActivityList";
+export { default as ActivityBoxes } from "@smartComponents/ActivityBoxes/ActivityBoxes";
+export { default as ActivityBox } from "@smartComponents/ActivityBoxes/ActivityBox/ActivityBox";
 export { default as FriendLists } from "@smartComponents/FriendLists/FriendLists";
 export { default as FriendList } from "@smartComponents/FriendLists/FriendList/FriendList";
 export { default as InterestLists } from "@smartComponents/InterestLists/InterestLists";
@@ -17,3 +17,4 @@ export { default as ActivityLists } from "@smartComponents/ActivityLists/Activit
 export { default as ActivityList } from "@smartComponents/ActivityLists/ActivityList/ActivityList";
 export { default as Biography } from "@smartComponents/Biography/Biography";
 export { default as ProfileInfo } from "@smartComponents/ProfileInfo/ProfileInfo";
+export { default as ProfilePic } from "@smartComponents/ProfilePic/ProfilePic";
