@@ -19,3 +19,4 @@ export { default as Biography } from "@smartComponents/Biography/Biography";
 export { default as ProfileInfo } from "@smartComponents/ProfileInfo/ProfileInfo";
 export { default as ProfilePic } from "@smartComponents/ProfilePic/ProfilePic";
 export { default as MemberLists } from "@smartComponents/MemberLists/MemberLists";
+

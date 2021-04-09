@@ -4,6 +4,7 @@ interface ActivityBoxes {
   activitySubHeading1: string;
   activitySubHeading2: string;
 }
+
 interface MemberLists {
   name: string;
   profilePic: string;
