@@ -4,6 +4,8 @@ import { User } from '../../models/user.model';
 import { InterestDescription, Technology } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
+
+
 it('should return 400 if users send invalid type of interest list', async () => {
   await request(app)
     .post('/api/users')

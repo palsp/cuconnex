@@ -1,3 +1,4 @@
+/* eslint-disable */
 const path = require("path");
 
 module.exports = function override(config) {
@@ -27,6 +28,9 @@ module.exports = function override(config) {
       ),
       "@assets": path.resolve(__dirname, "src", "assets"),
       "@src": path.resolve(__dirname, "src"),
+      "@api": path.resolve(__dirname, "src", "api"),
+      "@models": path.resolve(__dirname, "src", "models"),
+      "@hooks": path.resolve(__dirname, "src", "hooks"),
     },
   };
 

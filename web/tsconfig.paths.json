@@ -8,7 +8,10 @@
       "@pages/*": ["src/Pages/*"],
       "@icons/*": ["src/components/dumbComponents/UI/Icons/*"],
       "@assets/*": ["src/assets/*"],
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@api/*": ["src/api/*"],
+      "@models/*": ["src/models/*"],
+      "@hooks/*": ["src/hooks/*"]
     },
 
     "lib": ["dom", "dom.iterable", "esnext"],

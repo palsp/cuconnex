@@ -13,7 +13,7 @@ var DB *gorm.DB
 
 // CreateDSN returns data source name
 func CreateDSN(user,password,host,dbName string) string{
-	return fmt.Sprintf("%s:%s@tcp(%s)/%s",user,password,host,dbName)
+	return fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",user,password,host,dbName)
 }
 
 
@@ -29,14 +29,21 @@ func InitDB() (*gorm.DB, error) {
 		return nil, err
 	}
 
+
 	DB = db
 	return DB, nil
 }
 
 // TestDBInit will create a temporarily database for running testing cases
 func TestDBInit() (*gorm.DB, error) {
-	dsn := CreateDSN(config.TestDB.User, config.TestDB.Password,config.TestDB.Host, "")
-	fmt.Println(dsn)
+	dsn := CreateDSN(config.TestDB.User, config.TestDB.Password,config.TestDB.Host,"")
+	//test_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	//
+	//if err != nil {
+	//	fmt.Println("db err:", err)
+	//	return nil, err
+	//}
+
 	db , err := sql.Open("mysql" , dsn)
 	if err != nil {
 		fmt.Println("db err : connecting to mysql")
@@ -50,7 +57,8 @@ func TestDBInit() (*gorm.DB, error) {
 		panic(err)
 	}
 
-	test_db, err := gorm.Open(mysql.Open(dsn + config.TestDB.Name), &gorm.Config{})
+	 dsn = CreateDSN(config.TestDB.User, config.TestDB.Password,config.TestDB.Host,config.TestDB.Name)
+	test_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		fmt.Println("db err:", err)
