@@ -48,7 +48,7 @@ const EventLists: React.FC<Props> = (props) => {
           <div key={index} className={classes.deleteunderlineDiv}>
             <Link
               to={{
-                pathname: "/selectteam",
+                pathname: "/selectteams",
                 state: {
                   event: {
                     name: eventArray[index].name,

@@ -20,8 +20,8 @@ const SelectTeamPage: React.FC<Props> = (props) => {
     <div className={classes.mainDiv}>
       <div className={classes.arrowheaderContainer}>
         <div className={classes.arrowDiv}>
-          <Link to="/selectevent">
-          <ArrowLeft />
+          <Link to="/selectevents">
+            <ArrowLeft />
           </Link>
         </div>
         <div className={classes.headerContainer}>
