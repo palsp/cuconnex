@@ -1,7 +1,6 @@
 import React from "react";
 import classes from "./SelectTeamPage.module.css";
 import TeamLists from "@smartComponents/TeamLists/TeamLists";
-import { Heading } from "@dumbComponents/UI";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import EventCards from "@smartComponents/EventCards/EventCards";
 
