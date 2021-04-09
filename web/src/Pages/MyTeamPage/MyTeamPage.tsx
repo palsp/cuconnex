@@ -7,13 +7,12 @@ import {
   DotMorePage,
   Heading,
   InputField,
-  ProfilePic,
   Subtitle,
   Tab,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 
-import { MyTeamLists } from "@smartComponents/index";
+import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 
 import classes from "./MyTeamPage.module.css";
 

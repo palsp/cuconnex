@@ -6,7 +6,7 @@ export { default as HalfCircleOverlay } from "@dumbComponents/UI/HalfCircleOverl
 export { default as Heading } from "@dumbComponents/UI/Heading/Heading";
 export { default as Subtitle } from "@dumbComponents/UI/Subtitle/Subtitle";
 export { default as PicWithText } from "@dumbComponents/UI/PicWithText/PicWithText";
-export { default as ProfilePic } from "@dumbComponents/UI/ProfilePic/ProfilePic";
+export { default as TextWithSubHeading } from "@dumbComponents/UI/TextWithSubHeading/TextWithSubHeading";
 export { default as InputField } from "@dumbComponents/UI/InputField/InputField";
 export { default as Username } from "@dumbComponents/UI/Username/Username";
 export { default as Logo } from "@dumbComponents/UI/Logo/Logo";
@@ -14,3 +14,4 @@ export { default as Tab } from "@dumbComponents/UI/Tab/Tab";
 export { default as RecruitSign } from "@dumbComponents/UI/RecruitSign/RecruitSign";
 export { default as CoverPic } from "@dumbComponents/UI/CoverPic/CoverPic";
 export { default as Toggles } from "@dumbComponents/UI/Toggles/Toggles";
+export { default as CheckBox } from "@dumbComponents/UI/CheckBox/CheckBox";

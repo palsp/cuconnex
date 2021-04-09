@@ -16,6 +16,7 @@ import {
   LandingPage,
   SelectEventPage,
   SelectTeamPage,
+  SelectMemberPage,
 } from "@pages/index";
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
@@ -65,6 +66,7 @@ const App: React.FC = () => {
           <Route path="/profile" exact component={ProfilePage} />
           <Route path="/selectevents" exact component={SelectEventPage} />
           <Route path="/selectteams" exact component={SelectTeamPage} />
+          <Route path="/selectmember" exact component={SelectMemberPage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>

@@ -10,14 +10,16 @@ import {
   DotMorePage,
   Heading,
   InputField,
-  ProfilePic,
   Subtitle,
 } from "@dumbComponents/UI/index";
 
+import { ProfilePic } from "@smartComponents/index";
 import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
+import { convertCompilerOptionsFromJson } from "typescript";
+import { IncomingMessage } from "node:http";
 
 const facultyArray = [
   "Allied Health Sciences",
@@ -46,8 +48,24 @@ const facultyArray = [
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
 });
+
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
+
+  const [image, setImage] = useState({ preview: "", raw: "", filename: "" });
+
+  const handleUploadedImage = (e: any) => {
+    console.log(e.target.files);
+    if (e.target.files.length) {
+      setImage({
+        preview: URL.createObjectURL(e.target.files[0]),
+        raw: e.target.files[0],
+        filename: e.target.files[0].name,
+      });
+      // console.log("type of raw: ", typeof image.raw);
+      // console.log("file name: ", image.filename);
+    }
+  };
 
   return (
     <div className={classes.main}>
@@ -69,10 +87,59 @@ const PersonalInfoPage: React.FC = () => {
                     value="Setting up your profile"
                   />
                 </div>
-                <div className={classes.profilePicDiv}>
-                  <ProfilePic
-                    size="big"
-                    data-test="personal-info-personalImage"
+                <div
+                  className={classes.profilePicDiv}
+                  onChange={() => console.log(image.preview)}
+                >
+                  <label htmlFor="upload-button">
+                    {/* <ProfilePic
+                      size="big"
+                      uploadedProfile={true}
+                      data-test="personal-info-personalImage"
+                    /> */}
+                    {image.preview !== "" ? (
+                      <>
+                        {/* <img
+                          src={image.preview}
+                          alt="dummy"
+                          style={{
+                            width: "300px",
+                            height: "300px",
+                            borderRadius: "50%",
+                          }}
+                        /> */}
+                        {/* <div
+                          style={{
+                            width: "300px",
+                            height: "300px",
+                            borderRadius: "50%",
+                          }}
+                        > */}
+                        <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                          PicUrl={image.preview}
+                          uploadedProfile={true}
+                        />
+                        {/* </div> */}
+                      </>
+                    ) : (
+                      <>
+                        {/* <h1>else case</h1> */}
+                        <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                        />
+                      </>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="myFile"
+                    id="upload-button"
+                    style={{ display: "none" }}
+                    onChange={handleUploadedImage}
                   />
                 </div>
                 {/* <div className={classes.usernameDiv}>
@@ -99,6 +166,8 @@ const PersonalInfoPage: React.FC = () => {
                             state: {
                               name: data.displayName,
                               faculty: data.faculty,
+                              profilePic: image.raw,
+                              filename: image.filename,
                             },
                           }}
                         />

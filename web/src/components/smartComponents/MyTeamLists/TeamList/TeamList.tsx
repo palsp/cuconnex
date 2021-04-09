@@ -1,12 +1,8 @@
 import React from "react";
 
-import {
-  Button,
-  Heading,
-  ProfilePic,
-  RecruitSign,
-  Subtitle,
-} from "@dumbComponents/UI";
+import { Button, Heading, RecruitSign, Subtitle } from "@dumbComponents/UI";
+
+import { ProfilePic } from "@smartComponents/index";
 
 import classes from "./TeamList.module.css";
 import { Ecommerce } from "@dumbComponents/UI/Icons";
