@@ -3,6 +3,7 @@ import { Technology } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
+import { deleteFile } from '../../utils/file';
 
 describe('The /api/upload', () => {
 
@@ -30,7 +31,7 @@ describe('The /api/upload', () => {
 
     });
     it('should return 201 if there is a valid file uploaded', async () => {
-        await request(app)
+        const { body } = await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
             .field({
@@ -39,6 +40,12 @@ describe('The /api/upload', () => {
             })
             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
             .expect(201)
+
+        expect(body.image).not.toEqual("")
+
+        deleteFile(body.image)
+
+
 
     })
 

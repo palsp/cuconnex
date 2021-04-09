@@ -5,6 +5,7 @@ import { User, Interest } from '../../models';
 import { transformRequest } from '../../middlewares/middleware';
 import { BadRequestError } from '@cuconnex/common';
 import { upload } from '../../config/multer.config';
+import { deleteFile } from '../../utils/file';
 
 const router = express.Router();
 

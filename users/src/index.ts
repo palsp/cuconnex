@@ -28,10 +28,10 @@ const validateEnvAttr = () => {
 
 const start = async () => {
 
+  // validateEnvAttr();
 
   try {
     // check if all required env variable have been declared
-    validateEnvAttr();
 
     await initializeDB();
 
@@ -40,6 +40,7 @@ const start = async () => {
   } catch (err) {
     console.log(err);
   }
+  console.log(__dirname);
   app.listen(3000, () => {
     console.log('Listening on port 3000..');
   });

@@ -3,16 +3,19 @@ require('express-async-errors');
 import session from 'cookie-session';
 import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
-// import cors from 'cors';
+import cors from 'cors';
 import { fetchUser } from './middlewares';
 import * as router from './routes';
-import { upload } from './config/multer.config';
-
+require('./config/multer.config');
 
 
 const app = express();
 
+app.use(cors());
 app.set('trust proxy', true);
+
+
+
 
 app.use(json());
 app.use(urlencoded({ extended: true }))
@@ -29,6 +32,8 @@ app.use(
 app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
+
+app.use('/api/users/assets', express.static('assets'))
 
 // user handler
 app.use(router.getUserRouter);
