@@ -1,0 +1,21 @@
+.appLogo {
+  height: 150px;
+  width: 150px;
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  color: #000000;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+.space {
+  margin-top: 5%;
+}

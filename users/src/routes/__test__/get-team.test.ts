@@ -1,8 +1,9 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Team } from '../../models/team.model';
+
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
+import { Interest } from '../../models/interest.model';
 
 describe('Get Team Test', () => {
   it('should return "Team not found!" if team is not found', async () => {
@@ -18,9 +19,16 @@ describe('Get Team Test', () => {
   });
 
   it('should return team detail if it is found', async () => {
-    const user = await User.create({ id: '1', username: 'testName' });
-    await user.createInterest({ description: InterestDescription.Business });
-    const team = await user.createTeams({ name: 'testTeam' });
+    const user = await User.create({
+      id: '6131886621',
+      name: 'pal'
+    });
+    const interest = await Interest.findOne({
+      where: { description: Business.BusinessCase }
+    });
+
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'testTeam', description: '' });
 
     const res = await request(app)
       .get('/api/teams')
@@ -29,6 +37,6 @@ describe('Get Team Test', () => {
       .expect(200);
 
     expect(res.body.team.name).toEqual(team.name);
-    expect(res.body.team.userId).toEqual(user.id);
+    expect(res.body.team.creatorId).toEqual(user.id);
   });
 });

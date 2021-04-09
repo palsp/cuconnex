@@ -1,0 +1,27 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Faculty = void 0;
+var Faculty;
+(function (Faculty) {
+    Faculty["AlliedHealthSciences"] = "Allied Health Sciences";
+    Faculty["Architecture"] = "Architecture";
+    Faculty["Arts"] = "Arts";
+    Faculty["CommunicationArts"] = "Communication Arts";
+    Faculty["CommerceAndAccountancy"] = "Commerce and Accountancy";
+    Faculty["Dentistry"] = "Dentistry";
+    Faculty["Economics"] = "Economics";
+    Faculty["Education"] = "Education";
+    Faculty["Engineering"] = "Engineering";
+    Faculty["FineAndAppliedArts"] = "Fine and Applied Arts";
+    Faculty["Law"] = "Law";
+    Faculty["Medicine"] = "Medicine";
+    Faculty["Nursing"] = "Nursing";
+    Faculty["PharmaceuticalSciences"] = "Pharmaceutical Sciences";
+    Faculty["PoliticalSciences"] = "Political Sciences";
+    Faculty["Psychology"] = "Psychology";
+    Faculty["Science"] = "Science";
+    Faculty["SportsScience"] = "Sports Science";
+    Faculty["VeterinaryScience"] = "VeterinaryScience";
+    Faculty["IntegratedInnovation"] = "Integrated Innovation";
+    Faculty["AgriculturalResources"] = "Agricultural Resources";
+})(Faculty = exports.Faculty || (exports.Faculty = {}));

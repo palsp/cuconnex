@@ -1,0 +1,59 @@
+.mainDiv {
+  width: 375px;
+  display: flex;
+  flex-direction: column;
+  height: 900px;
+}
+.headerContainer{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.headingDiv{
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  color: var(--main_pink, #f33182);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 22px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+.teamContainer {
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+  width: 325px;
+  align-items: center;
+  margin-left:6%;
+}
+.teamDiv {
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  font-size: 20px;
+  color: var(--main_pink, #f33182);
+}
+.eventcardsDiv{
+}
+.arrowDiv{
+  position:absolute;
+  left:5%;
+  top:1.5%; 
+}
+.arrowheaderContainer{
+  width: 375px;
+  height:50px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 0.5px solid grey;
+}

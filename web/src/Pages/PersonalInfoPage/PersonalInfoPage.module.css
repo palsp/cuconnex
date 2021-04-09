@@ -1,0 +1,134 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  z-index: 2;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+/*
+
+.circle_overlay {
+  position: absolute;
+  background: white;
+  z-index: -1;
+  opacity: 0.5;
+  border-radius: 50%;
+  width: 200%;
+  height: 100%;
+  bottom: -33%;
+}
+
+*/
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.footerIcon {
+  display: flex;
+  align-items: center;
+}
+
+.usernameDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  text-align: start;
+  margin: 0 0 0 20px;
+}
+
+.titleDiv {
+  text-align: center;
+  margin-top: 10%;
+}
+
+.subtitleDiv {
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.inputFieldDiv {
+  width: 90%;
+  margin: 5vh auto;
+}
+
+.selectDiv {
+  width: 90%;
+  margin: 5vh auto;
+}
+
+.footerNavigation {
+  position: relative;
+  bottom: 3%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Button {
+  margin-top: 15%;
+  margin-bottom: 30%;
+}
+
+.noStyleButton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+/*
+
+@media only screen and (min-width: 415px) {                      /* tablet
+  .main .container {
+    width: 100vw;
+  }
+
+  .main .container .heading {
+    text-align: start;
+    margin: 4rem 0 0 2rem;
+  }
+
+  .main .container .subtitleDiv {
+    margin: -1.2rem 0 0 2rem;
+    text-align: start;
+  }
+
+  .main .container .profilePicDiv {
+    margin: 2rem auto;
+  }
+
+  .main .container .InputFieldDiv {
+    width: 70vw;
+    margin: 3vh auto;
+  }
+
+  .main .container .footerNavigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10vh;
+  }
+}
+
+*/

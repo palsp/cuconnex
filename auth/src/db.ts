@@ -21,7 +21,7 @@ const initializeDB = async () => {
 
     myDB.sequelize = new Sequelize(DB!, USER!, PASSWORD, { dialect: 'mysql', host: HOST, });
 
-
+    //User waits until a new database is created before initializing it's models
     userInit(myDB.sequelize);
 
     await myDB.sequelize.sync()
@@ -30,7 +30,7 @@ const initializeDB = async () => {
 }
 
 
-
+//Close database connection
 const endDB = async (db: myDB) => {
     if (db.sequelize) {
         await db.sequelize.close();

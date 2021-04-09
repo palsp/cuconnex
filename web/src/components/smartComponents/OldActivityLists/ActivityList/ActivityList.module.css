@@ -1,0 +1,12 @@
+.flexboxContainer {
+  display: inline-flex;
+}
+
+.flexboxItem {
+  width: 350px;
+  height: 125px;
+  margin: 10px;
+  /* border: 3px solid #333; */
+  border-radius: 20px;
+  background-color: #dfdfdf;
+}

@@ -4,13 +4,11 @@ deploy:
   kubectl:
     manifests:
       - ./infra/k8s/*
+      - ./infra/k8s-dev/*
 build:
   local:
     push: false
-  # googleCloudBuild:
-  #   projectId: ticketing-dev-303111
   artifacts:
-    
     - image: palsp/connex-users
       context: users
       docker:
@@ -27,3 +25,19 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: palsp/connex-event
+      context: event-services
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.go'
+            dest: .
+    - image: palsp/connex-web
+      context: web
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.ts'
+            dest: . 

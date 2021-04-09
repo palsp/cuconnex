@@ -1,0 +1,12 @@
+.thisToggle.react-toggle--checked .react-toggle-track {
+    background-image: linear-gradient(to right, rgb(236, 236, 236) , rgb(238, 48, 181));
+}
+
+
+.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+    background-color: #e694ff;
+}
+
+.react-toggle-track {
+    background-image: linear-gradient(to right, rgb(236, 236, 236) , rgb(238, 48, 181));
+}

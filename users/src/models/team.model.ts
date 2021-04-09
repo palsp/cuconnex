@@ -1,51 +1,53 @@
-import {
-  Model,
-  DataTypes,
-  HasManyGetAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  Association,
-  Sequelize,
-  STRING
-} from 'sequelize';
+import { Model, DataTypes, Sequelize, STRING } from 'sequelize';
+import { TableName } from './types';
 
 // keep member array as id of user
 export interface TeamAttrs {
   name: string;
-  userId: string;
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
 }
 
 export interface TeamCreationAttrs {
   name: string;
+  description: string;
 }
 
 class Team extends Model<TeamAttrs, TeamCreationAttrs> implements TeamAttrs {
   public name!: string;
-  public userId!: string;
+  public creatorId!: string;
+  public description!: string;
+  public lookingForMembers: boolean = true;
 
-  // public addMember(user: UserAttrs) {
-
-  // }
+  public static autoMigrate(sequelize: Sequelize) {
+    Team.init(
+      {
+        name: {
+          type: DataTypes.STRING(255),
+          primaryKey: true
+        },
+        creatorId: {
+          type: DataTypes.STRING(11),
+          allowNull: false
+        },
+        description: {
+          type: DataTypes.STRING(255),
+          allowNull: true
+        },
+        lookingForMembers: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false
+        }
+      },
+      {
+        tableName: TableName.teams,
+        sequelize,
+        timestamps: false
+      }
+    );
+  }
 }
 
-const initTeam = (sequelize: Sequelize) => {
-  Team.init(
-    {
-      name: {
-        type: DataTypes.STRING(255),
-        primaryKey: true
-      },
-      userId: {
-        type: DataTypes.STRING(11),
-        allowNull: false
-      }
-    },
-    {
-      tableName: 'teams',
-      sequelize,
-      timestamps: false
-    }
-  );
-  return Team;
-};
 
-export { Team, initTeam };
+export { Team };

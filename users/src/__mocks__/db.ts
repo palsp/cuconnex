@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import { test_config as config } from '../config/db.config';
 import mysql, { Connection } from 'mysql2/promise';
-import { initModel } from '../models';
+import { autoMigrate } from '../models';
 import { randomBytes } from 'crypto';
 
 interface myDB {
@@ -26,7 +26,8 @@ const initializeDB = async () => {
   });
 
   // initialize model
-  initModel(myDB.sequelize);
+  autoMigrate(myDB.sequelize);
+
 
   await myDB.sequelize.sync();
 

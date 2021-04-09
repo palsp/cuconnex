@@ -1,58 +1,62 @@
 import express from 'express';
 require('express-async-errors');
 import session from 'cookie-session';
-import { json } from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
+import cors from 'cors';
+import { fetchUser } from './middlewares';
+import * as router from './routes';
+require('./config/multer.config');
 
-import { fetchUser } from './middlewares/fetch-user';
-
-import { newUserRouter } from './routes/new-user';
-import { getUserRouter } from './routes/get-user';
-import { searchRouter } from './routes/search';
-import { addFriendRouter } from './routes/add-friend';
-
-import { newTeamRouter } from './routes/new-team';
-import { getTeamRouter } from './routes/get-team';
-
-import { addMemberRouter } from './routes/add-member';
-import { getMemberRouter } from './routes/get-member';
-import { memberStatusRouter } from './routes/status';
 
 const app = express();
 
+app.use(cors());
 app.set('trust proxy', true);
 
+
+
+
 app.use(json());
+app.use(urlencoded({ extended: true }))
+// app.use(cors());
 
 app.use(
   session({
     signed: false,
-    secure: false
+    secure: false,
     // httpOnly : true,
   })
 );
-
+/*TODO: uncomment these three lines after development */
 app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
 
-app.use(newUserRouter);
-app.use(getUserRouter);
-app.use(searchRouter);
-app.use(addFriendRouter);
+app.use('/api/users/assets', express.static('assets'))
 
-app.use(newTeamRouter);
-app.use(getTeamRouter);
+// user handler
+app.use(router.getUserRouter);
+app.use(router.newUserRouter);
+app.use(router.addFriendRouter);
+app.use(router.notificationUserRouter);
+app.use(router.manageStatusRouter);
 
-app.use(getMemberRouter);
-app.use(addMemberRouter);
-app.use(memberStatusRouter);
+// team handler
+app.use(router.getTeamRouter);
+app.use(router.newTeamRouter);
+app.use(router.getMemberRouter);
+app.use(router.addMemberRouter);
+
+// other handler
+app.use(router.memberStatusRouter);
+app.use(router.searchRouter);
+
+
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
 });
 
-app.use(errorHandling, () => {
-  console.log('err handling');
-});
+app.use(errorHandling);
 export { app };

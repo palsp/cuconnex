@@ -1,0 +1,47 @@
+.divHeading {
+  position: relative;
+  width: 375px;
+  height: 50px;
+  z-index: 1;
+}
+
+.divFixed {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 375px;
+  background-color: white;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+}
+
+.divBody {
+  position: relative;
+  width: 375px;
+  min-height: 300px;
+}
+
+.divFixedLeftWithPadding {
+  position: relative;
+  left: 18px;
+  padding: 10px 0px 10px;
+  text-align: left;
+}
+
+.divFixedLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 200px;
+  margin-left: 18px;
+  text-align: left;
+}
+
+.divInfo {
+  height: 40px;
+}

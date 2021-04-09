@@ -1,10 +1,7 @@
-import { FriendStatus, TeamStatus } from '@cuconnex/common';
 import { app } from './app';
 import { initializeDB } from './db';
-import { User } from './models/user.model';
-import { Member } from './models/member.model';
-import { Friend } from './models/friend.model';
-import { TableName } from './models/types';
+import { startDB } from './models/initDB'
+
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -29,22 +26,23 @@ const validateEnvAttr = () => {
 };
 
 const start = async () => {
+
+  validateEnvAttr();
+
   try {
     // check if all required env variable have been declared
-    validateEnvAttr();
+
     await initializeDB();
 
-    // const user = await User.create({ id: '6131707021', name: 'Krittamook' });
-    // user.createTeams({ name: 'dummy' });
-    // const team = await user.createTeams({ name: 'TeamDum' });
-    // await Member.create({ userId: user.id, teamName: 'TeamDum', status: TeamStatus.Accept });
-    // console.log('create dummy user ', user);
-  } catch (err) {
-    console.error(err);
-  }
+    // initial data for interest and category 
+    await startDB();
 
+  } catch (err) {
+    console.log(err);
+  }
+  console.log(__dirname);
   app.listen(3000, () => {
-    console.log('Listening on port 3000..');
+    console.log('Listening on port 3000....');
   });
 };
 

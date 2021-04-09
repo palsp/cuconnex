@@ -1,6 +1,4 @@
 import { Model, Sequelize, DataTypes } from 'sequelize';
-import { values } from 'sequelize/types/lib/operators';
-// import { Table, Column, BelongsToMany, PrimaryKey } from 'sequelize-typescript'
 import { Password } from '../services/password';
 interface UserAttributes {
     id: string;
@@ -13,30 +11,11 @@ interface UserCreationAttributes {
     password: string;
 }
 
-// @Table
-// export default class User extends Model<UserAttributes, UserCreationAttributes> {
-
-//     @PrimaryKey
-//     @Column
-//     id!: number;
-
-//     @Column
-//     email!: string;
-
-//     @Column
-//     username!: string;
-
-//     @Column
-//     password!: string;
-
-//     // @BelongsToMany(() => Role, () => UserRoles)
-//     // roles?: Role[];
-// }
-
 export default class User extends Model<UserAttributes, UserCreationAttributes> {
     public id!: string
     public email!: string
     public password!: string
+    //Called whenever model is changed to JSON
     public toJSON() {
         const values = { ...this.get() };
         delete values.password;
@@ -48,7 +27,7 @@ export default class User extends Model<UserAttributes, UserCreationAttributes> 
     }
 }
 
-
+//Initializes the user model
 export const userInit = function (sequelize: Sequelize) {
     User.init({
         id: {
