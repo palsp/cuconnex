@@ -21,6 +21,12 @@
   height: 40px;
   width: 40px;
 }
+
+.profileMini {
+  margin: auto;
+  height: 30px;
+  width: 30px;
+}
 .profilePicDefault {
   background-image: url("../../../assets/tempProfile.png");
   background-repeat: round;
@@ -34,11 +40,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.profileMini {
-  margin: auto;
-  height: 30px;
-  width: 30px;
 }
 
 .profilePic {

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
 import * as yup from "yup";
@@ -18,32 +18,33 @@ import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
-import { convertCompilerOptionsFromJson } from "typescript";
-import { IncomingMessage } from "node:http";
+import { FacultyListsEnum } from "@models/index";
 
-const facultyArray = [
-  "Allied Health Sciences",
-  "Architecture",
-  "Arts",
-  "Communication Arts",
-  "Commerce and Accountancy",
-  "Dentistry",
-  "Economics",
-  "Education",
-  "Engineering",
-  "Fine and Applied Arts",
-  "Law",
-  "Medicine",
-  "Nursing",
-  "Pharmaceutical Sciences",
-  "Political Sciences",
-  "Psychology",
-  "Science",
-  "Sports Science",
-  "VeterinaryScience",
-  "Integrated Innovation",
-  "Agricultural Resources",
-];
+const facultyArray: string[] = Object.values(FacultyListsEnum);
+
+// const facultyArray = [
+//   "Allied Health Sciences",
+//   "Architecture",
+//   "Arts",
+//   "Communication Arts",
+//   "Commerce and Accountancy",
+//   "Dentistry",
+//   "Economics",
+//   "Education",
+//   "Engineering",
+//   "Fine and Applied Arts",
+//   "Law",
+//   "Medicine",
+//   "Nursing",
+//   "Pharmaceutical Sciences",
+//   "Political Sciences",
+//   "Psychology",
+//   "Science",
+//   "Sports Science",
+//   "VeterinaryScience",
+//   "Integrated Innovation",
+//   "Agricultural Resources",
+// ];
 
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
@@ -92,40 +93,17 @@ const PersonalInfoPage: React.FC = () => {
                   onChange={() => console.log(image.preview)}
                 >
                   <label htmlFor="upload-button">
-                    {/* <ProfilePic
-                      size="big"
-                      uploadedProfile={true}
-                      data-test="personal-info-personalImage"
-                    /> */}
                     {image.preview !== "" ? (
                       <>
-                        {/* <img
-                          src={image.preview}
-                          alt="dummy"
-                          style={{
-                            width: "300px",
-                            height: "300px",
-                            borderRadius: "50%",
-                          }}
-                        /> */}
-                        {/* <div
-                          style={{
-                            width: "300px",
-                            height: "300px",
-                            borderRadius: "50%",
-                          }}
-                        > */}
                         <ProfilePic
                           size="big"
                           data-test="personal-info-personalImage"
                           PicUrl={image.preview}
                           uploadedProfile={true}
                         />
-                        {/* </div> */}
                       </>
                     ) : (
                       <>
-                        {/* <h1>else case</h1> */}
                         <ProfilePic
                           size="big"
                           data-test="personal-info-personalImage"
@@ -142,13 +120,6 @@ const PersonalInfoPage: React.FC = () => {
                     onChange={handleUploadedImage}
                   />
                 </div>
-                {/* <div className={classes.usernameDiv}>
-                  <Username
-                    data-test="personal-info-username"
-                    value="@micky_ngub"
-                  />
-                  <Edit />
-                </div> */}
                 <Formik
                   data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
@@ -176,7 +147,7 @@ const PersonalInfoPage: React.FC = () => {
                   }}
                   validationSchema={validationSchema}
                 >
-                  {({ values, handleSubmit }) => (
+                  {({ values }) => (
                     <Form>
                       <div className={classes.inputFieldDiv}>
                         <InputField
@@ -224,18 +195,6 @@ const PersonalInfoPage: React.FC = () => {
                     </Form>
                   )}
                 </Formik>
-                {/* <div className={classes.InputFieldDiv}>
-                  <InputField
-                    data-test="personal-info-setDisplayedName"
-                    value="Displayed Name" />
-                  <InputField 
-                    data-test="personal-info-setFaculty" 
-                    value="Faculty" />
-                  <InputField data-test="personal-info-setMajor" 
-                    value="Major" />
-                  <InputField data-test="personal-info-setYear" 
-                    value="Year of study" />
-                </div> */}
               </motion.div>
             </div>
             {redirect}
