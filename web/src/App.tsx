@@ -104,7 +104,6 @@ const App: React.FC = () => {
 
       <button onClick={fetchDataHandler}>FETCH</button>
       <button onClick={logoutHandler}>LOGOUT</button>
-      {/* {numUseEffect} */}
     </div>
   );
 };
