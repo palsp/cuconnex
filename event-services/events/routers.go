@@ -8,8 +8,8 @@ import (
 )
 
 func EventRegister(router *gin.RouterGroup) {
-	router.GET("/:event_id", GetEvent)
 	router.GET("/", GetAllEvent)
+	//router.GET("/:event_id", GetEvent)
 	router.POST("/", CreateEvent)
 }
 
