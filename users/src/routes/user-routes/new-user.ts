@@ -45,7 +45,7 @@ const transformReq = async (req: Request, res: Response, next: NextFunction) => 
 }
 
 // create user for first time login
-router.post('/api/users', upload.single('myFile'), transformReq, bodyChecker, validateRequest, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/api/users', upload.single('myFile'), transformReq, async (req: Request, res: Response, next: NextFunction) => {
   const { interests, name, faculty } = req.body;
   console.log(req.body);
   // console.log(interests, name)
