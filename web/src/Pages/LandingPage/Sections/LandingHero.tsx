@@ -5,7 +5,8 @@ import FindteamLogo from "../../../components/dumbComponents/UI/FindteamLogo/Fin
 import RecruitMemberLogo from "../../../components/dumbComponents/UI/RecruitmemberLogo/RecruitmemberLogo";
 import Subtitle from "../../../components/dumbComponents/UI/Subtitle/Subtitle";
 import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
-import { ProfilePic, Username } from "@dumbComponents/UI";
+import { Username } from "@dumbComponents/UI";
+import { ProfilePic } from "@smartComponents/index";
 import { Link } from "react-router-dom";
 
 const LandingHero: React.FC = () => {

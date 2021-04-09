@@ -11,10 +11,11 @@ import {
   DotMorePage,
   Heading,
   InputField,
-  ProfilePic,
   Subtitle,
   Toggles,
 } from "@dumbComponents/UI/index";
+
+import { ProfilePic } from "@smartComponents/index";
 
 const EditPrompt: React.FC = () => {
   const [redirect, setRedirect] = useState<any>();
