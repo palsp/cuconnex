@@ -8,14 +8,9 @@ export const storage = multer.diskStorage({
         // console.log(req.body);
         let extension = '.' + file.mimetype.split('/')[1];
         let fileName;
-        if (req.body.name) {
-            fileName = req.body.name + "_profile_pic";
-        } else {
-            if (req.currentUser) {
-                fileName = req.currentUser!.id + "_profile_pic";
-            }
 
-        }
+        fileName = req.currentUser!.id + "_profile_pic";
+
         cb(null, fileName + extension)
     }
 })

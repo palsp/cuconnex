@@ -2,11 +2,13 @@ import express, { NextFunction, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { User, Interest } from '../../models';
-import { requireFile } from '../../middlewares';
+import { transformRequest } from '../../middlewares/middleware';
 import { BadRequestError } from '@cuconnex/common';
 import { upload } from '../../config/multer.config';
 
 const router = express.Router();
+
+
 
 const bodyChecker = [
   body('interests')
@@ -34,43 +36,30 @@ const bodyChecker = [
     .withMessage('Name must be supplied')
 ];
 
-const transformReq = async (req: Request, res: Response, next: NextFunction) => {
-  console.log('before...', req.body);
-  req.body = JSON.parse(JSON.stringify(req.body));
-  if (req.body.interests) {
-    req.body.interests = JSON.parse(JSON.stringify(req.body.interests));
-  }
 
-  next();
-}
 
 // create user for first time login
-router.post('/api/users', upload.single('myFile'), transformReq, async (req: Request, res: Response, next: NextFunction) => {
+router.post('/api/users', upload.single('myFile'), transformRequest, bodyChecker, validateRequest, async (req: Request, res: Response, next: NextFunction) => {
   const { interests, name, faculty } = req.body;
-  console.log(req.body);
   // console.log(interests, name)
-  const file = req.file;
-  console.log(file)
+  let imagePath = "";
+  if (req.file) {
+    imagePath = req.file.path
+  }
+
+  // Make sure that user does not exist
+  let user = await User.findOne({ where: { id: req.currentUser!.id } });
+  if (user) {
+    throw new BadRequestError('User already existed');
+  }
 
 
-  // // // Make sure that user does not exist
-  // let user = await User.findOne({ where: { id: req.currentUser!.id } });
-  // if (user) {
-  //   throw new BadRequestError('User already existed');
-  // }
-
-
-  // let createsuccess = false;
-  // // create users 
+  let createsuccess = false;
+  // create users 
 
   try {
-    if (file) {
-      user = await User.create({ id: req.currentUser!.id, name: name, faculty: faculty || "", image: file!.path });
-      console.log('user: ', user);
-    } else {
-      user = await User.create({ id: req.currentUser!.id, name: name, faculty: faculty || "", image: '' });
-    }
 
+    user = await User.create({ id: req.currentUser!.id, name: name, faculty: faculty || "", image: imagePath });
 
     for (let category in interests) {
       console.log(category);
@@ -78,30 +67,22 @@ router.post('/api/users', upload.single('myFile'), transformReq, async (req: Req
       interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
       await user.addInterestFromArray(interests[category]);
 
-      //   }
+    }
 
-      //   createsuccess = true;
+    createsuccess = true;
 
-      // } catch (err) {
-      //   createsuccess = false;
-      // }
+  } catch (err) {
+    createsuccess = false;
+  }
 
-      // if (!createsuccess && user) {
-      //   await user.destroy();
-      //   throw new BadRequestError('Create User Failed');
-      // }
-      // res.status(201).send({ id: user!.id, interests });
+  if (!createsuccess && user) {
+    await user.destroy();
+    throw new BadRequestError('Create User Failed');
+  }
+  res.status(201).send({ id: user!.id, interests, image: user!.image });
 
-      res.send({});
-    });
+});
 
-// /*TODO: remove this route after development, it's only for testing that uploading file works */
-router.post('/api/upload', transformReq, upload.single('myFile'), requireFile, async (req: Request, res: Response, next: NextFunction) => {
-  const file = req.file;
-  console.log('req.body: ', req.body.name)
-  console.log(file);
-  res.status(200).json("You've successfully uploaded the file: " + file.originalname + " It is now stored as " + file.filename);
 
-})
 
 export { router as newUserRouter };

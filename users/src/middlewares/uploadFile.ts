@@ -1,7 +1,5 @@
-import { NotAuthorizedError } from '@cuconnex/common';
-import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
-import { User } from '../models/user.model';
+
 
 
 export const uploadFileWithName = (name: string) => {
@@ -11,7 +9,7 @@ export const uploadFileWithName = (name: string) => {
         },
         filename: (req, file, cb) => {
             let extension = '.' + file.mimetype.split('/')[1];
-            cb(null, name + '_profile_pic'+extension);
+            cb(null, name + '_profile_pic' + extension);
         }
     });
 
