@@ -1,13 +1,10 @@
 
-@media only screen and (max-width: 375px) {
-  /* iPhone X */
-  @media only screen and (width: 375px) and (height: 812px) {
     .buttonmainDiv {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      margin-top:40%;
+      margin-top:90px;
     }
     .findteamDiv {
       margin-left: 4%;
@@ -42,52 +39,5 @@
     .profileDiv{
       margin-right:4%;
     }
-  }
-}
-@media only screen and (min-width: 414px) {
-  .buttonmainDiv {
-    display: flex;
-    flex-direction: row;
-      align-items: center;
-      justify-content: center;
-    margin-top:5%;
-  }
-  .findteamDiv {
-    margin-left: 4%;
-    size: 100%;
-    zoom:150%;
-  }
-  .recruitmemberDiv {
-    size: 100%;
-    zoom:150%;
-    margin-right: 4%;
-  }
-  .mainDiv {
-    display: flex;
-    flex-direction: column;
-  }
-  .subtitleDiv {
-    width: 100vw;
-    height: 19px;
-    text-align: left;
-  }
-  .headingDiv {
-    width: 100vw;
-    text-align: left;
-  }
-  .upperpartDiv {
-    display: flex;
-    flex-direction: row;
-    margin-left:20vw;
-    zoom:150%;
-  }
-  .subupperpartDiv {
-    display: flex;
-    flex-direction: column;
-  }
-  .profileDiv{
-    margin-right:4%;
-    margin-top:1%;
-  }
-}
+
 

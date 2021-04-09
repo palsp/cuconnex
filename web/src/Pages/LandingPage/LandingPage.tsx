@@ -15,8 +15,8 @@ const LandingPage: React.FC = () => {
   };
 
   const LandingPrompt = !clickHamburger ? (
-    <div className={classes.flexDiv}>
-      <div className={classes.headerDiv}>
+    <div>
+      <div className={classes.toolbarDiv}>
         <div className={classes.searchDiv}>
           <Link to="/search">
             <Search />

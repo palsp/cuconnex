@@ -27,6 +27,7 @@ const EventCard: React.FC<Props> = (props) => {
       cssArrayEvent = [classes.nullDiv];
       break;
   }
+  console.log(props);
   return (
     <div className={classes.mainDiv}>
       <div className={classes.textbodyDiv}>

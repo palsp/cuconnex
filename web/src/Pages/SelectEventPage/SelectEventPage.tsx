@@ -5,6 +5,13 @@ import { Heading } from "@dumbComponents/UI";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
+interface Props {
+  location: {
+    state: {
+      eventstatus:string,
+    };
+  };
+}
 const SelectEventPage: React.FC = () => {
   return (
     <div className={classes.mainDiv}>
