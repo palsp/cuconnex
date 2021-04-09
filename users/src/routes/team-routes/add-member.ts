@@ -1,19 +1,13 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import { requireUser } from '../../middlewares/requireUser';
-import { Member } from '../../models/member.model';
-import { Team } from '../../models/team.model';
-import { User } from '../../models/user.model';
+import { User, Team, Member } from '../../models';
 
 import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
 
-const bodyChecker1 = [
-  body('teamName')
-    .notEmpty()
-    .isAlphanumeric()
-];
+const bodyChecker1 = [body('teamName').notEmpty().isAlphanumeric()];
 
 // a user request to join a team
 router.post(
@@ -43,7 +37,7 @@ router.post(
       const newMember = await Member.create({
         userId: user.id,
         teamName,
-        status: TeamStatus.Pending
+        status: TeamStatus.Pending,
       });
 
       res.status(201).send({ message: 'Request pending', member: newMember });
@@ -53,13 +47,10 @@ router.post(
   }
 );
 const bodyChecker2 = [
-  body('teamName')
-    .notEmpty()
-    .isAlphanumeric(),
-  body('newMemberId')
-    .notEmpty()
-    .isAlphanumeric()
+  body('teamName').notEmpty().isAlphanumeric(),
+  body('newMemberId').notEmpty().isAlphanumeric(),
 ];
+
 // a team member can invite a user to join
 router.post(
   '/api/members/invite',
@@ -67,20 +58,23 @@ router.post(
   bodyChecker2,
   validateRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    const user1 = req.user!;
+    const sender = req.user!;
 
     const { teamName, newMemberId } = req.body;
 
-    const user2 = await User.findOne({ where: { id: newMemberId } });
+    //Find if there is a user in the database with the id we want to invite, and if their exists a team to add.
+    const receiver = await User.findOne({ where: { id: newMemberId } });
     const team = await Team.findOne({ where: { name: teamName } });
 
-    if (!user2) {
+    if (!receiver) {
       throw new BadRequestError('User not found!');
+
+      // else if มี receiver แต่ receiver not yet fill info.
     } else if (!team) {
       throw new BadRequestError('Team not found!');
     }
 
-    const isInviterAMember = await Member.findOne({ where: { teamName, userId: user1.id } });
+    const isInviterAMember = await Member.findOne({ where: { teamName, userId: sender.id } });
     if (!isInviterAMember) {
       throw new BadRequestError('The inviter is not a team member.');
     } else if (isInviterAMember.status !== 'Accept') {
@@ -94,7 +88,7 @@ router.post(
     }
 
     await Member.create({ userId: newMemberId, teamName, status: TeamStatus.Pending });
-    res.status(201).send({ message: 'Invite pending', userId: user2!.id, team: team!.name });
+    res.status(201).send({ message: 'Invite pending', userId: receiver!.id, team: team!.name });
   }
 );
 export { router as addMemberRouter };

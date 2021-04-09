@@ -9,7 +9,7 @@ import (
 
 type EventModel struct {
 	gorm.Model
-	ID        uint      ` gorm:"primaryKey"`
+	ID        uint      `gorm:"primaryKey"`
 	EventName string    `gorm:"column:event-name"`
 	Bio       string    `gorm:"column:bio;size:1024"`
 	Location  string    `gorm:"column:location"`
@@ -27,4 +27,20 @@ func AutoMigrate() {
 	db := common.GetDB()
 
 	db.AutoMigrate(&EventModel{})
+}
+
+
+// SaveOne save event to db
+func SaveOne(data interface{}) error {
+	db := common.GetDB()
+	err := db.Save(data).Error
+	return err
+}
+
+// FindEvents returns events that match a condition
+func FindEvents(condition string , args ...string) ([]EventModel , error) {
+	db := common.GetDB()
+	var models []EventModel
+	result := db.Where(condition , args ).Find(&models)
+	return models , result.Error
 }

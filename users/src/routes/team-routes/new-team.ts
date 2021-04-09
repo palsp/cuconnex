@@ -2,10 +2,8 @@ import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import { requireUser } from '../../middlewares/requireUser';
 import { TeamStatus } from '@cuconnex/common';
-import { Team } from '../../models/team.model';
-import { User } from '../../models/user.model';
-import { Member } from '../../models/member.model';
-import { NotAuthorizedError, BadRequestError, validateRequest } from '@cuconnex/common';
+import { Team, Member } from '../../models';
+import { BadRequestError, validateRequest } from '@cuconnex/common';
 
 const router = express.Router();
 
@@ -46,6 +44,7 @@ router.post(
       });
     } catch (err) {
       next(err);
+      // throw new Error(err.message);
     }
   }
 );

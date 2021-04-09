@@ -11,7 +11,7 @@ const RecruitMemberLogo: React.FC = () => {
         src={recruitMemberLogo}
         alt="RECRUIT MEMBER LOGO"
       />
-      <div className={classes.space}>Recruit Member</div>
+      <div className={classes.space}>Create Team</div>
     </div>
   );
 };

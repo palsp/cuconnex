@@ -1,8 +1,8 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Team } from '../../models/team.model';
+
 import { User } from '../../models/user.model';
-import { InterestDescription } from '@cuconnex/common';
+import { Business } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
 
 describe('Get Team Test', () => {
@@ -21,12 +21,10 @@ describe('Get Team Test', () => {
   it('should return team detail if it is found', async () => {
     const user = await User.create({
       id: '6131886621',
-      email: 'test1@test.com',
-      password: 'password123',
       name: 'pal'
     });
     const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
+      where: { description: Business.BusinessCase }
     });
 
     await user.addInterest(interest!);

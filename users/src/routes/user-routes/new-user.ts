@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { InterestDescription, validateRequest } from '@cuconnex/common';
-import { User } from '../../models/user.model';
+import { User, Interest } from '../../models';
 import { BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();
@@ -10,15 +10,21 @@ const bodyChecker = [
   body('interests')
     .not()
     .isEmpty()
-    .isArray()
-    .custom((input: string[]) => {
-      // find first element in the input array that does not has
-      // value specify in InterestDescription
-      const result = input.find(
-        int => !(Object.values(InterestDescription) as string[]).includes(int)
-      );
-      // expect result to be undefined so the process continue
-      return result === undefined;
+    .custom((input: { [key: string]: any }) => {
+      // check for validity
+      let valid = true;
+
+      // check if key in interests filed is existed in InterestDescription
+      for (let key in input) {
+        valid = valid && (key in InterestDescription)
+
+        if (input[key]) {
+          valid = valid && Array.isArray(input[key])
+        }
+      }
+
+      // expect valid to be true so the process continue
+      return valid
     })
     .withMessage('Valid interest must be provided'),
   body('name')
@@ -28,38 +34,42 @@ const bodyChecker = [
 
 // create user for first time login
 router.post('/api/users', bodyChecker, validateRequest, async (req: Request, res: Response) => {
-  const { interests, name, email, password } = req.body;
+  const { interests, name, faculty } = req.body;
 
-  // Make sure that user does not exist
+
+  // // Make sure that user does not exist
   let user = await User.findOne({ where: { id: req.currentUser!.id } });
   if (user) {
     throw new BadRequestError('User already existed');
   }
 
-  // remove duplicate interests from an array of interests
-  const uniqueInterests = Array.from(new Set<InterestDescription>(interests)).map(description => ({
-    description
-  }));
 
-  let createSuccess;
+  let createsuccess = false;
+  // create users 
 
   try {
-    user = await User.create({ id: req.currentUser!.id, email, name, password });
+    user = await User.create({ id: req.currentUser!.id, name, faculty: faculty || "" });
 
-    await user.addInterestFromArray(uniqueInterests);
-    createSuccess = true;
+    for (let category in interests) {
+      // 
+      // select only valid interest description 
+      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      await user.addInterestFromArray(interests[category]);
+
+    }
+
+    createsuccess = true;
+
   } catch (err) {
-    createSuccess = false;
+    createsuccess = false;
   }
 
-  // if something went wrong clear all user information in database
-  // user need to retry from the beginning!!
-  if (!createSuccess && user) {
+  if (!createsuccess && user) {
     await user.destroy();
-    throw new Error('Something went wrong');
+    throw new BadRequestError('Create User Failed');
   }
+  res.status(201).send({ id: user!.id, interests });
 
-  res.status(201).send({ id: user!.id, name: user!.name, interests: uniqueInterests });
 });
 
 export { router as newUserRouter };
