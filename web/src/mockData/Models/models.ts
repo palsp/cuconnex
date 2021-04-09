@@ -5,4 +5,12 @@ interface ActivityBoxes {
   activitySubHeading2: string;
 }
 
-export type { ActivityBoxes };
+interface MemberLists {
+  name: string;
+  profilePic: string;
+  interest: string;
+  major: string;
+  year: number;
+}
+
+export type { ActivityBoxes, MemberLists };

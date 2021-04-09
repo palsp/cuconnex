@@ -44,3 +44,15 @@
 .bigSize {
   font-size: 3rem;
 }
+
+.smallMediumSize {
+  font-size: 1.25rem;
+  font-weight: 500;
+  height: 19px;
+}
+
+.smallerSize {
+  font-size: 0.75rem;
+  font-weight: 500;
+  height: 19px;
+}
