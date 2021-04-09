@@ -13,22 +13,22 @@ const ProfilePic: React.FC<Props> = (props) => {
     cssArray = [classes.profileBig];
   } else if (props.size === "small") {
     cssArray = [classes.profileSmall];
+  } else if (props.size === "mini") {
+    cssArray = [classes.profileMini];
   } else {
     cssArray = [classes.profile];
   }
+  profileArray = [classes.profilePicDefault];
 
   if (props.uploadedProfile === true) {
     // console.log("here");
     console.log("src: ", props.PicUrl);
     profileArray = [classes.profilePic];
-  } else {
-    console.log("not upload");
-    profileArray = [classes.profilePicDefault];
   }
 
   return (
     <div data-test="profile-pic" className={cssArray.join(" ")}>
-      <div className={profileArray.join("")}>
+      <div className={profileArray.join(" ")}>
         {props.PicUrl ? (
           <img
             src={props.PicUrl}
