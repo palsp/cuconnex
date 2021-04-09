@@ -1,6 +1,7 @@
 import express from 'express';
 require('express-async-errors');
 import session from 'cookie-session';
+import cors from 'cors';
 import { json } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 
@@ -9,6 +10,8 @@ import * as router from './routes';
 
 const app = express();
 
+
+app.use(cors());
 app.set('trust proxy', true);
 
 app.use(json());
