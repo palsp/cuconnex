@@ -1,10 +1,38 @@
 import classes from "./GeneralLists.module.css";
 import React, { useEffect, useState } from "react";
 interface Props {
-  event?: {
-    name: string;
-    description: string;
-    status: string;
+  allevents?: {
+    events: {
+      id: number;
+      eventName: string;
+      bio: string;
+      status?: string;
+      location: string;
+      startDate: {
+        date: {
+          month: number;
+          day: number;
+          year: number;
+        };
+        time: {
+          hour: number;
+          minute: number;
+          second: number;
+        };
+      };
+      endDate: {
+        date: {
+          month: number;
+          day: number;
+          year: number;
+        };
+        time: {
+          hour: number;
+          minute: number;
+          second: number;
+        };
+      };
+    }[];
   };
   team?: {
     name: string;
@@ -20,8 +48,9 @@ interface Props {
 }
 const GeneralLists: React.FC<Props> = (props) => {
   let cssArrayTeam = null;
-  let cssArrayEvent = null;
-  switch (props.event?.status) {
+  // let cssArrayEvent = null;
+
+  /*  switch (props.event.status) {
     case "Open for application":
       cssArrayEvent = [classes.eventstatusDiv];
       break;
@@ -38,6 +67,7 @@ const GeneralLists: React.FC<Props> = (props) => {
       cssArrayEvent = [classes.nullDiv];
       break;
   }
+  */
   switch (props.team?.compatibility) {
     case "Very compatible with you!":
       cssArrayTeam = [classes.verycompatibleDiv];
@@ -115,11 +145,9 @@ const GeneralLists: React.FC<Props> = (props) => {
         <div className={classes.profileDiv}> </div>
       </div>
       <div className={classes.textbodyDiv}>
-        <div className={classes.eventnameDiv}>{props.event?.name}</div>
-        <div className={classes.eventdescriptionDiv}>
-          {props.event?.description}
-        </div>
-        <div className={cssArrayEvent.join(" ")}>{props.event?.status}</div>
+        <div className={classes.eventnameDiv}>{props.allevents?.events[1]}</div>
+        <div className={classes.eventdescriptionDiv}>{props.allevents?.events[2]}</div>
+        <div className={classes.eventstatusDiv}>{props.allevents?.events[3]}</div>
         <div className={classes.teamnameDiv}>{props.team?.name}</div>
         <div className={cssArrayTeam.join(" ")}>
           {props.team?.compatibility}

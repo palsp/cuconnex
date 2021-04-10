@@ -6,6 +6,9 @@ import {
   IUserSignin,
   IUserSignup,
   IResultSigninSignup,
+  IFetchEventsData,
+  ICreateEventsData,
+  IFetchEventsDataResult
 } from "@src/models";
 
 //Auth Services
@@ -37,4 +40,18 @@ const userSigninAPI = async (
 const userLogoutAPI = async (): Promise<void> => {
   await axios.post("/api/auth/signout");
 };
-export { fetchUserDataAPI, userLogoutAPI, userSignupAPI, userSigninAPI };
+const fetchEventsDataAPI = async (): Promise<AxiosResponse<IFetchEventsData>> => {
+  const eventsData: AxiosResponse<IFetchEventsData> = await axios.get("/api/events/");
+
+  return eventsData;
+};
+const createEventsAPI = async (
+  eventsCreatedData: ICreateEventsData
+): Promise<AxiosResponse<IFetchEventsDataResult>> => {
+  const createEventsData: AxiosResponse<IFetchEventsDataResult> = await axios.post(
+    "/api/events/",
+    eventsCreatedData
+  );
+  return createEventsData;
+};
+export { fetchUserDataAPI, userLogoutAPI, userSignupAPI, userSigninAPI , fetchEventsDataAPI , createEventsAPI , };

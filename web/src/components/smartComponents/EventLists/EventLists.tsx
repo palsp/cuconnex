@@ -2,64 +2,59 @@ import classes from "./EventLists.module.css";
 import React, { useEffect, useState } from "react";
 import GeneralLists from "@smartComponents/GeneralLists/GeneralLists";
 import { Link } from "react-router-dom";
-const eventArray = [
-  {
-    name: "ISE Hackathon",
-    description:
-      "The biggest Chula's business case competition with more than 100 million baht awards",
-    status: "Open for application",
-  },
-  {
-    name: "BASCI Hackathon2",
-    description:
-      "The biggest Chula's business case competition with more than 100 million baht awards",
-    status: "Open for application",
-  },
-  {
-    name: "BSAC Hackathon",
-    description:
-      "The biggest Chula's business case competition with more than 100 million baht awards",
-    status: "Closed",
-  },
-  {
-    name: "BBA Hackathon",
-    description:
-      "The biggest Chula's business case competition with more than 100 million baht awards",
-    status: "Upcoming",
-  },
-];
+
 interface Props {
-  event?: {
-    name: string;
-    description: string;
-    status: string;
-  };
-  selectedevent?: {
-    name: string;
-    description: string;
-    status: string;
-  };
+  allevents: {
+    events: {
+      id: number;
+      eventName: string;
+      bio: string;
+      location: string;
+      status?: string;
+      startDate: {
+        date: {
+          month: number;
+          day: number;
+          year: number;
+        };
+        time: {
+          hour: number;
+          minute: number;
+          second: number;
+        };
+      };
+      endDate: {
+        date: {
+          month: number;
+          day: number;
+          year: number;
+        };
+        time: {
+          hour: number;
+          minute: number;
+          second: number;
+        };
+      };
+    }[];
+  }[];
 }
+
 const EventLists: React.FC<Props> = (props) => {
   const mappeddefault = (
     <div className={classes.mainDiv}>
-      {eventArray.map((sampleevent, index) => {
+      {props.allevents.map((eventpulled, index) => {
         return (
           <div key={index} className={classes.deleteunderlineDiv}>
             <Link
               to={{
                 pathname: "/selectteams",
                 state: {
-                  event: {
-                    name: eventArray[index].name,
-                    description: eventArray[index].description,
-                    status: eventArray[index].status,
-                  },
+                  event: props.allevents[index],
                 },
               }}
             >
               <div className={classes.listDiv}>
-                <GeneralLists key={index} event={sampleevent}></GeneralLists>
+                <GeneralLists key={index} allevents={eventpulled}></GeneralLists>
               </div>
             </Link>
           </div>
