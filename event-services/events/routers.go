@@ -11,6 +11,12 @@ func EventRegister(router *gin.RouterGroup) {
 	router.GET("/", GetAllEvent)
 	//router.GET("/:event_id", GetEvent)
 	router.POST("/", CreateEvent)
+
+
+	// TODO: Must be removed in production
+	router.OPTIONS("/" , func (ctx *gin.Context){
+		ctx.JSON(http.StatusOK,gin.H{})
+	})
 }
 
 
