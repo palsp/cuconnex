@@ -11,42 +11,34 @@ const postEventsHandler = async (eventsData: ICreateEventsData) => {
   }
 };
 const sampleevent = {
-  events: [{
-    id: 1,
-    eventName: "ISE Hackathon",
+    "event-name": "ISE Hackathon",
     bio: "Biggest competition in ISE",
-    location: "Chula",
-    startDate: {
-      date: {
-        month: 1,
-        day: 1,
-        year: 2000,
-      },
+    "start-date": {
+      month: 1,
+      day: 1,
+      year: 2000,
       time: {
-        hour: 10,
-        minute: 5,
-        second: 20,
+        hour: 12,
+        minute: 0,
+        second: 0,
       },
     },
-    endDate: {
-      date: {
-        month: 4,
-        day: 10,
-        year: 2000,
-      },
+    "end-date": {
+      month: 4,
+      day: 10,
+      year: 2000,
       time: {
-        hour: 10,
-        minute: 5,
-        second: 20,
+        hour: 12,
+        minute: 0,
+        second: 0,
       },
     },
-  }],
 };
 const PushPage: React.FC = () => {
   return (
     <Button
       value="press to send data"
-      onClick={()=>postEventsHandler(sampleevent)}
+      onClick={() => postEventsHandler(sampleevent)}
     ></Button>
   );
 };

@@ -5,19 +5,19 @@ import { Heading } from "@dumbComponents/UI";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
-import { fetchEventsDataAPI , fetchUserDataAPI} from "@api/index";
-
+import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
 const SelectEventPage: React.FC = () => {
   const [fetchEvents, setFetchEvents] = useState<boolean>(false);
   const fetchEventsHandler = async () => {
     try {
       const eventsData = await fetchEventsDataAPI();
       console.log("SUCCESS fetchDataHandler", eventsData.data);
+      return (eventsData.data);
     } catch (e) {
       console.log("fetchDataHandler error", e);
     }
   };
-  if (!fetchEvents){
+  if (!fetchEvents) {
     fetchEventsHandler();
     setFetchEvents(true);
   }
