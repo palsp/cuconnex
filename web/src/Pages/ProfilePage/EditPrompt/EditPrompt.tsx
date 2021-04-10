@@ -5,15 +5,7 @@ import { Formik, Form, Field } from "formik";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
 import * as yup from "yup";
 
-import {
-  Background,
-  Button,
-  DotMorePage,
-  Heading,
-  InputField,
-  Subtitle,
-  Toggles,
-} from "@dumbComponents/UI/index";
+import { InputField, Toggles } from "@dumbComponents/UI/index";
 
 import { ProfilePic } from "@smartComponents/index";
 

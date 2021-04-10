@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { MemberLists, SearchBar } from "@smartComponents/index";
-import { Heading } from "@dumbComponents/UI/index";
+import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-import { Subtitle } from "@dumbComponents/UI/index";
 
 import classes from "./SelectMemberPage.module.css";
 

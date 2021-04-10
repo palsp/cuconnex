@@ -1,11 +1,11 @@
 import classes from "./LandingHero.module.css";
 import React from "react";
 import "react-toggle/style.css";
-import FindteamLogo from "../../../components/dumbComponents/UI/FindteamLogo/FindteamLogo";
-import RecruitMemberLogo from "../../../components/dumbComponents/UI/RecruitmemberLogo/RecruitmemberLogo";
-import Subtitle from "../../../components/dumbComponents/UI/Subtitle/Subtitle";
-import Heading from "../../../components/dumbComponents/UI/Heading/Heading";
-import { Username } from "@dumbComponents/UI";
+import {
+  FindteamLogo,
+  RecruitMemberLogo,
+  Username,
+} from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import { Link } from "react-router-dom";
 

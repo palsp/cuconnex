@@ -1,11 +1,11 @@
-interface ActivityBoxes {
+export interface ActivityBoxes {
   activityName: string;
   activityPic: string;
   activitySubHeading1: string;
   activitySubHeading2: string;
 }
 
-interface MemberLists {
+export interface MemberLists {
   name: string;
   profilePic: string;
   interest: string;
@@ -13,4 +13,8 @@ interface MemberLists {
   year: number;
 }
 
-export type { ActivityBoxes, MemberLists };
+export interface PeopleLists {
+  name: string;
+  profilePic: string;
+  interest: string;
+}

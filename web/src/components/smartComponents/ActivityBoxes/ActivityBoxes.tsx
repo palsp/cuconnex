@@ -1,7 +1,7 @@
 import React from "react";
 import ActivityBox from "@smartComponents/ActivityBoxes/ActivityBox/ActivityBox";
 import classes from "./ActivityBoxes.module.css";
-import mockActivityBoxes from "./../../../mockData/mockActivitiesBoxes";
+import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
 
 const ActivityBoxes: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-import { ActivityBoxes } from "./Models/models";
+import { ActivityBoxes } from "@src/mockData/Models/index";
 
 const mockActivityBoxes: ActivityBoxes[] = [
   {

@@ -5,6 +5,7 @@ export { default as PlusCircle } from "@icons/PlusCircle/PlusCircle";
 export { default as Search } from "@icons/Search/Search";
 export { default as Send } from "@icons/Send/Send";
 export { default as Check } from "@icons/Check/Check";
+export { default as Mail } from "@icons/Mail/Mail";
 
 export { default as WebBuilder } from "@icons/InterestList/Technology/Web builder/Webbuilder";
 export { default as Blockchain } from "@icons/InterestList/Technology/Blockchain/Blockchain";

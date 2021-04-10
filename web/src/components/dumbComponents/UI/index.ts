@@ -15,3 +15,7 @@ export { default as RecruitSign } from "@dumbComponents/UI/RecruitSign/RecruitSi
 export { default as CoverPic } from "@dumbComponents/UI/CoverPic/CoverPic";
 export { default as Toggles } from "@dumbComponents/UI/Toggles/Toggles";
 export { default as CheckBox } from "@dumbComponents/UI/CheckBox/CheckBox";
+export { default as Tag } from "@dumbComponents/UI/Tag/Tag";
+export { default as FindteamLogo } from "@dumbComponents/UI/FindteamLogo/FindteamLogo";
+export { default as Hamburger } from "@dumbComponents/UI/Hamburger/Hamburger";
+export { default as RecruitMemberLogo } from "@dumbComponents/UI/RecruitmemberLogo/RecruitmemberLogo";
