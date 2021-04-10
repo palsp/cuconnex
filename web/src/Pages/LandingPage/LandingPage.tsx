@@ -14,7 +14,7 @@ const LandingPage: React.FC = () => {
     setClickHamburger(!clickHamburger);
   };
 
-  const firstTime = false;
+  const firstTime = true;
   let cssArray = [classes.content];
   if (firstTime) cssArray = [classes.flexDiv];
 

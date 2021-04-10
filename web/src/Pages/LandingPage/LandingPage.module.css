@@ -1,6 +1,6 @@
 .main {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
 }
 
@@ -27,7 +27,7 @@
 .content .searchDiv {
   zoom: 160%;
   margin-left: -10%;
-  margin-right: 50%;
+  margin-right: 53%;
 }
 
 .flexDiv {
