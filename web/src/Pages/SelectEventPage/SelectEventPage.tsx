@@ -1,14 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./SelectEventPage.module.css";
-import { Heading } from "@dumbComponents/UI";
-import { ArrowLeft } from "@dumbComponents/UI/Icons";
-import EventLists from "@smartComponents/EventLists/EventLists";
-import Tag from "@dumbComponents/UI/Tag/Tag";
+import { Heading, Tag } from "@dumbComponents/UI/index";
+import { ArrowLeft } from "@icons/index";
+import { EventLists } from "@smartComponents/index";
 interface Props {
   location: {
     state: {
-      eventstatus:string,
+      eventstatus: string;
     };
   };
 }

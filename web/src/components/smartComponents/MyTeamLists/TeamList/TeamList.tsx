@@ -1,6 +1,11 @@
 import React from "react";
 
-import { Button, Heading, RecruitSign, Subtitle } from "@dumbComponents/UI";
+import {
+  Button,
+  Heading,
+  RecruitSign,
+  Subtitle,
+} from "@dumbComponents/UI/index";
 
 import { ProfilePic } from "@smartComponents/index";
 

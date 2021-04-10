@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MemberList from "@smartComponents/MemberLists/MemberList/MemberList";
-import mockMemberLists from "./../../../mockData/mockMemberLists";
+import mockMemberLists from "@src/mockData/mockMemberLists";
 import classes from "./MemberLists.module.css";
 interface Props {
   selectMemberListsHandler: (e: number) => void;

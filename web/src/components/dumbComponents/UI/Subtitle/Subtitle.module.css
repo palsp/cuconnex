@@ -48,7 +48,7 @@
 .smallMediumSize {
   font-size: 1.25rem;
   font-weight: 500;
-  height: 19px;
+  /* height: 19px; */
 }
 
 .smallerSize {

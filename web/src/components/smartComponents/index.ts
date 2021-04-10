@@ -19,4 +19,9 @@ export { default as Biography } from "@smartComponents/Biography/Biography";
 export { default as ProfileInfo } from "@smartComponents/ProfileInfo/ProfileInfo";
 export { default as ProfilePic } from "@smartComponents/ProfilePic/ProfilePic";
 export { default as MemberLists } from "@smartComponents/MemberLists/MemberLists";
-
+export { default as PeopleLists } from "@smartComponents/PeopleLists/PeopleLists";
+export { default as PeopleList } from "@smartComponents/PeopleLists/PeopleList/PeopleList";
+export { default as GeneralLists } from "@smartComponents/GeneralLists/GeneralLists";
+export { default as EventLists } from "@smartComponents/EventLists/EventLists";
+export { default as EventCards } from "@smartComponents/EventCards/EventCards";
+export { default as EventCard } from "@smartComponents/EventCards/EventCard/EventCard";

@@ -1,3 +1,1 @@
-
-import { ActivityBoxes, MemberLists } from "./models";
-export type { ActivityBoxes, MemberLists };
+export * from "@src/mockData/Models/models";
