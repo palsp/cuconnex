@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./SelectEventPage.module.css";
 import { Heading } from "@dumbComponents/UI";
@@ -6,21 +6,17 @@ import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
 import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
+import { IEventData } from "@src/models";
 const SelectEventPage: React.FC = () => {
-  const [fetchEvents, setFetchEvents] = useState<boolean>(false);
+  const [eventLists, setEventLists] = useState<[IEventData] | []>([]);
+  useEffect(() => {
+    fetchEventsHandler().then( (value:[IEventData] | []) => setEventLists(value));
+  }, []);
   const fetchEventsHandler = async () => {
-    try {
       const eventsData = await fetchEventsDataAPI();
-      console.log("SUCCESS fetchDataHandler", eventsData.data);
-      return (eventsData.data);
-    } catch (e) {
-      console.log("fetchDataHandler error", e);
-    }
+      console.log("SUCCESS fetchDataHandler", eventsData.data.events);
+      return (eventsData.data.events);
   };
-  if (!fetchEvents) {
-    fetchEventsHandler();
-    setFetchEvents(true);
-  }
   return (
     <div className={classes.mainDiv}>
       <div className={classes.headingContainerDiv}>
@@ -37,6 +33,7 @@ const SelectEventPage: React.FC = () => {
         <Tag />
       </div>
       <div className={classes.eventDiv}>
+        <EventLists events={eventLists}></EventLists>
       </div>
     </div>
   );

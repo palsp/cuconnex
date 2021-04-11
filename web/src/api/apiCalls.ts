@@ -7,9 +7,7 @@ import {
   IUserSignup,
   IResultSigninSignup,
   IFetchEventsData,
-  ICreateEventsData,
-  IFetchEventsDataResult,
-  ICreateEventsDataResult
+  IEventData,
 } from "@src/models";
 
 //Auth Services
@@ -47,9 +45,9 @@ const fetchEventsDataAPI = async (): Promise<AxiosResponse<IFetchEventsData>> =>
   return eventsData;
 };
 const createEventsAPI = async (
-  eventsCreatedData: ICreateEventsData
-): Promise<AxiosResponse<ICreateEventsDataResult>> => {
-  const createEventsData: AxiosResponse<ICreateEventsDataResult> = await axios.post(
+  eventsCreatedData: IEventData
+): Promise<AxiosResponse<IEventData>> => {
+  const createEventsData: AxiosResponse<IEventData> = await axios.post(
     "/api/events/",
     eventsCreatedData
   );

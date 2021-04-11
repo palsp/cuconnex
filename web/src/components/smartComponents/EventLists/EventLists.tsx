@@ -2,39 +2,18 @@ import classes from "./EventLists.module.css";
 import React, { useEffect, useState } from "react";
 import GeneralLists from "@smartComponents/GeneralLists/GeneralLists";
 import { Link } from "react-router-dom";
+import { IEventData } from "@src/models";
 
 interface Props {
-  events: [{
-    "event-name": string;
-    bio: string;
-    status?: string;
-    "start-date": {
-      month: number;
-      day: number;
-      year: number;
-      time: {
-        hour: number;
-        minute: number;
-        second: number;
-      };
-    };
-    "end-date": {
-      month: number;
-      day: number;
-      year: number;
-      time: {
-        hour: number;
-        minute: number;
-        second: number;
-      };
-    };
-  }];
+  events: [
+    IEventData
+  ] | []
 }
 
 const EventLists: React.FC<Props> = (props) => {
   const mappeddefault = (
     <div className={classes.mainDiv}>
-      {props.events.map((eventpulled, index) => {
+      {props.events.map((eventpulled:IEventData, index:number) => {
         return (
           <div key={index} className={classes.deleteunderlineDiv}>
             <Link

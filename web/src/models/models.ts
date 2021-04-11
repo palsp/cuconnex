@@ -41,85 +41,15 @@ export interface ICreateUserData {
 //events
 export interface IFetchEventsData {
   events: [
-    {
-      "event-name": string;
-      bio: string;
-      "start-date": {
-        month: number;
-        day: number;
-        year: number;
-        time: {
-          hour: number;
-          minute: number;
-          second: number;
-        };
-      };
-      "end-date": {
-        month: number;
-        day: number;
-        year: number;
-        time: {
-          hour: number;
-          minute: number;
-          second: number;
-        };
-      };
-    }
-  ];
+    IEventData
+  ]
 }
 export interface IFetchEventsDataResult {
   events: [
-    {
-      "event-name": string;
-      bio: string;
-      "start-date": {
-        month: number;
-        day: number;
-        year: number;
-        time: {
-          hour: number;
-          minute: number;
-          second: number;
-        };
-      };
-      "end-date": {
-        month: number;
-        day: number;
-        year: number;
-        time: {
-          hour: number;
-          minute: number;
-          second: number;
-        };
-      };
-    }
-  ];
+    IEventData
+  ]
 }
-export interface ICreateEventsData {
-  "event-name": string;
-  bio: string;
-  "start-date": {
-    month: number;
-    day: number;
-    year: number;
-    time: {
-      hour: number;
-      minute: number;
-      second: number;
-    };
-  };
-  "end-date": {
-    month: number;
-    day: number;
-    year: number;
-    time: {
-      hour: number;
-      minute: number;
-      second: number;
-    };
-  };
-}
-export interface ICreateEventsDataResult {
+export interface IEventData {
   "event-name": string;
   bio: string;
   "start-date": {

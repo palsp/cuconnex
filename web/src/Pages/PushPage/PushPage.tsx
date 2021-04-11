@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Button } from "@dumbComponents/UI/index";
 import { createEventsAPI } from "@api/index";
-import { ICreateEventsData, IFetchEventsDataResult } from "@models/index";
-const postEventsHandler = async (eventsData: ICreateEventsData) => {
+import { IEventData } from "@src/models";
+const postEventsHandler = async (eventsData: IEventData) => {
   try {
     const resultEvents = await createEventsAPI(eventsData);
     console.log("Successfully sent a POST request to events", resultEvents);
