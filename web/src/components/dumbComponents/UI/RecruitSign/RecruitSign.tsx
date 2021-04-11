@@ -13,6 +13,8 @@ const RecruitSign: React.FC<Props> = (props) => {
     cssArray = [classes.recruiting];
   } else if (props.value === "Team owner") {
     cssArray = [classes.owner];
+  } else if (props.value === "Awaiting") {
+    cssArray = [classes.awaiting];
   } else {
     cssArray = [classes.default];
   }

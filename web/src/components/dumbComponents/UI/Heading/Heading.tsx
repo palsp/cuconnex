@@ -26,11 +26,12 @@ const Heading: React.FC<Props> = (props) => {
       break;
     case "medium":
       cssArray.push(classes.mediumSize);
-
       break;
     case "big":
       cssArray.push(classes.bigSize);
-
+      break;
+    case "small-medium":
+      cssArray.push(classes.smallMediumSize);
       break;
   }
   return (

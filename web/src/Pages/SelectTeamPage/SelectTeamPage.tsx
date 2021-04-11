@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import classes from "./SelectTeamPage.module.css";
-import TeamLists from "@smartComponents/TeamLists/TeamLists";
+import { TeamLists, EventCards } from "@smartComponents/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
-import EventCards from "@smartComponents/EventCards/EventCards";
 import { Link } from "react-router-dom";
 interface Props {
   location: {

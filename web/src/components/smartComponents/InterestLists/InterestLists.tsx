@@ -5,7 +5,7 @@ import classes from "./InterestLists.module.css";
 
 interface Props {
   type: string;
-  selectInterestHandler: (e: string) => any;
+  selectInterestHandler: (e: string) => void;
 }
 
 const businessInterestArray = [

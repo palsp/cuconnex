@@ -16,13 +16,14 @@ import {
   LandingPage,
   SelectEventPage,
   SelectTeamPage,
+  SelectMemberPage,
 } from "@pages/index";
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 import PushPage from "@pages/PushPage/PushPage";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<JSX.Element>();
 
   const fetchDataHandler = async () => {
@@ -67,6 +68,7 @@ const App: React.FC = () => {
           <Route path="/selectevents" exact component={SelectEventPage} />
           <Route path="/selectteams" exact component={SelectTeamPage} />
           <Route path="/post" exact component={PushPage} />
+          <Route path="/selectmember" exact component={SelectMemberPage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>
@@ -106,7 +108,6 @@ const App: React.FC = () => {
 
       <button onClick={fetchDataHandler}>FETCH</button>
       <button onClick={logoutHandler}>LOGOUT</button>
-      {/* {numUseEffect} */}
     </div>
   );
 };
