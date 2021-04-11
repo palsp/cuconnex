@@ -15,9 +15,20 @@ const LandingPage: React.FC = () => {
     setClickHamburger(!clickHamburger);
   };
 
+  const firstTime = true;
+  let cssArray = [classes.content];
+  if (firstTime) cssArray = [classes.flexDiv];
+
   const LandingPrompt = !clickHamburger ? (
+
+    <div className={cssArray.join(" ")}>
+      <div className={classes.headerDiv}>
+
+    {/* 
+    Loong's work
     <div>
-      <div className={classes.toolbarDiv}>
+      <div className={classes.toolbarDiv}> */}
+
         <div className={classes.searchDiv}>
           <Link to="/search">
             <Search />
@@ -31,7 +42,7 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero />
+        <LandingHero firstTime={firstTime} />
       </div>
     </div>
   ) : (

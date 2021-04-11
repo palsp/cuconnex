@@ -24,5 +24,7 @@ export { default as Finance } from "@icons/InterestList/Business/Finance/Finance
 export { default as Marketing } from "@icons/InterestList/Business/Marketing/Marketing";
 export { default as Startup } from "@icons/InterestList/Business/Startup/Startup";
 
+export { default as Group } from "@icons/Group/Group";
+export { default as Plus } from "@icons/Plus/Plus";
 export { default as CircleUnFilled } from "@icons/CircleUnFilled/CircleUnFilled";
 export { default as CircleFilled } from "@icons/CircleFilled/CircleFilled";

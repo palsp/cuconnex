@@ -55,11 +55,12 @@ const ProfilePage: React.FC = () => {
         </div>
 
         <div className={classes.about}>
-          <Biography
-            nickname="home"
-            detail="I love coding and Korean girl"
-            isMyProfile={isMyProfile}
-          />
+          <div className={classes.bio}>
+            <Biography nickname="home" detail="I love coding and Korean girl" />
+          </div>
+          <div className={classes.editAbout} onClick={EditButtonClickedHandler}>
+            {isMyProfile ? <Edit /> : <div />}
+          </div>
         </div>
 
         <div className={classes.education}>
@@ -72,6 +73,7 @@ const ProfilePage: React.FC = () => {
         <div className={classes.interest}>
           <div className={classes.interestHeader}>
             <div className={classes.heading}>Interests</div>
+
             <div className={classes.addIcon}>
               {isMyProfile ? (
                 <Link to="/selectinterests">
