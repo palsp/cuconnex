@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./EducationList.module.css";
-import { Logo } from "@dumbComponents/UI";
+import { Logo } from "@dumbComponents/UI/index";
 
 interface Props {
   educationBox: {

@@ -5,16 +5,9 @@ import { Formik, Form, Field } from "formik";
 import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
 import * as yup from "yup";
 
-import {
-  Background,
-  Button,
-  DotMorePage,
-  Heading,
-  InputField,
-  ProfilePic,
-  Subtitle,
-  Toggles,
-} from "@dumbComponents/UI/index";
+import { InputField, Toggles } from "@dumbComponents/UI/index";
+
+import { ProfilePic } from "@smartComponents/index";
 
 interface Props {
   type?: boolean; // true == 'Profile', false = 'About'

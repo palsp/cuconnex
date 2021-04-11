@@ -27,9 +27,22 @@
   height: 30px;
   width: 30px;
 }
+.profilePicDefault {
+  background-image: url("../../../assets/tempProfile.png");
+  background-repeat: round;
+  background-size: contain;
+
+  border-radius: 50%;
+  opacity: 1;
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .profilePic {
-  background-image: url("../../../../assets/tempProfile.png");
   background-repeat: round;
   background-size: contain;
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
-import { ActivityLists, SearchBar } from "@smartComponents/index";
+import { SearchBar } from "@smartComponents/index";
 import { ArrowLeft } from "@icons/index";
 
 import classes from "./FindTeamPage.module.css";
@@ -27,7 +27,11 @@ const FindTeamPage: React.FC = () => {
 
       <div className={classes.divBody}>
         <div className={classes.divFixedLeftWithPadding}>
-          <Heading size="big" value="Let's find the team that matches you" />
+          <Heading
+            size="medium"
+            color="black"
+            value="Let's find the team that matches you"
+          />
         </div>
         <SearchBar
           data-test="find-team-page-search-bar"
@@ -41,7 +45,6 @@ const FindTeamPage: React.FC = () => {
             <Subtitle value="from activity category" />
           </div>
         </div>
-        <ActivityLists data-test="find-team-page-friend-lists" />
       </div>
     </div>
   );

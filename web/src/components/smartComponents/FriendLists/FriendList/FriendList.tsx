@@ -1,11 +1,7 @@
 import React from "react";
 
-import {
-  Heading,
-  Subtitle,
-  Username,
-  ProfilePic,
-} from "@dumbComponents/UI/index";
+import { ProfilePic } from "@smartComponents/index";
+import { Heading, Subtitle, Username } from "@dumbComponents/UI/index";
 import { PlusCircle } from "@icons/index";
 import classes from "./FriendList.module.css";
 

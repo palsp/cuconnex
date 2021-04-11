@@ -1,14 +1,10 @@
 import React from "react";
 import classes from "./ProfileInfo.module.css";
 
-import {
-  Subtitle,
-  Heading,
-  ProfilePic,
-  CoverPic,
-} from "@dumbComponents/UI/index";
+import { Subtitle, Heading, CoverPic } from "@dumbComponents/UI/index";
 import { Edit } from "@dumbComponents/UI/Icons";
 
+import { ProfilePic } from "@smartComponents/index";
 interface Props {
   cover?: string;
   pic?: string;

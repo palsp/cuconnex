@@ -36,3 +36,8 @@
 .bigSize {
   font-size: 3rem;
 }
+
+.smallMediumSize {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
