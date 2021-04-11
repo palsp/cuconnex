@@ -10,21 +10,19 @@ import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
 
 const LandingPage: React.FC = () => {
-  const [clickHamburger, setClickHamburger] = useState(false);
+  const [clickHamburger, setClickHamburger] = useState<boolean>(false);
+  const [hasTeam] = useState<boolean>(true);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
 
-  const firstTime = true;
   let cssArray = [classes.content];
-  if (firstTime) cssArray = [classes.flexDiv];
+  if (!hasTeam) cssArray = [classes.flexDiv];
 
   const LandingPrompt = !clickHamburger ? (
-
     <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
-
-    {/* 
+        {/* 
     Loong's work
     <div>
       <div className={classes.toolbarDiv}> */}
@@ -42,7 +40,7 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero firstTime={firstTime} />
+        <LandingHero hasTeam={hasTeam} />
       </div>
     </div>
   ) : (

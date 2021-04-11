@@ -22,7 +22,7 @@ import {
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<JSX.Element>();
 
   const fetchDataHandler = async () => {
