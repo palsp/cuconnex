@@ -28,3 +28,6 @@ export { default as Group } from "@icons/Group/Group";
 export { default as Plus } from "@icons/Plus/Plus";
 export { default as CircleUnFilled } from "@icons/CircleUnFilled/CircleUnFilled";
 export { default as CircleFilled } from "@icons/CircleFilled/CircleFilled";
+
+export { default as InviteMember } from "@icons/InviteMember/InviteMember";
+export { default as Close } from "@icons/Close/Close";

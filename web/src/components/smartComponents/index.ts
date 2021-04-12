@@ -25,3 +25,9 @@ export { default as GeneralLists } from "@smartComponents/GeneralLists/GeneralLi
 export { default as EventLists } from "@smartComponents/EventLists/EventLists";
 export { default as EventCards } from "@smartComponents/EventCards/EventCards";
 export { default as EventCard } from "@smartComponents/EventCards/EventCard/EventCard";
+export { default as TeamInfo } from "@smartComponents/TeamInfo/TeamInfo";
+export { default as RecruitmentLists } from "@smartComponents/RecruitmentLists/RecruitmentLists";
+export { default as RecruitmentList } from "@smartComponents/RecruitmentLists/RecruitmentList/RecruitmentList";
+export { default as MemberPicList } from "@smartComponents/MemberPicList/MemberPicList";
+export { default as TeamActivityLists } from "@smartComponents/TeamActivityLists/TeamActivityLists";
+export { default as TeamActivityList } from "@smartComponents/TeamActivityLists/TeamActivityList/TeamActivityList";

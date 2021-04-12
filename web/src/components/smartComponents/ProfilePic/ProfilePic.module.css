@@ -16,6 +16,14 @@
   width: 125px;
 }
 
+.profileMediumBorder {
+  margin: auto;
+  height: 125px;
+  width: 125px;
+  border-radius: 50%;
+  border: 5px solid #00c300;
+}
+
 .profileSmall {
   margin: auto;
   height: 40px;

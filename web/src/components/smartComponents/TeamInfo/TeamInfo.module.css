@@ -15,32 +15,43 @@
   position: absolute;
 }
 
-.flex {
+.teamprofile {
   display: flex;
   flex-direction: row;
 }
 
 .profilePic {
-  border-radius: 50%;
-  margin-top: 15%;
   left: 5%;
+  margin-top: 15%;
   position: relative;
   overflow: hidden;
 }
 
+.namerole {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  margin-top: 35%;
+  margin-left: 10%;
+  width: 50%;
+}
+
 .name {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: start;
   font-weight: 800;
-  margin-left: 5%;
-  margin-top: 3%;
-  margin-bottom: 1.5%;
+  margin-bottom: 1%;
 }
 
 .role {
-  margin-left: 5%;
   font-size: 1rem;
   text-align: start;
   font-weight: 500;
   color: #00c300;
+}
+
+.sign {
+  margin-top: 1.5%;
+  margin-left: 45%;
 }
