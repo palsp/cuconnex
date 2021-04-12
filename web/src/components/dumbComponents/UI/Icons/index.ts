@@ -5,6 +5,7 @@ export { default as PlusCircle } from "@icons/PlusCircle/PlusCircle";
 export { default as Search } from "@icons/Search/Search";
 export { default as Send } from "@icons/Send/Send";
 export { default as Check } from "@icons/Check/Check";
+export { default as Mail } from "@icons/Mail/Mail";
 
 export { default as WebBuilder } from "@icons/InterestList/Technology/Web builder/Webbuilder";
 export { default as Blockchain } from "@icons/InterestList/Technology/Blockchain/Blockchain";
@@ -25,3 +26,5 @@ export { default as Startup } from "@icons/InterestList/Business/Startup/Startup
 
 export { default as Group } from "@icons/Group/Group";
 export { default as Plus } from "@icons/Plus/Plus";
+export { default as CircleUnFilled } from "@icons/CircleUnFilled/CircleUnFilled";
+export { default as CircleFilled } from "@icons/CircleFilled/CircleFilled";

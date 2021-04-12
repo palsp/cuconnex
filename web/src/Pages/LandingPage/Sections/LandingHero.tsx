@@ -1,45 +1,44 @@
 import classes from "./LandingHero.module.css";
 import React from "react";
-import FindteamLogo from "../../../components/dumbComponents/UI/FindteamLogo/FindteamLogo";
-import RecruitMemberLogo from "../../../components/dumbComponents/UI/RecruitmemberLogo/RecruitmemberLogo";
-import { ProfilePic, Username } from "@dumbComponents/UI";
+import "react-toggle/style.css";
+import {
+  FindteamLogo,
+  RecruitMemberLogo,
+  Username,
+} from "@dumbComponents/UI/index";
 import { Link } from "react-router-dom";
-import { MyTeamLists } from "@smartComponents/index";
-import { Plus } from "@dumbComponents/UI/Icons";
+import { MyTeamLists, ProfilePic } from "@smartComponents/index";
+import { Plus } from "@icons/index";
 
 interface Props {
-  firstTime: boolean;
+  hasTeam: boolean;
 }
 
 const LandingHero: React.FC<Props> = (props) => {
-  let heroPrompt = null;
-  if (props.firstTime) {
-    heroPrompt = (
-      <div className={classes.buttonmainDiv}>
-        <div className={classes.recruitmemberDiv}>
-          <RecruitMemberLogo />
-        </div>
-        <div className={classes.findteamDiv}>
-          <Link style={{ textDecoration: "none" }} to="/selectevents">
-            <FindteamLogo />
-          </Link>
-        </div>
-      </div>
-    );
-  } else {
-    heroPrompt = (
-      <div className={classes.myteamDiv}>
-        <MyTeamLists page="landing" />
+  const heroPrompt = props.hasTeam ? (
+    <div className={classes.myteamDiv}>
+      <MyTeamLists page="landing" />
 
-        <div className={classes.addTeam}>
-          <div className={classes.plus}>
-            <Plus />
-          </div>
-          <div className={classes.text}>CREATE YOUR NEW TEAM</div>
+      <div className={classes.addTeam}>
+        <div className={classes.plus}>
+          <Plus />
         </div>
+        <div className={classes.text}>CREATE YOUR NEW TEAM</div>
       </div>
-    );
-  }
+    </div>
+  ) : (
+    <div className={classes.buttonmainDiv}>
+      <div className={classes.recruitmemberDiv}>
+        <RecruitMemberLogo />
+      </div>
+      <div className={classes.findteamDiv}>
+        <Link style={{ textDecoration: "none" }} to="/selectevents">
+          <FindteamLogo />
+        </Link>
+      </div>
+    </div>
+  );
+
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>

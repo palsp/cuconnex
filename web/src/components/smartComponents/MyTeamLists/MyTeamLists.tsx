@@ -18,7 +18,7 @@ const MyTeamLists: React.FC<Props> = (props) => {
     landing = true;
   }
   return (
-    <div className={classes.container} data-test="myTeamLists">
+    <div className={classes.teamLists} data-test="myTeamLists">
       {teamArray.map((team, index) => {
         return <MyTeamList key={index} team={team} landing={landing} />;
       })}

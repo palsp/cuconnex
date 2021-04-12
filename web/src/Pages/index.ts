@@ -12,3 +12,4 @@ export { default as LandingPage } from "@pages/LandingPage/LandingPage";
 export { default as SelectEventPage } from "@pages/SelectEventPage/SelectEventPage";
 export { default as SelectTeamPage } from "@pages/SelectTeamPage/SelectTeamPage";
 export { default as TeamDetail } from "@pages/TeamDetailPage/TeamDetail";
+export { default as SelectMemberPage } from "@pages/SelectMemberPage/SelectMemberPage";

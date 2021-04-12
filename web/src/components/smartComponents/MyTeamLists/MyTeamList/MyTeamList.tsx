@@ -3,12 +3,12 @@ import React from "react";
 import {
   Button,
   Heading,
-  ProfilePic,
   RecruitSign,
   Subtitle,
   TeamPic,
 } from "@dumbComponents/UI";
 
+import { ProfilePic } from "@smartComponents/index";
 import classes from "./MyTeamList.module.css";
 import { Ecommerce, Group } from "@dumbComponents/UI/Icons";
 

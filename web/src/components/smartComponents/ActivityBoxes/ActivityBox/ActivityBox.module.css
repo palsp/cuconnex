@@ -1,0 +1,44 @@
+.flexboxContainer {
+  display: inline-flex;
+}
+
+.flexboxText {
+  justify-content: left;
+  align-items: top;
+}
+
+.flexboxItem {
+  /* width: 350px;
+  height: 125px; */
+  /* border: 3px solid #333; */
+
+  width: 165px;
+  height: 80px;
+  margin: 10px;
+  border-radius: 20px;
+  background-color: #dfdfdf;
+  /* justify-content: left;
+  align-items: top; */
+  /* background-color: var(--search_bar, #c2c2c2); */
+  /* opacity: 0.44; */
+  /* font-family: "Nunito", serif;
+  color: var(--grey_text, #484747); */
+
+  /* opacity: 1;
+  position: relative;
+  width: 100%;
+  height: inherit;
+  display: flex;
+  justify-content: left;
+  align-items: top;
+  color: black;
+  border-radius: 20px;
+  margin: 10%; */
+
+  /* width: 168px;
+  height: 74px;
+  background-color: var(--search_bar, #c2c2c2);
+  overflow: visible;
+  opacity: 0.44;
+  border-radius: 10px; */
+}
