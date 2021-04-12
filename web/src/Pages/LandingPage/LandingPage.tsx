@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
       <div className={classes.toolbarDiv}> */}
 
         <div className={classes.searchDiv}>
-          <Link to="/search">
+          <Link to="/explore">
             <Search />
           </Link>
         </div>

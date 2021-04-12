@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
-import "./App.css";
 import {
   AuthPage,
   PersonalInfoPage,
@@ -17,14 +16,20 @@ import {
   SelectEventPage,
   SelectTeamPage,
   SelectMemberPage,
+  ExplorePage,
 } from "@pages/index";
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
+import classes from "./App.module.css";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<JSX.Element>();
 
+  useEffect(() => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }, []);
   const fetchDataHandler = async () => {
     try {
       const userData = await fetchUserDataAPI();
@@ -67,6 +72,7 @@ const App: React.FC = () => {
           <Route path="/selectevents" exact component={SelectEventPage} />
           <Route path="/selectteams" exact component={SelectTeamPage} />
           <Route path="/selectmember" exact component={SelectMemberPage} />
+          <Route path="/explore" exact component={ExplorePage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>
@@ -87,7 +93,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className={classes.mainContainer}>
       {routes}
       <button
         onClick={() => {
