@@ -1,5 +1,5 @@
 import React from "react";
-import ActivityList from "@smartComponents/OldActivityLists/ActivityList/ActivityList";
+import OldActivityList from "@smartComponents/OldActivityLists/OldActivityList/OldActivityList";
 
 const activityArray = [
   {
@@ -32,7 +32,7 @@ const OldActivityLists: React.FC = () => {
   return (
     <div data-test="activity-lists">
       {activityArray.map((activity, index) => {
-        return <ActivityList key={index} activityBox={activity} />;
+        return <OldActivityList key={index} activityBox={activity} />;
       })}
     </div>
   );

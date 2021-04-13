@@ -6,7 +6,6 @@ import {
   PersonalInfoPage,
   SelectInterestPage,
   FriendsPage,
-  FindTeamPage,
   RecruitMemberPage,
   TestPage,
   SuccessPage,
@@ -63,7 +62,7 @@ const App: React.FC = () => {
             component={PersonalInfoPage}
           />
           <Route path="/friendlists" exact component={FriendsPage} />
-          <Route path="/findteams" exact component={FindTeamPage} />
+          {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
           <Route path="/recruitmembers" exact component={RecruitMemberPage} />
           <Route path="/success" exact component={SuccessPage} />
           <Route path="/landing" exact component={LandingPage} />
