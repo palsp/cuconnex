@@ -16,7 +16,7 @@ import { InterestLists } from "@smartComponents/index";
 
 import { ArrowLeft, ArrowRight } from "@icons/index";
 
-import { createUserDataAPI } from "@src/api/index";
+import { createUserDataAPI } from "@api/index";
 
 import { ICreateUserData } from "@models/index";
 
@@ -105,32 +105,28 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-
-  
-
   //These are Nat's test
-//   useEffect(() => {
-//     console.log("Fetching data GET /api/users");
-//     const fetchUserData = async () => {
-//       // const fetchInterestArray = { Business: [] };
-//       const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
+  //   useEffect(() => {
+  //     console.log("Fetching data GET /api/users");
+  //     const fetchUserData = async () => {
+  //       // const fetchInterestArray = { Business: [] };
+  //       const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
 
-//       if (fetchInterestArray.Business.length !== 0) {
-//         setEditInterest(true);
-//       }
+  //       if (fetchInterestArray.Business.length !== 0) {
+  //         setEditInterest(true);
+  //       }
 
-//       // try {
-//       //   const userData = await axios.get("/api/users");
-//       //   console.log("Successfully GET userData", userData);
-//       // } catch (e) {
-//       //   console.log("Errors FETCHING userData", e);
-//       //   console.log("Am I Authen?", isAuthenticated);
-//       // }
-//     };
-//     fetchUserData();
-//   }, []);
-const setUserData = async () => {
-
+  //       // try {
+  //       //   const userData = await axios.get("/api/users");
+  //       //   console.log("Successfully GET userData", userData);
+  //       // } catch (e) {
+  //       //   console.log("Errors FETCHING userData", e);
+  //       //   console.log("Am I Authen?", isAuthenticated);
+  //       // }
+  //     };
+  //     fetchUserData();
+  //   }, []);
+  const setUserData = async () => {
     if (props.location.state) {
       name = props.location.state.name;
       profilePic = props.location.state.profilePic;
