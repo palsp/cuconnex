@@ -27,6 +27,7 @@ export interface IFetchUserData {
     Design: string[];
   };
   faculty: string;
+  profilePic: File;
 }
 
 export interface ICreateUserData {
@@ -37,6 +38,7 @@ export interface ICreateUserData {
     Design: string[];
   };
   faculty: string;
+  profilePic: File;
 }
 
 export enum FacultyListsEnum {

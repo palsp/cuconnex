@@ -37,4 +37,28 @@ const userSigninAPI = async (
 const userLogoutAPI = async (): Promise<void> => {
   await axios.post("/api/auth/signout");
 };
-export { fetchUserDataAPI, userLogoutAPI, userSignupAPI, userSigninAPI };
+
+const createUserDataAPI = async (
+  createUserData: ICreateUserData
+): Promise<AxiosResponse<IFetchUserData>> => {
+  const formData = new FormData();
+  formData.append("name", createUserData.name);
+  formData.append("interests", JSON.stringify(createUserData.interests));
+  formData.append("faculy", createUserData.faculty);
+  formData.append("myFile", createUserData.profilePic);
+  const userCreatedData = await axios({
+    method: "post",
+    url: "/api/users/",
+    data: createUserData,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return userCreatedData;
+};
+
+export {
+  fetchUserDataAPI,
+  userLogoutAPI,
+  userSignupAPI,
+  userSigninAPI,
+  createUserDataAPI,
+};

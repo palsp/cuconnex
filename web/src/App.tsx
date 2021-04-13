@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { AuthenticatedContext } from "@src/AuthenticatedContext";
-import "./App.css";
 import {
   AuthPage,
   PersonalInfoPage,
   SelectInterestPage,
   FriendsPage,
-  FindTeamPage,
   RecruitMemberPage,
   TestPage,
   SuccessPage,
@@ -18,14 +16,21 @@ import {
   SelectTeamPage,
   SelectMemberPage,
   TeamDetail,
+  ExplorePage,
+
 } from "@pages/index";
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
+import classes from "./App.module.css";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<JSX.Element>();
+  const [heightStyle, setHeightStyle] = useState({});
 
+  useEffect(() => {
+    setHeightStyle({ height: `${window.innerHeight}px` });
+  }, []);
   const fetchDataHandler = async () => {
     try {
       const userData = await fetchUserDataAPI();
@@ -59,7 +64,7 @@ const App: React.FC = () => {
             component={PersonalInfoPage}
           />
           <Route path="/friendlists" exact component={FriendsPage} />
-          <Route path="/findteams" exact component={FindTeamPage} />
+          {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
           <Route path="/recruitmembers" exact component={RecruitMemberPage} />
           <Route path="/success" exact component={SuccessPage} />
           <Route path="/landing" exact component={LandingPage} />
@@ -69,6 +74,7 @@ const App: React.FC = () => {
           <Route path="/selectteams" exact component={SelectTeamPage} />
           <Route path="/selectmember" exact component={SelectMemberPage} />
           <Route path="/teamdetail" exact component={TeamDetail} />
+          <Route path="/explore" exact component={ExplorePage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>
@@ -89,7 +95,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div>
+    <div className={classes.mainContainer} style={heightStyle}>
       {routes}
       <button
         onClick={() => {

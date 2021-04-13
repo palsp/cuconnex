@@ -1,6 +1,6 @@
 import React from "react";
 import PicWithText from "@dumbComponents/UI/PicWithText/PicWithText";
-import classes from "./ActivityList.module.css";
+import classes from "./OldActivityList.module.css";
 
 interface Props {
   activityBox: {

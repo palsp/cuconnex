@@ -11,7 +11,7 @@ import LandingHero from "./Sections/LandingHero";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
-  const [hasTeam] = useState<boolean>(true);
+  const [hasTeam] = useState<boolean>(false);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
       <div className={classes.toolbarDiv}> */}
 
         <div className={classes.searchDiv}>
-          <Link to="/search">
+          <Link to="/explore">
             <Search />
           </Link>
         </div>
