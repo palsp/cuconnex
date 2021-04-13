@@ -11,8 +11,6 @@ declare global {
     }
 }
 
-
-
 /**
  * Transform multipartvalue into normal json format 
  * @param {Request} req 
@@ -26,8 +24,6 @@ export const transformRequest = async (req: Request, res: Response, next: NextFu
     }
     next();
 }
-
-
 
 /** 
  * A middleware function used to fetch user data from MySQL.
@@ -58,7 +54,6 @@ export const requireFile = (req: Request, res: Response, next: NextFunction) => 
     next();
 };
 
-
 /**
  * Checks for you if there is a req.user already.
  * 
@@ -75,7 +70,11 @@ export const requireUser = (req: Request, res: Response, next: NextFunction) => 
 };
 
 
-
+/**
+ * this will enable multipart form on the request
+ * @param name 
+ * @returns 
+ */
 export const uploadFileWithName = (name: string) => {
     var storage = multer.diskStorage({ //multers disk storage settings
         destination: (req, file, cb) => {
