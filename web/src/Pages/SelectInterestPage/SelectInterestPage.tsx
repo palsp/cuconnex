@@ -16,14 +16,18 @@ import { InterestLists } from "@smartComponents/index";
 
 import { ArrowLeft, ArrowRight } from "@icons/index";
 
+import { createUserDataAPI } from "@src/api/index";
+
+import { ICreateUserData } from "@models/index";
+
 import classes from "./SelectInterestPage.module.css";
 
 interface Props {
   location: {
     state: {
       name: string;
-      profilePic: any;
-      filename: string;
+      faculty: string;
+      profilePic: File;
     };
   };
   page?: string;
@@ -34,8 +38,9 @@ interface InterestListsArray {
   Business: string[];
   Design: string[];
 }
+
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
-  const [interestArray, setInterestArray] = useState<any>({
+  const [interestArray, setInterestArray] = useState<InterestListsArray>({
     Technology: [],
     Business: [],
     Design: [],
@@ -46,11 +51,14 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   );
 
   let name = "";
-  let profilePic: any;
-  let filename = "";
+  let faculty = "";
+  let profilePic: File;
   let saveButton = null;
-  const emptyInterests = { Technology: [], Business: [], Design: [] };
-  const jsonemptyInterests = JSON.stringify(emptyInterests);
+  const emptyInterests: InterestListsArray = {
+    Technology: [],
+    Business: [],
+    Design: [],
+  };
 
   const [editInterest, setEditInterest] = useState(false);
 
@@ -97,127 +105,68 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  useEffect(() => {
-    console.log("Fetching data GET /api/users");
-    const fetchUserData = async () => {
-      // const fetchInterestArray = { Business: [] };
-      const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
 
-      if (fetchInterestArray.Business.length !== 0) {
-        setEditInterest(true);
-      }
+  
 
-      // try {
-      //   const userData = await axios.get("/api/users");
-      //   console.log("Successfully GET userData", userData);
-      // } catch (e) {
-      //   console.log("Errors FETCHING userData", e);
-      //   console.log("Am I Authen?", isAuthenticated);
-      // }
-    };
-    fetchUserData();
-  }, []);
+  //These are Nat's test
+//   useEffect(() => {
+//     console.log("Fetching data GET /api/users");
+//     const fetchUserData = async () => {
+//       // const fetchInterestArray = { Business: [] };
+//       const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
 
-  const setUserData = async () => {
-    // firstTimeLogin
+//       if (fetchInterestArray.Business.length !== 0) {
+//         setEditInterest(true);
+//       }
+
+//       // try {
+//       //   const userData = await axios.get("/api/users");
+//       //   console.log("Successfully GET userData", userData);
+//       // } catch (e) {
+//       //   console.log("Errors FETCHING userData", e);
+//       //   console.log("Am I Authen?", isAuthenticated);
+//       // }
+//     };
+//     fetchUserData();
+//   }, []);
+const setUserData = async () => {
+
     if (props.location.state) {
       name = props.location.state.name;
       profilePic = props.location.state.profilePic;
-      filename = props.location.state.filename;
+      faculty = props.location.state.faculty;
     }
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("interests", interestArray);
-    formData.append("myFile", profilePic);
-    console.log("POST /api/users", formData);
-    //Old version
-    // const data = {
-    //   name: name,
-    //   interests: interestArray,
-    // };
-    // console.log("POST /api/users", data);
+    const userData: ICreateUserData = {
+      name: name,
+      interests: interestArray,
+      faculty: faculty,
+      profilePic: profilePic,
+    };
     try {
-      const result = await axios.post("/api/users", formData);
+      const result = await createUserDataAPI(userData);
       console.log("POST to /api/users is successful", result);
     } catch (e) {
       console.log("SelectInterestPage Error setting users data", e);
     }
-    // await fetch("/api/users", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    //   body: formData,
-    // });
   };
-  // const setEmptyInterest = async () => {
-  //   if (props.location.state) {
-  //     name = props.location.state.name;
-  //     profilePic = props.location.state.profilePic;
-  //   }
-  //   let data = {
-  //     name: name,
-  //     interest: { Technology: [], Business: [], Design: [] },
-  //     profilePic: profilePic,
-  //   };
-  //   console.log("Empty Interest POST /api/users", data);
 
-  //   try {
-  //     const result = await axios.post("/api/users/", data);
-  //     console.log("POST Empty interests to /api/users is successful", result);
-  //   } catch (e) {
-  //     console.log("SelectInterestPage Error setting empty interest", e);
-  //   }
-  // };
-
-  const setEmptyInterest = async (e: any) => {
-    e.preventDefault();
+  const setEmptyInterest = async () => {
     if (props.location.state) {
       name = props.location.state.name;
       profilePic = props.location.state.profilePic;
     }
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("interests", jsonemptyInterests);
-    formData.append("myFile", profilePic);
-    console.log("Empty Interest POST /api/users", formData);
-
-    //Old version
-    // const data = {
-    //   name: name,
-    //   interest: { Technology: [], Business: [], Design: [] },
-    // };
-    // console.log("Empty Interest POST /api/users", data);
-
+    const userData: ICreateUserData = {
+      name: name,
+      interests: emptyInterests,
+      faculty: faculty,
+      profilePic: profilePic,
+    };
     try {
-      const result = await axios.post("/api/users/", formData);
-      console.log("POST Empty interests to /api/users is successful", result);
+      const result = await createUserDataAPI(userData);
+      console.log("POST to /api/users is successful", result);
     } catch (e) {
-      console.log("SelectInterestPage Error setting empty interest", e);
+      console.log("SelectInterestPage Error setting users data", e);
     }
-
-    // await axios({
-    //   method: "post",
-    //   url: "/api/users/",
-    //   data: FormData,
-    //   headers: { "Content-Type": "multipart/form-data" },
-    // })
-    //   .then(function (response) {
-    //     //handle success
-    //     console.log(response);
-    //   })
-    //   .catch(function (response) {
-    //     //handle error
-    //     console.log(response);
-    //   });
-
-    // await fetch("/api/users", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    //   body: formData,
-    // });
   };
   useEffect(() => {
     console.log("Items in interestArray", interestArray);
