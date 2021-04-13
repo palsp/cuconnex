@@ -31,7 +31,7 @@ const TeamInfo: React.FC<Props> = (props) => {
           {props.isTeamOwner ? (
             <div className={classes.role}>You are team owner</div>
           ) : (
-            <div />
+            <div className={classes.role}>Very compatible with you</div>
           )}
         </div>
       </div>
@@ -40,7 +40,9 @@ const TeamInfo: React.FC<Props> = (props) => {
           <RecruitSign value="Invite member" />
         </div>
       ) : (
-        <div />
+        <div className={classes.sign}>
+          <RecruitSign value="Request to join" />
+        </div>
       )}
     </div>
   );

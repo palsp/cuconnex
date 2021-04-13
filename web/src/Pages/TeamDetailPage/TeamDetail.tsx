@@ -19,7 +19,7 @@ import {
 const TeamDetail: React.FC = () => {
   // Is user be team owner ?
   const isTeamOwner = true;
-  // Is team already exist ?
+  // Is team already exist ? (create team process)
   const isTeamExist = true;
   return (
     <div className={classes.TeamDetail}>

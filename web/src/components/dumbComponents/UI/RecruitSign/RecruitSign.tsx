@@ -20,6 +20,8 @@ const RecruitSign: React.FC<Props> = (props) => {
   } else if (props.value === "Invite member") {
     cssArray = [classes.invitemember];
     invitemember = true;
+  } else if (props.value === "Request to join") {
+    cssArray = [classes.requesttojoin];
   } else if (props.value === "Business") {
     cssArray = [classes.category];
   } else if (props.value === "Technology") {
