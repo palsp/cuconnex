@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import { InterestDescription, validateRequest } from '@cuconnex/common';
 import { User, Interest } from '../../models';
-import { transformRequest } from '../../middlewares/middleware';
+import { transformRequest } from '../../middlewares';
 import { BadRequestError } from '@cuconnex/common';
 import { upload } from '../../config/multer.config';
 import { postUserValidator } from '../../utils/validators';

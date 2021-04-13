@@ -1,18 +1,26 @@
 import express, { Request, Response } from 'express';
+import { NotFoundError } from '@cuconnex/common';
 import { requireUser } from '../../middlewares';
-import { UserInterest } from '../../models/';
+import { UserInterest, User } from '../../models/';
 
 const router = express.Router();
 
 router.get('/api/users/view-profile/:userId', requireUser, async (req: Request, res: Response) => {
+  const user = await User.findByPk(req.params.userId);
 
-  const interests = await UserInterest.findAll({ where: { userId: req.user!.id } });
+  if (!user) {
+    throw new NotFoundError();
+  }
 
-  const status = await req.user!.findRelation(req.user!.id);
+  const interests = await UserInterest.findAll({ where: { userId: user.id } });
+  if (!interests) {
+    console.log(interests);
+  }
 
-  return res.status(200).send({ id: req.user!.id, name: req.user!.name, interests, status });
+  const status = await user.findRelation(req.user!.id);
+
+  return res.status(200).send({ id: user.id, name: user.name, interests, status });
 });
-
 
 router.get('/api/users', async (req: Request, res: Response) => {
   if (!req.user) {
