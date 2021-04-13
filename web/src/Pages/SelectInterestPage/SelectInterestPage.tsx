@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
+
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { Redirect } from "react-router";
 
 import {
   Heading,
@@ -27,6 +30,7 @@ interface Props {
       profilePic: File;
     };
   };
+  page?: string;
 }
 
 interface InterestListsArray {
@@ -41,6 +45,11 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Business: [],
     Design: [],
   });
+
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticatedContext
+  );
+
   let name = "";
   let faculty = "";
   let profilePic: File;
@@ -51,12 +60,11 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Design: [],
   };
 
+  const [editInterest, setEditInterest] = useState(false);
+
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
     if (positionOfE === -1) {
-      // let { Technology } = interestArray;
-      // Technology.push(e);
-      // setInterestArray({ Technology: Technology });
       setInterestArray({
         ...interestArray,
         Technology: [...interestArray.Technology, e],
@@ -97,7 +105,32 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  const setUserData = async () => {
+
+  
+
+  //These are Nat's test
+//   useEffect(() => {
+//     console.log("Fetching data GET /api/users");
+//     const fetchUserData = async () => {
+//       // const fetchInterestArray = { Business: [] };
+//       const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
+
+//       if (fetchInterestArray.Business.length !== 0) {
+//         setEditInterest(true);
+//       }
+
+//       // try {
+//       //   const userData = await axios.get("/api/users");
+//       //   console.log("Successfully GET userData", userData);
+//       // } catch (e) {
+//       //   console.log("Errors FETCHING userData", e);
+//       //   console.log("Am I Authen?", isAuthenticated);
+//       // }
+//     };
+//     fetchUserData();
+//   }, []);
+const setUserData = async () => {
+
     if (props.location.state) {
       name = props.location.state.name;
       profilePic = props.location.state.profilePic;
@@ -144,6 +177,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       props.location.state
     );
   }, []);
+
   if (
     (interestArray.Technology.length !== 0 ||
       interestArray.Business.length !== 0 ||
@@ -178,7 +212,6 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
               <Subtitle value="Please Select at least 1 interest" />
             </div>
           </div>
-
           <div className={classes.heading}>
             <Heading size="small" value="Business" />
           </div>
@@ -205,23 +238,29 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           />
           <div className={classes.divSaveButton}>{saveButton}</div>
 
-          <div className={classes.footerNavigation}>
-            <Link to="/personalinformation">
-              <div className={classes.footerIcon}>
-                <ArrowLeft data-test="arrow-left" />
-                <Heading size="small" value="Back" />
-              </div>
+          {editInterest ? (
+            <Link to="/profile">
+              <Button value="Save" />
             </Link>
-            <DotMorePage data-test="dot-icon" amount={3} />
-            <div onClick={setEmptyInterest}>
-              <Link to="/success">
+          ) : (
+            <div className={classes.footerNavigation}>
+              <Link to="/personalinformation">
                 <div className={classes.footerIcon}>
-                  <Heading size="small" value="Skip" />
-                  <ArrowRight data-test="arrow-right" />
+                  <ArrowLeft data-test="arrow-left" />
+                  <Heading size="small" value="Back" />
                 </div>
               </Link>
+              <DotMorePage data-test="dot-icon" amount={3} />
+              <div onClick={setEmptyInterest}>
+                <Link to="/success">
+                  <div className={classes.footerIcon}>
+                    <Heading size="small" value="Skip" />
+                    <ArrowRight data-test="arrow-right" />
+                  </div>
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>
@@ -234,6 +273,15 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
 //       name: "Micky",
 //     },
 //   },
+// };
+
+// const fetchUserData = async () => {
+//   console.log("GET /api/users");
+//   try {
+//     const response = await axios.get("/api/users/123");
+//   } catch (e) {
+//     console.log("SelectInterestPage Error getting users data", e);
+//   }
 // };
 
 export default SelectInterestPage;

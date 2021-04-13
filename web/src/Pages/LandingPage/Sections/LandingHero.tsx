@@ -6,10 +6,39 @@ import {
   RecruitMemberLogo,
   Username,
 } from "@dumbComponents/UI/index";
-import { ProfilePic } from "@smartComponents/index";
 import { Link } from "react-router-dom";
+import { MyTeamLists, ProfilePic } from "@smartComponents/index";
+import { Plus } from "@icons/index";
 
-const LandingHero: React.FC = () => {
+interface Props {
+  hasTeam: boolean;
+}
+
+const LandingHero: React.FC<Props> = (props) => {
+  const heroPrompt = props.hasTeam ? (
+    <div className={classes.myteamDiv}>
+      <MyTeamLists page="landing" />
+
+      <div className={classes.addTeam}>
+        <div className={classes.plus}>
+          <Plus />
+        </div>
+        <div className={classes.text}>CREATE YOUR NEW TEAM</div>
+      </div>
+    </div>
+  ) : (
+    <div className={classes.buttonmainDiv}>
+      <div className={classes.recruitmemberDiv}>
+        <RecruitMemberLogo />
+      </div>
+      <div className={classes.findteamDiv}>
+        <Link style={{ textDecoration: "none" }} to="/selectevents">
+          <FindteamLogo />
+        </Link>
+      </div>
+    </div>
+  );
+
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
@@ -20,23 +49,14 @@ const LandingHero: React.FC = () => {
         </div>
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
-            Welcome,
+            <div className={classes.welcome}>Welcome,</div>
             <div className={classes.headingDiv}>
-              <Username value="Pichayada mizzy" />
+              <Username value="Pichayada Mizzy" />
             </div>
           </div>
         </div>
       </div>
-      <div className={classes.buttonmainDiv}>
-        <div className={classes.recruitmemberDiv}>
-          <RecruitMemberLogo />
-        </div>
-        <div className={classes.findteamDiv}>
-          <Link style={{ textDecoration: "none" }} to="/selectevents">
-            <FindteamLogo />
-          </Link>
-        </div>
-      </div>
+      {heroPrompt}
     </div>
   );
 };

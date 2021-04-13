@@ -10,16 +10,25 @@ import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
 
 const LandingPage: React.FC = () => {
-  const [clickHamburger, setClickHamburger] = useState(false);
+  const [clickHamburger, setClickHamburger] = useState<boolean>(false);
+  const [hasTeam] = useState<boolean>(false);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
 
+  let cssArray = [classes.content];
+  if (!hasTeam) cssArray = [classes.flexDiv];
+
   const LandingPrompt = !clickHamburger ? (
+    <div className={cssArray.join(" ")}>
+      <div className={classes.headerDiv}>
+        {/* 
+    Loong's work
     <div>
-      <div className={classes.toolbarDiv}>
+      <div className={classes.toolbarDiv}> */}
+
         <div className={classes.searchDiv}>
-          <Link to="/search">
+          <Link to="/explore">
             <Search />
           </Link>
         </div>
@@ -31,7 +40,7 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero />
+        <LandingHero hasTeam={hasTeam} />
       </div>
     </div>
   ) : (

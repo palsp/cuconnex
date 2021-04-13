@@ -7,6 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   box-sizing: border-box;
+  position: fixed;
+  overflow: hidden;
 }
 
 code {
@@ -18,19 +20,27 @@ html {
   font-size: 100%;
 }
 
-@media only screen and (min-width: 415px) {                                     /* tablet */  
+main {
+  width: 100vw;
+  min-height: 100vh;
+}
+
+@media only screen and (min-width: 415px) {
+  /* tablet */
   html {
     font-size: 120%;
   }
 }
 
-@media only screen and (min-width: 800px) {                                     /* pc */  
+@media only screen and (min-width: 800px) {
+  /* pc */
   html {
     font-size: 140%;
   }
 }
 
-@media only screen and (max-width: 340px) {                                     /* small phone */  
+@media only screen and (max-width: 340px) {
+  /* small phone */
   html {
     font-size: 80%;
   }

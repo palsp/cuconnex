@@ -70,26 +70,17 @@
     "moxios": "^0.4.0",
     "ts-jest": "^26.5.3"
   },
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "roots": [
-      "src"
-    ],
+  "jest" : {
+    "moduleDirectories": [ "node_modules", "src"],
+    "moduleFileExtensions": [ "js", "json", "ts"],
+    "roots": ["src"],
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "@pages/(.*)": "<rootDir>/src/Pages/$1",
+      "@pages/(.*)": "<rootDir>/src/components/dumbComponents/$1",
       "@dumbComponents/(.*)": "<rootDir>/src/components/dumbComponents/$1",
       "@smartComponents/(.*)": "<rootDir>/src/components/smartComponents/$1",
       "@icons/(.*)": "<rootDir>/src/components/dumbComponents/UI/Icons/$1",
@@ -99,5 +90,10 @@
       "@models/(.*)": "<rootDir>/src/models/$1",
       "@hooks/(.*)": "<rootDir>/src/hooks/$1"
     }
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
