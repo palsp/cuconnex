@@ -25,10 +25,10 @@ import classes from "./App.module.css";
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<JSX.Element>();
+  const [heightStyle, setHeightStyle] = useState({});
 
   useEffect(() => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
+    setHeightStyle({ height: `${window.innerHeight}px` });
   }, []);
   const fetchDataHandler = async () => {
     try {
@@ -93,7 +93,7 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className={classes.mainContainer}>
+    <div className={classes.mainContainer} style={heightStyle}>
       {routes}
       <button
         onClick={() => {
