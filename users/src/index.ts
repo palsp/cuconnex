@@ -27,7 +27,7 @@ const validateEnvAttr = () => {
 
 const start = async () => {
 
-  // validateEnvAttr();
+  validateEnvAttr();
 
   try {
     // check if all required env variable have been declared
