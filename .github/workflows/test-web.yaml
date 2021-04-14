@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd web && yarn install && yarn run test:ci
+      - run: cd web && yarn && yarn run test:ci
