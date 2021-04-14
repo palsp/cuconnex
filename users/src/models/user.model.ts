@@ -36,6 +36,17 @@ interface UserCreationAttrs {
   lookingForTeam?: boolean;
 }
 
+interface IUserResponse {
+  id: string;
+  name: string;
+  // faculty: Faculty;
+  faculty: string;
+  image: string;
+  lookingForTeam: boolean;
+  interests?: string[];
+}
+
+
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
@@ -103,9 +114,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    */
   public async addInterestFromArray(interests: Description[]) {
     for (let interest of interests) {
-        try {
-      // find corresponding interest in db
-      const addedInterest = await Interest.findOne({ where: { description: interest } });
+      try {
+        // find corresponding interest in db
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
 
         await this.addInterest(addedInterest!);
       } catch (err) {
@@ -162,6 +173,19 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.addConnection(user);
   }
 
+  public async getRequestConnection(): Promise<User[]> {
+    const result: User[] = [];
+    const connections = await this.getConnection()
+    for (let conn of connections) {
+      const status = await this.findRelation(conn.id);
+      if (status === FriendStatus.Pending) {
+        result.push(conn);
+      }
+    }
+    return result;
+
+  }
+
   /**
    * Method for finding a user with the specified userId.
    * Returns a promise that resolves if a user is found.
@@ -191,8 +215,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns 
    */
 
-    public async acceptConnection(userId: string, accepted: Boolean): Promise<FriendStatus> {
-        const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
+  public async acceptConnection(userId: string, accepted: Boolean): Promise<FriendStatus> {
+    const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
 
     if (!relation) {
       throw new BadRequestError('User has not send a request yet');
@@ -228,6 +252,26 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       name: attrs.name,
       description: attrs.description,
     });
+  }
+
+  /**
+   * return response format of user model
+   */
+  public async serializer(): Promise<IUserResponse> {
+    const interests = await this.getInterests();
+    const interestResp = []
+    for (let interest of interests) {
+      interestResp.push(interest.serializer());
+    }
+
+    return {
+      id: this.id,
+      image: this.image || "",
+      name: this.name,
+      faculty: this.faculty || "",
+      lookingForTeam: this.lookingForTeam,
+      interests: interestResp
+    }
   }
 
   public static associations: {
