@@ -6,7 +6,7 @@ import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconne
 import cors from 'cors';
 import { fetchUser } from './middlewares';
 import * as router from './routes';
-import { connectionRouter } from './routes';
+import { connectionRouter, userRouter } from './routes';
 require('./config/multer.config');
 
 
@@ -37,11 +37,11 @@ app.use(fetchUser);
 app.use('/api/users/assets', express.static('assets'))
 
 // user handler
-app.use(router.getUserRouter);
-app.use(router.newUserRouter);
 app.use(router.notificationUserRouter);
 app.use(router.manageStatusRouter);
 
+
+app.use("/api/users", userRouter)
 app.use("/api/users", connectionRouter);
 
 // team handler
