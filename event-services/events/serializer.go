@@ -65,6 +65,9 @@ func (self *EventsSerializer) Response() EventsResponse {
 				Location:  model.Location,
 				StartDate: model.StartDate,
 				EndDate:   model.EndDate,
+				Status: model.Status,
+				Registration: model.Registration,
+
 			}
 		}(eventModel)
 	}

@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Image
-        run: cd users && npm install del-cli typescript && npm run build && docker build -t palsp/connex-users . 
+        run: cd users && npm install del-cli typescript && npm run build | docker build -t palsp/connex-users . 
       - name: Login Docker
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
