@@ -8,7 +8,7 @@
     "build/**/*"
   ],
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node index.js",
     "dev": "ts-node-dev src/index.ts",
     "build": "del ./build/* && tsc",
     "test": "jest --watchAll --no-cache --testTimeout=10000",
@@ -42,11 +42,6 @@
     ],
     "setupFilesAfterEnv": [
       "./src/test/setup.ts"
-    ],
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
     ],
     "transform": {
       "^.+\\.(ts|tsx)$": "ts-jest",
