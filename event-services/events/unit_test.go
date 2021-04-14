@@ -59,6 +59,8 @@ func TestGetAllEvent(t *testing.T) {
 		Location : "",
 		StartDate : time.Now(),
 		EndDate   : time.Now(),
+		Status: common.EventStatus.Ongoing,
+		Registration: true,
 	}
 
 	err := SaveOne(&event)
@@ -78,6 +80,9 @@ func TestGetAllEvent(t *testing.T) {
 	assert.Equal(t, event.EventName , resp.Events[0].EventName )
 	assert.Equal(t, event.Bio , resp.Events[0].Bio )
 	assert.Equal(t, event.Location , resp.Events[0].Location )
+	assert.Equal(t, event.Status , resp.Events[0].Status)
+	assert.Equal(t, event.Registration , resp.Events[0].Registration)
+
 	// TODO : Test Time
 
 	resetDBWithMock()
