@@ -100,32 +100,5 @@
       "@models/(.*)": "<rootDir>/src/models/$1",
       "@hooks/(.*)": "<rootDir>/src/hooks/$1"
     }
-  },
-  "bit": {
-    "env": {
-      "compiler": "bit.envs/compilers/react-typescript@4.0.0"
-    },
-    "componentsDefaultDirectory": "components/{name}",
-    "packageManager": "yarn",
-    "resolveModules": {
-      "aliases": {
-        "@smartComponents": "src/components/smartComponents",
-        "@dumbComponents": "src/components/dumbComponents",
-        "@pages": "src/Pages",
-        "@icons": "src/components/dumbComponents/UI/Icons",
-        "@assets": "src/assets",
-        "@src": "src",
-        "@api": "src/api",
-        "@models": "src/models",
-        "@hooks": "src/hooks"
-      }
-    },
-    "overrides": {
-      "assets/*": {
-        "env": {
-          "compiler": "-"
-        }
-      }
-    }
   }
 }
