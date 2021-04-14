@@ -1,14 +1,34 @@
 import React, { useState } from "react";
 import classes from "./ExplorePage.module.css";
-import { ActivityBoxes, MyTeamLists, SearchBar } from "@smartComponents/index";
+import {
+  ActivityBoxes,
+  EventLists,
+  MyTeamLists,
+  SearchBar,
+} from "@smartComponents/index";
 import { ArrowLeft } from "@icons/index";
-import { Background, Subtitle } from "@dumbComponents/UI";
+import { Background, Heading, Subtitle, Tag } from "@dumbComponents/UI";
 import { Link } from "react-router-dom";
 
 const ExplorePage = () => {
-  const [hasSearch, setHasSearch] = useState<boolean>(false);
+  const [hasSearch, setHasSearch] = useState<boolean>(true);
   const explorePage = hasSearch ? (
-    <div />
+    <div className={classes.overflowY}>
+      <div className={classes.exploreContent}>
+        <Tag />
+        <div className={classes.exploreHeading}>
+          <Heading value="People" />
+        </div>
+        <div className={classes.exploreHeading}>
+          <Heading value="Teams" />
+        </div>
+        <MyTeamLists page="landing" />
+        <div className={classes.exploreHeading}>
+          <Heading value="Events" />
+        </div>
+        <EventLists />
+      </div>
+    </div>
   ) : (
     <>
       <div className={classes.exploreContent}>
@@ -32,10 +52,8 @@ const ExplorePage = () => {
           <Link to="/landing">
             <ArrowLeft />
           </Link>
-
           <SearchBar value="Explore" />
         </div>
-
         {explorePage}
       </div>
     </Background>

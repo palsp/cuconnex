@@ -18,7 +18,12 @@
   flex: 8;
 }
 
-.exploreSubtitle {
+.exploreSubtitle,
+.exploreHeading {
   display: flex;
   justify-content: left;
+}
+
+.overflowY {
+  overflow: scroll;
 }
