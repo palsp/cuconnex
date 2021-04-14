@@ -173,6 +173,19 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.addConnection(user);
   }
 
+  public async getRequestConnection(): Promise<User[]> {
+    const result: User[] = [];
+    const connections = await this.getConnection()
+    for (let conn of connections) {
+      const status = await this.findRelation(conn.id);
+      if (status === FriendStatus.Pending) {
+        result.push(conn);
+      }
+    }
+    return result;
+
+  }
+
   /**
    * Method for finding a user with the specified userId.
    * Returns a promise that resolves if a user is found.
