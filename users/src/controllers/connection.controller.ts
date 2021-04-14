@@ -8,7 +8,7 @@ import { User } from '../models'
  * @param req 
  * @param res 
  */
-export const getAllConnection = async (req: Request, res: Response) => {
+export const getAllConnection = async (req: Request, res: Response): Promise<void> => {
     const connections = await req.user!.getConnection()
     const resp = []
     for (let conn of connections) {
@@ -26,7 +26,7 @@ export const getAllConnection = async (req: Request, res: Response) => {
 /**
  * get all friend request handler
  */
-export const getAllFriendRequest = async (req: Request, res: Response) => {
+export const getAllFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const requests = await req.user!.getRequestConnection();
     const resp = [];
     for (let request of requests) {
@@ -42,7 +42,7 @@ export const getAllFriendRequest = async (req: Request, res: Response) => {
  * @param req 
  * @param res 
  */
-export const sendFriendRequest = async (req: Request, res: Response) => {
+export const sendFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const addedUser = await User.findUser(req.body.userId);
 
     await req.user!.requestConnection(addedUser);
@@ -56,7 +56,7 @@ export const sendFriendRequest = async (req: Request, res: Response) => {
  * @param req 
  * @param res 
  */
-export const acceptFriendRequest = async (req: Request, res: Response) => {
+export const acceptFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const sendUser = await User.findUser(req.body.userId);
 
     const status = await req.user!.acceptConnection(sendUser.id, req.body.accepted);

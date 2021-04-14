@@ -8,7 +8,7 @@ import { User, Interest, UserInterest } from '../models'
  * @param res 
  * @returns 
  */
-export const getUser = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
         return res.redirect('/userInfo');
     }
@@ -23,7 +23,7 @@ export const getUser = async (req: Request, res: Response) => {
  * @param res 
  * @returns 
  */
-export const viewUserProfile = async (req: Request, res: Response) => {
+export const viewUserProfile = async (req: Request, res: Response): Promise<void> => {
     const user = await User.findByPk(req.params.userId);
 
     if (!user) {
@@ -37,7 +37,7 @@ export const viewUserProfile = async (req: Request, res: Response) => {
 
     const status = await user.findRelation(req.user!.id);
 
-    return res.status(200).send({ id: user.id, name: user.name, interests, status });
+    res.status(200).send({ id: user.id, name: user.name, interests, status });
 }
 
 /**
@@ -45,7 +45,7 @@ export const viewUserProfile = async (req: Request, res: Response) => {
  * @param req 
  * @param res 
  */
-export const createUser = async (req: Request, res: Response) => {
+export const createUser = async (req: Request, res: Response): Promise<void> => {
     const { interests, name, faculty } = req.body;
     // console.log(interests, name)
     let imagePath = "";
