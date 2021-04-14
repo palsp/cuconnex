@@ -32,7 +32,9 @@ func TestCreateEvent(t *testing.T) {
 	r.POST("/api/events", CreateEvent)
 	for _, testData := range RequestTests {
 		bodyData := testData.bodyData
-		req, err := http.NewRequest(testData.method, testData.url, bytes.NewBufferString(bodyData))
+		body , _ := json.Marshal(bodyData)
+
+		req, err := http.NewRequest(testData.method, testData.url, bytes.NewBufferString(string(body)))
 		req.Header.Set("Content-type", "application/json")
 		assert.NoError(t, err, "Should send a request successfully")
 
@@ -41,7 +43,10 @@ func TestCreateEvent(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		resetDBWithMock()
+		var resp EventResponse
+		json.Unmarshal([]byte(w.Body.String()) , &resp)
 		assert.Equal(t, testData.expectedCode, w.Code, "Response Status - "+testData.msg)
+		assert.Equal(t, testData.expectedStatus , resp.Status)
 	}
 }
 
