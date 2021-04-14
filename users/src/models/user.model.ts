@@ -36,6 +36,17 @@ interface UserCreationAttrs {
   lookingForTeam?: boolean;
 }
 
+interface IUserResponse {
+  id: string;
+  name: string;
+  // faculty: Faculty;
+  faculty: string;
+  image: string;
+  lookingForTeam: boolean;
+  interests?: string[];
+}
+
+
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
@@ -103,9 +114,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    */
   public async addInterestFromArray(interests: Description[]) {
     for (let interest of interests) {
-        try {
-      // find corresponding interest in db
-      const addedInterest = await Interest.findOne({ where: { description: interest } });
+      try {
+        // find corresponding interest in db
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
 
         await this.addInterest(addedInterest!);
       } catch (err) {
@@ -191,8 +202,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns 
    */
 
-    public async acceptConnection(userId: string, accepted: Boolean): Promise<FriendStatus> {
-        const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
+  public async acceptConnection(userId: string, accepted: Boolean): Promise<FriendStatus> {
+    const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
 
     if (!relation) {
       throw new BadRequestError('User has not send a request yet');
@@ -228,6 +239,26 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       name: attrs.name,
       description: attrs.description,
     });
+  }
+
+  /**
+   * return response format of user model
+   */
+  public async serializer(): Promise<IUserResponse> {
+    const interests = await this.getInterests();
+    const interestResp = []
+    for (let interest of interests) {
+      interestResp.push(interest.serializer());
+    }
+
+    return {
+      id: this.id,
+      image: this.image || "",
+      name: this.name,
+      faculty: this.faculty || "",
+      lookingForTeam: this.lookingForTeam,
+      interests: interestResp
+    }
   }
 
   public static associations: {
