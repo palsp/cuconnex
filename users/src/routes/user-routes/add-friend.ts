@@ -3,19 +3,18 @@ import { body } from 'express-validator';
 import { validateRequest } from '@cuconnex/common';
 import { User } from '../../models';
 import { requireUser } from '../../middlewares';
+import { addFreindResultValidator, addFriendValidator } from '../../utils/validators';
 
 const router = express.Router();
 
-const bodyChecker = [
-  body('userId')
-    .notEmpty()
-    .isAlphanumeric()
-];
 
+/**
+ * add friend
+ */
 router.post(
   '/api/users/add-friend',
   requireUser,
-  bodyChecker,
+  addFriendValidator,
   validateRequest,
   async (req: Request, res: Response) => {
     const addedUser = await User.findUser(req.body.userId);
@@ -26,18 +25,13 @@ router.post(
   }
 );
 
+/**
+ * accepted or rejected friend request
+ */
 router.post(
   '/api/users/add-friend/result',
   requireUser,
-  [
-    body('userId')
-      .notEmpty()
-      .isAlphanumeric()
-      .withMessage('User id is not valid'),
-    body('accepted')
-      .notEmpty()
-      .isBoolean()
-  ],
+  addFreindResultValidator,
   validateRequest,
   async (req: Request, res: Response) => {
     const sendUser = await User.findUser(req.body.userId);

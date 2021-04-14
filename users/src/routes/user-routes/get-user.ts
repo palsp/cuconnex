@@ -11,6 +11,7 @@ router.get('/api/users/view-profile/:userId', requireUser, async (req: Request, 
   if (!user) {
     throw new NotFoundError();
   }
+
   const interests = await UserInterest.findAll({ where: { userId: user.id } });
   if (!interests) {
     console.log(interests);
