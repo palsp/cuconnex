@@ -8,8 +8,8 @@
     "build/**/*"
   ],
   "scripts": {
-    "start": "node index.js",
-    "dev": "ts-node-dev src/index.js",
+    "start": "node src/index.js",
+    "dev": "ts-node-dev src/index.ts",
     "build": "del ./build/* && tsc",
     "test": "jest --verbose --watchAll --no-cache",
     "test:ci": "jest"
