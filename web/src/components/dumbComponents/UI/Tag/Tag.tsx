@@ -56,9 +56,9 @@ const Tag: React.FC = () => {
   }
   return (
     <div className={classes.mainDiv}>
-        <div onClick={allTagClickedHandler} className={cssArrayAll.join(" ")}>
-          All
-        </div>
+      <div onClick={allTagClickedHandler} className={cssArrayAll.join(" ")}>
+        All
+      </div>
       <div
         onClick={ongoingTagClickedHandler}
         className={cssArrayOngoing.join(" ")}

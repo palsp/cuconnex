@@ -2,12 +2,12 @@ import React from "react";
 import classes from "./EventCards.module.css";
 import EventCard from "./EventCard/EventCard";
 
-interface Props{
-  event:{
-    name:string,
-    description:string,
-    status:string,
-  }
+interface Props {
+  event: {
+    name: string;
+    description: string;
+    status: string;
+  };
 }
 const EventCards: React.FC<Props> = (props) => {
   return (

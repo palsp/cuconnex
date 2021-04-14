@@ -19,6 +19,7 @@ const SelectMemberPage: React.FC = () => {
       setMemberArray((memberArray) => (memberArray = newMemberArray));
     }
   };
+
   return (
     <div>
       <div className={classes.divHeading}>

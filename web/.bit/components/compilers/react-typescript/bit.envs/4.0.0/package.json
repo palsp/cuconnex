@@ -1,0 +1,104 @@
+{
+  "name": "@bit/bit.envs.compilers.react-typescript",
+  "version": "4.0.0",
+  "homepage": "https://bit.dev/bit/envs/compilers/react-typescript",
+  "main": "dist/react-typescript/src/index.js",
+  "componentId": {
+    "scope": "bit.envs",
+    "name": "compilers/react-typescript",
+    "version": "4.0.0"
+  },
+  "dependencies": {
+    "fs-extra": "8.1.0",
+    "lodash": "^4.17.15",
+    "recursive-readdir": "^2.2.2",
+    "rimraf": "3.0.0"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^12.7.4",
+    "@types/recursive-readdir": "^2.2.0",
+    "bit-bin": "14.6.0",
+    "chai": "^4.2.0"
+  },
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {
+      "compiler": {
+        "bit.envs/compilers/typescript@3.1.49": {
+          "rawConfig": {
+            "compilerPath": "typescript/bin/tsc",
+            "compilerArguments": [
+              "--declaration"
+            ],
+            "compiledFileTypes": [
+              ".ts",
+              ".tsx"
+            ],
+            "configFileName": "tsconfig.json",
+            "tsconfig": {
+              "compilerOptions": {
+                "outDir": "dist",
+                "target": "ES2015",
+                "sourceMap": false,
+                "moduleResolution": "Node",
+                "esModuleInterop": true,
+                "module": "CommonJS",
+                "allowSyntheticDefaultImports": true,
+                "resolveJsonModule": true,
+                "declaration": true,
+                "experimentalDecorators": true,
+                "inlineSourceMap": false,
+                "inlineSources": false,
+                "jsx": "react",
+                "rootDir": "./",
+                "removeComments": true,
+                "typeRoots": [
+                  "./node_modules/@types"
+                ],
+                "importHelpers": false,
+                "skipLibCheck": true
+              },
+              "include": [
+                "./**/*"
+              ],
+              "exclude": [
+                "node_modules",
+                "dist",
+                ".dependencies",
+                "*.spec.ts",
+                "*.e2e.ts"
+              ]
+            },
+            "development": false,
+            "copyPolicy": {
+              "ignorePatterns": [
+                "package.json",
+                "package-lock.json",
+                "tsconfig.json"
+              ],
+              "disable": false
+            }
+          },
+          "options": {}
+        }
+      }
+    },
+    "overrides": {
+      "dependencies": {
+        "bit-bin": "-",
+        "@bit/bit.envs.common.create-workspace": "-",
+        "chai": "-"
+      },
+      "devDependencies": {
+        "@types/node": "+",
+        "@types/mocha": "^7.0.2",
+        "bit-bin": "14.6.0",
+        "@bit/bit.envs.common.create-workspace": "0.0.11",
+        "chai": "^4.2.0"
+      }
+    }
+  }
+}

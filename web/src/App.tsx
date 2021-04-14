@@ -17,14 +17,13 @@ import {
   SelectMemberPage,
   TeamDetail,
   ExplorePage,
-
 } from "@pages/index";
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 import classes from "./App.module.css";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<JSX.Element>();
   const [heightStyle, setHeightStyle] = useState({});
 

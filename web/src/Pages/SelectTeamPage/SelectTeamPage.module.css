@@ -4,13 +4,13 @@
   flex-direction: column;
   height: 900px;
 }
-.headerContainer{
-  display:flex;
+.headerContainer {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.headingDiv{
+.headingDiv {
   width: auto;
   height: auto;
   overflow: visible;
@@ -29,7 +29,7 @@
   height: 20px;
   width: 325px;
   align-items: center;
-  margin-left:6%;
+  margin-left: 6%;
 }
 .teamDiv {
   overflow: visible;
@@ -42,17 +42,17 @@
   font-size: 20px;
   color: var(--main_pink, #f33182);
 }
-.eventcardsDiv{
+.eventcardsDiv {
 }
-.arrowDiv{
-  position:absolute;
-  left:5%;
-  top:1.5%; 
+.arrowDiv {
+  position: absolute;
+  left: 5%;
+  top: 1.5%;
 }
-.arrowheaderContainer{
+.arrowheaderContainer {
   width: 375px;
-  height:50px;
-  display:flex;
+  height: 50px;
+  display: flex;
   justify-content: center;
   align-items: center;
   border-bottom: 0.5px solid grey;

@@ -51,7 +51,7 @@ const validationSchema = yup.object({
 });
 
 const PersonalInfoPage: React.FC = () => {
-  const [redirect, setRedirect] = useState<any>();
+  const [redirect, setRedirect] = useState<JSX.Element>();
 
   const [image, setImage] = useState({ preview: "", raw: File });
 

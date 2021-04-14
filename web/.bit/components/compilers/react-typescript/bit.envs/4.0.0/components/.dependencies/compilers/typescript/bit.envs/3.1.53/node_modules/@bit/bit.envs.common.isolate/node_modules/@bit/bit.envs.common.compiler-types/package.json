@@ -1,0 +1,54 @@
+{
+  "name": "@bit/bit.envs.common.compiler-types",
+  "version": "0.0.9",
+  "homepage": "https://bit.dev/bit/envs/common/compiler-types",
+  "main": "dist/compiler-types.js",
+  "componentId": {
+    "scope": "bit.envs",
+    "name": "common/compiler-types",
+    "version": "0.0.9"
+  },
+  "dependencies": {
+    "vinyl": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.7.4",
+    "@types/vinyl": "^2.0.3"
+  },
+  "peerDependencies": {},
+  "license": "SEE LICENSE IN LICENSE",
+  "bit": {
+    "env": {
+      "compiler": {
+        "bit.envs/compilers/typescript@3.1.11": {
+          "rawConfig": {
+            "tsconfig": {
+              "compilerOptions": {
+                "target": "ES5",
+                "module": "CommonJS",
+                "skipLibCheck": true
+              }
+            },
+            "development": false,
+            "copyPolicy": {
+              "ignorePatterns": [
+                "package.json",
+                "package-lock.json",
+                "tsconfig.json"
+              ],
+              "disable": false
+            }
+          },
+          "options": {}
+        }
+      }
+    },
+    "overrides": {
+      "devDependencies": {
+        "@types/node": "+",
+        "@types/mocha": "^5.2.7"
+      }
+    }
+  }
+}
