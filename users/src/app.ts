@@ -39,7 +39,6 @@ app.use('/api/users/assets', express.static('assets'))
 // user handler
 app.use(router.getUserRouter);
 app.use(router.newUserRouter);
-app.use(router.addFriendRouter);
 app.use(router.notificationUserRouter);
 app.use(router.manageStatusRouter);
 
