@@ -1,3 +1,3 @@
-import {getData, setData} from "./mockApi";
+import { getData, setData } from "./mockApi";
 
-export {getData, setData};
+export { getData, setData };

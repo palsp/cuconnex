@@ -1,5 +1,5 @@
 //always use real data model from models folder
-import {User, SomeValueEnum} from "./Models";
+import { User, SomeValueEnum } from "./Models";
 
 const mockUsers: User[] = [
   {

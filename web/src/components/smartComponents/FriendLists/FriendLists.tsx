@@ -1,8 +1,6 @@
 import React from "react";
 import FriendList from "@smartComponents/FriendLists/FriendList/FriendList";
 
-import classes from "./FriendList.module.css";
-
 const personArray = [
   {
     name: "NAT",

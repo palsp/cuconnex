@@ -1,0 +1,73 @@
+.profile {
+  margin: auto;
+  height: 100px;
+  width: 100px;
+}
+
+.profileBig {
+  margin: auto;
+  height: 200px;
+  width: 200px;
+}
+
+.profileMedium {
+  margin: auto;
+  height: 125px;
+  width: 125px;
+}
+
+.profileMediumBorder {
+  margin: auto;
+  height: 125px;
+  width: 125px;
+  border-radius: 50%;
+  border: 5px solid #00c300;
+}
+
+.profileSmall {
+  margin: auto;
+  height: 40px;
+  width: 40px;
+}
+
+.profileMini {
+  margin: auto;
+  height: 30px;
+  width: 30px;
+}
+.profilePicDefault {
+  background-image: url("../../../assets/tempProfile.png");
+  background-repeat: round;
+  background-size: contain;
+
+  border-radius: 50%;
+  opacity: 1;
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profilePic {
+  background-repeat: round;
+  background-size: contain;
+
+  border-radius: 50%;
+  opacity: 1;
+  position: relative;
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pTag {
+  font-weight: 600;
+}
+/* 
+p {
+  position: relative;
+} */

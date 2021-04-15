@@ -29,6 +29,13 @@
   top: 25%;
 }
 
+.editAbout {
+  position: absolute;
+  overflow: hidden;
+  right: 5%;
+  top: 37%;
+}
+
 .about {
   margin-top: 5%;
   border-bottom: 0.01px solid rgb(196, 194, 194);

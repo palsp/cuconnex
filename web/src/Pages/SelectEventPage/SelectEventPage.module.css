@@ -1,21 +1,20 @@
-.mainDiv{
-    width: 375px;
-    display:flex;
-    flex-direction: column;
+.mainDiv {
+  width: 375px;
+  display: flex;
+  flex-direction: column;
 }
-.headingContainerDiv{
-    display:flex;
-    flex-direction: row;
+.headingContainerDiv {
+  display: flex;
+  flex-direction: row;
 }
-.arrowDiv{
-    margin-left:5%;
-    margin-top:8%;
-    zoom:150%;
+.arrowDiv {
+  margin-left: 5%;
+  margin-top: 8%;
+  zoom: 150%;
 }
-.headingDiv{
-    margin-left:15%;
+.headingDiv {
+  margin-left: 15%;
 }
-.eventDiv{
-    width: 375px;
-
+.eventDiv {
+  width: 375px;
 }

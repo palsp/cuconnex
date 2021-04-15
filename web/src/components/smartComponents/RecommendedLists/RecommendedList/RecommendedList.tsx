@@ -1,11 +1,7 @@
 import React from "react";
 
-import {
-  Heading,
-  ProfilePic,
-  Subtitle,
-  Username,
-} from "@dumbComponents/UI/index";
+import { ProfilePic } from "@smartComponents/index";
+import { Heading, Subtitle, Username } from "@dumbComponents/UI/index";
 
 import classes from "./RecommendedList.module.css";
 

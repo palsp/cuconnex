@@ -5,6 +5,7 @@ interface Props {
   value: string;
   color?: string;
   size?: string;
+  bold?: boolean;
 }
 const Subtitle: React.FC<Props> = (props) => {
   let cssArray = null;
@@ -25,12 +26,19 @@ const Subtitle: React.FC<Props> = (props) => {
       break;
     case "medium":
       cssArray.push(classes.mediumSize);
-
       break;
     case "big":
       cssArray.push(classes.bigSize);
-
       break;
+    case "small-medium":
+      cssArray.push(classes.smallMediumSize);
+      break;
+    case "smaller":
+      cssArray.push(classes.smallerSize);
+      break;
+  }
+  if (props.bold) {
+    cssArray.push(classes.bold);
   }
   return (
     <div data-test="subtitle">

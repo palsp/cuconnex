@@ -1,0 +1,49 @@
+.pic {
+  /* background-image: url("../../../../assets/tempActivityBackground.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  opacity: 1;
+  position: relative;
+  /* width: 100%; */
+  height: inherit;
+  /* display: flex; */
+  justify-content: left;
+  align-items: top;
+  /* color: black; */
+  /* border-radius: 20px; */
+  margin: 2%;
+  font-family: "Nunito", serif;
+  color: var(--grey_text, #484747);
+}
+
+.box {
+  margin: 6%;
+  margin-left: 8%;
+}
+.heading {
+  opacity: 1;
+  position: relative;
+  height: inherit;
+  /* display: flex; */
+  justify-content: left;
+  align-items: top;
+  text-align: left;
+  /* margin-top: 3%; */
+  font-family: "Nunito", serif;
+  color: var(--grey_text, #484747);
+}
+
+.subheading {
+  opacity: 1;
+  position: relative;
+  height: inherit;
+  /* display: flex; */
+  justify-content: left;
+  align-items: top;
+  text-align: left;
+  /* margin-top: 3%; */
+  font-family: "Nunito", serif;
+  color: var(--grey_text, #484747);
+  font-size: 12px;
+}
