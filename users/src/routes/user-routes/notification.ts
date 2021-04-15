@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
-import { requireUser } from '../../middlewares/requireUser';
+import { requireUser } from '../../middlewares';
 import { Member } from '../../models';
 
 import { validateRequest, TeamStatus, } from '@cuconnex/common';

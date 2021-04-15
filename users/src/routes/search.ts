@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import { User, Team } from '../models';
 import { Op } from 'sequelize';
 import { requireUser } from '../middlewares';
@@ -6,6 +6,31 @@ import { requireUser } from '../middlewares';
 const router = express.Router();
 
 const MAX_SEARCH = 11;
+
+
+router.get('/api/users/general/:search', async (req: Request, res: Response, next: NextFunction) => {
+  const keyword = req.params.search;
+  const userConstraint = [{ name: { [Op.startsWith]: keyword } }, { id: { [Op.startsWith]: keyword } }];
+  /**
+   * TODO: add role and lookingformember keyword for team search
+   */
+  const teamConstraint = { name: { [Op.startsWith]: keyword } };
+
+  let users;
+  let team;
+  try {
+    users = await User.findAll({ where: { [Op.or]: userConstraint } });
+    team = await Team.findAll({ where: teamConstraint });
+  } catch (err) {
+    console.log(err)
+  }
+
+  res.status(200).send({
+    users,
+    team
+  })
+});
+
 
 router.get('/api/users/:search', requireUser, async (req: Request, res: Response) => {
   const constraints = [{ name: { [Op.startsWith]: req.params.search } }, { id: req.params.search }];
