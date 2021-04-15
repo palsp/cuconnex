@@ -2,7 +2,8 @@
     "items" : [
         {
             "event-name" : "Test",
-            "description" : "This is great",
+            "bio" : "This is great",
+            "registration" : true,
             "start-date" : {
                      "month" : 1,
                      "day" : 18,

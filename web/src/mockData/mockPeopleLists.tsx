@@ -21,41 +21,41 @@ const mockPeopleLists: PeopleLists[] = [
     profilePic: "",
     interest: "Sugi",
   },
-  {
-    name: "Home",
-    profilePic: "",
-    interest: "Defi",
-  },
-  {
-    name: "Pal",
-    profilePic: "",
-    interest: "PS5",
-  },
-  {
-    name: "Bird",
-    profilePic: "",
-    interest: "Girls",
-  },
-  {
-    name: "Bank",
-    profilePic: "",
-    interest: "Sleep",
-  },
-  {
-    name: "Saint",
-    profilePic: "",
-    interest: "City",
-  },
-  {
-    name: "Anon",
-    profilePic: "",
-    interest: "Developer",
-  },
-  {
-    name: "Mon",
-    profilePic: "",
-    interest: "PM",
-  },
+  // {
+  //   name: "Home",
+  //   profilePic: "",
+  //   interest: "Defi",
+  // },
+  // {
+  //   name: "Pal",
+  //   profilePic: "",
+  //   interest: "PS5",
+  // },
+  // {
+  //   name: "Bird",
+  //   profilePic: "",
+  //   interest: "Girls",
+  // },
+  // {
+  //   name: "Bank",
+  //   profilePic: "",
+  //   interest: "Sleep",
+  // },
+  // {
+  //   name: "Saint",
+  //   profilePic: "",
+  //   interest: "City",
+  // },
+  // {
+  //   name: "Anon",
+  //   profilePic: "",
+  //   interest: "Developer",
+  // },
+  // {
+  //   name: "Mon",
+  //   profilePic: "",
+  //   interest: "PM",
+  // },
 ];
 
 export default mockPeopleLists;

@@ -1,27 +1,39 @@
 package events
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 func EventRegister(router *gin.RouterGroup) {
-	router.GET("/:event_id", GetEvent)
 	router.GET("/", GetAllEvent)
+	//router.GET("/:event_id", GetEvent)
 	router.POST("/", CreateEvent)
+
+
+	// TODO: Must be removed in production
+	router.OPTIONS("/" , func (ctx *gin.Context){
+		ctx.JSON(http.StatusOK,gin.H{})
+	})
 }
 
 
 // GetEvent returns event(s) according to search keyword
 func GetEvent(c *gin.Context) {
-
 }
 
 // GetAllEvent returns all events ( maximum to 10 items per request)
 func GetAllEvent(c *gin.Context) {
+	events, err := GetAllEvents()
+	if err != nil {
+		log.Printf("Fetched events error: %v" , err)
+	}
 
+	c.Set("my_events_model" , events)
+	serializer := EventsSerializer{c}
+	c.JSON(http.StatusOK , serializer.Response())
 }
 
 // CreateEvent handles the POST
@@ -34,7 +46,6 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(eventModelValidator)
 	if err := SaveOne(&eventModelValidator.eventModel) ; err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"errors" : err.Error(),

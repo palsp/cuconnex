@@ -18,8 +18,10 @@ const ProfileInfo: React.FC<Props> = (props) => {
       <div className={classes.cover}>
         <CoverPic url="" />
       </div>
-      <div className={classes.profilePic}>
-        <ProfilePic size="medium" />
+      <div className={classes.flex}>
+        <div className={classes.profilePic}>
+          <ProfilePic size="mediumborder" />
+        </div>
       </div>
       <div className={classes.name}>{props.name}</div>
       <div className={classes.role}>{props.role}</div>

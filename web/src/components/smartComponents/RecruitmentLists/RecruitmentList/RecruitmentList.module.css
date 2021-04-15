@@ -1,0 +1,42 @@
+.recruitmentList {
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+}
+
+.recruitmentContainer {
+  display: flex;
+  margin-bottom: 5%;
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.recruitmentLogo {
+  width: 30%;
+  height: 60px;
+  margin-top: 3%;
+  margin-left: 5%;
+  margin-right: 7%;
+}
+
+.recruitmentInfo {
+  text-align: start;
+  width: 70%;
+}
+
+.role {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f33182;
+}
+
+.description {
+  width: 80%;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #c0bfbf;
+}
+
+.category {
+  margin-left: 60%;
+  margin-bottom: 5%;
+}

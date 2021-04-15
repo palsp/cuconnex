@@ -15,24 +15,18 @@
   position: absolute;
 }
 
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
 .profilePic {
-  width: 125px;
   border-radius: 50%;
-  border: 5px solid #00c300;
-  left: 5%;
   margin-top: 15%;
+  left: 5%;
   position: relative;
   overflow: hidden;
 }
-
-/*
-.editIcon {
-  position: absolute;
-  overflow: hidden;
-  right: 5%;
-  top: 25%;
-}
-*/
 
 .name {
   font-size: 1.5rem;

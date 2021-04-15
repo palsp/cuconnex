@@ -51,9 +51,9 @@ const validationSchema = yup.object({
 });
 
 const PersonalInfoPage: React.FC = () => {
-  const [redirect, setRedirect] = useState<any>();
+  const [redirect, setRedirect] = useState<JSX.Element>();
 
-  const [image, setImage] = useState({ preview: "", raw: "", filename: "" });
+  const [image, setImage] = useState({ preview: "", raw: File });
 
   const handleUploadedImage = (e: any) => {
     console.log(e.target.files);
@@ -61,10 +61,7 @@ const PersonalInfoPage: React.FC = () => {
       setImage({
         preview: URL.createObjectURL(e.target.files[0]),
         raw: e.target.files[0],
-        filename: e.target.files[0].name,
       });
-      // console.log("type of raw: ", typeof image.raw);
-      // console.log("file name: ", image.filename);
     }
   };
 
@@ -138,7 +135,6 @@ const PersonalInfoPage: React.FC = () => {
                               name: data.displayName,
                               faculty: data.faculty,
                               profilePic: image.raw,
-                              filename: image.filename,
                             },
                           }}
                         />

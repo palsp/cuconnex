@@ -69,6 +69,11 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   public static removeDuplicate(interests: any[]): any[] {
     return Array.from(new Set(interests))
   }
+
+
+  public serializer(): string {
+    return this.description
+  }
 }
 
 

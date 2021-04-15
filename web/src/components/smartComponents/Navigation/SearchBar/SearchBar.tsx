@@ -8,6 +8,7 @@ import useDebounce from "@src/hooks/useDebounce";
 
 interface Props {
   value: string;
+  setHasSearch?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const SearchBar: React.FC<Props> = (props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -31,11 +32,15 @@ const SearchBar: React.FC<Props> = (props) => {
     mockAPI(debouncedTerm).then((res) => {
       setSearchResult([res]);
     });
+    if (props.setHasSearch && debouncedTerm !== "") {
+      props.setHasSearch(true);
+    } else if (props.setHasSearch && debouncedTerm === "") {
+      props.setHasSearch(false);
+    }
   }, [debouncedTerm]);
 
   return (
     <div data-test="search-bar" className={classes.searchBar}>
-      {searchResult}
       {console.log(searchResult)}
       <TextField
         className={classes.textField}

@@ -63,6 +63,7 @@
     "@types/react-toggle": "^4.0.2",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
+    "babel-jest": "^26.6.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^7.23.0",
@@ -70,5 +71,35 @@
     "jest-enzyme": "^7.1.2",
     "moxios": "^0.4.0",
     "ts-jest": "^26.5.3"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "roots": [
+      "src"
+    ],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@pages/(.*)": "<rootDir>/src/components/dumbComponents/$1",
+      "@dumbComponents/(.*)": "<rootDir>/src/components/dumbComponents/$1",
+      "@smartComponents/(.*)": "<rootDir>/src/components/smartComponents/$1",
+      "@icons/(.*)": "<rootDir>/src/components/dumbComponents/UI/Icons/$1",
+      "@assets/(.*)": "<rootDir>/src/assets/$1",
+      "@src/(.*)": "<rootDir>/src/$1",
+      "@api/(.*)": "<rootDir>/src/api/$1",
+      "@models/(.*)": "<rootDir>/src/models/$1",
+      "@hooks/(.*)": "<rootDir>/src/hooks/$1"
+    }
   }
 }
