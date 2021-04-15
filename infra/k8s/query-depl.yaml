@@ -17,9 +17,9 @@ spec:
           image: palsp/connex-query
           env:
             - name: EVENT_SRV_ENDPOINT
-              value: http://event-srv
+              value: http://event-srv:3000
             - name: USER_SRV_ENDPOINT
-              value: http://users-srv
+              value: http://users-srv:3000
             - name : JWT_KEY
               valueFrom:
                 secretKeyRef:

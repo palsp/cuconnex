@@ -1,35 +1,33 @@
 import { Request, Response } from 'express';
 import axios from 'axios';
 
+const cookie = 'express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TXpFeE1qRXhNakVpTENKcFlYUWlPakUyTVRnMU1UZzBOemw5LkJTOUlwcTB4WDYyU0lPbmpwT0l5X3hpbnVWRkxIQmk0ODh1X2Y5LUo4SHMifQ=='
 
 export const searchHandler = async (req: Request, res: Response) => {
-    console.log(req.headers)
 
-    // // Demo: Forward alll headers to user the end-point
-    // const body = await axios.get(process.env.EVENT_SRV_ENDPOINT! + `/api/users/general/${req.params.keyword}`, {
-    //     headers: {
-    //         Cookie: [`express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TXpFeE1qRXhNakVpTENKcFlYUWlPakUyTVRnMU1UZzBOemw5LkJTOUlwcTB4WDYyU0lPbmpwT0l5X3hpbnVWRkxIQmk0ODh1X2Y5LUo4SHMifQ%3D%3D`]
-    //     }
-    // })
+    // TODO: Change to environment variable
+    const url = process.env.USER_SRV_ENDPOINT || 'http://188.166.197.13'
+
+    let userResp;
+    let eventResp;
     try {
-        const body = await axios.get("188.166.197.13/" + `/api/users/general/${req.params.keyword}`, {
+        userResp = await axios.get(url + `/api/users/general/${req.params.keyword}`, {
             headers: {
-                Cookies: [`express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TXpFeE1qRXhNakVpTENKcFlYUWlPakUyTVRnMU1UZzBOemw5LkJTOUlwcTB4WDYyU0lPbmpwT0l5X3hpbnVWRkxIQmk0ODh1X2Y5LUo4SHMifQ%3D%3D`]
+                cookie: cookie
             }
         })
-        console.log(body)
+
+        eventResp = await axios.get(url + `/api/events/`, {
+            headers: {
+                cookie: cookie
+            }
+        })
+        console.log(eventResp.data)
     } catch (err) {
-        console.log(err)
+        console.log('Error', err)
     }
 
-    // console.log("user ", body);
-
-
-    // //Demo: Forward all headers to the event end point
-    // const resp = await axios.get(process.env.USER_SRV_ENDPOINT! + "/api/events/", {
-    //     headers: req.headers
-    // })
-
-    // console.log("event ", resp)
-    res.status(200).send({});
+    const userResult = userResp ? userResp.data : null;
+    const eventResult = eventResp ? eventResp.data : null;
+    res.status(200).send({ ...userResult, ...eventResult });
 }
