@@ -25,12 +25,6 @@ const AuthPage: React.FC = () => {
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
-  const [motionHeight, setMotionHeight] = useState({});
-
-  useEffect(() => {
-    const mHeight = window.innerHeight;
-    setMotionHeight(mHeight);
-  }, []);
 
   const fetchDataHandler = async () => {
     try {
@@ -95,7 +89,7 @@ const AuthPage: React.FC = () => {
       </motion.div>
     ) : clickLogin === true ? (
       <motion.div
-        animate={{ y: -70 }}
+        animate={{ y: -(window.innerHeight * 0.2) }}
         transition={{
           type: "spring",
           delay: 0,
