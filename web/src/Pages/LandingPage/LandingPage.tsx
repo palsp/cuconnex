@@ -55,7 +55,7 @@ const LandingPage: React.FC = () => {
   );
 
   return (
-    <div className={classes.background}>
+    <div className={classes.main}>
       <Background>
         <div>{LandingPrompt}</div>
       </Background>

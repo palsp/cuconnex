@@ -7,9 +7,9 @@ import classes from "./PeopleLists.module.css";
 const PeopleLists: React.FC = () => {
   return (
     <div>
-      <div className={classes.divHeading}>
+      {/* <div className={classes.divHeading}>
         <Heading value="People" />
-      </div>
+      </div> */}
       {mockPeopleLists.map((person, index) => {
         return (
           <div key={index}>

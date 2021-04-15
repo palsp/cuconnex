@@ -4,6 +4,7 @@ import {
   ActivityBoxes,
   EventLists,
   MyTeamLists,
+  PeopleLists,
   SearchBar,
 } from "@smartComponents/index";
 import { ArrowLeft } from "@icons/index";
@@ -13,21 +14,20 @@ import { Link } from "react-router-dom";
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(true);
   const explorePage = hasSearch ? (
-    <div className={classes.overflowY}>
-      <div className={classes.exploreContent}>
-        <Tag />
-        <div className={classes.exploreHeading}>
-          <Heading value="People" />
-        </div>
-        <div className={classes.exploreHeading}>
-          <Heading value="Teams" />
-        </div>
-        <MyTeamLists page="landing" />
-        <div className={classes.exploreHeading}>
-          <Heading value="Events" />
-        </div>
-        <EventLists />
+    <div className={classes.exploreContent}>
+      <Tag />
+      <div className={classes.exploreHeading}>
+        <Heading value="People" />
       </div>
+      <PeopleLists />
+      <div className={classes.exploreHeading}>
+        <Heading value="Teams" />
+      </div>
+      <MyTeamLists page="landing" />
+      <div className={classes.exploreHeading}>
+        <Heading value="Events" />
+      </div>
+      <EventLists />
     </div>
   ) : (
     <>
