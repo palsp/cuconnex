@@ -17,7 +17,6 @@ import { ProfilePic } from "@smartComponents/index";
 import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
-import { motion } from "framer-motion";
 import { FacultyListsEnum } from "@models/index";
 
 const facultyArray: string[] = Object.values(FacultyListsEnum);
