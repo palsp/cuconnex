@@ -25,6 +25,12 @@ const AuthPage: React.FC = () => {
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const [motionHeight, setMotionHeight] = useState({});
+
+  useEffect(() => {
+    const mHeight = window.innerHeight;
+    setMotionHeight(mHeight);
+  }, []);
 
   const fetchDataHandler = async () => {
     try {
@@ -36,6 +42,7 @@ const AuthPage: React.FC = () => {
       console.log("fetchDataHandler error", e);
     }
   };
+
   useEffect(() => {
     fetchDataHandler();
   }, []);
@@ -53,11 +60,25 @@ const AuthPage: React.FC = () => {
   };
 
   const routeRedirect = redirect ? <Redirect to="/landing" /> : null;
+
   const authPrompt =
     clickSignup === true ? (
-      <div className={classes.contentContainer}>
+      <motion.div
+        animate={{ y: -(window.innerHeight * 0.3) }}
+        transition={{
+          type: "spring",
+          delay: 0,
+          stiffness: 270,
+          damping: 29,
+          mass: 3.3,
+        }}
+        className={classes.signupPrompt}
+      >
+        <div className={classes.logo}>
+          <Logo data-test="auth-page-logo" />
+        </div>
         <motion.div
-          animate={{ y: -120 }}
+          animate={{ y: -60 }}
           transition={{
             type: "spring",
             delay: 0,
@@ -65,32 +86,30 @@ const AuthPage: React.FC = () => {
             damping: 29,
             mass: 3.3,
           }}
-          className={classes.contentClick}
-        >
-          <div className={classes.logo}>
-            <Logo data-test="auth-page-logo" />
-          </div>
-          <motion.div
-            animate={{ y: -100 }}
-            transition={{
-              type: "spring",
-              delay: 0,
-              stiffness: 270,
-              damping: 29,
-              mass: 3.3,
-            }}
-            className={classes.circle_overlay}
-          ></motion.div>
-          <SignupPrompt
-            data-test="auth-page-signup-prompt"
-            backButtonClickedHandler={backButtonClickedHandler}
-          />
-        </motion.div>
-      </div>
+          className={classes.circle_overlay}
+        ></motion.div>
+        <SignupPrompt
+          data-test="auth-page-signup-prompt"
+          backButtonClickedHandler={backButtonClickedHandler}
+        />
+      </motion.div>
     ) : clickLogin === true ? (
-      <div className={classes.contentContainer}>
+      <motion.div
+        animate={{ y: -70 }}
+        transition={{
+          type: "spring",
+          delay: 0,
+          stiffness: 270,
+          damping: 29,
+          mass: 3.3,
+        }}
+        className={classes.loginPrompt}
+      >
+        <div className={classes.logo}>
+          <Logo />
+        </div>
         <motion.div
-          animate={{ y: -70 }}
+          animate={{ y: -100 }}
           transition={{
             type: "spring",
             delay: 0,
@@ -98,35 +117,21 @@ const AuthPage: React.FC = () => {
             damping: 29,
             mass: 3.3,
           }}
-          className={classes.contentClick}
-        >
-          <div className={classes.logo}>
-            <Logo />
-          </div>
-          <motion.div
-            animate={{ y: -100 }}
-            transition={{
-              type: "spring",
-              delay: 0,
-              stiffness: 270,
-              damping: 29,
-              mass: 3.3,
-            }}
-            className={classes.circle_overlay}
-          ></motion.div>
-          <LoginPrompt
-            data-test="auth-page-login-prompt"
-            backButtonClickedHandler={backButtonClickedHandler}
-          />
-        </motion.div>
-      </div>
+          className={classes.circle_overlay}
+        ></motion.div>
+        <LoginPrompt
+          data-test="auth-page-login-prompt"
+          backButtonClickedHandler={backButtonClickedHandler}
+        />
+      </motion.div>
     ) : (
-      <div className={classes.contentContainer}>
+      <div className={classes.authPrompt}>
         <div className={classes.logoDiv}>
           <AppLogo data-test="auth-page-logo" />
         </div>
         <div
           className={classes.circle_overlay}
+          style={{ bottom: -(window.innerHeight * 0.33) }}
           data-test="auth-page-halfcircleoverlay"
         ></div>
         <div className={classes.Button}>
@@ -135,32 +140,26 @@ const AuthPage: React.FC = () => {
             onClick={loginButtonClickedHandler}
             value="Log in to an existing account"
           />
-          <div className={classes.textDiv}>
-            <div className={classes.subtitleDiv}>
-              <Subtitle value="Don't have an account yet?" />
-            </div>
-            <div
-              data-test="auth-page-signup-button"
-              onClick={signupButtonClickedHandler}
-            >
-              <Heading value="Sign up" size="small" />
-            </div>
+        </div>
+        <div className={classes.textDiv}>
+          <div className={classes.subtitleDiv}>
+            <Subtitle value="Don't have an account yet?" />
+          </div>
+          <div
+            data-test="auth-page-signup-button"
+            onClick={signupButtonClickedHandler}
+          >
+            <Heading value="Sign up" size="small" />
           </div>
         </div>
       </div>
     );
 
   return (
-    <div className={classes.main}>
-      <div className={classes.container}>
-        <div className={classes.background}>
-          <Background data-test="auth-page-background">
-            <div className={classes.content}>{authPrompt}</div>
-            {routeRedirect}
-          </Background>
-        </div>
-      </div>
-    </div>
+    <Background data-test="auth-page-background">
+      <div className={classes.content}>{authPrompt}</div>
+      {routeRedirect}
+    </Background>
   );
 };
 

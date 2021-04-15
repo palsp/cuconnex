@@ -11,7 +11,7 @@ import LandingHero from "./Sections/LandingHero";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
-  const [hasTeam] = useState<boolean>(false);
+  const [hasTeam] = useState<boolean>(true);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
@@ -55,14 +55,10 @@ const LandingPage: React.FC = () => {
   );
 
   return (
-    <div className={classes.main}>
-      <div className={classes.container}>
-        <div className={classes.background}>
-          <Background>
-            <div>{LandingPrompt}</div>
-          </Background>
-        </div>
-      </div>
+    <div className={classes.background}>
+      <Background>
+        <div>{LandingPrompt}</div>
+      </Background>
     </div>
   );
 };
