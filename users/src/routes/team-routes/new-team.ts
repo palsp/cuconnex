@@ -1,6 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
-import { requireUser } from '../../middlewares/requireUser';
+import { requireUser } from '../../middlewares';
 import { TeamStatus } from '@cuconnex/common';
 import { Team, Member } from '../../models';
 import { BadRequestError, validateRequest } from '@cuconnex/common';

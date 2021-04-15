@@ -1,7 +1,6 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
-import { User } from './models/user.model';
 
 
 const validateEnvAttr = () => {
@@ -27,22 +26,22 @@ const validateEnvAttr = () => {
 };
 
 const start = async () => {
-  // check if all required env variable have been declared
+
   validateEnvAttr();
 
   try {
+    // check if all required env variable have been declared
+
     await initializeDB();
 
     // initial data for interest and category 
     await startDB();
+
   } catch (err) {
     console.log(err);
   }
-
-
-
   app.listen(3000, () => {
-    console.log('Listening on port 3000..');
+    console.log('Listening on port 3000');
   });
 };
 

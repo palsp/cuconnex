@@ -15,6 +15,8 @@ type EventModel struct {
 	Location  string    `gorm:"column:location"`
 	StartDate time.Time `gorm:"column:start-date"`
 	EndDate   time.Time `gorm:"column:end-date"`
+	Status 	  string     `gorm:"column:status"`
+	Registration bool    `gorm:"column:registration"`
 }
 
 
@@ -36,6 +38,17 @@ func SaveOne(data interface{}) error {
 	err := db.Save(data).Error
 	return err
 }
+
+
+// GetAllEvents return all events store in database
+func GetAllEvents() ([]EventModel , error) {
+	db := common.GetDB()
+	var models []EventModel
+	err := db.Find(&models).Error
+	return models , err
+
+}
+
 
 // FindEvents returns events that match a condition
 func FindEvents(condition string , args ...string) ([]EventModel , error) {
