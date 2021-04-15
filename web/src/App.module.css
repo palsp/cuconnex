@@ -1,0 +1,5 @@
+.mainContainer {
+  width: 100vw;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}

@@ -1,6 +1,6 @@
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 import axios from "./axiosInstance/axiosInstance";
-import {User, WriteResult, SomeValueEnum} from "../Models";
+import { User, WriteResult, SomeValueEnum } from "../Models";
 
 //ALWAYS delcare function return type
 const getData = async (): Promise<AxiosResponse<User> | string> => {
@@ -26,8 +26,11 @@ const setData = async ({
     name: name,
     someValue: SomeValueEnum.YES,
   };
-  const res: AxiosResponse<WriteResult> = await axios.post<WriteResult>("/api/auth/signin", user);
+  const res: AxiosResponse<WriteResult> = await axios.post<WriteResult>(
+    "/api/auth/signin",
+    user
+  );
   return res;
 };
 
-export {getData, setData};
+export { getData, setData };

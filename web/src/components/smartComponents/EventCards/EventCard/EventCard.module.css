@@ -5,7 +5,7 @@
   text-align: left;
 }
 .textbodyDiv {
-  margin-left:5%;
+  margin-left: 5%;
   display: flex;
   flex-direction: column;
   width: 333px;
@@ -55,11 +55,10 @@
   text-align: center;
   color: var(--white, #ffffff);
   font-size: 10px;
-  margin-bottom:5%;
+  margin-bottom: 5%;
 }
-.upcomingDiv{
-  
-  margin-top:5%;
+.upcomingDiv {
+  margin-top: 5%;
   width: 53px;
   height: 16px;
   background-color: var(--green_toggle, #00c300);
@@ -74,10 +73,10 @@
   text-align: center;
   color: var(--white, #ffffff);
   font-size: 10px;
-  margin-bottom:5%;
+  margin-bottom: 5%;
 }
-.closedDiv{
-  margin-top:5%;
+.closedDiv {
+  margin-top: 5%;
   width: 46px;
   height: 16px;
   background-color: var(--edit_grey, #767474);
@@ -92,7 +91,7 @@
   color: var(--white, #ffffff);
   font-size: 10px;
 }
-.eventPic{
+.eventPic {
   width: 312px;
   height: 158px;
   overflow: visible;
@@ -101,5 +100,5 @@
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 10px;
-  margin-bottom:5%;
+  margin-bottom: 5%;
 }

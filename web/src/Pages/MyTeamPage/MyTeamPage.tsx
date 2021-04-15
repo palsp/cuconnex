@@ -1,16 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  Background,
-  Button,
-  DotMorePage,
-  Heading,
-  InputField,
-  ProfilePic,
-  Subtitle,
-  Tab,
-} from "@dumbComponents/UI/index";
+import { Heading, Tab } from "@dumbComponents/UI/index";
+
 import { ArrowLeft } from "@icons/index";
 
 import { MyTeamLists } from "@smartComponents/index";

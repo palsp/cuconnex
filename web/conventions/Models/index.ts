@@ -1,3 +1,3 @@
-import {User, SomeValueEnum, WriteResult} from "./models";
+import { User, SomeValueEnum, WriteResult } from "./models";
 
-export {User, SomeValueEnum, WriteResult};
+export { User, SomeValueEnum, WriteResult };

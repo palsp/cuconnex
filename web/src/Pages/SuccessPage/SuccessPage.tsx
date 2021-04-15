@@ -30,16 +30,17 @@ const SuccessPage: React.FC = () => {
               <div className={classes.divHeader}>
                 <Heading
                   data-test="success-page-header"
-                  value="Welcome Suki!" />
+                  value="Welcome Suki!"
+                />
                 <Subtitle
                   data-test="success-page-subtitle"
-                  value="Your sign up is successful" />
+                  value="Your sign up is successful"
+                />
               </div>
 
               <div className={classes.check}>
-                  <Check></Check>
-                </div>
-         
+                <Check></Check>
+              </div>
 
               <Link to="/landing">
                 <div className={classes.button}>

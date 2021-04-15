@@ -1,54 +1,54 @@
-.head{
-    border-bottom:0.5px solid rgb(196, 194, 194);
-    width:100%;
+.head {
+  border-bottom: 0.5px solid rgb(196, 194, 194);
+  width: 100%;
 }
 .relativeArrow {
-    position: absolute;
-    left: 18px;
-    top: 27px;
-  }
-  
-.title{
-    text-align:top;
-    text-align:left;
-    text-indent:4%;
-    width: 500px;
-    height: 30px;
-    overflow: visible;
-    color: var(--main_pink, #0f0f0f);
-    font-size: 23px;
-    letter-spacing: 0px;
-    line-height: 1.2;
-    font-weight: 700;
-    font-style: normal;
-    font-family: "Nunito", serif;
-}
-.subtitle{
-    text-align:top;
-    text-align:left;
-    text-indent:4%;
-    width: 500px;
-    height: 30px;
-    overflow: visible;
-    color: var(--main_pink, #0f0f0f);
-    font-size: 23px;
-    letter-spacing: 0px;
-    line-height: 1.2;
-    font-weight: 700;
-    font-style: normal;
-    font-family: "Nunito", serif;
-    margin-top:-20px;
+  position: absolute;
+  left: 18px;
+  top: 27px;
 }
 
-.titlepink{
-    width: 254px;
-    height: 55px;
-    overflow: visible;
-    color: var(--main_pink, #f33182);
-    font-size: 23px;
-    letter-spacing: 0px;
-    line-height: 1.2;
-    font-weight: 700;
-    font-style: normal;
-    font-family: "Nunito", serif;
+.title {
+  text-align: top;
+  text-align: left;
+  text-indent: 4%;
+  width: 500px;
+  height: 30px;
+  overflow: visible;
+  color: var(--main_pink, #0f0f0f);
+  font-size: 23px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+.subtitle {
+  text-align: top;
+  text-align: left;
+  text-indent: 4%;
+  width: 500px;
+  height: 30px;
+  overflow: visible;
+  color: var(--main_pink, #0f0f0f);
+  font-size: 23px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  margin-top: -20px;
+}
+
+.titlepink {
+  width: 254px;
+  height: 55px;
+  overflow: visible;
+  color: var(--main_pink, #f33182);
+  font-size: 23px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
 }

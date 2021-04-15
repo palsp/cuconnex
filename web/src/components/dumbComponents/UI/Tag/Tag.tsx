@@ -1,21 +1,33 @@
 import React, { useState } from "react";
 import classes from "./Tag.module.css";
 const Tag: React.FC = () => {
-  const [clickAllTag, setClickAllTag] = useState(false);
+  const [clickAllTag, setClickAllTag] = useState(true);
   const [clickOngoingTag, setClickOngoingTag] = useState(false);
   const [clickUpcomingTag, setClickUpcomingTag] = useState(false);
   const [clickClosedTag, setClickClosedTag] = useState(false);
   const allTagClickedHandler = () => {
-    setClickAllTag(!clickAllTag);
+    setClickAllTag(true);
+    setClickOngoingTag(false);
+    setClickUpcomingTag(false);
+    setClickClosedTag(false);
   };
   const ongoingTagClickedHandler = () => {
-    setClickOngoingTag(!clickOngoingTag);
+    setClickAllTag(false);
+    setClickOngoingTag(true);
+    setClickUpcomingTag(false);
+    setClickClosedTag(false);
   };
   const upcomingTagClickedHandler = () => {
-    setClickUpcomingTag(!clickUpcomingTag);
+    setClickAllTag(false);
+    setClickOngoingTag(false);
+    setClickUpcomingTag(true);
+    setClickClosedTag(false);
   };
   const closedTagClickedHandler = () => {
-    setClickClosedTag(!clickClosedTag);
+    setClickAllTag(false);
+    setClickOngoingTag(false);
+    setClickUpcomingTag(false);
+    setClickClosedTag(true);
   };
   let cssArrayAll = null;
   let cssArrayOngoing = null;
@@ -42,7 +54,6 @@ const Tag: React.FC = () => {
   } else {
     cssArrayClosed = [classes.disableclosedtagDiv];
   }
-
   return (
     <div className={classes.mainDiv}>
       <div onClick={allTagClickedHandler} className={cssArrayAll.join(" ")}>

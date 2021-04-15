@@ -1,5 +1,5 @@
 import classes from "./GeneralLists.module.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 interface Props {
   event?: {
     name: string;
