@@ -10,6 +10,7 @@ import {
 import { ArrowLeft } from "@icons/index";
 import { Background, Heading, Subtitle, Tag } from "@dumbComponents/UI";
 import { Link } from "react-router-dom";
+import mockEventLists from "@src/mockData/mockEventLists";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -27,7 +28,7 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
       </div>
-      <EventLists />
+      <EventLists events={mockEventLists}/>
     </div>
   ) : (
     <>

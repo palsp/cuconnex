@@ -9,7 +9,7 @@ interface Props {
       events: {
         "event-name": string;
         bio: string;
-        status:string;
+        status: string;
         "start-date": {
           month: number;
           day: number;
@@ -37,21 +37,23 @@ interface Props {
 const SelectTeamPage: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
-      <div className={classes.arrowheaderContainer}>
-        <div className={classes.arrowDiv}>
-          <Link to="/selectevents">
-            <ArrowLeft />
-          </Link>
+      <div className={classes.fixDiv}>
+        <div className={classes.arrowheaderContainer}>
+          <div className={classes.arrowDiv}>
+            <Link to="/selectevents">
+              <ArrowLeft />
+            </Link>
+          </div>
+          <div className={classes.headerContainer}>
+            <div className={classes.headingDiv}>Team List</div>
+          </div>
         </div>
-        <div className={classes.headerContainer}>
-          <div className={classes.headingDiv}>Team List</div>
+        <div className={classes.eventcardsDiv}>
+          <EventCards events={props.location.state.events}></EventCards>
         </div>
-      </div>
-      <div className={classes.eventcardsDiv}>
-        <EventCards events={props.location.state.events}></EventCards>
       </div>
       <div className={classes.teamContainer}>
-        <div className={classes.teamDiv}>Team</div>
+        <div className={classes.teamDiv}>Teams</div>
       </div>
       <TeamLists />
     </div>
