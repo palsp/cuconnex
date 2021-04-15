@@ -3,6 +3,7 @@ import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import MemberTags from "@smartComponents/MemberTag/MemberTags";
 import ProfilePic from "@smartComponents/ProfilePic/ProfilePic";
 import { createTeamAPI } from "@src/api";
+import mockMemberTagData from "@src/mockData/mockMemberTagData";
 import { ITeamData } from "@src/models";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
@@ -86,7 +87,7 @@ const CreateTeamPage: React.FC = () => {
       <Link style={{ textDecoration: "none"}} to="/selectmember">
         <div className={classes.backgroundDiv}>
           <div className={classes.memberTagDiv}>
-            <MemberTags></MemberTags>
+            <MemberTags members={mockMemberTagData}></MemberTags>
           </div>
         </div>
       </Link>

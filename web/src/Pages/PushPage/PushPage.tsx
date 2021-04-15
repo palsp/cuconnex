@@ -44,7 +44,6 @@ const PushPage: React.FC = () => {
       value="press to send data"
       onClick={() => postEventsHandler(sampleevent)}
     ></Button>
-    <MemberTags></MemberTags>
     </div>
   );
 };

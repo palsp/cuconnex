@@ -25,3 +25,15 @@ export interface SelectedMemberLists {
   role:string;
   selected:boolean;
 }
+export interface SelectedMemberLists {
+  name: string;
+  profilePic: string;
+  role:string;
+  selected:boolean;
+}
+export interface MemberTagData {
+    name: string;
+    role: string;
+    profilePic: string;
+    selected:boolean;
+}

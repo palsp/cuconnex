@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import classes from "./MemberTag.module.css";
 interface Props {
   members: {
-    name: string;
-    role: string;
-    profilePic: string;
+    name: string,
+    role: string,
+    profilePic: string,
+    selected:boolean,
   };
 }
 const MemberTag: React.FC<Props> = (props) => {
