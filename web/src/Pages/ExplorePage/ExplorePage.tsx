@@ -12,7 +12,7 @@ import { Background, Heading, Subtitle, Tag } from "@dumbComponents/UI";
 import { Link } from "react-router-dom";
 
 const ExplorePage = () => {
-  const [hasSearch, setHasSearch] = useState<boolean>(true);
+  const [hasSearch, setHasSearch] = useState<boolean>(false);
   const explorePage = hasSearch ? (
     <div className={classes.exploreContent}>
       <Tag />
@@ -52,7 +52,7 @@ const ExplorePage = () => {
           <Link to="/landing">
             <ArrowLeft />
           </Link>
-          <SearchBar value="Explore" />
+          <SearchBar setHasSearch={setHasSearch} value="Explore" />
         </div>
         {explorePage}
       </div>
