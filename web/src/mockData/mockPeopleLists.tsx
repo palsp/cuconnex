@@ -1,6 +1,6 @@
-import { PeopleLists } from "@src/mockData/Models/index";
+import { PeopleListsData } from "@src/mockData/Models/index";
 
-const mockPeopleLists: PeopleLists[] = [
+const mockPeopleLists: PeopleListsData[] = [
   {
     name: "Pitawat Bank",
     profilePic: "",

@@ -1,4 +1,3 @@
-import { ActivityBoxes } from "@src/mockData/Models/index";
 import { IEventData } from "@src/models";
 
 const mockEventLists: [IEventData] | [] = [

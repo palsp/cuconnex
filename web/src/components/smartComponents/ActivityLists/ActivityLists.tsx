@@ -1,6 +1,7 @@
 import React from "react";
 import ActivityList from "@smartComponents/ActivityLists/ActivityList/ActivityList";
 import classes from "./ActivityLists.module.css";
+import { ActivityListsData } from "@src/mockData/Models";
 
 const activityArray = [
   {
@@ -16,12 +17,15 @@ const activityArray = [
     status: "Team owner",
   },
 ];
+interface Props {
+  activity:ActivityListsData[] | []
+}
 
-const ActivityLists: React.FC = () => {
+const ActivityLists: React.FC<Props> = (props) => {
   return (
     <div data-test="education-lists">
       <div className={classes.heading}>Current Activities</div>
-      {activityArray.map((activity, index) => {
+      {props.activity.map((activity:ActivityListsData, index:number) => {
         return <ActivityList key={index} activityBox={activity} />;
       })}
     </div>

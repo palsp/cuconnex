@@ -8,6 +8,7 @@ import { ArrowLeft } from "@icons/index";
 import { MyTeamLists } from "@smartComponents/index";
 
 import classes from "./MyTeamPage.module.css";
+import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 
 const MyTeamPage: React.FC = () => {
   const [clickOngoing, setOngoing] = useState(true);
@@ -54,7 +55,7 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" />
+          <MyTeamLists data-test="myteam-page-team-lists" team={mockMyTeamListsData} />
         </div>
       </div>
     );
@@ -86,7 +87,7 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" />
+          <MyTeamLists data-test="myteam-page-team-lists" team={mockMyTeamListsData} />
         </div>
       </div>
     );

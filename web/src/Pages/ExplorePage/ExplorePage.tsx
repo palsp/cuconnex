@@ -11,6 +11,9 @@ import { ArrowLeft } from "@icons/index";
 import { Background, Heading, Subtitle, Tag } from "@dumbComponents/UI";
 import { Link } from "react-router-dom";
 import mockEventLists from "@src/mockData/mockEventLists";
+import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
+import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
+import { mockPeopleLists } from "@src/mockData";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -20,11 +23,11 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="People" />
       </div>
-      <PeopleLists />
+      <PeopleLists peoplelist={mockPeopleLists} />
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
-      <MyTeamLists page="landing" />
+      <MyTeamLists page="landing" team={mockMyTeamListsData} />
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
       </div>
@@ -36,11 +39,11 @@ const ExplorePage = () => {
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Suggested for you" bold />
         </div>
-        <MyTeamLists page="landing" />
+        <MyTeamLists page="landing" team={mockMyTeamListsData} />
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
         </div>
-        <ActivityBoxes />
+        <ActivityBoxes activitybox={mockActivityBoxes} />
       </div>
     </>
   );

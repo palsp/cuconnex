@@ -13,6 +13,8 @@ import {
   InterestList,
   ProfileInfo,
 } from "@smartComponents/index";
+import mockActivityListsData from "@src/mockData/mockActivityListsData";
+import mockEducationListsData from "@src/mockData/mockEducationListsData";
 
 const ProfilePage: React.FC = () => {
   const [clickEditProfile, setClickEdit] = useState(false);
@@ -64,10 +66,10 @@ const ProfilePage: React.FC = () => {
         </div>
 
         <div className={classes.education}>
-          <EducationLists />
+          <EducationLists education={mockEducationListsData} />
         </div>
         <div className={classes.activity}>
-          <ActivityLists />
+          <ActivityLists activity={mockActivityListsData} />
         </div>
         {/* Interests should be fetched for it to dynamically render */}
         <div className={classes.interest}>
