@@ -4,7 +4,7 @@ interface Props {
   events?: {
     "event-name": string;
     bio: string;
-    status?: string;
+    status: string;
     "start-date": {
       month: number;
       day: number;
@@ -40,9 +40,9 @@ interface Props {
 }
 const GeneralLists: React.FC<Props> = (props) => {
   let cssArrayTeam = null;
-  // let cssArrayEvent = null;
+   let cssArrayEvent = null;
 
-  /*  switch (props.event.status) {
+    switch (props.events?.status) {
     case "Open for application":
       cssArrayEvent = [classes.eventstatusDiv];
       break;
@@ -59,7 +59,7 @@ const GeneralLists: React.FC<Props> = (props) => {
       cssArrayEvent = [classes.nullDiv];
       break;
   }
-  */
+  
   switch (props.team?.compatibility) {
     case "Very compatible with you!":
       cssArrayTeam = [classes.verycompatibleDiv];
@@ -139,7 +139,7 @@ const GeneralLists: React.FC<Props> = (props) => {
       <div className={classes.textbodyDiv}>
         <div className={classes.eventnameDiv}>{props.events?.["event-name"]}</div>
         <div className={classes.eventdescriptionDiv}>{props.events?.bio}</div>
-        <div className={classes.eventstatusDiv}>{props.events?.status}</div>
+        <div className={cssArrayEvent.join(" ")}>{props.events?.status}</div>
         <div className={classes.teamnameDiv}>{props.team?.name}</div>
         <div className={cssArrayTeam.join(" ")}>
           {props.team?.compatibility}

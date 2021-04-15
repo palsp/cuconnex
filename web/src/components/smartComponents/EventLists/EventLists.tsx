@@ -20,7 +20,7 @@ const EventLists: React.FC<Props> = (props) => {
               to={{
                 pathname: "/selectteams",
                 state: {
-                  event: props.events[index],
+                  events: props.events[index],
                 },
               }}
             >

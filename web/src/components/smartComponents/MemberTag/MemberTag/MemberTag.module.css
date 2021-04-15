@@ -1,0 +1,38 @@
+.mainDiv{
+    width:91px;
+    height:161px;
+}
+.textDiv{
+    display:flex;
+    flex-direction: column;
+    width:91px;
+    height:42px;
+}
+.nameDiv{
+    overflow: visible;
+  white-space: pre;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  font-size: 20px;
+  letter-spacing: 0px;
+  color: var(--black, #000000);
+  text-align: center;
+  width:91px;
+  height:24px;
+}
+.roleDiv{
+    overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  font-size: 15px;
+  color: var(--border_grey, #636363);
+  text-align: center;
+  width:auto;
+  height:18px;
+  text-align: center;
+}

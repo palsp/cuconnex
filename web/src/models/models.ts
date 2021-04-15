@@ -52,6 +52,7 @@ export interface IFetchEventsDataResult {
 export interface IEventData {
   "event-name": string;
   bio: string;
+  status:string;
   "start-date": {
     month: number;
     day: number;
@@ -72,7 +73,16 @@ export interface IEventData {
       second: number;
     };
   };
-
+}
+//team
+export interface ITeamData {
+  name:string,
+  description:string,
+}
+export interface ITeamDataResult {
+  name:string,
+  description:string,
+}
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",

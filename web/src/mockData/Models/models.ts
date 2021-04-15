@@ -18,3 +18,10 @@ export interface PeopleLists {
   profilePic: string;
   interest: string;
 }
+
+export interface SelectedMemberLists {
+  name: string;
+  profilePic: string;
+  role:string;
+  selected:boolean;
+}

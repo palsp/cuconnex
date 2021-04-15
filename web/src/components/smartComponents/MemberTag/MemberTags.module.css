@@ -1,0 +1,15 @@
+.memberTagDiv{
+    display:flex;
+    width: 375px;
+    height: 422px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.individualTagDiv{
+    margin-left:10px;
+    margin-right:10px;
+    height:160px;
+    width:100px;
+}

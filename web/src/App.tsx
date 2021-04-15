@@ -21,9 +21,10 @@ import {
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
 import PushPage from "@pages/PushPage/PushPage";
+import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [redirect, setRedirect] = useState<JSX.Element>();
 
   const fetchDataHandler = async () => {
@@ -69,6 +70,7 @@ const App: React.FC = () => {
           <Route path="/selectteams" exact component={SelectTeamPage} />
           <Route path="/post" exact component={PushPage} />
           <Route path="/selectmember" exact component={SelectMemberPage} />
+          <Route path="/createteam" exact component={CreateTeamPage} />
           <Route path="/test" exact component={TestPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
         </Switch>

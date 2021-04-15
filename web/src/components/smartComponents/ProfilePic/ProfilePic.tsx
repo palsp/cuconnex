@@ -11,6 +11,8 @@ const ProfilePic: React.FC<Props> = (props) => {
 
   if (props.size === "big") {
     cssArray = [classes.profileBig];
+  } else if (props.size === "medium") {
+    cssArray = [classes.profileMedium];
   } else if (props.size === "small") {
     cssArray = [classes.profileSmall];
   } else if (props.size === "mini") {
