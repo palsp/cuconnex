@@ -16,7 +16,7 @@ app.use(
 );
 
 
-app.use(searchRouter);
+app.use("/api/query", searchRouter);
 
 
 

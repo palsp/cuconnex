@@ -25,6 +25,10 @@ spec:
             backend:
               serviceName: event-srv 
               servicePort: 3000
+          - path: /api/query/?(.*)
+            backend:
+              serviceName: query-srv 
+              servicePort: 3000
           - path: /?(.*)
             backend:
               serviceName: web-srv 
