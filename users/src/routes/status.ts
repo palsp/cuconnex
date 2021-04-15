@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { body } from 'express-validator';
 import { User, Team, Member } from '../models';
-import { requireUser } from '../middlewares/requireUser';
+import { requireUser } from '../middlewares';
 import { validateRequest, BadRequestError } from '@cuconnex/common';
 
 const router = express.Router();

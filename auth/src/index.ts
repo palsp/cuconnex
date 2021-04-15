@@ -38,15 +38,15 @@ const validateEnvVar = () => {
 
 
 const start = async () => {
-    validateEnvVar();
+    // validateEnvVar();
     try {
         await initializeDB();
     } catch (err) {
         console.log(err);
     }
 
+    app.listen(port, () => console.log(`App listening on port ${port}.....`))
 
-    app.listen(port, () => console.log(`App listening on port ${port}`))
 
 }
 

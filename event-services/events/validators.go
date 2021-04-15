@@ -1,6 +1,7 @@
 package events
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -21,6 +22,7 @@ type Event struct {
 	EventName string        `json:"event-name"`
 	Bio       string        `json:"bio"`
 	Location  time.Location `json:"location"`
+	Registration bool       `json:"registration"`
 	StartDate *DateForm     `json:"start-date,omitempty"`
 	EndDate   *DateForm     `json:"end-date,omit-empty"`
 }
@@ -56,6 +58,7 @@ func (self *EventModelValidator) Bind(c *gin.Context) error{
 	}
 
 	self.eventModel.EventName = self.Event.EventName
+	self.eventModel.Registration = self.Event.Registration
 	self.eventModel.Bio = self.Event.Bio
 	self.eventModel.Location = self.Event.Location.String()
 	if self.Event.StartDate != nil {
@@ -64,6 +67,25 @@ func (self *EventModelValidator) Bind(c *gin.Context) error{
 	if self.Event.EndDate != nil {
 		self.eventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location)
 	}
+
+	fmt.Printf("start at %s\n current time %s\n" , self.eventModel.StartDate.UTC() , time.Now().UTC())
+
+	if self.eventModel.StartDate.After(self.eventModel.EndDate){
+		// TODO: implement custom error
+		return err
+	}
+	start := self.eventModel.StartDate.UTC()
+	end := self.eventModel.EndDate.UTC()
+	t := time.Now().UTC()
+	if  t.Before(start){
+		self.eventModel.Status = common.EventStatus.Upcoming
+	}else if t.After(start) && t.Before(end){
+		self.eventModel.Status = common.EventStatus.Ongoing
+	}else{
+		self.eventModel.Status = common.EventStatus.Closed
+	}
+
+
 	return nil
 }
 
