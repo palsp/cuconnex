@@ -56,13 +56,9 @@ const LandingPage: React.FC = () => {
 
   return (
     <div className={classes.main}>
-      <div className={classes.container}>
-        <div className={classes.background}>
-          <Background>
-            <div>{LandingPrompt}</div>
-          </Background>
-        </div>
-      </div>
+      <Background>
+        <div>{LandingPrompt}</div>
+      </Background>
     </div>
   );
 };
