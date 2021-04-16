@@ -9,17 +9,13 @@ import * as router from './routes';
 import { connectionRouter, userRouter } from './routes';
 require('./config/multer.config');
 
-
 const app = express();
 
 app.use(cors());
 app.set('trust proxy', true);
 
-
-
-
 app.use(json());
-app.use(urlencoded({ extended: true }))
+app.use(urlencoded({ extended: true }));
 // app.use(cors());
 
 app.use(
@@ -34,15 +30,14 @@ app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
 
-app.use('/api/users/assets', express.static('assets'))
+app.use('/api/users/assets', express.static('assets'));
 
 // user handler
 app.use(router.notificationUserRouter);
 app.use(router.manageStatusRouter);
 
-
-app.use("/api/users", userRouter);
-app.use("/api/users", connectionRouter);
+app.use('/api/users', userRouter);
+app.use('/api/users', connectionRouter);
 
 // team handler
 app.use(router.getTeamRouter);
@@ -53,8 +48,7 @@ app.use(router.addMemberRouter);
 // other handler
 app.use(router.memberStatusRouter);
 app.use(router.searchRouter);
-
-
+app.use(router.userInfoRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
