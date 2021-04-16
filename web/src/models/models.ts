@@ -12,12 +12,16 @@ export interface IUser {
 }
 
 export interface ITeam {
-  id: string;
+  name: string; // team name
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
 }
 
-export interface ISearchUserTeamResult {
+export interface ISearchUserTeamEventResult {
   users: IUser[];
   team: ITeam[];
+  events: IEventData[];
 }
 export interface IUserSignup {
   email: string;

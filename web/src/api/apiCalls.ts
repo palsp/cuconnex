@@ -9,8 +9,9 @@ import {
   IFetchEventsData,
   IEventData,
   ITeamData,
-  ISearchUserTeamResult,
+  ISearchUserTeamEventResult,
   IUser,
+  ITeam,
 } from "@src/models";
 
 //Auth Services
@@ -102,11 +103,11 @@ const createUserDataAPI = async (
   return userCreatedData;
 };
 
-const searchUserTeam = async (
+const searchUserTeamEvent = async (
   searchQuery: string
-): Promise<AxiosResponse<ISearchUserTeamResult>> => {
-  const searchResult: AxiosResponse<ISearchUserTeamResult> = await axios.get(
-    `/api/users/general/${searchQuery}`
+): Promise<AxiosResponse<ISearchUserTeamEventResult>> => {
+  const searchResult: AxiosResponse<ISearchUserTeamEventResult> = await axios.get(
+    `/api/query/${searchQuery}`
   );
 
   return searchResult;
@@ -121,7 +122,7 @@ export {
   fetchEventsDataAPI,
   createEventsAPI,
   createTeamAPI,
-  searchUserTeam,
+  searchUserTeamEvent,
   testFetchUserData,
   testIUSER,
 };
