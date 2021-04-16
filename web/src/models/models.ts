@@ -8,7 +8,7 @@ export interface IUser {
     Design: string[];
   };
   faculty: string;
-  profilePic: File;
+  image: string;
 }
 
 export interface ITeam {

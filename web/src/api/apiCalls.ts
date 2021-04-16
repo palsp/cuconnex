@@ -10,6 +10,7 @@ import {
   IEventData,
   ITeamData,
   ISearchUserTeamResult,
+  IUser,
 } from "@src/models";
 
 //Auth Services
@@ -21,6 +22,16 @@ const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
 const fetchUserDataAPINoAxiosResponse = async (): Promise<IFetchUserData> => {
   const userData: IFetchUserData = await axios.get("/api/users");
 
+  return userData;
+};
+
+const testFetchUserData = async () => {
+  const userData = await axios.get("/api/users");
+  return userData;
+};
+
+const testIUSER = async (): Promise<AxiosResponse<IUser>> => {
+  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
   return userData;
 };
 
@@ -111,4 +122,6 @@ export {
   createEventsAPI,
   createTeamAPI,
   searchUserTeam,
+  testFetchUserData,
+  testIUSER,
 };

@@ -23,6 +23,8 @@ import {
   fetchUserDataAPI,
   userLogoutAPI,
   fetchUserDataAPINoAxiosResponse,
+  testFetchUserData,
+  testIUSER,
 } from "@api/index";
 import PushPage from "@pages/PushPage/PushPage";
 import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
@@ -59,7 +61,25 @@ const App: React.FC = () => {
     try {
       const userData = await fetchUserDataAPINoAxiosResponse();
       setIsAuthenticated(true);
-      console.log("SUCCESS fetchDataHandler", userData);
+      console.log("SUCCESS noAxios", userData);
+    } catch (e) {
+      console.log("fetchDataHandler error", e);
+    }
+  };
+  const testIUserFetch = async () => {
+    try {
+      const userData = await testIUSER();
+      setIsAuthenticated(true);
+      console.log("SUCCESS testfetchDataHandler", userData);
+    } catch (e) {
+      console.log("fetchDataHandler error", e);
+    }
+  };
+  const testFetch = async () => {
+    try {
+      const userData = await testFetchUserData();
+      setIsAuthenticated(true);
+      console.log("SUCCESS testfetchDataHandler", userData);
     } catch (e) {
       console.log("fetchDataHandler error", e);
     }
@@ -142,6 +162,8 @@ const App: React.FC = () => {
       <button onClick={fetchDataHandlerNoAxiosResponse}>
         FETCH NOaxiosResponseT
       </button>
+      <button onClick={testFetchUserData}>FETCH testFetch</button>
+      <button onClick={testIUserFetch}>FETCH IUser</button>
 
       <button onClick={logoutHandler}>LOGOUT</button>
     </div>
