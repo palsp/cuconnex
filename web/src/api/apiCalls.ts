@@ -15,8 +15,8 @@ import {
 } from "@src/models";
 
 //Auth Services
-const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
-  const userData: AxiosResponse<IFetchUserData> = await axios.get("/api/users");
+const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
+  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
 
   return userData;
 };

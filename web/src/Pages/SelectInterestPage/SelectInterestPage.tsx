@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import { Redirect } from "react-router";
 
 import {

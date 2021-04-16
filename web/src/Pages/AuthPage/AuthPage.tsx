@@ -11,7 +11,7 @@ import {
   Subtitle,
   Heading,
 } from "@dumbComponents/UI/index";
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 
 import { fetchUserDataAPI } from "@api/index";
 
@@ -19,18 +19,21 @@ import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
 import classes from "./AuthPage.module.css";
+import { UserDataContext } from "@hooks/UserDataContext";
 
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { setUserData } = useContext(UserDataContext);
 
   const fetchDataHandler = async () => {
     try {
       const userData = await fetchUserDataAPI();
       console.log("SUCCESS fetchDataHandler", userData);
       setIsAuthenticated(true);
+      setUserData(userData.data);
       setRedirect(true);
     } catch (e) {
       console.log("fetchDataHandler error", e);

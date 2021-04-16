@@ -4,7 +4,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 
 import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
-import useDebounce from "@src/hooks/useDebounce";
+import useDebounce from "@hooks/useDebounce";
 import { searchUserTeamEvent } from "@api/index";
 import { IEventData, ITeam, IUser } from "@src/models";
 

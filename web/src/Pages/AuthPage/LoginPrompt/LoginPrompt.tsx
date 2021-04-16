@@ -10,7 +10,7 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import classes from "../AuthPage.module.css";
 import { IUserSignin } from "@models/index";
 import { userSigninAPI, fetchUserDataAPI } from "@api/index";
