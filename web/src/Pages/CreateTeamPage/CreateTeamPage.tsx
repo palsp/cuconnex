@@ -3,17 +3,16 @@ import React, { useEffect, useState } from "react";
 import { Close } from "@dumbComponents/UI/Icons";
 import { Link } from "react-router-dom";
 import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
+import { mockMemberLists } from "@src/mockData";
 
 const CreateTeamPage: React.FC = () => {
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [scopeType, setScopeType] = useState<number>(0);
   const [friendLists, setFriendLists] = useState<[string] | []>([]);
-
   /* useEffect(() => {
     fetchFriendListsHandler();
   }, []);*/
-
   const personalButtonClickedHandler = () => {
     setClickSelectMember(true);
     setClickSelectScope(false);
@@ -66,7 +65,7 @@ const CreateTeamPage: React.FC = () => {
       </div>
     ) : clickSelectMember === true ? (
       <div>
-        <SelectMemberPrompt name={"hello"} />
+        <SelectMemberPrompt members={mockMemberLists} />
       </div>
     ) : (
       <div>Error Occurs : Contant Staff</div>

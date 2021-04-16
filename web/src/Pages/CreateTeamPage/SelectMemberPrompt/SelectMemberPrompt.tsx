@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
@@ -10,14 +10,16 @@ import { mockMemberLists } from "@src/mockData";
 import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
 import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
+import { UsersData } from "@src/mockData/Models";
 interface Props {
-  name: string;
+  members: UsersData[];
 }
 const SelectMemberPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(true);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
+  const [selectedMemberArray, setSelectedMemberArray] = useState<UsersData[]>([]);
   const inviteClickedHandler = () => {
     setClickSelectMember(false);
     setClickCreateTeam(true);
@@ -27,6 +29,16 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     setClickSelectScope(true);
     setClickSelectMember(false);
     setClickCreateTeam(false);
+  };
+  const selectPersonHandler = (e:UsersData) => {
+    const positionOfE = selectedMemberArray.indexOf(e);
+    if (positionOfE === -1) {
+      setSelectedMemberArray([...selectedMemberArray, e]);
+    } else {
+      const newMemberArray:UsersData[] | [] = [...selectedMemberArray];
+      newMemberArray.splice(positionOfE, 1);
+      setSelectedMemberArray((selectedMemberArray) => (selectedMemberArray = newMemberArray));
+    }
   };
   const selectMemberHandler = (e: number) => {
     const positionOfE = memberArray.indexOf(e);
@@ -75,15 +87,19 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
           </div>
         </div>
         <MemberLists
+        memberlist={props.members}
           selectMemberListsHandler={selectMemberHandler}
-          memberlist={mockMemberLists}
+          personHandler={selectPersonHandler}
         />
+        {console.log("Array Contain: ", selectedMemberArray)}
         {console.log("Array Contain: ", memberArray)}
       </div>
     ) : clickCreateTeam === true ? (
-      <CreateTeamPrompt name={props.name} />
+      <CreateTeamPrompt members={selectedMemberArray} />
     ) : (
-      <div><CreateTeamPage/></div>
+      <div>
+        <CreateTeamPage />
+      </div>
     );
 
   return <div>{selectPrompt}</div>;
