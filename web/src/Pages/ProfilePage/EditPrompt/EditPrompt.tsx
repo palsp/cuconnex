@@ -105,7 +105,7 @@ const EditPrompt: React.FC<Props> = (props) => {
         >
           {({ values, handleSubmit }) => (
             <Form>
-              <div className={classes.input}>
+              <div className={classes.inputAbout}>
                 <div className={classes.inputFieldDiv}>
                   <InputField
                     label="Tell Something About You*"

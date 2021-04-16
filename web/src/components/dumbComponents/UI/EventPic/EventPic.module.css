@@ -1,0 +1,29 @@
+.eventPic {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  position: relative;
+}
+
+.pic {
+  width: 120px;
+  height: 150px;
+  background-image: url("../../../../assets/tempTeam.png");
+  background-size: cover;
+  opacity: 0.7;
+  position: relative;
+  display: flex;
+}
+
+.triangle {
+  margin-left: 100px;
+  height: 0;
+  width: 0;
+  border-bottom: 150px solid white;
+  border-left: 21px solid transparent;
+  overflow: hidden;
+  position: absolute;
+}

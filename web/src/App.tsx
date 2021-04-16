@@ -19,20 +19,45 @@ import {
   ExplorePage,
 } from "@pages/index";
 
-import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
+import {
+  fetchUserDataAPI,
+  userLogoutAPI,
+  fetchUserDataAPINoAxiosResponse,
+} from "@api/index";
+import PushPage from "@pages/PushPage/PushPage";
+import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 import classes from "./App.module.css";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+
   const [redirect, setRedirect] = useState<JSX.Element>();
   const [heightStyle, setHeightStyle] = useState({});
 
   useEffect(() => {
     setHeightStyle({ height: `${window.innerHeight}px` });
   }, []);
+
+  // useEffect(() => {
+  //   // get viewport height and multiply by 1% to get value for vh unit
+  //   const vh = window.innerHeight * 0.01;
+  //   // then we set the value in the --vh custom property to the root of the element
+  //   document.documentElement.style.setProperty("--vh", `${vh}px`);
+  // }, []);
+
   const fetchDataHandler = async () => {
     try {
       const userData = await fetchUserDataAPI();
+      setIsAuthenticated(true);
+      console.log("SUCCESS fetchDataHandler", userData);
+    } catch (e) {
+      console.log("fetchDataHandler error", e);
+    }
+  };
+
+  const fetchDataHandlerNoAxiosResponse = async () => {
+    try {
+      const userData = await fetchUserDataAPINoAxiosResponse();
       setIsAuthenticated(true);
       console.log("SUCCESS fetchDataHandler", userData);
     } catch (e) {
@@ -64,14 +89,16 @@ const App: React.FC = () => {
           />
           <Route path="/friendlists" exact component={FriendsPage} />
           {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
-          <Route path="/recruitmembers" exact component={RecruitMemberPage} />
+          {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
           <Route path="/success" exact component={SuccessPage} />
           <Route path="/landing" exact component={LandingPage} />
           <Route path="/myteams" exact component={MyTeamPage} />
           <Route path="/profile" exact component={ProfilePage} />
           <Route path="/selectevents" exact component={SelectEventPage} />
           <Route path="/selectteams" exact component={SelectTeamPage} />
+          <Route path="/post" exact component={PushPage} />
           <Route path="/selectmember" exact component={SelectMemberPage} />
+          <Route path="/createteam" exact component={CreateTeamPage} />
           <Route path="/teamdetail" exact component={TeamDetail} />
           <Route path="/explore" exact component={ExplorePage} />
           <Route path="/test" exact component={TestPage} />
@@ -96,7 +123,7 @@ const App: React.FC = () => {
   return (
     <div className={classes.mainContainer} style={heightStyle}>
       {routes}
-      {/* <button
+      <button
         onClick={() => {
           setIsAuthenticated(true);
         }}
@@ -111,8 +138,12 @@ const App: React.FC = () => {
         Show state
       </button>
 
-      <button onClick={fetchDataHandler}>FETCH</button>
-      <button onClick={logoutHandler}>LOGOUT</button> */}
+      <button onClick={fetchDataHandler}>FETCH AxiosResponseT</button>
+      <button onClick={fetchDataHandlerNoAxiosResponse}>
+        FETCH NOaxiosResponseT
+      </button>
+
+      <button onClick={logoutHandler}>LOGOUT</button>
     </div>
   );
 };

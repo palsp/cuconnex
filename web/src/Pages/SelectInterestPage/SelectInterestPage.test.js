@@ -38,23 +38,23 @@ it("should render interest list design", () => {
   expect(interestListDesign.length).toBe(1);
 });
 
-it("should render arrow left icon", () => {
-  const wrapper = setup();
-  const arrowLeft = findByTestAttr(wrapper, "arrow-left");
-  expect(arrowLeft.length).toBe(1);
-});
+// it("should render arrow left icon", () => {
+//   const wrapper = setup();
+//   const arrowLeft = findByTestAttr(wrapper, "arrow-left");
+//   expect(arrowLeft.length).toBe(1);
+// });
 
-it("should render dot indicating pages", () => {
-  const wrapper = setup();
-  const dotIcon = findByTestAttr(wrapper, "dot-icon");
-  expect(dotIcon.length).toBe(1);
-});
+// it("should render dot indicating pages", () => {
+//   const wrapper = setup();
+//   const dotIcon = findByTestAttr(wrapper, "dot-icon");
+//   expect(dotIcon.length).toBe(1);
+// });
 
-it("should render arrow right icon", () => {
-  const wrapper = setup();
-  const arrowRight = findByTestAttr(wrapper, "arrow-right");
-  expect(arrowRight.length).toBe(1);
-});
+// it("should render arrow right icon", () => {
+//   const wrapper = setup();
+//   const arrowRight = findByTestAttr(wrapper, "arrow-right");
+//   expect(arrowRight.length).toBe(1);
+// });
 
 // it("should render submit button if interest is selected", () => {
 //   const wrapper = setup();

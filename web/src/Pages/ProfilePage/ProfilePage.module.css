@@ -88,7 +88,7 @@
 
 .editPrompt .relativeArrow {
   left: 5%;
-  top: 5%;
+  margin-top: 7%;
 }
 
 .editPrompt .saveBtn {
@@ -99,5 +99,5 @@
   font-weight: 700;
   font-family: inherit;
   right: 5%;
-  top: 5%;
+  margin-top: 7%;
 }

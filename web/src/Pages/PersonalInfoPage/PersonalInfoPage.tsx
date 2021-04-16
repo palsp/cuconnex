@@ -17,7 +17,6 @@ import { ProfilePic } from "@smartComponents/index";
 import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
-import { motion } from "framer-motion";
 import { FacultyListsEnum } from "@models/index";
 
 const facultyArray: string[] = Object.values(FacultyListsEnum);
@@ -66,137 +65,128 @@ const PersonalInfoPage: React.FC = () => {
   };
 
   return (
-    <div className={classes.main}>
-      <div className={classes.container}>
-        <div className={classes.background}>
-          <Background data-test="personal-info-background">
-            <div className={classes.content}>
-              <motion.div className={classes.motion}>
-                <div className={classes.titleDiv}>
-                  <Heading
-                    data-test="personal-info-header"
-                    value="Personal Information"
-                  />
-                </div>
+    <div className={classes.background}>
+      <Background data-test="personal-info-background">
+        <div className={classes.content}>
+          <div className={classes.titleDiv}>
+            <Heading
+              data-test="personal-info-header"
+              value="Personal Information"
+            />
+          </div>
 
-                <div className={classes.subtitleDiv}>
-                  <Subtitle
-                    data-test="personal-info-subtitle"
-                    value="Setting up your profile"
+          <div className={classes.subtitleDiv}>
+            <Subtitle
+              data-test="personal-info-subtitle"
+              value="Setting up your profile"
+            />
+          </div>
+          <div
+            className={classes.profilePicDiv}
+            onChange={() => console.log(image.preview)}
+          >
+            <label htmlFor="upload-button">
+              {image.preview !== "" ? (
+                <>
+                  <ProfilePic
+                    size="medium"
+                    data-test="personal-info-personalImage"
+                    PicUrl={image.preview}
+                    uploadedProfile={true}
+                  />
+                </>
+              ) : (
+                <>
+                  <ProfilePic
+                    size="medium"
+                    data-test="personal-info-personalImage"
+                  />
+                </>
+              )}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              name="myFile"
+              id="upload-button"
+              style={{ display: "none" }}
+              onChange={handleUploadedImage}
+            />
+          </div>
+          <Formik
+            data-test="personal-info-form"
+            initialValues={{ displayName: "", faculty: "" }}
+            onSubmit={(data, { setSubmitting }) => {
+              console.log("Data from PersonalInformationPage", data);
+              setSubmitting(true);
+              setTimeout(() => {
+                setSubmitting(false);
+              }, 500);
+              setTimeout(() => {
+                setRedirect(
+                  <Redirect
+                    to={{
+                      pathname: "/selectinterests",
+                      state: {
+                        name: data.displayName,
+                        faculty: data.faculty,
+                        profilePic: image.raw,
+                      },
+                    }}
+                  />
+                );
+              }, 1500);
+            }}
+            validationSchema={validationSchema}
+          >
+            {({ values }) => (
+              <Form>
+                <div className={classes.inputFieldDiv}>
+                  <InputField
+                    label="Display Name*"
+                    type="input"
+                    name="displayName"
                   />
                 </div>
-                <div
-                  className={classes.profilePicDiv}
-                  onChange={() => console.log(image.preview)}
-                >
-                  <label htmlFor="upload-button">
-                    {image.preview !== "" ? (
-                      <>
-                        <ProfilePic
-                          size="big"
-                          data-test="personal-info-personalImage"
-                          PicUrl={image.preview}
-                          uploadedProfile={true}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <ProfilePic
-                          size="big"
-                          data-test="personal-info-personalImage"
-                        />
-                      </>
-                    )}
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name="myFile"
-                    id="upload-button"
-                    style={{ display: "none" }}
-                    onChange={handleUploadedImage}
-                  />
+                <div className={classes.selectDiv}>
+                  <FormControl style={{ width: "100%" }}>
+                    <InputLabel>Faculty</InputLabel>
+                    <Field
+                      name="faculty"
+                      type="select"
+                      label="Faculty"
+                      as={Select}
+                    >
+                      {facultyArray.map((faculty) => (
+                        <MenuItem key={faculty} value={faculty}>
+                          {faculty}
+                        </MenuItem>
+                      ))}
+                    </Field>
+                  </FormControl>
                 </div>
-                <Formik
-                  data-test="personal-info-form"
-                  initialValues={{ displayName: "", faculty: "" }}
-                  onSubmit={(data, { setSubmitting }) => {
-                    console.log("Data from PersonalInformationPage", data);
-                    setSubmitting(true);
-                    setTimeout(() => {
-                      setSubmitting(false);
-                    }, 500);
-                    setTimeout(() => {
-                      setRedirect(
-                        <Redirect
-                          to={{
-                            pathname: "/selectinterests",
-                            state: {
-                              name: data.displayName,
-                              faculty: data.faculty,
-                              profilePic: image.raw,
-                            },
-                          }}
-                        />
-                      );
-                    }, 1500);
-                  }}
-                  validationSchema={validationSchema}
-                >
-                  {({ values }) => (
-                    <Form>
-                      <div className={classes.inputFieldDiv}>
-                        <InputField
-                          label="Display Name*"
-                          type="input"
-                          name="displayName"
-                        />
-                      </div>
-                      <div className={classes.selectDiv}>
-                        <FormControl style={{ width: "100%" }}>
-                          <InputLabel>Faculty</InputLabel>
-                          <Field
-                            name="faculty"
-                            type="select"
-                            label="Faculty"
-                            as={Select}
-                          >
-                            {facultyArray.map((faculty) => (
-                              <MenuItem key={faculty} value={faculty}>
-                                {faculty}
-                              </MenuItem>
-                            ))}
-                          </Field>
-                        </FormControl>
-                      </div>
-                      <div className={classes.Button}>
-                        <Button value="Save" />
-                      </div>
-                      <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-                      <div className={classes.footerNavigation}>
-                        {/*  This div is for centering footer navigation*/}
-                        <div style={{ width: "80px" }}></div>
-                        <DotMorePage
-                          data-test="personal-info-dotIcon"
-                          amount={2}
-                        />
+                <div className={classes.Button}>
+                  <Button value="Save" />
+                </div>
+                <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
+                <div className={classes.footerNavigation}>
+                  {/*  This div is for centering footer navigation*/}
+                  <div style={{ width: "80px" }}></div>
+                  <DotMorePage data-test="personal-info-dotIcon" amount={2} />
 
-                        <button type="submit" className={classes.noStyleButton}>
-                          <div className={classes.footerIcon}>
-                            <Heading value="Skip" size="small" />
-                            <ArrowRight data-test="personal-info-arrowRight" />
-                          </div>
-                        </button>
-                      </div>
-                    </Form>
-                  )}
-                </Formik>
-              </motion.div>
-            </div>
-            {redirect}
-          </Background>
+                  <button type="submit" className={classes.noStyleButton}>
+                    <div className={classes.footerIcon}>
+                      <Heading value="Skip" size="small" />
+                      <ArrowRight data-test="personal-info-arrowRight" />
+                    </div>
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
-      </div>
+        {redirect}
+      </Background>
     </div>
   );
 };

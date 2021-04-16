@@ -11,7 +11,7 @@ import LandingHero from "./Sections/LandingHero";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
-  const [hasTeam] = useState<boolean>(false);
+  const [hasTeam] = useState<boolean>(true);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };

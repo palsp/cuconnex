@@ -24,6 +24,7 @@
   font-family: "Nunito", serif;
 }
 .teamContainer {
+  margin-top:320px;
   display: flex;
   flex-direction: row;
   height: 20px;
@@ -56,4 +57,11 @@
   justify-content: center;
   align-items: center;
   border-bottom: 0.5px solid grey;
+}
+.fixDiv{
+  position:fixed;
+  overflow:hidden;
+  width:375px;
+  height:320px;
+  background-color: white;
 }

@@ -1,6 +1,6 @@
-import { MemberLists } from "@src/mockData/Models/index";
+import { MemberListsData } from "@src/mockData/Models/index";
 
-const mockMemberLists: MemberLists[] = [
+const mockMemberLists: MemberListsData[] = [
   {
     name: "NAT",
     profilePic: "",

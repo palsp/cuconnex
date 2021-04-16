@@ -1,10 +1,30 @@
 import classes from "./GeneralLists.module.css";
 import React, { useEffect, useState } from "react";
 interface Props {
-  event?: {
-    name: string;
-    description: string;
+  events?: {
+    "event-name": string;
+    bio: string;
     status: string;
+    "start-date": {
+      month: number;
+      day: number;
+      year: number;
+      time: {
+        hour: number;
+        minute: number;
+        second: number;
+      };
+    };
+    "end-date": {
+      month: number;
+      day: number;
+      year: number;
+      time: {
+        hour: number;
+        minute: number;
+        second: number;
+      };
+    };
   };
   team?: {
     name: string;
@@ -20,8 +40,9 @@ interface Props {
 }
 const GeneralLists: React.FC<Props> = (props) => {
   let cssArrayTeam = null;
-  let cssArrayEvent = null;
-  switch (props.event?.status) {
+   let cssArrayEvent = null;
+
+    switch (props.events?.status) {
     case "Open for application":
       cssArrayEvent = [classes.eventstatusDiv];
       break;
@@ -38,6 +59,7 @@ const GeneralLists: React.FC<Props> = (props) => {
       cssArrayEvent = [classes.nullDiv];
       break;
   }
+  
   switch (props.team?.compatibility) {
     case "Very compatible with you!":
       cssArrayTeam = [classes.verycompatibleDiv];
@@ -115,11 +137,9 @@ const GeneralLists: React.FC<Props> = (props) => {
         <div className={classes.profileDiv}> </div>
       </div>
       <div className={classes.textbodyDiv}>
-        <div className={classes.eventnameDiv}>{props.event?.name}</div>
-        <div className={classes.eventdescriptionDiv}>
-          {props.event?.description}
-        </div>
-        <div className={cssArrayEvent.join(" ")}>{props.event?.status}</div>
+        <div className={classes.eventnameDiv}>{props.events?.["event-name"]}</div>
+        <div className={classes.eventdescriptionDiv}>{props.events?.bio}</div>
+        <div className={cssArrayEvent.join(" ")}>{props.events?.status}</div>
         <div className={classes.teamnameDiv}>{props.team?.name}</div>
         <div className={cssArrayTeam.join(" ")}>
           {props.team?.compatibility}

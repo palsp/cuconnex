@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
+import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 
 interface Props {
   hasTeam: boolean;
@@ -17,7 +18,7 @@ interface Props {
 const LandingHero: React.FC<Props> = (props) => {
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
-      <MyTeamLists page="landing" />
+      <MyTeamLists page="landing" team={mockMyTeamListsData} />
 
       <div className={classes.addTeam}>
         <div className={classes.plus}>

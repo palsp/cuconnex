@@ -1,18 +1,15 @@
 import React from "react";
 import classes from "./EventCards.module.css";
 import EventCard from "./EventCard/EventCard";
+import { IEventData } from "@src/models";
 
-interface Props {
-  event: {
-    name: string;
-    description: string;
-    status: string;
-  };
+interface Props{
+  events:IEventData
 }
 const EventCards: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
-      <EventCard event={props.event} />
+      <EventCard events={props.events} />
     </div>
   );
 };

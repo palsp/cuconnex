@@ -94,7 +94,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
       <div className={classes.footerNavigation}>
         <div
           onClick={props.backButtonClickedHandler}
-          className={classes.backNavigation}
+          className={classes.loginBackNavigation}
           data-test="back-navigation"
         >
           <ArrowLeft />
