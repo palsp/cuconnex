@@ -1,6 +1,7 @@
 import express from 'express';
 import { json } from 'body-parser';
 import session from 'cookie-session';
+require('express-async-errors');
 import { searchRouter } from './routes/search.routes';
 
 const app = express();
