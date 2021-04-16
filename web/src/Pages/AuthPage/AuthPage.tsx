@@ -55,10 +55,17 @@ const AuthPage: React.FC = () => {
 
   const routeRedirect = redirect ? <Redirect to="/landing" /> : null;
 
+  let animateHeight = window.innerHeight;
+  if (window.innerHeight < 750) {
+    animateHeight = -(window.innerHeight * 0.25);
+  } else if (window.innerHeight > 750) {
+    animateHeight = -(window.innerHeight * 0.05);
+  }
+
   const authPrompt =
     clickSignup === true ? (
       <motion.div
-        animate={{ y: -(window.innerHeight * 0.3) }}
+        animate={{ y: animateHeight }}
         transition={{
           type: "spring",
           delay: 0,
@@ -89,7 +96,7 @@ const AuthPage: React.FC = () => {
       </motion.div>
     ) : clickLogin === true ? (
       <motion.div
-        animate={{ y: -(window.innerHeight * 0.2) }}
+        animate={{ y: animateHeight * 0.75 }}
         transition={{
           type: "spring",
           delay: 0,
