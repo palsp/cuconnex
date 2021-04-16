@@ -14,7 +14,7 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
     }
 
     const interests = await req.user.getInterests({ attributes: ['description'] });
-    res.status(200).send({ id: req.user.id, name: req.user.name, interests });
+    res.status(200).send({ id: req.user.id, name: req.user.name, interests, image: req.user.image });
 };
 
 /**
@@ -37,7 +37,7 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
 
     const status = await user.findRelation(req.user!.id);
 
-    res.status(200).send({ id: user.id, name: user.name, interests, status });
+    res.status(200).send({ id: user.id, name: user.name, interests, status, image: user.image });
 }
 
 /**
