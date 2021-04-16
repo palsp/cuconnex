@@ -32,6 +32,14 @@ const App: React.FC = () => {
   useEffect(() => {
     setHeightStyle({ height: `${window.innerHeight}px` });
   }, []);
+
+  // useEffect(() => {
+  //   // get viewport height and multiply by 1% to get value for vh unit
+  //   const vh = window.innerHeight * 0.01;
+  //   // then we set the value in the --vh custom property to the root of the element
+  //   document.documentElement.style.setProperty("--vh", `${vh}px`);
+  // }, []);
+
   const fetchDataHandler = async () => {
     try {
       const userData = await fetchUserDataAPI();
@@ -41,6 +49,7 @@ const App: React.FC = () => {
       console.log("fetchDataHandler error", e);
     }
   };
+
   const logoutHandler = async () => {
     try {
       await userLogoutAPI();
