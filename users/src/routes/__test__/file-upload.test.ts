@@ -13,7 +13,7 @@ describe('The /api/upload', () => {
         await request(app)
             .post('/api/users')
             .field({ interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon' })
-            .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
+            .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
             .expect(401)
 
     });
@@ -22,7 +22,7 @@ describe('The /api/upload', () => {
         await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
-            .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg.zip')
+            .attach('image', 'src/routes/__test__/test_images/testImage.jpg.zip')
             .expect(400)
             .then(response => {
                 expect(response.body.errors[0].message).toEqual("Image uploaded is not of type jpg/jpeg or png")
@@ -38,7 +38,7 @@ describe('The /api/upload', () => {
                 name: 'Anon',
                 interests: JSON.stringify({ Technology: [Technology.Coding] })
             })
-            .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
+            .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
             .expect(201)
 
         expect(body.image).not.toEqual("")
@@ -70,7 +70,7 @@ describe('The /api/upload', () => {
     //             .set('Cookie', global.signin())
     //             .field({
     //                 name: 'test' })
-    //             .attach('myFile', 'src/routes/__test__/test_images/testImage.jpg')
+    //             .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
     //             .then(res => {
     //               expect(res.body.errors).toEqual(null);
     //             });

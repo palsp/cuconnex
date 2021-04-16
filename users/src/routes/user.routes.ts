@@ -13,7 +13,7 @@ router.get("/", userController.getUser)
 
 router.get("/view-profile/:userId", requireUser, userController.viewUserProfile);
 
-router.post("/", upload.single('myFile'), transformRequest, postUserValidator, validateRequest, userController.createUser);
+router.post("/", upload.single('image'), transformRequest, postUserValidator, validateRequest, userController.createUser);
 
 
 export { router as userRouter };
