@@ -6,7 +6,7 @@ import { axiosEventInstance, axiosUserInstance } from '../../api/axiosInstance';
 
 
 it('should include all field in response if user services is not available', async () => {
-    const user = (axiosUserInstance.get as jest.Mock).mock
+
 
     const { body } = await request(app)
         .get("/api/query/:api")
