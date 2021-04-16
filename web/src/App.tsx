@@ -19,13 +19,18 @@ import {
   ExplorePage,
 } from "@pages/index";
 
-import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
+import {
+  fetchUserDataAPI,
+  userLogoutAPI,
+  fetchUserDataAPINoAxiosResponse,
+} from "@api/index";
 import PushPage from "@pages/PushPage/PushPage";
 import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 import classes from "./App.module.css";
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+
   const [redirect, setRedirect] = useState<JSX.Element>();
   const [heightStyle, setHeightStyle] = useState({});
 
@@ -50,6 +55,15 @@ const App: React.FC = () => {
     }
   };
 
+  const fetchDataHandlerNoAxiosResponse = async () => {
+    try {
+      const userData = await fetchUserDataAPINoAxiosResponse();
+      setIsAuthenticated(true);
+      console.log("SUCCESS fetchDataHandler", userData);
+    } catch (e) {
+      console.log("fetchDataHandler error", e);
+    }
+  };
   const logoutHandler = async () => {
     try {
       await userLogoutAPI();
@@ -109,7 +123,7 @@ const App: React.FC = () => {
   return (
     <div className={classes.mainContainer} style={heightStyle}>
       {routes}
-      {/* <button
+      <button
         onClick={() => {
           setIsAuthenticated(true);
         }}
@@ -124,8 +138,12 @@ const App: React.FC = () => {
         Show state
       </button>
 
-      <button onClick={fetchDataHandler}>FETCH</button>
-      <button onClick={logoutHandler}>LOGOUT</button> */}
+      <button onClick={fetchDataHandler}>FETCH AxiosResponseT</button>
+      <button onClick={fetchDataHandlerNoAxiosResponse}>
+        FETCH NOaxiosResponseT
+      </button>
+
+      <button onClick={logoutHandler}>LOGOUT</button>
     </div>
   );
 };

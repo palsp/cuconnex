@@ -5,10 +5,15 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
 import useDebounce from "@src/hooks/useDebounce";
+import { searchUserTeam } from "@api/index";
 
 interface Props {
   value: string;
   setHasSearch?: React.Dispatch<React.SetStateAction<boolean>>;
+  setNoSearchResult?: React.Dispatch<React.SetStateAction<boolean>>;
+  setPeopleLists?: React.Dispatch<React.SetStateAction<never[]>>;
+  setTeamLists?: React.Dispatch<React.SetStateAction<never[]>>;
+  setEventLists?: React.Dispatch<React.SetStateAction<never[]>>;
 }
 const SearchBar: React.FC<Props> = (props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -21,6 +26,15 @@ const SearchBar: React.FC<Props> = (props) => {
     setSearchTerm(e.target.value);
   };
 
+  const searchAPIHandler = async (searchQuery: string) => {
+    const result = await searchUserTeam(searchQuery);
+    if (props.setNoSearchResult && result === null) {
+      props.setNoSearchResult(true);
+    }
+    if (props.setPeopleLists && result !== null) {
+      // props.setPeopleLists(result.users);
+    }
+  };
   const mockAPI = async (term: string) => {
     await setTimeout(() => {
       console.log("wait mockAPI");
