@@ -20,6 +20,8 @@ import {
 } from "@pages/index";
 
 import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
+import PushPage from "@pages/PushPage/PushPage";
+import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 import classes from "./App.module.css";
 
 const App: React.FC = () => {
@@ -71,7 +73,9 @@ const App: React.FC = () => {
           <Route path="/profile" exact component={ProfilePage} />
           <Route path="/selectevents" exact component={SelectEventPage} />
           <Route path="/selectteams" exact component={SelectTeamPage} />
+          <Route path="/post" exact component={PushPage} />
           <Route path="/selectmember" exact component={SelectMemberPage} />
+          <Route path="/createteam" exact component={CreateTeamPage} />
           <Route path="/teamdetail" exact component={TeamDetail} />
           <Route path="/explore" exact component={ExplorePage} />
           <Route path="/test" exact component={TestPage} />

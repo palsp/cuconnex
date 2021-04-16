@@ -6,6 +6,7 @@ import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 
 import classes from "./SelectMemberPage.module.css";
+import { mockMemberLists } from "@src/mockData";
 
 const SelectMemberPage: React.FC = () => {
   const [memberArray, setMemberArray] = useState<number[]>([]);
@@ -48,7 +49,7 @@ const SelectMemberPage: React.FC = () => {
         </div>
       </div>
 
-      <MemberLists selectMemberListsHandler={selectMemberHandler} />
+      <MemberLists selectMemberListsHandler={selectMemberHandler} memberlist={mockMemberLists} />
       {console.log("Array Contain: ", memberArray)}
     </div>
   );

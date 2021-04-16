@@ -40,7 +40,51 @@ export interface ICreateUserData {
   faculty: string;
   profilePic: File;
 }
-
+//events
+export interface IFetchEventsData {
+  events: [
+    IEventData
+  ]
+}
+export interface IFetchEventsDataResult {
+  events: [
+    IEventData
+  ]
+}
+export interface IEventData {
+  "event-name": string;
+  bio: string;
+  status:string;
+  "start-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+  "end-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+}
+//team
+export interface ITeamData {
+  name:string,
+  description:string,
+}
+export interface ITeamDataResult {
+  name:string,
+  description:string,
+}
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",
