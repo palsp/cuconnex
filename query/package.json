@@ -27,7 +27,6 @@
   "license": "ISC",
   "dependencies": {
     "@cuconnex/common": "^1.1.12",
-    "@types/request": "^2.48.5",
     "axios": "^0.21.1",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
@@ -41,6 +40,7 @@
     "sequelize": "^6.5.0"
   },
   "devDependencies": {
+    "@types/request": "^2.48.5",
     "@types/body-parser": "^1.19.0",
     "@types/cookie-session": "^2.0.42",
     "@types/cors": "^2.8.10",
