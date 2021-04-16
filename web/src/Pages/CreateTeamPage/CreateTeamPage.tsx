@@ -51,7 +51,9 @@ const CreateTeamPage: React.FC = () => {
             <Form>
               <div className={classes.pageHeaderDiv}>
                 <div className={classes.arrowDiv}>
-                  <ArrowLeft />
+                  <Link to="/selectmember">
+                    <ArrowLeft />
+                  </Link>
                 </div>
                 <div className={classes.newTeamDiv}>New team</div>
                 <div>
@@ -84,20 +86,18 @@ const CreateTeamPage: React.FC = () => {
     </div>
   );
   const MemberTag = (
-      <Link style={{ textDecoration: "none"}} to="/selectmember">
-        <div className={classes.backgroundDiv}>
-          <div className={classes.memberTagDiv}>
-            <MemberTags members={mockMemberTagData}></MemberTags>
-          </div>
+    <Link style={{ textDecoration: "none" }} to="/selectmember">
+      <div className={classes.backgroundDiv}>
+        <div className={classes.memberTagDiv}>
+          <MemberTags members={mockMemberTagData}></MemberTags>
         </div>
-      </Link>
+      </div>
+    </Link>
   );
   return (
     <div>
       {PageHero}
-      <div className={classes.deleteUnderlineDiv}>
-      {MemberTag}
-      </div>
+      <div className={classes.deleteUnderlineDiv}>{MemberTag}</div>
     </div>
   );
 };
