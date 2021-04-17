@@ -3,14 +3,9 @@ import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
 
 import { Heading } from "@dumbComponents/UI/index";
-import { ArrowLeft, Close, Edit, PlusCircle } from "@icons/index";
+import { ArrowLeft, Close } from "@icons/index";
 import {
-  ActivityLists,
-  Biography,
-  EducationLists,
-  InterestList,
   MemberPicList,
-  ProfileInfo,
   RecruitmentLists,
   TeamActivityLists,
   TeamInfo,
@@ -19,9 +14,10 @@ import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 
 const TeamDetail: React.FC = () => {
   // Is user be team owner ?
-  const isTeamOwner = true;
+  const isTeamOwner = false;
   // Is team already exist ? (create team process)
   const isTeamExist = true;
+
   return (
     <div className={classes.TeamDetail}>
       <div className={classes.header}>
