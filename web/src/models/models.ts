@@ -104,6 +104,11 @@ export interface ITeamDataResult {
   name: string;
   description: string;
 }
+
+export interface IFetchFriendsData {
+  connection: IFetchUserData[];
+}
+
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",

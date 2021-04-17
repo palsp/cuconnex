@@ -12,6 +12,7 @@ import {
   ISearchUserTeamEventResult,
   IUser,
   ITeam,
+  IFetchFriendsData,
 } from "@src/models";
 
 //Auth Services
@@ -112,6 +113,16 @@ const searchUserTeamEvent = async (
 
   return searchResult;
 };
+const fetchFriendsDataAPI = async (): Promise<
+  AxiosResponse<IFetchFriendsData>
+> => {
+  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
+    "/api/users/friends"
+  );
+
+  return userData;
+};
+
 export {
   fetchUserDataAPI,
   fetchUserDataAPINoAxiosResponse,
@@ -125,4 +136,5 @@ export {
   searchUserTeamEvent,
   testFetchUserData,
   testIUSER,
+  fetchFriendsDataAPI,
 };

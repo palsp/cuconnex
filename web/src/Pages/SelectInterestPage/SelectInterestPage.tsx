@@ -132,7 +132,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   //   }, []);
 
   const setUserData = async () => {
-    if (props.location.state) {
+    if (props.location.state && props.location.state.profilePic !== null) {
       name = props.location.state.name;
       profilePic = props.location.state.profilePic;
       faculty = props.location.state.faculty;
