@@ -24,14 +24,14 @@ describe("render Personal Info Page", () => {
     const subtitle = findByTestAttr(wrapper, "personal-info-subtitle");
     expect(subtitle.length).toBe(1);
   });
-  it("should render personalImage", () => {
-    const wrapper = setup();
-    const personalImage = findByTestAttr(
-      wrapper,
-      "personal-info-personalImage"
-    );
-    expect(personalImage.length).toBe(1);
-  });
+  // it("should render personalImage", () => {
+  //   const wrapper = setup();
+  //   const personalImage = findByTestAttr(
+  //     wrapper,
+  //     "personal-info-personalImage"
+  //   );
+  //   expect(personalImage.length).toBe(1);
+  // });
 
   it("should render form", () => {
     const wrapper = setup();
