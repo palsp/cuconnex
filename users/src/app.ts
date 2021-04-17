@@ -30,7 +30,7 @@ app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
 
-app.use('/api/users/assets', express.static('assets'));
+app.use('/api/users/assets', express.static('src/assets'));
 
 // user handler
 app.use(router.notificationUserRouter);
