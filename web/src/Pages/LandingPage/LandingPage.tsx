@@ -11,7 +11,7 @@ import LandingHero from "./Sections/LandingHero";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
-  const [hasTeam] = useState<boolean>(true);
+  const [hasTeam, setHasTeam] = useState<boolean>(true);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
@@ -32,7 +32,10 @@ const LandingPage: React.FC = () => {
             <Search />
           </Link>
         </div>
-        <div className={classes.mailDiv}>
+        <div
+          onClick={() => setHasTeam((prev) => !prev)}
+          className={classes.mailDiv}
+        >
           <Mail />
         </div>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
