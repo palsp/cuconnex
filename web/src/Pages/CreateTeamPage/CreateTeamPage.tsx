@@ -68,7 +68,7 @@ const CreateTeamPage: React.FC = () => {
         <SelectMemberPrompt members={mockMemberLists} />
       </div>
     ) : (
-      <div>Error Occurs : Contant Staff</div>
+      <div>Error Occurs : Contact Staff</div>
     );
 
   return <div>{createPrompt}</div>;
