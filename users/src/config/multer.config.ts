@@ -3,7 +3,7 @@ import { BadRequestError } from '@cuconnex/common';
 
 //Storage config
 export const storage = multer.diskStorage({
-    destination: 'assets',
+    destination: 'src/assets',
     filename: function (req, file, cb) {
         // console.log(req.body);
         let extension = '.' + file.mimetype.split('/')[1];

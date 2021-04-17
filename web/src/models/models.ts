@@ -1,5 +1,28 @@
 // Auth Services
+export interface IUser {
+  id: string;
+  name: string;
+  interests: {
+    Technology: string[];
+    Business: string[];
+    Design: string[];
+  };
+  faculty: string;
+  image: string;
+}
 
+export interface ITeam {
+  name: string; // team name
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
+}
+
+export interface ISearchUserTeamEventResult {
+  users: IUser[];
+  team: ITeam[];
+  events: IEventData[];
+}
 export interface IUserSignup {
   email: string;
   password: string;
@@ -42,19 +65,15 @@ export interface ICreateUserData {
 }
 //events
 export interface IFetchEventsData {
-  events: [
-    IEventData
-  ]
+  events: [IEventData];
 }
 export interface IFetchEventsDataResult {
-  events: [
-    IEventData
-  ]
+  events: [IEventData];
 }
 export interface IEventData {
   "event-name": string;
   bio: string;
-  status:string;
+  status: string;
   "start-date": {
     month: number;
     day: number;
@@ -78,12 +97,12 @@ export interface IEventData {
 }
 //team
 export interface ITeamData {
-  name:string,
-  description:string,
+  name: string;
+  description: string;
 }
 export interface ITeamDataResult {
-  name:string,
-  description:string,
+  name: string;
+  description: string;
 }
 export interface IInviteData {
   teamName:string,

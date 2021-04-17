@@ -20,12 +20,13 @@ html {
   font-size: 100%;
 }
 
-main {
+/* main {
   width: 100vw;
   min-height: 100vh;
-}
+  position: relative;
+} */
 
-@media only screen and (min-width: 415px) {
+@media only screen and (min-width: 430px) {
   /* tablet */
   html {
     font-size: 120%;

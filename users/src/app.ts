@@ -41,7 +41,7 @@ app.use(router.notificationUserRouter);
 app.use(router.manageStatusRouter);
 
 
-app.use("/api/users", userRouter)
+app.use("/api/users", userRouter);
 app.use("/api/users", connectionRouter);
 
 // team handler

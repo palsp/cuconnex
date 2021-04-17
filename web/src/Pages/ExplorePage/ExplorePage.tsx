@@ -14,9 +14,15 @@ import mockEventLists from "@src/mockData/mockEventLists";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
 import { mockPeopleLists } from "@src/mockData";
+import { IEventData, ITeam, IUser } from "@src/models";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
+  const [noSearchResult, setNoSearchResult] = useState<boolean>(false);
+  const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
+  const [teamLists, setTeamLists] = useState<ITeam[]>([]);
+  const [eventLists, setEventLists] = useState<IEventData[]>([]);
+
   const explorePage = hasSearch ? (
     <div className={classes.exploreContent}>
       <Tag />
@@ -31,7 +37,7 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
       </div>
-      <EventLists events={mockEventLists}/>
+      <EventLists events={mockEventLists} />
     </div>
   ) : (
     <>
@@ -56,8 +62,18 @@ const ExplorePage = () => {
           <Link to="/landing">
             <ArrowLeft />
           </Link>
-          <SearchBar setHasSearch={setHasSearch} value="Explore" />
+          <SearchBar
+            setHasSearch={setHasSearch}
+            setNoSearchResult={setNoSearchResult}
+            setPeopleLists={setPeopleLists}
+            setTeamLists={setTeamLists}
+            setEventLists={setEventLists}
+            value="Explore"
+          />
         </div>
+        {console.log("This is peopleLists", peopleLists)}
+        {console.log("This is teamLists", teamLists)}
+
         {explorePage}
       </div>
     </Background>

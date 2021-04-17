@@ -1,58 +1,12 @@
-.main {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-}
-
-.content {
-  z-index: 2;
-}
-
 .background {
   width: 100%;
   height: 100%;
 }
 
-/*
-
-.circle_overlay {
-  position: absolute;
-  background: white;
-  z-index: -1;
-  opacity: 0.5;
-  border-radius: 50%;
-  width: 200%;
-  height: 100%;
-  bottom: -33%;
-}
-
-*/
-
 .content {
   display: flex;
   align-items: center;
   flex-direction: column;
-}
-
-.footerIcon {
-  display: flex;
-  align-items: center;
-}
-
-.usernameDiv {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.heading {
-  text-align: start;
-  margin: 0 0 0 20px;
 }
 
 .titleDiv {
@@ -75,6 +29,22 @@
   margin: 5vh auto;
 }
 
+.footerIcon {
+  display: flex;
+  align-items: center;
+}
+
+.usernameDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  text-align: start;
+  margin: 0 0 0 20px;
+}
+
 .footerNavigation {
   position: relative;
   bottom: 3%;
@@ -85,7 +55,7 @@
 
 .Button {
   margin-top: 15%;
-  margin-bottom: 30%;
+  margin-bottom: 10%;
 }
 
 .noStyleButton {
@@ -97,6 +67,7 @@
   cursor: pointer;
   outline: inherit;
 }
+
 /*
 
 @media only screen and (min-width: 415px) {                      /* tablet
