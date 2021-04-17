@@ -1,11 +1,11 @@
 .mainDiv{
-    width:91px;
+    width:100px;
     height:161px;
 }
 .textDiv{
     display:flex;
     flex-direction: column;
-    width:91px;
+    width:100px;
     height:42px;
 }
 .nameDiv{

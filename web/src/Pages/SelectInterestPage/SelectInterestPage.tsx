@@ -21,6 +21,8 @@ import { createUserDataAPI } from "@api/index";
 import { ICreateUserData } from "@models/index";
 
 import classes from "./SelectInterestPage.module.css";
+import mockInterestLists from "@src/mockData/mockInterestListsData";
+import mockInterestListsData from "@src/mockData/mockInterestListsData";
 
 interface Props {
   location: {
@@ -212,6 +214,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Business" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectBusinessInterestHandler}
             data-test="interest-list-business"
             type="BUSINESS"
@@ -220,6 +223,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Technology" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectTechnologyInterestHandler}
             data-test="interest-list-technology"
             type="TECHNOLOGY"
@@ -228,6 +232,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Design" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectDesignInterestHandler}
             data-test="interest-list-design"
             type="DESIGN"
