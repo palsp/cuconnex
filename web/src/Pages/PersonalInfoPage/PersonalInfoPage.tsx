@@ -17,6 +17,7 @@ import { ProfilePic } from "@smartComponents/index";
 import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
+import { motion } from "framer-motion";
 import { FacultyListsEnum } from "@models/index";
 import defaultProfilePic from "@assets/tempProfilePic.png";
 
@@ -120,35 +121,25 @@ const PersonalInfoPage: React.FC = () => {
   // };
 
   return (
-    <div className={classes.background}>
-      <Background data-test="personal-info-background">
-        <div className={classes.content}>
-          <div className={classes.titleDiv}>
-            <Heading
-              data-test="personal-info-header"
-              value="Personal Information"
-            />
-          </div>
-
-          <div className={classes.subtitleDiv}>
-            <Subtitle
-              data-test="personal-info-subtitle"
-              value="Setting up your profile"
-            />
-          </div>
-          <div
-            className={classes.profilePicDiv}
-            onChange={() => console.log(image.preview)}
-          >
-            <label htmlFor="upload-button">
-              {image.preview !== "" ? (
-                <>
-                  <ProfilePic
-                    size="medium"
-                    data-test="personal-info-personalImage"
-                    PicUrl={image.preview}
-                    uploadedProfile={true}
+    <div className={classes.main}>
+      <div className={classes.container}>
+        <div className={classes.background}>
+          <Background data-test="personal-info-background">
+            <div className={classes.content}>
+              <motion.div className={classes.motion}>
+                <div className={classes.titleDiv}>
+                  <Heading
+                    data-test="personal-info-header"
+                    value="Personal Information"
                   />
+                </div>
+
+                <div className={classes.subtitleDiv}>
+                  <Subtitle
+                    data-test="personal-info-subtitle"
+                    value="Setting up your profile"
+                  />
+                </div>
                 <div
                   className={classes.profilePicDiv}
                   onChange={() => console.log("Image raw: ", image.raw)}
@@ -180,40 +171,8 @@ const PersonalInfoPage: React.FC = () => {
                     id="upload-button"
                     style={{ display: "none" }}
                     onChange={handleUploadedImage}
-
-                  />
-                );
-              }, 1500);
-            }}
-            validationSchema={validationSchema}
-          >
-            {({ values }) => (
-              <Form>
-                <div className={classes.inputFieldDiv}>
-                  <InputField
-                    label="Display Name*"
-                    type="input"
-                    name="displayName"
                   />
                 </div>
-                <div className={classes.selectDiv}>
-                  <FormControl style={{ width: "100%" }}>
-                    <InputLabel>Faculty</InputLabel>
-                    <Field
-                      name="faculty"
-                      type="select"
-                      label="Faculty"
-                      as={Select}
-                    >
-                      {facultyArray.map((faculty) => (
-                        <MenuItem key={faculty} value={faculty}>
-                          {faculty}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                  </FormControl>
-                </div>
-
                 <Formik
                   data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
@@ -283,20 +242,22 @@ const PersonalInfoPage: React.FC = () => {
                           amount={2}
                         />
 
-
-                  <button type="submit" className={classes.noStyleButton}>
-                    <div className={classes.footerIcon}>
-                      <Heading value="Skip" size="small" />
-                      <ArrowRight data-test="personal-info-arrowRight" />
-                    </div>
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                        <button type="submit" className={classes.noStyleButton}>
+                          <div className={classes.footerIcon}>
+                            <Heading value="Skip" size="small" />
+                            <ArrowRight data-test="personal-info-arrowRight" />
+                          </div>
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </motion.div>
+            </div>
+            {redirect}
+          </Background>
         </div>
-        {redirect}
-      </Background>
+      </div>
     </div>
   );
 };
