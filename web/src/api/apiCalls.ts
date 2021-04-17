@@ -104,8 +104,8 @@ const createUserDataAPI = async (
   const formData = new FormData();
   formData.append("name", createUserData.name);
   formData.append("interests", JSON.stringify(createUserData.interests));
-  formData.append("faculy", createUserData.faculty);
-  formData.append("myFile", createUserData.image);
+  formData.append("faculty", createUserData.faculty);
+  formData.append("image", createUserData.image);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",

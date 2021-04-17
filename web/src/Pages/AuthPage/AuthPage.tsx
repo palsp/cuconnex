@@ -42,6 +42,11 @@ const AuthPage: React.FC = () => {
 
   useEffect(() => {
     fetchDataHandler();
+    return () => {
+      setClickLogin(false);
+      setClickSignup(false);
+      setRedirect(false);
+    };
   }, []);
 
   const signupButtonClickedHandler = () => {

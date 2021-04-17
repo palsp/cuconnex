@@ -41,6 +41,8 @@ const LoginPrompt: React.FC<Props> = (props) => {
       }
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
+      setIsAuthenticated(false);
+      setRedirect(false);
       console.log("ERRORS occured while POST /api/auth/signin", e);
     }
   };
