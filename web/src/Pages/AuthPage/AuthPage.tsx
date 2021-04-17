@@ -41,7 +41,13 @@ const AuthPage: React.FC = () => {
   };
 
   useEffect(() => {
+    // let isMounted = true;
+    // if (isMounted) {
     fetchDataHandler();
+    // }
+    // return () => {
+    //   isMounted = false;
+    // };
   }, []);
 
   const signupButtonClickedHandler = () => {
@@ -161,7 +167,19 @@ const AuthPage: React.FC = () => {
 
   return (
     <Background data-test="auth-page-background">
-      <div className={classes.content}>{authPrompt}</div>
+      <div className={classes.content}>
+        {authPrompt}
+        <button
+          style={{ position: "fixed", top: "0", left: "0" }}
+          onClick={() => {
+            console.log("clickSignup", clickSignup);
+            console.log("clickLogin", clickLogin);
+            console.log("redirect", redirect);
+          }}
+        >
+          Click
+        </button>
+      </div>
       {routeRedirect}
     </Background>
   );

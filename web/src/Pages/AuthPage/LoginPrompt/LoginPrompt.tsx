@@ -55,9 +55,9 @@ const LoginPrompt: React.FC<Props> = (props) => {
       }}
       onSubmit={async (data, { setSubmitting, resetForm }) => {
         console.log("POST /api/auth/signin", data);
-        signinHandler(data);
         setSubmitting(true);
         resetForm();
+        await signinHandler(data);
       }}
       validationSchema={validationSchema}
     >

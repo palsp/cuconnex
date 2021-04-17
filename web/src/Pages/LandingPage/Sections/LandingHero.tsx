@@ -10,9 +10,12 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
+import { IUser } from "@models/index";
+import { UserDataContext } from "@src/hooks/UserDataContext";
 
 interface Props {
   hasTeam: boolean;
+  userData: IUser;
 }
 
 const LandingHero: React.FC<Props> = (props) => {
@@ -55,7 +58,7 @@ const LandingHero: React.FC<Props> = (props) => {
           <div className={classes.subtitleDiv}>
             <div className={classes.welcome}>Welcome,</div>
             <div className={classes.headingDiv}>
-              <Username value="Pichayada Mizzy" />
+              <Username value={props.userData.name} />
             </div>
           </div>
         </div>

@@ -33,7 +33,6 @@ import classes from "./App.module.css";
 import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamPrompt";
 import { IUser } from "@models/index";
 
-
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userData, setUserData] = useState<IUser>({
@@ -103,6 +102,7 @@ const App: React.FC = () => {
       await userLogoutAPI();
       setIsAuthenticated(false);
       setRedirect(<Redirect to="/" />);
+      console.log("LOGOUT");
     } catch (e) {
       console.log("FAILED loggingout", e);
     }
@@ -113,7 +113,6 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-
         <UserDataContext.Provider value={{ userData, setUserData }}>
           <Switch>
             <Route path="/" exact component={AuthPage} />
@@ -141,12 +140,11 @@ const App: React.FC = () => {
             <Route path="/createteam" exact component={CreateTeamPage} />
             <Route path="/teamdetail" exact component={TeamDetail} />
             <Route path="/explore" exact component={ExplorePage} />
-             <Route path="/testprompt" exact component={CreateTeamPrompt} />
+            <Route path="/testprompt" exact component={CreateTeamPrompt} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>
         </UserDataContext.Provider>
-
       </AuthenticatedContext.Provider>
     </BrowserRouter>
   ) : (
@@ -154,11 +152,13 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-        <Switch>
-          <Route path="/" exact component={AuthPage} />
-          {redirect}
-          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-        </Switch>
+        <UserDataContext.Provider value={{ userData, setUserData }}>
+          <Switch>
+            <Route path="/" exact component={AuthPage} />
+            {redirect}
+            <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+          </Switch>
+        </UserDataContext.Provider>
       </AuthenticatedContext.Provider>
     </BrowserRouter>
   );
@@ -185,9 +185,8 @@ const App: React.FC = () => {
       <button onClick={fetchDataHandlerNoAxiosResponse}>
         FETCH NOaxiosResponseT
       </button>
-      <button onClick={testFetchUserData}>FETCH testFetch</button>
+      <button onClick={testFetch}>FETCH testFetch</button>
       <button onClick={testIUserFetch}>FETCH IUser</button>
-
       <button onClick={logoutHandler}>LOGOUT</button>
     </div>
   );
