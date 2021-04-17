@@ -18,9 +18,17 @@ spec:
             backend:
               serviceName: users-srv 
               servicePort: 3000
+          - path: /api/teams/?(.*)
+            backend:
+              serviceName: users-srv 
+              servicePort: 3000
           - path: /api/events/?(.*)
             backend:
               serviceName: event-srv 
+              servicePort: 3000
+          - path: /api/query/?(.*)
+            backend:
+              serviceName: query-srv 
               servicePort: 3000
           - path: /?(.*)
             backend:
