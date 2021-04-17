@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
-
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
-import { Redirect } from "react-router";
-
 import {
   Heading,
   Subtitle,
@@ -13,13 +9,9 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { InterestLists } from "@smartComponents/index";
-
 import { ArrowLeft, ArrowRight } from "@icons/index";
-
 import { createUserDataAPI } from "@api/index";
-
 import { ICreateUserData } from "@models/index";
-
 import classes from "./SelectInterestPage.module.css";
 
 interface Props {
@@ -45,10 +37,6 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Business: [],
     Design: [],
   });
-
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
 
   let name = "";
   let faculty = "";
@@ -132,7 +120,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   //   }, []);
 
   const setUserData = async () => {
-    if (props.location.state) {
+    if (props.location.state && props.location.state.profilePic !== null) {
       name = props.location.state.name;
       profilePic = props.location.state.profilePic;
       faculty = props.location.state.faculty;
@@ -141,7 +129,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       name: name,
       interests: interestArray,
       faculty: faculty,
-      profilePic: profilePic,
+      image: profilePic,
     };
     try {
       const result = await createUserDataAPI(userData);
@@ -160,7 +148,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       name: name,
       interests: emptyInterests,
       faculty: faculty,
-      profilePic: profilePic,
+      image: profilePic,
     };
     try {
       const result = await createUserDataAPI(userData);
