@@ -1,0 +1,7 @@
+mysql: 
+  name: auth
+  env: 
+    - name: MYSQL_ROOT_PASSWORD
+      value: password
+    - name: MYSQL_DATABASE
+      value: auth

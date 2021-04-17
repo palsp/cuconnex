@@ -1,0 +1,29 @@
+app:
+  name: auth
+  group: backend
+  container:
+    image: palsp/connex-auth
+    port: 3000
+    env:
+      - name: DB_HOST
+        value: 'auth-mysql-srv'
+      - name: DB_USER
+        value: 'root'
+      - name : DB_SCHEMA
+        value: 'auth_db'
+    secret: 
+      - name: DB_PASSWORD
+        ref: auth-db-secret
+        key: DB_PASSWORD
+      - name: JWT_KEY
+        ref: jwt-secret
+        key: JWT_KEY
+  service:
+    port: 3000
+    protocol: TCP
+  initContainer:
+    wait: false
+    name: init-wait
+    image: alpine
+    command : ["sh", "-c", "for i in $(seq 1 300); do nc -zvw1 auth-mysql-srv 3306 && exit 0 || sleep 3; done; exit 1"]
+    

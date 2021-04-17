@@ -1,0 +1,23 @@
+replicaCount: 1
+app:
+  name: app
+  group: app
+  container:
+    image: add-image-here
+    port: 3000
+    config: []
+    env:
+      - name: name
+        value: value
+    secret:
+      - name: name
+        ref: ref
+        key: key
+  service:
+    port: 3000
+    protocol : TCP
+  initContainer:
+    wait: false
+    name: init-wait
+    image: alpine
+    command : ["sh"]
