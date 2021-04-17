@@ -1,23 +1,5 @@
-.main {
-  width: 100vw;
-  height: 100%;
-  position: relative;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
-}
-
-/* Background */
-
 .content {
   z-index: 2;
-}
-
-.background {
-  width: 100%;
-  height: 100%;
 }
 
 .circle_overlay {
@@ -31,13 +13,19 @@
   bottom: -33%;
 }
 
-.contentContainer {
+.authPrompt {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.contentClick {
+.signupPrompt {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginPrompt {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -47,7 +35,6 @@
 
 .Button {
   margin-top: 10%;
-  margin-bottom: -10%;
 }
 
 .LoginButton {
@@ -74,8 +61,6 @@
 }
 
 .subtitleDiv {
-  height: 54px;
-  margin: 1vw;
   font-size: 1rem;
 }
 
@@ -102,7 +87,7 @@
 /* Footer */
 
 .footerNavigation {
-  margin-top: 10vh;
+  margin-top: 15%;
   position: relative;
   width: 110%;
 }
@@ -115,14 +100,29 @@
   justify-content: center;
 }
 
+.loginBackNavigation {
+  position: absolute;
+  margin-top: -20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .divFooterHeading {
   margin: 5px 0 0 10px;
 }
 
-/* @media */
+@media only screen and (max-width: 350px) {
+  /* small phone */
+  .logoDiv {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 60%;
+  }
+}
 
-@media only screen and (max-width: 414px) {
-  /* mobile */
+@media only screen and (min-width: 350px) {
+  /* iphone X */
   .logoDiv {
     margin-top: 60%;
     margin-bottom: 5%;
@@ -130,11 +130,26 @@
   }
 }
 
-@media only screen and (min-width: 415px) {
+@media only screen and (min-width: 376px) {
+  /* iphone Max */
+  .logoDiv {
+    margin-top: 40%;
+    margin-bottom: 5%;
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 430px) {
   /* tablet */
   .logoDiv {
     margin-top: 30%;
     margin-bottom: 5%;
     width: 50%;
+  }
+
+  .logo {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 25%;
   }
 }

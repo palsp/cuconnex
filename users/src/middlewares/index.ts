@@ -90,5 +90,5 @@ export const uploadFileWithName = (name: string) => {
         storage: storage
     })
 
-    return upload.single('myFile');
+    return upload.single('image');
 };

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
 
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import { Redirect } from "react-router";
 
 import {
@@ -56,13 +56,17 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   let faculty = "";
   let profilePic: File;
   let saveButton = null;
+
   const emptyInterests: InterestListsArray = {
     Technology: [],
     Business: [],
     Design: [],
   };
 
-  const [editInterest, setEditInterest] = useState(false);
+  // const [editInterest, setEditInterest] = useState(false);
+  // const setEditInterestHandler = () => {
+  //   setEditInterest(true);
+  // };
 
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
@@ -128,6 +132,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   //     };
   //     fetchUserData();
   //   }, []);
+
   const setUserData = async () => {
     if (props.location.state) {
       name = props.location.state.name;
@@ -166,9 +171,11 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("SelectInterestPage Error setting users data", e);
     }
   };
+
   useEffect(() => {
     console.log("Items in interestArray", interestArray);
   }, [interestArray]);
+
   useEffect(() => {
     console.log(
       "State passed from PersonalInformationPage",
@@ -198,6 +205,42 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   } else {
     saveButton = null;
   }
+
+  let selectInterestPrompt = null;
+
+  if (!props.location.state) {
+    selectInterestPrompt = <div></div>;
+    saveButton = (
+      <Link
+        to={{
+          pathname: "/profile",
+        }}
+      >
+        <Button onClick={setUserData} value="SAVE" />
+      </Link>
+    );
+  } else {
+    selectInterestPrompt = (
+      <div className={classes.footerNavigation}>
+        <Link to="/personalinformation">
+          <div className={classes.footerIcon}>
+            <ArrowLeft data-test="arrow-left" />
+            <Heading size="small" value="Back" />
+          </div>
+        </Link>
+        <DotMorePage data-test="dot-icon" amount={3} />
+        <div onClick={setEmptyInterest}>
+          <Link to="/success">
+            <div className={classes.footerIcon}>
+              <Heading size="small" value="Skip" />
+              <ArrowRight data-test="arrow-right" />
+            </div>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className={classes.main}>
@@ -238,30 +281,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             type="DESIGN"
           />
           <div className={classes.divSaveButton}>{saveButton}</div>
-
-          {editInterest ? (
-            <Link to="/profile">
-              <Button value="Save" />
-            </Link>
-          ) : (
-            <div className={classes.footerNavigation}>
-              <Link to="/personalinformation">
-                <div className={classes.footerIcon}>
-                  <ArrowLeft data-test="arrow-left" />
-                  <Heading size="small" value="Back" />
-                </div>
-              </Link>
-              <DotMorePage data-test="dot-icon" amount={3} />
-              <div onClick={setEmptyInterest}>
-                <Link to="/success">
-                  <div className={classes.footerIcon}>
-                    <Heading size="small" value="Skip" />
-                    <ArrowRight data-test="arrow-right" />
-                  </div>
-                </Link>
-              </div>
-            </div>
-          )}
+          {selectInterestPrompt}
         </div>
       </div>
     </>

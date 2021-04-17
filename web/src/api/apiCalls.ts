@@ -11,12 +11,31 @@ import {
   ITeamData,
   IInviteData,
   IInviteDataResult,
+  ISearchUserTeamEventResult,
+  IUser,
+  ITeam,
+
 } from "@src/models";
 
 //Auth Services
-const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
-  const userData: AxiosResponse<IFetchUserData> = await axios.get("/api/users");
+const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
+  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
 
+  return userData;
+};
+const fetchUserDataAPINoAxiosResponse = async (): Promise<IFetchUserData> => {
+  const userData: IFetchUserData = await axios.get("/api/users");
+
+  return userData;
+};
+
+const testFetchUserData = async () => {
+  const userData = await axios.get("/api/users");
+  return userData;
+};
+
+const testIUSER = async (): Promise<AxiosResponse<IUser>> => {
+  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
   return userData;
 };
 
@@ -42,8 +61,12 @@ const userSigninAPI = async (
 const userLogoutAPI = async (): Promise<void> => {
   await axios.post("/api/auth/signout");
 };
-const fetchEventsDataAPI = async (): Promise<AxiosResponse<IFetchEventsData>> => {
-  const eventsData: AxiosResponse<IFetchEventsData> = await axios.get("/api/events/");
+const fetchEventsDataAPI = async (): Promise<
+  AxiosResponse<IFetchEventsData>
+> => {
+  const eventsData: AxiosResponse<IFetchEventsData> = await axios.get(
+    "/api/events/"
+  );
 
   return eventsData;
 };
@@ -92,11 +115,28 @@ const createUserDataAPI = async (
   return userCreatedData;
 };
 
+const searchUserTeamEvent = async (
+  searchQuery: string
+): Promise<AxiosResponse<ISearchUserTeamEventResult>> => {
+  const searchResult: AxiosResponse<ISearchUserTeamEventResult> = await axios.get(
+    `/api/query/${searchQuery}`
+  );
+
+  return searchResult;
+};
 export {
   fetchUserDataAPI,
+  fetchUserDataAPINoAxiosResponse,
   userLogoutAPI,
   userSignupAPI,
   userSigninAPI,
   createUserDataAPI,
-  fetchEventsDataAPI , createEventsAPI , createTeamAPI , teamInvitationAPI ,
+  teamInvitationAPI ,
+  fetchEventsDataAPI,
+  createEventsAPI,
+  createTeamAPI,
+  searchUserTeamEvent,
+  testFetchUserData,
+  testIUSER,
+
 };
