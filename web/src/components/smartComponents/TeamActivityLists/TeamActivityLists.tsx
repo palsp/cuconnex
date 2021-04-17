@@ -1,6 +1,7 @@
 import React from "react";
 import TeamActivityList from "@smartComponents/TeamActivityLists/TeamActivityList/TeamActivityList";
 import classes from "./TeamActivityLists.module.css";
+import { TeamActivitiesData } from "@src/mockData/Models";
 
 const teamActivityArray = [
   {
@@ -10,12 +11,15 @@ const teamActivityArray = [
     status: "Recruiting",
   },
 ];
+interface Props{
+  activity:TeamActivitiesData[] | []
+}
 
-const TeamActivityLists: React.FC = () => {
+const TeamActivityLists: React.FC<Props> = (props) => {
   return (
     <div data-test="team-activity-lists">
       <div className={classes.heading}>Ongoing Projects</div>
-      {teamActivityArray.map((teamActivity, index) => {
+      {props.activity.map((teamActivity:TeamActivitiesData, index:number) => {
         return <TeamActivityList key={index} teamActivityBox={teamActivity} />;
       })}
     </div>

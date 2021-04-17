@@ -15,6 +15,7 @@ import {
   TeamActivityLists,
   TeamInfo,
 } from "@smartComponents/index";
+import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 
 const TeamDetail: React.FC = () => {
   // Is user be team owner ?
@@ -62,7 +63,7 @@ const TeamDetail: React.FC = () => {
       </div>
 
       <div className={classes.activity}>
-        <TeamActivityLists />
+        <TeamActivityLists activity={mockTeamActivitiesData} />
       </div>
     </div>
   );

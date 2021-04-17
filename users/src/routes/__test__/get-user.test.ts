@@ -11,6 +11,7 @@ const setup = async () => {
   const user = await User.create({
     id: '6131778821',
     name: 'pal',
+    image: '/file/path'
   });
 
   const interest = await Interest.findOne({
@@ -48,6 +49,7 @@ describe('get current user', () => {
 
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
+    expect(res.image).toEqual(user.image);
   });
 
   it('return user must include interests', async () => {

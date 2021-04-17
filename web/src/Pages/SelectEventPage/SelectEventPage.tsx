@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./SelectEventPage.module.css";
-import { Heading, Tag } from "@dumbComponents/UI/index";
-import { ArrowLeft } from "@icons/index";
-import { EventLists } from "@smartComponents/index";
-interface Props {
-  location: {
-    state: {
-      eventstatus: string;
-    };
-  };
-}
+import { Heading } from "@dumbComponents/UI";
+import { ArrowLeft } from "@dumbComponents/UI/Icons";
+import EventLists from "@smartComponents/EventLists/EventLists";
+import Tag from "@dumbComponents/UI/Tag/Tag";
+import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
+import { IEventData } from "@src/models";
 const SelectEventPage: React.FC = () => {
+  const [eventLists, setEventLists] = useState<[IEventData] | []>([]);
+  useEffect(() => {
+    fetchEventsHandler().then( (value:[IEventData] | []) => setEventLists(value));
+  }, []);
+  const fetchEventsHandler = async () => {
+      const eventsData = await fetchEventsDataAPI();
+      console.log("SUCCESS fetchDataHandler", eventsData.data.events);
+      return (eventsData.data.events);
+  };
   return (
     <div className={classes.mainDiv}>
       <div className={classes.headingContainerDiv}>
@@ -28,7 +33,7 @@ const SelectEventPage: React.FC = () => {
         <Tag />
       </div>
       <div className={classes.eventDiv}>
-        <EventLists />
+        <EventLists events={eventLists}></EventLists>
       </div>
     </div>
   );

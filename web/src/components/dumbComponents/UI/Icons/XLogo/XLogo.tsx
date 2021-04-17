@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./X.module.css";
 const XLogo: React.FC = () => {
   return (
     <div>

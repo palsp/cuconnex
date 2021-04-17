@@ -1,0 +1,31 @@
+.memberTagDiv{
+    margin-top:10px;
+    display:flex;
+    width: 375px;
+    height: 335px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.individualTagDiv{
+    margin-left:10px;
+    margin-right:10px;
+    height:160px;
+    width:100px;
+}
+.headerDiv {
+    margin-top:20px;
+    text-align: center;
+    width: 375px;
+    height: 24px;
+    overflow: visible;
+    white-space: pre;
+    font-weight: 700;
+    font-style: normal;
+    font-family: "Nunito", serif;
+    letter-spacing: 0px;
+    line-height: 1.2;
+    font-size: 20px;
+    color: var(--main_pink, #f33182);
+  }

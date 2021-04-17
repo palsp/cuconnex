@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { Heading } from "@dumbComponents/UI/index";
@@ -13,16 +14,27 @@ import {
   InterestList,
   ProfileInfo,
 } from "@smartComponents/index";
+import mockActivityListsData from "@src/mockData/mockActivityListsData";
+import mockEducationListsData from "@src/mockData/mockEducationListsData";
 
 const ProfilePage: React.FC = () => {
   const [clickEditProfile, setClickEdit] = useState(false);
+  const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
 
-  const EditButtonClickedHandler = () => {
-    setClickEdit(true);
-  };
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
+
+  const EditProfileClickedHandler = () => {
+    setClickEditOption(true);
+    setClickEdit(true);
+  };
+
+  const EditAboutClickedHandler = () => {
+    setClickEditOption(false);
+    setClickEdit(true);
+  };
+
   // Is it my profile ?
   const isMyProfile = true;
 
@@ -48,7 +60,7 @@ const ProfilePage: React.FC = () => {
           </div>
           <div
             className={classes.editProfile}
-            onClick={EditButtonClickedHandler}
+            onClick={EditProfileClickedHandler}
           >
             {isMyProfile ? <Edit /> : <div />}
           </div>
@@ -58,16 +70,16 @@ const ProfilePage: React.FC = () => {
           <div className={classes.bio}>
             <Biography nickname="home" detail="I love coding and Korean girl" />
           </div>
-          <div className={classes.editAbout} onClick={EditButtonClickedHandler}>
+          <div className={classes.editAbout} onClick={EditAboutClickedHandler}>
             {isMyProfile ? <Edit /> : <div />}
           </div>
         </div>
 
         <div className={classes.education}>
-          <EducationLists />
+          <EducationLists education={mockEducationListsData} />
         </div>
         <div className={classes.activity}>
-          <ActivityLists />
+          <ActivityLists activity={mockActivityListsData} />
         </div>
         {/* Interests should be fetched for it to dynamically render */}
         <div className={classes.interest}>
@@ -76,7 +88,11 @@ const ProfilePage: React.FC = () => {
 
             <div className={classes.addIcon}>
               {isMyProfile ? (
-                <Link to="/selectinterests">
+                <Link
+                  to={{
+                    pathname: "/selectinterests",
+                  }}
+                >
                   <PlusCircle />{" "}
                 </Link>
               ) : (
@@ -118,9 +134,11 @@ const ProfilePage: React.FC = () => {
           <div className={classes.head}>
             <Heading data-test="profile-page-header" value="Edit Profile" />
           </div>
-          <div className={classes.saveBtn}>Save</div>
+          <div className={classes.saveBtn} data-test="profile-page-save-btn">
+            Save
+          </div>
         </div>
-        <EditPrompt />
+        <EditPrompt type={clickEditOption} />
       </div>
     );
   }

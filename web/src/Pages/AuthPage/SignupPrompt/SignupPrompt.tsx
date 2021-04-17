@@ -11,7 +11,7 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import { ArrowLeft } from "@icons/index";
 import { userSignupAPI } from "@api/index";
 import { IUserSignup } from "@models/index";

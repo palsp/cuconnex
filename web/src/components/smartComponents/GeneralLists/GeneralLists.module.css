@@ -3,6 +3,9 @@
   flex-direction: row;
   justify-content: flex-start;
   text-align: left;
+  width:375px;
+  height:110px;
+  border-top:0.5px solid grey;
 }
 .textbodyDiv {
   display: flex;
@@ -19,11 +22,10 @@
   align-items: center;
 }
 .profileDiv {
-  background-image: url("../../../assets/tempProfile.png");
+  background-image: url("../../../assets/tempEventProfile.jpg");
   background-size: contain;
   border-radius: 50%;
   opacity: 1;
-  position: relative;
   width: 57px;
   height: 57px;
   display: flex;
