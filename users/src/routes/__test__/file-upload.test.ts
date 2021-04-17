@@ -44,8 +44,6 @@ describe('The /api/upload', () => {
 
         deleteFile(body.image)
 
-
-
     })
 
     it('should create user although file is not attached', async () => {
