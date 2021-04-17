@@ -40,7 +40,7 @@ const MemberList: React.FC<Props> = (props) => {
           </div>
         </div>
         <div onClick={() => props.selectMemberListHandler(checked)}>
-          <div className={classes.divUserInfo} onClick={checkedMemberHandler}>
+          <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
             <CheckBox />
           </div>
         </div>

@@ -1,8 +1,8 @@
 .memberTagDiv{
-    padding-left:7px;
-    padding-top:10px;
+    padding-left:1.86vw;
+    padding-top:2.67vw;
     display:flex;
-    width: 368px;
+    width: 98.13vw;
     height: auto;
     flex-wrap: wrap;
     align-items: center;
@@ -12,16 +12,16 @@
     border-radius: 0px 0px 30px 30px;
 }
 .individualTagDiv{
-    margin-left:10px;
-    margin-right:10px;  
+    margin-left:2.67vw;
+    margin-right:2.67vw;  
 }
 .headerDiv {
-    margin-top:20px;
-    padding-bottom:10px;
-    padding-top:10px;
+    margin-top:2.463vh;
+    padding-bottom:1.231vh;
+    padding-top:1.231vh;
     text-align: center;
-    width: 375px;
-    height: 24px;
+    width: 100vw;
+    height: 2.96vh;
     overflow: visible;
     white-space: pre;
     font-weight: 700;
