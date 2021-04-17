@@ -25,7 +25,9 @@ const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
-  const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { isAuthenticated, setIsAuthenticated } = useContext(
+    AuthenticatedContext
+  );
   const { setUserData } = useContext(UserDataContext);
 
   const fetchDataHandler = async () => {
@@ -48,7 +50,7 @@ const AuthPage: React.FC = () => {
     // return () => {
     //   isMounted = false;
     // };
-  }, []);
+  }, [isAuthenticated]);
 
   const signupButtonClickedHandler = () => {
     setClickSignup(true);
@@ -167,19 +169,7 @@ const AuthPage: React.FC = () => {
 
   return (
     <Background data-test="auth-page-background">
-      <div className={classes.content}>
-        {authPrompt}
-        <button
-          style={{ position: "fixed", top: "0", left: "0" }}
-          onClick={() => {
-            console.log("clickSignup", clickSignup);
-            console.log("clickLogin", clickLogin);
-            console.log("redirect", redirect);
-          }}
-        >
-          Click
-        </button>
-      </div>
+      <div className={classes.content}>{authPrompt}</div>
       {routeRedirect}
     </Background>
   );
