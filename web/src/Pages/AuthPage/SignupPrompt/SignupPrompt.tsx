@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
@@ -42,7 +42,7 @@ const validationSchema = yup.object({
 
 const SignupPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
-  const [redirect, setRedirect] = useState<JSX.Element>();
+  const [redirect, setRedirect] = useState<boolean>(false);
 
   const { isAuthenticated, setIsAuthenticated } = useContext(
     AuthenticatedContext
@@ -53,17 +53,12 @@ const SignupPrompt: React.FC<Props> = (props) => {
       const resultSignup = await userSignupAPI(signupData);
       console.log("Successfully sent a POST request to signup", resultSignup);
       setIsAuthenticated(true);
-      setRedirect(<Redirect to="/personalinformation" />);
+      setRedirect(true);
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
       console.log("ERRORS occured while POST /api/auth/signup", e);
     }
   };
-  useEffect(() => {
-    return () => {
-      setRedirect(undefined);
-    };
-  }, []);
   return (
     <>
       <div className={classes.divHeader}>
@@ -76,55 +71,64 @@ const SignupPrompt: React.FC<Props> = (props) => {
         </div>
       </div>
 
-      <Formik
-        data-test="auth-page-signup-form"
-        initialValues={{
-          email: "",
-          id: "",
-          password: "",
-          confirmPassword: "",
-        }}
-        onSubmit={(data, { setSubmitting, resetForm }) => {
-          const userSignupData = {
-            email: data.email,
-            id: data.id,
-            password: data.password,
-          };
-          signupHandler(userSignupData);
-          console.log("POST /api/auth/signup", data);
-          setSubmitting(true);
-          resetForm();
-        }}
-        validationSchema={validationSchema}
-      >
-        {({ isSubmitting, values }) => (
-          <Form>
-            <InputField label="Email" name="email" type="input" />
-            <div className={classes.InputFieldDiv}>
-              <InputField label="Student ID" name="id" type="input" />
-            </div>
-            <div className={classes.InputFieldDiv}>
-              <InputField label="Password" name="password" type="password" />
-            </div>
-            <div className={classes.InputFieldDiv}>
-              <InputField
-                label="Confirm Password"
-                name="confirmPassword"
-                type="password"
-              />
-            </div>
-            <div className={classes.Button}>
-              <Button
-                data-test="auth-page-signup-next-button"
-                value="Next"
-                disabled={isSubmitting}
-                type="submit"
-              />
-            </div>
-          </Form>
-        )}
-      </Formik>
-      {redirect}
+      {redirect ? (
+        <div>
+          {console.log(
+            "IsAuthenticated in signupPrompt before redirect",
+            isAuthenticated
+          )}
+          <Redirect to="/personalinformation" />
+        </div>
+      ) : (
+        <Formik
+          data-test="auth-page-signup-form"
+          initialValues={{
+            email: "",
+            id: "",
+            password: "",
+            confirmPassword: "",
+          }}
+          onSubmit={(data, { setSubmitting, resetForm }) => {
+            const userSignupData = {
+              email: data.email,
+              id: data.id,
+              password: data.password,
+            };
+            signupHandler(userSignupData);
+            console.log("POST /api/auth/signup", data);
+            setSubmitting(true);
+            resetForm();
+          }}
+          validationSchema={validationSchema}
+        >
+          {({ isSubmitting, values }) => (
+            <Form>
+              <InputField label="Email" name="email" type="input" />
+              <div className={classes.InputFieldDiv}>
+                <InputField label="Student ID" name="id" type="input" />
+              </div>
+              <div className={classes.InputFieldDiv}>
+                <InputField label="Password" name="password" type="password" />
+              </div>
+              <div className={classes.InputFieldDiv}>
+                <InputField
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                />
+              </div>
+              <div className={classes.Button}>
+                <Button
+                  data-test="auth-page-signup-next-button"
+                  value="Next"
+                  disabled={isSubmitting}
+                  type="submit"
+                />
+              </div>
+            </Form>
+          )}
+        </Formik>
+      )}
       {errorOnScreen}
       <div className={classes.footerNavigation}>
         <DotMorePage data-test="dot-icon" amount={1} />
