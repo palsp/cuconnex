@@ -1,17 +1,17 @@
-import { MemberTagData, SelectedMemberLists } from "@src/mockData/Models";
+import { MemberTagData, SelectedMemberLists, UsersData } from "@src/mockData/Models";
 import React, { useState } from "react";
 import classes from "./MemberTags.module.css";
 import MemberTag from "./MemberTag/MemberTag";
 interface Props {
   members:
-   MemberTagData[] | []
+   UsersData[] | []
 }
 
 const MemberTags: React.FC<Props> = (props) => {
   const member = props.members.length;
   const mappedMembers=(
     <div className={classes.memberTagDiv} >
-      {props.members.map((person:MemberTagData, index:number) => {
+      {props.members.map((person:UsersData, index:number) => {
         return (
           <div 
           className={classes.individualTagDiv}
