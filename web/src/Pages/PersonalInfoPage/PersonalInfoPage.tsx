@@ -149,8 +149,6 @@ const PersonalInfoPage: React.FC = () => {
                     PicUrl={image.preview}
                     uploadedProfile={true}
                   />
-
-                </div>
                 <div
                   className={classes.profilePicDiv}
                   onChange={() => console.log("Image raw: ", image.raw)}
