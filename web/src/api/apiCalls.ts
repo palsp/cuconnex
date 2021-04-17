@@ -9,10 +9,13 @@ import {
   IFetchEventsData,
   IEventData,
   ITeamData,
+  IInviteData,
+  IInviteDataResult,
   ISearchUserTeamEventResult,
   IUser,
   ITeam,
   IFetchFriendsData,
+
 } from "@src/models";
 
 //Auth Services
@@ -86,6 +89,15 @@ const createTeamAPI = async (
   );
   return createTeamData;
 };
+const teamInvitationAPI = async (
+  invitedData: IInviteData
+): Promise<AxiosResponse<IInviteDataResult>> => {
+  const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
+    "/api/members/invite/",
+   invitedData
+  );
+  return invitedUsersData;
+};
 
 const createUserDataAPI = async (
   createUserData: ICreateUserData
@@ -130,6 +142,7 @@ export {
   userSignupAPI,
   userSigninAPI,
   createUserDataAPI,
+  teamInvitationAPI ,
   fetchEventsDataAPI,
   createEventsAPI,
   createTeamAPI,
@@ -137,4 +150,5 @@ export {
   testFetchUserData,
   testIUSER,
   fetchFriendsDataAPI,
+
 };

@@ -3,19 +3,14 @@ import MemberList from "@smartComponents/MemberLists/MemberList/MemberList";
 import mockMemberLists from "@src/mockData/mockMemberLists";
 import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
-import { MemberListsData } from "@src/mockData/Models";
 
-interface member {
-  name: string;
-  profilePic: string;
-  interest: string;
-  major: string;
-  year: number;
-}
+import { UsersData } from "@src/mockData/Models";
+
 interface Props {
-  memberlist: MemberListsData[] | [];
+  memberlist: UsersData[] | [];
   selectMemberListsHandler: (e: number) => void;
-  // selectMemberListsHandler: (e: member) => void;
+  personHandler: (e:UsersData) =>void;
+
 }
 const MemberLists: React.FC<Props> = (props) => {
   // const fetchFriendsList:member[] = async () => {
@@ -27,14 +22,15 @@ const MemberLists: React.FC<Props> = (props) => {
   // }
   return (
     <div>
-      {props.memberlist.map((person: MemberListsData, index: number) => {
+      {props.memberlist.map((person:UsersData, index:number) => {
         return (
           <div key={index}>
             <MemberList
               key={index}
-              member={person}
+              members={person}
               selectMemberListHandler={(currentState: boolean) => {
                 props.selectMemberListsHandler(index);
+                props.personHandler(person);
               }}
             />
           </div>

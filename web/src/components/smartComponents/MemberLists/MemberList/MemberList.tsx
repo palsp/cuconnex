@@ -9,15 +9,10 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import { Search } from "@icons/index";
 import classes from "./MemberList.module.css";
+import { UsersData } from "@src/mockData/Models";
 
 interface Props {
-  member: {
-    name: string;
-    profilePic: string;
-    interest: string;
-    major: string;
-    year: number;
-  };
+  members: UsersData;
   selectMemberListHandler: any;
 }
 
@@ -34,14 +29,14 @@ const MemberList: React.FC<Props> = (props) => {
         </div>
         <div className={classes.userInfo}>
           <div className={classes.divUserInfo}>
-            <Username value={props.member.name} />
+            <Username value={props.members.name} />
           </div>
           <div className={classes.divUserInfo}>
-            <Heading value={props.member.interest} size="small" />
+            <Heading value={props.members.profilePic} size="small" />
           </div>
 
           <div className={classes.divUserInfo}>
-            <Subtitle value={props.member.major} />
+            <Subtitle value={props.members.faculty} />
           </div>
         </div>
         <div onClick={() => props.selectMemberListHandler(checked)}>
