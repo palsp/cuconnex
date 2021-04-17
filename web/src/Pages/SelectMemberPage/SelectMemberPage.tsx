@@ -49,7 +49,7 @@ const SelectMemberPage: React.FC = () => {
         </div>
       </div>
 
-      <MemberLists selectMemberListsHandler={selectMemberHandler} memberlist={mockMemberLists} />
+    
       {console.log("Array Contain: ", memberArray)}
     </div>
   );

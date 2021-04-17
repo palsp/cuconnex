@@ -1,105 +1,77 @@
-import { Button, InputField } from "@dumbComponents/UI";
-import { ArrowLeft } from "@dumbComponents/UI/Icons";
-import MemberTags from "@smartComponents/MemberTag/MemberTags";
-import ProfilePic from "@smartComponents/ProfilePic/ProfilePic";
-import { createTeamAPI } from "@src/api";
-import mockMemberTagData from "@src/mockData/mockMemberTagData";
-import { ITeamData } from "@src/models";
-import { Form, Formik } from "formik";
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
 import classes from "./CreateTeamPage.module.css";
+import React, { useEffect, useState } from "react";
+import { Close } from "@dumbComponents/UI/Icons";
+import { Link } from "react-router-dom";
+import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
+import { mockMemberLists } from "@src/mockData";
 
 const CreateTeamPage: React.FC = () => {
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
-  const [redirect, setRedirect] = useState<boolean>(false);
-  const createTeamHandler = async (teamData: ITeamData) => {
-    try {
-      const resultTeam = await createTeamAPI(teamData);
-      console.log("Successfully sent a POST request to teams", resultTeam);
-      setRedirect(true);
-    } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/teams/");
-      console.log("ERRORS occured while POST /api/teams/", e);
-    }
+  const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
+  const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
+  const [scopeType, setScopeType] = useState<number>(0);
+  const [friendLists, setFriendLists] = useState<[string] | []>([]);
+  /* useEffect(() => {
+    fetchFriendListsHandler();
+  }, []);*/
+  const personalButtonClickedHandler = () => {
+    setClickSelectMember(true);
+    setClickSelectScope(false);
+    setScopeType(1);
   };
 
-  const PageHero = (
-    <div>
-      {redirect ? (
-        <div>
-          <Redirect to="/" />
-        </div>
-      ) : (
-        <Formik
-          initialValues={{
-            name: "",
-            description: "",
-          }}
-          onSubmit={(data, { setSubmitting, resetForm }) => {
-            const teamCreateData = {
-              name: data.name,
-              description: data.description,
-            };
-            createTeamHandler(teamCreateData);
-            console.log("POST /api/events/", data);
-            setSubmitting(true);
-            resetForm();
-          }}
-        >
-          {({ isSubmitting, values }) => (
-            <Form>
-              <div className={classes.pageHeaderDiv}>
-                <div className={classes.arrowDiv}>
-                  <ArrowLeft />
-                </div>
-                <div className={classes.newTeamDiv}>New team</div>
-                <div>
-                  <button
-                    className={classes.createDiv}
-                    value="Next"
-                    type="submit"
-                  >
-                    Create
-                  </button>
-                </div>
-              </div>
-              <div className={classes.profilePicDiv}>
-                <ProfilePic size="medium"></ProfilePic>
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField label="Team name" name="name" type="input" />
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField
-                  label="Team description"
-                  name="description"
-                  type="input"
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
-      )}
-    </div>
-  );
-  const MemberTag = (
-      <Link style={{ textDecoration: "none"}} to="/selectmember">
-        <div className={classes.backgroundDiv}>
-          <div className={classes.memberTagDiv}>
-            <MemberTags members={mockMemberTagData}></MemberTags>
+  const chulaButtonClickedHandler = () => {
+    setClickSelectMember(true);
+    setClickSelectScope(false);
+    setScopeType(2);
+  };
+  const nonChulaButtonClickedHandler = () => {
+    setClickSelectMember(true);
+    setClickSelectScope(false);
+    setScopeType(3);
+  };
+  const createPrompt =
+    clickSelectScope === true ? (
+      <div>
+        <div className={classes.headerContainer}>
+          <div className={classes.closeDiv}>
+            <Link to="landing">
+              <Close />
+            </Link>
           </div>
         </div>
-      </Link>
-  );
-  return (
-    <div>
-      {PageHero}
-      <div className={classes.deleteUnderlineDiv}>
-      {MemberTag}
+        <div className={classes.heroDiv}>
+          <div className={classes.topicDiv}>Your team&apos;s scope</div>
+          <div>
+            <div
+              onClick={() => personalButtonClickedHandler()}
+              className={classes.scopeDiv}
+            >
+              Personal Project
+            </div>
+            <div
+              onClick={() => chulaButtonClickedHandler()}
+              className={classes.scopeDiv}
+            >
+              Chula Competition
+            </div>
+            <div
+              onClick={() => nonChulaButtonClickedHandler()}
+              className={classes.scopeDiv}
+            >
+              Non-Chula Competition
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    ) : clickSelectMember === true ? (
+      <div>
+        <SelectMemberPrompt members={mockMemberLists} />
+      </div>
+    ) : (
+      <div>Error Occurs : Contact Staff</div>
+    );
+
+  return <div>{createPrompt}</div>;
 };
 
 export default CreateTeamPage;

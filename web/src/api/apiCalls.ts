@@ -9,13 +9,17 @@ import {
   IFetchEventsData,
   IEventData,
   ITeamData,
-  ISearchUserTeamResult,
+  IInviteData,
+  IInviteDataResult,
+  ISearchUserTeamEventResult,
   IUser,
+  ITeam,
+
 } from "@src/models";
 
 //Auth Services
-const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
-  const userData: AxiosResponse<IFetchUserData> = await axios.get("/api/users");
+const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
+  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
 
   return userData;
 };
@@ -84,6 +88,15 @@ const createTeamAPI = async (
   );
   return createTeamData;
 };
+const teamInvitationAPI = async (
+  invitedData: IInviteData
+): Promise<AxiosResponse<IInviteDataResult>> => {
+  const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
+    "/api/members/invite/",
+   invitedData
+  );
+  return invitedUsersData;
+};
 
 const createUserDataAPI = async (
   createUserData: ICreateUserData
@@ -102,11 +115,11 @@ const createUserDataAPI = async (
   return userCreatedData;
 };
 
-const searchUserTeam = async (
+const searchUserTeamEvent = async (
   searchQuery: string
-): Promise<AxiosResponse<ISearchUserTeamResult>> => {
-  const searchResult: AxiosResponse<ISearchUserTeamResult> = await axios.get(
-    `/api/users/general/${searchQuery}`
+): Promise<AxiosResponse<ISearchUserTeamEventResult>> => {
+  const searchResult: AxiosResponse<ISearchUserTeamEventResult> = await axios.get(
+    `/api/query/${searchQuery}`
   );
 
   return searchResult;
@@ -118,10 +131,12 @@ export {
   userSignupAPI,
   userSigninAPI,
   createUserDataAPI,
+  teamInvitationAPI ,
   fetchEventsDataAPI,
   createEventsAPI,
   createTeamAPI,
-  searchUserTeam,
+  searchUserTeamEvent,
   testFetchUserData,
   testIUSER,
+
 };

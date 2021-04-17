@@ -12,12 +12,16 @@ export interface IUser {
 }
 
 export interface ITeam {
-  id: string;
+  name: string; // team name
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
 }
 
-export interface ISearchUserTeamResult {
+export interface ISearchUserTeamEventResult {
   users: IUser[];
   team: ITeam[];
+  events: IEventData[];
 }
 export interface IUserSignup {
   email: string;
@@ -100,6 +104,17 @@ export interface ITeamDataResult {
   name: string;
   description: string;
 }
+export interface IInviteData {
+  teamName:string,
+  newMemberId:string,
+}
+
+export interface IInviteDataResult {
+  message:string,
+  User:string,
+  Team:string,
+}
+
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",
