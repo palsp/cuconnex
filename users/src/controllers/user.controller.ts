@@ -10,7 +10,7 @@ import { User, Interest, UserInterest } from '../models'
  */
 export const getUser = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
-        return res.redirect('/userInfo');
+        return res.redirect('/personalInformation');
     }
 
     const interests = await req.user.getInterests({ attributes: ['description'] });
