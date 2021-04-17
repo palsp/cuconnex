@@ -12,6 +12,8 @@ import {
   ISearchUserTeamEventResult,
   IUser,
   ITeam,
+  IFetchTeamNotification,
+  IFetchFriendNotification,
 } from "@src/models";
 
 //Auth Services
@@ -112,6 +114,25 @@ const searchUserTeamEvent = async (
 
   return searchResult;
 };
+const fetchTeamNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchTeamNotification>
+> => {
+  const teamNotificationData: AxiosResponse<IFetchTeamNotification> = await axios.get(
+    "/api/users/notification/invite/"
+  );
+
+  return teamNotificationData;
+};
+const fetchFriendNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchFriendNotification>
+> => {
+  const friendNotificationData: AxiosResponse<IFetchFriendNotification> = await axios.get(
+    "/api/users/friends/request/"
+  );
+
+  return friendNotificationData;
+};
+
 export {
   fetchUserDataAPI,
   fetchUserDataAPINoAxiosResponse,
@@ -125,4 +146,6 @@ export {
   searchUserTeamEvent,
   testFetchUserData,
   testIUSER,
+  fetchTeamNotificationAPI,
+  fetchFriendNotificationAPI,
 };

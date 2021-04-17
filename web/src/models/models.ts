@@ -127,3 +127,10 @@ export enum FacultyListsEnum {
   IntegratedInnovation = "Integrated Innovation", // วัฒนกรรมบูรณาการ
   AgriculturalResources = "Agricultural Resources",
 }
+//Notifications
+export interface IFetchTeamNotification {
+  teamNames:string[]
+}
+export interface IFetchFriendNotification {
+  request:IUser[];
+}

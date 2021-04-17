@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Heading, Tab } from "@dumbComponents/UI/index";
@@ -14,11 +14,28 @@ import {
 import mockConnectionListsData from "@src/mockData/mockConnectionListsData";
 import mockMembersInActivityNotification from "@src/mockData/mockMembersInActivityNotificationData";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
+import { IFetchFriendNotification, IFetchTeamNotification } from "@src/models";
+import { fetchFriendNotificationAPI, fetchTeamNotificationAPI } from "@src/api/apiCalls";
 
 const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
-
+  const [teamNoti, setTeamNoti] = useState<IFetchTeamNotification| []>([]);
+  const [friendNoti, setFriendNoti] = useState<IFetchFriendNotification| []>([]);
+  useEffect(() => {
+    fetchTeamNotiHandler().then( (value:IFetchTeamNotification | []) => setTeamNoti(value));
+    fetchFriendNotiHandler().then( (value:IFetchFriendNotification | []) => setFriendNoti(value));
+  }, []);
+  const fetchTeamNotiHandler = async () => {
+      const teamNotiData = await fetchTeamNotificationAPI();
+      console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.data);
+      return (teamNotiData.data);
+  };
+  const fetchFriendNotiHandler = async () => {
+    const friendNotiData = await fetchFriendNotificationAPI();
+    console.log("SUCCESS fetchFriendNotiHandler", friendNotiData.data);
+    return (friendNotiData.data);
+};
   const connectionButtonHandler = () => {
     setConnection(true);
     setActivity(false);
