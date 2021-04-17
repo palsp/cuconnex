@@ -4,18 +4,34 @@
   flex-direction: column;
 }
 .headingContainerDiv {
+  width:100vw;
+  height:4.92vh;
   display: flex;
+  align-items: center;
   flex-direction: row;
   border-bottom:0.5px solid grey;
 }
 .arrowDiv {
   margin-left: 5%;
-  margin-top: 8%;
-  zoom: 150%;
+
 }
 .headingDiv {
-  margin-left: 15%;
+  margin-left: 22%;
+  overflow: visible;
+  white-space: pre;
+  color: var(--main_pink, #f33182);
+  font-size: 22px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
 }
 .eventDiv {
   width: 375px;
+}
+.fixHeaderDiv{
+  position:fixed;
+  background-color: white;
+}
+.tagDiv{
+  margin-top:5vh;
 }

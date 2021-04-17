@@ -30,7 +30,9 @@ import {
 import PushPage from "@pages/PushPage/PushPage";
 import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 import classes from "./App.module.css";
+import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamPrompt";
 import { IUser } from "@models/index";
+
 
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -111,6 +113,7 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
+
         <UserDataContext.Provider value={{ userData, setUserData }}>
           <Switch>
             <Route path="/" exact component={AuthPage} />
@@ -138,10 +141,12 @@ const App: React.FC = () => {
             <Route path="/createteam" exact component={CreateTeamPage} />
             <Route path="/teamdetail" exact component={TeamDetail} />
             <Route path="/explore" exact component={ExplorePage} />
+             <Route path="/testprompt" exact component={CreateTeamPrompt} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>
         </UserDataContext.Provider>
+
       </AuthenticatedContext.Provider>
     </BrowserRouter>
   ) : (
