@@ -53,72 +53,27 @@ const validationSchema = yup.object({
 
 const PersonalInfoPage: React.FC = () => {
   const [redirect, setRedirect] = useState<JSX.Element>();
-
-  const [image, setImage] = useState({ preview: "", raw: File });
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageRaw, setImageRaw] = useState<File>();
 
   const handleUploadedImage = (e: any) => {
-    console.log("e.target.files: ", e.target.files);
+    // console.log("e.target.files: ", e.target.files);
     if (e.target.files.length) {
-      console.log("Initial image raw: ", image.raw);
-      setImage({
-        preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0],
-      });
+      // console.log("Initial image raw: ", imageRaw);
+      setImagePreview(URL.createObjectURL(e.target.files[0]));
+      setImageRaw(e.target.files[0]);
     }
   };
 
-  // const componentDidMount = () => {};
-  // const handleDefaultImage = (e: any) => {
-  //   setImage((currentState) => ({
-  //     ...currentState,
-  //     raw: e,
-  //   }));
-  //   console.log("what happen");
-  // };
-
-  const defaultPic =
-    "/Users/clm/Documents/GitHub/cuconnex/web/src/Pages/PersonalInfoPage/blank-profile-picture-973460_1280.png";
-
   const handleInitialImage = () => {
-    // const url =
-    //   "https://cdn.shopify.com/s/files/1/0234/8017/2591/products/young-man-in-bright-fashion_925x_f7029e2b-80f0-4a40-a87b-834b9a283c39.jpg?v=1572867553";
-    const url = "./blank-profile-picture-973460_1280.png";
     const fileName = "myFile.jpg";
     fetch(defaultProfilePic).then(async (response) => {
-      console.log(response.type);
-      // const contentType = response.headers.get("content-type");
       const blob = await response.blob();
-      console.log(blob);
-      console.log(URL.createObjectURL(blob));
-      // const file = new File([blob], fileName, { contentType });
       const file = new File([blob], fileName, { type: "image/*" });
-      console.log("what is this: ", file);
-      // handleUploadedImage(file);
-      // setImage({
-      //   preview: URL.createObjectURL(file),
-      //   raw: file,
-      // });
-      setImage((prevState) => ({
-        ...prevState,
-        preview: URL.createObjectURL(file),
-      }));
-      // access file here
-      // handleUploadedImage(file);
+      setImagePreview(URL.createObjectURL(blob));
+      setImageRaw(file);
     });
   };
-
-  // const ha = new File(defaultPic, "defaultPic");
-  // console.log("Before----------------------");
-  // handleDefaultImage(defaultPic);
-  // console.log("After----------------------");
-
-  // const componentDidMount = () => {
-  //   console.log("hello");
-  // };
-
-  // const handleNonUploadImage = () => {
-  //   handleUploadedImage();
-  // };
 
   return (
     <div className={classes.main}>
@@ -142,25 +97,25 @@ const PersonalInfoPage: React.FC = () => {
                 </div>
                 <div
                   className={classes.profilePicDiv}
-                  onChange={() => console.log("Image raw: ", image.raw)}
+                  onChange={() => console.log("Image raw: ", imageRaw)}
                 >
                   <label htmlFor="upload-button">
-                    {image.preview !== "" ? (
+                    {imagePreview !== "" ? (
                       <>
                         <ProfilePic
                           size="big"
                           data-test="personal-info-personalImage"
-                          PicUrl={image.preview}
+                          PicUrl={imagePreview}
                           uploadedProfile={true}
                         />
                       </>
                     ) : (
                       <>
                         {handleInitialImage()}
-                        <ProfilePic
+                        {/* <ProfilePic
                           size="big"
                           data-test="personal-info-personalImage"
-                        />
+                        /> */}
                       </>
                     )}
                   </label>
@@ -177,10 +132,6 @@ const PersonalInfoPage: React.FC = () => {
                   data-test="personal-info-form"
                   initialValues={{ displayName: "", faculty: "" }}
                   onSubmit={(data, { setSubmitting }) => {
-                    // if (image.raw != File) {
-                    //   console.log("setting up image");
-                    //   handleInitialImage();
-                    // }
                     console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
                     setTimeout(() => {
@@ -195,7 +146,7 @@ const PersonalInfoPage: React.FC = () => {
                               name: data.displayName,
                               faculty: data.faculty,
                               // profilePic: image ? image.raw : null,
-                              ProfilePic: image.raw,
+                              ProfilePic: imageRaw,
                             },
                           }}
                         />

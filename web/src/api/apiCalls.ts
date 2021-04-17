@@ -14,7 +14,7 @@ import {
   ISearchUserTeamEventResult,
   IUser,
   ITeam,
-
+  IFetchFriendsData,
 } from "@src/models";
 
 //Auth Services
@@ -93,7 +93,7 @@ const teamInvitationAPI = async (
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
     "/api/members/invite/",
-   invitedData
+    invitedData
   );
   return invitedUsersData;
 };
@@ -105,11 +105,11 @@ const createUserDataAPI = async (
   formData.append("name", createUserData.name);
   formData.append("interests", JSON.stringify(createUserData.interests));
   formData.append("faculy", createUserData.faculty);
-  formData.append("myFile", createUserData.profilePic);
+  formData.append("myFile", createUserData.image);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",
-    data: createUserData,
+    data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   });
   return userCreatedData;
@@ -124,6 +124,16 @@ const searchUserTeamEvent = async (
 
   return searchResult;
 };
+const fetchFriendsDataAPI = async (): Promise<
+  AxiosResponse<IFetchFriendsData>
+> => {
+  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
+    "/api/users/friends"
+  );
+
+  return userData;
+};
+
 export {
   fetchUserDataAPI,
   fetchUserDataAPINoAxiosResponse,
@@ -131,12 +141,12 @@ export {
   userSignupAPI,
   userSigninAPI,
   createUserDataAPI,
-  teamInvitationAPI ,
+  teamInvitationAPI,
   fetchEventsDataAPI,
   createEventsAPI,
   createTeamAPI,
   searchUserTeamEvent,
   testFetchUserData,
   testIUSER,
-
+  fetchFriendsDataAPI,
 };
