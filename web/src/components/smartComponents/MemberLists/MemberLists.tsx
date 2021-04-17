@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import MemberList from "@smartComponents/MemberLists/MemberList/MemberList";
 import mockMemberLists from "@src/mockData/mockMemberLists";
+import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
+
 import { UsersData } from "@src/mockData/Models";
+
 interface Props {
   memberlist: UsersData[] | [];
   selectMemberListsHandler: (e: number) => void;
   personHandler: (e:UsersData) =>void;
+
 }
 const MemberLists: React.FC<Props> = (props) => {
+  // const fetchFriendsList:member[] = async () => {
+  //   try {
+  //     return await fetchFriendsDataAPI();
+  //   } catch(e){
+
+  //   }
+  // }
   return (
     <div>
       {props.memberlist.map((person:UsersData, index:number) => {

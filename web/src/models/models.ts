@@ -104,6 +104,12 @@ export interface ITeamDataResult {
   name: string;
   description: string;
 }
+
+
+export interface IFetchFriendsData {
+  connection: IFetchUserData[];
+}
+
 export interface IInviteData {
   teamName:string,
   newMemberId:string,
@@ -113,6 +119,7 @@ export interface IInviteDataResult {
   message:string,
   User:string,
   Team:string,
+
 }
 
 export enum FacultyListsEnum {
