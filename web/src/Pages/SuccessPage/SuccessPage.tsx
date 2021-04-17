@@ -39,7 +39,7 @@ const SuccessPage: React.FC = () => {
               </div>
 
               <div className={classes.check}>
-                <Check></Check>
+                <Check circle={true} />
               </div>
 
               <Link to="/landing">

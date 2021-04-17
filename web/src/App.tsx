@@ -18,6 +18,7 @@ import {
   SelectMemberPage,
   TeamDetail,
   ExplorePage,
+  NotificationPage,
 } from "@pages/index";
 
 import {
@@ -33,7 +34,7 @@ import classes from "./App.module.css";
 import { IUser } from "@models/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
@@ -138,6 +139,7 @@ const App: React.FC = () => {
             <Route path="/createteam" exact component={CreateTeamPage} />
             <Route path="/teamdetail" exact component={TeamDetail} />
             <Route path="/explore" exact component={ExplorePage} />
+            <Route path="/notification" exact component={NotificationPage} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
           </Switch>

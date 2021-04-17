@@ -5,9 +5,8 @@ import { MyTeamListsData } from "@src/mockData/Models";
 
 interface Props {
   page?: string;
-  team:MyTeamListsData[] | []
+  team: MyTeamListsData[] | [];
 }
-
 
 const MyTeamLists: React.FC<Props> = (props) => {
   let landing = false;
@@ -16,7 +15,7 @@ const MyTeamLists: React.FC<Props> = (props) => {
   }
   return (
     <div className={classes.teamLists} data-test="myTeamLists">
-      {props.team.map((team:MyTeamListsData, index:number) => {
+      {props.team.map((team: MyTeamListsData, index: number) => {
         return <MyTeamList key={index} team={team} landing={landing} />;
       })}
     </div>

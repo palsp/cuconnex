@@ -10,7 +10,7 @@ interface Props {
 const MemberLists: React.FC<Props> = (props) => {
   return (
     <div>
-      {props.memberlist.map((person:MemberListsData, index:number) => {
+      {props.memberlist.map((person: MemberListsData, index: number) => {
         return (
           <div key={index}>
             <MemberList

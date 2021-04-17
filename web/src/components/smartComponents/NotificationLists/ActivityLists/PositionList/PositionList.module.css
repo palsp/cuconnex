@@ -1,0 +1,71 @@
+.positionList {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.leftFlex {
+  width: 40%;
+}
+
+.profilePic {
+  margin-top: 25px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rightFlex {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+}
+
+.role {
+  text-align: start;
+  left: 10%;
+  height: 10%;
+  margin-bottom: 5%;
+}
+
+.teamName {
+  text-align: start;
+  margin-top: 8%;
+  margin-left: 2%;
+  color: #c2c2c2;
+}
+
+.smallFlex {
+  margin-top: 3%;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+}
+
+.memberPic {
+  display: flex;
+  flex-direction: row;
+  margin-right: 2%;
+}
+
+.more {
+  width: 10vw;
+  height: 3vh;
+  margin-top: 5%;
+  background-color: #d4d3d3;
+  border-radius: 13px;
+  font: inherit;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #5e5e5e;
+}
+
+.pendingSign {
+  margin-top: 5%;
+  margin-left: 5%;
+  text-align: start;
+}

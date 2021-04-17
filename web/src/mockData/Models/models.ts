@@ -64,3 +64,27 @@ export interface TeamActivitiesData {
   event: string;
   status: string;
 }
+
+export interface ConnectionListsData {
+  profilePic: string;
+  name: string;
+  role: string;
+  faculty: string;
+  status: string;
+}
+
+export interface MembersInActivityNotificationData {
+  profilePic: string;
+  name: string;
+  role: string;
+  teamName: string;
+  status: string;
+}
+
+export interface PositionsInActivityNotificationData {
+  teamPic: string;
+  role: string;
+  teamName: string;
+  teamList: string;
+  status: string;
+}
