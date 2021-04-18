@@ -1,0 +1,56 @@
+.main {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.tabConnection {
+  width: 100%;
+  height: 100%;
+}
+
+.tabActivity {
+  width: 100%;
+  height: 100%;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 5%;
+  align-items: center;
+}
+
+.head {
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.tab {
+  display: flex;
+  justify-content: center;
+}
+
+.connection {
+  width: 50%;
+  overflow: hidden;
+}
+
+.activity {
+  width: 50%;
+  overflow: hidden;
+}
+
+.tabConnection .connection {
+  border-bottom: 5px solid rgb(196, 194, 194);
+}
+
+.tabActivity .activity {
+  border-bottom: 5px solid rgb(196, 194, 194);
+}
+
+.connectionList {
+  margin-top: 5%;
+}
+
+.activityList {
+  margin-top: 5%;
+}

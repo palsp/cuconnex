@@ -9,8 +9,7 @@ import { UsersData } from "@src/mockData/Models";
 interface Props {
   memberlist: UsersData[] | [];
   selectMemberListsHandler: (e: number) => void;
-  personHandler: (e:UsersData) =>void;
-
+  personHandler: (e: UsersData) => void;
 }
 const MemberLists: React.FC<Props> = (props) => {
   // const fetchFriendsList:member[] = async () => {
@@ -22,7 +21,9 @@ const MemberLists: React.FC<Props> = (props) => {
   // }
   return (
     <div>
-      {props.memberlist.map((person:UsersData, index:number) => {
+      {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
+      {props.memberlist.map((person: MemberListsData, index: number) => { */}
+      {props.memberlist.map((person: UsersData, index: number) => {
         return (
           <div key={index}>
             <MemberList

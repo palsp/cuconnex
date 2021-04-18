@@ -100,3 +100,43 @@
   color: white;
   margin: 0;
 }
+
+.pending {
+  width: 20vw;
+  height: 3vh;
+  background-color: #767474;
+  border-radius: 10px;
+  font: inherit;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.pending p {
+  font-size: 0.8rem;
+  color: white;
+  margin: 0;
+}
+
+.connected {
+  width: 25vw;
+  height: 3vh;
+  background-color: rgb(80, 184, 80);
+  border-radius: 10px;
+  font: inherit;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.connected p {
+  font-size: 0.8rem;
+  color: white;
+}
+
+.connected .icon {
+  width: 20%;
+  margin-top: 4%;
+}

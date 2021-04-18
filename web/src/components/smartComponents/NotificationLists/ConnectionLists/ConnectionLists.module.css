@@ -1,0 +1,18 @@
+.ConnectionList {
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+.listHeader {
+  height: 1.2rem;
+  overflow: visible;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 1.2rem;
+  color: #f33182;
+  font-weight: 600;
+  font-style: normal;
+  font-family: inherit;
+  text-align: start;
+  margin-left: 5%;
+}

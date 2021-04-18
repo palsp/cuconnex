@@ -18,6 +18,7 @@ import {
   SelectMemberPage,
   TeamDetail,
   ExplorePage,
+  NotificationPage,
 } from "@pages/index";
 
 import PushPage from "@pages/PushPage/PushPage";
@@ -27,7 +28,7 @@ import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamP
 import { IUser } from "@models/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
@@ -79,6 +80,7 @@ const App: React.FC = () => {
             <Route path="/createteam" exact component={CreateTeamPage} />
             <Route path="/teamdetail" exact component={TeamDetail} />
             <Route path="/explore" exact component={ExplorePage} />
+            <Route path="/notification" exact component={NotificationPage} />
             <Route path="/testprompt" exact component={CreateTeamPrompt} />
             <Route path="/test" exact component={TestPage} />
             <Route path="/" component={LandingPage} />

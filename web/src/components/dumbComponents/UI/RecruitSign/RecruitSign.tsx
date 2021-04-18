@@ -1,5 +1,5 @@
 import React from "react";
-import { InviteMember } from "../Icons";
+import { Check, InviteMember } from "../Icons";
 import classes from "./RecruitSign.module.css";
 interface Props {
   disabled?: boolean;
@@ -11,6 +11,7 @@ interface Props {
 const RecruitSign: React.FC<Props> = (props) => {
   let cssArray = null;
   let invitemember = false;
+  let connected = false;
   if (props.value === "Recruiting") {
     cssArray = [classes.recruiting];
   } else if (props.value === "Team owner") {
@@ -28,6 +29,11 @@ const RecruitSign: React.FC<Props> = (props) => {
     cssArray = [classes.category];
   } else if (props.value === "Design") {
     cssArray = [classes.category];
+  } else if (props.value === "Pending") {
+    cssArray = [classes.pending];
+  } else if (props.value === "Connected") {
+    cssArray = [classes.connected];
+    connected = true;
   } else {
     cssArray = [classes.default];
   }
@@ -36,6 +42,7 @@ const RecruitSign: React.FC<Props> = (props) => {
       <p data-test="button-props-value">{props.value}</p>
       <div className={classes.icon}>
         {invitemember ? <InviteMember /> : <div />}
+        {connected ? <Check circle={false} /> : <div />}
       </div>
     </div>
   );

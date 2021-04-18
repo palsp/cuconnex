@@ -31,3 +31,8 @@ export { default as RecruitmentList } from "@smartComponents/RecruitmentLists/Re
 export { default as MemberPicList } from "@smartComponents/MemberPicList/MemberPicList";
 export { default as TeamActivityLists } from "@smartComponents/TeamActivityLists/TeamActivityLists";
 export { default as TeamActivityList } from "@smartComponents/TeamActivityLists/TeamActivityList/TeamActivityList";
+export { default as ConnectionLists } from "@smartComponents/NotificationLists/ConnectionLists/ConnectionLists";
+export { default as ConnectionList } from "@smartComponents/NotificationLists/ConnectionLists/ConnectionList/ConnectionList";
+export { default as ActivityNotificationLists } from "@smartComponents/NotificationLists/ActivityLists/ActivityLists";
+export { default as MemberInActivityNotificationList } from "@smartComponents/NotificationLists/ActivityLists/MemberList/MemberList";
+export { default as PositionsInActivityNotificationList } from "@smartComponents/NotificationLists/ActivityLists/PositionList/PositionList";
