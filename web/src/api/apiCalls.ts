@@ -144,7 +144,7 @@ const fetchFriendNotificationAPI = async (): Promise<
   );
 
   return friendNotificationData;
-
+};
 const fetchFriendsDataAPI = async (): Promise<
   AxiosResponse<IFetchFriendsData>
 > => {
@@ -153,7 +153,6 @@ const fetchFriendsDataAPI = async (): Promise<
   );
 
   return userData;
-
 };
 
 export {
