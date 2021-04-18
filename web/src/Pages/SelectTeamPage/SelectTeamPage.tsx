@@ -37,25 +37,27 @@ interface Props {
 const SelectTeamPage: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
-      <div className={classes.fixDiv}>
-        <div className={classes.arrowheaderContainer}>
-          <div className={classes.arrowDiv}>
-            <Link to="/selectevents">
-              <ArrowLeft />
-            </Link>
-          </div>
-          <div className={classes.headerContainer}>
-            <div className={classes.headingDiv}>Team List</div>
-          </div>
+      <div className={classes.fixHeaderDiv}>
+      <div className={classes.headerContainer}>
+        <div className={classes.arrowDiv}>
+          <Link to="/selectevents">
+            <ArrowLeft />
+          </Link>
         </div>
-        <div className={classes.eventcardsDiv}>
-          <EventCards events={props.location.state.events}></EventCards>
+        <div className={classes.pageNameContainer}>
+          <div className={classes.headingDiv}>Team List</div>
         </div>
+      </div>
+      <div className={classes.eventcardsDiv}>
+        <EventCards events={props.location.state.events}></EventCards>
+      </div>
       </div>
       <div className={classes.teamContainer}>
         <div className={classes.teamDiv}>Teams</div>
       </div>
+      <div className={classes.teamListsDiv}>
       <TeamLists />
+      </div>
     </div>
   );
 };

@@ -2,9 +2,11 @@ import React from "react";
 import InterestList from "@smartComponents/InterestLists/InterestList/InterestList";
 
 import classes from "./InterestLists.module.css";
+import { InterestData } from "@src/mockData/Models";
 
 interface Props {
   type: string;
+  data:InterestData;
   selectInterestHandler: (e: string) => void;
 }
 
@@ -30,7 +32,7 @@ const InterestLists: React.FC<Props> = (props) => {
     case "BUSINESS":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          {businessInterestArray.map((interest) => {
+          {props.data.business.map((interest) => {
             return (
               <InterestList
                 data-test="interest-list-business"
@@ -49,7 +51,7 @@ const InterestLists: React.FC<Props> = (props) => {
     case "TECHNOLOGY":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          {technologyInterestArray.map((interest) => {
+          {props.data.technology.map((interest) => {
             return (
               <InterestList
                 data-test="interest-list-technology"
@@ -67,7 +69,7 @@ const InterestLists: React.FC<Props> = (props) => {
     case "DESIGN":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          {designInterestArray.map((interest) => {
+          {props.data.design.map((interest) => {
             return (
               <InterestList
                 data-test="interest-list-design"

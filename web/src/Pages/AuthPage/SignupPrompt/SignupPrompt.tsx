@@ -88,13 +88,13 @@ const SignupPrompt: React.FC<Props> = (props) => {
             password: "",
             confirmPassword: "",
           }}
-          onSubmit={(data, { setSubmitting, resetForm }) => {
+          onSubmit={async (data, { setSubmitting, resetForm }) => {
             const userSignupData = {
               email: data.email,
               id: data.id,
               password: data.password,
             };
-            signupHandler(userSignupData);
+            await signupHandler(userSignupData);
             console.log("POST /api/auth/signup", data);
             setSubmitting(true);
             resetForm();

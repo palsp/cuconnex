@@ -50,7 +50,7 @@ export interface IFetchUserData {
     Design: string[];
   };
   faculty: string;
-  profilePic: File;
+  image: string;
 }
 
 export interface ICreateUserData {
@@ -61,7 +61,7 @@ export interface ICreateUserData {
     Design: string[];
   };
   faculty: string;
-  profilePic: File;
+  image: File;
 }
 //events
 export interface IFetchEventsData {
@@ -104,6 +104,22 @@ export interface ITeamDataResult {
   name: string;
   description: string;
 }
+
+export interface IFetchFriendsData {
+  connection: IFetchUserData[];
+}
+
+export interface IInviteData {
+  teamName: string;
+  newMemberId: string;
+}
+
+export interface IInviteDataResult {
+  message: string;
+  User: string;
+  Team: string;
+}
+
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",
