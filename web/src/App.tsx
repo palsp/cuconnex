@@ -35,7 +35,7 @@ import { IUser } from "@models/index";
 
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
