@@ -47,45 +47,63 @@ const App: React.FC = () => {
   }, []);
 
   const routes = isAuthenticated ? (
-    <>
-      <Route path="/selectinterests" exact component={SelectInterestPage} />
-      <Route path="/personalInformation" exact component={PersonalInfoPage} />
-      <Route path="/friendlists" exact component={FriendsPage} />
-      {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
-      {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
-      <Route path="/success" exact component={SuccessPage} />
-      <Route path="/landing" exact component={LandingPage} />
-      <Route path="/myteams" exact component={MyTeamPage} />
-      <Route path="/profile" exact component={ProfilePage} />
-      <Route path="/selectevents" exact component={SelectEventPage} />
-      <Route path="/selectteams" exact component={SelectTeamPage} />
-      <Route path="/post" exact component={PushPage} />
-      <Route path="/selectmember" exact component={SelectMemberPage} />
-      <Route path="/createteam" exact component={CreateTeamPage} />
-      <Route path="/teamdetail" exact component={TeamDetail} />
-      <Route path="/explore" exact component={ExplorePage} />
-      <Route path="/testprompt" exact component={CreateTeamPrompt} />
-      <Route path="/test" exact component={TestPage} />
-      <Route path="/" component={LandingPage} />
-    </>
+    <BrowserRouter>
+      <AuthenticatedContext.Provider
+        value={{ isAuthenticated, setIsAuthenticated }}
+      >
+        <UserDataContext.Provider value={{ userData, setUserData }}>
+          <Switch>
+            <Route path="/" exact component={AuthPage} />
+
+            <Route
+              path="/selectinterests"
+              exact
+              component={SelectInterestPage}
+            />
+            <Route
+              path="/personalInformation"
+              exact
+              component={PersonalInfoPage}
+            />
+            <Route path="/friendlists" exact component={FriendsPage} />
+            {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
+            {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
+            <Route path="/success" exact component={SuccessPage} />
+            <Route path="/landing" exact component={LandingPage} />
+            <Route path="/myteams" exact component={MyTeamPage} />
+            <Route path="/profile" exact component={ProfilePage} />
+            <Route path="/selectevents" exact component={SelectEventPage} />
+            <Route path="/selectteams" exact component={SelectTeamPage} />
+            <Route path="/post" exact component={PushPage} />
+            <Route path="/selectmember" exact component={SelectMemberPage} />
+            <Route path="/createteam" exact component={CreateTeamPage} />
+            <Route path="/teamdetail" exact component={TeamDetail} />
+            <Route path="/explore" exact component={ExplorePage} />
+            <Route path="/testprompt" exact component={CreateTeamPrompt} />
+            <Route path="/test" exact component={TestPage} />
+            <Route path="/" component={LandingPage} />
+          </Switch>
+        </UserDataContext.Provider>
+      </AuthenticatedContext.Provider>
+    </BrowserRouter>
   ) : (
-    <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+    <BrowserRouter>
+      <AuthenticatedContext.Provider
+        value={{ isAuthenticated, setIsAuthenticated }}
+      >
+        <UserDataContext.Provider value={{ userData, setUserData }}>
+          <Switch>
+            <Route path="/" exact component={AuthPage} />
+            <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+          </Switch>
+        </UserDataContext.Provider>
+      </AuthenticatedContext.Provider>
+    </BrowserRouter>
   );
 
   return (
     <div className={classes.mainContainer} style={heightStyle}>
-      <BrowserRouter>
-        <AuthenticatedContext.Provider
-          value={{ isAuthenticated, setIsAuthenticated }}
-        >
-          <UserDataContext.Provider value={{ userData, setUserData }}>
-            <Switch>
-              <Route path="/" exact component={AuthPage} />
-              {routes}
-            </Switch>
-          </UserDataContext.Provider>
-        </AuthenticatedContext.Provider>
-      </BrowserRouter>
+      {routes}
     </div>
   );
 };
