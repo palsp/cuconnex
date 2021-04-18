@@ -9,10 +9,12 @@ const HamburgerPrompt: React.FC = () => {
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const logoutHandler = async () => {
     try {
+      //clear cookie first
+      await userLogoutAPI();
       //needs await and order is important here!!!
+
       await setRedirect(<Redirect to="/" />);
       setIsAuthenticated(false);
-      await userLogoutAPI();
 
       console.log("LOGOUT");
     } catch (e) {
