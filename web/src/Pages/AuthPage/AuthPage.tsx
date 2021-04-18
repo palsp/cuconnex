@@ -12,9 +12,7 @@ import {
   Heading,
 } from "@dumbComponents/UI/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
-
 import { fetchUserDataAPI } from "@api/index";
-
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 
@@ -25,9 +23,7 @@ const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
+  const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const { setUserData } = useContext(UserDataContext);
 
   const fetchDataHandler = async () => {
@@ -50,7 +46,7 @@ const AuthPage: React.FC = () => {
     // return () => {
     //   isMounted = false;
     // };
-  }, [isAuthenticated]);
+  }, []);
 
   const signupButtonClickedHandler = () => {
     setClickSignup(true);
