@@ -1,7 +1,7 @@
 .memberList {
   box-sizing: border-box;
-  width: 375px;
-  height: 128px;
+  width: 100vw;
+  height: 15.763vh;
   overflow: visible;
   border-color: #808080;
   border-style: solid;
@@ -23,10 +23,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-top: -30px;
-  width: 150px;
+  margin-top: -3.7vh;
+  width: 0.4vw;
 }
 
 .divUserInfo {
-  height: 20px;
+  height: 2.46vh;
+}
+.checkboxDiv{
+  display:flex;
+  padding-left:10vw;
+  height:16.7vh;
+  align-items: center;
 }

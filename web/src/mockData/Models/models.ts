@@ -64,3 +64,8 @@ export interface UsersData {
   faculty: string;
   profilePic: string;
 }
+export interface InterestData {
+  business:string[],
+  technology:string[],
+  design:string[],
+}
