@@ -146,7 +146,7 @@ const PersonalInfoPage: React.FC = () => {
                               name: data.displayName,
                               faculty: data.faculty,
                               // profilePic: image ? image.raw : null,
-                              ProfilePic: imageRaw,
+                              profilePic: imageRaw,
                             },
                           }}
                         />

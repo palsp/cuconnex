@@ -1,4 +1,4 @@
-.profileInfo {
+.teamInfo {
   width: 100%;
   margin-bottom: 5%;
   display: flex;
@@ -15,7 +15,7 @@
   position: absolute;
 }
 
-.teamprofile {
+.flex {
   display: flex;
   flex-direction: row;
 }
@@ -32,8 +32,8 @@
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  margin-top: 35%;
-  margin-left: 10%;
+  margin-left: 45%;
+  margin-top: -13%;
   width: 50%;
 }
 

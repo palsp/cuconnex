@@ -1,20 +1,20 @@
 .divHeading {
     position: relative;
-    width: 375px;
-    height: 130px;
+    width: 100vw;
+    height: 1.60vh;
     z-index: 1;
   }
   
   .divFixed {
     position: fixed;
-    width: 375px;
+    width: 100vw;
     background-color: white;
   }
   
   .relativeArrow {
     position: absolute;
-    left: 18px;
-    top: 26px;
+    left: 4.8vw;
+    top: 3.201vh;
   }
   
   .divInfo {
@@ -24,12 +24,12 @@
   }
   
   .divLeft {
-    left: 18px;
+    left: 4.8vw;
     text-align: left;
   }
   
   .divRight {
-    right: 18px;
+    right: 4.8vw;
     text-align: right;
   }
   
@@ -44,11 +44,19 @@
     outline: inherit;
     position: absolute;
     top: 3.5vh;
-    right: 18px;
+    right: 4.8vw;
   }
   .arrowDiv{
     position: absolute;
     top: 3.2vh;
-    left: 18px;
+    left: 4.8vw;
   }
-  
+  .searchDiv{
+    width:100vw
+  }
+  .memberListsDiv{
+    display:flex;
+    justify-content: center;
+    margin-top:9vh;
+    width:100vw;
+  }
