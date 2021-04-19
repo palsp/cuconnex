@@ -1,8 +1,22 @@
+# pull official base image
 FROM node:alpine
 
+# set working directory
 WORKDIR /app
-COPY package.json .
-RUN npm install --only=prod
-COPY . .
 
-CMD ["npm" , "start"]
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# install app dependencies
+COPY package.json ./
+COPY yarn.lock ./
+RUN yarn
+RUN yarn global add react-scripts
+
+# add app
+COPY . ./
+
+# start app
+
+CMD ["yarn", "start"]
+

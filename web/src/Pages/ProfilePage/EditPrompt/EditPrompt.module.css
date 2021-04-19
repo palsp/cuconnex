@@ -1,0 +1,38 @@
+.profilePicDiv {
+  margin-top: 15%;
+  margin-bottom: 15%;
+}
+
+.toggle {
+  width: 70%;
+  display: flex;
+  margin: 0 auto;
+}
+
+.toggleText {
+  text-align: start;
+  margin-right: 20%;
+  font-size: 1.1rem;
+  font-weight: 750;
+}
+
+.toggleBtn {
+  justify-content: right;
+}
+
+.input {
+  width: 70%;
+  margin: 5% auto;
+  margin-bottom: 40%;
+}
+
+.inputAbout {
+  width: 70%;
+  margin: 5% auto;
+  margin-top: 15%;
+  margin-bottom: 40%;
+}
+
+.inputFieldDiv {
+  margin: 10% auto;
+}

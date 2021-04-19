@@ -1,0 +1,105 @@
+.background {
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.titleDiv {
+  text-align: center;
+  margin-top: 10%;
+}
+
+.subtitleDiv {
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+.inputFieldDiv {
+  width: 90%;
+  margin: 5vh auto;
+}
+
+.selectDiv {
+  width: 90%;
+  margin: 5vh auto;
+}
+
+.footerIcon {
+  display: flex;
+  align-items: center;
+}
+
+.usernameDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  text-align: start;
+  margin: 0 0 0 20px;
+}
+
+.footerNavigation {
+  position: relative;
+  bottom: 3%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Button {
+  margin-top: 15%;
+  margin-bottom: 10%;
+}
+
+.noStyleButton {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+/*
+
+@media only screen and (min-width: 415px) {                      /* tablet
+  .main .container {
+    width: 100vw;
+  }
+
+  .main .container .heading {
+    text-align: start;
+    margin: 4rem 0 0 2rem;
+  }
+
+  .main .container .subtitleDiv {
+    margin: -1.2rem 0 0 2rem;
+    text-align: start;
+  }
+
+  .main .container .profilePicDiv {
+    margin: 2rem auto;
+  }
+
+  .main .container .InputFieldDiv {
+    width: 70vw;
+    margin: 3vh auto;
+  }
+
+  .main .container .footerNavigation {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10vh;
+  }
+}
+
+*/

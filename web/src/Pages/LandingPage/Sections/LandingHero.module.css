@@ -1,0 +1,183 @@
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.upperpartDiv {
+  display: flex;
+  flex-direction: row;
+  height: 10%;
+}
+
+.profileDiv {
+  margin-top: 1%;
+  margin-right: 5%;
+}
+
+.subupperpartDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.subtitleDiv {
+  width: 70%;
+  height: 10%;
+  text-align: left;
+}
+
+.welcome {
+  margin-top: -2%;
+  margin-left: 4%;
+}
+
+.headingDiv {
+  width: 240px;
+  text-align: left;
+}
+
+.buttonmainDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 40%;
+}
+
+/* FirstTime Login */
+
+.recruitmemberDiv {
+  size: 100%;
+  margin-right: 4%;
+}
+
+.findteamDiv {
+  margin-left: 4%;
+  size: 100%;
+}
+
+.myteamDiv {
+  margin-top: 10%;
+}
+
+.addTeam {
+  width: 100%;
+  height: 150px;
+  background-color: var(--white, #ffffff);
+  overflow: visible;
+  opacity: 0.6;
+  border-radius: 10px;
+  margin-bottom: 20%;
+}
+
+.plus {
+  margin-top: 5%;
+  position: relative;
+}
+
+.text {
+  height: 15px;
+  overflow: hidden;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  color: #c2c2c2;
+  line-height: 1.2;
+  font-size: 1rem;
+}
+
+/*
+@media only screen and (max-width: 375px) {
+  /* iPhone X
+  @media only screen and (width: 375px) and (height: 812px) {
+    .buttonmainDiv {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      margin-top:90px;
+    }
+    .findteamDiv {
+      margin-left: 4%;
+      size: 100%;
+    }
+    .recruitmemberDiv {
+      size: 100%;
+      margin-right: 4%;
+    }
+    .mainDiv {
+      display: flex;
+      flex-direction: column;
+    }
+    .subtitleDiv {
+      width: 200px;
+      height: 19px;
+      text-align: left;
+    }
+    .headingDiv {
+      width: 200px;
+      text-align: left;
+    }
+    .upperpartDiv {
+      display: flex;
+      flex-direction: row;
+      margin:auto;
+    }
+    .subupperpartDiv {
+      display: flex;
+      flex-direction: column;
+    }
+    .profileDiv{
+      margin-right:4%;
+    }
+  }
+}
+@media only screen and (min-width: 414px) {
+  .buttonmainDiv {
+    display: flex;
+    flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    margin-top:5%;
+  }
+  .findteamDiv {
+    margin-left: 4%;
+    size: 100%;
+    zoom:150%;
+  }
+  .recruitmemberDiv {
+    size: 100%;
+    zoom:150%;
+    margin-right: 4%;
+  }
+  .mainDiv {
+    display: flex;
+    flex-direction: column;
+  }
+  .subtitleDiv {
+    width: 100vw;
+    height: 19px;
+    text-align: left;
+  }
+  .headingDiv {
+    width: 100vw;
+    text-align: left;
+  }
+  .upperpartDiv {
+    display: flex;
+    flex-direction: row;
+    margin-left:20vw;
+    zoom:150%;
+  }
+  .subupperpartDiv {
+    display: flex;
+    flex-direction: column;
+  }
+  .profileDiv{
+    margin-right:4%;
+    margin-top:1%;
+  }
+}
+*/

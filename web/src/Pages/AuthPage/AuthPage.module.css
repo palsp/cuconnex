@@ -1,0 +1,155 @@
+.content {
+  z-index: 2;
+}
+
+.circle_overlay {
+  position: absolute;
+  z-index: -1;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  width: 200%;
+  height: 100%;
+  bottom: -33%;
+}
+
+.authPrompt {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.signupPrompt {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.loginPrompt {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Content */
+
+.Button {
+  margin-top: 10%;
+}
+
+.LoginButton {
+  margin-top: 20%;
+  margin-bottom: 35%;
+}
+
+.logo {
+  margin-top: 70%;
+  margin-bottom: 5%;
+  width: 25%;
+}
+
+.InputFieldDiv {
+  width: 100%;
+  margin: 5% auto;
+}
+
+.textDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.subtitleDiv {
+  font-size: 1rem;
+}
+
+.inputFieldSubtitle {
+  text-align: start;
+  margin-bottom: 5%;
+}
+
+.divHeader {
+  text-align: start;
+  width: 100%;
+}
+
+.divHeaderSubtitle {
+  margin-top: -15px;
+}
+
+.divSubtitle {
+  text-align: start;
+  width: 100%;
+  margin: auto;
+}
+
+/* Footer */
+
+.footerNavigation {
+  margin-top: 15%;
+  position: relative;
+  width: 110%;
+}
+
+.backNavigation {
+  position: absolute;
+  top: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginBackNavigation {
+  position: absolute;
+  margin-top: -20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divFooterHeading {
+  margin: 5px 0 0 10px;
+}
+
+@media only screen and (max-width: 350px) {
+  /* small phone */
+  .logoDiv {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 60%;
+  }
+}
+
+@media only screen and (min-width: 350px) {
+  /* iphone X */
+  .logoDiv {
+    margin-top: 60%;
+    margin-bottom: 5%;
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 376px) {
+  /* iphone Max */
+  .logoDiv {
+    margin-top: 40%;
+    margin-bottom: 5%;
+    width: 70%;
+  }
+}
+
+@media only screen and (min-width: 430px) {
+  /* tablet */
+  .logoDiv {
+    margin-top: 30%;
+    margin-bottom: 5%;
+    width: 50%;
+  }
+
+  .logo {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    width: 25%;
+  }
+}

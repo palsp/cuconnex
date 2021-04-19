@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
+spec:
+  rules:
+    - http:
+        paths:
+          - path : /api/auth/?(.*)
+            backend: 
+              serviceName: auth-srv 
+              servicePort: 3000
+          - path: /api/users/?(.*)
+            backend:
+              serviceName: users-srv 
+              servicePort: 3000
+          - path: /api/teams/?(.*)
+            backend:
+              serviceName: users-srv 
+              servicePort: 3000
+          - path: /api/events/?(.*)
+            backend:
+              serviceName: event-srv 
+              servicePort: 3000
+          - path: /api/query/?(.*)
+            backend:
+              serviceName: query-srv 
+              servicePort: 3000
+          - path: /?(.*)
+            backend:
+              serviceName: web-srv 
+              servicePort: 3000

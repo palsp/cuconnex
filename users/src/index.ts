@@ -1,11 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
-import { User } from './models/user.model';
-import { Interest } from './models/interest.model';
-import { InterestDescription } from '@cuconnex/common';
-import { startInterest } from './models/initDB';
-import { fromPairs } from 'lodash';
-import { UserInterest } from './models/UserInterest.model';
+import { startDB } from './models/initDB'
+
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -30,33 +26,22 @@ const validateEnvAttr = () => {
 };
 
 const start = async () => {
+
+  validateEnvAttr();
+
   try {
     // check if all required env variable have been declared
-    // validateEnvAttr();
+
     await initializeDB();
 
-    await startInterest();
+    // initial data for interest and category 
+    await startDB();
 
-    const user = await User.create({
-      id: '6131776621',
-      email: 'test@test.com',
-      password: 'password123',
-      name: 'pal'
-    });
-    const interest = await Interest.findOne({
-      where: { description: InterestDescription.Business }
-    });
-    await user.addInterest(interest!);
-    const users = await User.findAll({
-      where: { id: user.id },
-      include: { association: 'interests', attributes: ['description'] }
-    });
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
-
   app.listen(3000, () => {
-    console.log('Listening on port 3000..');
+    console.log('Listening on port 3000');
   });
 };
 

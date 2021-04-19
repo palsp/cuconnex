@@ -2,7 +2,6 @@ import express, { Request, Response } from 'express';
 import { Team } from '../../models/team.model';
 import { BadRequestError, validateRequest } from '@cuconnex/common';
 import { body } from 'express-validator';
-import { requireUser } from '../../middlewares/requireUser';
 
 const router = express.Router();
 
@@ -15,7 +14,7 @@ const bodyChecker = [
 router.get('/api/teams', bodyChecker, validateRequest, async (req: Request, res: Response) => {
   const { name } = req.body;
 
-  const team = await Team.findOne({ where: { name: name } });
+  const team = await Team.findOne({ where: { name } });
 
   if (!team) {
     throw new BadRequestError('Team not found!');

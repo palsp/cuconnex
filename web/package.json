@@ -1,0 +1,105 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.3",
+    "@types/react-router": "^5.1.13",
+    "axios": "^0.21.1",
+    "formik": "^2.2.6",
+    "framer-motion": "^4.0.0",
+    "react": "^16.10.2",
+    "react-app-rewired": "^2.1.8",
+    "react-dom": "~16.10.0",
+    "react-redux": "^7.2.2",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.2",
+    "react-toggle": "^4.1.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "typescript": "^4.1.5",
+    "web-vitals": "^1.1.0",
+    "yarn": "^1.22.10",
+    "yup": "^0.32.9"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject",
+    "test:ci": "CI=true npm run test"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
+    "@types/enzyme": "^3.10.8",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^12.20.1",
+    "@types/react": "^16.14.5",
+    "@types/react-dom": "~16.9.0",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-toggle": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.20.0",
+    "@typescript-eslint/parser": "^4.20.0",
+    "babel-jest": "^26.6.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.23.1",
+    "jest-enzyme": "^7.1.2",
+    "moxios": "^0.4.0",
+    "ts-jest": "^26.5.3"
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "roots": [
+      "src"
+    ],
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "coverageDirectory": "../coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@pages/(.*)": "<rootDir>/src/components/dumbComponents/$1",
+      "@dumbComponents/(.*)": "<rootDir>/src/components/dumbComponents/$1",
+      "@smartComponents/(.*)": "<rootDir>/src/components/smartComponents/$1",
+      "@icons/(.*)": "<rootDir>/src/components/dumbComponents/UI/Icons/$1",
+      "@assets/(.*)": "<rootDir>/src/assets/$1",
+      "@src/(.*)": "<rootDir>/src/$1",
+      "@api/(.*)": "<rootDir>/src/api/$1",
+      "@models/(.*)": "<rootDir>/src/models/$1",
+      "@hooks/(.*)": "<rootDir>/src/hooks/$1"
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.divHeading {
+  position: relative;
+  width: 375px;
+  height: 130px;
+  z-index: 1;
+}
+
+.divFixed {
+  position: fixed;
+  width: 375px;
+  background-color: white;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 18px;
+  top: 26px;
+}
+
+.divInfo {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+
+.divLeft {
+  left: 18px;
+  text-align: left;
+}
+
+.divRight {
+  right: 18px;
+  text-align: right;
+}
+
+.noStyleButton {
+  background: none;
+  /* color: inherit; */
+  color: #00c300;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  position: absolute;
+  top: 3.5vh;
+  right: 18px;
+}

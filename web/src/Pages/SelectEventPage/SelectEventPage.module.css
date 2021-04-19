@@ -1,0 +1,21 @@
+.mainDiv {
+  width: 375px;
+  display: flex;
+  flex-direction: column;
+}
+.headingContainerDiv {
+  display: flex;
+  flex-direction: row;
+  border-bottom:0.5px solid grey;
+}
+.arrowDiv {
+  margin-left: 5%;
+  margin-top: 8%;
+  zoom: 150%;
+}
+.headingDiv {
+  margin-left: 15%;
+}
+.eventDiv {
+  width: 375px;
+}

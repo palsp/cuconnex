@@ -1,0 +1,261 @@
+.mainDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+  width:375px;
+  height:110px;
+  border-top:0.5px solid grey;
+}
+.textbodyDiv {
+  display: flex;
+  flex-direction: column;
+  width: 333px;
+  height: 108px;
+  margin-top: 3%;
+}
+.profileContainer {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profileDiv {
+  background-image: url("../../../assets/tempEventProfile.jpg");
+  background-size: contain;
+  border-radius: 50%;
+  opacity: 1;
+  width: 57px;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.eventnameDiv {
+  text-align: left;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  color: var(--black, #000000);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  font-size: 14px;
+}
+.eventdescriptionDiv {
+  text-align: left;
+  overflow: visible;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  color: var(--edit_grey, #767474);
+  font-size: 11px;
+  word-wrap: break-word;
+}
+.eventstatusDiv {
+  margin-top: 5%;
+  width: 105px;
+  height: 16px;
+  background-color: var(--main_pink, #f33182);
+  border-radius: 5px;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--white, #ffffff);
+  font-size: 10px;
+}
+.teamnameDiv {
+  text-align: left;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 20px;
+  color: var(--main_pink, #f33182);
+}
+.projectnameDiv {
+  text-align: left;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  font-size: 14px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--search_bar, #c2c2c2);
+}
+.teamstatusDiv {
+  text-align: left;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 10px;
+  color: var(--border_grey, #636363);
+}
+.compatibilityContainer {
+  display: flex;
+  flex-direction: row;
+}
+.categoryContainer {
+  display: flex;
+  flex-direction: row;
+}
+.verycompatibleDiv {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  text-align: left;
+  font-size: 10px;
+  color: var(--green_toggle, #00c300);
+}
+.compatibleDiv {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  text-align: left;
+  font-size: 10px;
+  color: var(--green_toggle, #cc8e3c);
+}
+.notcompatibleDiv {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  text-align: left;
+  font-size: 10px;
+  color: var(--green_toggle, #c31d00);
+}
+.techcategoryDiv {
+  margin-top: 5%;
+  background-color: var(--main_pink, #f33182);
+  border-radius: 5px;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--white, #ffffff);
+  font-size: 10px;
+  width: 65px;
+  height: 15px;
+  background-color: var(--edit_grey, #767474);
+  overflow: visible;
+  border-radius: 5px;
+}
+.businesscategoryDiv {
+  margin-top: 5%;
+  width: 54px;
+  height: 16px;
+  background-color: var(--main_pink, #f33182);
+  border-radius: 5px;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--white, #ffffff);
+  font-size: 10px;
+  background-color: var(--edit_grey, #767474);
+  overflow: visible;
+  border-radius: 5px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+.designcategoryDiv {
+  margin-top: 5%;
+  width: 45px;
+  height: 16px;
+  background-color: var(--main_pink, #f33182);
+  border-radius: 5px;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  text-align: center;
+  color: var(--white, #ffffff);
+  font-size: 10px;
+  background-color: var(--edit_grey, #767474);
+  overflow: visible;
+  border-radius: 5px;
+  margin-left: 2%;
+}
+.upcomingDiv {
+  margin-top: 5%;
+  width: 53px;
+  height: 16px;
+  background-color: var(--green_toggle, #00c300);
+  overflow: visible;
+  border-radius: 5px;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--white, #ffffff);
+  font-size: 10px;
+}
+.closedDiv {
+  margin-top: 5%;
+  width: 46px;
+  height: 16px;
+  background-color: var(--edit_grey, #767474);
+  border-radius: 5px;
+  white-space: pre;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--white, #ffffff);
+  font-size: 10px;
+}

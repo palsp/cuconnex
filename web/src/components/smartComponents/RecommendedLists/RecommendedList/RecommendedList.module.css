@@ -1,0 +1,45 @@
+.marg {
+  margin-top: 0%;
+  position: relative;
+  display: relative;
+  top: 10px;
+}
+.flex {
+  border: 0.5px solid grey;
+  border-radius: 25px;
+  justify-content: space-around;
+  width: 170px;
+  height: 200px;
+  margin-bottom: 20px;
+  margin-left: 8px;
+}
+
+.divFriendList {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 160px;
+}
+
+.divUserInfo {
+  height: 0px;
+}
+.titlePage {
+  /* width: 106px; */
+  height: 10px;
+  overflow: visible;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 22px;
+  color: #070707;
+  font-weight: 600;
+  font-style: normal;
+  font-family: inherit;
+}

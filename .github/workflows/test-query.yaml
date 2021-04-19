@@ -1,0 +1,15 @@
+name: test-qyery
+
+on:
+  pull_request:
+    paths:
+      - 'query/**'
+  
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name : install dependencies and test
+        run: cd query && yarn && yarn test:ci 

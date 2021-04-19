@@ -1,0 +1,36 @@
+.heading {
+  font-size: 1.1rem;
+  text-align: start;
+  font-weight: 800;
+  margin-left: 5%;
+}
+
+.subheading {
+  font-size: 0.8rem;
+  text-align: start;
+  font-weight: 600;
+  margin-left: 5%;
+  margin-bottom: 5%;
+  color: #c0bfbf;
+}
+
+.piclist {
+  width: 60%;
+  margin-left: 20%;
+  display: flex;
+  margin-bottom: 5%;
+}
+
+.more {
+  width: 12vw;
+  height: 3vh;
+  margin-top: 1%;
+  background-color: #d4d3d3;
+  border-radius: 13px;
+  font: inherit;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  color: #5e5e5e;
+}

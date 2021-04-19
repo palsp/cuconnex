@@ -1,27 +1,28 @@
 import { authRoutes } from './auth.routes';
 require('express-async-errors');
+import cors from 'cors';
 import Session from 'cookie-session';
-import * as bodyParser from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import { errorHandling } from '@cuconnex/common';
+import express from 'express';
 
-const express = require('express');
+
+
 export const app = express()
 
-var corsOptions = {
-    origin: "http://localhost:3000"
-};
 
+app.use(cors());
 app.set('trust proxy', true);
 
 
 /*Initialize Middlewares*/
 
-// app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
-app.use(bodyParser.json());
+app.use(json());
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 //Parses cookies
 // app.use(cookieParser())
 
