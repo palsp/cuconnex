@@ -15,6 +15,7 @@ import { Interest, InterestCreationAttrs } from './interest.model';
 export interface CategoryAttrs {
   id: number;
   category: string;
+  interests?: Interest[];
 }
 
 // all arguments require to create interest
@@ -25,6 +26,7 @@ export interface CategoryCreationAttrs {
 class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
   public id!: number;
   public category!: string;
+  public interests?: Interest[];
 
   public addInterest!: HasManyAddAssociationMixin<Interest, 'id'>;
   public getInterests!: HasManyGetAssociationsMixin<Interest>;

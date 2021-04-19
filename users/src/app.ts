@@ -7,6 +7,7 @@ import cors from 'cors';
 import { fetchUser } from './middlewares';
 import * as router from './routes';
 import { connectionRouter, userRouter } from './routes';
+import { interestRouter } from './routes/interest.routes';
 require('./config/multer.config');
 
 const app = express();
@@ -26,9 +27,9 @@ app.use(
   })
 );
 /*TODO: uncomment these three lines after development */
-app.use(currentUser);
-app.use(requireAuth);
-app.use(fetchUser);
+// app.use(currentUser);
+// app.use(requireAuth);
+// app.use(fetchUser);
 
 app.use('/api/users/assets', express.static('assets'));
 
@@ -39,6 +40,7 @@ app.use(router.manageStatusRouter);
 app.use('/api/users', userRouter);
 app.use('/api/users', connectionRouter);
 
+app.use(interestRouter);
 // team handler
 app.use(router.getTeamRouter);
 app.use(router.newTeamRouter);
