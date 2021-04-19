@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { NotFoundError, BadRequestError, InterestDescription } from '@cuconnex/common';
-import { User, Interest, UserInterest } from '../models'
+import { User, Interest, UserInterest, Category } from '../models'
 
 /**
  * get current user profile
@@ -84,10 +84,15 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 }
 
 export const getInterest = async (req: Request, res: Response): Promise<void> => {
-    const interests = await Interest.findAll();
-    if (!interests) {
-        console.log(interests);
+    const categories = await Category.findAll({ include: "interests" });
+    if (!categories) {
+        console.log(categories);
     }
-    res.status(200).send({ });
-
+    const response = categories.map((category: any) => {
+        return {
+            category: category.category,
+            interests: category.interests?.map((interest: Interest) => interest.serializer())
+        }
+    });
+    res.status(200).send({ interests: response });
 }
