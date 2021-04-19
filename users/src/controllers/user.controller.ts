@@ -82,3 +82,12 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     }
     res.status(201).send({ id: user!.id, interests, image: user!.image });
 }
+
+export const getInterest = async (req: Request, res: Response): Promise<void> => {
+    const interests = await Interest.findAll();
+    if (!interests) {
+        console.log(interests);
+    }
+    res.status(200).send({ });
+
+}
