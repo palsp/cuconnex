@@ -1,28 +1,28 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { Member } from '../../models/member.model';
-import { User } from '../../models/user.model';
+import { app } from '../../../app';
+import { Member } from '../../../models/member.model';
+import { User } from '../../../models/user.model';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { Interest } from '../../../models/interest.model';
 
 describe('Get Members', () => {
   it('should return "Team not found! if team is not found', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
+    const user = await User.create({
+      id: "6131776621",
+      name: "test-user"
+    })
     const res = await request(app)
-      .get('/api/members')
-      .set('Cookie', global.signin(user1.id))
-      .send({
-        teamName: 'Team1'
-      })
+      .get('/api/teams/members/notExistTeam')
+      .set('Cookie', global.signin(user.id))
+      .send({})
       .expect(400);
 
     const error = res.body.errors[0];
     expect(error.message).toEqual('Team not found!');
   });
+
+
 
   it('should return 200: member status detail if get member correctly', async () => {
     const user1 = await User.create({
@@ -46,14 +46,11 @@ describe('Get Members', () => {
     await Member.create({ userId: user2.id, teamName: 'Team1', status: TeamStatus.Pending });
 
     const res = await request(app)
-      .get('/api/members')
+      .get(`/api/teams/members/${team.name}`)
       .set('Cookie', global.signin(user1.id))
-      .send({
-        teamName: 'Team1'
-      })
+      .send({})
       .expect(200);
 
-    expect(res.body.message).toEqual(`Getting members of ${team.name}`);
     expect(res.body.members[0]).toEqual({
       teamName: team.name,
       userId: user1.id,

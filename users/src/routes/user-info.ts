@@ -6,6 +6,9 @@ import { NotFoundError, validateRequest, TeamStatus } from '@cuconnex/common';
 
 const router = express.Router();
 
+/**
+ * เอาไว้ทำอิหยัง
+ */
 router.get('/api/members/:id', async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { id: req.params.id } });
   if (!user) {

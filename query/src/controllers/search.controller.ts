@@ -18,7 +18,7 @@ export const searchHandler = async (req: Request, res: Response) => {
     try {
         // TODO: demo cookie is provided for development purpose only, it should be removed in production stage
         // fetch data from user service
-        userResp = await axiosUserInstance.get(`/api/users/general/${req.params.keyword}`, { headers: { cookie: req.headers.cookie || cookie } })
+        userResp = await axiosUserInstance.get(`/api/users/?keyword=${req.params.keyword}`, { headers: { cookie: req.headers.cookie || cookie } })
 
     } catch (err) {
         console.error('User Failed', err)

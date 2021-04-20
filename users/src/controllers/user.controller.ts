@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
-import { NotFoundError, BadRequestError, InterestDescription } from '@cuconnex/common';
-import { User, Interest, UserInterest } from '../models'
+import { Op } from 'sequelize';
+import { NotFoundError, BadRequestError, InterestDescription, currentUser } from '@cuconnex/common';
+import { User, Team, Interest, UserInterest } from '../models'
 
 /**
  * get current user profile
@@ -13,8 +14,10 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
         return res.redirect('/personalInformation');
     }
 
-    const interests = await req.user.getInterests({ attributes: ['description'] });
-    res.status(200).send({ id: req.user.id, name: req.user.name, interests, image: req.user.image });
+
+    // const interests = await req.user.getInterests({ attributes: ['description'] });
+    const response = await req.user.serializer();
+    res.status(200).send({ ...response });
 };
 
 /**
@@ -30,14 +33,11 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
         throw new NotFoundError();
     }
 
-    const interests = await UserInterest.findAll({ where: { userId: user.id } });
-    if (!interests) {
-        console.log(interests);
-    }
 
     const status = await user.findRelation(req.user!.id);
 
-    res.status(200).send({ id: user.id, name: user.name, interests, status, image: user.image });
+    const response = await user.serializer();
+    res.status(200).send({ ...response, status });
 }
 
 /**
@@ -46,11 +46,18 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
  * @param res 
  */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
-    const { interests, name, faculty } = req.body;
+    const { interests, name, faculty, year, major, bio } = req.body;
     // console.log(interests, name)
     let imagePath = "";
     if (req.file) {
         imagePath = req.file.path
+    }
+
+    if (year) {
+        const pattern = /^[1-4]$/
+        if (!pattern.test(year)) {
+            throw new BadRequestError('Year must be valid')
+        }
     }
 
     // Make sure that user does not exist
@@ -64,7 +71,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     // create users 
 
     try {
-        user = await User.create({ id: req.currentUser!.id, name: name, faculty: faculty || "", image: imagePath });
+        user = await User.create({ id: req.currentUser!.id, name, faculty, year, major, bio, image: imagePath });
         for (let category in interests) {
             // select only valid interest description 
             interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
@@ -80,5 +87,52 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         await user.destroy();
         throw new BadRequestError('Create User Failed');
     }
+
     res.status(201).send({ id: user!.id, interests, image: user!.image });
+}
+
+export const search = async (req: Request, res: Response) => {
+    const keyword = req.query.keyword
+
+    const userConstraint = [
+        { name: { [Op.startsWith]: keyword } },
+        { id: { [Op.startsWith]: keyword } },
+    ];
+
+    /**
+   * TODO: add role and lookingformember keyword for team search
+   */
+    const teamConstraint = { name: { [Op.startsWith]: keyword } };
+
+
+    let users;
+    let team;
+    try {
+        users = await User.findAll({ where: { [Op.or]: userConstraint } });
+        team = await Team.findAll({ where: teamConstraint });
+    } catch (err) {
+        console.log(err);
+    }
+
+    res.status(200).send({
+        users,
+        team,
+    });
+}
+
+export const findRelation = async (req: Request, res: Response) => {
+    if (!req.params.userId) {
+        throw new NotFoundError();
+    }
+
+    const conn = await User.findOne({ where: { id: req.params.userId } })
+    if (!conn) {
+        throw new NotFoundError();
+    }
+
+    const relation = await req.user!.findRelation(req.params.userId)
+
+    res.status(200).send({
+        status: relation
+    })
 }
