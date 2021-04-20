@@ -1,8 +1,8 @@
 
 import { Technology } from '@cuconnex/common';
 import request from 'supertest';
-import { app } from '../../app';
-import { deleteFile } from '../../utils/file';
+import { app } from '../../../app';
+import { deleteFile } from '../../../utils/file';
 
 describe('The /api/upload', () => {
 

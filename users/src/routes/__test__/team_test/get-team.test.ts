@@ -1,9 +1,9 @@
 import request from 'supertest';
-import { app } from '../../app';
+import { app } from '../../../app';
 
-import { User } from '../../models/user.model';
+import { User } from '../../../models/user.model';
 import { Business } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { Interest } from '../../../models/interest.model';
 
 describe('Get Team Test', () => {
   it('should return "Team not found!" if team is not found', async () => {
@@ -38,8 +38,6 @@ describe('Get Team Test', () => {
       // .send({ name: team.name })
       .send({})
       .expect(200);
-
-    console.log(body)
 
     expect(body.team.name).toEqual(team.name);
     expect(body.team.creatorId).toEqual(user.id);

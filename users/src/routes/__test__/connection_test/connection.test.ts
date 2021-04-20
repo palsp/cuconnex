@@ -1,7 +1,7 @@
 import { FriendStatus, Technology } from '@cuconnex/common';
 import request from 'supertest';
-import { app } from '../../app';
-import { Interest, User } from '../../models';
+import { app } from '../../../app';
+import { Interest, User } from '../../../models';
 
 
 

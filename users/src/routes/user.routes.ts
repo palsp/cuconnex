@@ -8,10 +8,13 @@ import { postUserValidator } from '../utils/user.validators';
 
 const router = express.Router();
 
+router.get("/current-user", userController.getUser);
 
-router.get("/", userController.getUser)
+router.get("/relation/:userId", requireUser, userController.findRelation)
 
 router.get("/:userId", requireUser, userController.viewUserProfile);
+
+router.get("/", userController.search);
 
 router.post("/", upload.single('image'), transformRequest, postUserValidator, validateRequest, userController.createUser);
 

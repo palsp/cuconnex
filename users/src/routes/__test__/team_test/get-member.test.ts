@@ -1,10 +1,10 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { Member } from '../../models/member.model';
-import { User } from '../../models/user.model';
+import { app } from '../../../app';
+import { Member } from '../../../models/member.model';
+import { User } from '../../../models/user.model';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { Interest } from '../../../models/interest.model';
 
 describe('Get Members', () => {
   it('should return "Team not found! if team is not found', async () => {

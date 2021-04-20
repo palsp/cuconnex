@@ -1,9 +1,9 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { Member } from '../../models/member.model';
-import { User } from '../../models/user.model';
+import { app } from '../../../app';
+import { Member } from '../../../models/member.model';
+import { User } from '../../../models/user.model';
 import { Business, TeamStatus } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { Interest } from '../../../models/interest.model';
 
 const setupTeam = async () => {
   const user = await User.create({
