@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
-
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
-import { Redirect } from "react-router";
-
 import {
   Heading,
   Subtitle,
@@ -13,14 +9,12 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { InterestLists } from "@smartComponents/index";
-
 import { ArrowLeft, ArrowRight } from "@icons/index";
-
 import { createUserDataAPI } from "@api/index";
-
 import { ICreateUserData } from "@models/index";
-
 import classes from "./SelectInterestPage.module.css";
+import mockInterestLists from "@src/mockData/mockInterestListsData";
+import mockInterestListsData from "@src/mockData/mockInterestListsData";
 
 interface Props {
   location: {
@@ -46,13 +40,9 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Design: [],
   });
 
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
-
   let name = "";
   let faculty = "";
-  let profilePic: File;
+  let profileImage: File;
   let saveButton = null;
 
   const emptyInterests: InterestListsArray = {
@@ -134,14 +124,14 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   const setUserData = async () => {
     if (props.location.state) {
       name = props.location.state.name;
-      profilePic = props.location.state.profilePic;
+      profileImage = props.location.state.profilePic;
       faculty = props.location.state.faculty;
     }
     const userData: ICreateUserData = {
       name: name,
       interests: interestArray,
       faculty: faculty,
-      profilePic: profilePic,
+      image: profileImage,
     };
     try {
       const result = await createUserDataAPI(userData);
@@ -154,13 +144,14 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   const setEmptyInterest = async () => {
     if (props.location.state) {
       name = props.location.state.name;
-      profilePic = props.location.state.profilePic;
+      faculty = props.location.state.faculty;
+      profileImage = props.location.state.profilePic;
     }
     const userData: ICreateUserData = {
       name: name,
       interests: emptyInterests,
       faculty: faculty,
-      profilePic: profilePic,
+      image: profileImage,
     };
     try {
       const result = await createUserDataAPI(userData);
@@ -194,6 +185,8 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           state: {
             name: props.location.state.name,
             interests: interestArray,
+            faculty: props.location.state.faculty,
+            profilePic: props.location.state.profilePic,
           },
         }}
       >
@@ -255,6 +248,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Business" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectBusinessInterestHandler}
             data-test="interest-list-business"
             type="BUSINESS"
@@ -263,6 +257,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Technology" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectTechnologyInterestHandler}
             data-test="interest-list-technology"
             type="TECHNOLOGY"
@@ -271,6 +266,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Design" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectDesignInterestHandler}
             data-test="interest-list-design"
             type="DESIGN"

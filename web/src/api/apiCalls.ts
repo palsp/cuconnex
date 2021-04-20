@@ -9,11 +9,14 @@ import {
   IFetchEventsData,
   IEventData,
   ITeamData,
+  IInviteData,
+  IInviteDataResult,
   ISearchUserTeamEventResult,
   IUser,
   ITeam,
   IFetchTeamNotification,
   IFetchFriendNotification,
+  IFetchFriendsData,
 } from "@src/models";
 
 //Auth Services
@@ -87,6 +90,15 @@ const createTeamAPI = async (
   );
   return createTeamData;
 };
+const teamInvitationAPI = async (
+  invitedData: IInviteData
+): Promise<AxiosResponse<IInviteDataResult>> => {
+  const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
+    "/api/members/invite/",
+    invitedData
+  );
+  return invitedUsersData;
+};
 
 const createUserDataAPI = async (
   createUserData: ICreateUserData
@@ -94,12 +106,12 @@ const createUserDataAPI = async (
   const formData = new FormData();
   formData.append("name", createUserData.name);
   formData.append("interests", JSON.stringify(createUserData.interests));
-  formData.append("faculy", createUserData.faculty);
-  formData.append("myFile", createUserData.profilePic);
+  formData.append("faculty", createUserData.faculty);
+  formData.append("image", createUserData.image);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",
-    data: createUserData,
+    data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   });
   return userCreatedData;
@@ -114,6 +126,7 @@ const searchUserTeamEvent = async (
 
   return searchResult;
 };
+
 const fetchTeamNotificationAPI = async (): Promise<
   AxiosResponse<IFetchTeamNotification>
 > => {
@@ -132,6 +145,15 @@ const fetchFriendNotificationAPI = async (): Promise<
 
   return friendNotificationData;
 };
+const fetchFriendsDataAPI = async (): Promise<
+  AxiosResponse<IFetchFriendsData>
+> => {
+  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
+    "/api/users/friends"
+  );
+
+  return userData;
+};
 
 export {
   fetchUserDataAPI,
@@ -140,6 +162,7 @@ export {
   userSignupAPI,
   userSigninAPI,
   createUserDataAPI,
+  teamInvitationAPI,
   fetchEventsDataAPI,
   createEventsAPI,
   createTeamAPI,
@@ -148,4 +171,5 @@ export {
   testIUSER,
   fetchTeamNotificationAPI,
   fetchFriendNotificationAPI,
+  fetchFriendsDataAPI,
 };
