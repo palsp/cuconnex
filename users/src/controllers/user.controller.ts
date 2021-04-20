@@ -90,9 +90,9 @@ export const getInterest = async (req: Request, res: Response): Promise<void> =>
         console.log(categories);
     }
     
-    const response = categories.map((category: any) => ({
+    const response = categories.map((category: Category) => ({
             category: category.category,
-            interests: category.interests?.map((interest: Interest) => interest.serializer())
+            interests: category.interests!.map((interest: Interest) => interest.serializer())
     }));
     res.status(200).send({ interests: response });
 }
