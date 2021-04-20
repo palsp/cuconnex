@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
+import { motion } from "framer-motion";
 
 interface Props {
   hasTeam: boolean;
@@ -19,11 +20,20 @@ const LandingHero: React.FC<Props> = (props) => {
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={mockMyTeamListsData} />
-
       <div className={classes.addTeam}>
-        <div className={classes.plus}>
+        <motion.div
+          transition={{
+            // On Tap - Navigation
+            type: "spring",
+            delay: 0,
+            stiffness: 500,
+            damping: 60,
+            mass: 1,
+          }}
+          className={classes.plus}
+        >
           <Plus />
-        </div>
+        </motion.div>
         <div className={classes.text}>CREATE YOUR NEW TEAM</div>
       </div>
     </div>
@@ -43,11 +53,26 @@ const LandingHero: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
-        <div className={classes.profileDiv}>
+        <motion.div
+          transition={{
+            // On Tap - Navigation
+            type: "spring",
+            delay: 0,
+            stiffness: 500,
+            damping: 60,
+            mass: 1,
+          }}
+          className={classes.profileDiv}
+        >
           <Link to="/profile">
             <ProfilePic size="small" />
           </Link>
-        </div>
+        </motion.div>
+        {/* <div className={classes.profileDiv}>
+          <Link to="/profile">
+            <ProfilePic size="small" />
+          </Link>
+        </div> */}
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
             <div className={classes.welcome}>Welcome,</div>
