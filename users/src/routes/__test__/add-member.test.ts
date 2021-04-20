@@ -5,12 +5,13 @@ import { User } from '../../models/user.model';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../models/interest.model';
-import { setFlagsFromString } from 'v8';
+
+
 
 describe('Add member to Team --- Requesting', () => {
   it('should return 401 if user is not logged in yet', async () => {
     const res = await request(app)
-      .post('/api/members/request')
+      .post('/api/teams/request-to-join')
       .send({
         teamName: 'Team1'
       })
@@ -31,14 +32,8 @@ describe('Add member to Team --- Requesting', () => {
       name: 'bob'
     });
 
-    // const interest = await Interest.findOne({
-    //   where: { description: InterestDescription.Business }
-    // });
-    // await user1.addInterest(interest!);
-    // await user1.createTeams({ name: 'Team1', description: '' });
-
     const res = await request(app)
-      .post('/api/members/request')
+      .post('/api/teams/request-to-join')
       .set('Cookie', global.signin())
       .send({
         teamName: 'Team1'
@@ -63,7 +58,7 @@ describe('Add member to Team --- Requesting', () => {
     await user.createTeams({ name: 'Team1', description: '' });
 
     const res = await request(app)
-      .post('/api/members/request')
+      .post('/api/teams/request-to-join')
       .set('Cookie', global.signin(user.id))
       .send({
         teamName: 'Team2'
@@ -93,7 +88,7 @@ describe('Add member to Team --- Requesting', () => {
     });
 
     const res = await request(app)
-      .post('/api/members/request')
+      .post('/api/teams/request-to-join')
       .set('Cookie', global.signin(user.id))
       .send({
         teamName: team.name
@@ -117,7 +112,7 @@ describe('Add member to Team --- Requesting', () => {
     const team = await user.createTeams({ name: 'Team1', description: '' });
 
     const res = await request(app)
-      .post('/api/members/request')
+      .post('/api/teams/request-to-join')
       .set('Cookie', global.signin(user.id))
       .send({
         teamName: 'Team1'
@@ -129,10 +124,13 @@ describe('Add member to Team --- Requesting', () => {
   });
 });
 
+
+
+
 describe('Add member to Team --- Invitation', () => {
   it('should return 401 if user is not logged in yet', async () => {
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .send({
         teamName: 'Team1',
         newMemberId: '9999'
@@ -144,32 +142,13 @@ describe('Add member to Team --- Invitation', () => {
   });
 
   it('should return 400 if user is not yet fill in information detail.', async () => {
-    const user1 = await User.create({
-      id: '6131886621',
-      name: 'pal'
-    });
-    const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
-    });
-    await user1.addInterest(interest!);
-    const team = await user1.createTeams({ name: 'Team1', description: '' });
-    const status = await Member.create({
-      userId: user1.id,
-      teamName: team.name,
-      status: TeamStatus.Accept
-    });
-
-    const user2 = await User.create({
-      id: '6131886622',
-      name: 'pal2'
-    });
 
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .set('Cookie', global.signin())
       .send({
         teamName: 'Team1',
-        newMemberId: user2.id
+        newMemberId: 1
       })
       .expect(400);
 
@@ -183,23 +162,13 @@ describe('Add member to Team --- Invitation', () => {
       name: 'pal'
     });
 
-    // await user1.createInterest({ description: InterestDescription.Business });
-    const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
-    });
-    await user1.addInterest(interest!);
-    await user1.createTeams({ name: 'Team1', description: '' });
-
     const user2 = await User.create({
       id: '6131886622',
       name: 'pal2'
     });
 
-    // await user2.createInterest({ description: InterestDescription.Business });
-    await user2.addInterest(interest!);
-
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team2',
@@ -217,20 +186,15 @@ describe('Add member to Team --- Invitation', () => {
       name: 'pal'
     });
 
-    const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
-    });
-    await user1.addInterest(interest!);
-    await user1.createTeams({ name: 'Team1', description: '' });
+    await user1.createTeams({ name: 'Team1', description: 'This is great' });
 
     const user2 = await User.create({
       id: '6131886622',
       name: 'pal2'
     });
 
-    await user2.addInterest(interest!);
 
-    const member1 = await Member.create({
+    await Member.create({
       teamName: 'Team1',
       userId: user1.id,
       status: TeamStatus.Accept
@@ -243,7 +207,7 @@ describe('Add member to Team --- Invitation', () => {
     });
 
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team1',
@@ -255,26 +219,23 @@ describe('Add member to Team --- Invitation', () => {
     expect(error.message).toEqual(`This user already have status: ${member2.status}`);
   });
 
+
+
   it('should return 400 if the inviter is not a member of the team.', async () => {
     const user1 = await User.create({
       id: '6131886621',
       name: 'pal'
     });
 
-    const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
-    });
-    await user1.addInterest(interest!);
     await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
       id: '6131886622',
       name: 'pal2'
     });
-    await user2.addInterest(interest!);
 
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team1',
@@ -286,16 +247,16 @@ describe('Add member to Team --- Invitation', () => {
     expect(error.message).toEqual('The inviter is not a team member.');
   });
 
+  /**
+   * ดู logic ตรงนี้ใหม่
+   */
   it('should return 400 if the inviter is not a yet a member of the team but having pending status.', async () => {
     const user1 = await User.create({
       id: '6131886621',
       name: 'pal'
     });
 
-    const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
-    });
-    await user1.addInterest(interest!);
+
     await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
@@ -303,16 +264,15 @@ describe('Add member to Team --- Invitation', () => {
       name: 'pal2'
     });
 
-    await user2.addInterest(interest!);
 
-    const member1 = await Member.create({
+    await Member.create({
       teamName: 'Team1',
       userId: user1.id,
       status: TeamStatus.Pending
     });
 
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team1',
@@ -329,26 +289,23 @@ describe('Add member to Team --- Invitation', () => {
       id: '6131886621',
       name: 'pal'
     });
-    const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
-    });
-    await user1.addInterest(interest!);
+
     const team = await user1.createTeams({ name: 'Team1', description: '' });
 
     const user2 = await User.create({
       id: '6131886622',
       name: 'pal2'
     });
-    await user2.addInterest(interest!);
 
-    const member1 = await Member.create({
+
+    await Member.create({
       teamName: 'Team1',
       userId: user1.id,
       status: TeamStatus.Accept
     });
 
     const res = await request(app)
-      .post('/api/members/invite')
+      .post('/api/teams/members')
       .set('Cookie', global.signin(user1.id))
       .send({
         teamName: 'Team1',

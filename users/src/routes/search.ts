@@ -55,6 +55,7 @@ router.get('/api/users/:search', requireUser, async (req: Request, res: Response
   res.status(200).send(users);
 });
 
+
 router.get('/api/teams/:search', async (req: Request, res: Response) => {
   let teams = await Team.findAll({
     where: { name: { [Op.startsWith]: req.params.search } },

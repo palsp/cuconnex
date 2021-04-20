@@ -71,7 +71,7 @@ describe('get current user', () => {
 describe('view user profile', () => {
   it('should return 400 if user is not fill info', async () => {
     await request(app)
-      .get('/api/users/view-profile/asfadfadfa')
+      .get('/api/users/asfadfadfa')
       .set('Cookie', global.signin())
       .send({})
       .expect(400);
@@ -81,7 +81,7 @@ describe('view user profile', () => {
     const { user } = await setup();
 
     await request(app)
-      .get('/api/users/view-profile/613177221')
+      .get('/api/users/613177221')
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(404);
@@ -91,7 +91,7 @@ describe('view user profile', () => {
     const { user } = await setup();
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${user.id}`)
+      .get(`/api/users/${user.id}`)
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
@@ -110,7 +110,7 @@ describe('view user profile', () => {
     });
 
     const { body: res } = await request(app)
-      .get(`/api/users/view-profile/${someone.id}`)
+      .get(`/api/users/${someone.id}`)
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);

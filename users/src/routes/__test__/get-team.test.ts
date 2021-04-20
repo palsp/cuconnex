@@ -9,10 +9,12 @@ describe('Get Team Test', () => {
   it('should return "Team not found!" if team is not found', async () => {
     const id = '1';
     const res = await request(app)
-      .get('/api/teams')
+      .get('/api/teams/notExistingTeam')
       .set('Cookie', global.signin(id))
-      .send({ name: 'notExsitingTeam' })
+      // .send({ name: 'notExsitingTeam' })
+      .send({})
       .expect(400);
+
 
     const error = res.body.errors[0];
     expect(error.message).toEqual('Team not found!');
@@ -30,13 +32,16 @@ describe('Get Team Test', () => {
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
 
-    const res = await request(app)
-      .get('/api/teams')
+    const { body } = await request(app)
+      .get(`/api/teams/${team.name}`)
       .set('Cookie', global.signin(user.id))
-      .send({ name: team.name })
+      // .send({ name: team.name })
+      .send({})
       .expect(200);
 
-    expect(res.body.team.name).toEqual(team.name);
-    expect(res.body.team.creatorId).toEqual(user.id);
+    console.log(body)
+
+    expect(body.team.name).toEqual(team.name);
+    expect(body.team.creatorId).toEqual(user.id);
   });
 });
