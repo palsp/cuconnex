@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form } from "formik";
-import axios from "@src/axiosInstance/axiosInstance";
 import * as yup from "yup";
 
 import {
@@ -11,29 +10,75 @@ import {
   Subtitle,
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-import { AuthenticatedContext } from "../../../AuthenticatedContext";
+import { AuthenticatedContext } from "@src/AuthenticatedContext";
 import classes from "../AuthPage.module.css";
+import { IUserSignin } from "@models/index";
+import { userSigninAPI, fetchUserDataAPI } from "@api/index";
 
 interface Props {
   backButtonClickedHandler: () => void;
 }
 const validationSchema = yup.object({
   email: yup.string().email().required("Email is required"),
-  password: yup
-    .string()
-    .required("No password provided.")
-    .min(8, "password is too short. Need at least 8 characters")
-    .matches(/(?=.*[0-9])/, "Password must contain a number.")
-    .matches(/(?=.*[a-z])/, "Password must contain one lower case letter")
-    .matches(/(?=.*[A-Z])/, "Password must contain one UPPER case letter"),
+  password: yup.string().required("No password provided."),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
+  const { setIsAuthenticated } = useContext(AuthenticatedContext);
 
+  const signinHandler = async (signinData: IUserSignin) => {
+    try {
+      const resultSignin = await userSigninAPI(signinData);
+      console.log("Successfully sent a POST request to signup", resultSignin);
+      setIsAuthenticated(true);
+      setRedirect(true);
+      try {
+        const userData = await fetchUserDataAPI();
+        console.log("SUCCESS fetchDataHandler", userData);
+      } catch (e) {
+        console.log("POST signin success but failed GET fetching");
+      }
+    } catch (e) {
+      setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
+      console.log("ERRORS occured while POST /api/auth/signin", e);
+    }
+  };
+  const loginPrompt = redirect ? (
+    <Redirect to="/landing" />
+  ) : (
+    <Formik
+      data-test="auth-page-login-form"
+      initialValues={{
+        email: "",
+        password: "",
+      }}
+      onSubmit={async (data, { setSubmitting, resetForm }) => {
+        console.log("POST /api/auth/signin", data);
+        signinHandler(data);
+        setSubmitting(true);
+        resetForm();
+      }}
+      validationSchema={validationSchema}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <InputField label="Email" name="email" type="input" />
+          <div className={classes.InputFieldDiv}>
+            <InputField label="Password" name="password" type="password" />
+          </div>
+          <div className={classes.LoginButton}>
+            <Button
+              disabled={isSubmitting}
+              type="submit"
+              data-test="auth-page-login-button"
+              value="Log in"
+            />
+          </div>
+        </Form>
+      )}
+    </Formik>
+  );
   return (
     <>
       <div className={classes.divHeader}>
@@ -43,68 +88,8 @@ const LoginPrompt: React.FC<Props> = (props) => {
           data-test="auth-page-login-subtitle"
         />
       </div>
-      {redirect ? (
-        <div>
-          {console.log(
-            "IsAuthenticated in loginPrompt before redirect",
-            isAuthenticated
-          )}
-          <Redirect to="/landing" />
-        </div>
-      ) : (
-        <Formik
-          data-test="auth-page-login-form"
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          onSubmit={async (data, { setSubmitting, resetForm }) => {
-            console.log("POST /api/auth/signin", data);
-            setSubmitting(true);
-            resetForm();
-            try {
-              const resultSignin = await axios.post("/api/auth/signin", data);
-              setIsAuthenticated(true);
-              setRedirect(true);
-              console.log(
-                "Successfully sent a POST request to signin",
-                resultSignin
-              );
-              try {
-                const fetchUserDataSignin = await axios.get("/api/users");
-                console.log(
-                  "fetchUserDataSign successfully",
-                  fetchUserDataSignin
-                );
-              } catch (e) {
-                console.log("POST signin success but failed GET fetching");
-              }
-            } catch (e) {
-              setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
-              console.log("ERRORS occured while POST /api/auth/signin", e);
-            }
-          }}
-          validationSchema={validationSchema}
-        >
-          {({ values, isSubmitting, errors }) => (
-            <Form>
-              <InputField label="Email" name="email" type="input" />
-              <div className={classes.InputFieldDiv}>
-                <InputField label="Password" name="password" type="password" />
-              </div>
-              <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-              <div className={classes.LoginButton}>
-                <Button
-                  disabled={isSubmitting}
-                  type="submit"
-                  data-test="auth-page-login-button"
-                  value="Log in"
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
-      )}
+
+      {loginPrompt}
 
       <div className={classes.footerNavigation}>
         <div

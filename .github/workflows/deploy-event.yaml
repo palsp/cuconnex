@@ -12,14 +12,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd event-services && docker build -t palsp/connex-event . 
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: Build Docker Image 
+        run: cd event-services && docker build -t palsp/connex-event . 
+      - name: Login Docker 
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push palsp/connex-event
+      - name: Push Image to Docker Hub
+        run: docker push palsp/connex-event
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig save cu-connex
-      - run: kubectl rollout restart deployment event-depl
+      - name: Use k8s context
+        run: doctl kubernetes cluster kubeconfig save cu-connex
+      - name: Restart deployment
+        run: kubectl rollout restart deployment event-depl

@@ -11,15 +11,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Check out code
       - uses: actions/checkout@v2
-      - run: cd auth && docker build -t palsp/connex-auth . 
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      # This is the a separate action that sets up buildx runner
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+       # So now you can use Actions' own caching!
+      - name: Cache Docker layers
+        uses: actions/cache@v2
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+            
+#       - name: Build Docker Image 
+#         run: cd auth && npm install del-cli typescript && npm run build | docker build -t palsp/connex-auth . 
+      - name: Login to Docker
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push palsp/connex-auth
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}   
+       # And make it available for the builds
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: palsp/connex-auth
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new
+#       - name: Push Image to Docker Hub
+#         run: docker push palsp/connex-auth
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
       - uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - run: doctl kubernetes cluster kubeconfig save cu-connex
-      - run: kubectl rollout restart deployment auth-depl
+      - name: Use k8s context
+        run: doctl kubernetes cluster kubeconfig save cu-connex
+      - name: Restart deployment
+        run: kubectl rollout restart deployment auth-depl
