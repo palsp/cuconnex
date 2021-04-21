@@ -55,8 +55,6 @@ const App: React.FC = () => {
     setHeightStyle({ height: `${window.innerHeight}px` });
   }, []);
 
-  const location = useLocation();
-
   const routes = isAuthenticated ? (
     <BrowserRouter>
       <AuthenticatedContext.Provider
