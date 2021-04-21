@@ -32,6 +32,8 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
   public getInterests!: HasManyGetAssociationsMixin<Interest>;
   public createInterest!: HasManyCreateAssociationMixin<Interest>;
 
+  public interests?: Interest[];
+
   /**
    * Automatically migrate schema, to keep your schema up to date.
    * @param sequelize 

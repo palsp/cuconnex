@@ -12,3 +12,5 @@ export * from './connection.routes';
 export * from './search';
 export * from './status';
 export * from './user-info';
+
+export * from './interest.routes';
