@@ -24,7 +24,18 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-            
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+      - name: Build js file
+        run: |
+          cd auth
+          npm install del-cli typescript
+          npm run build
+        
 #       - name: Build Docker Image 
 #         run: cd auth && npm install del-cli typescript && npm run build | docker build -t palsp/connex-auth . 
       - name: Login to Docker
