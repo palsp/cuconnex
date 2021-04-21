@@ -7,6 +7,7 @@
     "@types/react-router": "^5.1.13",
     "axios": "^0.21.1",
     "formik": "^2.2.6",
+    "framer": "^1.2.29",
     "framer-motion": "^4.0.0",
     "react": "^16.10.2",
     "react-app-rewired": "^2.1.8",

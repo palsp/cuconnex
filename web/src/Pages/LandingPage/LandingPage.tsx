@@ -10,12 +10,23 @@ import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
 import { UserDataContext } from "@hooks/UserDataContext";
 
+import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
   const [hasTeam, setHasTeam] = useState<boolean>(true);
   const { userData } = useContext(UserDataContext);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
+  };
+
+  const transition = {
+    // On Tap - Navigation
+    type: "spring",
+    delay: 0,
+    stiffness: 500,
+    damping: 60,
+    mass: 1,
   };
 
   let cssArray = [classes.content];
@@ -59,12 +70,32 @@ const LandingPage: React.FC = () => {
     </div>
   );
 
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: { delay: 0.5, duration: 1 },
+    },
+    exit: {
+      x: window.innerWidth,
+      transition: { delay: 1, duaration: 1 },
+    },
+  };
+
   return (
-    <div className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.main}
+    >
       <Background>
         <div>{LandingPrompt}</div>
       </Background>
-    </div>
+    </motion.div>
   );
 };
 

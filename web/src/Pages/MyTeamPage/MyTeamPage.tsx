@@ -55,7 +55,10 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" team={mockMyTeamListsData} />
+          <MyTeamLists
+            data-test="myteam-page-team-lists"
+            team={mockMyTeamListsData}
+          />
         </div>
       </div>
     );
@@ -87,7 +90,10 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" team={mockMyTeamListsData} />
+          <MyTeamLists
+            data-test="myteam-page-team-lists"
+            team={mockMyTeamListsData}
+          />
         </div>
       </div>
     );

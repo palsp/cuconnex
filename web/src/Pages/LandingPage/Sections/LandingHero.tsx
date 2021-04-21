@@ -1,5 +1,5 @@
 import classes from "./LandingHero.module.css";
-import React from "react";
+import React, { useState } from "react";
 import "react-toggle/style.css";
 import {
   FindteamLogo,
@@ -10,7 +10,10 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-import { motion } from "framer-motion";
+
+import { motion, useSpring } from "framer-motion";
+import { useNavigation } from "framer";
+
 import { IUser } from "@models/index";
 import { UserDataContext } from "@src/hooks/UserDataContext";
 
@@ -51,25 +54,21 @@ const LandingHero: React.FC<Props> = (props) => {
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
         <motion.div
-          transition={{
-            // On Tap - Navigation
-            type: "spring",
-            delay: 0,
-            stiffness: 500,
-            damping: 60,
-            mass: 1,
-          }}
           className={classes.profileDiv}
+          initial={{ x: 0 }}
+          // animate={{ x: window.innerWidth }}
+          exit={{
+            transition: { x: -window.innerWidth },
+            opacity: 0.5,
+            x: -window.innerWidth,
+          }}
+          transition={{ duration: 2, ease: [0.6, -0.05] }}
         >
           <Link to="/profile">
             <ProfilePic size="small" />
           </Link>
         </motion.div>
-        {/* <div className={classes.profileDiv}>
-          <Link to="/profile">
-            <ProfilePic size="small" />
-          </Link>
-        </div> */}
+
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
             <div className={classes.welcome}>Welcome,</div>

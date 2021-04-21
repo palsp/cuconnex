@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+import { useNavigation } from "framer";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
@@ -143,10 +146,30 @@ const ProfilePage: React.FC = () => {
     );
   }
 
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+    },
+    visible: {
+      opacity: 1,
+      transition: { delay: 0.5, duration: 1 },
+    },
+    exit: {
+      x: window.innerWidth,
+      transition: { delay: 1, duaration: 1 },
+    },
+  };
+
   return (
-    <div className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.main}
+    >
       <div className={classes.container}>{profilePrompt}</div>
-    </div>
+    </motion.div>
   );
 };
 
