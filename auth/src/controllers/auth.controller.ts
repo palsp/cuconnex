@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 import { BadRequestError } from '@cuconnex/common'
+import { Op } from 'sequelize';
 import { Password } from '../services/password';
 require('express-async-errors');
 
@@ -13,10 +14,9 @@ interface UserPayload {
 export const signUp = async (req: Request, res: Response) => {
     const { id, email, password } = req.body
 
-    const existingUser = await User.findOne({ where: { id } }); //This works too because email is unique
+    const existingUser = await User.findOne({ where: { [Op.or]: [{ id }, { email }] } }); //This works too because email is unique
 
     if (existingUser) throw new BadRequestError('User existed');
-
 
     let user: User;
     try {
@@ -31,7 +31,6 @@ export const signUp = async (req: Request, res: Response) => {
 
     const userPayload: UserPayload = {
         id: user.id,
-
     }
 
     const userJwt = jwt.sign(userPayload, process.env.JWT_KEY!); //Needs exclamation mark because typescript doesn't know if we already have a key
