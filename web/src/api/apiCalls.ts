@@ -90,6 +90,7 @@ const createTeamAPI = async (
   );
   return createTeamData;
 };
+
 const teamInvitationAPI = async (
   invitedData: IInviteData
 ): Promise<AxiosResponse<IInviteDataResult>> => {

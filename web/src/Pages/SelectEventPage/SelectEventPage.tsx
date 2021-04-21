@@ -7,6 +7,9 @@ import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
 import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
 import { IEventData } from "@src/models";
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
+
 const SelectEventPage: React.FC = () => {
   const [eventLists, setEventLists] = useState<[IEventData] | []>([]);
   useEffect(() => {
@@ -20,7 +23,13 @@ const SelectEventPage: React.FC = () => {
     return eventsData.data.events;
   };
   return (
-    <div className={classes.mainDiv}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.mainDiv}
+    >
       <div className={classes.fixHeaderDiv}>
         <div className={classes.headingContainerDiv}>
           <div className={classes.arrowDiv}>
@@ -37,7 +46,7 @@ const SelectEventPage: React.FC = () => {
       <div className={classes.eventDiv}>
         <EventLists events={eventLists}></EventLists>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

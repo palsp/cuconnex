@@ -1,21 +1,21 @@
-import React, {useState, useContext} from "react";
-import {ProfilePic} from "@smartComponents/index";
+import React, { useState, useContext } from "react";
+import { ProfilePic } from "@smartComponents/index";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
-import {ArrowLeft, ArrowRight, Search} from "@dumbComponents/UI/Icons";
+import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
 import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import {UserDataContext} from "@hooks/UserDataContext";
-
-import {motion, AnimatePresence, AnimateSharedLayout} from "framer-motion";
+import { UserDataContext } from "@hooks/UserDataContext";
+import containerVariants from "@src/models/models";
+import { motion } from "framer-motion";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
   const [hasTeam, setHasTeam] = useState<boolean>(true);
-  const {userData} = useContext(UserDataContext);
+  const { userData } = useContext(UserDataContext);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
@@ -45,7 +45,10 @@ const LandingPage: React.FC = () => {
             <Search />
           </Link>
         </div>
-        <div onClick={() => setHasTeam((prev) => !prev)} className={classes.mailDiv}>
+        <div
+          onClick={() => setHasTeam((prev) => !prev)}
+          className={classes.mailDiv}
+        >
           <Mail />
         </div>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
@@ -67,26 +70,12 @@ const LandingPage: React.FC = () => {
     </div>
   );
 
-  const containerVariants = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-      transition: {delay: 0.5, duration: 1},
-    },
-    exit: {
-      x: window.innerWidth,
-      transition: {delay: 1, duaration: 1},
-    },
-  };
-
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      exit={{opacity: 0}}
+      exit="exit"
       className={classes.main}
     >
       <Background>

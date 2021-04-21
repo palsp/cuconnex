@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-import { useNavigation } from "framer";
-import { AnimatePresence, motion } from "framer-motion";
-
+import { motion } from "framer-motion";
 import { Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
@@ -19,6 +16,7 @@ import {
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
+import containerVariants from "@src/models/models";
 
 const ProfilePage: React.FC = () => {
   const [clickEditProfile, setClickEdit] = useState(false);
@@ -145,20 +143,6 @@ const ProfilePage: React.FC = () => {
       </div>
     );
   }
-
-  const containerVariants = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-      transition: { delay: 0.5, duration: 1 },
-    },
-    exit: {
-      x: window.innerWidth,
-      transition: { delay: 1, duaration: 1 },
-    },
-  };
 
   return (
     <motion.div

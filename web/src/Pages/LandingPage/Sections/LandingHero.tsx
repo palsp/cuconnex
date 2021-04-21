@@ -53,21 +53,9 @@ const LandingHero: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
-        <motion.div
-          className={classes.profileDiv}
-          initial={{ x: 0 }}
-          // animate={{ x: window.innerWidth }}
-          exit={{
-            transition: { x: -window.innerWidth },
-            opacity: 0.5,
-            x: -window.innerWidth,
-          }}
-          transition={{ duration: 2, ease: [0.6, -0.05] }}
-        >
-          <Link to="/profile">
-            <ProfilePic size="small" />
-          </Link>
-        </motion.div>
+        <Link to="/profile">
+          <ProfilePic size="small" />
+        </Link>
 
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>

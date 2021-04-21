@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Heading, Tab } from "@dumbComponents/UI/index";
@@ -9,10 +9,30 @@ import { MyTeamLists } from "@smartComponents/index";
 
 import classes from "./MyTeamPage.module.css";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
+import { motion } from "framer-motion";
+
+import containerVariants from "@src/models/models";
+
+import { UserDataContext } from "@hooks/UserDataContext";
+
+import { fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
   const [clickOngoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
+
+  // const { setTeamData } = useContext(UserDataContext);
+
+  // const fetchTeamHandler = async () => {
+  //   try {
+  //     const teamData = await fetchTeamNotificationAPI();
+  //     console.log("fetchTeamHandler", teamData)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchTeamHandler();
+  // }, []);
 
   const ongoingButtonHandler = () => {
     setOngoing(true);
@@ -100,9 +120,14 @@ const MyTeamPage: React.FC = () => {
   }
 
   return (
-    <div data-test="myteam-page" className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      exit="exit"
+      data-test="myteam-page"
+      className={classes.main}
+    >
       {myteamsPrompt}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,7 +1,13 @@
-import React, {useState, useEffect} from "react";
-import {BrowserRouter, Switch, Route, Redirect, useLocation} from "react-router-dom";
-import {AuthenticatedContext} from "@hooks/AuthenticatedContext";
-import {UserDataContext} from "@hooks/UserDataContext";
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect,
+  useLocation,
+} from "react-router-dom";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import { UserDataContext } from "@hooks/UserDataContext";
 import {
   AuthPage,
   PersonalInfoPage,
@@ -25,9 +31,9 @@ import PushPage from "@pages/PushPage/PushPage";
 import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 import classes from "./App.module.css";
 import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamPrompt";
-import {IUser} from "@models/index";
+import { IUser } from "@models/index";
 
-import {AnimatePresence} from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -48,18 +54,28 @@ const App: React.FC = () => {
   const [heightStyle, setHeightStyle] = useState({});
 
   useEffect(() => {
-    setHeightStyle({height: `${window.innerHeight}px`});
+    setHeightStyle({ height: `${window.innerHeight}px` });
   }, []);
 
   const routes = isAuthenticated ? (
-    <AuthenticatedContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
-      <UserDataContext.Provider value={{userData, setUserData}}>
-        <AnimatePresence exitBeforeEnter>
+    <AuthenticatedContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated }}
+    >
+      <UserDataContext.Provider value={{ userData, setUserData }}>
+        <AnimatePresence>
           <Switch location={location} key={location.pathname}>
             <Route path="/" exact component={AuthPage} />
 
-            <Route path="/selectinterests" exact component={SelectInterestPage} />
-            <Route path="/personalInformation" exact component={PersonalInfoPage} />
+            <Route
+              path="/selectinterests"
+              exact
+              component={SelectInterestPage}
+            />
+            <Route
+              path="/personalInformation"
+              exact
+              component={PersonalInfoPage}
+            />
             <Route path="/friendlists" exact component={FriendsPage} />
             {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
             {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
@@ -83,8 +99,10 @@ const App: React.FC = () => {
       </UserDataContext.Provider>
     </AuthenticatedContext.Provider>
   ) : (
-    <AuthenticatedContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
-      <UserDataContext.Provider value={{userData, setUserData}}>
+    <AuthenticatedContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated }}
+    >
+      <UserDataContext.Provider value={{ userData, setUserData }}>
         <Switch>
           <Route path="/" exact component={AuthPage} />
           <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
