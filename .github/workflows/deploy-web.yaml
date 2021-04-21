@@ -40,7 +40,7 @@ jobs:
           cache-to: type=local,dest=/tmp/web/.buildx-cache-new
       - name: Move cache
         run: |
-          rm -rf /tmp/.buildx-cache
+          rm -rf /tmp/web/.buildx-cache
           mv /tmp/web/.buildx-cache-new /tmp/web/.buildx-cache
       - uses: digitalocean/action-doctl@v2
         with:
