@@ -46,6 +46,6 @@ jobs:
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       - name: restart deployment
-      - run: |
+        run: |
           doctl kubernetes cluster kubeconfig save cu-connex
           kubectl rollout restart deployment web-depl
