@@ -13,16 +13,21 @@ interface UserPayload {
 export const signUp = async (req: Request, res: Response) => {
     const { id, email, password } = req.body
 
-    const existingUser = await User.findOne({ where: { email } }); //This works too because email is unique
+    const existingUser = await User.findOne({ where: { id } }); //This works too because email is unique
 
     if (existingUser) throw new BadRequestError('User existed');
 
 
-    const user = await User.create({
-        id,
-        email,
-        password,
-    });
+    let user: User;
+    try {
+        user = await User.create({
+            id,
+            email,
+            password,
+        });
+    } catch (err) {
+        throw new BadRequestError('Create User Failed')
+    }
 
     const userPayload: UserPayload = {
         id: user.id,
