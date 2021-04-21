@@ -2,7 +2,6 @@ import request from 'supertest';
 import { app } from '../../app';
 import { User } from '../../models/user.model';
 import { InterestDescription, Technology } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
 
 
 

@@ -27,9 +27,9 @@ app.use(
   })
 );
 /*TODO: uncomment these three lines after development */
-// app.use(currentUser);
-// app.use(requireAuth);
-// app.use(fetchUser);
+app.use(currentUser);
+app.use(requireAuth);
+app.use(fetchUser);
 
 app.use('/api/users/assets', express.static('assets'));
 
