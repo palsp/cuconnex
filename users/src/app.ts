@@ -16,7 +16,7 @@ app.set('trust proxy', true);
 
 app.use(json());
 app.use(urlencoded({ extended: true, limit: "800mb" }));
-// app.use(cors());
+app.use(cors());
 
 app.use(
   session({
