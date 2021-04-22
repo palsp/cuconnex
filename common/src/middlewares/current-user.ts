@@ -36,6 +36,10 @@ export const currentUser = async (req: Request, res: Response, next: NextFunctio
     } catch (err) {
       console.log('bearer decode error', err.message);
     }
+  } else {
+    return res.status(401).send({
+      errors: [{ message: "Token not found" }]
+    })
   }
 
 
