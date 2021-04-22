@@ -35,7 +35,10 @@ export const transformRequest = async (req: Request, res: Response, next: NextFu
  */
 export const fetchUser = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.currentUser) {
-    throw new NotAuthorizedError();
+    // throw new NotAuthorizedError();
+    return res.status(401).send({
+      errors: [{ message: "User not found in fetch User" }]
+    })
   }
 
   try {
