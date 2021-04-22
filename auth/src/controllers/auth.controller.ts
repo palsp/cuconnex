@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, response, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 import { BadRequestError } from '@cuconnex/common'
@@ -39,7 +39,9 @@ export const signUp = async (req: Request, res: Response) => {
         jwt: userJwt
     };
 
-    res.status(201).send(user);
+    const response = user.toJSON()
+    // Token must be removed in production
+    res.status(201).send({ ...response, token: userJwt });
 
 };
 
@@ -66,7 +68,8 @@ export const signIn = async (req: Request, res: Response) => {
         jwt: userJwt,
     };
 
-    res.status(200).send({ email: existingUser.email, id: existingUser.id });
+    // Token must be removed in production
+    res.status(200).send({ email: existingUser.email, id: existingUser.id, token: userJwt });
 };
 
 
