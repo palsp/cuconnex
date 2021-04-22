@@ -67,6 +67,11 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
                 console.log('bearer decode error', err.message);
             }
         }
+        else {
+            return [2 /*return*/, res.status(401).send({
+                    errors: [{ message: "Token not found" }]
+                })];
+        }
         next();
         return [2 /*return*/];
     });

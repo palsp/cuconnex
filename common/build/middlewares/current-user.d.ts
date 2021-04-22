@@ -9,5 +9,5 @@ declare global {
         }
     }
 }
-export declare const currentUser: (req: Request, res: Response, next: NextFunction) => Promise<void>;
+export declare const currentUser: (req: Request, res: Response, next: NextFunction) => Promise<Response<any, Record<string, any>> | undefined>;
 export {};
