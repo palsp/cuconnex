@@ -28,7 +28,6 @@ interface Props {
   };
 }
 const ProfilePage: React.FC<Props> = (props) => {
-  const [isMyProfile, setIsMyProfile] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
   const [clickEditProfile, setClickEdit] = useState(false);
@@ -48,12 +47,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEditOption(false);
     setClickEdit(true);
   };
-  if (props.location.state.users.id == userData.id) {
-    setIsMyProfile(true);
-  }
-  else{
-    setIsMyProfile(false);
-  }
+  const isMyProfile = props.location.state.users.id == userData.id;
 
   // Is it my profile ?
   const selectBusinessInterestHandler = () => {
