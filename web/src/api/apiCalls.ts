@@ -46,7 +46,6 @@ const userSigninAPI = async (
     "/api/auth/signin",
     signinUserData
   );
-  console.log("Data return from signin", userSigninData);
   return userSigninData;
 };
 const userLogoutAPI = async (): Promise<void> => {
