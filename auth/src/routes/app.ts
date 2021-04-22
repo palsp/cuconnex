@@ -30,6 +30,7 @@ app.use(urlencoded({ extended: true }));
 app.use(Session({
     signed: false,
     secure: false,
+    domain: "http://localhost:3000"
 }))
 
 /* Initialize all the handler */
