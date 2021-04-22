@@ -63,7 +63,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
     }
   };
 
-  const yearFacultyHandler = async (id: string) => {
+  const yearFacultyHandler = (id: string) => {
     const enrolledYear = Number(id.substring(0, 2));
     const studentFacultyCode = id.substring(8);
     let currentYear: number = new Date().getFullYear();
@@ -167,10 +167,10 @@ const SignupPrompt: React.FC<Props> = (props) => {
               id: data.id,
               password: data.password,
             };
+            setSubmitting(true);
             yearFacultyHandler(data.id);
             await signupHandler(userSignupData);
             console.log("POST /api/auth/signup", data);
-            setSubmitting(true);
             resetForm();
           }}
           validationSchema={validationSchema}

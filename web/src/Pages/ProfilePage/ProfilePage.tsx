@@ -17,9 +17,8 @@ import {
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
-import { IFetchFriendNotification, IUser } from "@src/models";
+import { IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
-import { fetchFriendNotificationAPI } from "@src/api";
 interface Props {
   location: {
     state: {

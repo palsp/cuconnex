@@ -203,10 +203,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                         />
 
                         <button type="submit" className={classes.noStyleButton}>
-                          <div className={classes.footerIcon}>
-                            <Heading value="Skip" size="small" />
-                            <ArrowRight data-test="personal-info-arrowRight" />
-                          </div>
+                          <div className={classes.emptyDiv}></div>
                         </button>
                       </div>
                     </Form>
