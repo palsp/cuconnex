@@ -14,14 +14,16 @@ declare global {
 }
 
 export const currentUser = async (req: Request, res: Response, next: NextFunction) => {
-  if (!req.session?.jwt) {
-    return next();
-  }
+  // if (!req.session?.jwt) {
+  //   return next();
+  // }
 
-  try {
-    const decodedPayload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
-    req.currentUser = decodedPayload;
-  } catch (err) { }
+  if (req.session?.jwt) {
+    try {
+      const decodedPayload = jwt.verify(req.session.jwt, process.env.JWT_KEY!) as UserPayload;
+      req.currentUser = decodedPayload;
+    } catch (err) { }
+  }
 
   // TODO: for development purpose only
   const authHeader = req.get('Authorization');
