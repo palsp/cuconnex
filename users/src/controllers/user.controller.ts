@@ -112,8 +112,8 @@ export const search = async (req: Request, res: Response) => {
     const teamConstraint = { name: { [Op.startsWith]: keyword } };
 
 
-    let users;
-    let team;
+    let users: User[];
+    let team: Team[];
     try {
         users = await User.findAll({ where: { [Op.or]: userConstraint } });
         team = await Team.findAll({ where: teamConstraint });
@@ -121,11 +121,9 @@ export const search = async (req: Request, res: Response) => {
         console.log(err);
     }
 
-    console.log('/api/users/?keyword', users, team);
-
     res.status(200).send({
-        users,
-        team,
+        users: users! || [],
+        team: team! || [],
     });
 }
 
