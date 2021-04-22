@@ -20,6 +20,9 @@ export const UserContextProvider = (props: any) => {
       Design: [],
     },
     faculty: "",
+    year: "",
+    major: "",
+    bio: "",
     image: "",
   });
 
