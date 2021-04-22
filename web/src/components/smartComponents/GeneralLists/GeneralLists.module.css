@@ -3,16 +3,16 @@
   flex-direction: row;
   justify-content: flex-start;
   text-align: left;
-  width:375px;
-  height:110px;
+  width:100vw;
+  height: 14vh;
   border-top:0.5px solid grey;
 }
 .textbodyDiv {
+  padding-top:1vh;
   display: flex;
   flex-direction: column;
-  width: 333px;
-  height: 108px;
-  margin-top: 3%;
+  width: 88.8vw;
+  height: 13.3vh; 
 }
 .profileContainer {
   margin-left: 5%;
@@ -26,7 +26,7 @@
   background-size: contain;
   border-radius: 50%;
   opacity: 1;
-  width: 57px;
+  width:57px;
   height: 57px;
   display: flex;
   justify-content: center;
@@ -60,8 +60,8 @@
 }
 .eventstatusDiv {
   margin-top: 5%;
-  width: 105px;
-  height: 16px;
+  width: 28vw;
+  height: 2vh;
   background-color: var(--main_pink, #f33182);
   border-radius: 5px;
   overflow: visible;
@@ -167,7 +167,7 @@
   color: var(--green_toggle, #c31d00);
 }
 .techcategoryDiv {
-  margin-top: 5%;
+  margin-top: 1vh;
   background-color: var(--main_pink, #f33182);
   border-radius: 5px;
   overflow: visible;
@@ -186,9 +186,9 @@
   border-radius: 5px;
 }
 .businesscategoryDiv {
-  margin-top: 5%;
-  width: 54px;
-  height: 16px;
+  margin-top: 1vh;
+  width: 14.4vw;
+  height: 2vh;
   background-color: var(--main_pink, #f33182);
   border-radius: 5px;
   overflow: visible;
@@ -207,9 +207,9 @@
   margin-right: 2%;
 }
 .designcategoryDiv {
-  margin-top: 5%;
-  width: 45px;
-  height: 16px;
+  margin-top: 1vh;
+  width: 12vw;
+  height: 2vh;
   background-color: var(--main_pink, #f33182);
   border-radius: 5px;
   overflow: visible;
@@ -227,9 +227,9 @@
   margin-left: 2%;
 }
 .upcomingDiv {
-  margin-top: 5%;
-  width: 53px;
-  height: 16px;
+  margin-top: 5vh;
+  width: 14.1vw;
+  height: 2vh;
   background-color: var(--green_toggle, #00c300);
   overflow: visible;
   border-radius: 5px;
@@ -245,8 +245,8 @@
 }
 .closedDiv {
   margin-top: 5%;
-  width: 46px;
-  height: 16px;
+  width: 12.2vw;
+  height: 2vh;
   background-color: var(--edit_grey, #767474);
   border-radius: 5px;
   white-space: pre;

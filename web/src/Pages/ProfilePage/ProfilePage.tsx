@@ -51,6 +51,9 @@ const ProfilePage: React.FC<Props> = (props) => {
   if (props.location.state.users.id == userData.id) {
     setIsMyProfile(true);
   }
+  else{
+    setIsMyProfile(false);
+  }
 
   // Is it my profile ?
   const selectBusinessInterestHandler = () => {
