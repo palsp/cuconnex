@@ -9,6 +9,7 @@ interface Props {
 
 const Button: React.FC<Props> = (props) => {
   return (
+    <div className={classes.ButtonContainer}>
     <button
       data-test="button"
       className={classes.Button}
@@ -18,6 +19,7 @@ const Button: React.FC<Props> = (props) => {
     >
       <p data-test="button-props-value">{props.value}</p>
     </button>
+    </div>
   );
 };
 
