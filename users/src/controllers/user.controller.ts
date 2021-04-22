@@ -121,6 +121,7 @@ export const search = async (req: Request, res: Response) => {
         console.log(err);
     }
 
+    console.log('/api/users/?keyword', users, team);
 
     res.status(200).send({
         users,
