@@ -1,7 +1,7 @@
 import React from "react";
-import { shallow } from "enzyme";
+import {shallow} from "enzyme";
 import AuthPage from "./AuthPage";
-import { findByTestAttr } from "../../../test/testUtils";
+import {findByTestAttr} from "../../../test/testUtils";
 
 const setup = (initialState = {}) => {
   const wrapper = shallow(<AuthPage {...initialState} />);
@@ -21,10 +21,7 @@ describe("auth Page, first render, no button has been clicked", () => {
     expect(background.length).toBe(1);
   });
   it("should render HalfCircleOverlay", () => {
-    const halfCircleOverlay = findByTestAttr(
-      wrapper,
-      "auth-page-halfcircleoverlay"
-    );
+    const halfCircleOverlay = findByTestAttr(wrapper, "auth-page-halfcircleoverlay");
     expect(halfCircleOverlay.length).toBe(1);
   });
   it("should render signup button", () => {
