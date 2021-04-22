@@ -142,8 +142,8 @@ const AuthPage: React.FC = () => {
           <AppLogo data-test="auth-page-logo" />
         </div>
         <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ delay: 1, duration: 500 }}
+          // animate={{ rotate: 360 }}
+          // transition={{ delay: 1, duration: 500 }}
           className={classes.circle_overlay}
           style={{ bottom: -(window.innerHeight * 0.33) }}
           data-test="auth-page-halfcircleoverlay"
