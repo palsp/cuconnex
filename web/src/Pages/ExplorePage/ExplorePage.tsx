@@ -29,7 +29,7 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="People" />
       </div>
-      <PeopleLists peoplelist={mockPeopleLists} />
+      <PeopleLists peoplelist={peopleLists} />
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
@@ -73,6 +73,7 @@ const ExplorePage = () => {
         </div>
         {console.log("This is peopleLists", peopleLists)}
         {console.log("This is teamLists", teamLists)}
+        {console.log("This is eventLists", eventLists)}
 
         {explorePage}
       </div>
