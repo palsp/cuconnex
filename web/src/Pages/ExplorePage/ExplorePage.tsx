@@ -16,6 +16,7 @@ import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
 import { mockPeopleLists } from "@src/mockData";
 import { IEventData, ITeam, IUser } from "@src/models";
 import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -55,7 +56,7 @@ const ExplorePage = () => {
     </>
   );
   return (
-    <motion.div exit="exit">
+    <motion.div variants={containerVariants} exit="exit">
       <Background>
         {/* Background has display: flex so this div is for that */}
 

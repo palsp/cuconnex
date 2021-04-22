@@ -154,20 +154,20 @@ export interface IFetchFriendNotification {
 
 const containerVariants = {
   hidden: {
-    opacity: 0.5,
+    opacity: 0.85,
     x: window.innerWidth,
   },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 1,
+      duration: 0.3,
     },
   },
   exit: {
-    opacity: 0.9,
+    opacity: 0.8,
     transition: {
-      duration: 0.9,
+      duration: 0.2
     },
   },
 };
