@@ -18,7 +18,7 @@ import {
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
 import { IFetchFriendNotification, IUser } from "@src/models";
-import { UserDataContext } from "@src/hooks/UserDataContext";
+import { UserContext } from "@context/UserContext";
 import { fetchFriendNotificationAPI } from "@src/api";
 interface Props {
   location: {
@@ -33,7 +33,7 @@ const ProfilePage: React.FC<Props> = (props) => {
   const [isFriend, setIsFriend] = useState(false);
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
-  const { userData, setUserData } = useContext(UserDataContext);
+  const { userData } = useContext(UserContext);
   console.log(userData);
   const backButtonClickedHandler = () => {
     setClickEdit(false);
