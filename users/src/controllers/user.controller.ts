@@ -52,7 +52,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     let imagePath = "";
     if (req.file) {
         imagePath = req.file.path
-        if(req.file.size > 1024*1024*1024){
+        if (req.file.size > 1024 * 1024 * 1024) {
             deleteFile(imagePath);
             throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
         }
@@ -99,6 +99,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 export const search = async (req: Request, res: Response) => {
     const keyword = req.query.keyword
 
+
+
     const userConstraint = [
         { name: { [Op.startsWith]: keyword } },
         { id: { [Op.startsWith]: keyword } },
@@ -118,6 +120,7 @@ export const search = async (req: Request, res: Response) => {
     } catch (err) {
         console.log(err);
     }
+
 
     res.status(200).send({
         users,

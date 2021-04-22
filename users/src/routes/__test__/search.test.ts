@@ -165,6 +165,18 @@ const setup = async () => {
 // });
 
 describe('General Search', () => {
+
+  it('should return empty array if cannot find corresponding users and teams', async () => {
+    const { body } = await request(app)
+      .get(`/api/users/?keyword=empty`)
+      .set('Cookie', global.signin())
+      .send({})
+    //   .expect(200);
+
+    expect(body.users).toHaveLength(0);
+    expect(body.team).toHaveLength(0);
+  })
+
   it('retuens corresponding user matched with given name as a keyword', async () => {
     const users = (await setup());
     await users[0].createTeams({ name: 'testTeam1', description: '' });
