@@ -43,7 +43,7 @@ jobs:
         with:
           context: ./users
           push: true
-          tags: palsp/connex-web
+          tags: palsp/connex-users
           cache-from: type=local,src=/tmp/users/.buildx-cache
           cache-to: type=local,dest=/tmp/users/.buildx-cache-new
       - name: Move cache
