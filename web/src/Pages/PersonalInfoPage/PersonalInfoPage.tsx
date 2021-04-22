@@ -106,7 +106,7 @@ const PersonalInfoPage: React.FC = () => {
                           size="big"
                           data-test="personal-info-personalImage"
                           PicUrl={imagePreview}
-                          uploadedProfile={true}
+                          previewImage={true}
                         />
                       </>
                     ) : (
@@ -146,7 +146,7 @@ const PersonalInfoPage: React.FC = () => {
                               name: data.displayName,
                               faculty: data.faculty,
                               // profilePic: image ? image.raw : null,
-                              ProfilePic: imageRaw,
+                              profilePic: imageRaw,
                             },
                           }}
                         />

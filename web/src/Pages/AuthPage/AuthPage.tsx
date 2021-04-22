@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { motion } from "framer-motion";
 import { Redirect } from "react-router";
 
@@ -12,31 +11,25 @@ import {
   Heading,
 } from "@dumbComponents/UI/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
-import { fetchUserDataAPI } from "@api/index";
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
-
 import classes from "./AuthPage.module.css";
-import { UserDataContext } from "@hooks/UserDataContext";
+import { UserContext } from "@context/UserContext";
 
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
-  const { setUserData } = useContext(UserDataContext);
+  const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { fetchUserDataHandler } = useContext(UserContext);
 
-  const fetchDataHandler = async () => {
+  const checkUserHasLogin = async () => {
     try {
-      const userData = await fetchUserDataAPI();
-      console.log("SUCCESS fetchDataHandler", userData);
+      await fetchUserDataHandler();
       setIsAuthenticated(true);
-      setUserData(userData.data);
       setRedirect(true);
     } catch (e) {
-      console.log("fetchDataHandler error", e);
+      console.log("checkUserHasLogin error", e);
     }
   };
 
@@ -44,7 +37,7 @@ const AuthPage: React.FC = () => {
     // let isMounted = true;
     // if (isMounted) {
     // if(isAuthenticated) {
-    fetchDataHandler();
+    checkUserHasLogin();
     // }
     // return () => {
     //   isMounted = false;
