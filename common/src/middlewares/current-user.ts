@@ -23,5 +23,18 @@ export const currentUser = async (req: Request, res: Response, next: NextFunctio
     req.currentUser = decodedPayload;
   } catch (err) { }
 
+  // TODO: for development purpose only
+  const authHeader = req.get('Authorization');
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    try {
+      const decodedPayload = jwt.verify(token, process.env.JWT_KEY!) as UserPayload;
+      req.currentUser = decodedPayload;
+    } catch (err) {
+
+    }
+  }
+
+
   next();
 };
