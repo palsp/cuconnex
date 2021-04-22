@@ -17,17 +17,18 @@ export const storage = multer.diskStorage({
 
 //Filters for only image files
 const fileFilter = (req: any, file: any, cb: any) => {
+    console.log(file.mimetype);
     //Only accept files smaller than 1 GB, adjust file size (in bytes) here
     const max_size = 1000000000;
-    if (file.mimetype === "image/jpg" ||
+    if ((file.mimetype === "image/jpg" ||
         file.mimetype === "image/jpeg" ||
-        file.mimetype === "image/png" && file.size <= max_size) {
+        file.mimetype === "image/png") && file.size <= max_size) {
 
         cb(null, true);
 
 
     } else {
-        if (max_size > 1000000000) {
+        if (file.size > 1000000000) {
             cb(new BadRequestError("Max file size exceeded!!!"), false);
         } else {
             cb(new BadRequestError("Image uploaded is not of type jpg/jpeg or png"), false);
