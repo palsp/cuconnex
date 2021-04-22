@@ -90,8 +90,8 @@ export interface UsersData {
   profilePic: string;
 }
 export interface InterestData {
-  business:string[],
-  technology:string[],
-  design:string[],
+  Business:string[],
+  Technology:string[],
+  Design:string[],
 }
 

@@ -101,3 +101,29 @@
   right: 5%;
   margin-top: 7%;
 }
+.buttonDiv{
+  margin-top: 7vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  background-color: var(--main_pink, #f33182);
+  overflow: visible;
+  border-radius: 25px;
+}
+.buttonTextDiv{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  color: var(--white, #ffffff);
+  font-size: 12px;
+}
