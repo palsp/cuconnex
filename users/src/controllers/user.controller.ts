@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, currentUser } from '@cuconnex/common';
 import { User, Team, Interest, UserInterest } from '../models'
+import { deleteFile } from '../utils/file';
 
 /**
  * get current user profile
@@ -51,6 +52,10 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     let imagePath = "";
     if (req.file) {
         imagePath = req.file.path
+        if(req.file.size > 1024*1024*1024){
+            deleteFile(imagePath);
+            throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
+        }
     }
 
     if (year) {
