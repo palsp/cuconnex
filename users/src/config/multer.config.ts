@@ -28,7 +28,7 @@ const fileFilter = (req: any, file: any, cb: any) => {
 
 
     } else {
-        if (file.size > 1000000000) {
+        if (file.size > max_size) {
             cb(new BadRequestError("Max file size exceeded!!!"), false);
         } else {
             cb(new BadRequestError("Image uploaded is not of type jpg/jpeg or png"), false);
