@@ -85,8 +85,8 @@ describe('Sign in test', () => {
             })
             .expect(200);
 
-        expect(res.email).toEqual(email);
-        expect(res.id).toEqual(id);
+        expect(res.user.email).toEqual(email);
+        expect(res.user.id).toEqual(id);
 
     });
 
@@ -100,7 +100,7 @@ describe('Sign in test', () => {
             })
             .expect(200);
 
-        expect(res.password).not.toBeDefined();
+        expect(res.user.password).not.toBeDefined();
     });
 
     it('should set cookie once successfully sign in', async () => {
@@ -117,3 +117,5 @@ describe('Sign in test', () => {
     });
 
 });
+
+it.todo('remove related bearer token logic')

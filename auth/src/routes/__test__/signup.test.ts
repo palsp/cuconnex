@@ -78,9 +78,9 @@ describe('Sign up test', () => {
             .send(userInput)
             .expect(201)
 
-        expect(res.email).toEqual(userInput.email);
-        expect(res.id).toEqual(userInput.id);
-        expect(res.password).not.toBeDefined();
+        expect(res.user.email).toEqual(userInput.email);
+        expect(res.user.id).toEqual(userInput.id);
+        expect(res.user.password).not.toBeDefined();
     });
 
     it('should set cookie once successfully sign up', async () => {
