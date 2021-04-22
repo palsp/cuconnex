@@ -12,12 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build Docker Image
-        run: | 
-          cd users 
-          npm install del-cli typescript  
-          npm run build 
-          docker build -t palsp/connex-users . 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
        # So now you can use Actions' own caching!
@@ -34,6 +28,11 @@ jobs:
           path: |
             users/node_modules
           key: ${{ runner.os }}-${{ hashFiles('users/package-lock.json') }}  
+      - name: Build js file
+        run: | 
+          cd users 
+          npm install del-cli typescript  
+          npm run build 
       - name: Login Docker
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:
