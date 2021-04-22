@@ -41,7 +41,7 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
   try {
     const user = await User.findByPk(req.currentUser!.id);
     req.user = user;
-  } catch (err) {}
+  } catch (err) { }
 
   next();
 };
@@ -92,3 +92,16 @@ export const uploadFileWithName = (name: string) => {
 
   return upload.single('image');
 };
+
+export const corsHandler = (req: Request, res: Response, next: NextFunction) => {
+
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET , POST , PUT , PATCH , DELETE"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  next();
+
+
+}
