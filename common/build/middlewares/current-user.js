@@ -45,14 +45,16 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
     var decodedPayload, authHeader, token, decodedPayload;
     var _a;
     return __generator(this, function (_b) {
-        if (!((_a = req.session) === null || _a === void 0 ? void 0 : _a.jwt)) {
-            return [2 /*return*/, next()];
+        // if (!req.session?.jwt) {
+        //   return next();
+        // }
+        if ((_a = req.session) === null || _a === void 0 ? void 0 : _a.jwt) {
+            try {
+                decodedPayload = jsonwebtoken_1.default.verify(req.session.jwt, process.env.JWT_KEY);
+                req.currentUser = decodedPayload;
+            }
+            catch (err) { }
         }
-        try {
-            decodedPayload = jsonwebtoken_1.default.verify(req.session.jwt, process.env.JWT_KEY);
-            req.currentUser = decodedPayload;
-        }
-        catch (err) { }
         authHeader = req.get('Authorization');
         if (authHeader) {
             token = authHeader.split(" ")[1];

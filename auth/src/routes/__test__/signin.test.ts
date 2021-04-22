@@ -85,8 +85,8 @@ describe('Sign in test', () => {
             })
             .expect(200);
 
-        expect(res.user.email).toEqual(email);
-        expect(res.user.id).toEqual(id);
+        expect(res.email).toEqual(email);
+        expect(res.id).toEqual(id);
 
     });
 
@@ -100,7 +100,8 @@ describe('Sign in test', () => {
             })
             .expect(200);
 
-        expect(res.user.password).not.toBeDefined();
+
+        expect(res.password).not.toBeDefined();
     });
 
     it('should set cookie once successfully sign in', async () => {
