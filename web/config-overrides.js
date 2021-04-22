@@ -31,6 +31,7 @@ module.exports = function override(config) {
       "@api": path.resolve(__dirname, "src", "api"),
       "@models": path.resolve(__dirname, "src", "models"),
       "@hooks": path.resolve(__dirname, "src", "hooks"),
+      "@context": path.resolve(__dirname, "src", "context"),
     },
   };
 
