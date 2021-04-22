@@ -103,7 +103,8 @@
       "@src/(.*)": "<rootDir>/src/$1",
       "@api/(.*)": "<rootDir>/src/api/$1",
       "@models/(.*)": "<rootDir>/src/models/$1",
-      "@hooks/(.*)": "<rootDir>/src/hooks/$1"
+      "@hooks/(.*)": "<rootDir>/src/hooks/$1",
+      "@context/(.*)": "<rootDir>/src/context/$1"
     }
   }
 }
