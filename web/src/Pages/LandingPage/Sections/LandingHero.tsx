@@ -11,7 +11,6 @@ import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { IUser } from "@models/index";
-import { UserDataContext } from "@src/hooks/UserDataContext";
 
 interface Props {
   hasTeam: boolean;

@@ -11,7 +11,7 @@ import {
 } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
-import { UserDataContext } from "@hooks/UserDataContext";
+import { UserContext } from "@context/UserContext";
 import classes from "../AuthPage.module.css";
 import { IUserSignin } from "@models/index";
 import { userSigninAPI, fetchUserDataAPI } from "@api/index";
@@ -27,7 +27,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
-  const { setUserData } = useContext(UserDataContext);
+  const { fetchUserDataHandler } = useContext(UserContext);
 
   const signinHandler = async (signinData: IUserSignin) => {
     try {
@@ -36,9 +36,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
       setIsAuthenticated(true);
       setRedirect(true);
       try {
-        const userData = await fetchUserDataAPI();
-        setUserData(userData.data);
-        console.log("SUCCESS fetchDataHandler", userData);
+        await fetchUserDataHandler();
       } catch (e) {
         console.log("POST signin success but failed GET fetching");
       }
