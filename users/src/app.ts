@@ -11,7 +11,9 @@ require('./config/multer.config');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  allowedHeaders: 'Authorization'
+}));
 app.set('trust proxy', true);
 
 app.use(json());

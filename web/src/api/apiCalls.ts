@@ -19,6 +19,7 @@ import {
   IFetchFriendsData,
 } from "@src/models";
 
+
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
   const userData: AxiosResponse<IUser> = await axios.get(
