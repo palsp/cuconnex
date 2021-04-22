@@ -30,7 +30,7 @@ app.use(urlencoded({ extended: true }));
 app.use(Session({
     signed: false,
     secure: false,
-    sameSite: 'lax'
+    domain: ""
 }))
 
 /* Initialize all the handler */

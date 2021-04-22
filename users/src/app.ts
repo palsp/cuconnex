@@ -23,7 +23,7 @@ app.use(
     signed: false,
     secure: false,
     // httpOnly : true,
-    sameSite: 'lax'
+    domain: ""
   })
 );
 /*TODO: uncomment these three lines after development */
