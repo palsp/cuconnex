@@ -19,14 +19,24 @@ import {
   IFetchFriendsData,
 } from "@src/models";
 
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxM3h4eHh4MjEiLCJpYXQiOjE2MTkxMDYwNjR9.8Ne0heTtkpGi7zAMq8YZ4eRH_rxIrBhMF4hkMPTFO5U";
+
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
-  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
+  const userData: AxiosResponse<IUser> = await axios.get("/api/users", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 
   return userData;
 };
 const fetchUserDataAPINoAxiosResponse = async (): Promise<IFetchUserData> => {
-  const userData: IFetchUserData = await axios.get("/api/users");
+  const userData: IFetchUserData = await axios.get("/api/users", {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 
   return userData;
 };
@@ -58,6 +68,7 @@ const userSigninAPI = async (
     "/api/auth/signin",
     signinUserData
   );
+  console.log("Data return from signin", userSigninData);
   return userSigninData;
 };
 const userLogoutAPI = async (): Promise<void> => {
