@@ -56,6 +56,7 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
             catch (err) { }
         }
         authHeader = req.get('Authorization');
+        console.log('found', authHeader);
         if (authHeader) {
             token = authHeader.split(" ")[1];
             try {
@@ -63,6 +64,7 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
                 req.currentUser = decodedPayload;
             }
             catch (err) {
+                console.log('bearer decode error', err.message);
             }
         }
         next();
