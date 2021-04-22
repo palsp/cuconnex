@@ -1,23 +1,30 @@
 import React from "react";
 import { PeopleList } from "@smartComponents/index";
 import { Heading } from "@dumbComponents/UI/index";
-import mockPeopleLists from "@src/mockData/mockPeopleLists";
 import classes from "./PeopleLists.module.css";
-import { PeopleListsData } from "@src/mockData/Models";
+import { IUser } from "@src/models";
+import { Link } from "react-router-dom";
+import { mockPeopleLists } from "@src/mockData";
 
-interface Props{
-  peoplelist:PeopleListsData[] | []
+interface Props {
+  peoplelist: IUser[] | [];
 }
 const PeopleLists: React.FC<Props> = (props) => {
   return (
     <div>
-      {/* <div className={classes.divHeading}>
-        <Heading value="People" />
-      </div> */}
-      {props.peoplelist.map((person:PeopleListsData, index:number) => {
+      {props.peoplelist.map((person: IUser, index: number) => {
         return (
-          <div key={index}>
-            <PeopleList key={index} people={person} />
+          <div className={classes.linkDiv} key={index}>
+            <Link
+              to={{
+                pathname: "/profile",
+                state: {
+                  users: props.peoplelist[index],
+                },
+              }}
+            >
+              <PeopleList key={index} people={props.peoplelist[index]} />
+            </Link>
           </div>
         );
       })}

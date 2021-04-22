@@ -8,8 +8,12 @@ export interface IUser {
     Design: string[];
   };
   faculty: string;
+  year:string;
+  major:string;
+  bio:string;
   image: string;
 }
+
 
 export interface ITeam {
   name: string; // team name
@@ -20,7 +24,7 @@ export interface ITeam {
 
 export interface ISearchUserTeamEventResult {
   users: IUser[];
-  team: ITeam[];
+  teams: ITeam[];
   events: IEventData[];
 }
 export interface IUserSignup {
@@ -50,6 +54,9 @@ export interface IFetchUserData {
     Design: string[];
   };
   faculty: string;
+  year:string;
+  major:string;
+  bio:string;
   image: string;
 }
 
@@ -73,7 +80,7 @@ export interface IFetchEventsDataResult {
 export interface IEventData {
   "event-name": string;
   bio: string;
-  status: string;
+  status?: string;
   "start-date": {
     month: number;
     day: number;
@@ -145,8 +152,13 @@ export enum FacultyListsEnum {
 }
 //Notifications
 export interface IFetchTeamNotification {
-  teamNames:string[]
+  teamNames: string[];
 }
 export interface IFetchFriendNotification {
-  request:IUser[];
+  request: IUser[];
+}
+//Search
+export interface ISearchGeneral {
+  users: IUser[];
+  teams: ITeam[];
 }

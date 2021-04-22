@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-import { Heading } from "@dumbComponents/UI/index";
+import { Button, Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
 
@@ -12,15 +12,29 @@ import {
   Biography,
   EducationLists,
   InterestList,
+  InterestLists,
   ProfileInfo,
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
-
-const ProfilePage: React.FC = () => {
+import { IFetchFriendNotification, IUser } from "@src/models";
+import { UserDataContext } from "@src/hooks/UserDataContext";
+import { fetchFriendNotificationAPI } from "@src/api";
+interface Props {
+  location: {
+    state: {
+      users: IUser;
+    };
+  };
+}
+const ProfilePage: React.FC<Props> = (props) => {
+  const [isMyProfile, setIsMyProfile] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+  const [isFriend, setIsFriend] = useState(false);
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
-
+  const { userData, setUserData } = useContext(UserDataContext);
+  console.log(userData);
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
@@ -34,9 +48,14 @@ const ProfilePage: React.FC = () => {
     setClickEditOption(false);
     setClickEdit(true);
   };
+  if (props.location.state.users.id == userData.id) {
+    setIsMyProfile(true);
+  }
 
   // Is it my profile ?
-  const isMyProfile = true;
+  const selectBusinessInterestHandler = () => {
+    console.log("clicked");
+  };
 
   let profilePrompt = null;
 
@@ -56,19 +75,31 @@ const ProfilePage: React.FC = () => {
 
         <div className={classes.info}>
           <div className={classes.profileInfo}>
-            <ProfileInfo name="Rathapat Benjasilarak" role="Developer" />
+            <ProfileInfo
+              name={props.location.state.users.name}
+              role={props.location.state.users.major}
+            />
           </div>
           <div
             className={classes.editProfile}
             onClick={EditProfileClickedHandler}
           >
-            {isMyProfile ? <Edit /> : <div />}
+            {isMyProfile ? (
+              <Edit />
+            ) : (
+              <div className={classes.buttonDiv}>
+                <div className={classes.buttonTextDiv}>Connect</div>
+              </div>
+            )}
           </div>
         </div>
 
         <div className={classes.about}>
           <div className={classes.bio}>
-            <Biography nickname="home" detail="I love coding and Korean girl" />
+            <Biography
+              nickname={props.location.state.users.major}
+              detail={props.location.state.users.bio}
+            />
           </div>
           <div className={classes.editAbout} onClick={EditAboutClickedHandler}>
             {isMyProfile ? <Edit /> : <div />}

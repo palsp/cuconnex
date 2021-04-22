@@ -28,7 +28,7 @@ import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamP
 import { IUser } from "@models/index";
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
@@ -38,6 +38,9 @@ const App: React.FC = () => {
       Design: [],
     },
     faculty: "",
+    year:"",
+    major:"",
+    bio:"",
     image: "",
   });
 

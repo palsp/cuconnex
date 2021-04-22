@@ -21,23 +21,23 @@ import {
 
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
-  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
+  const userData: AxiosResponse<IUser> = await axios.get("/api/current-user");
 
   return userData;
 };
 const fetchUserDataAPINoAxiosResponse = async (): Promise<IFetchUserData> => {
-  const userData: IFetchUserData = await axios.get("/api/users");
+  const userData: IFetchUserData = await axios.get("/api/current-user");
 
   return userData;
 };
 
 const testFetchUserData = async () => {
-  const userData = await axios.get("/api/users");
+  const userData = await axios.get("/api/current-user");
   return userData;
 };
 
 const testIUSER = async (): Promise<AxiosResponse<IUser>> => {
-  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
+  const userData: AxiosResponse<IUser> = await axios.get("/api/current-user");
   return userData;
 };
 
