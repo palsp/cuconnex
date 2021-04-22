@@ -47,11 +47,20 @@ const facultyArray: string[] = Object.values(FacultyListsEnum);
 //   "Agricultural Resources",
 // ];
 
+interface Props {
+  location: {
+    state: {
+      year: number;
+      faculty: FacultyListsEnum;
+    };
+  };
+}
+
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
 });
 
-const PersonalInfoPage: React.FC = () => {
+const PersonalInfoPage: React.FC<Props> = (props) => {
   const [redirect, setRedirect] = useState<JSX.Element>();
   const [imagePreview, setImagePreview] = useState<string>("");
   const [imageRaw, setImageRaw] = useState<File>();
