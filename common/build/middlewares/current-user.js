@@ -56,7 +56,6 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
             catch (err) { }
         }
         authHeader = req.get('Authorization');
-        console.log('found', authHeader);
         if (authHeader) {
             token = authHeader.split(" ")[1];
             try {
@@ -66,11 +65,6 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
             catch (err) {
                 console.log('bearer decode error', err.message);
             }
-        }
-        else {
-            return [2 /*return*/, res.status(401).send({
-                    errors: [{ message: "Token not found" }]
-                })];
         }
         next();
         return [2 /*return*/];

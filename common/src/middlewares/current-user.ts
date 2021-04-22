@@ -27,7 +27,6 @@ export const currentUser = async (req: Request, res: Response, next: NextFunctio
 
   // TODO: for development purpose only
   const authHeader = req.get('Authorization');
-  console.log('found', authHeader);
   if (authHeader) {
     const token = authHeader.split(" ")[1];
     try {
@@ -36,10 +35,6 @@ export const currentUser = async (req: Request, res: Response, next: NextFunctio
     } catch (err) {
       console.log('bearer decode error', err.message);
     }
-  } else {
-    return res.status(401).send({
-      errors: [{ message: "Token not found" }]
-    })
   }
 
 
