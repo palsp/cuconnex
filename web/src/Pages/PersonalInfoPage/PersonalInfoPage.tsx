@@ -106,7 +106,7 @@ const PersonalInfoPage: React.FC = () => {
                           size="big"
                           data-test="personal-info-personalImage"
                           PicUrl={imagePreview}
-                          uploadedProfile={true}
+                          previewImage={true}
                         />
                       </>
                     ) : (

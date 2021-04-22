@@ -28,7 +28,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject",
-    "test:ci": "CI=true npm run test"
+    "test:ci": "CI=true npm run test",
+    "precommit": "pretty-quick --staged"
   },
   "eslintConfig": {
     "extends": [
@@ -68,8 +69,11 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint": "^7.23.0",
     "eslint-plugin-react": "^7.23.1",
+    "husky": "^6.0.0",
     "jest-enzyme": "^7.1.2",
     "moxios": "^0.4.0",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "ts-jest": "^26.5.3"
   },
   "jest": {

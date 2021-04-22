@@ -133,6 +133,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       faculty: faculty,
       image: profileImage,
     };
+    console.log("upload userdata...", userData);
     try {
       const result = await createUserDataAPI(userData);
       console.log("POST to /api/users is successful", result);
