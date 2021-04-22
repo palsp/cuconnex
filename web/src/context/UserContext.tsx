@@ -30,7 +30,6 @@ export const UserContextProvider = (props: any) => {
       setUserData(userData.data);
     } catch (e) {
       throw new Error("fetchDataHandler error");
-      console.log("threw error", e);
     }
   };
 
