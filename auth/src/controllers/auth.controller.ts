@@ -39,7 +39,9 @@ export const signUp = async (req: Request, res: Response) => {
         jwt: userJwt
     };
 
-    res.status(201).send(user);
+
+
+    res.status(201).send({ user, token: userJwt });
 
 };
 
@@ -66,7 +68,7 @@ export const signIn = async (req: Request, res: Response) => {
         jwt: userJwt,
     };
 
-    res.status(200).send({ email: existingUser.email, id: existingUser.id });
+    res.status(200).send({ email: existingUser.email, id: existingUser.id, token: userJwt });
 };
 
 

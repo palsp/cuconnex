@@ -42,7 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.currentUser = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var decodedPayload;
+    var decodedPayload, authHeader, token, decodedPayload;
     var _a;
     return __generator(this, function (_b) {
         if (!((_a = req.session) === null || _a === void 0 ? void 0 : _a.jwt)) {
@@ -53,6 +53,16 @@ var currentUser = function (req, res, next) { return __awaiter(void 0, void 0, v
             req.currentUser = decodedPayload;
         }
         catch (err) { }
+        authHeader = req.get('Authorization');
+        if (authHeader) {
+            token = authHeader.split(" ")[1];
+            try {
+                decodedPayload = jsonwebtoken_1.default.verify(token, process.env.JWT_KEY);
+                req.currentUser = decodedPayload;
+            }
+            catch (err) {
+            }
+        }
         next();
         return [2 /*return*/];
     });

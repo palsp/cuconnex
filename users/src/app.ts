@@ -22,8 +22,6 @@ app.use(
   session({
     signed: false,
     secure: false,
-    // httpOnly : true,
-    domain: ""
   })
 );
 /*TODO: uncomment these three lines after development */

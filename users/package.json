@@ -26,7 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@cuconnex/common": "^1.1.12",
+    "@cuconnex/common": "^1.1.14",
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "del-cli": "^3.0.1",
