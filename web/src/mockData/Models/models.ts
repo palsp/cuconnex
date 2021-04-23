@@ -87,7 +87,7 @@ export interface UsersData {
     Design: string[];
   };
   faculty: string;
-  profilePic: string;
+  image: string;
 }
 export interface InterestData {
   Business:string[],
