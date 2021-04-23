@@ -16,6 +16,8 @@ import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 
+import { IUserResponse } from '../interfaces';
+
 // All attributes in user model
 interface UserAttrs {
   id: string;
@@ -26,9 +28,10 @@ interface UserAttrs {
   lookingForTeam: boolean;
   interests?: Interest[];
   friends?: User[];
-  year?: string,
-  major?: string,
-  bio?: string,
+  year: string,
+  major: string,
+  bio: string,
+  connections?: Connection;
 }
 
 interface UserCreationAttrs {
@@ -43,33 +46,20 @@ interface UserCreationAttrs {
 
 }
 
-interface IUserResponse {
-  id: string;
-  name: string;
-  // faculty: Faculty;
-  faculty: string;
-  image: string;
-  lookingForTeam: boolean;
-  interests?: string[];
-  year?: string,
-  major?: string,
-  bio?: string,
-}
-
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
 
-  public faculty?: string;
-  public image?: string;
+  public faculty!: string;
+  public image!: string;
   public lookingForTeam: boolean = true;
-  public year?: string;
-  public major?: string;
-  public bio?: string;
+  public year!: string;
+  public major!: string;
+  public bio!: string;
 
   public interests?: Interest[];
-  public friends?: User[];
+  public connections?: Connection;
 
 
 
@@ -150,6 +140,15 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         console.log(err);
       }
     }
+  }
+
+  /**
+   * A method to retreive user from database which include user's interest
+   * @param userId 
+   * @returns 
+   */
+  public static async fetchUser(userId: string): Promise<User | null> {
+    return User.findOne({ where: { id: userId }, include: 'interests' });
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -282,35 +281,17 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     });
   }
 
-  /**
-   * return response format of user model
-   */
-  public async serializer(): Promise<IUserResponse> {
-    const interests = await this.getInterests();
-    const interestResp = []
-    for (let interest of interests) {
-      interestResp.push(interest.serializer());
-    }
 
-    return {
-      id: this.id,
-      image: this.image || "",
-      name: this.name,
-      faculty: this.faculty || "",
-      year: this.year || "",
-      major: this.major || "",
-      bio: this.bio || "",
-      lookingForTeam: this.lookingForTeam,
-      interests: interestResp
-    }
-  }
 
   public toJSON(): IUserResponse {
     const values = { ...this.get() }
-
     let interests: string[] = [];
     if (this.interests) {
       interests = this.interests.map(interest => interest.serializer());
+    }
+
+    if (this.connections) {
+      delete this.connections
     }
 
     return { ...values, interests }

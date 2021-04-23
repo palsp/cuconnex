@@ -70,7 +70,6 @@ describe('get current user', () => {
       .expect(200);
 
 
-    console.log('user response', res)
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
     expect(res.interests).not.toBeNull();

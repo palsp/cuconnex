@@ -1,5 +1,6 @@
 import { FriendStatus } from '@cuconnex/common';
 import { Request, Response } from 'express';
+import { IAcceptFriendRequest, IGetAllConnectionResponse, IGetAllFreindRequest } from '../interfaces';
 import { User } from '../models'
 
 
@@ -10,17 +11,22 @@ import { User } from '../models'
  */
 export const getAllConnection = async (req: Request, res: Response): Promise<void> => {
     const connections = await req.user!.getConnection()
-    const resp = []
+    const helper = []
+
     for (let conn of connections) {
         const status = await req.user!.findRelation(conn.id);
         // skip if there is not establish connection
         if (status !== FriendStatus.Accept) {
             continue;
         }
-        const userSerielizer = await conn.serializer()
-        resp.push(userSerielizer);
+        // const userSerielizer = await conn.serializer()
+        conn.interests = await conn.getInterests();
+        helper.push(conn);
     }
-    res.status(200).send({ connections: resp })
+
+    const response: IGetAllConnectionResponse = { connections: helper.map(ele => ele.toJSON()) };
+
+    res.status(200).send(response)
 }
 
 /**
@@ -28,12 +34,17 @@ export const getAllConnection = async (req: Request, res: Response): Promise<voi
  */
 export const getAllFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const requests = await req.user!.getRequestConnection();
-    const resp = [];
+    const helper = [];
     for (let request of requests) {
-        const userSerielizer = await request.serializer()
-        resp.push(userSerielizer);
+        request.interests = await request.getInterests()
+        helper.push(request);
     }
-    res.status(200).send({ requests: resp })
+
+    const response: IGetAllFreindRequest = {
+        requests: helper.map(ele => ele.toJSON())
+    }
+
+    res.status(200).send(response)
 }
 
 
@@ -61,5 +72,8 @@ export const acceptFriendRequest = async (req: Request, res: Response): Promise<
 
     const status = await req.user!.acceptConnection(sendUser.id, req.body.accepted);
 
-    res.status(201).send({ status });
+    const response: IAcceptFriendRequest = {
+        status,
+    }
+    res.status(201).send(response);
 }

@@ -40,7 +40,7 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
   }
 
   try {
-    const user = await User.findOne({ where: { id: req.currentUser.id }, include: 'interests' });
+    const user = await User.fetchUser(req.currentUser.id)
     req.user = user;
   } catch (err) { }
 

@@ -40,7 +40,6 @@ describe('The /api/upload', () => {
             .attach('image', 'src/routes/__test__/test_images/testImage2.png')
             .expect(201)
             .then(response => {
-                console.log(response.status);
                 expect(response.body.image).not.toEqual("")
 
                 deleteFile(response.body.image)
