@@ -2,7 +2,7 @@ import { validateRequest } from '@cuconnex/common';
 import express from 'express'
 import * as connectionController from '../controllers/connection.controller';
 import { requireUser } from '../middlewares';
-import { addFreindResultValidator, addFriendValidator } from '../utils/validators';
+import { addFreindResultValidator, addFriendValidator } from '../utils/user.validators';
 
 
 const router = express.Router();

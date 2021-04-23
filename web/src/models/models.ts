@@ -71,7 +71,11 @@ export interface ICreateUserData {
     Design: string[];
   };
   faculty: string;
+  bio: string;
+  year: string;
   image: File;
+  major?: string;
+
 }
 //events
 export interface IFetchEventsData {
@@ -153,6 +157,7 @@ export enum FacultyListsEnum {
   IntegratedInnovation = "Integrated Innovation", // วัฒนกรรมบูรณาการ
   AgriculturalResources = "Agricultural Resources",
 }
+
 //Notifications
 export interface IFetchTeamNotification {
   teamNames: string[];
@@ -165,3 +170,25 @@ export interface ISearchGeneral {
   users: IUser[];
   teams: ITeam[];
 }
+
+const containerVariants = {
+  hidden: {
+    opacity: 0.85,
+    x: window.innerWidth,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  exit: {
+    opacity: 0.8,
+    transition: {
+      duration: 0.2
+    },
+  },
+};
+
+export default containerVariants;

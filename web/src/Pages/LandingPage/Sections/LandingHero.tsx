@@ -1,5 +1,5 @@
 import classes from "./LandingHero.module.css";
-import React from "react";
+import React, { useState } from "react";
 import "react-toggle/style.css";
 import {
   FindteamLogo,
@@ -10,6 +10,10 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
+
+import { motion, useSpring } from "framer-motion";
+import { useNavigation } from "framer";
+
 import { IUser } from "@models/index";
 
 interface Props {
@@ -50,7 +54,7 @@ const LandingHero: React.FC<Props> = (props) => {
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
           <Link to="/profile">
-            <ProfilePic size="small" />
+            <ProfilePic size="small" PicUrl={props.userData.image} />
           </Link>
         </div>
         <div className={classes.subupperpartDiv}>

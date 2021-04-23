@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import { UserContext } from "@context/UserContext";
 import {
   Heading,
   Subtitle,
@@ -21,6 +21,8 @@ interface Props {
     state: {
       name: string;
       faculty: string;
+      bio: string;
+      year: string;
       profilePic: File;
     };
   };
@@ -39,22 +41,13 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Business: [],
     Design: [],
   });
-
+  const { fetchUserDataHandler } = useContext(UserContext);
   let name = "";
   let faculty = "";
+  let bio = "";
+  let year = "";
   let profileImage: File;
   let saveButton = null;
-
-  const emptyInterests: InterestListsArray = {
-    Technology: [],
-    Business: [],
-    Design: [],
-  };
-
-  // const [editInterest, setEditInterest] = useState(false);
-  // const setEditInterestHandler = () => {
-  //   setEditInterest(true);
-  // };
 
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
@@ -99,64 +92,31 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  //These are Nat's test
-  //   useEffect(() => {
-  //     console.log("Fetching data GET /api/users");
-  //     const fetchUserData = async () => {
-  //       // const fetchInterestArray = { Business: [] };
-  //       const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
-
-  //       if (fetchInterestArray.Business.length !== 0) {
-  //         setEditInterest(true);
-  //       }
-
-  //       // try {
-  //       //   const userData = await axios.get("/api/users");
-  //       //   console.log("Successfully GET userData", userData);
-  //       // } catch (e) {
-  //       //   console.log("Errors FETCHING userData", e);
-  //       //   console.log("Am I Authen?", isAuthenticated);
-  //       // }
-  //     };
-  //     fetchUserData();
-  //   }, []);
-
   const setUserData = async () => {
     if (props.location.state) {
       name = props.location.state.name;
       profileImage = props.location.state.profilePic;
       faculty = props.location.state.faculty;
+      bio = props.location.state.bio;
+      year = props.location.state.year;
     }
     const userData: ICreateUserData = {
       name: name,
       interests: interestArray,
       faculty: faculty,
+      bio: bio,
+      year: year,
       image: profileImage,
     };
     console.log("upload userdata...", userData);
     try {
       const result = await createUserDataAPI(userData);
-      console.log("POST to /api/users is successful", result);
-    } catch (e) {
-      console.log("SelectInterestPage Error setting users data", e);
-    }
-  };
-
-  const setEmptyInterest = async () => {
-    if (props.location.state) {
-      name = props.location.state.name;
-      faculty = props.location.state.faculty;
-      profileImage = props.location.state.profilePic;
-    }
-    const userData: ICreateUserData = {
-      name: name,
-      interests: emptyInterests,
-      faculty: faculty,
-      image: profileImage,
-    };
-    try {
-      const result = await createUserDataAPI(userData);
-      console.log("POST to /api/users is successful", result);
+      console.log("POST createUserData to /api/users is successful", result);
+      try {
+        await fetchUserDataHandler();
+      } catch (e) {
+        console.log("POST signup success but failed GET fetching");
+      }
     } catch (e) {
       console.log("SelectInterestPage Error setting users data", e);
     }
@@ -221,12 +181,9 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           </div>
         </Link>
         <DotMorePage data-test="dot-icon" amount={3} />
-        <div onClick={setEmptyInterest}>
+        <div>
           <Link to="/success">
-            <div className={classes.footerIcon}>
-              <Heading size="small" value="Skip" />
-              <ArrowRight data-test="arrow-right" />
-            </div>
+            <div className={classes.emptyDiv}></div>
           </Link>
         </div>
       </div>

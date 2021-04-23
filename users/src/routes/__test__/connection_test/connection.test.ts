@@ -1,7 +1,7 @@
 import { FriendStatus, Technology } from '@cuconnex/common';
 import request from 'supertest';
-import { app } from '../../app';
-import { Interest, User } from '../../models';
+import { app } from '../../../app';
+import { Interest, User } from '../../../models';
 
 
 
@@ -37,7 +37,7 @@ describe('Get Connections', () => {
             .get("/api/users/friends")
             .set('Cookie', global.signin(user1.id))
             .send({})
-        // .expect(200);
+            .expect(200);
 
         expect(body.connections).toHaveLength(0)
 
@@ -82,7 +82,7 @@ describe('Get Connections', () => {
             .get("/api/users/friends")
             .set('Cookie', global.signin(user1.id))
             .send({})
-        // .expect(200);
+            .expect(200);
 
         expect(body.connections).toHaveLength(1)
         expect(body.connections[0].interests).toBeDefined()

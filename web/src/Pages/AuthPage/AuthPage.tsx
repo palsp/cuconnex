@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 import { Redirect } from "react-router";
 
 import {
@@ -133,11 +134,13 @@ const AuthPage: React.FC = () => {
         <div className={classes.logoDiv}>
           <AppLogo data-test="auth-page-logo" />
         </div>
-        <div
+        <motion.div
+          // animate={{ rotate: 360 }}
+          // transition={{ delay: 1, duration: 500 }}
           className={classes.circle_overlay}
           style={{ bottom: -(window.innerHeight * 0.33) }}
           data-test="auth-page-halfcircleoverlay"
-        ></div>
+        ></motion.div>
         <div className={classes.Button}>
           <Button
             data-test="auth-page-login-button"
@@ -161,8 +164,19 @@ const AuthPage: React.FC = () => {
 
   return (
     <Background data-test="auth-page-background">
-      <div className={classes.content}>{authPrompt}</div>
-      {routeRedirect}
+      <motion.div
+        variants={containerVariants}
+        exit={{
+          opacity: 0.5,
+          transition: {
+            duration: 0.2,
+          },
+        }}
+        className={classes.content}
+      >
+        {authPrompt}
+        {routeRedirect}
+      </motion.div>
     </Background>
   );
 };

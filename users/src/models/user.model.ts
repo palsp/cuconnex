@@ -26,6 +26,9 @@ interface UserAttrs {
   lookingForTeam: boolean;
   interests?: Interest[];
   friends?: User[];
+  year?: string,
+  major?: string,
+  bio?: string,
 }
 
 interface UserCreationAttrs {
@@ -34,6 +37,10 @@ interface UserCreationAttrs {
   faculty?: string;
   image?: string;
   lookingForTeam?: boolean;
+  year?: string,
+  major?: string,
+  bio?: string,
+
 }
 
 interface IUserResponse {
@@ -44,6 +51,9 @@ interface IUserResponse {
   image: string;
   lookingForTeam: boolean;
   interests?: string[];
+  year?: string,
+  major?: string,
+  bio?: string,
 }
 
 
@@ -54,6 +64,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public faculty?: string;
   public image?: string;
   public lookingForTeam: boolean = true;
+  public year?: string;
+  public major?: string;
+  public bio?: string;
 
   public interests?: Interest[];
   public friends?: User[];
@@ -79,6 +92,15 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
           allowNull: false,
         },
         faculty: {
+          type: DataTypes.STRING(255),
+        },
+        year: {
+          type: DataTypes.STRING(1),
+        },
+        major: {
+          type: DataTypes.STRING(255),
+        },
+        bio: {
           type: DataTypes.STRING(255),
         },
         image: {
@@ -138,6 +160,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns {FriendStatus | null} friend.status - The friend status between the two users, if the relationship exists
    */
   public async findRelation(userId: string): Promise<FriendStatus | null> {
+    // TODO: parameter need to be change from string to User
     if (this.id === userId) return null;
     const constraint = {
       [Op.or]: [
@@ -269,6 +292,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       image: this.image || "",
       name: this.name,
       faculty: this.faculty || "",
+      year: this.year || "",
+      major: this.major || "",
+      bio: this.bio || "",
       lookingForTeam: this.lookingForTeam,
       interests: interestResp
     }

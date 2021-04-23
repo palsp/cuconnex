@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build Docker Image 
-        run: cd query && yarn build && docker build -t palsp/connex-query . 
+        run: cd query && yarn add del-cli typescript && yarn build && docker build -t palsp/connex-query . 
       - name: Login Docker 
         run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         env:

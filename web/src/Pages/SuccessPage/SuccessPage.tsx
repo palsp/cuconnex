@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Check } from "@icons/index";
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 import {
   AppLogo,
@@ -15,7 +17,13 @@ import classes from "./SuccessPage.module.css";
 
 const SuccessPage: React.FC = () => {
   return (
-    <div className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.main}
+    >
       <div className={classes.container}>
         <div className={classes.background}>
           <Background data-test="auth-page-background">
@@ -54,7 +62,7 @@ const SuccessPage: React.FC = () => {
           </Background>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
