@@ -68,7 +68,11 @@ export interface ICreateUserData {
     Design: string[];
   };
   faculty: string;
+  bio: string;
+  year: string;
   image: File;
+  major?: string;
+
 }
 //events
 export interface IFetchEventsData {

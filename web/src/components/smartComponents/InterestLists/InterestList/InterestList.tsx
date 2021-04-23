@@ -83,7 +83,7 @@ const InterestList: React.FC<Props> = (props) => {
       <div onClick={interestClickHandler} className={btnCSS.join(" ")}>
         <div className={classes.icon}>{icon}</div>
         <div className={classes.text}>
-          <p data-test="interest-list-props-value">{props.value + " "}</p>
+          <p className={classes.interestP} data-test="interest-list-props-value">{props.value + " "}</p>
         </div>
       </div>
     </div>

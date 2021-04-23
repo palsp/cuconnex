@@ -26,7 +26,7 @@ import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamP
 
 const App: React.FC = () => {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [heightStyle, setHeightStyle] = useState({});
 
   useEffect(() => {
