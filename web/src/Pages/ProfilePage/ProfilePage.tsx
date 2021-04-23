@@ -49,8 +49,10 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEditOption(false);
     setClickEdit(true);
   };
-  const isMyProfile = props.location.state.users.id == userData.id;
-
+  let isMyProfile = false;
+  if (props.location) {
+    isMyProfile = props.location.state.users.id === userData.id;
+  }
   // Is it my profile ?
   const selectBusinessInterestHandler = () => {
     console.log("clicked");
