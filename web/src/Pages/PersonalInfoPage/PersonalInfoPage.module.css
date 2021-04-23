@@ -22,7 +22,7 @@
 
 .inputFieldDiv {
   width: 100%;
-  margin: 2vh auto;
+  margin: 1vh auto;
 }
 
 .selectDiv {
@@ -74,14 +74,13 @@
 }
 
 .profilePicDiv {
-  margin: 5vh;
+  margin: 4vh;
 }
 .idYearFaculty {
   text-align: start;
-  max-width: 90vw;
+  max-width: 80vw;
   height: auto;
   overflow: visible;
-  white-space: pre;
   font-weight: 400;
   font-style: normal;
   font-family: "nunito", serif;
