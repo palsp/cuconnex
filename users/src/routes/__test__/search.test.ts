@@ -239,8 +239,11 @@ describe('General Search', () => {
       .send({})
       .expect(200);
 
+
     expect(body.users).toHaveLength(3);
     expect(body.team).toHaveLength(2);
+    expect(body.users[0].interests).toBeDefined();
   });
+
 
 });

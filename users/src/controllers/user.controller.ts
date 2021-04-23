@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, currentUser } from '@cuconnex/common';
-import { User, Team, Interest, UserInterest } from '../models'
+import { User, Team, Interest } from '../models'
 import { deleteFile } from '../utils/file';
+import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
 
 /**
  * get current user profile
@@ -15,10 +16,8 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
         return res.redirect('/personalInformation');
     }
 
-
-    // const interests = await req.user.getInterests({ attributes: ['description'] });
-    const response = await req.user.serializer();
-    res.status(200).send({ ...response });
+    const response: IUserResponse = req.user.toJSON();
+    res.status(200).send(response);
 };
 
 /**
@@ -28,7 +27,8 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
  * @returns 
  */
 export const viewUserProfile = async (req: Request, res: Response): Promise<void> => {
-    const user = await User.findByPk(req.params.userId);
+
+    const user = await User.fetchUser(req.params.userId);
 
     if (!user) {
         throw new NotFoundError();
@@ -37,8 +37,11 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
 
     const status = await user.findRelation(req.user!.id);
 
-    const response = await user.serializer();
-    res.status(200).send({ ...response, status });
+    const response: IViewProfileResponse = {
+        ...user.toJSON(),
+        status,
+    }
+    res.status(200).send(response);
 }
 
 /**
@@ -93,7 +96,12 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         throw new BadRequestError('Create User Failed');
     }
 
-    res.status(201).send({ id: user!.id, interests, image: user!.image });
+    const response: IUserResponse = {
+        ...user!.toJSON(),
+        interests
+    }
+
+    res.status(201).send(response);
 }
 
 export const search = async (req: Request, res: Response) => {
@@ -115,7 +123,7 @@ export const search = async (req: Request, res: Response) => {
     let users: User[];
     let team: Team[];
     try {
-        users = await User.findAll({ where: { [Op.or]: userConstraint } });
+        users = await User.findAll({ where: { [Op.or]: userConstraint }, include: 'interests' });
         team = await Team.findAll({ where: teamConstraint });
     } catch (err) {
         console.log(err);
@@ -139,7 +147,8 @@ export const findRelation = async (req: Request, res: Response) => {
 
     const relation = await req.user!.findRelation(req.params.userId)
 
-    res.status(200).send({
+    const response: IFindRelationResponse = {
         status: relation
-    })
+    }
+    res.status(200).send(response);
 }
