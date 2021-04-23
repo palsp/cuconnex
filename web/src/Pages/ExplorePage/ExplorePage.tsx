@@ -31,7 +31,7 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="People" />
       </div>
-      <PeopleLists peoplelist={mockPeopleLists} />
+      <PeopleLists peoplelist={peopleLists} />
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
@@ -59,23 +59,23 @@ const ExplorePage = () => {
     <motion.div variants={containerVariants} exit="exit">
       <Background>
         {/* Background has display: flex so this div is for that */}
-
         <div>
-          <div className={classes.exploreHeader}>
-            <Link to="/landing">
-              <ArrowLeft />
-            </Link>
-            <SearchBar
-              setHasSearch={setHasSearch}
-              setNoSearchResult={setNoSearchResult}
-              setPeopleLists={setPeopleLists}
-              setTeamLists={setTeamLists}
-              setEventLists={setEventLists}
-              value="Explore"
-            />
-          </div>
-          {console.log("This is peopleLists", peopleLists)}
-          {console.log("This is teamLists", teamLists)}
+        <div className={classes.exploreHeader}>
+          <Link to="/landing">
+            <ArrowLeft />
+          </Link>
+          <SearchBar
+            setHasSearch={setHasSearch}
+            setNoSearchResult={setNoSearchResult}
+            setPeopleLists={setPeopleLists}
+            setTeamLists={setTeamLists}
+            setEventLists={setEventLists}
+            value="Explore"
+          />
+        </div>
+        {console.log("This is peopleLists", peopleLists)}
+        {console.log("This is teamLists", teamLists)}
+        {console.log("This is eventLists", eventLists)}
 
           {explorePage}
         </div>

@@ -8,14 +8,14 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import { UserDataContext } from "@hooks/UserDataContext";
 import containerVariants from "@src/models/models";
 import { motion } from "framer-motion";
+import { UserContext } from "@context/UserContext";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
   const [hasTeam, setHasTeam] = useState<boolean>(true);
-  const { userData } = useContext(UserDataContext);
+  const { userData } = useContext(UserContext);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };

@@ -2,13 +2,10 @@ import React from "react";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./PeopleList.module.css";
+import { IUser } from "@src/models";
 
 interface Props {
-  people: {
-    name: string;
-    profilePic: string;
-    interest: string;
-  };
+  people: IUser;
 }
 
 const PeopleList: React.FC<Props> = (props) => {
@@ -21,7 +18,7 @@ const PeopleList: React.FC<Props> = (props) => {
         <Subtitle value={props.people.name} color="black" size="small-medium" />
       </div>
       <div className={classes.divInterest}>
-        <Subtitle value={props.people.interest} color="pink" />
+        <Subtitle value={props.people.faculty} color="pink" />
       </div>
     </div>
   );

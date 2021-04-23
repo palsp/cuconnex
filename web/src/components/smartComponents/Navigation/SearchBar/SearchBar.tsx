@@ -6,7 +6,7 @@ import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
 import useDebounce from "@hooks/useDebounce";
 import { searchUserTeamEvent } from "@api/index";
-import { IEventData, ITeam, IUser } from "@src/models";
+import { IEventData,  ITeam, IUser } from "@src/models";
 
 interface Props {
   value: string;
@@ -41,14 +41,7 @@ const SearchBar: React.FC<Props> = (props) => {
       props.setPeopleLists(result.data.users);
     }
     if (props.setTeamLists) {
-      props.setTeamLists([
-        {
-          name: "test", // team name
-          creatorId: "69",
-          description: "testTeam",
-          lookingForMembers: true,
-        },
-      ]);
+      props.setTeamLists(result.data.teams);
     }
     if (props.setEventLists) {
       props.setEventLists(result.data.events);
@@ -62,7 +55,6 @@ const SearchBar: React.FC<Props> = (props) => {
   //   }, 1000);
   //   return term;
   // };
-
   useEffect(() => {
     if (debouncedTerm !== "") {
       searchAPIHandler(debouncedTerm);

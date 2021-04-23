@@ -68,6 +68,9 @@
   outline: inherit;
 }
 
+.emptyDiv {
+  width: 21vw;
+}
 /*
 
 @media only screen and (min-width: 415px) {                      /* tablet

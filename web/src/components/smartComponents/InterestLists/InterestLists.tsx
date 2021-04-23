@@ -32,7 +32,7 @@ const InterestLists: React.FC<Props> = (props) => {
     case "BUSINESS":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          {props.data.business.map((interest) => {
+          {props.data.Business.map((interest) => {
             return (
               <InterestList
                 data-test="interest-list-business"
@@ -51,7 +51,7 @@ const InterestLists: React.FC<Props> = (props) => {
     case "TECHNOLOGY":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          {props.data.technology.map((interest) => {
+          {props.data.Technology.map((interest) => {
             return (
               <InterestList
                 data-test="interest-list-technology"
@@ -69,7 +69,7 @@ const InterestLists: React.FC<Props> = (props) => {
     case "DESIGN":
       InterestLists = (
         <div className={classes.interestLists} data-test="interest-lists">
-          {props.data.design.map((interest) => {
+          {props.data.Design.map((interest) => {
             return (
               <InterestList
                 data-test="interest-list-design"

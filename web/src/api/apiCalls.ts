@@ -21,23 +21,10 @@ import {
 
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
-  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
+  const userData: AxiosResponse<IUser> = await axios.get(
+    "/api/users/current-user"
+  );
 
-  return userData;
-};
-const fetchUserDataAPINoAxiosResponse = async (): Promise<IFetchUserData> => {
-  const userData: IFetchUserData = await axios.get("/api/users");
-
-  return userData;
-};
-
-const testFetchUserData = async () => {
-  const userData = await axios.get("/api/users");
-  return userData;
-};
-
-const testIUSER = async (): Promise<AxiosResponse<IUser>> => {
-  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
   return userData;
 };
 
@@ -158,7 +145,6 @@ const fetchFriendsDataAPI = async (): Promise<
 
 export {
   fetchUserDataAPI,
-  fetchUserDataAPINoAxiosResponse,
   userLogoutAPI,
   userSignupAPI,
   userSigninAPI,
@@ -168,8 +154,6 @@ export {
   createEventsAPI,
   createTeamAPI,
   searchUserTeamEvent,
-  testFetchUserData,
-  testIUSER,
   fetchTeamNotificationAPI,
   fetchFriendNotificationAPI,
   fetchFriendsDataAPI,
