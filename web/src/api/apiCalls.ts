@@ -19,7 +19,6 @@ import {
   IFetchFriendsData,
 } from "@src/models";
 
-
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
   const userData: AxiosResponse<IUser> = await axios.get(
@@ -98,6 +97,8 @@ const createUserDataAPI = async (
   formData.append("interests", JSON.stringify(createUserData.interests));
   formData.append("faculty", createUserData.faculty);
   formData.append("image", createUserData.image);
+  formData.append("bio", createUserData.bio);
+  formData.append("year", createUserData.year);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",

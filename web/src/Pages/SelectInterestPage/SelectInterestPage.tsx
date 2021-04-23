@@ -111,11 +111,11 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     console.log("upload userdata...", userData);
     try {
       const result = await createUserDataAPI(userData);
-      console.log("POST to /api/users is successful", result);
+      console.log("POST createUserData to /api/users is successful", result);
       try {
         await fetchUserDataHandler();
       } catch (e) {
-        console.log("POST signin success but failed GET fetching");
+        console.log("POST signup success but failed GET fetching");
       }
     } catch (e) {
       console.log("SelectInterestPage Error setting users data", e);
