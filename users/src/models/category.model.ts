@@ -46,6 +46,7 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
           type: DataTypes.ENUM,
           values: Object.keys(InterestDescription),
           primaryKey: true,
+          unique: true,
         },
       },
       {
