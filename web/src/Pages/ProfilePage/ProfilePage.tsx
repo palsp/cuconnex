@@ -17,9 +17,9 @@ import {
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
-import { IFetchFriendNotification, IUser } from "@src/models";
+import { IConnected, IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
-import { fetchFriendNotificationAPI } from "@src/api";
+import { fetchRelationAPI } from "@src/api";
 interface Props {
   location: {
     state: {
@@ -28,7 +28,7 @@ interface Props {
   };
 }
 const ProfilePage: React.FC<Props> = (props) => {
-  const [isAdded, setIsAdded] = useState(false);
+  const [isAdded, setIsAdded] = useState<string>("");
   const [isFriend, setIsFriend] = useState(false);
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
@@ -47,13 +47,16 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEditOption(false);
     setClickEdit(true);
   };
-  const isMyProfile = props.location.state.users.id == userData.id;
-
-  // Is it my profile ?
-  const selectBusinessInterestHandler = () => {
-    console.log("clicked");
+  const fetchRelationHandler = async (searchQuery: string) => {
+    const result = await fetchRelationAPI(searchQuery);
+    console.log(
+      result.data
+    );
+    return result;
   };
-
+  const isMyProfile = props.location.state.users.id==userData.id;
+  const isMyFriend = fetchRelationHandler(userData.id);
+  console.log(isMyFriend);
   let profilePrompt = null;
 
   if (clickEditProfile === false) {

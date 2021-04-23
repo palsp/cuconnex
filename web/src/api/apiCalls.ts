@@ -132,6 +132,15 @@ const fetchFriendNotificationAPI = async (): Promise<
 
   return friendNotificationData;
 };
+const fetchRelationAPI = async (
+  userId: string
+): Promise<AxiosResponse<ISearchUserTeamEventResult>> => {
+  const relationResult: AxiosResponse<ISearchUserTeamEventResult> = await axios.get(
+    `/api/users/relation/${userId}`
+  );
+
+  return relationResult;
+};
 const fetchFriendsDataAPI = async (): Promise<
   AxiosResponse<IFetchFriendsData>
 > => {
@@ -156,4 +165,5 @@ export {
   fetchTeamNotificationAPI,
   fetchFriendNotificationAPI,
   fetchFriendsDataAPI,
+  fetchRelationAPI,
 };

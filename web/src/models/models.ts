@@ -42,6 +42,9 @@ export interface IUserSignin {
   email: string;
   password: string;
 }
+export interface IConnected{
+  status:string;
+}
 
 // User Services
 
