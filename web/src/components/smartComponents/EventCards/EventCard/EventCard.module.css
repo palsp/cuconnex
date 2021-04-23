@@ -8,8 +8,8 @@
   margin-left: 5%;
   display: flex;
   flex-direction: column;
-  width: 333px;
-  height: 250px;
+  width: 88.8vw;
+  height: 30vh;
   margin-top: 3%;
 }
 .eventnameDiv {
@@ -41,9 +41,9 @@
   word-wrap: break-word;
 }
 .eventstatusDiv {
-  margin-top: 5%;
-  width: 105px;
-  height: 16px;
+  margin-top: 1vh;
+  width: 28vw;
+  height: 2vh;
   background-color: var(--main_pink, #f33182);
   border-radius: 5px;
   overflow: visible;
@@ -58,9 +58,9 @@
   margin-bottom: 5%;
 }
 .upcomingDiv {
-  margin-top: 5%;
-  width: 53px;
-  height: 16px;
+  margin-top: 1vh;
+  width:  14.1vw;
+  height: 2vh;
   background-color: var(--green_toggle, #00c300);
   overflow: visible;
   border-radius: 5px;
@@ -76,9 +76,9 @@
   margin-bottom: 5%;
 }
 .closedDiv {
-  margin-top: 5%;
-  width: 46px;
-  height: 16px;
+  margin-top: 1vh;
+  width: 12.3vw;
+  height: 2vh;
   background-color: var(--edit_grey, #767474);
   border-radius: 5px;
   white-space: pre;
@@ -92,8 +92,8 @@
   font-size: 10px;
 }
 .eventPic {
-  width: 312px;
-  height: 158px;
+  width: 83.2vw;
+  height: 19.4vh;
   overflow: visible;
   background-image: url("../../../../assets/tempEvent.png");
   background-size: cover;

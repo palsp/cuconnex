@@ -15,6 +15,8 @@ import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
 import { mockPeopleLists } from "@src/mockData";
 import { IEventData, ITeam, IUser } from "@src/models";
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -54,10 +56,10 @@ const ExplorePage = () => {
     </>
   );
   return (
-    <Background>
-      {/* Background has display: flex so this div is for that */}
-
-      <div>
+    <motion.div variants={containerVariants} exit="exit">
+      <Background>
+        {/* Background has display: flex so this div is for that */}
+        <div>
         <div className={classes.exploreHeader}>
           <Link to="/landing">
             <ArrowLeft />
@@ -75,9 +77,10 @@ const ExplorePage = () => {
         {console.log("This is teamLists", teamLists)}
         {console.log("This is eventLists", eventLists)}
 
-        {explorePage}
-      </div>
-    </Background>
+          {explorePage}
+        </div>
+      </Background>
+    </motion.div>
   );
 };
 

@@ -4,6 +4,8 @@ import { Close } from "@dumbComponents/UI/Icons";
 import { Link } from "react-router-dom";
 import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
 import { mockMemberLists } from "@src/mockData";
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 const CreateTeamPage: React.FC = () => {
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
@@ -29,6 +31,7 @@ const CreateTeamPage: React.FC = () => {
     setClickSelectScope(false);
     setScopeType(3);
   };
+
   const createPrompt =
     clickSelectScope === true ? (
       <div>
@@ -71,7 +74,16 @@ const CreateTeamPage: React.FC = () => {
       <div>Error Occurs : Contact Staff</div>
     );
 
-  return <div>{createPrompt}</div>;
+  return (
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
+      {createPrompt}
+    </motion.div>
+  );
 };
 
 export default CreateTeamPage;
