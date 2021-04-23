@@ -35,7 +35,8 @@ const start = async () => {
     await initializeDB();
 
     // initial data for interest and category 
-    await startDB();
+    // it should be run only once
+    // await startDB();
 
   } catch (err) {
     console.log(err);
