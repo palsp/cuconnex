@@ -34,7 +34,7 @@ const App: React.FC = () => {
   }, []);
 
   const routes = isAuthenticated ? (
-    <>
+    <Switch location={location} key={location.pathname}>
       <Route path="/" exact component={AuthPage} />
       <Route path="/selectinterests" exact component={SelectInterestPage} />
       <Route path="/personalInformation" exact component={PersonalInfoPage} />
@@ -56,12 +56,12 @@ const App: React.FC = () => {
       {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
       {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
       {/* <Route path="/" component={LandingPage} /> */}
-    </>
+    </Switch>
   ) : (
-    <>
+    <Switch location={location} key={location.pathname}>
       <Route path="/" exact component={AuthPage} />
       <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-    </>
+    </Switch>
   );
 
   return (
@@ -69,11 +69,7 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-        <AnimatePresence>
-          <Switch location={location} key={location.pathname}>
-            {routes}
-          </Switch>
-        </AnimatePresence>
+        <AnimatePresence>{routes}</AnimatePresence>
       </AuthenticatedContext.Provider>
     </div>
   );
