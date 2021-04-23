@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
 import { Button, Heading } from "@dumbComponents/UI/index";
+
 import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
 
@@ -17,6 +18,8 @@ import {
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
+import containerVariants from "@src/models/models";
+
 import { IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
 interface Props {
@@ -174,9 +177,15 @@ const ProfilePage: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.main}
+    >
       <div className={classes.container}>{profilePrompt}</div>
-    </div>
+    </motion.div>
   );
 };
 

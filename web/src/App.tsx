@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useLocation, } from "react-router-dom";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import {
   AuthPage,
@@ -25,7 +25,10 @@ import CreateTeamPage from "@pages/CreateTeamPage/CreateTeamPage";
 import classes from "./App.module.css";
 import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamPrompt";
 
+import { AnimatePresence } from "framer-motion";
+
 const App: React.FC = () => {
+  const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [heightStyle, setHeightStyle] = useState({});
 
@@ -37,7 +40,8 @@ const App: React.FC = () => {
     <AuthenticatedContext.Provider
       value={{ isAuthenticated, setIsAuthenticated }}
     >
-      <Switch>
+     <AnimatePresence>
+       <Switch location={location} key={location.pathname}>
         <Route path="/" exact component={AuthPage} />
         <Route path="/selectinterests" exact component={SelectInterestPage} />
         <Route path="/personalInformation" exact component={PersonalInfoPage} />
@@ -59,7 +63,9 @@ const App: React.FC = () => {
         <Route path="/testprompt" exact component={CreateTeamPrompt} />
         <Route path="/test" exact component={TestPage} />
         <Route path="/" component={LandingPage} />
-      </Switch>
+       </Switch>
+      </AnimatePresence>
+
     </AuthenticatedContext.Provider>
   ) : (
     <AuthenticatedContext.Provider

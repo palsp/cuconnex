@@ -8,6 +8,8 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
+import containerVariants from "@src/models/models";
+import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 
 const LandingPage: React.FC = () => {
@@ -16,6 +18,15 @@ const LandingPage: React.FC = () => {
   const { userData } = useContext(UserContext);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
+  };
+
+  const transition = {
+    // On Tap - Navigation
+    type: "spring",
+    delay: 0,
+    stiffness: 500,
+    damping: 60,
+    mass: 1,
   };
 
   let cssArray = [classes.content];
@@ -60,11 +71,17 @@ const LandingPage: React.FC = () => {
   );
 
   return (
-    <div className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.main}
+    >
       <Background>
         <div>{LandingPrompt}</div>
       </Background>
-    </div>
+    </motion.div>
   );
 };
 

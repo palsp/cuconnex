@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 import {
   Button,
@@ -30,7 +31,17 @@ const TeamList: React.FC<Props> = (props) => {
   }
   return (
     <div className={cssArrayTeam.join(" ")} data-test="team-list">
-      <div className={classes.teamContainer}>
+      <motion.div
+        // On Tap - Navigation
+        transition={{
+          type: "spring",
+          delay: 0,
+          stiffness: 500,
+          damping: 60,
+          mass: 1,
+        }}
+        className={classes.teamContainer}
+      >
         <div className={classes.leftFlex}>
           <div className={classes.teampic}>
             {props.landing ? <TeamPic /> : <ProfilePic />}
@@ -92,7 +103,7 @@ const TeamList: React.FC<Props> = (props) => {
             <div className={classes.moreFriends}></div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
