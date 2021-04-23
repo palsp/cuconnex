@@ -123,7 +123,7 @@ export const search = async (req: Request, res: Response) => {
     let users: User[];
     let team: Team[];
     try {
-        users = await User.findAll({ where: { [Op.or]: userConstraint } });
+        users = await User.findAll({ where: { [Op.or]: userConstraint }, include: 'interests' });
         team = await Team.findAll({ where: teamConstraint });
     } catch (err) {
         console.log(err);
