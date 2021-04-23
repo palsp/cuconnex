@@ -31,7 +31,7 @@ const ProfilePic: React.FC<Props> = (props) => {
     profileArray = [classes.profilePic];
   }
 
-  url = window.location.origin + "/api/users/assets/" + props.PicUrl;
+  url = window.location.origin + "/api/users/" + props.PicUrl;
 
   if (props.previewImage) {
     url = props.PicUrl;

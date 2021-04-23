@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
+import { FormControl, InputLabel, MenuItem, Select, TextField} from "@material-ui/core/";
 import * as yup from "yup";
 
 import {
@@ -175,7 +175,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                       </div>
                       <div className={classes.selectDiv}>
                         <FormControl style={{ width: "100%" }}>
-                          <InputLabel>Faculty</InputLabel>
+                          {/* <InputLabel>Faculty</InputLabel>
                           <Field
                             name="faculty"
                             type="select"
@@ -187,8 +187,17 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                                 {faculty}
                               </MenuItem>
                             ))}
-                          </Field>
+                          </Field> */}
+                          <TextField
+                            label="Bio"
+                            type="input"
+                            name="bio"
+                            multiline
+                            rowsMax={4}
+                            variant="outlined"
+                          />
                         </FormControl>
+                        
                       </div>
                       <div className={classes.Button}>
                         <Button value="Save" />
