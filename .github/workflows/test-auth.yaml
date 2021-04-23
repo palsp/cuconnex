@@ -17,6 +17,12 @@ jobs:
         uses: mirromutth/mysql-action@master
         with:
           mysql root password : ${{secrets.DB_TEST_PASSWORD}}
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('auth/package-lock.json') }}
       - name : npm install and test
         run: cd auth && npm install && npm run test:ci --password=${{secrets.DB_TEST_PASSWORD}}
 

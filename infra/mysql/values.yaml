@@ -1,0 +1,15 @@
+replicaCount: 1
+
+mysql:
+  name: name 
+  group: db
+  container:
+    image: mysql
+    port: 3306
+    args: 
+      - arg: "--default-authentication-plugin=mysql_native_password"
+    env:
+      - name: name
+        value: value
+  service: 
+    port: 3306

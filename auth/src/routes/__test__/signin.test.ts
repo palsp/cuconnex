@@ -100,6 +100,7 @@ describe('Sign in test', () => {
             })
             .expect(200);
 
+
         expect(res.password).not.toBeDefined();
     });
 
@@ -117,3 +118,5 @@ describe('Sign in test', () => {
     });
 
 });
+
+it.todo('remove related bearer token logic')

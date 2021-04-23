@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}-depl
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app.name }}
+    spec:
+      containers:
+        - name:  {{ .Values.app.name }}
+          image: {{ .Values.app.container.image }}
+          env:
+            {{- range .Values.app.container.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end}}
+            {{- range .Values.app.container.secret}}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .ref }}
+                  key: {{ .key }}
+            {{- end}}
+      {{- if  (default .Values.app.initContainer.wait true) }}
+      initContainers:
+        - name: {{ .Values.app.initContainer.name }}
+          image: {{ .Values.app.initContainer.image }}
+          command: {{ .Values.app.initContainer.command }}
+      {{- end}}

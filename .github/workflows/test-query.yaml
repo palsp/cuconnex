@@ -1,9 +1,9 @@
-name: test-auth
+name: test-qyery
 
 on:
   pull_request:
     paths:
-      - 'auth/**'
+      - 'query/**'
   
   
 jobs:
@@ -11,11 +11,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name : Shutdown Ubuntu MySQL(SUDO)
-        run : sudo service mysql stop
-      - name : Set up MySQL 
-        uses: mirromutth/mysql-action@master
-        with:
-          mysql root password : ${{secrets.DB_TEST_PASSWORD}}
       - name : install dependencies and test
         run: cd query && yarn && yarn test:ci 

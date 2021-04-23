@@ -11,6 +11,7 @@ declare global {
   namespace NodeJS {
     interface Global {
       signin(id?: string): string[];
+
     }
   }
 }
@@ -59,6 +60,8 @@ global.signin = (id?: string) => {
 
   // create the JWT
   const token = jwt.sign(payload, process.env.JWT_KEY!);
+
+
 
   // build session
   const session = { jwt: token };

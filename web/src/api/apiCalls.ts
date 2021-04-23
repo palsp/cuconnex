@@ -19,6 +19,7 @@ import {
   IFetchFriendsData,
 } from "@src/models";
 
+
 //Auth Services
 const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
   const userData: AxiosResponse<IUser> = await axios.get(
@@ -45,6 +46,7 @@ const userSigninAPI = async (
     "/api/auth/signin",
     signinUserData
   );
+  console.log(userSigninData.data);
   return userSigninData;
 };
 const userLogoutAPI = async (): Promise<void> => {

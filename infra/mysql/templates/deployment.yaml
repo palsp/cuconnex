@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.mysql.name}}-mysql-depl
+spec:
+  replicas: {{ .Values.replicaCount}}
+  selector:
+    matchLabels:
+      app: {{ .Values.mysql.name }}-mysql
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.mysql.name }}-mysql
+    spec:
+      containers:
+        - name: {{ .Values.mysql.name }}-mysql
+          image: {{ .Values.mysql.container.image}}
+          args:
+            {{- range .Values.mysql.container.args }}
+            - {{ .arg }}
+            {{- end}}
+          env:
+            {{- range .Values.mysql.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end}}
