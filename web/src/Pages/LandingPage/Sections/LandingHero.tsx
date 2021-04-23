@@ -15,7 +15,6 @@ import { motion, useSpring } from "framer-motion";
 import { useNavigation } from "framer";
 
 import { IUser } from "@models/index";
-import { UserDataContext } from "@src/hooks/UserDataContext";
 
 interface Props {
   hasTeam: boolean;
@@ -53,10 +52,11 @@ const LandingHero: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
-        <Link to="/profile">
-          <ProfilePic size="small" />
-        </Link>
-
+        <div className={classes.profileDiv}>
+          <Link to="/profile">
+            <ProfilePic size="small" PicUrl={props.userData.image} />
+          </Link>
+        </div>
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
             <div className={classes.welcome}>Welcome,</div>
