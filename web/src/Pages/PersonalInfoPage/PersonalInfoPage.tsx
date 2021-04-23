@@ -138,13 +138,17 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     onChange={handleUploadedImage}
                   />
                 </div>
-                <div className={classes.idYearFaculty}>
-                  {props.location.state.id}
-                </div>
-                <div className={classes.idYearFaculty}>
-                  Faculty of {props.location.state.faculty}, Year{" "}
-                  {props.location.state.year}
-                </div>
+                {props.location && (
+                  <>
+                    <div className={classes.idYearFaculty}>
+                      {props.location.state.id}
+                    </div>
+                    <div className={classes.idYearFaculty}>
+                      Faculty of {props.location.state.faculty}, Year{" "}
+                      {props.location.state.year}
+                    </div>
+                  </>
+                )}
 
                 <Formik
                   data-test="personal-info-form"

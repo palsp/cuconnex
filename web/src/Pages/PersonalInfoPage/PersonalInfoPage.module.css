@@ -78,7 +78,7 @@
 }
 .idYearFaculty {
   text-align: start;
-  width: auto;
+  max-width: 90vw;
   height: auto;
   overflow: visible;
   white-space: pre;
