@@ -17,8 +17,8 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 
 
     // const interests = await req.user.getInterests({ attributes: ['description'] });
-    const response = await req.user.serializer();
-    res.status(200).send({ ...response });
+    // const response = await req.user.serializer();
+    res.status(200).send(req.user);
 };
 
 /**

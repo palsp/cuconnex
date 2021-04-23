@@ -93,18 +93,23 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         },
         faculty: {
           type: DataTypes.STRING(255),
+          defaultValue: "",
         },
         year: {
           type: DataTypes.STRING(1),
+          defaultValue: "",
         },
         major: {
           type: DataTypes.STRING(255),
+          defaultValue: "",
         },
         bio: {
           type: DataTypes.STRING(255),
+          defaultValue: "",
         },
         image: {
           type: DataTypes.STRING(255),
+          defaultValue: "",
         },
         lookingForTeam: {
           type: DataTypes.BOOLEAN,
@@ -298,6 +303,18 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       lookingForTeam: this.lookingForTeam,
       interests: interestResp
     }
+  }
+
+  public toJSON(): IUserResponse {
+    const values = { ...this.get() }
+
+    let interests: string[] = [];
+    if (this.interests) {
+      interests = this.interests.map(interest => interest.serializer());
+    }
+
+    return { ...values, interests }
+
   }
 
   public static associations: {
