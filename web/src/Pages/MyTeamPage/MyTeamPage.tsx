@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 
 import containerVariants from "@src/models/models";
 
-import { UserDataContext } from "@hooks/UserDataContext";
+import { UserContext } from "@context/UserContext";
 
 import { fetchTeamNotificationAPI } from "@api/index";
 
