@@ -287,7 +287,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     const values = { ...this.get() }
     let interests: string[] = [];
     if (this.interests) {
+      console.log('before serialize', this.interests)
       interests = this.interests.map(interest => interest.serializer());
+      console.log('after serialize', interests)
     }
 
     if (this.connections) {

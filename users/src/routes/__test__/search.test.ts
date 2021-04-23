@@ -1,7 +1,5 @@
-import { Technology } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../app';
-import { Interest } from '../../models/interest.model';
 import { User } from '../../models/user.model';
 
 
