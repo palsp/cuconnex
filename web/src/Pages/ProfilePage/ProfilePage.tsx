@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Button, Heading } from "@dumbComponents/UI/index";
+import React, {useContext, useEffect, useState} from "react";
+import {Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
+import {motion} from "framer-motion";
+import {Button, Heading} from "@dumbComponents/UI/index";
 
-import { ArrowLeft, Edit, PlusCircle } from "@icons/index";
+import {ArrowLeft, Edit, PlusCircle} from "@icons/index";
 import EditPrompt from "./EditPrompt/EditPrompt";
 
 import classes from "./ProfilePage.module.css";
@@ -20,8 +20,8 @@ import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
 import containerVariants from "@src/models/models";
 
-import { IUser } from "@src/models";
-import { UserContext } from "@context/UserContext";
+import {IUser} from "@src/models";
+import {UserContext} from "@context/UserContext";
 interface Props {
   location: {
     state: {
@@ -34,7 +34,7 @@ const ProfilePage: React.FC<Props> = (props) => {
   const [isFriend, setIsFriend] = useState(false);
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
-  const { userData } = useContext(UserContext);
+  const {userData} = useContext(UserContext);
   console.log(userData);
   const backButtonClickedHandler = () => {
     setClickEdit(false);
@@ -81,10 +81,7 @@ const ProfilePage: React.FC<Props> = (props) => {
               role={props.location.state.users.major}
             />
           </div>
-          <div
-            className={classes.editProfile}
-            onClick={EditProfileClickedHandler}
-          >
+          <div className={classes.editProfile} onClick={EditProfileClickedHandler}>
             {isMyProfile ? (
               <Edit />
             ) : (
@@ -157,10 +154,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     profilePrompt = (
       <div className={classes.editPrompt}>
         <div className={classes.header}>
-          <div
-            className={classes.relativeArrow}
-            onClick={backButtonClickedHandler}
-          >
+          <div className={classes.relativeArrow} onClick={backButtonClickedHandler}>
             <ArrowLeft data-test="profile-page-arrow-left" />
           </div>
           <div className={classes.head}>
