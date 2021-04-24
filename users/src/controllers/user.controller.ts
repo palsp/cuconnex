@@ -151,6 +151,16 @@ export const findRelation = async (req: Request, res: Response) => {
     res.status(200).send(response);
 }
 
+/**
+ * Method for editing the name or bio of the user with the specified id.
+ * Expects req.body to have either a name or bio field.
+ * If there's only one field and the field is the same, will throw error.
+ * Will throw NotFoundError if the user with the specified id cannot be found
+ * If all checks pass, will update User with name and bio specified.
+ * Then sends 200 alongside the newly updated user object.
+ * @param req 
+ * @param res 
+ */
 export const editUser = async (req: Request, res: Response) => {
     if(!req.params.userId) throw new BadRequestError("Please enter a user ID!");
    
