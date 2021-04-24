@@ -86,7 +86,7 @@ describe('Create a Team Test', () => {
     expect(status[0].teamName).toEqual('newTeam');
     expect(status[0].status).toEqual(TeamStatus.Accept);
 
-    expect(body.creatorId).toEqual(user.id);
-    expect(body.name).toEqual('newTeam');
+    expect(body.dataValues.creatorId).toEqual(user.id);
+    expect(body.dataValues.name).toEqual('newTeam');
   });
 });

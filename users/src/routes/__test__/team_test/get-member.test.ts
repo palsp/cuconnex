@@ -27,25 +27,32 @@ describe('Get Members', () => {
       id: '6131886621',
       name: 'pal',
     });
-
+    const user2 = await User.create({
+      id: '6131707021',
+      name: 'bird',
+    });
+    const user3 = await User.create({
+      id: '6asdadadad',
+      name: 'superman',
+    });
     const interest = await Interest.findOne({
       where: { description: Business.BusinessCase },
     });
-    await user1.addInterest(interest!);
-    const team = await user1.createTeams({ name: 'Team1', description: '' });
-    await team.addAndAcceptMember(user1);
 
-    const user2 = await User.create({
-      id: '6131886622',
-      name: 'pal2',
-    });
-    await user2.addInterest(interest!);
-    await team.addAndAcceptMember(user2);
+    await user1.addInterest(interest!);
+    const team = await user1.createTeams({ name: 'testTeam', description: '' });
+    await team.addAndAcceptMember(user1);
+    await team.inviteMember(user2);
+    await team.inviteMember(user3);
 
     const res = await request(app)
       .get(`/api/teams/members/${team.name}`)
       .set('Cookie', global.signin(user1.id))
       .send({})
       .expect(200);
+
+    expect(res.body.users.length).toEqual(1);
+    expect(res.body.users[0].id).toEqual(user1.id);
+    expect(res.body.users[0].name).toEqual(user1.name);
   });
 });

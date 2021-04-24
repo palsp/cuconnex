@@ -30,13 +30,13 @@ describe('Get Team Test', () => {
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
 
-    const { body } = await request(app)
+    const res = await request(app)
       .get(`/api/teams/${team.name}`)
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
-    expect(body.team.name).toEqual(team.name);
-    expect(body.team.creatorId).toEqual(user.id);
+    expect(res.body.dataValues.name).toEqual(team.name);
+    expect(res.body.dataValues.creatorId).toEqual(user.id);
   });
 });

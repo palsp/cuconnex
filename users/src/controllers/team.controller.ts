@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequestError } from '@cuconnex/common';
 import { Team, Member, User } from '../models';
+import { ITeamMemberResponse, ITeamResponse } from '../interfaces/team';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -12,7 +13,8 @@ export const getTeam = async (req: Request, res: Response) => {
     throw new BadRequestError('Team not found!');
   }
 
-  res.status(200).send({ team: team });
+  const response: ITeamResponse = team.toJSON();
+  res.status(200).send(response);
 };
 
 export const createTeam = async (req: Request, res: Response) => {
@@ -29,21 +31,12 @@ export const createTeam = async (req: Request, res: Response) => {
   try {
     newTeam = await user.createTeams({ name, description });
     await newTeam.addAndAcceptMember(user);
-
-    // status = await Member.create({
-    //   userId: user.id,
-    //   teamName: name,
-    //   status: TeamStatus.Accept,
-    // });
   } catch (err) {
     throw new BadRequestError('Create Team Failed');
   }
+  const response: ITeamResponse = newTeam.toJSON();
 
-  res.status(201).send({
-    creatorId: user.id,
-    name: newTeam!.name,
-    status,
-  });
+  res.status(201).send(response);
 };
 
 export const getTeamMember = async (req: Request, res: Response) => {
@@ -55,13 +48,10 @@ export const getTeamMember = async (req: Request, res: Response) => {
     throw new BadRequestError('Team not found!');
   }
 
-  /**
-   * TODO: It should return all user information such as bio and interests , it returns onlt userId and Status
-   */
-  //   const members = await Member.findAll({ where: { teamName } });
-  const members = await team.getMember();
+  const acceptedUser = await team.getMembers();
 
-  res.status(200).send({ members: members });
+  // const response: ITeamMemberResponse = await team.getMember();
+  res.status(200).send({ users: acceptedUser });
 };
 
 /**

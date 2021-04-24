@@ -12,12 +12,16 @@ import { Member } from './member.model';
 import { User } from './user.model';
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
+import { ITeamResponse } from '../interfaces/team';
+import { IUserResponse } from '../interfaces/user';
+
 // keep member array as id of user
 export interface TeamAttrs {
   name: string;
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
+  members?: User[];
 }
 
 export interface TeamCreationAttrs {
@@ -30,6 +34,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public creatorId!: string;
   public description!: string;
   public lookingForMembers: boolean = true;
+  public members?: User[];
 
   public static autoMigrate(sequelize: Sequelize) {
     Team.init(
@@ -61,7 +66,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // this addMember function just create PENDING status not ACCEPTED -> try use the 'addAndAcceptMember' function instead
   public addMember!: BelongsToManyAddAssociationMixin<Member, User>;
-  public getMember!: BelongsToManyGetAssociationsMixin<Member>;
+  public getMember!: BelongsToManyGetAssociationsMixin<User>;
 
   // create PENDING status to the user
   public async inviteMember(user: User) {
@@ -117,6 +122,35 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     newMember.status = TeamStatus.Accept;
     await newMember.save();
     return;
+  }
+
+  // get accepted members
+  public async getMembers(): Promise<User[]> {
+    const membersWithAllStatus = await this.getMember();
+
+    console.log('check1', membersWithAllStatus);
+    if (!membersWithAllStatus) {
+      throw new BadRequestError('This team has no member');
+    }
+
+    const acceptedUsers = membersWithAllStatus.filter((member: any) => {
+      if (member.members.status === TeamStatus.Accept) {
+        return member;
+      }
+    });
+
+    return acceptedUsers;
+  }
+
+  public toJSON(): ITeamResponse {
+    const values = { ...this.get() };
+    let returnMembers: IUserResponse[] = [];
+
+    if (this.members) {
+      returnMembers = this.members.map((member) => member.toJSON());
+    }
+
+    return { ...values, members: returnMembers };
   }
 }
 
