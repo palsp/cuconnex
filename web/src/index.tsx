@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import UserContext from "@src/context/UserContext";
+import UserContext from "@context/UserContext";
 import reportWebVitals from "./reportWebVitals";
-import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>

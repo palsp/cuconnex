@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
+import { FormControl, TextField } from "@material-ui/core/";
 import * as yup from "yup";
 
 import {
@@ -51,7 +51,8 @@ interface Props {
   location: {
     state: {
       year: number;
-      faculty: FacultyListsEnum;
+      faculty: string;
+      id: string;
     };
   };
 }
@@ -137,9 +138,21 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     onChange={handleUploadedImage}
                   />
                 </div>
+                {props.location && (
+                  <>
+                    <div className={classes.idYearFaculty}>
+                      {props.location.state.id}
+                    </div>
+                    <div className={classes.idYearFaculty}>
+                      Faculty of {props.location.state.faculty}, Year{" "}
+                      {props.location.state.year}
+                    </div>
+                  </>
+                )}
+
                 <Formik
                   data-test="personal-info-form"
-                  initialValues={{ displayName: "", faculty: "" }}
+                  initialValues={{ displayName: "", bio: "" }}
                   onSubmit={(data, { setSubmitting }) => {
                     console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
@@ -153,9 +166,10 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                             pathname: "/selectinterests",
                             state: {
                               name: data.displayName,
-                              faculty: data.faculty,
-                              // profilePic: image ? image.raw : null,
+                              bio: data.bio,
                               profilePic: imageRaw,
+                              year: props.location.state.year.toString(10),
+                              faculty: props.location.state.faculty,
                             },
                           }}
                         />
@@ -175,7 +189,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                       </div>
                       <div className={classes.selectDiv}>
                         <FormControl style={{ width: "100%" }}>
-                          <InputLabel>Faculty</InputLabel>
+                          {/* <InputLabel>Faculty</InputLabel>
                           <Field
                             name="faculty"
                             type="select"
@@ -187,13 +201,21 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                                 {faculty}
                               </MenuItem>
                             ))}
-                          </Field>
+                          </Field> */}
+                          <Field
+                            label="Bio"
+                            type="input"
+                            name="bio"
+                            multiline
+                            rowsMax={4}
+                            variant="outlined"
+                            as={TextField}
+                          />
                         </FormControl>
                       </div>
                       <div className={classes.Button}>
                         <Button value="Save" />
                       </div>
-                      <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
                       <div className={classes.footerNavigation}>
                         {/*  This div is for centering footer navigation*/}
                         <div style={{ width: "80px" }}></div>

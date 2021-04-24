@@ -45,6 +45,7 @@ const userSigninAPI = async (
     "/api/auth/signin",
     signinUserData
   );
+  console.log(userSigninData.data);
   return userSigninData;
 };
 const userLogoutAPI = async (): Promise<void> => {
@@ -96,6 +97,8 @@ const createUserDataAPI = async (
   formData.append("interests", JSON.stringify(createUserData.interests));
   formData.append("faculty", createUserData.faculty);
   formData.append("image", createUserData.image);
+  formData.append("bio", createUserData.bio);
+  formData.append("year", createUserData.year);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",

@@ -40,88 +40,84 @@ const validationSchema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
+const yearFacultyHandler = (id: string) => {
+  let studentYear: number | undefined = undefined;
+  let studentFaculty: string | undefined = "";
+  const enrolledYear = Number(id.substring(0, 2));
+  const studentFacultyCode = id.substring(8);
+  let currentYear: number = new Date().getFullYear();
+  const currentMonth: number = new Date().getMonth();
+  currentYear = currentYear + 543;
+  currentYear = Number(currentYear.toString().substring(2));
+  if (currentMonth > 7) {
+    studentYear = currentYear - enrolledYear + 1;
+  } else {
+    studentYear = currentYear - enrolledYear;
+  }
+  if (studentFacultyCode === "21") {
+    studentFaculty = FacultyListsEnum.Engineering;
+  } else if (studentFacultyCode === "22") {
+    studentFaculty = FacultyListsEnum.Arts;
+  } else if (studentFacultyCode === "23") {
+    studentFaculty = FacultyListsEnum.Science;
+  } else if (studentFacultyCode === "24") {
+    studentFaculty = FacultyListsEnum.PoliticalSciences;
+  } else if (studentFacultyCode === "25") {
+    studentFaculty = FacultyListsEnum.Architecture;
+  } else if (studentFacultyCode === "26") {
+    studentFaculty = FacultyListsEnum.CommerceAndAccountancy;
+  } else if (studentFacultyCode === "27") {
+    studentFaculty = FacultyListsEnum.Education;
+  } else if (studentFacultyCode === "28") {
+    studentFaculty = FacultyListsEnum.CommunicationArts;
+  } else if (studentFacultyCode === "29") {
+    studentFaculty = FacultyListsEnum.Economics;
+  } else if (studentFacultyCode === "30") {
+    studentFaculty = FacultyListsEnum.Medicine;
+  } else if (studentFacultyCode === "31") {
+    studentFaculty = FacultyListsEnum.VeterinaryScience;
+  } else if (studentFacultyCode === "32") {
+    studentFaculty = FacultyListsEnum.Dentistry;
+  } else if (studentFacultyCode === "33") {
+    studentFaculty = FacultyListsEnum.PharmaceuticalSciences;
+  } else if (studentFacultyCode === "34") {
+    studentFaculty = FacultyListsEnum.Law;
+  } else if (studentFacultyCode === "35") {
+    studentFaculty = FacultyListsEnum.FineAndAppliedArts;
+  } else if (studentFacultyCode === "36") {
+    studentFaculty = FacultyListsEnum.Nursing;
+  } else if (studentFacultyCode === "37") {
+    studentFaculty = FacultyListsEnum.AlliedHealthSciences;
+  } else if (studentFacultyCode === "38") {
+    studentFaculty = FacultyListsEnum.Psychology;
+  } else if (studentFacultyCode === "39") {
+    studentFaculty = FacultyListsEnum.SportsScience;
+  } else if (studentFacultyCode === "40") {
+    studentFaculty = FacultyListsEnum.AgriculturalResources;
+  } else if (studentFacultyCode === "56") {
+    studentFaculty = FacultyListsEnum.IntegratedInnovation;
+  } else {
+    studentFaculty = undefined;
+  }
+
+  return { studentFaculty, studentYear };
+};
+
 const SignupPrompt: React.FC<Props> = (props) => {
   const [errorOnScreen, setErrorOnScreen] = useState<string>("");
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState<JSX.Element>();
 
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
-
-  let studentYear: number | undefined = undefined;
-  let studentFaculty: FacultyListsEnum | undefined = undefined;
+  const { setIsAuthenticated } = useContext(AuthenticatedContext);
 
   const signupHandler = async (signupData: IUserSignup) => {
     try {
       const resultSignup = await userSignupAPI(signupData);
       console.log("Successfully sent a POST request to signup", resultSignup);
       setIsAuthenticated(true);
-      setRedirect(true);
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
       console.log("ERRORS occured while POST /api/auth/signup", e);
     }
-  };
-
-  const yearFacultyHandler = (id: string) => {
-    const enrolledYear = Number(id.substring(0, 2));
-    const studentFacultyCode = id.substring(8);
-    let currentYear: number = new Date().getFullYear();
-    const currentMonth: number = new Date().getMonth();
-    currentYear = currentYear + 543;
-    currentYear = Number(currentYear.toString().substring(2));
-    if (currentMonth > 7) {
-      studentYear = currentYear - enrolledYear + 1;
-    } else {
-      studentYear = currentYear - enrolledYear;
-    }
-    if (studentFacultyCode === "21") {
-      studentFaculty = FacultyListsEnum.Engineering;
-    } else if (studentFacultyCode === "22") {
-      studentFaculty = FacultyListsEnum.Arts;
-    } else if (studentFacultyCode === "23") {
-      studentFaculty = FacultyListsEnum.Science;
-    } else if (studentFacultyCode === "24") {
-      studentFaculty = FacultyListsEnum.PoliticalSciences;
-    } else if (studentFacultyCode === "25") {
-      studentFaculty = FacultyListsEnum.Architecture;
-    } else if (studentFacultyCode === "26") {
-      studentFaculty = FacultyListsEnum.CommerceAndAccountancy;
-    } else if (studentFacultyCode === "27") {
-      studentFaculty = FacultyListsEnum.Education;
-    } else if (studentFacultyCode === "28") {
-      studentFaculty = FacultyListsEnum.CommunicationArts;
-    } else if (studentFacultyCode === "29") {
-      studentFaculty = FacultyListsEnum.Economics;
-    } else if (studentFacultyCode === "30") {
-      studentFaculty = FacultyListsEnum.Medicine;
-    } else if (studentFacultyCode === "31") {
-      studentFaculty = FacultyListsEnum.VeterinaryScience;
-    } else if (studentFacultyCode === "32") {
-      studentFaculty = FacultyListsEnum.Dentistry;
-    } else if (studentFacultyCode === "33") {
-      studentFaculty = FacultyListsEnum.PharmaceuticalSciences;
-    } else if (studentFacultyCode === "34") {
-      studentFaculty = FacultyListsEnum.Law;
-    } else if (studentFacultyCode === "35") {
-      studentFaculty = FacultyListsEnum.FineAndAppliedArts;
-    } else if (studentFacultyCode === "36") {
-      studentFaculty = FacultyListsEnum.Nursing;
-    } else if (studentFacultyCode === "37") {
-      studentFaculty = FacultyListsEnum.AlliedHealthSciences;
-    } else if (studentFacultyCode === "38") {
-      studentFaculty = FacultyListsEnum.Psychology;
-    } else if (studentFacultyCode === "39") {
-      studentFaculty = FacultyListsEnum.SportsScience;
-    } else if (studentFacultyCode === "40") {
-      studentFaculty = FacultyListsEnum.AgriculturalResources;
-    } else if (studentFacultyCode === "56") {
-      studentFaculty = FacultyListsEnum.IntegratedInnovation;
-    } else {
-      studentFaculty = undefined;
-    }
-    console.log("Faculty: ", studentFaculty);
-    console.log("Year: ", studentYear);
   };
 
   return (
@@ -135,74 +131,69 @@ const SignupPrompt: React.FC<Props> = (props) => {
           />
         </div>
       </div>
-
-      {redirect ? (
-        <div>
-          {console.log(
-            "IsAuthenticated in signupPrompt before redirect",
-            isAuthenticated
-          )}
-          <Redirect
-            to={{
-              pathname: "/personalinformation",
-              state: {
-                year: studentYear,
-                faculty: studentFaculty,
-              },
-            }}
-          />
-        </div>
-      ) : (
-        <Formik
-          data-test="auth-page-signup-form"
-          initialValues={{
-            email: "",
-            id: "",
-            password: "",
-            confirmPassword: "",
-          }}
-          onSubmit={async (data, { setSubmitting, resetForm }) => {
-            const userSignupData = {
-              email: data.email,
-              id: data.id,
-              password: data.password,
-            };
-            setSubmitting(true);
-            yearFacultyHandler(data.id);
-            await signupHandler(userSignupData);
-            console.log("POST /api/auth/signup", data);
-            resetForm();
-          }}
-          validationSchema={validationSchema}
-        >
-          {({ isSubmitting, values }) => (
-            <Form>
-              <InputField label="Email" name="email" type="input" />
-              <div className={classes.InputFieldDiv}>
-                <InputField label="Student ID" name="id" type="input" />
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField label="Password" name="password" type="password" />
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField
-                  label="Confirm Password"
-                  name="confirmPassword"
-                  type="password"
-                />
-              </div>
-              <div className={classes.Button}>
-                <Button
-                  data-test="auth-page-signup-next-button"
-                  value="Next"
-                  disabled={isSubmitting}
-                  type="submit"
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
-      )}
+      <Formik
+        data-test="auth-page-signup-form"
+        initialValues={{
+          email: "",
+          id: "",
+          password: "",
+          confirmPassword: "",
+        }}
+        onSubmit={async (data, { setSubmitting, resetForm }) => {
+          const userSignupData = {
+            email: data.email,
+            id: data.id,
+            password: data.password,
+          };
+          setSubmitting(true);
+          const { studentYear, studentFaculty } = yearFacultyHandler(data.id);
+          console.log("Faculty: ", studentFaculty, "Year: ", studentYear);
+          await signupHandler(userSignupData);
+          console.log("POST /api/auth/signup", data);
+          resetForm();
+          setRedirect(
+            <Redirect
+              to={{
+                pathname: "/personalinformation",
+                state: {
+                  year: studentYear,
+                  faculty: studentFaculty,
+                  id: data.id,
+                },
+              }}
+            />
+          );
+        }}
+        validationSchema={validationSchema}
+      >
+        {({ isSubmitting, values }) => (
+          <Form>
+            <InputField label="Email" name="email" type="input" />
+            <div className={classes.InputFieldDiv}>
+              <InputField label="Student ID" name="id" type="input" />
+            </div>
+            <div className={classes.InputFieldDiv}>
+              <InputField label="Password" name="password" type="password" />
+            </div>
+            <div className={classes.InputFieldDiv}>
+              <InputField
+                label="Confirm Password"
+                name="confirmPassword"
+                type="password"
+              />
+            </div>
+            <div className={classes.Button}>
+              <Button
+                data-test="auth-page-signup-next-button"
+                value="Next"
+                disabled={isSubmitting}
+                type="submit"
+              />
+            </div>
+          </Form>
+        )}
+      </Formik>
+      {redirect}
       {errorOnScreen}
       <div className={classes.footerNavigation}>
         <DotMorePage data-test="dot-icon" amount={1} />

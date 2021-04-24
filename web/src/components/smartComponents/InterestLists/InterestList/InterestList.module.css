@@ -27,11 +27,11 @@
   /* position: relative; */
 }
 
-p::after {
+p.interestP::after {
   content: " ";
   white-space: pre;
 }
-p::before {
+p.interestP::before {
   content: " ";
   white-space: pre;
 }

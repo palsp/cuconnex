@@ -10,22 +10,23 @@
 }
 
 .titleDiv {
-  text-align: center;
+  text-align: start;
   margin-top: 10%;
+  margin-bottom: -8%;
 }
 
 .subtitleDiv {
-  text-align: center;
-  margin-bottom: 5%;
+  text-align: start;
+  margin-bottom: 14%;
 }
 
 .inputFieldDiv {
-  width: 90%;
-  margin: 5vh auto;
+  width: 100%;
+  margin: 1vh auto;
 }
 
 .selectDiv {
-  width: 90%;
+  width: 100%;
   margin: 5vh auto;
 }
 
@@ -70,6 +71,23 @@
 
 .emptyDiv {
   width: 21vw;
+}
+
+.profilePicDiv {
+  margin: 4vh;
+}
+.idYearFaculty {
+  text-align: start;
+  max-width: 80vw;
+  height: auto;
+  overflow: visible;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "nunito", serif;
+  color: var(--main_pink, #f33182);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 18px;
 }
 /*
 

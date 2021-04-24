@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: query
+  template:
+    metadata:
+      labels:
+        app: query
+    spec:
+      containers:
+        - name: query
+          image: palsp/connex-query
+          env:
+            - name: EVENT_SRV_ENDPOINT
+              value: http://event-srv:3000
+            - name: USER_SRV_ENDPOINT
+              value: http://users-srv:3000
+            - name : JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name : jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-srv
+spec:
+  selector:
+    app: query
+  ports:
+    - name: query
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
