@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { IUser } from "@models/index";
 import { fetchUserDataAPI } from "@api/index";
 
@@ -7,9 +7,11 @@ interface IUserContext {
   fetchUserDataHandler: () => Promise<void>;
   setUserDataHandler: (updatedUserData: any) => void;
 }
+
 export const UserContext = React.createContext<IUserContext>(
   {} as IUserContext
 );
+
 export const UserContextProvider = (props: any) => {
   const [userData, setUserData] = useState<IUser>({
     id: "",
