@@ -42,10 +42,17 @@ export interface IUserSignin {
   email: string;
   password: string;
 }
+//Friend
 export interface IConnected{
   status:string;
 }
-
+export interface IAddFriend{
+  userId:string;
+}
+export interface IAddFriendResponse{
+  userId:string;
+  accepted:boolean;
+}
 // User Services
 
 export interface IFetchUserData {
@@ -132,6 +139,10 @@ export interface IInviteDataResult {
   message: string;
   User: string;
   Team: string;
+}
+
+export interface ICallTeamOfUser{
+  teams:ITeam[];
 }
 
 export enum FacultyListsEnum {

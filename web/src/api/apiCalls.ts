@@ -17,6 +17,10 @@ import {
   IFetchTeamNotification,
   IFetchFriendNotification,
   IFetchFriendsData,
+  IConnected,
+  IAddFriend,
+  IAddFriendResponse,
+  ICallTeamOfUser,
 } from "@src/models";
 
 //Auth Services
@@ -88,6 +92,15 @@ const teamInvitationAPI = async (
   );
   return invitedUsersData;
 };
+const callTeamOfUserAPI = async (
+  userId: string
+): Promise<AxiosResponse<ICallTeamOfUser>> => {
+  const calledResult: AxiosResponse<ICallTeamOfUser> = await axios.get(
+    `/api/users/teams/${userId}`
+  );
+
+  return calledResult;
+};
 
 const createUserDataAPI = async (
   createUserData: ICreateUserData
@@ -138,8 +151,8 @@ const fetchFriendNotificationAPI = async (): Promise<
 };
 const fetchRelationAPI = async (
   userId: string
-): Promise<AxiosResponse<ISearchUserTeamEventResult>> => {
-  const relationResult: AxiosResponse<ISearchUserTeamEventResult> = await axios.get(
+): Promise<AxiosResponse<IConnected>> => {
+  const relationResult: AxiosResponse<IConnected> = await axios.get(
     `/api/users/relation/${userId}`
   );
 
@@ -153,6 +166,24 @@ const fetchFriendsDataAPI = async (): Promise<
   );
 
   return userData;
+};
+const addFriendAPI = async (
+  addFriendData: IAddFriend
+): Promise<AxiosResponse<IAddFriend>> => {
+  const friendAddData: AxiosResponse<IAddFriend> = await axios.post(
+    "/api/users/add-friend/",
+    addFriendData
+  );
+  return friendAddData;
+};
+const addFriendResponseAPI = async (
+  addFriendResponseData: IAddFriendResponse
+): Promise<AxiosResponse<IAddFriendResponse>> => {
+  const friendResponseData: AxiosResponse<IAddFriendResponse> = await axios.post(
+    "/api/users/add-friend/result/",
+    addFriendResponseData
+  );
+  return friendResponseData;
 };
 
 export {
@@ -170,4 +201,6 @@ export {
   fetchFriendNotificationAPI,
   fetchFriendsDataAPI,
   fetchRelationAPI,
+  addFriendAPI,
+  callTeamOfUserAPI,
 };
