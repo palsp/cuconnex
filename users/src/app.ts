@@ -4,17 +4,14 @@ import session from 'cookie-session';
 import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 import cors from 'cors';
-import { corsHandler, fetchUser } from './middlewares';
+import { fetchUser } from './middlewares';
 import * as router from './routes';
 import { connectionRouter, userRouter, teamRouter } from './routes';
 require('./config/multer.config');
 
 const app = express();
 
-app.use(cors({
-  allowedHeaders: 'Authorization',
-  methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"]
-}));
+app.use(cors());
 app.set('trust proxy', true);
 
 // app.use(corsHandler);
