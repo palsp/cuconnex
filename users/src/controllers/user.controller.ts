@@ -13,7 +13,8 @@ import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../i
  */
 export const getUser = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
-        return res.redirect('/personalInformation');
+        res.status(302).send({});
+        return
     }
 
     const response: IUserResponse = req.user.toJSON();
