@@ -20,11 +20,6 @@ describe('Add member to Team --- Requesting', () => {
   });
 
   it('should return 400 if user is not yet fill in the information detail.', async () => {
-    // const user1 = await User.create({
-    //   id: '6131886621',
-    //   name: 'pal'
-    // });
-
     const user2 = await User.create({
       id: '6131776621',
       name: 'bob',
@@ -47,7 +42,7 @@ describe('Add member to Team --- Requesting', () => {
       id: '6131886621',
       name: 'pal',
     });
-    // await user1.createInterest({ description: InterestDescription.Business });
+
     const interest = await Interest.findOne({
       where: { description: Business.BusinessCase },
     });
@@ -72,19 +67,13 @@ describe('Add member to Team --- Requesting', () => {
       name: 'pal',
     });
 
-    // await user1.createInterest({ description: InterestDescription.Business });
     const interest = await Interest.findOne({
       where: { description: Business.BusinessCase },
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'Team1', description: '' });
-    // const member = await Member.create({
-    //   teamName: 'Team1',
-    //   userId: user.id,
-    //   status: TeamStatus.Accept,
-    // });
 
-    await team.addMember(user);
+    await team.inviteMember(user);
 
     const res = await request(app)
       .post('/api/teams/request-to-join')
@@ -95,7 +84,6 @@ describe('Add member to Team --- Requesting', () => {
       .expect(400);
 
     const error = res.body.errors[0];
-    // expect(error.message).toEqual(`This user already have status: ${member.status}`);
   });
 
   it('should return 200 if user request pending to a team successfully.', async () => {
@@ -119,7 +107,6 @@ describe('Add member to Team --- Requesting', () => {
       .expect(201);
 
     expect(res.body.message).toEqual('Request pending');
-    // expect(res.body.member).toEqual({ userId: user.id, teamName: team.name, status: 'Pending' });
   });
 });
 
@@ -188,22 +175,9 @@ describe('Add member to Team --- Invitation', () => {
       name: 'pal2',
     });
 
-    // await Member.create({
-    //   teamName: 'Team1',
-    //   userId: user1.id,
-    //   status: TeamStatus.Accept,
-    // });
-
-    await team.inviteMember(user1);
-    await team.editMemberStatus(user1, TeamStatus.Accept);
+    await team.addAndAcceptMember(user1);
 
     await team.inviteMember(user2);
-
-    // const member2 = await Member.create({
-    //   teamName: 'Team1',
-    //   userId: user2.id,
-    //   status: TeamStatus.Accept,
-    // });
 
     const res = await request(app)
       .post('/api/teams/members')
@@ -213,9 +187,6 @@ describe('Add member to Team --- Invitation', () => {
         newMemberId: user2.id,
       })
       .expect(400);
-
-    const error = res.body.errors[0];
-    // expect(error.message).toEqual(`This user already have status: ${status}`);
   });
 
   it('should return 400 if the inviter is not a member of the team.', async () => {
@@ -244,9 +215,6 @@ describe('Add member to Team --- Invitation', () => {
     expect(error.message).toEqual('The inviter is not a team member.');
   });
 
-  /**
-   * ดู logic ตรงนี้ใหม่
-   */
   it('should return 400 if the inviter is not a yet a member of the team but having pending status.', async () => {
     const user1 = await User.create({
       id: '6131886621',
@@ -260,13 +228,7 @@ describe('Add member to Team --- Invitation', () => {
       name: 'pal2',
     });
 
-    // await Member.create({
-    //   teamName: 'Team1',
-    //   userId: user1.id,
-    //   status: TeamStatus.Pending,
-    // });
-
-    await team.addMember(user1);
+    await team.inviteMember(user1);
 
     const res = await request(app)
       .post('/api/teams/members')
@@ -286,21 +248,13 @@ describe('Add member to Team --- Invitation', () => {
       id: '6131886621',
       name: 'pal',
     });
-
     const team = await user1.createTeams({ name: 'Team1', description: '' });
+    await team.addAndAcceptMember(user1);
 
     const user2 = await User.create({
       id: '6131886622',
       name: 'pal2',
     });
-
-    // await Member.create({
-    //   teamName: 'Team1',
-    //   userId: user1.id,
-    //   status: TeamStatus.Accept,
-    // });
-    await team.addMember(user1);
-    await team.editMemberStatus(user1, TeamStatus.Accept);
 
     const res = await request(app)
       .post('/api/teams/members')

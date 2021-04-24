@@ -28,11 +28,13 @@ export const createTeam = async (req: Request, res: Response) => {
   let status;
   try {
     newTeam = await user.createTeams({ name, description });
-    status = await Member.create({
-      userId: user.id,
-      teamName: name,
-      status: TeamStatus.Accept,
-    });
+    await newTeam.addAndAcceptMember(user);
+
+    // status = await Member.create({
+    //   userId: user.id,
+    //   teamName: name,
+    //   status: TeamStatus.Accept,
+    // });
   } catch (err) {
     throw new BadRequestError('Create Team Failed');
   }
@@ -58,6 +60,7 @@ export const getTeamMember = async (req: Request, res: Response) => {
    */
   //   const members = await Member.findAll({ where: { teamName } });
   const members = await team.getMember();
+  console.log('sdsd', members);
 
   res.status(200).send({ members: members });
 };
@@ -89,24 +92,10 @@ export const addTeamMember = async (req: Request, res: Response) => {
 
   const isInviterAMember = await Member.findOne({ where: { teamName, userId: sender.id } });
   if (!isInviterAMember) {
-    /**
-     * Logic มันแปลกๆนะ invitor ต้อง accpet ด้วยหรอ?
-     */
     throw new BadRequestError('The inviter is not a team member.');
   } else if (isInviterAMember.status !== 'Accept') {
     throw new BadRequestError('The inviter is not yet a team member.');
   }
-
-  //   const member = await Member.findOne({ where: { teamName, userId: newMemberId } });
-  //   // if there is a member status : 'accept || reject || pending ' do nothing
-  //   if (member) {
-  //     throw new BadRequestError('This user already have status: ' + member.status);
-  //   }
-
-  /**
-   * TODO: this must not be create by a join table
-   */
-  //   await Member.create({ userId: newMemberId, teamName, status: TeamStatus.Pending });
 
   await team.inviteMember(receiver);
 

@@ -33,15 +33,14 @@ describe('Get Members', () => {
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
+    await team.addAndAcceptMember(user1);
 
     const user2 = await User.create({
       id: '6131886622',
       name: 'pal2',
     });
     await user2.addInterest(interest!);
-
-    await team.addMember(user2);
+    await team.addAndAcceptMember(user2);
 
     const res = await request(app)
       .get(`/api/teams/members/${team.name}`)

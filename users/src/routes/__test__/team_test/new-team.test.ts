@@ -8,17 +8,16 @@ import { Interest } from '../../../models/interest.model';
 const setupTeam = async () => {
   const user = await User.create({
     id: '6131886621',
-    name: 'pal'
+    name: 'pal',
   });
   const interest = await Interest.findOne({
-    where: { description: Business.BusinessCase }
+    where: { description: Business.BusinessCase },
   });
   await user.addInterest(interest!);
   const team = await user.createTeams({ name: 'testTeam', description: 'this is a great team' });
 
-  return { user, interest, team }
-}
-
+  return { user, interest, team };
+};
 
 describe('Create a Team Test', () => {
   it('should return 400 if team name is already existed', async () => {
@@ -29,7 +28,7 @@ describe('Create a Team Test', () => {
       .set('Cookie', global.signin(user.id))
       .send({
         name: team.name,
-        description: team.description
+        description: team.description,
       })
       .expect(400);
 
@@ -57,7 +56,7 @@ describe('Create a Team Test', () => {
       .set('Cookie', global.signin(id))
       .send({
         name: 'testTeam',
-        description: "test description"
+        description: 'test description',
       })
       .expect(400);
 
@@ -68,8 +67,8 @@ describe('Create a Team Test', () => {
   it('should create team successfully if user is authorized and team name is unique.', async () => {
     const team = {
       name: 'newTeam',
-      description: 'my new team'
-    }
+      description: 'my new team',
+    };
     const { user } = await setupTeam();
 
     const { body } = await request(app)
@@ -77,7 +76,7 @@ describe('Create a Team Test', () => {
       .set('Cookie', global.signin(user.id))
       .send({
         name: team.name,
-        description: team.description
+        description: team.description,
       })
       .expect(201);
 
