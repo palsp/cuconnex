@@ -1,10 +1,8 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { User } from '../../models/user.model';
-import { Member } from '../../models/member.model';
-import { Team } from '../../models/team.model';
+import { app } from '../../../app';
+import { User, Member } from '../../../models';
 
-import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
+import { TeamStatus } from '@cuconnex/common';
 
 const setup = async () => {
   const sender = await User.create({
@@ -27,17 +25,13 @@ describe('User manages his/her connection(s) with teams', () => {
     const { sender, receiver } = await setup();
 
     const team1 = await sender.createTeams({ name: 'testTeam', description: '' });
+    await team1.addAndAcceptMember(sender);
+
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
-    const member1 = await Member.create({
-      userId: receiver.id,
-      teamName: team1.name,
-      status: TeamStatus.Pending,
-    });
-    const member2 = await Member.create({
-      userId: receiver.id,
-      teamName: team2.name,
-      status: TeamStatus.Pending,
-    });
+    await team2.addAndAcceptMember(sender);
+
+    await team1.inviteMember(receiver);
+    await team2.inviteMember(receiver);
 
     await request(app)
       .post('/api/users/invitation')

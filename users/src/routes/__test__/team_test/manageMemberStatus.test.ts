@@ -1,32 +1,30 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { Member } from '../../models/member.model';
-import { User } from '../../models/user.model';
+import { app } from '../../../app';
+
 import { Business } from '@cuconnex/common';
-import { TeamStatus } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { User, Interest } from '../../../models';
 
 describe('Status Changing Test', () => {
   it('should return 400 if user is not found', async () => {
     const user1 = await User.create({
       id: '6131778821',
-      name: 'pal'
+      name: 'pal',
     });
 
     const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
+      where: { description: Business.BusinessCase },
     });
     await user1.addInterest(interest!);
-    await user1.createTeams({ name: 'Team1', description: '' });
-    await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
+    const team = await user1.createTeams({ name: 'Team1', description: '' });
+    await team.addAndAcceptMember(user1);
 
     const res = await request(app)
-      .post('/api/members/status')
+      .post('/api/teams/members/status')
       .set('Cookie', global.signin(user1.id))
       .send({
         targetUserId: '2',
         teamName: 'Team1',
-        status: 'Accept'
+        status: 'Accept',
       })
       .expect(400);
 
@@ -36,21 +34,21 @@ describe('Status Changing Test', () => {
   it('should return 400 if team is not found', async () => {
     const user1 = await User.create({
       id: '6131778821',
-      name: 'pal'
+      name: 'pal',
     });
     const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
+      where: { description: Business.BusinessCase },
     });
 
     await user1.addInterest(interest!);
 
     const res = await request(app)
-      .post('/api/members/status')
+      .post('/api/teams/members/status')
       .set('Cookie', global.signin(user1.id))
       .send({
         targetUserId: '2',
         teamName: 'Team1',
-        status: 'Accept'
+        status: 'Accept',
       })
       .expect(400);
 
@@ -60,36 +58,36 @@ describe('Status Changing Test', () => {
   it('should return 400 if the requester is not the team creator', async () => {
     const user1 = await User.create({
       id: '6131778821',
-      name: 'pal'
+      name: 'pal',
     });
     const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
+      where: { description: Business.BusinessCase },
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
+    await team.addAndAcceptMember(user1);
 
     const user2 = await User.create({
       id: '6131778822',
-      name: 'pal2'
+      name: 'pal2',
     });
     await user2.addInterest(interest!);
-    await Member.create({ userId: user2.id, teamName: 'Team1', status: TeamStatus.Accept });
+    await team.addAndAcceptMember(user2);
 
     const user3 = await User.create({
       id: '6131778823',
-      name: 'pal3'
+      name: 'pal3',
     });
     await user3.addInterest(interest!);
-    await Member.create({ userId: user3.id, teamName: 'Team1', status: TeamStatus.Pending });
+    await team.inviteMember(user3);
 
     const res = await request(app)
-      .post('/api/members/status')
+      .post('/api/teams/members/status')
       .set('Cookie', global.signin(user2.id))
       .send({
         targetUserId: user3.id,
         teamName: 'Team1',
-        status: 'Accept'
+        status: 'Accept',
       })
       .expect(400);
 
@@ -99,28 +97,28 @@ describe('Status Changing Test', () => {
   it('should return 400 if the targetId is not yet pending request.', async () => {
     const user1 = await User.create({
       id: '6131778821',
-      name: 'pal'
+      name: 'pal',
     });
     const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
+      where: { description: Business.BusinessCase },
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
+    await team.addAndAcceptMember(user1);
 
     const user3 = await User.create({
       id: '6131778823',
-      name: 'pal3'
+      name: 'pal3',
     });
     await user3.addInterest(interest!);
 
     const res = await request(app)
-      .post('/api/members/status')
+      .post('/api/teams/members/status')
       .set('Cookie', global.signin(user1.id))
       .send({
         targetUserId: user3.id,
         teamName: 'Team1',
-        status: 'Accept'
+        status: 'Accept',
       })
       .expect(400);
 
@@ -132,38 +130,32 @@ describe('Status Changing Test', () => {
   it('should return 200 if the creator can change status successfully.', async () => {
     const user1 = await User.create({
       id: '6131778821',
-      name: 'pal'
+      name: 'pal',
     });
     const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
+      where: { description: Business.BusinessCase },
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    await Member.create({ userId: user1.id, teamName: 'Team1', status: TeamStatus.Accept });
+    await team.addAndAcceptMember(user1);
 
     const user3 = await User.create({
       id: '6131778823',
-      name: 'pal3'
+      name: 'pal3',
     });
     await user3.addInterest(interest!);
-    const oldStatus = await Member.create({
-      userId: user3.id,
-      teamName: 'Team1',
-      status: TeamStatus.Pending
-    });
+    await team.inviteMember(user3);
 
     const res = await request(app)
-      .post('/api/members/status')
+      .post('/api/teams/members/status')
       .set('Cookie', global.signin(user1.id))
       .send({
         targetUserId: user3.id,
         teamName: 'Team1',
-        status: 'Accept'
+        status: 'Accept',
       })
       .expect(200);
 
-    expect(res.body.message).toEqual(
-      `Change status of ${user3.id} from ${oldStatus.status} to Accept`
-    );
+    expect(res.body.message).toEqual(`Change status of ${user3.id} to Accept`);
   });
 });
