@@ -11,10 +11,8 @@ describe('Get Team Test', () => {
     const res = await request(app)
       .get('/api/teams/notExistingTeam')
       .set('Cookie', global.signin(id))
-      // .send({ name: 'notExsitingTeam' })
       .send({})
       .expect(400);
-
 
     const error = res.body.errors[0];
     expect(error.message).toEqual('Team not found!');
@@ -23,10 +21,10 @@ describe('Get Team Test', () => {
   it('should return team detail if it is found', async () => {
     const user = await User.create({
       id: '6131886621',
-      name: 'pal'
+      name: 'pal',
     });
     const interest = await Interest.findOne({
-      where: { description: Business.BusinessCase }
+      where: { description: Business.BusinessCase },
     });
 
     await user.addInterest(interest!);
@@ -35,7 +33,6 @@ describe('Get Team Test', () => {
     const { body } = await request(app)
       .get(`/api/teams/${team.name}`)
       .set('Cookie', global.signin(user.id))
-      // .send({ name: team.name })
       .send({})
       .expect(200);
 

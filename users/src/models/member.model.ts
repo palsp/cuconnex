@@ -1,8 +1,4 @@
-import {
-  Model,
-  DataTypes,
-  Sequelize
-} from 'sequelize';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
 import { TableName } from './types';
 
@@ -31,7 +27,7 @@ class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAt
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
-   * @param sequelize 
+   * @param sequelize
    */
   public static autoMigrate(sequelize: Sequelize) {
     Member.init(
@@ -49,13 +45,13 @@ class Member extends Model<MemberAttrs, MemberCreationAttrs> implements MemberAt
         status: {
           type: DataTypes.ENUM,
           values: Object.values(TeamStatus),
-          allowNull: false
-        }
+          allowNull: false,
+        },
       },
       {
         tableName: TableName.members,
         sequelize,
-        timestamps: false
+        timestamps: false,
       }
     );
   }

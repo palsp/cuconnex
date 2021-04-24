@@ -5,8 +5,6 @@ export default {
   db: process.env.DB_SCHEMA,
 };
 
-
-
 /*TODO: chnage this back to default settings after development*/
 export const test_config = {
   host: 'localhost',
