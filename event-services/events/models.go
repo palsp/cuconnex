@@ -1,6 +1,8 @@
 package events
 
 import (
+	"fmt"
+	"log"
 	"time"
 
 	"github.com/palsp/cuconnex/event-services/common"
@@ -21,14 +23,43 @@ type EventModel struct {
 
 
 
+
 func (EventModel) TableName() string{
 	return "event"
 }
 // AutoMigrate  Migrate the schema of database if needed
 func AutoMigrate() {
 	db := common.GetDB()
-
 	db.AutoMigrate(&EventModel{})
+}
+
+
+// SearchByID find events detail of a given id
+func SearchByID(id string) (*EventModel , error) {
+	db := common.GetDB()
+	var event EventModel
+	err := db.First(&event,id).Error
+	if err != nil {
+		log.Printf("Fetch event by id Failed: %v ", err)
+		return nil , err
+	}
+	return &event , nil
+}
+
+// SearchByName find events detail of a given name
+func SearchByName(name string) ([]EventModel , error) {
+	db := common.GetDB()
+	
+	var events []EventModel
+	// err := db.Where(EventModel{
+	// 	EventName: name,
+	// }).Find(&events).Error
+	err := db.Find(&events , "`event-name` Like ?" , fmt.Sprintf("%%%v%%", name)).Error
+	if err != nil {
+		return nil , err
+	}
+
+	return events , nil
 }
 
 
@@ -48,6 +79,7 @@ func GetAllEvents() ([]EventModel , error) {
 	return models , err
 
 }
+
 
 
 // FindEvents returns events that match a condition

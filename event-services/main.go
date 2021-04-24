@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"log"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
-	"log"
-	"net/http"
 )
 
 func Migrate() {
@@ -45,18 +45,10 @@ func main() {
 }
 
 func CustomHeaderAPI(c *gin.Context) {
-	fmt.Println("In middleware" , c.GetHeader("Method:"))
 	// Add CORS headers
 	c.Header("Access-Control-Allow-Origin", "*")
 	c.Header("Access-Control-Allow-Methods", "*")
 	c.Header("Access-Control-Allow-Headers","Content-Type")
-
-	if c.GetHeader("Methods") == "OPTIONS"{
-		 c.JSON(http.StatusOK, gin.H{
-			"message" : "OK",
-		})
-		 return
-	}
 
 	c.Next()
 }
