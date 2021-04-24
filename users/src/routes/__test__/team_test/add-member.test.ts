@@ -72,7 +72,6 @@ describe('Add member to Team --- Requesting', () => {
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'Team1', description: '' });
-
     await team.inviteMember(user);
 
     const res = await request(app)
@@ -82,8 +81,6 @@ describe('Add member to Team --- Requesting', () => {
         teamName: team.name,
       })
       .expect(400);
-
-    const error = res.body.errors[0];
   });
 
   it('should return 200 if user request pending to a team successfully.', async () => {
@@ -109,6 +106,12 @@ describe('Add member to Team --- Requesting', () => {
     expect(res.body.message).toEqual('Request pending');
   });
 });
+
+// ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- -------
+// ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- -------
+// ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- -------
+// ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- -------
+// ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- ------- -------
 
 describe('Add member to Team --- Invitation', () => {
   it('should return 401 if user is not logged in yet', async () => {

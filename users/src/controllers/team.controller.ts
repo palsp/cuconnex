@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { NotFoundError, BadRequestError, TeamStatus } from '@cuconnex/common';
-import { Team, Member, UserInterest, User } from '../models';
+import { BadRequestError } from '@cuconnex/common';
+import { Team, Member, User } from '../models';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -113,19 +113,6 @@ export const requetToJoinTeam = async (req: Request, res: Response) => {
   }
 
   await team.inviteMember(user);
-
-  //   const member = await Member.findOne({ where: { teamName, userId: user.id } });
-
-  //   // if there is a member status : 'accept || reject || pending ' do nothing
-  //   if (member) {
-  //     throw new BadRequestError('This user already have status: ' + member.status);
-  //   }
-
-  //   const newMember = await Member.create({
-  //     userId: user.id,
-  //     teamName,
-  //     status: TeamStatus.Pending,
-  //   });
 
   res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
 };
