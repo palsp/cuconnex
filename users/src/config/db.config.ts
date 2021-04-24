@@ -5,12 +5,11 @@ export default {
   db: process.env.DB_SCHEMA,
 };
 
-
-
 /*TODO: chnage this back to default settings after development*/
 export const test_config = {
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  // password: 'password',
+  password: 'birdza555',
   db: 'testdb',
 };
