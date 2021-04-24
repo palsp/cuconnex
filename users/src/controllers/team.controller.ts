@@ -60,7 +60,6 @@ export const getTeamMember = async (req: Request, res: Response) => {
    */
   //   const members = await Member.findAll({ where: { teamName } });
   const members = await team.getMember();
-  console.log('sdsd', members);
 
   res.status(200).send({ members: members });
 };

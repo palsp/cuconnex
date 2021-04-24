@@ -1,15 +1,13 @@
 import express, { Request, Response } from 'express';
 
-import { User, Member } from '../models';
+import { User, Member } from '../../models';
 
-import { NotFoundError, validateRequest, TeamStatus } from '@cuconnex/common';
+import { NotFoundError, TeamStatus } from '@cuconnex/common';
 
 const router = express.Router();
 
-/**
- * เอาไว้ทำอิหยัง
- */
-router.get('/api/members/:id', async (req: Request, res: Response) => {
+// get list of team(s) that the paramsID belongs to
+router.get('/api/users/teams/:id', async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { id: req.params.id } });
   if (!user) {
     throw new NotFoundError();
