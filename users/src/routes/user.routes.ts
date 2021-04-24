@@ -10,7 +10,9 @@ const router = express.Router();
 
 router.get("/current-user", userController.getUser);
 
-router.get("/relation/:userId", requireUser, userController.findRelation)
+router.get("/relation/:userId", requireUser, userController.findRelation);
+
+router.put("/:userId", requireUser, userController.editUser)
 
 router.get("/:userId", requireUser, userController.viewUserProfile);
 
