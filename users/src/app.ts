@@ -37,11 +37,6 @@ app.use(fetchUser);
 
 app.use('/api/users/assets', express.static('assets'));
 
-// user handler
-// app.use(router.notificationUserRouter);
-app.use(router.manageStatusRouter);
-// app.use(router.memberStatusRouter);
-
 app.use('/api/users', connectionRouter);
 app.use('/api/users', userRouter);
 
@@ -49,7 +44,6 @@ app.use('/api/teams', teamRouter);
 
 // other handler
 app.use(router.searchRouter);
-app.use(router.userInfoRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

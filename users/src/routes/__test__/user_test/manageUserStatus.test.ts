@@ -18,7 +18,7 @@ const setup = async () => {
   return { sender, receiver };
 };
 
-// should check all IF-STATEMENT cases on /api/users/invitaion as well
+// should check all IF-STATEMENT cases on /api/users/status/invitaion as well
 // but lazy for now...
 describe('User manages his/her connection(s) with teams', () => {
   it('should return 200 if a user can accept/reject his/her status correctly.', async () => {
@@ -34,7 +34,7 @@ describe('User manages his/her connection(s) with teams', () => {
     await team2.inviteMember(receiver);
 
     await request(app)
-      .post('/api/users/invitation')
+      .post('/api/users/status/invitation')
       .set('Cookie', global.signin(receiver.id))
       .send({ teamName: team1.name, newStatusFromUser: TeamStatus.Accept })
       .expect(200);
@@ -45,7 +45,7 @@ describe('User manages his/her connection(s) with teams', () => {
     expect(member1AfterChanged!.status).toEqual(TeamStatus.Accept);
 
     await request(app)
-      .post('/api/users/invitation')
+      .post('/api/users/status/invitation')
       .set('Cookie', global.signin(receiver.id))
       .send({ teamName: team2.name, newStatusFromUser: TeamStatus.Reject })
       .expect(200);

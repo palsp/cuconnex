@@ -181,3 +181,43 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
     throw new BadRequestError(err.message);
   }
 };
+
+export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
+  const user = await User.findOne({ where: { id: req.params.userId } });
+  if (!user) {
+    throw new NotFoundError();
+  }
+
+  const members = await Member.findAll({ where: { userId: user.id } });
+
+  let returnTeams: any = [];
+  if (members) {
+    members.filter((member) => {
+      if (member.status === TeamStatus.Accept) {
+        returnTeams.push(member.teamName);
+      }
+    });
+  }
+
+  res.status(200).send({ teams: returnTeams });
+};
+
+export const manageStatus = async (req: Request, res: Response) => {
+  const user = req.user!;
+  const { teamName, newStatusFromUser } = req.body;
+
+  try {
+    const team = await Team.findOne({ where: { name: teamName } });
+
+    if (!team) {
+      throw new BadRequestError('Team not found');
+    }
+    await team.editMemberStatus(user, newStatusFromUser);
+
+    res
+      .status(200)
+      .send({ message: `Invitation from ${team.name} to ${user.name} is ${newStatusFromUser}.` });
+  } catch (err) {
+    throw new BadRequestError(err.message);
+  }
+};

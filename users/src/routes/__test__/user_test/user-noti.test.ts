@@ -1,8 +1,8 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { User } from '../../models/user.model';
-import { Member } from '../../models/member.model';
-import { Team } from '../../models/team.model';
+import { app } from '../../../app';
+import { User } from '../../../models/user.model';
+import { Member } from '../../../models/member.model';
+import { Team } from '../../../models/team.model';
 
 import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
 

@@ -88,7 +88,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     try {
       await member.save();
     } catch (err) {
-      throw new Error('Db connection failed');
+      throw new BadRequestError(err.message);
     }
   }
 

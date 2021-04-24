@@ -3,7 +3,7 @@ import express from 'express';
 import { upload } from '../config/multer.config';
 import * as userController from '../controllers/user.controller';
 import { requireUser, transformRequest } from '../middlewares';
-import { postUserValidator } from '../utils/user.validators';
+import { postUserValidator, manageUserStatusValidator } from '../utils/user.validators';
 
 const router = express.Router();
 
@@ -25,5 +25,15 @@ router.post(
 );
 
 router.get('/notification/invite', requireUser, validateRequest, userController.getInvitationNoti);
+
+router.get('/teams/:userId', requireUser, userController.getListofTeamsBelongsTo);
+
+router.post(
+  '/status/invitation',
+  requireUser,
+  manageUserStatusValidator,
+  validateRequest,
+  userController.manageStatus
+);
 
 export { router as userRouter };
