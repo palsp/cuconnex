@@ -153,20 +153,23 @@ export const findRelation = async (req: Request, res: Response) => {
 
 export const editUser = async (req: Request, res: Response) => {
     if(!req.params.userId) throw new BadRequestError("Please enter a user ID!");
-    try {
-        const user = await User.findOne({ where: { id: req.params.userId } });
-        if(!user) throw new NotFoundError();
-        if(!req.body.name && !req.body.bio) throw new BadRequestError("Empty request!");
-        
-        if(user.name === req.body.name) throw new BadRequestError('Your name is the same!!');
-        User.update(
-            { name: req.body.name || user.name, bio: req.body.bio || user.bio},
-            { where: { id: req.params.userId }}
-        ).then((rowsUpdated) => {
-            console.log(rowsUpdated)
-            res.status(200).send(rowsUpdated);
-        }).catch((err) => { console.log(err.message) })
-    } catch (error) {
-        console.log(error.message);
-    }
+   
+    const user = await User.findOne({ where: { id: req.params.userId } });
+    console.log(user);
+    if(!user) throw new NotFoundError();
+    if(!req.body.name && !req.body.bio) throw new BadRequestError("Empty request!");
+    //Only throws duplicate errors if the duplicated field is the only one supplied.
+    if(!req.body.bio && user.name === req.body.name) throw new BadRequestError('Your name is the same!!');
+    if(!req.body.name && user.bio === req.body.bio) throw new BadRequestError("Your bio is the same!!");
+    User.update(
+        { name: req.body.name || user.name, bio: req.body.bio || user.bio},
+        { returning: true, where: { id: req.params.userId }}
+    ).then(async (rowsUpdated) => {
+        console.log(rowsUpdated)
+        const user = await User.findOne({ where: { id: req.params.userId }})
+        res.status(200).send(user);
+    }).catch((err) => { 
+        console.log(err.message)
+        res.status(500).send(err.message);
+    })
 }
