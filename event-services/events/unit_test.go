@@ -17,6 +17,8 @@ import (
 
 var test_db *gorm.DB
 
+
+
 //Reset test DB and create new one with mock data
 func resetDBWithMock() {
 	test_db.Where("1=1").Delete(&EventModel{})

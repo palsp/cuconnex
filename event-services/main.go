@@ -14,7 +14,7 @@ func Migrate() {
 }
 
 func main() {
-	_, err := common.InitDB()
+	_ , err := common.InitDB()
 	Migrate()
 	if err != nil {
 		log.Fatalln("db err:", err)

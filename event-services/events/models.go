@@ -25,7 +25,7 @@ type EventModel struct {
 
 
 func (EventModel) TableName() string{
-	return "event"
+	return "events"
 }
 // AutoMigrate  Migrate the schema of database if needed
 func AutoMigrate() {
