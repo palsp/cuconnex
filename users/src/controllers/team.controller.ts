@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequestError } from '@cuconnex/common';
 import { Team, Member, User } from '../models';
-import { ITeamMemberResponse, ITeamResponse } from '../interfaces/team';
+import { ITeamResponse } from '../interfaces/team';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -50,7 +50,6 @@ export const getTeamMember = async (req: Request, res: Response) => {
 
   const acceptedUser = await team.getMembers();
 
-  // const response: ITeamMemberResponse = await team.getMember();
   res.status(200).send({ users: acceptedUser });
 };
 
