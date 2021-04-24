@@ -8,7 +8,7 @@ import classes from "./FriendList.module.css";
 interface Props {
   friend: {
     name: string;
-    profilePic: any;
+    image: string;
     interest: string;
     major: string;
     year: number;
@@ -19,7 +19,7 @@ const FriendList: React.FC<Props> = (props) => {
     <div data-test="friend-list" className={classes.friendList}>
       <div className={classes.divFriendList}>
         <div>
-          <ProfilePic />
+          <ProfilePic PicUrl={props.friend.image} />
         </div>
         <div className={classes.userInfo}>
           <div className={classes.divUserInfo}>

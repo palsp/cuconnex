@@ -12,7 +12,7 @@ import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 
 import { motion, useSpring } from "framer-motion";
-import { useNavigation } from "framer";
+// import { useNavigation } from "framer";
 
 import { IUser } from "@models/index";
 

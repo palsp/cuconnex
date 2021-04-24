@@ -1,15 +1,16 @@
 .interestList {
   margin: 2vw;
-  border-radius: 10%;
+  border-radius: 10%/20%;
   height: 100%;
 }
 
 .interest {
-  background-color: hsl(0, 29%, 59%);
+  /* background-color: hsl(0, 29%, 59%); */
+  background-color: #dad8d8;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10%;
+  border-radius: 10%/20%;
   height: 40px;
 }
 
@@ -38,7 +39,7 @@ p.interestP::before {
 
 .isClicked {
   background-color: #f33182;
-  border-radius: 10%;
+  border-radius: 10%/20%;
   color: white;
 }
 
