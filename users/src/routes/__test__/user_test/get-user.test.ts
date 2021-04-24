@@ -38,9 +38,9 @@ describe('get current user', () => {
     const { headers } = await request(app)
       .get('/api/users/current-user')
       .set('Cookie', global.signin())
-      .send();
+      .send()
+      .expect(302)
 
-    expect(headers.location).not.toBeNull();
   });
 
   it.todo('should redirect with specific url');
