@@ -196,7 +196,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     if (status === FriendStatus.Accept || status === FriendStatus.Pending) {
       return;
     }
-
+    user.addConnection(this);
     return this.addConnection(user);
   }
 

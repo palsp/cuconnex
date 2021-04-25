@@ -9,6 +9,6 @@ export default {
 export const test_config = {
   host: 'localhost',
   user: 'root',
-  password: 'password',
+  password: 'anon123',
   db: 'testdb',
 };

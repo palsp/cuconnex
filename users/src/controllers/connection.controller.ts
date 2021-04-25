@@ -1,6 +1,6 @@
 import { FriendStatus } from '@cuconnex/common';
-import { Request, Response } from 'express';
-import { IAcceptFriendRequest, IGetAllConnectionResponse, IGetAllFreindRequest } from '../interfaces';
+import { NextFunction, Request, Response } from 'express';
+import { IAcceptFriendRequest, IGetAllConnectionResponse, IGetAllFriendRequest } from '../interfaces';
 import { User } from '../models'
 
 
@@ -40,7 +40,7 @@ export const getAllFriendRequest = async (req: Request, res: Response): Promise<
         helper.push(request);
     }
 
-    const response: IGetAllFreindRequest = {
+    const response: IGetAllFriendRequest = {
         requests: helper.map(ele => ele.toJSON())
     }
 
@@ -76,4 +76,19 @@ export const acceptFriendRequest = async (req: Request, res: Response): Promise<
         status,
     }
     res.status(201).send(response);
+}
+
+export const getAllReceivedConnections = async (req: Request, res: Response): Promise<void> =>{
+    const requests = await req.user!.getRequestConnection();
+    const helper = [];
+    for (let request of requests) {
+        request.interests = await request.getInterests()
+        helper.push(request);
+    }
+
+    const response: IGetAllFriendRequest = {
+        requests: helper.map(ele => ele.toJSON())
+    }
+
+    res.status(200).send(response)
 }
