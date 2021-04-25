@@ -16,9 +16,10 @@
   margin: 2vw 0vh;
 
   border-radius: 20px;
-  background-color: #dfdfdf;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  color: var(--grey_text, #484747);
   /* align-items: center; */
   /* margin: 6%;
   margin-left: 8%; */
@@ -49,6 +50,11 @@
   border-radius: 10px; */
 }
 
+.flexboxItem:active {
+  background: #f33182;
+  color:white;
+}
+
 .box {
   margin: auto;
   display: flex;
@@ -65,7 +71,6 @@
   text-align: left;
   /* margin-top: 3%; */
   font-family: "Nunito", serif;
-  color: var(--grey_text, #484747);
 }
 
 .icon {
@@ -89,6 +94,5 @@
   text-align: left; */
   /* margin-top: 3%; */
   font-family: "Nunito", serif;
-  color: var(--grey_text, #484747);
   font-size: 12px;
 }
