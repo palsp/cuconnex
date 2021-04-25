@@ -5,7 +5,7 @@ import { User } from '../models'
 
 
 /**
- * return all connections of the user 
+ * return all connections of the user (Connections where status is Accepted)
  * @param req 
  * @param res 
  */
@@ -30,7 +30,7 @@ export const getAllConnection = async (req: Request, res: Response): Promise<voi
 }
 
 /**
- * get all friend request handler
+ * get all friend request handler (Relations whose status is still pending)
  */
 export const getAllFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const requests = await req.user!.getRequestConnection();
@@ -78,8 +78,8 @@ export const acceptFriendRequest = async (req: Request, res: Response): Promise<
     res.status(201).send(response);
 }
 
-export const getAllReceivedConnections = async (req: Request, res: Response): Promise<void> =>{
-    const requests = await req.user!.getRequestConnection();
+export const getAllReceivedFriendRequest = async (req: Request, res: Response): Promise<void> =>{
+    const requests = await req.user!.getReceivedFriendRequests();
     const helper = [];
     for (let request of requests) {
         request.interests = await request.getInterests()

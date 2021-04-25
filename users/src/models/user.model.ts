@@ -196,10 +196,12 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     if (status === FriendStatus.Accept || status === FriendStatus.Pending) {
       return;
     }
-    user.addConnection(this);
     return this.addConnection(user);
   }
-
+  /**
+   * Get all pending connection requests
+   * 
+   */
   public async getRequestConnection(): Promise<User[]> {
     const result: User[] = [];
     const connections = await this.getConnection()
@@ -211,6 +213,21 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
     return result;
 
+  }
+  public async getReceivedFriendRequests() {
+    const result: User[] = [];
+    const constraint = { receiverId: this.id, status: FriendStatus.Pending }
+    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
+    console.log(receivedRequests);
+    for(let conn of receivedRequests){
+        const user = await User.findOne({ where: { id: conn.senderId } })
+        if(user){
+          result.push(user);
+        }
+    }
+    console.log(result);
+
+    return result;
   }
 
   /**
