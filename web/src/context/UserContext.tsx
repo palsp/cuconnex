@@ -12,7 +12,11 @@ export const UserContext = React.createContext<IUserContext>(
   {} as IUserContext
 );
 
-export const UserContextProvider = (props: any) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const UserContextProvider: React.FC<Props> = (props) => {
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
