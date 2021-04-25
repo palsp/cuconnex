@@ -38,7 +38,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
       try {
         await fetchUserDataHandler();
       } catch (e) {
-        console.log("POST signin success but failed GET fetching");
+        console.log(`POST signin success but failed GET fetching, error: ${e}`);
       }
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
