@@ -133,6 +133,9 @@ export interface IEventData {
   };
 }
 //team
+export interface IGetTeam{
+  team:ITeam;
+}
 export interface ITeamData {
   name: string;
   description: string;

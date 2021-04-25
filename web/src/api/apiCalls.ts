@@ -22,6 +22,7 @@ import {
   ICallTeamOfUser,
   IFetchFriendNotification,
   IFetchFriendReceivedNotification,
+  IGetTeam,
 } from "@src/models";
 
 //Auth Services
@@ -90,6 +91,14 @@ const teamInvitationAPI = async (
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
     "/api/members/invite/",
     invitedData
+  );
+  return invitedUsersData;
+};
+const fetchTeamDataAPI = async (
+  name: string
+): Promise<AxiosResponse<IGetTeam>> => {
+  const invitedUsersData: AxiosResponse<IGetTeam> = await axios.post(
+    `/api/teams/${name}`
   );
   return invitedUsersData;
 };
@@ -215,4 +224,5 @@ export {
   callTeamOfUserAPI,
   addFriendResponseAPI,
   fetchFriendReceivedNotificationAPI,
+  fetchTeamDataAPI,
 };

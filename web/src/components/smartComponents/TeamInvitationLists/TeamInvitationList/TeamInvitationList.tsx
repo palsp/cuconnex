@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import {
@@ -11,6 +11,8 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./TeamInvitationList.module.css";
 import { Group } from "@dumbComponents/UI/Icons";
+import { fetchTeamDataAPI } from "@src/api";
+import { IGetTeam } from "@src/models";
 
 interface Props {
   TeamInvitation: {
@@ -18,9 +20,22 @@ interface Props {
     teamName: string;
     event: string;
   };
+  name?:string;
 }
 
 const TeamInvitationList: React.FC<Props> = (props) => {
+  // const [getTeamData, setGetTeamData] = useState<IGetTeam>();
+  //  useEffect(() => {
+  //   fetchTeamHandler().then((value: IGetTeam) =>
+  //      setGetTeamData(value)
+  //    );
+  // }, []);
+  // const fetchTeamHandler = async () => {
+  //   const teamData = await fetchTeamDataAPI(props.TeamInvitation.teamName);
+  //   console.log("SUCCESS fetchFriendHandler", teamData.data.team);
+  //   return teamData.data;
+  // };
+  
   return (
       <div className={classes.teamInvitationList}>
     <div className={classes.teamContainer}>
