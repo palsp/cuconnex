@@ -23,6 +23,7 @@ import {
   IFetchFriendNotification,
   IFetchFriendReceivedNotification,
   IGetTeam,
+  ITeamMembers,
 } from "@src/models";
 
 //Auth Services
@@ -97,10 +98,18 @@ const teamInvitationAPI = async (
 const fetchTeamDataAPI = async (
   name: string
 ): Promise<AxiosResponse<IGetTeam>> => {
-  const invitedUsersData: AxiosResponse<IGetTeam> = await axios.post(
+  const teamDetailsData: AxiosResponse<IGetTeam> = await axios.post(
     `/api/teams/${name}`
   );
-  return invitedUsersData;
+  return teamDetailsData;
+};
+const fetchTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<ITeamMembers>> => {
+  const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
+    `/api/teams/${teamName}`
+  );
+  return teamMembersData;
 };
 const callTeamOfUserAPI = async (
   userId: string
@@ -225,4 +234,5 @@ export {
   addFriendResponseAPI,
   fetchFriendReceivedNotificationAPI,
   fetchTeamDataAPI,
+  fetchTeamMembersAPI,
 };

@@ -140,6 +140,9 @@ export interface ITeamData {
   name: string;
   description: string;
 }
+export interface ITeamMembers{
+  users:IUser[];
+}
 export interface ITeamDataResult {
   name: string;
   description: string;
