@@ -2,14 +2,14 @@ import request from 'supertest';
 import { app } from '../../../app';
 import { User } from '../../../models/user.model';
 import { Interest } from '../../../models/interest.model';
-import { FriendStatus, Business } from '@cuconnex/common';
+import { FriendStatus, Business, Technology } from '@cuconnex/common';
 
 const setup = async (id?: string, name?: string) => {
     const user = await User.create({
         id: id || '6131898121',
         name: name || 'Anon',
         image: '/file/path',
-        bio: "Hello"
+        bio: "Hello",
     });
 
     const interest = await Interest.findOne({
@@ -96,11 +96,17 @@ describe('The edit User route', () => {
         const { body: res } = await request(app)
             .put('/api/users/6131898121')
             .set('Cookie', global.signin(user.id))
-            .send({ bio: 'Hello my name is Anon', name: 'John', year: '3', faculty: 'Engineering' })
+            .send({
+                bio: 'Hello my name is Anon', 
+                name: 'John', 
+                year: '3', 
+                faculty: 'Engineering' 
+            })
             .expect(200)
         expect(res.name).toEqual('John');
         expect(res.bio).toEqual('Hello my name is Anon');
         expect(res.year).toEqual('3');
-        expect(res.faculty).toEqual('Engineering')
+        expect(res.faculty).toEqual('Engineering');
+        console.log(res);
     });
 });
