@@ -11,10 +11,13 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
-    id: "2",  
+    id: "2",
     name: "Loong2",
     interests: {
       Technology: ["Coding", "Web Builder", "Chatbot", "FinTech"],
@@ -22,6 +25,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
@@ -33,6 +39,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
@@ -44,6 +53,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
@@ -55,6 +67,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
@@ -66,6 +81,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
@@ -77,6 +95,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
   {
@@ -88,6 +109,9 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
+    year: "3",
+    role: "Developer",
+    bio: "",
     image: "",
   },
 ];

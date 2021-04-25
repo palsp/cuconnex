@@ -21,7 +21,9 @@ const MemberList: React.FC<Props> = (props) => {
   const checkedMemberHandler = () => {
     setChecked((prevState) => !prevState);
   };
-  
+
+  const facultyYear = props.members.faculty + ", " + props.members.year;
+
   return (
     <div className={classes.memberList}>
       <div className={classes.divFriendList}>
@@ -33,10 +35,13 @@ const MemberList: React.FC<Props> = (props) => {
             <Username value={props.members.name} />
           </div>
           <div className={classes.divUserInfo}>
-            <Heading value={props.members.image} size="small" />
+            <Heading value={props.members.role} size="small" />
           </div>
           <div className={classes.divUserInfo}>
             <Subtitle value={props.members.faculty} />
+          </div>
+          <div className={classes.divUserInfo}>
+            <Subtitle value={props.members.year} />
           </div>
         </div>
         <div onClick={() => props.selectMemberListHandler(checked)}>

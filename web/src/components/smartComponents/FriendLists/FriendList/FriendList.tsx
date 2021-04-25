@@ -4,15 +4,10 @@ import { ProfilePic } from "@smartComponents/index";
 import { Heading, Subtitle, Username } from "@dumbComponents/UI/index";
 import { PlusCircle } from "@icons/index";
 import classes from "./FriendList.module.css";
+import { UsersData } from "@src/mockData/Models/index";
 
 interface Props {
-  friend: {
-    name: string;
-    image: string;
-    interest: string;
-    major: string;
-    year: number;
-  };
+  friend: UsersData;
 }
 const FriendList: React.FC<Props> = (props) => {
   return (
@@ -30,15 +25,17 @@ const FriendList: React.FC<Props> = (props) => {
           </div>
           <div className={classes.divUserInfo}>
             <Heading
-              value={props.friend ? props.friend.interest : "test-value"}
+              value={props.friend ? props.friend.role : "test-value"}
               size="small"
             />
           </div>
-
           <div className={classes.divUserInfo}>
             <Subtitle
-              value={props.friend ? props.friend.major : "test-value"}
+              value={props.friend ? props.friend.faculty : "test-value"}
             />
+          </div>
+          <div className={classes.divUserInfo}>
+            <Subtitle value={props.friend ? props.friend.year : "test-value"} />
           </div>
         </div>
 

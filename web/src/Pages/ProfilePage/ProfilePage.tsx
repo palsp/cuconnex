@@ -22,13 +22,15 @@ import containerVariants from "@src/models/models";
 
 import { IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
+import { EducationListsData } from "@src/mockData/Models";
 interface Props {
   location: {
     state: {
-      users: IUser;
+      users: any;
     };
   };
 }
+
 const ProfilePage: React.FC<Props> = (props) => {
   const [isAdded, setIsAdded] = useState(false);
   const [isFriend, setIsFriend] = useState(false);
@@ -58,6 +60,12 @@ const ProfilePage: React.FC<Props> = (props) => {
     console.log("clicked");
   };
 
+  const education: EducationListsData[] = [
+    {
+      faculty: props.location.state.users.faculty,
+      year: props.location.state.users.year,
+    },
+  ];
   let profilePrompt = null;
 
   if (clickEditProfile === false) {
@@ -79,6 +87,7 @@ const ProfilePage: React.FC<Props> = (props) => {
             <ProfileInfo
               name={props.location.state.users.name}
               role={props.location.state.users.role}
+              image={props.location.state.users.image}
             />
           </div>
           <div
@@ -108,7 +117,8 @@ const ProfilePage: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.education}>
-          <EducationLists education={mockEducationListsData} />
+          {/* <EducationLists education={mockEducationListsData} /> */}
+          <EducationLists education={education} />
         </div>
         <div className={classes.activity}>
           <ActivityLists activity={mockActivityListsData} />
@@ -133,8 +143,88 @@ const ProfilePage: React.FC<Props> = (props) => {
               )}
             </div>
           </div>
+
+          {/* If we get return as 3 separate interests arrray */}
+
           <div className={classes.interestLists}>
-            <InterestList
+            {/* {props.location.state.users.interests.Business ? (
+              props.location.state.users.interests.Business.map(
+                (interest: string) => {
+                  return (
+                    <InterestList
+                      data-test="interest-list-business"
+                      selectInterestHandlerDiv={() => {
+                        return;
+                      }}
+                      value={interest}
+                      key={interest}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div />
+            )}
+            {props.location.state.users.interests.Technology ? (
+              props.location.state.users.interests.Technology.map(
+                (interest: string) => {
+                  return (
+                    <InterestList
+                      data-test="interest-list-business"
+                      selectInterestHandlerDiv={() => {
+                        return;
+                      }}
+                      value={interest}
+                      key={interest}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div />
+            )}
+            {props.location.state.users.interests.Design ? (
+              props.location.state.users.interests.Design.map(
+                (interest: string) => {
+                  return (
+                    <InterestList
+                      data-test="interest-list-business"
+                      selectInterestHandlerDiv={() => {
+                        return;
+                      }}
+                      value={interest}
+                      key={interest}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div />
+            )} */}
+
+            {/* If Interest return in one Array */}
+
+            {props.location.state.users.interests ? (
+              props.location.state.users.interests.map((interest: string) => {
+                console.log(interest);
+                return (
+                  <InterestList
+                    data-test="interest-list-business"
+                    selectInterestHandlerDiv={() => {
+                      return;
+                    }}
+                    value={interest}
+                    key={interest}
+                  />
+                );
+              })
+            ) : (
+              <div />
+            )}
+
+            {/* Mock Interest */}
+
+            {/* <InterestList
               data-test="interest-list-business"
               selectInterestHandlerDiv={() => {
                 return;
@@ -149,7 +239,7 @@ const ProfilePage: React.FC<Props> = (props) => {
               }}
               value="Ecommerce"
               key="Ecommerce"
-            />
+            /> */}
           </div>
         </div>
       </div>
@@ -172,6 +262,7 @@ const ProfilePage: React.FC<Props> = (props) => {
           </div>
         </div>
         <EditPrompt type={clickEditOption} />
+        {/* <EditPrompt type={clickEditOption} users={props.location.state.users} /> */}
       </div>
     );
   }
