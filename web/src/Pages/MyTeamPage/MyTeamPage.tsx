@@ -18,8 +18,7 @@ import { UserContext } from "@context/UserContext";
 import { fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-  const [clickOngoing, setOngoing] = useState(true);
-  const [clickFinished, setFinished] = useState(false);
+  const [onGoing, setOngoing] = useState(true);
 
   // const { setTeamData } = useContext(UserDataContext);
 
@@ -36,18 +35,16 @@ const MyTeamPage: React.FC = () => {
 
   const ongoingButtonHandler = () => {
     setOngoing(true);
-    setFinished(false);
     console.log("setOngoing");
   };
 
   const finishedButtonHandler = () => {
     setOngoing(false);
-    setFinished(true);
     console.log("setFinished");
   };
 
   let myteamsPrompt = null;
-  if (clickOngoing === true) {
+  if (onGoing === true) {
     myteamsPrompt = (
       <div className={classes.tabOngoing}>
         <div className={classes.relativeArrow}>
@@ -82,7 +79,7 @@ const MyTeamPage: React.FC = () => {
         </div>
       </div>
     );
-  } else if (clickFinished === true) {
+  } else if (onGoing === false) {
     myteamsPrompt = (
       <div className={classes.tabFinished}>
         <div className={classes.relativeArrow}>
