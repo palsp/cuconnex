@@ -150,7 +150,7 @@ describe('Get Friend Request', () => {
 
     });
 });
-describe('The Received connections route', () => {
+describe('Get Received Requests', () => {
     it('should return all received connection requests with pending status', async () => {
         const user1 = await User.create({ id: "6131775521", name: "test_1" })
         const user2 = await User.create({ id: "6131775621", name: "test_2" })
@@ -172,6 +172,7 @@ describe('The Received connections route', () => {
         const user3 = await User.create({ id: "6131775721", name: "test_3" })
         await user1.requestConnection(user2);
         await user3.requestConnection(user2);
+        console.log(await user1.getReceivedFriendRequests())
         const { body } = await request(app)
             .get("/api/users/friends/request/received")
             .set('Cookie', global.signin(user2.id))
