@@ -12,8 +12,18 @@ import containerVariants from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 
-const LandingPage: React.FC = () => {
-  const [clickHamburger, setClickHamburger] = useState<boolean>(false);
+interface Props {
+  location: {
+    state?: {
+      hamburgerOn?: boolean;
+    };
+  };
+}
+
+const LandingPage: React.FC<Props> = (props) => {
+  console.log(props.location);
+  const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
+  const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
   const [hasTeam, setHasTeam] = useState<boolean>(true);
   const { userData } = useContext(UserContext);
   console.log(userData);

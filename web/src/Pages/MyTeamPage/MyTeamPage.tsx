@@ -48,7 +48,10 @@ const MyTeamPage: React.FC = () => {
     myteamsPrompt = (
       <div className={classes.tabOngoing}>
         <div className={classes.relativeArrow}>
-          <Link data-test="myteam-page-back-link" to="/landing">
+          <Link
+            data-test="myteam-page-back-link"
+            to={{ pathname: "/landing", state: { hamburgerOn: true } }}
+          >
             <ArrowLeft data-test="myteam-page-arrow-left" />
           </Link>
         </div>
