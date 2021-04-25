@@ -45,6 +45,3 @@ export const isValidID = (id: string): boolean => {
 }
 
 
-
-
-console.log(isValidID("6131886621"))
