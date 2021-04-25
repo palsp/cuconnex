@@ -12,6 +12,7 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import { ErrorContext } from "@context/ErrorContext";
 import { ArrowLeft } from "@icons/index";
 import { userSignupAPI } from "@api/index";
 import { IUserSignup, FacultyListsEnum } from "@models/index";
@@ -104,10 +105,9 @@ const yearFacultyHandler = (id: string) => {
 };
 
 const SignupPrompt: React.FC<Props> = (props) => {
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<JSX.Element>();
-
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { setErrorHandler } = useContext(ErrorContext);
 
   const signupHandler = async (signupData: IUserSignup) => {
     try {
@@ -115,7 +115,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
       console.log("Successfully sent a POST request to signup", resultSignup);
       setIsAuthenticated(true);
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
+      setErrorHandler(e);
       console.log("ERRORS occured while POST /api/auth/signup", e);
     }
   };
@@ -194,7 +194,6 @@ const SignupPrompt: React.FC<Props> = (props) => {
         )}
       </Formik>
       {redirect}
-      {errorOnScreen}
       <div className={classes.footerNavigation}>
         <DotMorePage data-test="dot-icon" amount={1} />
         <div

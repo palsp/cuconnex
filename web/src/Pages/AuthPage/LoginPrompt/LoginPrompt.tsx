@@ -26,7 +26,7 @@ const validationSchema = yup.object({
   password: yup.string().required("No password provided."),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
-  const [redirect, setRedirect] = useState<boolean>(false);
+  const [redirect, setRedirect] = useState<JSX.Element>();
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const { fetchUserDataHandler } = useContext(UserContext);
   const { setErrorHandler } = useContext(ErrorContext);
@@ -36,19 +36,33 @@ const LoginPrompt: React.FC<Props> = (props) => {
       const resultSignin = await userSigninAPI(signinData);
       console.log("Successfully sent a POST request to signin", resultSignin);
       setIsAuthenticated(true);
-      setRedirect(true);
       try {
         await fetchUserDataHandler();
+        setRedirect(<Redirect to="/landing" />);
       } catch (e) {
-        console.log("POST signin success but failed GET fetching");
+        console.log(
+          "User has not finished filling in their personal information!"
+        );
+        // setErrorHandler("Please fill out your information!");
+        setRedirect(
+          <Redirect
+            to={{
+              pathname: "/personalinformation",
+              state: {
+                year: "3", // This should be sent back by server
+                faculty: "Engineering", // This should be sent back by server
+                id: "6131824721", // This should be sent back by server
+              },
+            }}
+          />
+        );
       }
     } catch (e) {
-      setErrorHandler("Wrong Username or Password!");
+      console.log(e.message);
+      setErrorHandler(e);
     }
   };
-  const loginPrompt = redirect ? (
-    <Redirect to="/landing" />
-  ) : (
+  const loginPrompt = (
     <Formik
       data-test="auth-page-login-form"
       initialValues={{
@@ -92,7 +106,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
       </div>
 
       {loginPrompt}
-
+      {redirect}
       <div className={classes.footerNavigation}>
         <div
           onClick={props.backButtonClickedHandler}

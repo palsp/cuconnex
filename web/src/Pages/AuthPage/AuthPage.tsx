@@ -30,7 +30,7 @@ const AuthPage: React.FC = () => {
       setIsAuthenticated(true);
       setRedirect(true);
     } catch (e) {
-      setErrorHandler(e);
+      // setErrorHandler(e);
       console.log("FAILED checkUserHasLogin", e);
     }
   };
