@@ -10,10 +10,10 @@ import { ProfilePic } from "@smartComponents/index";
 import { Search } from "@icons/index";
 import classes from "./MemberList.module.css";
 import { UsersData } from "@src/mockData/Models";
-import { IUser } from "@src/models";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  members: IUser;
+  members: IUserFriend;
   selectMemberListHandler: any;
 }
 
@@ -33,7 +33,7 @@ const MemberList: React.FC<Props> = (props) => {
             <Username value={props.members.name} />
           </div>
           <div className={classes.divUserInfo}>
-            <Heading value={props.members.bio} size="small" />
+            <Heading value={props.members.role} size="small" />
           </div>
 
           <div className={classes.divUserInfo}>

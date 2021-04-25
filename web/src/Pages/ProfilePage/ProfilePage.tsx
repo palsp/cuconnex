@@ -86,7 +86,7 @@ const ProfilePage: React.FC<Props> = (props) => {
       <div className={classes.profile}>
         <div className={classes.header}>
           <div className={classes.relativeArrow}>
-            <Link data-test="profile-page-back-link" to="/landing">
+            <Link data-test="profile-page-back-link" to="/friendlists">
               <ArrowLeft data-test="profile-page-arrow-left" />
             </Link>
           </div>
@@ -99,7 +99,7 @@ const ProfilePage: React.FC<Props> = (props) => {
           <div className={classes.profileInfo}>
             <ProfileInfo
               name={props.location.state.users.name}
-              role={props.location.state.users.major}
+              role={props.location.state.users.role}
             />
           </div>
           <div
@@ -116,12 +116,20 @@ const ProfilePage: React.FC<Props> = (props) => {
             >
               <div className={classes.buttonTextDiv}>Connect</div>
             </div>
-            ) : (
+            ) : isFriend == "Pending" ?(
               <div
               className={classes.pendingButtonDiv}
             >
               <div className={classes.buttonTextDiv}>Pending</div>
             </div>
+            ): isFriend=="Accept"?(
+              <div
+              className={classes.acceptButtonDiv}
+            >
+              <div className={classes.buttonTextDiv}>Connected</div>
+            </div>
+            ):(
+              <div/>
             )}
           </div>
         </div>
@@ -129,7 +137,7 @@ const ProfilePage: React.FC<Props> = (props) => {
         <div className={classes.about}>
           <div className={classes.bio}>
             <Biography
-              nickname={props.location.state.users.major}
+              nickname={props.location.state.users.role}
               detail={props.location.state.users.bio}
             />
           </div>
@@ -142,7 +150,7 @@ const ProfilePage: React.FC<Props> = (props) => {
           <EducationList
             faculty={props.location.state.users.faculty}
             year={props.location.state.users.year}
-            major={props.location.state.users.major}
+            major={props.location.state.users.bio}
           />
         </div>
         <div className={classes.activity}>

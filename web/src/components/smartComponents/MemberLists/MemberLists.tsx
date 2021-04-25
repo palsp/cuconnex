@@ -5,12 +5,12 @@ import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
-import { IUser } from "@src/models";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  memberlist: IUser[] | [];
+  memberlist: IUserFriend[] | [];
   selectMemberListsHandler: (e: number) => void;
-  personHandler: (e: IUser) => void;
+  personHandler: (e: IUserFriend) => void;
 }
 const MemberLists: React.FC<Props> = (props) => {
   // const fetchFriendsList:member[] = async () => {
@@ -24,7 +24,7 @@ const MemberLists: React.FC<Props> = (props) => {
     <div>
       {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
       {props.memberlist.map((person: MemberListsData, index: number) => { */}
-      {props.memberlist.map((person: IUser, index: number) => {
+      {props.memberlist.map((person: IUserFriend, index: number) => {
         return (
           <div key={index}>
             <MemberList

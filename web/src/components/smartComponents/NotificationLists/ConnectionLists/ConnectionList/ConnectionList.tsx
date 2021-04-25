@@ -88,7 +88,7 @@ const ConnectionList: React.FC<Props> = (props) => {
         <div className={classes.role}>
           <Subtitle
             data-test="connection-list-role"
-            value={props.connection.major}
+            value={props.connection.role}
             size="small"
             color="pink"
           />

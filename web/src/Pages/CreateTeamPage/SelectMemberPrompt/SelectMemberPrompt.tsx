@@ -8,7 +8,7 @@ import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
 import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
-import { IUser } from "@src/models";
+import { IUser, IUserFriend } from "@src/models";
 import { fetchFriendsDataAPI } from "@src/api";
 
 const SelectMemberPrompt: React.FC = () => {
@@ -16,12 +16,12 @@ const SelectMemberPrompt: React.FC = () => {
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
-  const [selectedMemberArray, setSelectedMemberArray] = useState< IUser[]>(
+  const [selectedMemberArray, setSelectedMemberArray] = useState< IUserFriend[]>(
     []
   );
-  const [friendLists, setFriendLists] = useState<IUser[] | []>([]);
+  const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
-    fetchFriendsHandler().then((value: IUser[] | []) => setFriendLists(value));
+    fetchFriendsHandler().then((value: IUserFriend[] | []) => setFriendLists(value));
   }, []);
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -38,12 +38,12 @@ const SelectMemberPrompt: React.FC = () => {
     setClickSelectMember(false);
     setClickCreateTeam(false);
   };
-  const selectPersonHandler = (e: IUser) => {
+  const selectPersonHandler = (e: IUserFriend) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: IUser[] | [] = [...selectedMemberArray];
+      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       setSelectedMemberArray(
         (selectedMemberArray) => (selectedMemberArray = newMemberArray)

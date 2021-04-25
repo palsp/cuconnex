@@ -5,7 +5,7 @@ import ProfilePic from "@smartComponents/ProfilePic/ProfilePic";
 import { createTeamAPI, teamInvitationAPI } from "@src/api";
 import { mockMemberLists } from "@src/mockData";
 import { UsersData } from "@src/mockData/Models";
-import { IInviteData, ITeamData, IUser } from "@src/models";
+import { IInviteData, ITeamData, IUser, IUserFriend } from "@src/models";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import React, { useState } from "react";
@@ -13,7 +13,7 @@ import { Link, Redirect } from "react-router-dom";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
 interface Props {
-  members: IUser[] | [];
+  members: IUserFriend[] | [];
 }
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
@@ -44,7 +44,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       console.log("ERRORS occured while POST /members/invite/", e);
     }
   };
-  const inviteMember = (teamName:string,members:IUser[] | []) => {
+  const inviteMember = (teamName:string,members:IUserFriend[] | []) => {
     members.forEach(members => {
       invitationHandler({teamName, newMemberId:members.id });
       console.log("POST /members/invite/", teamName,members.id);

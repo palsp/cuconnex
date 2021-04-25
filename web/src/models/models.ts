@@ -9,7 +9,7 @@ export interface IUser {
   };
   faculty: string;
   year: string;
-  major: string;
+  role: string;
   bio: string;
   image: string;
 }
@@ -24,7 +24,7 @@ export interface IUserFriend {
   interests: string[];
   faculty: string;
   year: string;
-  major: string;
+  role: string;
   bio: string;
   image: string;
 }
@@ -79,7 +79,7 @@ export interface IFetchUserData {
   };
   faculty: string;
   year: string;
-  major: string;
+  role: string;
   bio: string;
   image: string;
 }
@@ -95,10 +95,10 @@ export interface ICreateUserData {
   bio: string;
   year: string;
   image: File;
-  major?: string;
+  role?: string;
 }
 export interface IFetchFriendsData {
-  connections: IUser[];
+  connections: IUserFriend[];
 }
 //events
 export interface IFetchEventsData {

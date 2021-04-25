@@ -1,5 +1,6 @@
 .divHeading {
-  position: relative;
+  display:flex;
+  flex-direction: column;
   width: 100vw;
   height: 150px;
   z-index: 1;
@@ -17,5 +18,7 @@
   top: 5vh;
 }
 .listDiv{
-  margin-top:2vh;
+  margin-top:5%;
+}
+.searchDiv{
 }

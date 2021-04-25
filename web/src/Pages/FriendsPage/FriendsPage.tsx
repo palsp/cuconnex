@@ -5,15 +5,16 @@ import { FriendLists, SearchBar } from "@smartComponents/index";
 import { Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 import { motion } from "framer-motion";
-import containerVariants, { IUser } from "@src/models/models";
+import containerVariants, { IUser, IUserFriend } from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
 import { fetchFriendsDataAPI } from "@src/api";
 
 const FriendsPage: React.FC = () => {
-  const [friendLists, setFriendLists] = useState<IUser[] | []>([]);
+  const [hasSearch, setHasSearch] = useState<boolean>(false);
+  const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
-    fetchFriendsHandler().then((value: IUser[] | []) => setFriendLists(value));
+    fetchFriendsHandler().then((value: IUserFriend[] | []) => setFriendLists(value));
   }, []);
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -22,6 +23,7 @@ const FriendsPage: React.FC = () => {
   };
   const test = fetchFriendsHandler();
   console.log(test);
+  
   return (
     <motion.div
       variants={containerVariants}
@@ -42,10 +44,12 @@ const FriendsPage: React.FC = () => {
             value="My connections"
             size="medium"
           />
+          <div className={classes.searchDiv}>
           <SearchBar
             data-test="friends-page-search-bar"
             value="Search By Name"
           />
+          </div>
         </div>
       </div>
       <div className={classes.listDiv}>

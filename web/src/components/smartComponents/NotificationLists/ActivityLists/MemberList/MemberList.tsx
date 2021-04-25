@@ -36,7 +36,7 @@ const MemberList: React.FC<Props> = (props) => {
         <div className={classes.role}>
           <Subtitle
             data-test="member-list-role"
-            value={props.member.major}
+            value={props.member.role}
             color="pink"
           />
         </div>
