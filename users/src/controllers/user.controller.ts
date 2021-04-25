@@ -178,7 +178,10 @@ export const editUser = async (req: Request, res: Response) => {
     if(!req.params.userId) throw new BadRequestError("Please enter a user ID!");
     const user = await User.findOne({ where: { id: req.params.userId } });
     if(!user) throw new NotFoundError();
-    
+    let imagePath = "";
+    if(req.file){
+        imagePath = req.file.path;
+    }
  
     if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
 
@@ -191,6 +194,7 @@ export const editUser = async (req: Request, res: Response) => {
             year: req.body.year || user.year,
             major: req.body.major || user.major,
             lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+            image: imagePath || user.image
         },
         { returning: true, where: { id: req.params.userId }}
     ).then(async (rowsUpdated) => {
