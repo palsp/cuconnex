@@ -4,6 +4,7 @@ interface Props {
   value: string;
   color?: string;
   size?: string;
+  bold?: boolean;
 }
 
 const Heading: React.FC<Props> = (props) => {
@@ -33,6 +34,10 @@ const Heading: React.FC<Props> = (props) => {
     case "small-medium":
       cssArray.push(classes.smallMediumSize);
       break;
+  }
+
+  if (props.bold) {
+    cssArray.push(classes.bold);
   }
   return (
     <div data-test="heading-title">
