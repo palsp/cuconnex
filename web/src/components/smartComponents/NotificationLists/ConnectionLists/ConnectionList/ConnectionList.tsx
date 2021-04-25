@@ -9,8 +9,8 @@ import {
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./ConnectionList.module.css";
-import { IUser, IUserFriend } from "@src/models";
 import { Check } from "@dumbComponents/UI/Icons";
+import { IUser, IUserFriend } from "@src/models";
 interface Props {
   connection: IUserFriend;
 }

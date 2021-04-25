@@ -36,7 +36,6 @@ const LandingPage: React.FC = () => {
             <Search />
           </Link>
         </div>
-        <Link to="/notification">
         <div
           //onClick={() => setHasTeam((prev) => !prev)}
           className={classes.mailDiv}
@@ -45,7 +44,6 @@ const LandingPage: React.FC = () => {
             <Mail />
           </Link>
         </div>
-        </Link>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
           <Hamburger />
         </div>
