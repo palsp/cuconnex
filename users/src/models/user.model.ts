@@ -196,10 +196,12 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     if (status === FriendStatus.Accept || status === FriendStatus.Pending) {
       return;
     }
-
     return this.addConnection(user);
   }
-
+  /**
+   * Get all pending connection requests
+   * 
+   */
   public async getRequestConnection(): Promise<User[]> {
     const result: User[] = [];
     const connections = await this.getConnection()
@@ -211,6 +213,44 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
     return result;
 
+  }
+  /**
+   * Method for finding all pending friend requests this user has received
+   * @returns {User[]} - Array of all users who have send a friend request to current user
+   */
+  public async getReceivedFriendRequests() {
+    const result: User[] = [];
+    const constraint = { receiverId: this.id, status: FriendStatus.Pending }
+    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
+    console.log(receivedRequests);
+    for(let conn of receivedRequests){
+        const user = await User.findOne({ where: { id: conn.senderId } })
+        if(user){
+          result.push(user);
+        }
+    }
+    console.log(result);
+
+    return result;
+  }
+  /**
+   * Method for finding all pending friend requests this user has send
+   * @returns {User[]} - Array of all users who have received a friend request from current user
+   */
+  public async getSendFriendRequests() {
+    const result: User[] = [];
+    const constraint = { senderId: this.id, status: FriendStatus.Pending }
+    const sendRequests: Connection[] = await Connection.findAll({ where: constraint });
+    console.log(sendRequests);
+    for (let conn of sendRequests) {
+      const user = await User.findOne({ where: { id: conn.senderId } })
+      if (user) {
+        result.push(user);
+      }
+    }
+    console.log(result);
+
+    return result;
   }
 
   /**

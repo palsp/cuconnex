@@ -149,5 +149,36 @@ describe('Get Friend Request', () => {
         expect(body.requests).toHaveLength(1)
 
     });
-
+});
+describe('The Received connections route', () => {
+    it('should return all received connection requests with pending status', async () => {
+        const user1 = await User.create({ id: "6131775521", name: "test_1" })
+        const user2 = await User.create({ id: "6131775621", name: "test_2" })
+        const user3 = await User.create({ id: "6131775721", name: "test_3" })
+        await user1.requestConnection(user2);
+        await user2.requestConnection(user3);
+        console.log(user2.getReceivedFriendRequests())
+        const { body } = await request(app)
+            .get("/api/users/friends/request/received")
+            .set('Cookie', global.signin(user2.id))
+            .send({})
+            .expect(200);
+        expect(body.requests).toHaveLength(1)
+        expect(body.requests[0].name).toEqual("test_1");
+    });
+    it('should return all received connection requests with pending status if there are multiple', async () => {
+        const user1 = await User.create({ id: "6131775521", name: "test_1" })
+        const user2 = await User.create({ id: "6131775621", name: "test_2" })
+        const user3 = await User.create({ id: "6131775721", name: "test_3" })
+        await user1.requestConnection(user2);
+        await user3.requestConnection(user2);
+        const { body } = await request(app)
+            .get("/api/users/friends/request/received")
+            .set('Cookie', global.signin(user2.id))
+            .send({})
+            .expect(200);
+        expect(body.requests).toHaveLength(2)
+        expect(body.requests[0].name).toEqual("test_1");
+        expect(body.requests[1].name).toEqual("test_3");
+    });
 });
