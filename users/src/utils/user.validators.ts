@@ -44,7 +44,7 @@ export const addFriendValidator = [
 /**
  * userId and accepted is required to accept or rejected add freind request
  */
-export const addFreindResultValidator = [
+export const addFriendResultValidator = [
     body('userId')
         .notEmpty()
         .isAlphanumeric()
