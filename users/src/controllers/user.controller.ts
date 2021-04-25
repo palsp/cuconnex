@@ -175,34 +175,46 @@ export const findRelation = async (req: Request, res: Response) => {
  * @param res 
  */
 export const editUser = async (req: Request, res: Response) => {
-    if(!req.params.userId) throw new BadRequestError("Please enter a user ID!");
-    const user = await User.findOne({ where: { id: req.params.userId } });
+    if(!req.currentUser!.id) throw new BadRequestError("Please enter a user ID!");
+    const user = await User.findOne({ where: { id: req.currentUser!.id } });
     if(!user) throw new NotFoundError();
     let imagePath = "";
-    if(req.file){
-        imagePath = req.file.path;
+    if (req.file) {
+        imagePath = req.file.path
+        if (req.file.size > 1024 * 1024 * 1024) {
+            deleteFile(imagePath);
+            throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
+        }
     }
  
-    if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
+    //if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
+    if (req.body.year) {
+        const pattern = /^[1-4]$/
+        if (!pattern.test(req.body.year)) {
+            throw new BadRequestError('Year must be valid')
+        }
+    }
 
     User.update(
         { 
             name: req.body.name || user.name, 
             bio: req.body.bio || user.bio,
-            interests: req.body.interests || user.interests,
             faculty: req.body.faculty || user.faculty,
+            interests: req.body.interests || user.interests,
             year: req.body.year || user.year,
             major: req.body.major || user.major,
             lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
             image: imagePath || user.image
         },
-        { returning: true, where: { id: req.params.userId }}
-    ).then(async (rowsUpdated) => {
-        console.log(rowsUpdated)
-        const user = await User.findOne({ where: { id: req.params.userId }})
-        res.status(200).send(user);
-    }).catch((err) => { 
-        console.log(err.message)
-        res.status(500).send(err.message);
-    })
+        { where: { id: req.params.userId } }
+    )
+        .then(async (rowsUpdated) => {
+            console.log(rowsUpdated)
+            let user = await User.findOne({ where: { id: req.currentUser!.id }})
+            res.status(200).send(user)
+        })
+        .catch((err) => { 
+            console.log(err.message)
+            res.status(500).send(err.message);
+        })
 }
