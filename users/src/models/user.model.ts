@@ -29,7 +29,7 @@ interface UserAttrs {
   interests?: Interest[];
   friends?: User[];
   year: string,
-  major: string,
+  role: string,
   bio: string,
   connections?: Connection;
 }
@@ -41,7 +41,7 @@ interface UserCreationAttrs {
   image?: string;
   lookingForTeam?: boolean;
   year?: string,
-  major?: string,
+  role?: string,
   bio?: string,
 
 }
@@ -55,7 +55,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public image!: string;
   public lookingForTeam: boolean = true;
   public year!: string;
-  public major!: string;
+  public role!: string;
   public bio!: string;
 
   public interests?: Interest[];
@@ -89,7 +89,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
           type: DataTypes.STRING(1),
           defaultValue: "",
         },
-        major: {
+        role: {
           type: DataTypes.STRING(255),
           defaultValue: "",
         },

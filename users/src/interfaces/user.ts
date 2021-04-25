@@ -7,7 +7,7 @@ export interface IUserResponse {
     image: string,
     faculty: string,
     year: string,
-    major: string,
+    role: string,
     bio: string,
     lookingForTeam: boolean,
     interests: IInterestResponse[];

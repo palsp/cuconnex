@@ -132,7 +132,7 @@ it('should create user successfully with optional field', async () => {
     },
     name: 'test',
     year: '1',
-    major: 'ICE',
+    role: 'developer',
     bio: 'I am the best programmer in the world',
   };
   const { body } = await request(app)
@@ -146,7 +146,7 @@ it('should create user successfully with optional field', async () => {
   const saveUser = await User.findOne({ where: { id } });
   expect(saveUser!.name).toEqual(user.name);
   expect(saveUser!.year).toEqual(user.year);
-  expect(saveUser!.major).toEqual(user.major);
+  expect(saveUser!.role).toEqual(user.role);
   expect(saveUser!.bio).toEqual(user.bio);
 });
 

@@ -51,7 +51,7 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
  * @param res 
  */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
-    const { interests, name, faculty, year, major, bio } = req.body;
+    const { interests, name, faculty, year, role, bio } = req.body;
     // console.log(interests, name)
     let imagePath = "";
     if (req.file) {
@@ -80,7 +80,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     // create users 
 
     try {
-        user = await User.create({ id: req.currentUser!.id, name, faculty, year, major, bio, image: imagePath });
+        user = await User.create({ id: req.currentUser!.id, name, faculty, year, role, bio, image: imagePath });
         for (let category in interests) {
             // select only valid interest description 
             interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
