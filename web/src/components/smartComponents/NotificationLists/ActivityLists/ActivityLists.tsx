@@ -10,9 +10,10 @@ import {
   PositionsInActivityNotificationList,
 } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  Memberlist: MembersInActivityNotificationData[] | [];
+  Memberlist: [IUserFriend] | [];
   Positionlist: PositionsInActivityNotificationData[] | [];
 }
 
@@ -37,7 +38,7 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
       <div className={classes.memberlist}>
         <div className={classes.listHeader}>Pending Connections</div>
         {props.Memberlist.map(
-          (person: MembersInActivityNotificationData, index: number) => {
+          (person: IUserFriend, index: number) => {
             return (
               <div key={index}>
                 <MemberInActivityNotificationList key={index} member={person} />
