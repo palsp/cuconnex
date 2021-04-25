@@ -216,6 +216,6 @@ export const editUser = async (req: Request, res: Response) => {
         })
         .catch((err) => { 
             console.log(err.message)
-            res.status(500).send(err.message);
+            throw new BadRequestError("Update User error");
         })
 }
