@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
-import { BadRequestError } from '@cuconnex/common'
+import { BadRequestError, getYearFromId } from '@cuconnex/common'
 import { Op } from 'sequelize';
 import { Password } from '../services/password';
 require('express-async-errors');
-import { isValidID } from '@cuconnex/common';
+import { faculty, getFacultyCodeFromId, getCurrentYear } from '@cuconnex/common';
 
 interface UserPayload {
     id: string,
@@ -41,7 +41,12 @@ export const signUp = async (req: Request, res: Response) => {
         jwt: userJwt
     };
 
-    const response = user.toJSON()
+    const response = {
+        ...user.toJSON(),
+        faculty: faculty[getFacultyCodeFromId(id)],
+        year: +getCurrentYear() - +getYearFromId(id)
+    }
+
     // Token must be removed in production
     res.status(201).send({ ...response, token: userJwt });
 
