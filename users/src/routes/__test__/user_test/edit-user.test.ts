@@ -27,14 +27,6 @@ describe('The edit User route', () => {
             .send({ hello: "hello"})
             .expect(401)
     });
-    it('should return 404 if there is no user with specified id', async () => {
-        const { user } = await setup();
-        await request(app)
-            .put('/api/users/613')
-            .set('Cookie', global.signin(user.id))
-            .send({ name: 'John' })
-            .expect(404)
-    });
     // it('should return 400 if no fields are provided', async () => {
     //     const { user } = await setup();
     //     const { body: res} = await request(app)
@@ -47,7 +39,7 @@ describe('The edit User route', () => {
     it('should return 400 if invalid fields are provided', async () => {
         const { user } = await setup();
         const { body: res } = await request(app)
-            .put('/api/users/6131898121')
+            .put('/api/users')
             .set('Cookie', global.signin(user.id))
             .send({ name: 4, bio: 2, year: 3 })
             .expect(400)
@@ -69,7 +61,7 @@ describe('The edit User route', () => {
     it('should return 200 if name is specified and should update only the name', async () => {
         const { user } = await setup();
         await request(app)
-            .put('/api/users/6131898121')
+            .put('/api/users')
             .set('Cookie', global.signin(user.id))
             .send({ name: 'John' })
             .expect(200)
@@ -81,7 +73,7 @@ describe('The edit User route', () => {
     it('should return 200 if bio is specified and should update only the bio', async () => {
         const { user } = await setup();
         await request(app)
-            .put('/api/users/6131898121')
+            .put('/api/users')
             .set('Cookie', global.signin(user.id))
             .send({ bio: 'Hello my name is Anon' })
             .expect(200)
@@ -94,7 +86,7 @@ describe('The edit User route', () => {
     it('should return 200 if more than one fields are specified and update all specified fields', async () => {
         const { user } = await setup();
         const { body: res } = await request(app)
-            .put('/api/users/6131898121')
+            .put('/api/users')
             .set('Cookie', global.signin(user.id))
             .send({
                 bio: 'Hello my name is Anon', 

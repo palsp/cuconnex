@@ -176,6 +176,7 @@ export const findRelation = async (req: Request, res: Response) => {
  */
 export const editUser = async (req: Request, res: Response) => {
     if(!req.currentUser!.id) throw new BadRequestError("Please enter a user ID!");
+    console.log(req.currentUser!.id);
     const user = await User.findOne({ where: { id: req.currentUser!.id } });
     if(!user) throw new NotFoundError();
     let imagePath = "";
@@ -206,7 +207,7 @@ export const editUser = async (req: Request, res: Response) => {
             lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
             image: imagePath || user.image
         },
-        { where: { id: req.params.userId } }
+        { where: { id: req.currentUser!.id } }
     )
         .then(async (rowsUpdated) => {
             console.log(rowsUpdated)
