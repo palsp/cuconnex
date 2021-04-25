@@ -75,8 +75,13 @@ export const signIn = async (req: Request, res: Response) => {
         jwt: userJwt,
     };
 
+    const response = {
+        ...existingUser.toJSON(),
+        faculty: faculty[getFacultyCodeFromId(existingUser.id)],
+        year: +getCurrentYear() - +getYearFromId(existingUser.id)
+    }
     // Token must be removed in production
-    res.status(200).send({ email: existingUser.email, id: existingUser.id, token: userJwt });
+    res.status(200).send({ ...response, token: userJwt });
 };
 
 
