@@ -35,7 +35,7 @@ describe('Get Team Test', () => {
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
-    console.log('eiei', res.body);
+
     // expect(res.body.dataValues.name).toEqual(team.name);
     // expect(res.body.dataValues.creatorId).toEqual(user.id);
 

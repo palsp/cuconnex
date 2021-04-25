@@ -8,7 +8,7 @@ import {
 
 import { TableName } from './types';
 
-import { Member } from './member.model';
+import { IsMember } from './isMember.model';
 import { User } from './user.model';
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
@@ -65,12 +65,12 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   }
 
   // this addMember function just create PENDING status not ACCEPTED -> try use the 'addAndAcceptMember' function instead
-  public addMember!: BelongsToManyAddAssociationMixin<Member, User>;
+  public addMember!: BelongsToManyAddAssociationMixin<IsMember, User>;
   public getMember!: BelongsToManyGetAssociationsMixin<User>;
 
   // create PENDING status to the user
   public async inviteMember(user: User) {
-    const member = await Member.findOne({ where: { teamName: this.name, userId: user.id } });
+    const member = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     // if there is a member status : 'accept || reject || pending ' do nothing
     if (member) {
@@ -82,16 +82,16 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // edit can be use to ACCEPT or REJECT status
   public async editMemberStatus(user: User, status: TeamStatus) {
-    const member = await Member.findOne({ where: { teamName: this.name, userId: user.id } });
+    const isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     // no status with this user yet
-    if (!member) {
+    if (!isMember) {
       throw new BadRequestError(`User ${user.id} does not have any status yet`);
     }
 
-    member.status = status;
+    isMember.status = status;
     try {
-      await member.save();
+      await isMember.save();
     } catch (err) {
       throw new BadRequestError(err.message);
     }
@@ -99,28 +99,28 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // this will promptly create ACCEPT status for user >> mostly use for the creator of the team
   public async addAndAcceptMember(user: User) {
-    const member = await Member.findOne({ where: { teamName: this.name, userId: user.id } });
+    const isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
-    if (member) {
+    if (isMember) {
       // if user already accepted in the team
-      if (member.status === TeamStatus.Accept) {
+      if (isMember.status === TeamStatus.Accept) {
         throw new BadRequestError(`This user is already part of the team`);
 
         // if user have other status, just bring him/her in the team
       } else {
-        member.status = TeamStatus.Accept;
-        await member.save();
+        isMember.status = TeamStatus.Accept;
+        await isMember.save();
       }
     }
 
     await this.addMember(user);
-    const newMember = await Member.findOne({ where: { teamName: this.name, userId: user.id } });
+    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
-    if (!newMember) {
+    if (!newIsMember) {
       throw new Error('Db connection failed');
     }
-    newMember.status = TeamStatus.Accept;
-    await newMember.save();
+    newIsMember.status = TeamStatus.Accept;
+    await newIsMember.save();
     return;
   }
 
@@ -132,8 +132,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       throw new BadRequestError('This team has no member');
     }
 
-    const acceptedUsers = membersWithAllStatus.filter((member: any) => {
-      if (member.members.status === TeamStatus.Accept) {
+    const acceptedUsers = membersWithAllStatus.filter((member: User) => {
+      if (member.isMembers!.status === TeamStatus.Accept) {
         return member;
       }
     });

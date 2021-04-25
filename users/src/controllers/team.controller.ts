@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BadRequestError } from '@cuconnex/common';
-import { Team, Member, User } from '../models';
+import { Team, IsMember, User } from '../models';
 import { ITeamResponse } from '../interfaces/team';
 require('express-async-errors');
 
@@ -78,7 +78,7 @@ export const addTeamMember = async (req: Request, res: Response) => {
     throw new BadRequestError('Team not found!');
   }
 
-  const isInviterAMember = await Member.findOne({ where: { teamName, userId: sender.id } });
+  const isInviterAMember = await IsMember.findOne({ where: { teamName, userId: sender.id } });
   if (!isInviterAMember) {
     throw new BadRequestError('The inviter is not a team member.');
   } else if (isInviterAMember.status !== 'Accept') {
@@ -119,7 +119,7 @@ export const manageStatus = async (req: Request, res: Response) => {
       throw new BadRequestError('You are not the team creator!');
     }
 
-    const member = await Member.findOne({ where: { teamName, userId: targetUserId } });
+    const member = await IsMember.findOne({ where: { teamName, userId: targetUserId } });
     if (!member) {
       throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
     }

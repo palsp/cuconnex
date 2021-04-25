@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../../app';
 import { User } from '../../../models/user.model';
-import { Member } from '../../../models/member.model';
+import { IsMember } from '../../../models/isMember.model';
 import { Team } from '../../../models/team.model';
 
 import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
@@ -35,8 +35,16 @@ describe('notification for a user', () => {
 
     const team1 = await sender.createTeams({ name: 'testTeam', description: '' });
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
-    await Member.create({ userId: receiver.id, teamName: team1.name, status: TeamStatus.Pending });
-    await Member.create({ userId: receiver.id, teamName: team2.name, status: TeamStatus.Pending });
+    await IsMember.create({
+      userId: receiver.id,
+      teamName: team1.name,
+      status: TeamStatus.Pending,
+    });
+    await IsMember.create({
+      userId: receiver.id,
+      teamName: team2.name,
+      status: TeamStatus.Pending,
+    });
 
     const res = await request(app)
       .get('/api/users/notification/invite')

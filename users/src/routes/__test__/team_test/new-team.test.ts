@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { Member } from '../../../models/member.model';
+import { IsMember } from '../../../models/isMember.model';
 import { User } from '../../../models/user.model';
 import { Business, TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
@@ -80,7 +80,7 @@ describe('Create a Team Test', () => {
       })
       .expect(201);
 
-    const status = await Member.findAll({ where: { userId: user.id, teamName: team.name } });
+    const status = await IsMember.findAll({ where: { userId: user.id, teamName: team.name } });
 
     expect(status[0].userId).toEqual(user.id);
     expect(status[0].teamName).toEqual('newTeam');

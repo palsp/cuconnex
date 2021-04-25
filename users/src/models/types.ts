@@ -1,10 +1,10 @@
-import { InterestDescription } from '@cuconnex/common'
+import { InterestDescription } from '@cuconnex/common';
 
 export enum TableName {
   users = 'users',
   interests = 'interests',
   connections = 'connections',
-  members = 'members',
+  isMembers = 'isMembers',
   userInterest = 'userInterests',
   category = 'categories',
   teams = 'teams',
@@ -17,9 +17,7 @@ let desc: any[] = [];
 
 for (let key in InterestDescription) {
   const interest = Object.values(InterestDescription[key]);
-  desc = desc.concat(interest)
+  desc = desc.concat(interest);
 }
 
-export { desc as InterestEnumVal }
-
-
+export { desc as InterestEnumVal };

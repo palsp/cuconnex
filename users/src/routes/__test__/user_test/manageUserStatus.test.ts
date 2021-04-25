@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { User, Member } from '../../../models';
+import { User, IsMember } from '../../../models';
 
 import { TeamStatus } from '@cuconnex/common';
 
@@ -39,7 +39,7 @@ describe('User manages his/her connection(s) with teams', () => {
       .send({ teamName: team1.name, newStatusFromUser: TeamStatus.Accept })
       .expect(200);
 
-    const member1AfterChanged = await Member.findOne({
+    const member1AfterChanged = await IsMember.findOne({
       where: { userId: receiver.id, teamName: team1.name },
     });
     expect(member1AfterChanged!.status).toEqual(TeamStatus.Accept);
@@ -50,7 +50,7 @@ describe('User manages his/her connection(s) with teams', () => {
       .send({ teamName: team2.name, newStatusFromUser: TeamStatus.Reject })
       .expect(200);
 
-    const member2AfterChanged = await Member.findOne({
+    const member2AfterChanged = await IsMember.findOne({
       where: { userId: receiver.id, teamName: team2.name },
     });
     expect(member2AfterChanged!.status).toEqual(TeamStatus.Reject);

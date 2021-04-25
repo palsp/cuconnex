@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { Member } from '../../../models/member.model';
+import { IsMember } from '../../../models/isMember.model';
 import { User } from '../../../models/user.model';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';

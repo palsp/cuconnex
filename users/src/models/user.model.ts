@@ -15,6 +15,7 @@ import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
+import { IsMember } from './isMember.model';
 
 import { IUserResponse } from '../interfaces';
 
@@ -32,7 +33,7 @@ interface UserAttrs {
   major: string;
   bio: string;
   connections?: Connection;
-  // members?: Member
+  isMembers?: IsMember;
 }
 
 interface UserCreationAttrs {
@@ -59,6 +60,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public interests?: Interest[];
   public connections?: Connection;
+  public isMembers?: IsMember;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.

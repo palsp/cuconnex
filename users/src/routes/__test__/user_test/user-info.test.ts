@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { Member } from '../../../models/member.model';
+import { IsMember } from '../../../models/isMember.model';
 import { User } from '../../../models/user.model';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
@@ -31,7 +31,7 @@ describe('USER--INFO: Get list of teams from user', () => {
       name: 'pal',
     });
 
-    await Member.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
+    await IsMember.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
 
     const res = await request(app)
       .get(`/api/users/teams/${user.id}`)

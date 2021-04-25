@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
-import { User, Team, Member, Interest } from '../models';
+import { User, Team, IsMember, Interest } from '../models';
 import { deleteFile } from '../utils/file';
 import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
 
@@ -162,7 +162,7 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
   try {
     const user = req.user!;
 
-    const invitations = await Member.findAll({
+    const invitations = await IsMember.findAll({
       where: { userId: user.id, status: TeamStatus.Pending },
     });
 
@@ -188,13 +188,13 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
     throw new NotFoundError();
   }
 
-  const members = await Member.findAll({ where: { userId: user.id } });
+  const isMembers = await IsMember.findAll({ where: { userId: user.id } });
 
   let returnTeams: any = [];
-  if (members) {
-    members.filter((member) => {
-      if (member.status === TeamStatus.Accept) {
-        returnTeams.push(member.teamName);
+  if (isMembers) {
+    isMembers.filter((isMember) => {
+      if (isMember.status === TeamStatus.Accept) {
+        returnTeams.push(isMember.teamName);
       }
     });
   }
