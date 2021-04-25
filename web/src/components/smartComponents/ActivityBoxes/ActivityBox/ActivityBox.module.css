@@ -16,7 +16,8 @@
   margin: 2vw 0vh;
 
   border-radius: 20px;
-  background-color: #dfdfdf;
+  background: #ffffff;
+  color: #484747;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -49,6 +50,11 @@
   border-radius: 10px; */
 }
 
+.flexboxItem:active {
+  background: #f33182;
+  color:white;
+}
+
 .box {
   margin: auto;
   display: flex;
@@ -65,7 +71,7 @@
   text-align: left;
   /* margin-top: 3%; */
   font-family: "Nunito", serif;
-  color: var(--grey_text, #484747);
+  /* color: var(--grey_text, #484747); */
 }
 
 .icon {
