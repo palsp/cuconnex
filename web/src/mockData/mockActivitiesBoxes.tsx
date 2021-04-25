@@ -1,50 +1,51 @@
 import { ActivityBoxesData } from "@src/mockData/Models/index";
+import { activityName } from "@smartComponents/ActivityBoxes/ActivityBox/ActivityBox";
 
 const mockActivityBoxes: ActivityBoxesData[] = [
   {
-    activityName: "Ads",
+    activityName: activityName.ads,
     activityPic: "",
     activitySubHeading1: "BlockchainNers",
     activitySubHeading2: "DMP",
   },
   {
-    activityName: "Web Builder",
+    activityName: activityName.webBuilder,
     activityPic: "",
     activitySubHeading1: "BMP",
     activitySubHeading2: "YSEPGangs",
   },
   {
-    activityName: "Chatbot",
+    activityName: activityName.chatBot,
     activityPic: "",
     activitySubHeading1: "UXWOW",
     activitySubHeading2: "UIPeeps",
   },
   {
-    activityName: "Coding",
+    activityName: activityName.coding,
     activityPic: "",
     activitySubHeading1: "CaseClub12",
     activitySubHeading2: "Saosaosao",
   },
   {
-    activityName: "FinTech",
+    activityName: activityName.finTech,
     activityPic: "",
     activitySubHeading1: "BlockchainNers",
     activitySubHeading2: "DMP",
   },
   {
-    activityName: "Graphic",
+    activityName: activityName.graphic,
     activityPic: "",
     activitySubHeading1: "BlockchainNers",
     activitySubHeading2: "DMP",
   },
   {
-    activityName: "Fashion",
+    activityName: activityName.fashion,
     activityPic: "",
     activitySubHeading1: "UXWOW",
     activitySubHeading2: "UIPeeps",
   },
   {
-    activityName: "Marketing",
+    activityName: activityName.marketing,
     activityPic: "",
     activitySubHeading1: "CaseClub12",
     activitySubHeading2: "Saosaosao",
