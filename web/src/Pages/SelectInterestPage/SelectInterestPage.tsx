@@ -7,13 +7,11 @@ import {
   DotMorePage,
   Button,
 } from "@dumbComponents/UI/index";
-
 import { InterestLists } from "@smartComponents/index";
-import { ArrowLeft, ArrowRight } from "@icons/index";
+import { ArrowLeft } from "@icons/index";
 import { createUserDataAPI } from "@api/index";
 import { ICreateUserData } from "@models/index";
 import classes from "./SelectInterestPage.module.css";
-import mockInterestLists from "@src/mockData/mockInterestListsData";
 import mockInterestListsData from "@src/mockData/mockInterestListsData";
 
 interface Props {
@@ -121,10 +119,6 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("SelectInterestPage Error setting users data", e);
     }
   };
-
-  useEffect(() => {
-    console.log("Items in interestArray", interestArray);
-  }, [interestArray]);
 
   useEffect(() => {
     console.log(
@@ -236,22 +230,5 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     </>
   );
 };
-
-// SelectInterestPage.defaultProps = {
-//   location: {
-//     state: {
-//       name: "Micky",
-//     },
-//   },
-// };
-
-// const fetchUserData = async () => {
-//   console.log("GET /api/users");
-//   try {
-//     const response = await axios.get("/api/users/123");
-//   } catch (e) {
-//     console.log("SelectInterestPage Error getting users data", e);
-//   }
-// };
 
 export default SelectInterestPage;
