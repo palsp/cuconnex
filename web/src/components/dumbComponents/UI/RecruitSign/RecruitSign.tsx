@@ -9,36 +9,36 @@ interface Props {
 }
 
 const RecruitSign: React.FC<Props> = (props) => {
-  let cssArray = null;
+  const cssArray = [classes.baseSign];
   let invitemember = false;
   let connected = false;
   if (props.value === "Recruiting") {
-    cssArray = [classes.recruiting];
+    cssArray.push(classes.recruiting);
   } else if (props.value === "Team owner") {
-    cssArray = [classes.owner];
+    cssArray.push(classes.owner);
   } else if (props.value === "Awaiting") {
-    cssArray = [classes.awaiting];
+    cssArray.push(classes.awaiting);
   } else if (props.value === "Invite member") {
-    cssArray = [classes.invitemember];
+    cssArray.push(classes.invitemember);
     invitemember = true;
   } else if (props.value === "Request to join") {
-    cssArray = [classes.requesttojoin];
+    cssArray.push(classes.requesttojoin);
   } else if (props.value === "Business") {
-    cssArray = [classes.category];
+    cssArray.push(classes.category);
   } else if (props.value === "Technology") {
-    cssArray = [classes.category];
+    cssArray.push(classes.category);
   } else if (props.value === "Design") {
-    cssArray = [classes.category];
+    cssArray.push(classes.category);
   } else if (props.value === "Pending") {
-    cssArray = [classes.pending];
+    cssArray.push(classes.pending);
   } else if (props.value === "Connected") {
-    cssArray = [classes.connected];
+    cssArray.push(classes.connected);
     connected = true;
   } else {
-    cssArray = [classes.default];
+    cssArray.push(classes.default);
   }
   return (
-    <div className={cssArray.join("")}>
+    <div className={cssArray.join(" ")}>
       <p data-test="button-props-value">{props.value}</p>
       <div className={classes.icon}>
         {invitemember ? <InviteMember /> : <div />}
