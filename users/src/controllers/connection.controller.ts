@@ -40,7 +40,7 @@ export const getAllFriendRequest = async (req: Request, res: Response): Promise<
     helper.push(request);
   }
 
-  const response: IGetAllFreindRequest = {
+  const response: IGetAllFriendRequest = {
     requests: helper.map((ele) => ele.toJSON()),
   };
 
@@ -71,7 +71,6 @@ export const acceptFriendRequest = async (req: Request, res: Response): Promise<
   if (!sendUser) {
     throw new BadRequestError('Sender not found')
   }
-
 
   const status = await req.user!.acceptConnection(sendUser, req.body.accepted);
 

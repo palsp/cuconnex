@@ -32,7 +32,7 @@ describe('Get Members', () => {
       name: 'bird',
     });
     const user3 = await User.create({
-      id: '6asdadadad',
+      id: '6131223221',
       name: 'superman',
     });
     const interest = await Interest.findOne({
