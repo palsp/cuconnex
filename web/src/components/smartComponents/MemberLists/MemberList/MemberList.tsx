@@ -33,7 +33,7 @@ const MemberList: React.FC<Props> = (props) => {
             <Username value={props.members.name} />
           </div>
           <div className={classes.divUserInfo}>
-            <Heading value={props.members.image} size="small" />
+            <Heading value={props.members.bio} size="small" />
           </div>
 
           <div className={classes.divUserInfo}>

@@ -21,11 +21,7 @@ export interface IUserFriend {
     senderId: string;
     status: string;
   };
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  interests: string[];
   faculty: string;
   year: string;
   major: string;
@@ -102,7 +98,7 @@ export interface ICreateUserData {
   major?: string;
 }
 export interface IFetchFriendsData {
-  connections: [IUser];
+  connections: IUser[];
 }
 //events
 export interface IFetchEventsData {
@@ -190,8 +186,12 @@ export interface IFetchTeamNotification {
   teamNames: string[];
 }
 export interface IFetchFriendNotification {
-  requests: [IUserFriend];
+  requests: IUserFriend[];
 }
+export interface IFetchFriendReceivedNotification {
+  requests: IUserFriend[];
+}
+
 
 //Search
 export interface ISearchGeneral {

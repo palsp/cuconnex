@@ -13,7 +13,7 @@ import { Heading, Subtitle } from "@dumbComponents/UI";
 import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  Memberlist: [IUserFriend] | [];
+  Memberlist: IUserFriend[] | [];
   Positionlist: PositionsInActivityNotificationData[] | [];
 }
 

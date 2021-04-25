@@ -112,6 +112,17 @@
   overflow: visible;
   border-radius: 25px;
 }
+.pendingButtonDiv{
+  margin-top: 7vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  background-color: grey;
+  overflow: visible;
+  border-radius: 25px;
+}
 .buttonTextDiv{
   display: flex;
   align-items: center;

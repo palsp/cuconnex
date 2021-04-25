@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ProfilePic } from "@smartComponents/index";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
 import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
@@ -8,18 +8,34 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import containerVariants from "@src/models/models";
+import containerVariants, { ITeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
+import { valueScaleCorrection } from "framer-motion/types/render/dom/projection/scale-correction";
+import { callTeamOfUserAPI } from "@src/api";
 
 const LandingPage: React.FC = () => {
   const [clickHamburger, setClickHamburger] = useState<boolean>(false);
-  const [hasTeam, setHasTeam] = useState<boolean>(true);
+  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const { userData } = useContext(UserContext);
+  let hasTeam=false;
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
-  
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+      setCurrentTeamLists(value)
+    );
+  }, []);
+  if(currentTeamLists.length!=0){
+    hasTeam=false;
+  }
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
+  };
+  console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 

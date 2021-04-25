@@ -3,7 +3,7 @@ import FriendList from "@smartComponents/FriendLists/FriendList/FriendList";
 import { IUser } from "@src/models";
 
 interface Props{
-  connections:[IUser] | [];
+  connections:IUser[] | [];
 }
 const FriendLists: React.FC<Props> = (props) => {
   return (

@@ -1,28 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-
 import { MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-
 import classes from "./SelectMemberPrompt.module.css";
-import { mockMemberLists } from "@src/mockData";
 import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
 import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
 import { IUser } from "@src/models";
-interface Props {
-  members: IUser[];
-}
-const SelectMemberPrompt: React.FC<Props> = (props) => {
+import { fetchFriendsDataAPI } from "@src/api";
+
+const SelectMemberPrompt: React.FC = () => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(true);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
-  const [selectedMemberArray, setSelectedMemberArray] = useState<IUser[]>(
+  const [selectedMemberArray, setSelectedMemberArray] = useState< IUser[]>(
     []
   );
+  const [friendLists, setFriendLists] = useState<IUser[] | []>([]);
+  useEffect(() => {
+    fetchFriendsHandler().then((value: IUser[] | []) => setFriendLists(value));
+  }, []);
+  const fetchFriendsHandler = async () => {
+    const friendsData = await fetchFriendsDataAPI();
+    console.log("SUCCESS fetchFriendsHandler", friendsData.data);
+    return friendsData.data.connections;
+  };
   const inviteClickedHandler = () => {
     setClickSelectMember(false);
     setClickCreateTeam(true);
@@ -95,7 +100,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
         </div>
         <div className={classes.memberListsDiv}>
           <MemberLists
-            memberlist={props.members}
+            memberlist={friendLists}
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
           />
@@ -107,7 +112,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
       <CreateTeamPrompt members={selectedMemberArray} />
     ) : (
       <div>
-        <CreateTeamPage member={props.members} />
+        <CreateTeamPage />
       </div>
     );
 

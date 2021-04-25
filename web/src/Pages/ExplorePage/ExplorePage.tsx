@@ -28,18 +28,17 @@ const ExplorePage = () => {
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
   const { userData } = useContext(UserContext);
+
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+      setCurrentTeamLists(value)
+    );
+  }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData);
     return teamData.data.teams;
   };
-
-  useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) =>
-    setCurrentTeamLists(value)
-  );
-  }, []);
-
   const explorePage = hasSearch ? (
     <div className={classes.exploreContent}>
       <Tag />
@@ -75,22 +74,22 @@ const ExplorePage = () => {
       <Background>
         {/* Background has display: flex so this div is for that */}
         <div>
-        <div className={classes.exploreHeader}>
-          <Link to="/landing">
-            <ArrowLeft />
-          </Link>
-          <SearchBar
-            setHasSearch={setHasSearch}
-            setNoSearchResult={setNoSearchResult}
-            setPeopleLists={setPeopleLists}
-            setTeamLists={setTeamLists}
-            setEventLists={setEventLists}
-            value="Explore"
-          />
-        </div>
-        {console.log("This is peopleLists", peopleLists)}
-        {console.log("This is teamLists", teamLists)}
-        {console.log("This is eventLists", eventLists)}
+          <div className={classes.exploreHeader}>
+            <Link to="/landing">
+              <ArrowLeft />
+            </Link>
+            <SearchBar
+              setHasSearch={setHasSearch}
+              setNoSearchResult={setNoSearchResult}
+              setPeopleLists={setPeopleLists}
+              setTeamLists={setTeamLists}
+              setEventLists={setEventLists}
+              value="Explore"
+            />
+          </div>
+          {console.log("This is peopleLists", peopleLists)}
+          {console.log("This is teamLists", teamLists)}
+          {console.log("This is eventLists", eventLists)}
 
           {explorePage}
         </div>

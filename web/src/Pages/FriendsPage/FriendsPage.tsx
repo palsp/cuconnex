@@ -11,18 +11,16 @@ import classes from "./FriendsPage.module.css";
 import { fetchFriendsDataAPI } from "@src/api";
 
 const FriendsPage: React.FC = () => {
-  const [friendLists, setFriendLists] = useState<[IUser] | []>([]);
-   useEffect(() => {
-     fetchFriendsHandler().then((value: [IUser] | []) =>
-       setFriendLists(value)
-     );
+  const [friendLists, setFriendLists] = useState<IUser[] | []>([]);
+  useEffect(() => {
+    fetchFriendsHandler().then((value: IUser[] | []) => setFriendLists(value));
   }, []);
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
     console.log("SUCCESS fetchFriendsHandler", friendsData.data);
     return friendsData.data.connections;
   };
-  const test= fetchFriendsHandler();
+  const test = fetchFriendsHandler();
   console.log(test);
   return (
     <motion.div
@@ -50,8 +48,9 @@ const FriendsPage: React.FC = () => {
           />
         </div>
       </div>
-
-      {/* <FriendLists connections={friendLists}/> */}
+      <div className={classes.listDiv}>
+        <FriendLists connections={friendLists} />
+      </div>
     </motion.div>
   );
 };

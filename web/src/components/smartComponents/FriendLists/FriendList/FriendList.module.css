@@ -1,7 +1,7 @@
 .friendList {
   box-sizing: border-box;
-  width: 375px;
-  height: 128px;
+  width: 100vw;
+  height: 15.76vh;
   overflow: visible;
   border-color: #808080;
   border-style: solid;
@@ -28,5 +28,6 @@
 }
 
 .divUserInfo {
-  height: 20px;
+  height: 2.5vh;
+  text-align: left;
 }

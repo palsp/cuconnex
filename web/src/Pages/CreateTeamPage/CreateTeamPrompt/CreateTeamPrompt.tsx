@@ -13,7 +13,7 @@ import { Link, Redirect } from "react-router-dom";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
 interface Props {
-  members: IUser[];
+  members: IUser[] | [];
 }
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
@@ -127,7 +127,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         <div className={classes.deleteUnderlineDiv}>{MemberTag}</div>
       </div>
     ) : clickSelectMember === true ? (
-      <SelectMemberPrompt members={props.members} />
+      <SelectMemberPrompt/>
     ) : (
       <div>error</div>
     );

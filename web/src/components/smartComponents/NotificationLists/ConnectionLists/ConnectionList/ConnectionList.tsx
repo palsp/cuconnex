@@ -11,6 +11,7 @@ import { ProfilePic } from "@smartComponents/index";
 import classes from "./ConnectionList.module.css";
 import { Check } from "@dumbComponents/UI/Icons";
 import { IUser, IUserFriend } from "@src/models";
+import { addFriendResponseAPI } from "@src/api";
 interface Props {
   connection: IUserFriend;
 }
@@ -18,16 +19,28 @@ const ConnectionList: React.FC<Props> = (props) => {
   const [clickAccept, setAccept] = useState(false);
   const [clickDecline, setDecline] = useState(false);
 
-  const acceptButtonHandler = () => {
+  const acceptButtonHandler = async () => {
     setAccept(true);
     setDecline(false);
+    const response = {
+      userId: props.connection.id + "",
+      accepted: true,
+    };
     console.log("Accept Connection");
+    const friendsReceivedData = await addFriendResponseAPI(response);
+    console.log("Responded as ", friendsReceivedData.data);
   };
 
-  const declineButtonHandler = () => {
+  const declineButtonHandler = async () => {
     setAccept(false);
     setDecline(true);
+    const response = {
+      userId: props.connection.id + "",
+      accepted: false,
+    };
     console.log("Decline Connection");
+    const friendsReceivedData = await addFriendResponseAPI(response);
+    console.log("Responded as ", friendsReceivedData.data);
   };
 
   let ButtonPrompt = null;
@@ -35,34 +48,24 @@ const ConnectionList: React.FC<Props> = (props) => {
     ButtonPrompt = (
       <div className={classes.selectSign}>
         <div className={classes.acceptIcon} onClick={acceptButtonHandler}>
-          <Check circle={true}/>
+          <Check circle={true} />
         </div>
         <div className={classes.declineIcon} onClick={declineButtonHandler}>
-          <Check circle={true}/>
+          <Check circle={true} />
         </div>
       </div>
     );
   } else if (clickAccept) {
     ButtonPrompt = (
-      <div 
-        className={classes.connectedSign}
-        
-        >
-          <RecruitSign
-            data-test="team-list-status"
-            value="Connected"
-          />
-    </div>
-    );   
+      <div className={classes.connectedSign}>
+        <RecruitSign data-test="team-list-status" value="Connected" />
+      </div>
+    );
   } else if (clickDecline) {
     ButtonPrompt = (
-      <div className={classes.declineSign}
-      >
-      <RecruitSign
-        data-test="team-list-status"
-        value="Declined"
-      />
-    </div>
+      <div className={classes.declineSign}>
+        <RecruitSign data-test="team-list-status" value="Declined" />
+      </div>
     );
   }
 
@@ -94,9 +97,7 @@ const ConnectionList: React.FC<Props> = (props) => {
           <div className={classes.faculty}>{props.connection.faculty}</div>
         </div>
       </div>
-      <div className={classes.rightFlex}>
-          {ButtonPrompt}
-      </div>
+      <div className={classes.rightFlex}>{ButtonPrompt}</div>
     </div>
   );
 };

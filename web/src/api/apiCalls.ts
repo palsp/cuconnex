@@ -21,6 +21,7 @@ import {
   IAddFriendResponse,
   ICallTeamOfUser,
   IFetchFriendNotification,
+  IFetchFriendReceivedNotification,
 } from "@src/models";
 
 //Auth Services
@@ -149,6 +150,15 @@ const fetchFriendNotificationAPI = async (): Promise<
 
   return friendNotificationData;
 };
+const fetchFriendReceivedNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchFriendReceivedNotification>
+> => {
+  const friendNotificationData: AxiosResponse<IFetchFriendReceivedNotification> = await axios.get(
+    "/api/users/friends/request/received"
+  );
+
+  return friendNotificationData;
+};
 const fetchRelationAPI = async (
   userId: string
 ): Promise<AxiosResponse<IConnected>> => {
@@ -204,4 +214,5 @@ export {
   addFriendAPI,
   callTeamOfUserAPI,
   addFriendResponseAPI,
+  fetchFriendReceivedNotificationAPI,
 };

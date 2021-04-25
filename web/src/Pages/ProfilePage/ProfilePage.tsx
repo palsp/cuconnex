@@ -22,12 +22,12 @@ import mockEducationListsData from "@src/mockData/mockEducationListsData";
 import { IConnected, IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
 import { addFriendAPI, fetchRelationAPI } from "@src/api";
-import containerVariants, { IAddFriend } from "@src/models/models";
+import containerVariants, { IAddFriend, IUserFriend } from "@src/models/models";
 
 interface Props {
   location: {
     state: {
-      users: IUser;
+      users: IUserFriend;
     };
   };
 }
@@ -66,6 +66,7 @@ const ProfilePage: React.FC<Props> = (props) => {
         "Successfully sent a POST request to users/friends",
         resultAdd
       );
+      setIsFriend("Pending");
     } catch (e) {
       console.log("ERRORS occured while POST /users/friends", e);
     }
@@ -73,15 +74,13 @@ const ProfilePage: React.FC<Props> = (props) => {
   if (isFriend == null) {
     console.log("This is user's own profile",{isFriend});
   }
-  console.log(isFriend);
   let isMyProfile = false;
   if (props.location) {
     isMyProfile = props.location.state.users.id == userData.id;
   }
   const isMyFriend = fetchRelationHandler(props.location.state.users.id);
-  console.log(isMyFriend);
+  console.log(props.location.state.users.interests);
   let profilePrompt = null;
-
   if (clickEditProfile === false) {
     profilePrompt = (
       <div className={classes.profile}>
@@ -111,14 +110,18 @@ const ProfilePage: React.FC<Props> = (props) => {
           </div>
           <div className={classes.addDiv}>
             {isFriend == "toBedefined" ? (
-              <button
+              <div
               onClick={() => addFriendHandler(friendId)}
               className={classes.buttonDiv}
             >
               <div className={classes.buttonTextDiv}>Connect</div>
-            </button>
+            </div>
             ) : (
-              <div/>
+              <div
+              className={classes.pendingButtonDiv}
+            >
+              <div className={classes.buttonTextDiv}>Pending</div>
+            </div>
             )}
           </div>
         </div>
@@ -165,22 +168,18 @@ const ProfilePage: React.FC<Props> = (props) => {
             </div>
           </div>
           <div className={classes.interestLists}>
-            <InterestList
-              data-test="interest-list-business"
-              selectInterestHandlerDiv={() => {
-                return;
-              }}
-              value="Marketing"
-              key="Marketing"
-            />
-            <InterestList
-              data-test="interest-list-business"
-              selectInterestHandlerDiv={() => {
-                return;
-              }}
-              value="Ecommerce"
-              key="Ecommerce"
-            />
+          {props.location.state.users.interests.map((interest:string,index:number) => {
+            return (
+              <InterestList
+                data-test="interest-list-business"
+                selectInterestHandlerDiv={() => {
+                  return;
+                }}
+                value={props.location.state.users.interests[index]}
+                key={index}
+              />
+            );
+          })} 
           </div>
         </div>
       </div>
