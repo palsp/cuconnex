@@ -11,6 +11,7 @@ import classes from "./ProfilePage.module.css";
 import {
   ActivityLists,
   Biography,
+  EducationList,
   EducationLists,
   InterestList,
   InterestLists,
@@ -18,10 +19,11 @@ import {
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
-import containerVariants from "@src/models/models";
-
-import { IUser } from "@src/models";
+import { IConnected, IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
+import { addFriendAPI, fetchRelationAPI } from "@src/api";
+import containerVariants, { IAddFriend } from "@src/models/models";
+
 interface Props {
   location: {
     state: {
@@ -30,12 +32,14 @@ interface Props {
   };
 }
 const ProfilePage: React.FC<Props> = (props) => {
-  const [isAdded, setIsAdded] = useState(false);
-  const [isFriend, setIsFriend] = useState(false);
+  const [isFriend, setIsFriend] = useState<string>("");
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
   const { userData } = useContext(UserContext);
   console.log(userData);
+  const friendId = {
+    userId: props.location.state.users.id,
+  };
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
@@ -49,15 +53,33 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEditOption(false);
     setClickEdit(true);
   };
+  const fetchRelationHandler = async (userId: string) => {
+    const relationResult = await fetchRelationAPI(userId);
+    console.log(relationResult.data.status);
+    setIsFriend(relationResult.data.status);
+    return relationResult;
+  };
+  const addFriendHandler = async (addData: IAddFriend) => {
+    try {
+      const resultAdd = await addFriendAPI(addData);
+      console.log(
+        "Successfully sent a POST request to users/friends",
+        resultAdd
+      );
+    } catch (e) {
+      console.log("ERRORS occured while POST /users/friends", e);
+    }
+  };
+  console.log(props.location.state.users);
+  if (isFriend == null) {
+    console.log("This is user's own profile");
+  }
   let isMyProfile = false;
   if (props.location) {
-    isMyProfile = props.location.state.users.id === userData.id;
+    isMyProfile = props.location.state.users.id == userData.id;
   }
-  // Is it my profile ?
-  const selectBusinessInterestHandler = () => {
-    console.log("clicked");
-  };
-
+  const isMyFriend = fetchRelationHandler(props.location.state.users.id);
+  console.log(isMyFriend);
   let profilePrompt = null;
 
   if (clickEditProfile === false) {
@@ -85,12 +107,18 @@ const ProfilePage: React.FC<Props> = (props) => {
             className={classes.editProfile}
             onClick={EditProfileClickedHandler}
           >
-            {isMyProfile ? (
-              <Edit />
+            {isMyProfile ? <Edit /> : <div />}
+          </div>
+          <div className={classes.addDiv}>
+            {isFriend == "Accepted" ? (
+              <div />
             ) : (
-              <div className={classes.buttonDiv}>
+              <button
+                onClick={() => addFriendHandler(friendId)}
+                className={classes.buttonDiv}
+              >
                 <div className={classes.buttonTextDiv}>Connect</div>
-              </div>
+              </button>
             )}
           </div>
         </div>
@@ -108,7 +136,11 @@ const ProfilePage: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.education}>
-          <EducationLists education={mockEducationListsData} />
+          <EducationList
+            faculty={props.location.state.users.faculty}
+            year={props.location.state.users.year}
+            major={props.location.state.users.major}
+          />
         </div>
         <div className={classes.activity}>
           <ActivityLists activity={mockActivityListsData} />

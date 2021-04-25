@@ -10,14 +10,9 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./ConnectionList.module.css";
 import { Check } from "@dumbComponents/UI/Icons";
-
+import { IUser, IUserFriend } from "@src/models";
 interface Props {
-  Connection: {
-    profilePic: string;
-    name: string;
-    role: string;
-    faculty: string;
-  };
+  connection: IUserFriend;
 }
 
 const ConnectionList: React.FC<Props> = (props) => {
@@ -83,7 +78,7 @@ const ConnectionList: React.FC<Props> = (props) => {
         <div className={classes.name}>
           <Subtitle
             data-test="connection-list-name"
-            value={props.Connection.name}
+            value={props.connection.name}
             size="small-medium"
             color="black"
           />
@@ -91,13 +86,13 @@ const ConnectionList: React.FC<Props> = (props) => {
         <div className={classes.role}>
           <Subtitle
             data-test="connection-list-role"
-            value={props.Connection.role}
+            value={props.connection.major}
             size="small"
             color="pink"
           />
         </div>
         <div className={classes.smallFlex}>
-          <div className={classes.faculty}>{props.Connection.faculty}</div>
+          <div className={classes.faculty}>{props.connection.faculty}</div>
         </div>
       </div>
       <div className={classes.rightFlex}>

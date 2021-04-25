@@ -37,8 +37,8 @@ const LandingPage: React.FC = () => {
           </Link>
         </div>
         <div
-          // onClick={() => setHasTeam((prev) => !prev)}
-          className={classes.mailDiv}      
+          //onClick={() => setHasTeam((prev) => !prev)}
+          className={classes.mailDiv}
         >
           <Link to="/notification">
             <Mail />

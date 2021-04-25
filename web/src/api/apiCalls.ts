@@ -15,8 +15,12 @@ import {
   IUser,
   ITeam,
   IFetchTeamNotification,
-  IFetchFriendNotification,
   IFetchFriendsData,
+  IConnected,
+  IAddFriend,
+  IAddFriendResponse,
+  ICallTeamOfUser,
+  IFetchFriendNotification,
 } from "@src/models";
 
 //Auth Services
@@ -88,6 +92,15 @@ const teamInvitationAPI = async (
   );
   return invitedUsersData;
 };
+const callTeamOfUserAPI = async (
+  userId: string
+): Promise<AxiosResponse<ICallTeamOfUser>> => {
+  const calledResult: AxiosResponse<ICallTeamOfUser> = await axios.get(
+    `/api/users/teams/${userId}`
+  );
+
+  return calledResult;
+};
 
 const createUserDataAPI = async (
   createUserData: ICreateUserData
@@ -136,14 +149,41 @@ const fetchFriendNotificationAPI = async (): Promise<
 
   return friendNotificationData;
 };
+const fetchRelationAPI = async (
+  userId: string
+): Promise<AxiosResponse<IConnected>> => {
+  const relationResult: AxiosResponse<IConnected> = await axios.get(
+    `/api/users/relation/${userId}`
+  );
+
+  return relationResult;
+};
 const fetchFriendsDataAPI = async (): Promise<
-  AxiosResponse<IFetchFriendsData>
+  AxiosResponse<IUser[]| []>
 > => {
-  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
+  const userData: AxiosResponse<IUser[]| []> = await axios.get(
     "/api/users/friends"
   );
 
   return userData;
+};
+const addFriendAPI = async (
+  addFriendData: IAddFriend
+): Promise<AxiosResponse<IAddFriend>> => {
+  const friendAddData: AxiosResponse<IAddFriend> = await axios.post(
+    "/api/users/add-friend/",
+    addFriendData
+  );
+  return friendAddData;
+};
+const addFriendResponseAPI = async (
+  addFriendResponseData: IAddFriendResponse
+): Promise<AxiosResponse<IAddFriendResponse>> => {
+  const friendResponseData: AxiosResponse<IAddFriendResponse> = await axios.post(
+    "/api/users/add-friend/result/",
+    addFriendResponseData
+  );
+  return friendResponseData;
 };
 
 export {
@@ -160,4 +200,7 @@ export {
   fetchTeamNotificationAPI,
   fetchFriendNotificationAPI,
   fetchFriendsDataAPI,
+  fetchRelationAPI,
+  addFriendAPI,
+  callTeamOfUserAPI,
 };

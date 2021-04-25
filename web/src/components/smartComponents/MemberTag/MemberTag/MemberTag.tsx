@@ -1,10 +1,11 @@
 import ProfilePic from "@smartComponents/ProfilePic/ProfilePic";
 import { UsersData } from "@src/mockData/Models";
+import { IUser } from "@src/models";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./MemberTag.module.css";
 interface Props {
-  members:UsersData;
+  members:IUser;
 }
 const MemberTag: React.FC<Props> = (props) => {
   return (

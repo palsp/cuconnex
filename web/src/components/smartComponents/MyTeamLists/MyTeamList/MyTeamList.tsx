@@ -12,13 +12,10 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./MyTeamList.module.css";
 import { Ecommerce, Group } from "@dumbComponents/UI/Icons";
+import { ITeam } from "@src/models";
 
 interface Props {
-  team: {
-    name: string;
-    event: string;
-    status: string;
-  };
+  team: ITeam;
   landing?: boolean;
 }
 
@@ -60,7 +57,7 @@ const TeamList: React.FC<Props> = (props) => {
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.event : "test-value"}
+                  value={props.team ? props.team.name : "test-value"}
                   size="small"
                 />
               </div>
@@ -72,7 +69,7 @@ const TeamList: React.FC<Props> = (props) => {
                 <div className={classes.teamStatus}>
                   <RecruitSign
                     data-test="team-list-status"
-                    value={props.team.status}
+                    value={""+props.team.lookingForMembers}
                   />
                 </div>
               </div>
@@ -82,14 +79,14 @@ const TeamList: React.FC<Props> = (props) => {
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.event : "test-value"}
+                  value={props.team ? props.team.creatorId : "test-value"}
                   size="small"
                 />
               </div>
               <div className={classes.teamStatus}>
                 <RecruitSign
                   data-test="team-list-status"
-                  value={props.team.status}
+                  value={props.team.lookingForMembers+""}
                 />
               </div>
             </div>

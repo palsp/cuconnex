@@ -3,7 +3,6 @@ import EducationList from "@smartComponents/EducationLists/EducationList/Educati
 import { Heading } from "@dumbComponents/UI";
 import classes from "./EducationLists.module.css";
 import { EducationListsData } from "@src/mockData/Models";
-
 const educationArray = [
   {
     educationPic: "",
@@ -22,6 +21,9 @@ const educationArray = [
 ];
 interface Props{
   education:EducationListsData[] | []
+  faculty:string,
+  major:string,
+  year:string,
 }
 const EducationLists: React.FC<Props> = (props) => {
   return (

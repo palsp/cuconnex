@@ -127,3 +127,8 @@
   color: var(--white, #ffffff);
   font-size: 12px;
 }
+.addDiv{
+  position:absolute;
+  right:4vw;
+  top:26vh;
+}

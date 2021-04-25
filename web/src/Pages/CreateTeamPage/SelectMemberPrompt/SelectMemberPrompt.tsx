@@ -11,15 +11,16 @@ import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
 import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
+import { IUser } from "@src/models";
 interface Props {
-  members: UsersData[];
+  members: IUser[];
 }
 const SelectMemberPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(true);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
-  const [selectedMemberArray, setSelectedMemberArray] = useState<UsersData[]>(
+  const [selectedMemberArray, setSelectedMemberArray] = useState<IUser[]>(
     []
   );
   const inviteClickedHandler = () => {
@@ -32,12 +33,12 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     setClickSelectMember(false);
     setClickCreateTeam(false);
   };
-  const selectPersonHandler = (e: UsersData) => {
+  const selectPersonHandler = (e: IUser) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: UsersData[] | [] = [...selectedMemberArray];
+      const newMemberArray: IUser[] | [] = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       setSelectedMemberArray(
         (selectedMemberArray) => (selectedMemberArray = newMemberArray)
@@ -106,7 +107,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
       <CreateTeamPrompt members={selectedMemberArray} />
     ) : (
       <div>
-        <CreateTeamPage />
+        <CreateTeamPage member={props.members} />
       </div>
     );
 

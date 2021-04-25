@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./ExplorePage.module.css";
 import {
   ActivityBoxes,
@@ -17,13 +17,28 @@ import { mockPeopleLists } from "@src/mockData";
 import { IEventData, ITeam, IUser } from "@src/models";
 import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
+import { callTeamOfUserAPI } from "@src/api";
+import { UserContext } from "@context/UserContext";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [noSearchResult, setNoSearchResult] = useState<boolean>(false);
   const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
   const [teamLists, setTeamLists] = useState<ITeam[]>([]);
+  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
+  const { userData } = useContext(UserContext);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
+  };
+
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+    setCurrentTeamLists(value)
+  );
+  }, []);
 
   const explorePage = hasSearch ? (
     <div className={classes.exploreContent}>
@@ -35,7 +50,7 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
-      <MyTeamLists page="landing" team={mockMyTeamListsData} />
+      {/* <MyTeamLists page="landing" team={teamLists} /> */}
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
       </div>
@@ -47,7 +62,7 @@ const ExplorePage = () => {
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Suggested for you" bold />
         </div>
-        <MyTeamLists page="landing" team={mockMyTeamListsData} />
+        {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
         </div>

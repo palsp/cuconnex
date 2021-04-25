@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
 import { mockMemberLists } from "@src/mockData";
 import { motion } from "framer-motion";
-import containerVariants from "@src/models/models";
-
-const CreateTeamPage: React.FC = () => {
+import containerVariants, { IUser } from "@src/models/models";
+interface Props{
+  member:IUser[] | []
+}
+const CreateTeamPage: React.FC<Props> = (props) => {
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [scopeType, setScopeType] = useState<number>(0);
@@ -68,7 +70,7 @@ const CreateTeamPage: React.FC = () => {
       </div>
     ) : clickSelectMember === true ? (
       <div>
-        <SelectMemberPrompt members={mockMemberLists} />
+        <SelectMemberPrompt members={props.member} />
       </div>
     ) : (
       <div>Error Occurs : Contact Staff</div>

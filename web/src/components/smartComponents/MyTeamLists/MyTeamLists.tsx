@@ -2,10 +2,11 @@ import React from "react";
 import MyTeamList from "@smartComponents/MyTeamLists/MyTeamList/MyTeamList";
 import classes from "./MyTeamLists.module.css";
 import { MyTeamListsData } from "@src/mockData/Models";
+import { ITeam } from "@src/models";
 
 interface Props {
   page?: string;
-  team: MyTeamListsData[] | [];
+  team: ITeam[] | [];
 }
 
 const MyTeamLists: React.FC<Props> = (props) => {
@@ -15,7 +16,7 @@ const MyTeamLists: React.FC<Props> = (props) => {
   }
   return (
     <div className={classes.teamLists} data-test="myTeamLists">
-      {props.team.map((team: MyTeamListsData, index: number) => {
+      {props.team.map((team: ITeam, index: number) => {
         return <MyTeamList key={index} team={team} landing={landing} />;
       })}
     </div>
