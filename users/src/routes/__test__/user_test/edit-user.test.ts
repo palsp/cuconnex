@@ -35,15 +35,15 @@ describe('The edit User route', () => {
             .send({ name: 'John' })
             .expect(404)
     });
-    it('should return 400 if no fields are provided', async () => {
-        const { user } = await setup();
-        const { body: res} = await request(app)
-            .put('/api/users/6131898121')
-            .set('Cookie', global.signin(user.id))
-            .send({ })
-            .expect(400)
-        expect(res.errors[0].message).toEqual("Empty request!");
-    });
+    // it('should return 400 if no fields are provided', async () => {
+    //     const { user } = await setup();
+    //     const { body: res} = await request(app)
+    //         .put('/api/users/6131898121')
+    //         .set('Cookie', global.signin(user.id))
+    //         .send({ })
+    //         .expect(400)
+    //     expect(res.errors[0].message).toEqual("Empty request!");
+    // });
     it('should return 400 if invalid fields are provided', async () => {
         const { user } = await setup();
         const { body: res } = await request(app)

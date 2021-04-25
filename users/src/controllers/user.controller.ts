@@ -187,7 +187,7 @@ export const editUser = async (req: Request, res: Response) => {
         }
     }
  
-    if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
+    // if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
     if (req.body.year) {
         const pattern = /^[1-4]$/
         if (!pattern.test(req.body.year)) {
