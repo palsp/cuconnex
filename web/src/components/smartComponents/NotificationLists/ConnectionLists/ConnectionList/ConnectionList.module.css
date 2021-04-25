@@ -15,8 +15,8 @@
   align-items: center;
 }
 
-.rightFlex {
-  width: 60%;
+.midFlex {
+  width: 30%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -28,14 +28,14 @@
   text-align: start;
   left: 10%;
   height: 10%;
-  margin-bottom: 7%;
+  margin-bottom: 15%;
 }
 
 .role {
   text-align: start;
   left: 10%;
   height: 10%;
-  margin-bottom: 5%;
+  margin-bottom: 15%;
 }
 
 .smallFlex {
@@ -47,12 +47,40 @@
 
 .faculty {
   text-align: start;
-  margin-left: 2%;
   margin-top: 1%;
-  width: 50%;
+  width: 45%;
   color: #c2c2c2;
 }
 
+.rightFlex {
+  width: 30%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 6%;
+}
+
+.selectSign {
+  display: flex;
+  flex-direction: row;
+  margin-top: 30%;
+}
+
+/* .acceptIcon {
+  
+}
+
+
+.declineIcon {
+  
+} */
+
 .connectedSign {
   position: relative;
+  margin-top: 60%;
+}
+
+.declineSign {
+  position: relative;
+  margin-top: 60%;
 }

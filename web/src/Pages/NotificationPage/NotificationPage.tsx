@@ -9,8 +9,10 @@ import classes from "./NotificationPage.module.css";
 import {
   ActivityNotificationLists,
   ConnectionLists,
+  TeamInvitationLists,
 } from "@smartComponents/index";
 
+import mockTeamInvitationListsData from "@src/mockData/mockTeamInvitationListsData";
 import mockConnectionListsData from "@src/mockData/mockConnectionListsData";
 import mockMembersInActivityNotification from "@src/mockData/mockMembersInActivityNotificationData";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
@@ -21,6 +23,9 @@ import {
   fetchTeamNotificationAPI,
 } from "@src/api/apiCalls";
 import { isPropertySignature } from "typescript";
+
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
@@ -74,25 +79,31 @@ const NotificationPage: React.FC = () => {
           </Link>
         </div>
         <div className={classes.head}>
-          <Heading data-test="Notification-page-header" value="Notification" />
+          <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
           <div className={classes.connection}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
-              value="Connection"
+              value="Incoming"
               number="3"
             />
           </div>
           <div className={classes.activity}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
-              value="Activity"
+              value="Outgoing"
               number="2"
             />
           </div>
+        </div>
+        <div className={classes.teamInvitationList}>
+          <TeamInvitationLists
+            data-test="Notification-page-team-invitation-lists"
+            TeamInvitationlist={mockTeamInvitationListsData}
+          />
         </div>
         <div className={classes.connectionList}>
            <ConnectionLists
@@ -111,22 +122,22 @@ const NotificationPage: React.FC = () => {
           </Link>
         </div>
         <div className={classes.head}>
-          <Heading data-test="Notification-page-header" value="Notification" />
+          <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
-          <div className={classes.connection}>
+        <div className={classes.connection}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
-              value="Connection"
+              value="Incoming"
               number="3"
             />
           </div>
           <div className={classes.activity}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
-              value="Activity"
+              value="Outgoing"
               number="2"
             />
           </div>
@@ -143,9 +154,14 @@ const NotificationPage: React.FC = () => {
   }
 
   return (
-    <div data-test="Notification-page" className={classes.main}>
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    data-test="Notification-page" className={classes.main}>
       {NotificationsPrompt}
-    </div>
+    </motion.div>
   );
 };
 
