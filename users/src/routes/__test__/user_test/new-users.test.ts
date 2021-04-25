@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../../app';
 import { User } from '../../../models/user.model';
-import { InterestDescription, Technology } from '@cuconnex/common';
+import { InterestDescription, Technology, getCurrentYear, getYearFromId, faculty } from '@cuconnex/common';
 
 it('should return 400 if users send invalid type of interest list', async () => {
   await request(app)
@@ -108,21 +108,6 @@ it('should not save duplicate interest list', async () => {
   expect(await currentUser?.getInterests()).toHaveLength(1);
 });
 
-it('should return 400 if year is invalid', async () => {
-  const { body: user } = await request(app)
-    .post('/api/users')
-    .set('Cookie', global.signin())
-    .send({
-      interests: {
-        Technology: [Technology.Coding, Technology.Coding],
-      },
-      name: 'test',
-      year: '51',
-    })
-    .expect(400);
-
-  expect(user.errors[0].message).toEqual('Year must be valid');
-});
 
 it('should create user successfully with optional field', async () => {
   const id = '6131776621';
@@ -131,8 +116,7 @@ it('should create user successfully with optional field', async () => {
       Technology: [Technology.Coding, Technology.Coding],
     },
     name: 'test',
-    year: '1',
-    major: 'ICE',
+    role: 'developer',
     bio: 'I am the best programmer in the world',
   };
   const { body } = await request(app)
@@ -143,10 +127,14 @@ it('should create user successfully with optional field', async () => {
     })
     .expect(201);
 
+
   const saveUser = await User.findOne({ where: { id } });
+  expect(saveUser).not.toBeNull();
+  const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString()
   expect(saveUser!.name).toEqual(user.name);
-  expect(saveUser!.year).toEqual(user.year);
-  expect(saveUser!.major).toEqual(user.major);
+  expect(saveUser!.year).toEqual(year);
+  expect(saveUser!.faculty).toEqual(faculty["21"])
+  expect(saveUser!.role).toEqual(user.role);
   expect(saveUser!.bio).toEqual(user.bio);
 });
 

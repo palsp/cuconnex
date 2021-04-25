@@ -1,16 +1,13 @@
-import { FriendStatus } from '@cuconnex/common';
+import { BadRequestError, FriendStatus } from '@cuconnex/common';
 import { Request, Response } from 'express';
-import {
-  IAcceptFriendRequest,
-  IGetAllConnectionResponse,
-  IGetAllFreindRequest,
-} from '../interfaces';
-import { User } from '../models';
+import { IAcceptFriendRequest, IGetAllConnectionResponse, IGetAllFriendRequest } from '../interfaces';
+import { User } from '../models'
+
 
 /**
- * return all connections of the user
- * @param req
- * @param res
+ * return all connections of the user (Connections where status is Accepted)
+ * @param req 
+ * @param res 
  */
 export const getAllConnection = async (req: Request, res: Response): Promise<void> => {
   const connections = await req.user!.getConnection();
@@ -33,7 +30,7 @@ export const getAllConnection = async (req: Request, res: Response): Promise<voi
 };
 
 /**
- * get all friend request handler
+ * get all friend request handler (Relations whose status is still pending)
  */
 export const getAllFriendRequest = async (req: Request, res: Response): Promise<void> => {
   const requests = await req.user!.getRequestConnection();
@@ -71,10 +68,30 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
 export const acceptFriendRequest = async (req: Request, res: Response): Promise<void> => {
   const sendUser = await User.findUser(req.body.userId);
 
-  const status = await req.user!.acceptConnection(sendUser.id, req.body.accepted);
+  if (!sendUser) {
+    throw new BadRequestError('Sender not found')
+  }
+
+
+  const status = await req.user!.acceptConnection(sendUser, req.body.accepted);
 
   const response: IAcceptFriendRequest = {
     status,
-  };
+  }
   res.status(201).send(response);
-};
+}
+
+export const getAllReceivedFriendRequest = async (req: Request, res: Response): Promise<void> => {
+  const requests = await req.user!.getReceivedFriendRequests();
+  const helper = [];
+  for (let request of requests) {
+    request.interests = await request.getInterests()
+    helper.push(request);
+  }
+
+  const response: IGetAllFriendRequest = {
+    requests: helper.map(ele => ele.toJSON())
+  }
+
+  res.status(200).send(response)
+}

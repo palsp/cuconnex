@@ -37,8 +37,12 @@ export const addFriendValidator = [body('userId').notEmpty().isAlphanumeric()];
  * userId and accepted is required to accept or rejected add freind request
  */
 export const addFreindResultValidator = [
-  body('userId').notEmpty().isAlphanumeric().withMessage('User id is not valid'),
-  body('accepted').notEmpty().isBoolean(),
+  body('userId').notEmpty()
+    .isAlphanumeric()
+    .withMessage('User id is not valid'),
+  body('accepted')
+    .notEmpty()
+    .isBoolean(),
 ];
 
 export const manageUserStatusValidator = [

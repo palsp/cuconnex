@@ -8,8 +8,8 @@ import (
 )
 
 func EventRegister(router *gin.RouterGroup) {
+	router.GET("/:event_name", GetEvent)
 	router.GET("/", GetAllEvent)
-	//router.GET("/:event_id", GetEvent)
 	router.POST("/", CreateEvent)
 
 
@@ -22,6 +22,18 @@ func EventRegister(router *gin.RouterGroup) {
 
 // GetEvent returns event(s) according to search keyword
 func GetEvent(c *gin.Context) {
+	eventName := c.Param("event_name")
+	events , err := SearchByName(eventName)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"messages" : "Something went wrong",
+		})
+		return
+	}
+	c.Set("my_events_model" , events)
+	serializer := EventsSerializer{c}
+	c.JSON(http.StatusOK , serializer.Response())			
+
 }
 
 // GetAllEvent returns all events ( maximum to 10 items per request)

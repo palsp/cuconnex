@@ -38,7 +38,7 @@ const validateEnvVar = () => {
 
 
 const start = async () => {
-    // validateEnvVar();
+    validateEnvVar();
     try {
         await initializeDB();
     } catch (err) {

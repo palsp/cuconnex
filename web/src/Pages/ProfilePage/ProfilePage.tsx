@@ -78,7 +78,7 @@ const ProfilePage: React.FC<Props> = (props) => {
           <div className={classes.profileInfo}>
             <ProfileInfo
               name={props.location.state.users.name}
-              role={props.location.state.users.major}
+              role={props.location.state.users.role}
             />
           </div>
           <div
@@ -98,7 +98,7 @@ const ProfilePage: React.FC<Props> = (props) => {
         <div className={classes.about}>
           <div className={classes.bio}>
             <Biography
-              nickname={props.location.state.users.major}
+              nickname={props.location.state.users.role}
               detail={props.location.state.users.bio}
             />
           </div>
@@ -123,6 +123,7 @@ const ProfilePage: React.FC<Props> = (props) => {
                 <Link
                   to={{
                     pathname: "/selectinterests",
+                    state: { users: userData },
                   }}
                 >
                   <PlusCircle />{" "}

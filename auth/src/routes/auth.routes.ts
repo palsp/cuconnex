@@ -1,7 +1,7 @@
 import { signUp, signIn, signOut } from '../controllers/auth.controller';
 import express from 'express';
 import { body } from 'express-validator';
-import { validateRequest } from '@cuconnex/common';
+import { isValidID, validateRequest } from '@cuconnex/common';
 
 
 const authRoutes = express.Router();
@@ -22,9 +22,12 @@ const signupChecker = [
         .notEmpty()
         .withMessage('Password must be supplied'),
     body('id')
-        .isAlphanumeric()
         .notEmpty()
+        .custom((id: string) => {
+            return isValidID(id);
+        })
         .withMessage('id must be supplied')
+
 ];
 
 /**Checks if there is email password within the request body object
