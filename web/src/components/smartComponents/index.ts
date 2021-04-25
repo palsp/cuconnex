@@ -36,3 +36,5 @@ export { default as ConnectionList } from "@smartComponents/NotificationLists/Co
 export { default as ActivityNotificationLists } from "@smartComponents/NotificationLists/ActivityLists/ActivityLists";
 export { default as MemberInActivityNotificationList } from "@smartComponents/NotificationLists/ActivityLists/MemberList/MemberList";
 export { default as PositionsInActivityNotificationList } from "@smartComponents/NotificationLists/ActivityLists/PositionList/PositionList";
+export { default as TeamInvitationList } from "@smartComponents/TeamInvitationLists/TeamInvitationList/TeamInvitationList";
+export { default as TeamInvitationLists } from "@smartComponents/TeamInvitationLists/TeamInvitationLists";

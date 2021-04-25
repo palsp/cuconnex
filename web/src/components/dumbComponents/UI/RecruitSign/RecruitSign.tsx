@@ -34,6 +34,11 @@ const RecruitSign: React.FC<Props> = (props) => {
   } else if (props.value === "Connected") {
     cssArray = [classes.connected];
     connected = true;
+  } else if (props.value === "Declined") {
+    cssArray = [classes.declined];
+    connected = true;
+  } else if (props.value === "Accept") {
+    cssArray = [classes.accept];
   } else {
     cssArray = [classes.default];
   }

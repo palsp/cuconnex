@@ -11,7 +11,7 @@ interface Props {
 const ConnectionLists: React.FC<Props> = (props) => {
   return (
     <div className={classes.ConnectionLists}>
-      <div className={classes.listHeader}>Connection Requests</div>
+      <div className={classes.listHeader}>Connections</div>
       {props.Connectionlist.map(
         (Connection: ConnectionListsData, index: number) => {
           return (

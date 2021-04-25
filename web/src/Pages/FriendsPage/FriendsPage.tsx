@@ -13,6 +13,8 @@ const FriendsPage: React.FC = () => {
   return (
     <motion.div
       variants={containerVariants}
+      initial="hidden"
+      animate="visible"
       exit="exit"
       data-test="friends-page"
     >

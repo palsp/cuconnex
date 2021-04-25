@@ -59,14 +59,19 @@ export interface ConnectionListsData {
   name: string;
   role: string;
   faculty: string;
-  status: string;
+}
+
+export interface TeamInvitationListsData {
+  teamPic: string;
+  teamName: string;
+  event: string;
 }
 
 export interface MembersInActivityNotificationData {
   profilePic: string;
   name: string;
   role: string;
-  teamName: string;
+  faculty: string;
   status: string;
 }
 

@@ -19,16 +19,7 @@ const LandingPage: React.FC = () => {
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
-
-  const transition = {
-    // On Tap - Navigation
-    type: "spring",
-    delay: 0,
-    stiffness: 500,
-    damping: 60,
-    mass: 1,
-  };
-
+  
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 
@@ -46,10 +37,12 @@ const LandingPage: React.FC = () => {
           </Link>
         </div>
         <div
-          onClick={() => setHasTeam((prev) => !prev)}
-          className={classes.mailDiv}
+          // onClick={() => setHasTeam((prev) => !prev)}
+          className={classes.mailDiv}      
         >
-          <Mail />
+          <Link to="/notification">
+            <Mail />
+          </Link>
         </div>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
           <Hamburger />

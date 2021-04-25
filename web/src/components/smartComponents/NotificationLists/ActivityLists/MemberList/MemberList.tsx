@@ -16,7 +16,7 @@ interface Props {
     profilePic: string;
     name: string;
     role: string;
-    teamName: string;
+    faculty: string;
     status: string;
   };
 }
@@ -46,7 +46,7 @@ const MemberList: React.FC<Props> = (props) => {
           />
         </div>
         <div className={classes.smallFlex}>
-          <div className={classes.teamName}>{props.member.teamName}</div>
+          <div className={classes.teamName}>{props.member.faculty}</div>
 
           <div className={classes.connectedSign}>
             <RecruitSign
