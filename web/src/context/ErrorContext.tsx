@@ -1,10 +1,27 @@
 import React, { useState } from "react";
-
+import classes from "./ErrorModal.module.css";
 interface IErrorContext {
   error: string;
   setErrorHandler: (updatedError: any) => void;
 }
 
+interface IErrorMsg {
+  errorMessage: string;
+}
+export const ErrorModal: React.FC<IErrorMsg> = (props) => {
+  const [showError] = useState<boolean>(false);
+  return (
+    <>
+      {showError && (
+        <>
+          <div className={classes.modal} />
+          kuay
+          <div>{props.errorMessage}</div>
+        </>
+      )}
+    </>
+  );
+};
 export const ErrorContext = React.createContext<IErrorContext>(
   {} as IErrorContext
 );
@@ -17,7 +34,10 @@ export const ErrorContextProvider = (props: any) => {
   };
   return (
     <ErrorContext.Provider value={{ error, setErrorHandler }}>
+      <ErrorModal errorMessage={error} />
       {props.children}
     </ErrorContext.Provider>
   );
 };
+
+export default ErrorContextProvider;

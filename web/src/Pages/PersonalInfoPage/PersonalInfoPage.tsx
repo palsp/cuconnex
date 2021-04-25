@@ -59,6 +59,8 @@ interface Props {
 
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
+  bio: yup.string().required("Please fill in your bio"),
+  role: yup.string().required("Please fill in your role"),
 });
 
 const PersonalInfoPage: React.FC<Props> = (props) => {
@@ -152,7 +154,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
 
                 <Formik
                   data-test="personal-info-form"
-                  initialValues={{ displayName: "", bio: "" }}
+                  initialValues={{ displayName: "", bio: "", role: "" }}
                   onSubmit={(data, { setSubmitting }) => {
                     console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
@@ -167,6 +169,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                             state: {
                               name: data.displayName,
                               bio: data.bio,
+                              role: data.role,
                               profilePic: imageRaw,
                               year: props.location.state.year.toString(10),
                               faculty: props.location.state.faculty,
@@ -208,6 +211,14 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                             name="bio"
                             multiline
                             rowsMax={4}
+                            variant="outlined"
+                            as={TextField}
+                          />
+                          <Field
+                            label="Role"
+                            type="input"
+                            name="role"
+                            rowsMax={1}
                             variant="outlined"
                             as={TextField}
                           />
