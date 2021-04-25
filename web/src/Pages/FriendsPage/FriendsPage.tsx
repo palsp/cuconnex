@@ -19,7 +19,10 @@ const FriendsPage: React.FC = () => {
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
           <div className={classes.relativeArrow}>
-            <Link data-test="friends-page-back-link" to="/landing">
+            <Link
+              data-test="friends-page-back-link"
+              to={{ pathname: "/landing", state: { hamburgerOn: true } }}
+            >
               <ArrowLeft data-test="friends-page-arrow-left" />
             </Link>
           </div>
