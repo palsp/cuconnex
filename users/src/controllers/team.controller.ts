@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { BadRequestError } from '@cuconnex/common';
 import { Team, IsMember, User } from '../models';
 import { ITeamResponse } from '../interfaces/team';
+import { IUserResponse } from '../interfaces/user';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -27,7 +28,6 @@ export const createTeam = async (req: Request, res: Response) => {
   }
 
   let newTeam;
-  let status;
   try {
     newTeam = await user.createTeams({ name, description });
     await newTeam.addAndAcceptMember(user);
@@ -48,9 +48,13 @@ export const getTeamMember = async (req: Request, res: Response) => {
     throw new BadRequestError('Team not found!');
   }
 
-  const acceptedUser = await team.getMembers();
+  const acceptedUsers: User[] = await team.getMembers();
 
-  res.status(200).send({ users: acceptedUser });
+  const response: IUserResponse[] = acceptedUsers.map((eachUser) => {
+    return eachUser.toJSON();
+  });
+
+  res.status(200).send(response);
 };
 
 /**
@@ -124,9 +128,6 @@ export const manageStatus = async (req: Request, res: Response) => {
       throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
     }
 
-    // const oldStatus = member.status;
-    // member.status = status;
-    // member.save();
     team.editMemberStatus(targetUser, status);
 
     res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });

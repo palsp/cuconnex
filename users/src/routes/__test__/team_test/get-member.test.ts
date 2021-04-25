@@ -48,12 +48,11 @@ describe('Get Members', () => {
     const res = await request(app)
       .get(`/api/teams/members/${team.name}`)
       .set('Cookie', global.signin(user1.id))
-      .send({});
-    // .expect(200);
-    console.log(res.body);
+      .send({})
+      .expect(200);
 
-    expect(res.body.users.length).toEqual(1);
-    expect(res.body.users[0].id).toEqual(user1.id);
-    expect(res.body.users[0].name).toEqual(user1.name);
+    expect(res.body.length).toEqual(1);
+    expect(res.body[0].id).toEqual(user1.id);
+    expect(res.body[0].name).toEqual(user1.name);
   });
 });

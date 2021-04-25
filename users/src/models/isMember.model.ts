@@ -2,9 +2,6 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 
 import { TableName } from './types';
 
-import { User } from './user.model';
-import { Team } from './team.model';
-
 import { TeamStatus } from '@cuconnex/common';
 
 // keep member array as id of user
