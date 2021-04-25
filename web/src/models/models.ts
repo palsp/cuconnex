@@ -8,12 +8,30 @@ export interface IUser {
     Design: string[];
   };
   faculty: string;
-  year:string;
-  major:string;
-  bio:string;
+  year: string;
+  major: string;
+  bio: string;
   image: string;
 }
-
+export interface IUserFriend {
+  id: string;
+  name: string;
+  connections: {
+    receiverId: string;
+    senderId: string;
+    status: string;
+  };
+  interests: {
+    Technology: string[];
+    Business: string[];
+    Design: string[];
+  };
+  faculty: string;
+  year: string;
+  major: string;
+  bio: string;
+  image: string;
+}
 
 export interface ITeam {
   name: string; // team name
@@ -43,15 +61,15 @@ export interface IUserSignin {
   password: string;
 }
 //Friend
-export interface IConnected{
-  status:string;
+export interface IConnected {
+  status: string;
 }
-export interface IAddFriend{
-  userId:string;
+export interface IAddFriend {
+  userId: string;
 }
-export interface IAddFriendResponse{
-  userId:string;
-  accepted:boolean;
+export interface IAddFriendResponse {
+  userId: string;
+  accepted: boolean;
 }
 // User Services
 
@@ -64,9 +82,9 @@ export interface IFetchUserData {
     Design: string[];
   };
   faculty: string;
-  year:string;
-  major:string;
-  bio:string;
+  year: string;
+  major: string;
+  bio: string;
   image: string;
 }
 
@@ -82,7 +100,9 @@ export interface ICreateUserData {
   year: string;
   image: File;
   major?: string;
-
+}
+export interface IFetchFriendsData {
+  connections: [IUser];
 }
 //events
 export interface IFetchEventsData {
@@ -126,10 +146,6 @@ export interface ITeamDataResult {
   description: string;
 }
 
-export interface IFetchFriendsData {
-  connection: IFetchUserData[];
-}
-
 export interface IInviteData {
   teamName: string;
   newMemberId: string;
@@ -141,8 +157,8 @@ export interface IInviteDataResult {
   Team: string;
 }
 
-export interface ICallTeamOfUser{
-  teams:ITeam[];
+export interface ICallTeamOfUser {
+  teams: ITeam[];
 }
 
 export enum FacultyListsEnum {
@@ -174,8 +190,9 @@ export interface IFetchTeamNotification {
   teamNames: string[];
 }
 export interface IFetchFriendNotification {
-  request: IUser[];
+  requests: [IUserFriend];
 }
+
 //Search
 export interface ISearchGeneral {
   users: IUser[];
@@ -197,7 +214,7 @@ const containerVariants = {
   exit: {
     opacity: 0.8,
     transition: {
-      duration: 0.2
+      duration: 0.2,
     },
   },
 };

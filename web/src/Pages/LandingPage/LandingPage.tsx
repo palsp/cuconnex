@@ -45,12 +45,14 @@ const LandingPage: React.FC = () => {
             <Search />
           </Link>
         </div>
+        <Link to="/notification">
         <div
-          onClick={() => setHasTeam((prev) => !prev)}
+          //onClick={() => setHasTeam((prev) => !prev)}
           className={classes.mailDiv}
         >
           <Mail />
         </div>
+        </Link>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
           <Hamburger />
         </div>

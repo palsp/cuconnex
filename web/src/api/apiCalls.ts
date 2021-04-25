@@ -15,12 +15,12 @@ import {
   IUser,
   ITeam,
   IFetchTeamNotification,
-  IFetchFriendNotification,
   IFetchFriendsData,
   IConnected,
   IAddFriend,
   IAddFriendResponse,
   ICallTeamOfUser,
+  IFetchFriendNotification,
 } from "@src/models";
 
 //Auth Services
@@ -159,9 +159,9 @@ const fetchRelationAPI = async (
   return relationResult;
 };
 const fetchFriendsDataAPI = async (): Promise<
-  AxiosResponse<IFetchFriendsData>
+  AxiosResponse<IUser[]| []>
 > => {
-  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
+  const userData: AxiosResponse<IUser[]| []> = await axios.get(
     "/api/users/friends"
   );
 
