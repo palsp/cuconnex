@@ -50,7 +50,7 @@ describe('Get Connections', () => {
         const user2 = await User.create({ id: "6131775621", name: "test_2" })
         await user1.addConnection(user2);
 
-        await user2.acceptConnection(user1.id, false);
+        await user2.acceptConnection(user1, false);
 
         const { body } = await request(app)
             .get("/api/users/friends")
@@ -76,7 +76,7 @@ describe('Get Connections', () => {
             await user2.addInterest(coding)
         }
 
-        await user2.acceptConnection(user1.id, true);
+        await user2.acceptConnection(user1, true);
 
         const { body } = await request(app)
             .get("/api/users/friends")
@@ -136,7 +136,7 @@ describe('Get Friend Request', () => {
         await user1.requestConnection(user2);
         await user1.addConnection(user3);
 
-        await user3.acceptConnection(user1.id, true);
+        await user3.acceptConnection(user1, true);
 
 
 
@@ -157,7 +157,6 @@ describe('The Received connections route', () => {
         const user3 = await User.create({ id: "6131775721", name: "test_3" })
         await user1.requestConnection(user2);
         await user2.requestConnection(user3);
-        console.log(user2.getReceivedFriendRequests())
         const { body } = await request(app)
             .get("/api/users/friends/request/received")
             .set('Cookie', global.signin(user2.id))

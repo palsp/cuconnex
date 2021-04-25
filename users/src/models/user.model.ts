@@ -196,6 +196,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     if (status === FriendStatus.Accept || status === FriendStatus.Pending) {
       return;
     }
+
     return this.addConnection(user);
   }
   /**
@@ -222,14 +223,12 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     const result: User[] = [];
     const constraint = { receiverId: this.id, status: FriendStatus.Pending }
     const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
-    console.log(receivedRequests);
-    for(let conn of receivedRequests){
-        const user = await User.findOne({ where: { id: conn.senderId } })
-        if(user){
-          result.push(user);
-        }
+    for (let conn of receivedRequests) {
+      const user = await User.findOne({ where: { id: conn.senderId } })
+      if (user) {
+        result.push(user);
+      }
     }
-    console.log(result);
 
     return result;
   }
@@ -241,36 +240,14 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     const result: User[] = [];
     const constraint = { senderId: this.id, status: FriendStatus.Pending }
     const sendRequests: Connection[] = await Connection.findAll({ where: constraint });
-    console.log(sendRequests);
     for (let conn of sendRequests) {
       const user = await User.findOne({ where: { id: conn.senderId } })
       if (user) {
         result.push(user);
       }
     }
-    console.log(result);
 
     return result;
-  }
-
-  /**
-   * Method for finding a user with the specified userId.
-   * Returns a promise that resolves if a user is found.
-   * 
-   * if the user is not found, throws a new NotFoundError
-   * @param userId - The id of the user we wish to find
-   * @throws {NotFoundError} - if the user is not found
-   * @return {User}`user` - the found user, if it exists 
-   */
-  public static async findUser(userId: string): Promise<User> {
-    const user = await User.findByPk(userId);
-
-    // check if user who is added exists in the database
-    if (!user) {
-      throw new NotFoundError();
-    }
-
-    return user;
   }
 
   /**
@@ -282,26 +259,60 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns 
    */
 
-  public async acceptConnection(userId: string, accepted: Boolean): Promise<FriendStatus> {
-    const relation = await Connection.findOne({ where: { senderId: userId, receiverId: this.id } });
+  public async acceptConnection(sendUser: User, accepted: Boolean): Promise<FriendStatus> {
+    let relations = await Connection.findAll({ where: { senderId: sendUser.id, receiverId: this.id } });
 
-    if (!relation) {
+    if (relations.length === 0) {
       throw new BadRequestError('User has not send a request yet');
     }
 
     if (accepted) {
-      relation.status = FriendStatus.Accept;
-    } else {
-      relation.status = FriendStatus.Reject;
+      await this.addConnection(sendUser)
+      const recentAddedConn = await Connection.findAll({ where: { senderId: this.id, receiverId: sendUser.id } });
+      relations = relations.concat(recentAddedConn);
     }
 
-    try {
-      await relation.save();
-    } catch (err) {
-      throw new Error('Db connection failed');
+
+    const status = accepted ? FriendStatus.Accept : FriendStatus.toBeDefined;
+
+    for (let relation of relations) {
+
+      if (accepted) {
+        relation.status = status;
+      } else {
+        relation.status = status;
+      }
+
+
+      try {
+        await relation.save();
+      } catch (err) {
+        throw new Error('Db connection failed');
+      }
     }
 
-    return relation.status;
+
+    return status;
+  }
+
+  /**
+ * Method for finding a user with the specified userId.
+ * Returns a promise that resolves if a user is found.
+ * 
+ * if the user is not found, throws a new NotFoundError
+ * @param userId - The id of the user we wish to find
+ * @throws {NotFoundError} - if the user is not found
+ * @return {User}`user` - the found user, if it exists 
+ */
+  public static async findUser(userId: string): Promise<User> {
+    const user = await User.findByPk(userId);
+
+    // check if user who is added exists in the database
+    if (!user) {
+      throw new NotFoundError();
+    }
+
+    return user;
   }
 
   public createTeam!: HasManyCreateAssociationMixin<Team>;
