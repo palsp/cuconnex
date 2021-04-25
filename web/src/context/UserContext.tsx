@@ -23,7 +23,7 @@ export const UserContextProvider = (props: any) => {
     },
     faculty: "",
     year: "",
-    major: "",
+    role: "",
     bio: "",
     image: "",
   });
@@ -53,6 +53,7 @@ export const UserContextProvider = (props: any) => {
       },
       faculty: updatedUserData.faculty || prevState.faculty,
       image: updatedUserData.image || prevState.image,
+      role: updatedUserData.role || prevState.role,
     }));
     console.log("setUserDataHandler data is...", updatedUserData);
   };
