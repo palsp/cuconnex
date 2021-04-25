@@ -30,6 +30,7 @@ describe('The /api/upload', () => {
 
     });
     it('should return 201 if there is a valid file uploaded', async () => {
+
         await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
@@ -60,16 +61,19 @@ describe('The /api/upload', () => {
     });
 
 
-    // describe('The /api/users endpoint with files', () => {
-    //     it('should return 201 without interests', async () => {
-    //         await request(app)
-    //             .post('/api/users')
-    //             .set('Cookie', global.signin())
-    //             .field({
-    //                 name: 'test' })
-    //             .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
-    //             .then(res => {
-    //               expect(res.body.errors).toEqual(null);
-    //             });
-    //     });
+    describe('The /api/users endpoint with files', () => {
+        it('should return 201 without interests', async () => {
+            await request(app)
+                .post('/api/users')
+                .set('Cookie', global.signin())
+                .field({
+                    name: 'test'
+                })
+                .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
+                .then(res => {
+                    expect(res.body.errors).toEqual(null);
+                });
+        });
+    });
+
 });
