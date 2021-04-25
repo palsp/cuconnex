@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { FormControl, TextField } from "@material-ui/core/";
@@ -14,7 +14,6 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { ProfilePic } from "@smartComponents/index";
-import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
@@ -68,9 +67,9 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [imageRaw, setImageRaw] = useState<File>();
 
-  const handleUploadedImage = (e: any) => {
+  const handleUploadedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log("e.target.files: ", e.target.files);
-    if (e.target.files.length) {
+    if (e.target.files?.length) {
       // console.log("Initial image raw: ", imageRaw);
       setImagePreview(URL.createObjectURL(e.target.files[0]));
       setImageRaw(e.target.files[0]);
