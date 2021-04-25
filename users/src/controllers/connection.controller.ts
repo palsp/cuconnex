@@ -1,4 +1,4 @@
-import { FriendStatus } from '@cuconnex/common';
+import { BadRequestError, FriendStatus } from '@cuconnex/common';
 import { NextFunction, Request, Response } from 'express';
 import { IAcceptFriendRequest, IGetAllConnectionResponse, IGetAllFriendRequest } from '../interfaces';
 import { User } from '../models'
@@ -70,7 +70,12 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
 export const acceptFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const sendUser = await User.findUser(req.body.userId);
 
-    const status = await req.user!.acceptConnection(sendUser.id, req.body.accepted);
+    if (!sendUser) {
+        throw new BadRequestError('Sender not found')
+    }
+
+
+    const status = await req.user!.acceptConnection(sendUser, req.body.accepted);
 
     const response: IAcceptFriendRequest = {
         status,
@@ -78,7 +83,7 @@ export const acceptFriendRequest = async (req: Request, res: Response): Promise<
     res.status(201).send(response);
 }
 
-export const getAllReceivedFriendRequest = async (req: Request, res: Response): Promise<void> =>{
+export const getAllReceivedFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const requests = await req.user!.getReceivedFriendRequests();
     const helper = [];
     for (let request of requests) {
