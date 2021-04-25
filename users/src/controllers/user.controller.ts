@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
-import { NotFoundError, BadRequestError, InterestDescription, currentUser } from '@cuconnex/common';
+import { NotFoundError, BadRequestError, InterestDescription, currentUser, getYearFromId, getFacultyCodeFromId, getCurrentYear, faculty } from '@cuconnex/common';
 import { User, Team, Interest } from '../models'
 import { deleteFile } from '../utils/file';
 import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
@@ -51,8 +51,7 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
  * @param res 
  */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
-    const { interests, name, faculty, year, role, bio } = req.body;
-    // console.log(interests, name)
+    const { interests, name, role, bio } = req.body;
     let imagePath = "";
     if (req.file) {
         imagePath = req.file.path
@@ -62,12 +61,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         }
     }
 
-    if (year) {
-        const pattern = /^[1-4]$/
-        if (!pattern.test(year)) {
-            throw new BadRequestError('Year must be valid')
-        }
-    }
+
+
 
     // Make sure that user does not exist
     let user = await User.findOne({ where: { id: req.currentUser!.id } });
@@ -76,20 +71,24 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     }
 
 
+
     let createsuccess = false;
     // create users 
 
     try {
-        user = await User.create({ id: req.currentUser!.id, name, faculty, year, role, bio, image: imagePath });
+        user = await User.create({ id: req.currentUser!.id, name, role, bio, image: imagePath });
+        createsuccess = true;
         for (let category in interests) {
             // select only valid interest description 
             interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
             await user.addInterestFromArray(interests[category]);
         }
-        createsuccess = true;
     } catch (err) {
         createsuccess = false;
+        console.log(err.message);
     }
+
+
 
     // destroy the created resource if something goes wrong
     if (!createsuccess && user) {
@@ -101,6 +100,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         ...user!.toJSON(),
         interests
     }
+
 
     res.status(201).send(response);
 }

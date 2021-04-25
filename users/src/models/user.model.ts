@@ -9,7 +9,7 @@ import {
   Association,
   Sequelize,
 } from 'sequelize';
-import { BadRequestError, NotFoundError, FriendStatus, Description } from '@cuconnex/common';
+import { BadRequestError, NotFoundError, FriendStatus, Description, faculty, getCurrentYear, getYearFromId, getFacultyCodeFromId } from '@cuconnex/common';
 
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
@@ -22,28 +22,24 @@ import { IUserResponse } from '../interfaces';
 interface UserAttrs {
   id: string;
   name: string;
-  // faculty: Faculty;
-  faculty: string;
   image: string;
+  faculty?: string
+  year?: string,
+  role: string,
+  bio: string,
   lookingForTeam: boolean;
   interests?: Interest[];
   friends?: User[];
-  year: string,
-  role: string,
-  bio: string,
   connections?: Connection;
 }
 
 interface UserCreationAttrs {
   id: string;
   name: string;
-  faculty?: string;
   image?: string;
   lookingForTeam?: boolean;
-  year?: string,
   role?: string,
   bio?: string,
-
 }
 
 
@@ -82,8 +78,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
           allowNull: false,
         },
         faculty: {
-          type: DataTypes.STRING(255),
-          defaultValue: "",
+          type: DataTypes.ENUM,
+          // allowNull: false,
+          values: Object.values(faculty)
         },
         year: {
           type: DataTypes.STRING(1),
@@ -112,6 +109,16 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         timestamps: false,
       }
     );
+
+    User.beforeCreate(async (user) => {
+      // insert faculty and year according to user id 
+      const year = +getCurrentYear() - +getYearFromId(user.id);
+      const fname = faculty[getFacultyCodeFromId(user.id)];
+
+      user.year = year.toString();
+      user.faculty = fname;
+
+    });
   }
 
 
@@ -293,6 +300,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     if (this.connections) {
       delete this.connections
     }
+
 
     return { ...values, interests }
 
