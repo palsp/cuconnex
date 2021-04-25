@@ -19,6 +19,16 @@ const MemberLists: React.FC<Props> = (props) => {
 
   //   }
   // }
+  const selectMemberListHandler = (
+    checked: boolean,
+    index: number,
+    person: UsersData
+  ) => {
+    if (checked) {
+      props.selectMemberListsHandler(index);
+      props.personHandler(person);
+    }
+  };
   return (
     <div>
       {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
@@ -29,10 +39,9 @@ const MemberLists: React.FC<Props> = (props) => {
             <MemberList
               key={index}
               members={person}
-              selectMemberListHandler={(currentState: boolean) => {
-                props.selectMemberListsHandler(index);
-                props.personHandler(person);
-              }}
+              selectMemberListHandler={(checked: boolean) =>
+                selectMemberListHandler(checked, index, person)
+              }
             />
           </div>
         );

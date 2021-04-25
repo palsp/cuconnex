@@ -12,6 +12,8 @@ import {
 import { ArrowLeft } from "@icons/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import { UserContext } from "@context/UserContext";
+import { ErrorContext } from "@context/ErrorContext";
+
 import classes from "../AuthPage.module.css";
 import { IUserSignin } from "@models/index";
 import { userSigninAPI, fetchUserDataAPI } from "@api/index";
@@ -24,10 +26,10 @@ const validationSchema = yup.object({
   password: yup.string().required("No password provided."),
 });
 const LoginPrompt: React.FC<Props> = (props) => {
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const { fetchUserDataHandler } = useContext(UserContext);
+  const { setErrorHandler } = useContext(ErrorContext);
 
   const signinHandler = async (signinData: IUserSignin) => {
     try {
@@ -41,8 +43,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
         console.log(`POST signin success but failed GET fetching, error: ${e}`);
       }
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/auth/signin");
-      console.log("ERRORS occured while POST /api/auth/signin", e);
+      setErrorHandler("Wrong Username or Password!");
     }
   };
   const loginPrompt = redirect ? (
@@ -103,7 +104,6 @@ const LoginPrompt: React.FC<Props> = (props) => {
             <Heading value="Back" size="small" />
           </div>
         </div>
-        {errorOnScreen}
       </div>
     </>
   );

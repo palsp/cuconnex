@@ -41,3 +41,7 @@
   font-size: 1.5rem;
   font-weight: 500;
 }
+
+.bold {
+  font-weight: 600;
+}
