@@ -4,6 +4,21 @@ import { NotFoundError, BadRequestError, InterestDescription, currentUser } from
 import { User, Team, Interest } from '../models'
 import { deleteFile } from '../utils/file';
 import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
+//Test for empty object
+function isEmpty(obj: Object) {
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+function isNull(obj: Object){
+    Object.keys(obj).map(key => {
+        if(!key) return false;
+    })
+    return true;
+}
 
 /**
  * get current user profile
@@ -152,27 +167,31 @@ export const findRelation = async (req: Request, res: Response) => {
 }
 
 /**
- * Method for editing the name or bio of the user with the specified id.
- * Expects req.body to have either a name or bio field.
- * If there's only one field and the field is the same, will throw error.
- * Will throw NotFoundError if the user with the specified id cannot be found
- * If all checks pass, will update User with name and bio specified.
+ * Method for editing any field of the user with the specified id.
+ * Expects req.body to have a user object
+ * If all checks pass, will update User with the fields specified
  * Then sends 200 alongside the newly updated user object.
  * @param req 
  * @param res 
  */
 export const editUser = async (req: Request, res: Response) => {
     if(!req.params.userId) throw new BadRequestError("Please enter a user ID!");
-   
     const user = await User.findOne({ where: { id: req.params.userId } });
-    console.log(user);
     if(!user) throw new NotFoundError();
-    if(!req.body.name && !req.body.bio) throw new BadRequestError("Empty request!");
-    //Only throws duplicate errors if the duplicated field is the only one supplied.
-    if(!req.body.bio && user.name === req.body.name) throw new BadRequestError('Your name is the same!!');
-    if(!req.body.name && user.bio === req.body.bio) throw new BadRequestError("Your bio is the same!!");
+    
+ 
+    if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
+
     User.update(
-        { name: req.body.name || user.name, bio: req.body.bio || user.bio},
+        { 
+            name: req.body.name || user.name, 
+            bio: req.body.bio || user.bio,
+            interests: req.body.interests || user.interests,
+            faculty: req.body.faculty || user.faculty,
+            year: req.body.year || user.year,
+            major: req.body.major || user.major,
+            lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+        },
         { returning: true, where: { id: req.params.userId }}
     ).then(async (rowsUpdated) => {
         console.log(rowsUpdated)

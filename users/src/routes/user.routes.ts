@@ -12,7 +12,7 @@ router.get("/current-user", userController.getUser);
 
 router.get("/relation/:userId", requireUser, userController.findRelation);
 
-router.put("/:userId", requireUser, userController.editUser)
+router.put("/:userId", upload.single('image'), transformRequest, validateRequest, requireUser, userController.editUser)
 
 router.get("/:userId", requireUser, userController.viewUserProfile);
 

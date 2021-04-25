@@ -33,13 +33,13 @@ describe('The edit User route', () => {
             .put('/api/users/613')
             .set('Cookie', global.signin(user.id))
             .send({ name: 'John' })
-            .expect(404)
             .then((res) =>{
+                expect(res.status).toEqual(404);
                 console.log(res.body.errors[0].message);
             })
         
     });
-    it('should return 400 if neither the name or bio fields are provided', async () => {
+    it('should return 400 if no fields are provided', async () => {
         const { user } = await setup();
         await request(app)
             .put('/api/users/6131898121')
@@ -51,27 +51,6 @@ describe('The edit User route', () => {
                 console.log(res.body.errors[0].message);
             })
         
-    });
-    it('should return 400 if a duplicate field is specified and it is the only field', async () => {
-        const { user } = await setup();
-        await request(app)
-            .put('/api/users/6131898121')
-            .set('Cookie', global.signin(user.id))
-            .send({ name: 'Anon' })
-            .expect(400)
-            .then((res) =>{
-                expect(res.body.errors[0].message).toEqual("Your name is the same!!");
-                console.log(res.body.errors[0].message);
-            })
-        await request(app)
-            .put('/api/users/6131898121')
-            .set('Cookie', global.signin(user.id))
-            .send({ bio: "Hello" })
-            .expect(400)
-            .then((res) => {
-                expect(res.body.errors[0].message).toEqual("Your bio is the same!!");
-                console.log(res.body.errors[0].message);
-            })
     });
     it('should work fine if a duplicate field is entered alongside none duplicate', async () => {
         const { user } = await setup();
@@ -114,15 +93,12 @@ describe('The edit User route', () => {
 
     it('should return 200 if both are specified and update both fields', async () => {
         const { user } = await setup();
-        await request(app)
+        const { body: res } = await request(app)
             .put('/api/users/6131898121')
             .set('Cookie', global.signin(user.id))
             .send({ bio: 'Hello my name is Anon', name: 'John' })
             .expect(200)
-            .then((res) => {
-                console.log(res.body);
-                expect(res.body.name).toEqual('John');
-                expect(res.body.bio).toEqual('Hello my name is Anon');
-            })
+        expect(res.name).toEqual('John');
+        expect(res.bio).toEqual('Hello my name is Anon');
     });
 });
