@@ -22,6 +22,7 @@ interface Props {
       bio: string;
       year: string;
       profilePic: File;
+      role: string;
     };
   };
   page?: string;
@@ -44,6 +45,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   let faculty = "";
   let bio = "";
   let year = "";
+  let role = "";
   let profileImage: File;
   let saveButton = null;
 
@@ -97,12 +99,14 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       faculty = props.location.state.faculty;
       bio = props.location.state.bio;
       year = props.location.state.year;
+      role = props.location.state.role;
     }
     const userData: ICreateUserData = {
       name: name,
       interests: interestArray,
       faculty: faculty,
       bio: bio,
+      role: role,
       year: year,
       image: profileImage,
     };
