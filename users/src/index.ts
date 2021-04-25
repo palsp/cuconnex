@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
+import { } from '@cuconnex/common';
 
 
 const validateEnvAttr = () => {
@@ -46,3 +47,4 @@ const start = async () => {
 };
 
 start();
+

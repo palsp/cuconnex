@@ -21,3 +21,18 @@ export enum Faculty {
   IntegratedInnovation = 'Integrated Innovation', // วัฒนกรรมบูรณาการ
   AgriculturalResources = 'Agricultural Resources'
 }
+
+export const faculty = {
+  "01": "THE SIRINDHORN THAI LANGUAGE INSTITUTE",
+  "02": "OFFICE OF ACADEMIC AFFAIRS",
+  "20": "GRADUATE SCHOOL",
+  "21": "FACULTY OF ENGINEERING",
+  "22": "FACULTY OF ARTS",
+  "23": "FACULTY OF SCIENCE",
+  "24": "FACULTY OF POLITICAL SCIENCE",
+  "25": "FACULTY OF ARCHITECTURE",
+  "26": "FACULTY OF COMMERCE AND ACCOUNTANCY",
+  "27": "FACULTY OF EDUCATION",
+  "28": "FACULTY OF COMMUNICATION ARTS",
+  "29": "FACULTY OF ECONOMICS"
+}
