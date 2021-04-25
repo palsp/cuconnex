@@ -106,10 +106,11 @@ const NotificationPage: React.FC = () => {
           />
         </div>
         <div className={classes.connectionList}>
-           {/* <ConnectionLists
+           <ConnectionLists
             data-test="Notification-page-team-lists"
+            // requests={mockConnectionListsData}
             requests={friendNoti}
-          />  */}
+          />
         </div>
       </div>
     );

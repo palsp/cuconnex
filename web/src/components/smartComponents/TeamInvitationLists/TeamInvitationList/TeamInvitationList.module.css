@@ -58,14 +58,23 @@
   }
   
 .groupAmount {
+    width: 10%;
     margin-left: 2%;
     text-align: start;
     color: #c2c2c2;
   }
   
 .groupIcon {
+  width: 20%;
     margin-left: 5%;
     margin-right: 10%;
+    display: flex;
+ }
+
+ .groupIcon2 {
+  display: flex;
+  flex-direction: row;
+  width: 40%
  }
    
 .teamFriends {

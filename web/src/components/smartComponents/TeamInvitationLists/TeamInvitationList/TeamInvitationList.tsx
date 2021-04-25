@@ -10,7 +10,7 @@ import {
 
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./TeamInvitationList.module.css";
-import { Group } from "@dumbComponents/UI/Icons";
+import { Accept, Decline, Group } from "@dumbComponents/UI/Icons";
 
 interface Props {
   TeamInvitation: {

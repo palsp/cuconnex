@@ -66,14 +66,13 @@
   margin-top: 30%;
 }
 
-/* .acceptIcon {
-  
+.acceptIcon {
+  width: 30%;
 }
 
-
 .declineIcon {
-  
-} */
+  width: 30%;
+}
 
 .connectedSign {
   position: relative;

@@ -10,7 +10,7 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./ConnectionList.module.css";
 import { IUser, IUserFriend } from "@src/models";
-import { Check } from "@dumbComponents/UI/Icons";
+import { Accept, Check, Decline } from "@dumbComponents/UI/Icons";
 interface Props {
   connection: IUserFriend;
 }
@@ -35,18 +35,17 @@ const ConnectionList: React.FC<Props> = (props) => {
     ButtonPrompt = (
       <div className={classes.selectSign}>
         <div className={classes.acceptIcon} onClick={acceptButtonHandler}>
-          <Check circle={true}/>
+          <Accept />
         </div>
         <div className={classes.declineIcon} onClick={declineButtonHandler}>
-          <Check circle={true}/>
+          <Decline />
         </div>
       </div>
     );
   } else if (clickAccept) {
     ButtonPrompt = (
       <div 
-        className={classes.connectedSign}
-        
+        className={classes.connectedSign} 
         >
           <RecruitSign
             data-test="team-list-status"

@@ -31,3 +31,6 @@ export { default as CircleFilled } from "@icons/CircleFilled/CircleFilled";
 
 export { default as InviteMember } from "@icons/InviteMember/InviteMember";
 export { default as Close } from "@icons/Close/Close";
+
+export { default as Accept } from "@icons/Accept/Accept";
+export { default as Decline } from "@icons/Decline/Decline";
