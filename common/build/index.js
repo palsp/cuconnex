@@ -19,6 +19,7 @@ __exportStar(require("./middlewares/requireAuth"), exports);
 __exportStar(require("./db-status/friend"), exports);
 __exportStar(require("./db-status/team"), exports);
 __exportStar(require("./db-status/interest"), exports);
+__exportStar(require("./db-status/faculty"), exports);
 // nats-events
 __exportStar(require("./nats/events/friend-added-event"), exports);
 __exportStar(require("./nats/events/friend-updated-event"), exports);

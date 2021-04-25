@@ -22,7 +22,7 @@
 //   AgriculturalResources = 'Agricultural Resources'
 // }
 
-export const faculty = {
+export const faculty: { [key: string]: string } = {
   "01": "THE SIRINDHORN THAI LANGUAGE INSTITUTE",
   "02": "OFFICE OF ACADEMIC AFFAIRS",
   "20": "GRADUATE SCHOOL",

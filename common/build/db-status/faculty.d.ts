@@ -1,23 +1,31 @@
-export declare enum Faculty {
-    AlliedHealthSciences = "Allied Health Sciences",
-    Architecture = "Architecture",
-    Arts = "Arts",
-    CommunicationArts = "Communication Arts",
-    CommerceAndAccountancy = "Commerce and Accountancy",
-    Dentistry = "Dentistry",
-    Economics = "Economics",
-    Education = "Education",
-    Engineering = "Engineering",
-    FineAndAppliedArts = "Fine and Applied Arts",
-    Law = "Law",
-    Medicine = "Medicine",
-    Nursing = "Nursing",
-    PharmaceuticalSciences = "Pharmaceutical Sciences",
-    PoliticalSciences = "Political Sciences",
-    Psychology = "Psychology",
-    Science = "Science",
-    SportsScience = "Sports Science",
-    VeterinaryScience = "VeterinaryScience",
-    IntegratedInnovation = "Integrated Innovation",
-    AgriculturalResources = "Agricultural Resources"
-}
+export declare const faculty: {
+    "01": string;
+    "02": string;
+    "20": string;
+    "21": string;
+    "22": string;
+    "23": string;
+    "24": string;
+    "25": string;
+    "26": string;
+    "27": string;
+    "28": string;
+    "29": string;
+    "30": string;
+    "31": string;
+    "32": string;
+    "33": string;
+    "34": string;
+    "35": string;
+    "36": string;
+    "37": string;
+    "38": string;
+    "39": string;
+    "40": string;
+    "51": string;
+    "53": string;
+    "55": string;
+    "56": string;
+    "58": string;
+    "99": string;
+};

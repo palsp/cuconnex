@@ -5,6 +5,7 @@ export * from './middlewares/requireAuth';
 export * from './db-status/friend';
 export * from './db-status/team';
 export * from './db-status/interest';
+export * from './db-status/faculty';
 export * from './nats/events/friend-added-event';
 export * from './nats/events/friend-updated-event';
 export * from './nats/events/team-added-event';
