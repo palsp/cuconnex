@@ -33,36 +33,38 @@ describe('The edit User route', () => {
             .put('/api/users/613')
             .set('Cookie', global.signin(user.id))
             .send({ name: 'John' })
-            .then((res) =>{
-                expect(res.status).toEqual(404);
-                console.log(res.body.errors[0].message);
-            })
-        
+            .expect(404)
     });
     it('should return 400 if no fields are provided', async () => {
         const { user } = await setup();
-        await request(app)
+        const { body: res} = await request(app)
             .put('/api/users/6131898121')
             .set('Cookie', global.signin(user.id))
             .send({ })
             .expect(400)
-            .then((res) =>{
-                expect(res.body.errors[0].message).toEqual("Empty request!");
-                console.log(res.body.errors[0].message);
-            })
-        
+        expect(res.errors[0].message).toEqual("Empty request!");
     });
-    it('should work fine if a duplicate field is entered alongside none duplicate', async () => {
+    it('should return 400 if invalid fields are provided', async () => {
         const { user } = await setup();
-        await request(app)
+        const { body: res } = await request(app)
             .put('/api/users/6131898121')
             .set('Cookie', global.signin(user.id))
-            .send({ name: 'Anon', bio: "Hello there" })
-            .expect(200)
-            .then((res) => {
-                expect(res.body.name).toEqual('Anon');
-                expect(res.body.bio).toEqual('Hello there');
-            })
+            .send({ name: 4, bio: 2, year: 3 })
+            .expect(400)
+        console.log(res.errors);
+        expect(res.errors).toEqual(          
+            expect.arrayContaining([      
+                expect.objectContaining({   
+                    message: 'Year must be a string!'              
+                }), 
+                expect.objectContaining({
+                    message: "Name is invalid"
+                }),
+                expect.objectContaining({
+                    message: "Bio is invalid"
+                }),
+            ])
+        )
     });
     it('should return 200 if name is specified and should update only the name', async () => {
         const { user } = await setup();
@@ -72,7 +74,6 @@ describe('The edit User route', () => {
             .send({ name: 'John' })
             .expect(200)
             .then((res) =>{
-                console.log(res.body);
                 expect(res.body.name).toEqual('John');
                 expect(res.body.bio).toEqual('Hello');
             })
@@ -85,20 +86,21 @@ describe('The edit User route', () => {
             .send({ bio: 'Hello my name is Anon' })
             .expect(200)
             .then((res) =>{
-                console.log(res.body);
                 expect(res.body.name).toEqual('Anon');
                 expect(res.body.bio).toEqual('Hello my name is Anon');
             })
     });
 
-    it('should return 200 if both are specified and update both fields', async () => {
+    it('should return 200 if more than one fields are specified and update all specified fields', async () => {
         const { user } = await setup();
         const { body: res } = await request(app)
             .put('/api/users/6131898121')
             .set('Cookie', global.signin(user.id))
-            .send({ bio: 'Hello my name is Anon', name: 'John' })
+            .send({ bio: 'Hello my name is Anon', name: 'John', year: '3', faculty: 'Engineering' })
             .expect(200)
         expect(res.name).toEqual('John');
         expect(res.bio).toEqual('Hello my name is Anon');
+        expect(res.year).toEqual('3');
+        expect(res.faculty).toEqual('Engineering')
     });
 });
