@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FriendLists, SearchBar } from "@smartComponents/index";
 import { Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 import { motion } from "framer-motion";
-import containerVariants from "@src/models/models";
+import containerVariants, { IUser } from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
+import { fetchFriendsDataAPI } from "@src/api";
 
 const FriendsPage: React.FC = () => {
+  const [friendLists, setFriendLists] = useState<[IUser] | []>([]);
+   useEffect(() => {
+     fetchFriendsHandler().then((value: [IUser] | []) =>
+       setFriendLists(value)
+     );
+  }, []);
+  const fetchFriendsHandler = async () => {
+    const friendsData = await fetchFriendsDataAPI();
+    console.log("SUCCESS fetchFriendsHandler", friendsData.data);
+    return friendsData.data.connections;
+  };
+  const test= fetchFriendsHandler();
+  console.log(test);
   return (
     <motion.div
       variants={containerVariants}
@@ -37,7 +51,7 @@ const FriendsPage: React.FC = () => {
         </div>
       </div>
 
-      <FriendLists data-test="friends-page-friend-lists" />
+      {/* <FriendLists connections={friendLists}/> */}
     </motion.div>
   );
 };

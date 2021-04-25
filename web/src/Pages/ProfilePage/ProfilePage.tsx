@@ -70,10 +70,10 @@ const ProfilePage: React.FC<Props> = (props) => {
       console.log("ERRORS occured while POST /users/friends", e);
     }
   };
-  console.log(props.location.state.users);
   if (isFriend == null) {
-    console.log("This is user's own profile");
+    console.log("This is user's own profile",{isFriend});
   }
+  console.log(isFriend);
   let isMyProfile = false;
   if (props.location) {
     isMyProfile = props.location.state.users.id == userData.id;
@@ -110,15 +110,15 @@ const ProfilePage: React.FC<Props> = (props) => {
             {isMyProfile ? <Edit /> : <div />}
           </div>
           <div className={classes.addDiv}>
-            {isFriend == "Accepted" ? (
-              <div />
-            ) : (
+            {isFriend == "toBedefined" ? (
               <button
-                onClick={() => addFriendHandler(friendId)}
-                className={classes.buttonDiv}
-              >
-                <div className={classes.buttonTextDiv}>Connect</div>
-              </button>
+              onClick={() => addFriendHandler(friendId)}
+              className={classes.buttonDiv}
+            >
+              <div className={classes.buttonTextDiv}>Connect</div>
+            </button>
+            ) : (
+              <div/>
             )}
           </div>
         </div>

@@ -55,7 +55,7 @@ const NotificationPage: React.FC = () => {
   // };
   const fetchFriendNotiHandler = async () => {
     const friendsData = await fetchFriendNotificationAPI();
-    console.log("SUCCESS fetchDataHandler", friendsData.data.requests);
+    console.log("SUCCESS fetchFriendHandler", friendsData.data.requests);
     return friendsData.data.requests;
   };
   const connectionButtonHandler = () => {
@@ -106,10 +106,10 @@ const NotificationPage: React.FC = () => {
           />
         </div>
         <div className={classes.connectionList}>
-           <ConnectionLists
+           {/* <ConnectionLists
             data-test="Notification-page-team-lists"
             requests={friendNoti}
-          /> 
+          />  */}
         </div>
       </div>
     );
@@ -145,7 +145,7 @@ const NotificationPage: React.FC = () => {
         <div className={classes.activityList}>
           <ActivityNotificationLists
             data-test="Notification-page-team-lists"
-            Memberlist={mockMembersInActivityNotification}
+            Memberlist={friendNoti}
             Positionlist={mockPositionsInActivityNotification}
           />
         </div>

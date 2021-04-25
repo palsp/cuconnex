@@ -159,9 +159,9 @@ const fetchRelationAPI = async (
   return relationResult;
 };
 const fetchFriendsDataAPI = async (): Promise<
-  AxiosResponse<IUser[]| []>
+  AxiosResponse<IFetchFriendsData>
 > => {
-  const userData: AxiosResponse<IUser[]| []> = await axios.get(
+  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
     "/api/users/friends"
   );
 
@@ -203,4 +203,5 @@ export {
   fetchRelationAPI,
   addFriendAPI,
   callTeamOfUserAPI,
+  addFriendResponseAPI,
 };
