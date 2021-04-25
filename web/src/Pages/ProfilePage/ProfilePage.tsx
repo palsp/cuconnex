@@ -26,7 +26,7 @@ import { EducationListsData } from "@src/mockData/Models";
 interface Props {
   location: {
     state: {
-      users: any;
+      users: IUser;
     };
   };
 }
