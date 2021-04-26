@@ -19,14 +19,16 @@ exports.NotFoundError = void 0;
 var custom_error_1 = require("./custom-error");
 var NotFoundError = /** @class */ (function (_super) {
     __extends(NotFoundError, _super);
-    function NotFoundError() {
-        var _this = _super.call(this, 'Not Found') || this;
+    function NotFoundError(message) {
+        if (message === void 0) { message = ""; }
+        var _this = _super.call(this, message + ' Not Found') || this;
+        _this.message = message;
         _this.statusCode = 404;
         Object.setPrototypeOf(_this, NotFoundError.prototype);
         return _this;
     }
     NotFoundError.prototype.serializeErrors = function () {
-        return [{ message: 'Not Found' }];
+        return [{ message: (this.message + 'Not Found').trim() }];
     };
     return NotFoundError;
 }(custom_error_1.CustomError));

@@ -18,6 +18,7 @@ import {
   getCurrentYear,
   getYearFromId,
   getFacultyCodeFromId,
+  InternalServerError,
 } from '@cuconnex/common';
 
 import { TableName } from './types';
@@ -294,7 +295,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       try {
         await relation.save();
       } catch (err) {
-        throw new Error('Db connection failed');
+        throw new InternalServerError();
       }
     }
 
