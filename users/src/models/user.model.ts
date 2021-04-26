@@ -6,6 +6,7 @@ import {
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
+  HasManyAddAssociationMixin,
   Association,
   Sequelize,
 } from 'sequelize';
@@ -324,6 +325,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
+
+  public addRequest!: BelongsToManyAddAssociationMixin<IsMember, Team>;
+  public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
 
   /**
    * Creates Team with the specified name and description

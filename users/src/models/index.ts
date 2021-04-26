@@ -19,7 +19,6 @@ export const autoMigrate = (sequelize: Sequelize) => {
   Team.autoMigrate(sequelize);
   Category.autoMigrate(sequelize);
 
-
   const userInterest = sequelize.define(TableName.userInterest, {}, { timestamps: false });
   // M-M user and interest
   User.belongsToMany(Interest, {
@@ -100,7 +99,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
     foreignKey: 'teamName',
   });
 
-  User.belongsToMany(Team, { as: 'member', through: isMember, foreignKey: 'userId' });
+  User.belongsToMany(Team, { as: 'request', through: isMember, foreignKey: 'userId' });
 
   IsMember.autoMigrate(sequelize);
 };
