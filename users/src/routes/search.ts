@@ -7,8 +7,6 @@ const router = express.Router();
 
 const MAX_SEARCH = 11;
 
-
-
 /**
  * DEPRECIATE
  */

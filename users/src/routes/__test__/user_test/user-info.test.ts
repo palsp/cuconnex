@@ -1,17 +1,25 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { Member } from '../../../models/member.model';
-import { User } from '../../../models/user.model';
+import { User, IsMember } from '../../../models';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
 
 describe('USER--INFO: Get list of teams from user', () => {
   it('should return 404 if userId is not found', async () => {
+    const user = await User.create({
+      id: '6131778821',
+      name: 'pal',
+    });
+    const interest = await Interest.findOne({
+      where: { description: Business.BusinessCase },
+    });
+    await user.addInterest(interest!);
+
     const searchId = '6131886621';
     const res = await request(app)
       .get(`/api/users/teams/${searchId}`)
-      .set('Cookie', global.signin('1'))
+      .set('Cookie', global.signin(user.id))
       .send()
       .expect(404);
   });
@@ -22,7 +30,7 @@ describe('USER--INFO: Get list of teams from user', () => {
       name: 'pal',
     });
 
-    await Member.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
+    await IsMember.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
 
     const res = await request(app)
       .get(`/api/users/teams/${user.id}`)
