@@ -40,7 +40,7 @@
   font-style: normal;
   font-family: "Nunito", serif;
 }
-.divFacultyInfo{
+.divFacultyInfo {
   width: auto;
   height: auto;
   overflow: visible;
@@ -58,16 +58,16 @@
   height: 2.5vh;
   text-align: left;
 }
-.divUserInterest {
+.divUserRole {
   height: 2.5vh;
   text-align: left;
-  display:flex;
+  display: flex;
   flex-direction: row;
 }
-.linkDiv a{
+.linkDiv a {
   text-decoration: none;
 }
-.interestDiv{
+.roleDiv {
   font-size: 14px;
   text-align: left;
   font-weight: 600;

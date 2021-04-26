@@ -9,7 +9,6 @@ import containerVariants, { IUser, IUserFriend } from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
 import { fetchFriendsDataAPI } from "@src/api";
-import { mockFriendLists } from "@src/mockData/index";
 
 const FriendsPage: React.FC = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -24,8 +23,6 @@ const FriendsPage: React.FC = () => {
     console.log("SUCCESS fetchFriendsHandler", friendsData.data);
     return friendsData.data.connections;
   };
-  const test = fetchFriendsHandler();
-  console.log(test);
 
   return (
     <motion.div

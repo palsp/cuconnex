@@ -22,14 +22,13 @@ interface Props {
   };
 }
 
-
 const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
   const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   //const [hasTeam, setHasTeam] = useState<boolean>(true);
   const { userData } = useContext(UserContext);
-  let hasTeam=false;
+  let hasTeam = false;
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
@@ -38,8 +37,8 @@ const LandingPage: React.FC<Props> = (props) => {
       setCurrentTeamLists(value)
     );
   }, []);
-  if(currentTeamLists.length!=0){
-    hasTeam=false;
+  if (currentTeamLists.length != 0) {
+    hasTeam = false;
   }
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);

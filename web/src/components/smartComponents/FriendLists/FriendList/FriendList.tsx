@@ -24,27 +24,20 @@ const FriendList: React.FC<Props> = (props) => {
         <div data-test="friend-list" className={classes.friendList}>
           <div className={classes.divFriendList}>
             <div>
-              <ProfilePic />
+              <ProfilePic PicUrl={props.friend.image} />
             </div>
             <div className={classes.userInfo}>
               <div className={classes.divUsernameInfo}>
                 {props.friend ? props.friend.name : "test-value"}
               </div>
-              <div className={classes.divUserInterest}>
-                <div className={classes.interestDiv}>
-                  {props.friend ? props.friend.interests[0] : "test-value"}
+              <div className={classes.divUserRole}>
+                <div className={classes.roleDiv}>
+                  {props.friend ? props.friend.role : "test-value"}
                 </div>
-                <div className={classes.interestDiv}>
-                   &nbsp;, &nbsp;
-                </div>
-                <div className={classes.interestDiv}>
-                  {props.friend ? props.friend.interests[2] : "test-value"}
-                </div>
-
               </div>
-
               <div className={classes.divFacultyInfo}>
-                {props.friend ? props.friend.faculty : "test-value"}
+                {props.friend ? props.friend.faculty : "test-value"},
+                {` ${props.friend.year}`}
               </div>
             </div>
 
