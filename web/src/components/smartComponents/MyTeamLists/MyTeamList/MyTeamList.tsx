@@ -21,18 +21,18 @@ interface Props {
 }
 
 const TeamList: React.FC<Props> = (props) => {
-  let cssArrayTeam = null;
+  const cssArrayTeam = [classes.default];
   // if (props.landing) {
   //   cssArrayTeam = [classes.landingDiv];
   // } else {
   //   cssArrayTeam = [classes.team];
   // }
   if (props.page === "landing") {
-    cssArrayTeam = [classes.landingDiv];
+    cssArrayTeam.push(classes.landingDiv);
   } else if (props.page === "explore") {
-    cssArrayTeam = [classes.explore];
+    cssArrayTeam.push(classes.explore);
   } else {
-    cssArrayTeam = [classes.team];
+    cssArrayTeam.push(classes.team);
   }
 
   return (
@@ -67,7 +67,7 @@ const TeamList: React.FC<Props> = (props) => {
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.name : "test-value"}
+                  value={props.team ? props.team.description : "test-value"}
                   size="small"
                 />
               </div>
@@ -79,7 +79,7 @@ const TeamList: React.FC<Props> = (props) => {
                 <div className={classes.teamStatus}>
                   <RecruitSign
                     data-test="team-list-status"
-                    value={"" + props.team.lookingForMembers}
+                    value={props.team.lookingForMembers ? "Recruiting" : ""}
                   />
                 </div>
               </div>
@@ -117,7 +117,7 @@ const TeamList: React.FC<Props> = (props) => {
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.name : "test-value"}
+                  value={props.team ? props.team.description : "test-value"}
                   size="small"
                 />
               </div>
@@ -129,7 +129,7 @@ const TeamList: React.FC<Props> = (props) => {
                 <div className={classes.teamStatus}>
                   <RecruitSign
                     data-test="team-list-status"
-                    value={"" + props.team.lookingForMembers}
+                    value={props.team.lookingForMembers ? "Recruiting" : ""}
                   />
                 </div>
               </div>
@@ -139,14 +139,14 @@ const TeamList: React.FC<Props> = (props) => {
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.name : "test-value"}
+                  value={props.team ? props.team.description : "test-value"}
                   size="small"
                 />
               </div>
               <div className={classes.teamStatus}>
                 <RecruitSign
                   data-test="team-list-status"
-                  value={props.team.lookingForMembers + ""}
+                  value={props.team.lookingForMembers ? "Recruiting" : ""}
                 />
               </div>
             </div>
