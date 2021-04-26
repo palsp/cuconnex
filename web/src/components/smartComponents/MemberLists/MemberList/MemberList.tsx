@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Heading,
@@ -21,6 +21,9 @@ const MemberList: React.FC<Props> = (props) => {
   const checkedMemberHandler = () => {
     setChecked((prevState) => !prevState);
   };
+  useEffect(() => {
+    props.selectMemberListHandler(checked);
+  }, [checked]);
   return (
     <div className={classes.memberList}>
       <div className={classes.divFriendList}>
@@ -39,10 +42,8 @@ const MemberList: React.FC<Props> = (props) => {
             <Subtitle value={props.members.faculty} />
           </div>
         </div>
-        <div onClick={() => props.selectMemberListHandler(checked)}>
-          <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
-            <CheckBox />
-          </div>
+        <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
+          <CheckBox />
         </div>
       </div>
     </div>

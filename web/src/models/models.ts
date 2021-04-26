@@ -35,6 +35,8 @@ export interface IUserSignup {
 export interface IResultSigninSignup {
   email: string;
   id: string;
+  faculty: string;
+  year: number;
 }
 
 export interface IUserSignin {

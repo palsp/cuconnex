@@ -12,9 +12,10 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import { ErrorContext } from "@context/ErrorContext";
 import { ArrowLeft } from "@icons/index";
 import { userSignupAPI } from "@api/index";
-import { IUserSignup, FacultyListsEnum } from "@models/index";
+import { IUserSignup } from "@models/index";
 import classes from "@pages/AuthPage/AuthPage.module.css";
 
 interface Props {
@@ -27,7 +28,12 @@ const validationSchema = yup.object({
     .string()
     .required("ID is required")
     .length(10, "Please enter valid Chula ID")
-    .matches(/^\d+$/, "Numbers only"),
+    .matches(/^\d+$/, "Numbers only")
+    .matches(/^[5-6][0-4|9]/, "Student ID should starts with 59-64")
+    .matches(
+      /([2-3][0-9]|01|02|40|51|53|55|56|58)$/,
+      "Please enter valid Chula Faculty"
+    ),
   password: yup
     .string()
     .required("No password provided.")
@@ -40,83 +46,27 @@ const validationSchema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
-const yearFacultyHandler = (id: string) => {
-  let studentYear: number | undefined = undefined;
-  let studentFaculty: string | undefined = "";
-  const enrolledYear = Number(id.substring(0, 2));
-  const studentFacultyCode = id.substring(8);
-  let currentYear: number = new Date().getFullYear();
-  const currentMonth: number = new Date().getMonth();
-  currentYear = currentYear + 543;
-  currentYear = Number(currentYear.toString().substring(2));
-  if (currentMonth > 7) {
-    studentYear = currentYear - enrolledYear + 1;
-  } else {
-    studentYear = currentYear - enrolledYear;
-  }
-  if (studentFacultyCode === "21") {
-    studentFaculty = FacultyListsEnum.Engineering;
-  } else if (studentFacultyCode === "22") {
-    studentFaculty = FacultyListsEnum.Arts;
-  } else if (studentFacultyCode === "23") {
-    studentFaculty = FacultyListsEnum.Science;
-  } else if (studentFacultyCode === "24") {
-    studentFaculty = FacultyListsEnum.PoliticalSciences;
-  } else if (studentFacultyCode === "25") {
-    studentFaculty = FacultyListsEnum.Architecture;
-  } else if (studentFacultyCode === "26") {
-    studentFaculty = FacultyListsEnum.CommerceAndAccountancy;
-  } else if (studentFacultyCode === "27") {
-    studentFaculty = FacultyListsEnum.Education;
-  } else if (studentFacultyCode === "28") {
-    studentFaculty = FacultyListsEnum.CommunicationArts;
-  } else if (studentFacultyCode === "29") {
-    studentFaculty = FacultyListsEnum.Economics;
-  } else if (studentFacultyCode === "30") {
-    studentFaculty = FacultyListsEnum.Medicine;
-  } else if (studentFacultyCode === "31") {
-    studentFaculty = FacultyListsEnum.VeterinaryScience;
-  } else if (studentFacultyCode === "32") {
-    studentFaculty = FacultyListsEnum.Dentistry;
-  } else if (studentFacultyCode === "33") {
-    studentFaculty = FacultyListsEnum.PharmaceuticalSciences;
-  } else if (studentFacultyCode === "34") {
-    studentFaculty = FacultyListsEnum.Law;
-  } else if (studentFacultyCode === "35") {
-    studentFaculty = FacultyListsEnum.FineAndAppliedArts;
-  } else if (studentFacultyCode === "36") {
-    studentFaculty = FacultyListsEnum.Nursing;
-  } else if (studentFacultyCode === "37") {
-    studentFaculty = FacultyListsEnum.AlliedHealthSciences;
-  } else if (studentFacultyCode === "38") {
-    studentFaculty = FacultyListsEnum.Psychology;
-  } else if (studentFacultyCode === "39") {
-    studentFaculty = FacultyListsEnum.SportsScience;
-  } else if (studentFacultyCode === "40") {
-    studentFaculty = FacultyListsEnum.AgriculturalResources;
-  } else if (studentFacultyCode === "56") {
-    studentFaculty = FacultyListsEnum.IntegratedInnovation;
-  } else {
-    studentFaculty = undefined;
-  }
-
-  return { studentFaculty, studentYear };
-};
-
 const SignupPrompt: React.FC<Props> = (props) => {
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<JSX.Element>();
-
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { setErrorHandler } = useContext(ErrorContext);
 
   const signupHandler = async (signupData: IUserSignup) => {
     try {
       const resultSignup = await userSignupAPI(signupData);
-      console.log("Successfully sent a POST request to signup", resultSignup);
+      const resutlStatusCode = resultSignup.status;
       setIsAuthenticated(true);
+      console.log("ResultStatusCode", resutlStatusCode);
+      if (resutlStatusCode === 201) {
+        console.log("SIGNUP SUCCESS...", resultSignup);
+      }
+      return resultSignup;
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
-      console.log("ERRORS occured while POST /api/auth/signup", e);
+      setErrorHandler(e.response.data.errors[0].message);
+      console.log(
+        "ERRORS occured while POST /api/auth/signup",
+        e.response.data.errors[0].message
+      );
     }
   };
 
@@ -146,23 +96,30 @@ const SignupPrompt: React.FC<Props> = (props) => {
             password: data.password,
           };
           setSubmitting(true);
-          const { studentYear, studentFaculty } = yearFacultyHandler(data.id);
-          console.log("Faculty: ", studentFaculty, "Year: ", studentYear);
-          await signupHandler(userSignupData);
-          console.log("POST /api/auth/signup", data);
+          const result = await signupHandler(userSignupData);
+          const resultData = result?.data;
+          let faculty;
+          let year;
+          if (resultData) {
+            faculty = resultData.faculty;
+            year = resultData.year;
+          }
+          console.log("Result Signup..", result);
           resetForm();
-          setRedirect(
-            <Redirect
-              to={{
-                pathname: "/personalinformation",
-                state: {
-                  year: studentYear,
-                  faculty: studentFaculty,
-                  id: data.id,
-                },
-              }}
-            />
-          );
+          if (result) {
+            setRedirect(
+              <Redirect
+                to={{
+                  pathname: "/personalinformation",
+                  state: {
+                    year: year,
+                    faculty: faculty,
+                    id: data.id,
+                  },
+                }}
+              />
+            );
+          }
         }}
         validationSchema={validationSchema}
       >
@@ -194,7 +151,6 @@ const SignupPrompt: React.FC<Props> = (props) => {
         )}
       </Formik>
       {redirect}
-      {errorOnScreen}
       <div className={classes.footerNavigation}>
         <DotMorePage data-test="dot-icon" amount={1} />
         <div

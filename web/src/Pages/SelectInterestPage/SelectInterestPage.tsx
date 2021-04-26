@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { UserContext } from "@context/UserContext";
 import {
   Heading,
@@ -13,6 +13,7 @@ import { createUserDataAPI } from "@api/index";
 import { ICreateUserData } from "@models/index";
 import classes from "./SelectInterestPage.module.css";
 import mockInterestListsData from "@src/mockData/mockInterestListsData";
+import { ErrorContext } from "@context/ErrorContext";
 
 interface Props {
   location: {
@@ -35,6 +36,8 @@ interface InterestListsArray {
 }
 
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
+  const { setErrorHandler } = useContext(ErrorContext);
+  const [redirect, setRedirect] = useState<JSX.Element>();
   const [interestArray, setInterestArray] = useState<InterestListsArray>({
     Technology: [],
     Business: [],
@@ -48,6 +51,13 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   let role = "";
   let profileImage: File;
   let saveButton = null;
+
+  useEffect(() => {
+    console.log(
+      "State passed from PersonalInformationPage",
+      props.location.state
+    );
+  }, []);
 
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
@@ -92,7 +102,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  const setUserData = async () => {
+  const setUserDataFirstTime = async () => {
     if (props.location.state) {
       name = props.location.state.name;
       profileImage = props.location.state.profilePic;
@@ -116,20 +126,18 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("POST createUserData to /api/users is successful", result);
       try {
         await fetchUserDataHandler();
+        setRedirect(<Redirect to="/success" />);
       } catch (e) {
+        setErrorHandler(e.response.data.errors[0].message);
+        setRedirect(<Redirect to="/" />);
         console.log("POST signup success but failed GET fetching");
       }
     } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
       console.log("SelectInterestPage Error setting users data", e);
+      setRedirect(<Redirect to="/" />);
     }
   };
-
-  useEffect(() => {
-    console.log(
-      "State passed from PersonalInformationPage",
-      props.location.state
-    );
-  }, []);
 
   if (
     (interestArray.Technology.length !== 0 ||
@@ -137,21 +145,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       interestArray.Design.length !== 0) &&
     props.location.state
   ) {
-    saveButton = (
-      <Link
-        to={{
-          pathname: "/success",
-          state: {
-            name: props.location.state.name,
-            interests: interestArray,
-            faculty: props.location.state.faculty,
-            profilePic: props.location.state.profilePic,
-          },
-        }}
-      >
-        <Button onClick={setUserData} value="SAVE" />
-      </Link>
-    );
+    saveButton = <Button onClick={setUserDataFirstTime} value="SAVE" />;
   } else {
     saveButton = null;
   }
@@ -166,7 +160,8 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           pathname: "/profile",
         }}
       >
-        <Button onClick={setUserData} value="SAVE" />
+        {/* Should not be setUserDataFirstTime bc this is for editing interests */}
+        <Button onClick={setUserDataFirstTime} value="SAVE" />
       </Link>
     );
   } else {
@@ -229,6 +224,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           />
           <div className={classes.divSaveButton}>{saveButton}</div>
           {selectInterestPrompt}
+          {redirect}
         </div>
       </div>
     </>

@@ -71,13 +71,7 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-        <AnimatePresence>
-          {/* <button onClick={() => setErrorHandler("kuay")}>
-            Click me to show error pls
-          </button> */}
-
-          {routes}
-        </AnimatePresence>
+        <AnimatePresence>{routes}</AnimatePresence>
       </AuthenticatedContext.Provider>
     </div>
   );
