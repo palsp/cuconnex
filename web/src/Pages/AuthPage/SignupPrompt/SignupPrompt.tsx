@@ -15,7 +15,7 @@ import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import { ErrorContext } from "@context/ErrorContext";
 import { ArrowLeft } from "@icons/index";
 import { userSignupAPI } from "@api/index";
-import { IUserSignup } from "@models/index";
+import { IUserSignup, FacultyListsEnum } from "@models/index";
 import classes from "@pages/AuthPage/AuthPage.module.css";
 
 interface Props {

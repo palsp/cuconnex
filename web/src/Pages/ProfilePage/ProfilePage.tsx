@@ -22,8 +22,11 @@ import mockEducationListsData from "@src/mockData/mockEducationListsData";
 import { IConnected, IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
 import { addFriendAPI, fetchRelationAPI } from "@src/api";
-import containerVariants, { IAddFriend, IUserFriend } from "@src/models/models";
-import { EducationListsData } from "@src/mockData/Models";
+import containerVariants, {
+  IAddFriend,
+  IEducationData,
+  IUserFriend,
+} from "@src/models/models";
 interface Props {
   location: {
     state: {
@@ -74,7 +77,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     }
   };
   if (isFriend == null) {
-    console.log("This is user's own profile",{isFriend});
+    console.log("This is user's own profile", { isFriend });
   }
   let isMyProfile = false;
   if (props.location) {
@@ -82,13 +85,13 @@ const ProfilePage: React.FC<Props> = (props) => {
   }
   const isMyFriend = fetchRelationHandler(props.location.state.users.id);
   console.log(props.location.state.users.interests);
-    
+
   // Is it my profile ?
   const selectBusinessInterestHandler = () => {
     console.log("clicked");
   };
 
-  const education: EducationListsData[] = [
+  const education: IEducationData[] = [
     {
       faculty: props.location.state.users.faculty,
       year: props.location.state.users.year,
@@ -127,25 +130,21 @@ const ProfilePage: React.FC<Props> = (props) => {
           <div className={classes.addDiv}>
             {isFriend == "toBedefined" ? (
               <div
-              onClick={() => addFriendHandler(friendId)}
-              className={classes.buttonDiv}
-            >
-              <div className={classes.buttonTextDiv}>Connect</div>
-            </div>
-            ) : isFriend == "Pending" ?(
-              <div
-              className={classes.pendingButtonDiv}
-            >
-              <div className={classes.buttonTextDiv}>Pending</div>
-            </div>
-            ): isFriend=="Accept"?(
-              <div
-              className={classes.acceptButtonDiv}
-            >
-              <div className={classes.buttonTextDiv}>Connected</div>
-            </div>
-            ):(
-              <div/>
+                onClick={() => addFriendHandler(friendId)}
+                className={classes.buttonDiv}
+              >
+                <div className={classes.buttonTextDiv}>Connect</div>
+              </div>
+            ) : isFriend == "Pending" ? (
+              <div className={classes.pendingButtonDiv}>
+                <div className={classes.buttonTextDiv}>Pending</div>
+              </div>
+            ) : isFriend == "Accept" ? (
+              <div className={classes.acceptButtonDiv}>
+                <div className={classes.buttonTextDiv}>Connected</div>
+              </div>
+            ) : (
+              <div />
             )}
           </div>
         </div>
@@ -163,16 +162,15 @@ const ProfilePage: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.education}>
-
-          <EducationList
+          {/* <EducationList
             faculty={props.location.state.users.faculty}
             year={props.location.state.users.year}
             major={props.location.state.users.bio}
-          />
+          /> */}
 
           {/* <EducationLists education={mockEducationListsData} /> */}
-          {/* Home's work  <EducationLists education={education} /> */}
-
+          {/* Home's work   */}
+          <EducationLists education={education} />
         </div>
         <div className={classes.activity}>
           <ActivityLists activity={mockActivityListsData} />
@@ -201,21 +199,22 @@ const ProfilePage: React.FC<Props> = (props) => {
           {/* If we get return as 3 separate interests arrray */}
 
           <div className={classes.interestLists}>
+            {props.location.state.users.interests.map(
+              (interest: string, index: number) => {
+                return (
+                  <InterestList
+                    data-test="interest-list-business"
+                    selectInterestHandlerDiv={() => {
+                      return;
+                    }}
+                    value={props.location.state.users.interests[index]}
+                    key={index}
+                  />
+                );
+              }
+            )}
 
-          {props.location.state.users.interests.map((interest:string,index:number) => {
-            return (
-              <InterestList
-                data-test="interest-list-business"
-                selectInterestHandlerDiv={() => {
-                  return;
-                }}
-                value={props.location.state.users.interests[index]}
-                key={index}
-              />
-            );
-          })} 
-
-        {/* Starts of home's work
+            {/* Starts of home's work
             {/* {props.location.state.users.interests.Business ? (
               props.location.state.users.interests.Business.map(
                 (interest: string) => {
@@ -272,7 +271,7 @@ const ProfilePage: React.FC<Props> = (props) => {
             )} */}
 
             {/* If Interest return in one Array This is home's work*/}
-        {/*
+            {/*
             {props.location.state.users.interests ? (
               props.location.state.users.interests.map((interest: string) => {
                 console.log(interest);
@@ -310,9 +309,8 @@ const ProfilePage: React.FC<Props> = (props) => {
               value="Ecommerce"
               key="Ecommerce"
             /> */}
-        
-        {/*    end of home's work  */}
 
+            {/*    end of home's work  */}
           </div>
         </div>
       </div>

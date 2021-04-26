@@ -19,7 +19,7 @@ import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
   const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
-  const [clickOngoing, setOngoing] = useState(true);
+  const [clickOnGoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);
   const fetchTeamHandler = async () => {
@@ -32,7 +32,7 @@ const MyTeamPage: React.FC = () => {
     fetchTeamHandler().then((value: ITeam[] | []) => setTeamLists(value));
   }, []);
 
-  const ButtonHandler = () => {
+  const onGoingButtonHandler = () => {
     setOngoing(true);
     console.log("setOngoing");
   };
@@ -61,7 +61,7 @@ const MyTeamPage: React.FC = () => {
           <div className={classes.ongoing}>
             <Tab
               data-test="myteam-page-ongoing"
-              onClick={ongoingButtonHandler}
+              onClick={onGoingButtonHandler}
               value="Ongoing"
             />
           </div>
@@ -78,7 +78,7 @@ const MyTeamPage: React.FC = () => {
         </div>
       </div>
     );
-  } else if (onGoing === false) {
+  } else if (clickOnGoing === false) {
     myteamsPrompt = (
       <div className={classes.tabFinished}>
         <div className={classes.relativeArrow}>
@@ -93,7 +93,7 @@ const MyTeamPage: React.FC = () => {
           <div className={classes.ongoing}>
             <Tab
               data-test="myteam-page-ongoing"
-              onClick={ongoingButtonHandler}
+              onClick={onGoingButtonHandler}
               value="Ongoing"
             />
           </div>
