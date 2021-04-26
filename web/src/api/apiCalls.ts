@@ -89,7 +89,7 @@ const teamInvitationAPI = async (
   invitedData: IInviteData
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
-    "/api/members/invite/",
+    "/api/teams/members/",
     invitedData
   );
   return invitedUsersData;

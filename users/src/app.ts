@@ -20,10 +20,10 @@ app.set('trust proxy', true);
 // app.use(corsHandler);
 
 app.use(json());
-app.use(urlencoded({ extended: true, limit: "800mb" }));
-app.use(cors({
-  allowedHeaders: ["Authorization"]
-}));
+// app.use(urlencoded({ extended: true, limit: "800mb" }));
+// app.use(cors({
+//   allowedHeaders: ["Authorization"]
+// }));
 
 app.use(
   session({

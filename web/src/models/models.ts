@@ -144,12 +144,12 @@ export interface ITeamData {
   name: string;
   description: string;
 }
+export interface ITeamDataResult {
+  message:string;
+}
+
 export interface ITeamMembers{
   users:IUser[];
-}
-export interface ITeamDataResult {
-  name: string;
-  description: string;
 }
 
 export interface IInviteData {
@@ -158,7 +158,6 @@ export interface IInviteData {
 }
 
 export interface IInviteDataResult {
-  message: string;
   User: string;
   Team: string;
 }

@@ -28,6 +28,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     try {
       const resultTeam = await createTeamAPI(teamData);
       console.log("Successfully sent a POST request to teams", resultTeam);
+      console.log("Hello"+{resultTeam});  
       setRedirect(true);
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/teams/");
@@ -37,17 +38,17 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
       const resultInvitation = await teamInvitationAPI(inviteData);
-      console.log("Successfully sent a POST request to members", resultInvitation);
+      console.log("Hi, Successfully sent a POST request to api/teams/members/", resultInvitation);
       setRedirect(true);
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /members/invite/");
-      console.log("ERRORS occured while POST /members/invite/", e);
+      setErrorOnScreen("ERRORS occured while POST api/teams/members");
+      console.log("ERRORS occured while POST api/teams/members", e);
     }
   };
-  const inviteMember = (teamName:string,members:IUserFriend[] | []) => {
+  const inviteMember = (teamNames:string,members:IUserFriend[] | []) => {
     members.forEach(members => {
-      invitationHandler({teamName, newMemberId:members.id });
-      console.log("POST /members/invite/", teamName,members.id);
+      invitationHandler({teamName:teamNames, newMemberId:members.id });
+      console.log("POST /members/invite/", teamNames,members.id);
     });
   };
 
@@ -68,6 +69,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
               name: data.name,
               description: data.description,
             };
+
             createTeamHandler(teamCreateData);
             inviteMember(teamCreateData.name,props.members);
             console.log("POST /api/teams/", data);
