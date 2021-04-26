@@ -10,7 +10,7 @@ export const getTeam = async (req: Request, res: Response) => {
   const team = await Team.findOne({ where: { name } });
 
   if (!team) {
-    throw new BadRequestError('Team not found!');
+    throw new NotFoundError('Team');
   }
 
   const response: ITeamResponse = team.toJSON();
@@ -44,7 +44,7 @@ export const getTeamMember = async (req: Request, res: Response) => {
   const team = await Team.findOne({ where: { name: teamName } });
 
   if (!team) {
-    throw new BadRequestError('Team not found!');
+    throw new NotFoundError('Team');
   }
 
   const acceptedUsers: User[] = await team.getMembers();
@@ -72,13 +72,13 @@ export const addTeamMember = async (req: Request, res: Response) => {
   const team = await Team.findOne({ where: { name: teamName } });
 
   if (!receiver) {
-    throw new BadRequestError('User not found!');
+    throw new NotFoundError('User');
 
     // else if มี receiver แต่ receiver not yet fill info.
   }
 
   if (!team) {
-    throw new BadRequestError('Team not found!');
+    throw new NotFoundError('Team');
   }
 
   const isInviterAMember = await IsMember.findOne({ where: { teamName, userId: sender.id } });
@@ -100,7 +100,7 @@ export const requetToJoinTeam = async (req: Request, res: Response) => {
 
   const team = await Team.findOne({ where: { name: teamName } });
   if (!team) {
-    throw new BadRequestError('Team not found!');
+    throw new NotFoundError('Team');
   }
 
   await team.inviteMember(user);
@@ -111,43 +111,35 @@ export const requetToJoinTeam = async (req: Request, res: Response) => {
 export const manageStatus = async (req: Request, res: Response) => {
   const { targetUserId, teamName, status } = req.body;
 
-  try {
-    const team = await Team.findOne({ where: { name: teamName } });
-    const targetUser = await User.findOne({ where: { id: targetUserId } });
-    if (!team) {
-      throw new BadRequestError('Team not found!');
-    } else if (!targetUser) {
-      throw new BadRequestError('User not found!');
-    } else if (team.creatorId !== req.user!.id) {
-      throw new BadRequestError('You are not the team creator!');
-    }
-
-    const member = await IsMember.findOne({ where: { teamName, userId: targetUserId } });
-    if (!member) {
-      throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
-    }
-
-    team.editMemberStatus(targetUser, status);
-
-    res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
-  } catch (err) {
-    throw new BadRequestError(err.message);
+  const team = await Team.findOne({ where: { name: teamName } });
+  const targetUser = await User.findOne({ where: { id: targetUserId } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  } else if (!targetUser) {
+    throw new NotFoundError('User');
+  } else if (team.creatorId !== req.user!.id) {
+    throw new BadRequestError('You are not the team creator!');
   }
+
+  const member = await IsMember.findOne({ where: { teamName, userId: targetUserId } });
+  if (!member) {
+    throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
+  }
+
+  team.editMemberStatus(targetUser, status);
+
+  res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
 };
 
 export const getOutGoingRequests = async (req: Request, res: Response) => {
   const teamName = req.params.name;
 
-  try {
-    const team = await Team.findOne({ where: { name: teamName } });
-    if (!team) {
-      throw new BadRequestError('Team not found!');
-    }
-
-    const response: IIsMemberResponse = await team.getOutgoingRequests();
-
-    res.status(200).send(response);
-  } catch (err) {
-    throw new BadRequestError(err.message);
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
   }
+
+  const response: IIsMemberResponse = await team.getOutgoingRequests();
+
+  res.status(200).send(response);
 };

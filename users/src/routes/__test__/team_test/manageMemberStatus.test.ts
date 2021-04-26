@@ -5,7 +5,7 @@ import { Business } from '@cuconnex/common';
 import { User, Interest } from '../../../models';
 
 describe('Status Changing Test', () => {
-  it('should return 400 if user is not found', async () => {
+  it('should return 404 if user is not found', async () => {
     const user1 = await User.create({
       id: '6131778821',
       name: 'pal',
@@ -26,12 +26,12 @@ describe('Status Changing Test', () => {
         teamName: 'Team1',
         status: 'Accept',
       })
-      .expect(400);
+      .expect(404);
 
-    expect(res.body.errors[0].message).toEqual('User not found!');
+    expect(res.body.errors[0].message).toEqual('UserNot Found');
   });
 
-  it('should return 400 if team is not found', async () => {
+  it('should return 404 if team is not found', async () => {
     const user1 = await User.create({
       id: '6131778821',
       name: 'pal',
@@ -50,9 +50,9 @@ describe('Status Changing Test', () => {
         teamName: 'Team1',
         status: 'Accept',
       })
-      .expect(400);
+      .expect(404);
 
-    expect(res.body.errors[0].message).toEqual('Team not found!');
+    expect(res.body.errors[0].message).toEqual('TeamNot Found');
   });
 
   it('should return 400 if the requester is not the team creator', async () => {

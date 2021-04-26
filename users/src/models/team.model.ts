@@ -116,10 +116,11 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     if (!newIsMember) {
-      throw new Error('Db connection failed');
+      throw new BadRequestError('IsMember db went wrong');
     }
     newIsMember.status = TeamStatus.Accept;
     await newIsMember.save();
+
     return;
   }
 

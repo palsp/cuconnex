@@ -37,7 +37,7 @@ describe('Add member to Team --- Requesting', () => {
     expect(error.message).toEqual('Please fill the information form first.');
   });
 
-  it('should return 401 if team is not found.', async () => {
+  it('should return 404 if team is not found.', async () => {
     const user = await User.create({
       id: '6131886621',
       name: 'pal',
@@ -55,10 +55,10 @@ describe('Add member to Team --- Requesting', () => {
       .send({
         teamName: 'Team2',
       })
-      .expect(400);
+      .expect(404);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('Team not found!');
+    expect(error.message).toEqual('TeamNot Found');
   });
 
   it('should return 400 if member status is already there.', async () => {
@@ -141,7 +141,7 @@ describe('Add member to Team --- Invitation', () => {
     expect(error.message).toEqual('Please fill the information form first.');
   });
 
-  it('should return 401 if team is not found.', async () => {
+  it('should return 404 if team is not found.', async () => {
     const user1 = await User.create({
       id: '6131886621',
       name: 'pal',
@@ -159,10 +159,10 @@ describe('Add member to Team --- Invitation', () => {
         teamName: 'Team2',
         newMemberId: user2.id,
       })
-      .expect(400);
+      .expect(404);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('Team not found!');
+    expect(error.message).toEqual('TeamNot Found');
   });
 
   it('should return 400 if member status is already there.', async () => {

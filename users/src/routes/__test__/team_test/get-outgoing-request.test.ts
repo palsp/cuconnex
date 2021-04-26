@@ -4,7 +4,7 @@ import { User, Interest } from '../../../models';
 import { Business, TeamStatus } from '@cuconnex/common';
 
 describe('Get Outgoing Requests', () => {
-  it('should return "Team not found! if team is not found', async () => {
+  it('should return 404 "Team not found! if team is not found', async () => {
     const user = await User.create({
       id: '6131776621',
       name: 'test-user',
@@ -13,10 +13,10 @@ describe('Get Outgoing Requests', () => {
       .get('/api/teams/outgoingrequests/notExistTeam')
       .set('Cookie', global.signin(user.id))
       .send({})
-      .expect(400);
+      .expect(404);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('Team not found!');
+    expect(error.message).toEqual('TeamNot Found');
   });
 
   it('should return 400 if the team has no member', async () => {

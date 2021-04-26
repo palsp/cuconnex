@@ -6,16 +6,16 @@ import { Business } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
 
 describe('Get Team Test', () => {
-  it('should return "Team not found!" if team is not found', async () => {
+  it('should return 404 "Team not found!" if team is not found', async () => {
     const id = '1';
     const res = await request(app)
       .get('/api/teams/notExistingTeam')
       .set('Cookie', global.signin(id))
       .send({})
-      .expect(400);
+      .expect(404);
 
     const error = res.body.errors[0];
-    expect(error.message).toEqual('Team not found!');
+    expect(error.message).toEqual('TeamNot Found');
   });
 
   it('should return team detail if it is found', async () => {

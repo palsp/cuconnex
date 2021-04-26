@@ -1,10 +1,8 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { User } from '../../../models/user.model';
-import { IsMember } from '../../../models/isMember.model';
-import { Team } from '../../../models/team.model';
+import { Team, IsMember, User } from '../../../models';
 
-import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
+import { TeamStatus } from '@cuconnex/common';
 
 const setup = async () => {
   const sender = await User.create({
