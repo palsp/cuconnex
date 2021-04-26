@@ -179,15 +179,6 @@ export const editUser = async (req: Request, res: Response) => {
     console.log(req.currentUser!.id);
     const user = req.user;
     if(!user) throw new NotFoundError();
-    let imagePath = "";
-    if (req.file) {
-        deleteFile(user.image);
-        imagePath = req.file.path;
-        
-        
-        console.log("imagePath: ", imagePath)
-    }
- 
     // if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
     if (req.body.year) {
         const pattern = /^[1-4]$/
@@ -195,26 +186,53 @@ export const editUser = async (req: Request, res: Response) => {
             throw new BadRequestError('Year must be valid')
         }
     }
+    let imagePath = "";
+    try{
+        if (req.file) {
+            deleteFile(user.image);
+            imagePath = req.file.path;
+            console.log("imagePath: ", imagePath)
+            await user.update(
+                {
+                    name: req.body.name || user.name,
+                    bio: req.body.bio || user.bio,
+                    faculty: req.body.faculty || user.faculty,
+                    interests: req.body.interests || user.interests,
+                    year: req.body.year || user.year,
+                    lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+                    image: imagePath
+                },
+                { where: { id: user!.id } }
+            )
+                .then((rowsUpdated) => {
+                    console.log(rowsUpdated)
+                    res.status(200).send(user)
+                })
+                .catch((err) => {
+                    console.log(err.message)
+                    throw new BadRequestError("Update User error");
+                })
+        } else {
+            await user.update(
+                {
+                    name: req.body.name || user.name,
+                    bio: req.body.bio || user.bio,
+                    faculty: req.body.faculty || user.faculty,
+                    interests: req.body.interests || user.interests,
+                    year: req.body.year || user.year,
+                    lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+                },
+                { where: { id: user!.id } }
+            )
+        }
+        res.status(200).send(user);
+    } catch (err){
+        console.log(err.message)
+    }
+    
+    
+ 
+    
 
-    User.update(
-        { 
-            name: req.body.name || user.name, 
-            bio: req.body.bio || user.bio,
-            faculty: req.body.faculty || user.faculty,
-            interests: req.body.interests || user.interests,
-            year: req.body.year || user.year,
-            lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
-            image: imagePath
-        },
-        { where: { id: req.currentUser!.id } }
-    )
-        .then(async (rowsUpdated) => {
-            console.log(rowsUpdated)
-            let user = await User.findOne({ where: { id: req.currentUser!.id }})
-            res.status(200).send(user)
-        })
-        .catch((err) => { 
-            console.log(err.message)
-            throw new BadRequestError("Update User error");
-        })
+    
 }
