@@ -15,14 +15,12 @@ import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 import classes from "./AuthPage.module.css";
 import { UserContext } from "@context/UserContext";
-import { ErrorContext } from "@context/ErrorContext";
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const { fetchUserDataHandler } = useContext(UserContext);
-  const { setErrorHandler } = useContext(ErrorContext);
 
   const checkUserHasLogin = async () => {
     try {
@@ -30,20 +28,12 @@ const AuthPage: React.FC = () => {
       setIsAuthenticated(true);
       setRedirect(true);
     } catch (e) {
-      // setErrorHandler(e);
       console.log("FAILED checkUserHasLogin", e);
     }
   };
 
   useEffect(() => {
-    // let isMounted = true;
-    // if (isMounted) {
-    // if(isAuthenticated) {
     checkUserHasLogin();
-    // }
-    // return () => {
-    //   isMounted = false;
-    // };
   }, []);
 
   const signupButtonClickedHandler = () => {

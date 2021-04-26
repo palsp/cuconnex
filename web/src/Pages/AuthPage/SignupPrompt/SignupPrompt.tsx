@@ -96,8 +96,6 @@ const SignupPrompt: React.FC<Props> = (props) => {
             password: data.password,
           };
           setSubmitting(true);
-          // const { studentYear, studentFaculty } = yearFacultyHandler(data.id);
-          // console.log("Faculty: ", studentFaculty, "Year: ", studentYear);
           const result = await signupHandler(userSignupData);
           const resultData = result?.data;
           let faculty;
