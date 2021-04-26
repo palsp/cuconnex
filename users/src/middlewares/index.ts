@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import multer from 'multer';
-import { NotAuthorizedError, BadRequestError } from '@cuconnex/common';
+import { NotAuthorizedError, BadRequestError, InternalServerError } from '@cuconnex/common';
 import { User } from '../models';
 import { includes } from 'lodash';
 
@@ -42,7 +42,8 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
   try {
     const user = await User.fetchUser(req.currentUser.id)
     req.user = user;
-  } catch (err) { }
+  } catch (err) {
+  }
 
   next();
 };

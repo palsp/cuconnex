@@ -9,7 +9,7 @@ import {
   Association,
   Sequelize,
 } from 'sequelize';
-import { BadRequestError, NotFoundError, FriendStatus, Description, faculty, getCurrentYear, getYearFromId, getFacultyCodeFromId } from '@cuconnex/common';
+import { BadRequestError, NotFoundError, FriendStatus, Description, faculty, getCurrentYear, getYearFromId, getFacultyCodeFromId, InternalServerError } from '@cuconnex/common';
 
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
@@ -294,7 +294,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       try {
         await relation.save();
       } catch (err) {
-        throw new Error('Db connection failed');
+        throw new InternalServerError();
       }
     }
 
