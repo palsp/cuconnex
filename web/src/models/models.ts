@@ -2,11 +2,12 @@
 export interface IUser {
   id: string;
   name: string;
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  // interests: {
+  //   Technology: string[];
+  //   Business: string[];
+  //   Design: string[];
+  // };
+  interests: string[];
   faculty: string;
   year: string;
   role: string;
@@ -49,11 +50,12 @@ export interface IUserSignin {
 export interface IFetchUserData {
   id: string;
   name: string;
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  // interests: {
+  //   Technology: string[];
+  //   Business: string[];
+  //   Design: string[];
+  // };
+  interests: string[];
   faculty: string;
   year: string;
   role: string;

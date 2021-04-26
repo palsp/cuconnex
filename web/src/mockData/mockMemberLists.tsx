@@ -1,4 +1,5 @@
 import { UsersData } from "@src/mockData/Models/index";
+import tempProfile from "@assets/tempProfile.png";
 
 const mockMemberLists: UsersData[] | [] = [
   {
@@ -10,7 +11,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "2",
@@ -21,7 +25,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "3",
@@ -32,7 +39,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "4",
@@ -43,7 +53,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "5",
@@ -54,7 +67,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "6",
@@ -65,7 +81,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "7",
@@ -76,7 +95,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
   {
     id: "8",
@@ -87,7 +109,10 @@ const mockMemberLists: UsersData[] | [] = [
       Design: ["Graphic", "UXUI", "Ads", "Fashion"],
     },
     faculty: "Engineering",
-    profilePic: "test",
+    year: "3",
+    role: "Developer",
+    bio: "",
+    image: "",
   },
 ];
 

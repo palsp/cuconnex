@@ -13,6 +13,7 @@ const friend = {
   profilePic: "",
   interest: "Marketing, Startup",
   year: 3,
+  image: "/test",
 };
 
 it("should render interest list", () => {

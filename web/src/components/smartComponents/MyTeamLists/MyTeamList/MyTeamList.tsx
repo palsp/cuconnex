@@ -19,16 +19,25 @@ interface Props {
     event: string;
     status: string;
   };
-  landing?: boolean;
+  landingexplore?: boolean;
+  page?: string;
 }
 
 const TeamList: React.FC<Props> = (props) => {
   let cssArrayTeam = null;
-  if (props.landing) {
+  // if (props.landing) {
+  //   cssArrayTeam = [classes.landingDiv];
+  // } else {
+  //   cssArrayTeam = [classes.team];
+  // }
+  if (props.page === "landing") {
     cssArrayTeam = [classes.landingDiv];
+  } else if (props.page === "explore") {
+    cssArrayTeam = [classes.explore];
   } else {
     cssArrayTeam = [classes.team];
   }
+
   return (
     <div className={cssArrayTeam.join(" ")} data-test="team-list">
       <motion.div
@@ -44,7 +53,8 @@ const TeamList: React.FC<Props> = (props) => {
       >
         <div className={classes.leftFlex}>
           <div className={classes.teampic}>
-            {props.landing ? <TeamPic /> : <ProfilePic />}
+            {/* <TeamPic/> */}
+            {props.landingexplore ? <TeamPic /> : <ProfilePic />}
           </div>
         </div>
         <div className={classes.rightFlex}>
@@ -55,7 +65,7 @@ const TeamList: React.FC<Props> = (props) => {
               size="small"
             />
           </div>
-          {props.landing ? (
+          {props.page === "landing" ? (
             <div className={classes.landingLine}>
               <div className={classes.teamEvent}>
                 <Subtitle
@@ -77,14 +87,19 @@ const TeamList: React.FC<Props> = (props) => {
                 </div>
               </div>
             </div>
-          ) : (
+          ) : ( props.page === "explore" ? (
+          <div className={classes.landingLine}>
+            <div className={classes.teamEvent}>
+              <Subtitle
+                data-test="team-list-event"
+                value={props.team ? props.team.event : "test-value"}
+                size="small"
+              />
+            </div>
             <div className={classes.flex}>
-              <div className={classes.teamEvent}>
-                <Subtitle
-                  data-test="team-list-event"
-                  value={props.team ? props.team.event : "test-value"}
-                  size="small"
-                />
+              <div className={classes.groupAmount}>5</div>
+              <div className={classes.groupIcon}>
+                <Group />
               </div>
               <div className={classes.teamStatus}>
                 <RecruitSign
@@ -93,8 +108,24 @@ const TeamList: React.FC<Props> = (props) => {
                 />
               </div>
             </div>
-          )}
-
+          </div>
+          ) :( <div className={classes.flex}>
+            <div className={classes.teamEvent}>
+              <Subtitle
+                data-test="team-list-event"
+                value={props.team ? props.team.event : "test-value"}
+                size="small"
+              />
+            </div>
+            <div className={classes.teamStatus}>
+              <RecruitSign
+                data-test="team-list-status"
+                value={props.team.status}
+              />
+            </div>
+          </div>
+        ))
+           }
           <div className={classes.teamFriends}>
             <ProfilePic size="mini" />
             <ProfilePic size="mini" />
