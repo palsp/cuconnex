@@ -39,7 +39,7 @@ export interface ITeam {
 
 export interface ISearchUserTeamEventResult {
   users: IUser[];
-  teams: ITeam[];
+  team: ITeam[];
   events: IEventData[];
 }
 export interface IUserSignup {
@@ -147,7 +147,7 @@ export interface ITeamData {
 }
 
 export interface ITeamDataResult {
-  message:string;
+  message: string;
 }
 
 export interface ITeamMembers {

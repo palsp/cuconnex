@@ -51,7 +51,7 @@ const ExplorePage = () => {
       </div>
       {/*Loong's work*/}
       {/* <MyTeamLists page="landing" team={teamLists} /> */}
-      <MyTeamLists page="explore" team={mockMyTeamListsData} />
+      <MyTeamLists page="explore" team={teamLists} />
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
       </div>
@@ -64,7 +64,7 @@ const ExplorePage = () => {
           <Subtitle value="Suggested for you" bold />
         </div>
 
-      {/*Loong's work*/}
+        {/*Loong's work*/}
         {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
         <MyTeamLists page="explore" team={mockMyTeamListsData} />
         <div className={classes.exploreSubtitle}>
@@ -77,27 +77,27 @@ const ExplorePage = () => {
   return (
     <motion.div variants={containerVariants} exit="exit">
       {/* <Background> */}
-        {/* Background has display: flex so this div is for that */}
-        <div>
-          <div className={classes.exploreHeader}>
-            <Link to="/landing">
-              <ArrowLeft />
-            </Link>
-            <SearchBar
-              setHasSearch={setHasSearch}
-              setNoSearchResult={setNoSearchResult}
-              setPeopleLists={setPeopleLists}
-              setTeamLists={setTeamLists}
-              setEventLists={setEventLists}
-              value="Explore"
-            />
-          </div>
-          {console.log("This is peopleLists", peopleLists)}
-          {console.log("This is teamLists", teamLists)}
-          {console.log("This is eventLists", eventLists)}
-
-          {explorePage}
+      {/* Background has display: flex so this div is for that */}
+      <div>
+        <div className={classes.exploreHeader}>
+          <Link to="/landing">
+            <ArrowLeft />
+          </Link>
+          <SearchBar
+            setHasSearch={setHasSearch}
+            setNoSearchResult={setNoSearchResult}
+            setPeopleLists={setPeopleLists}
+            setTeamLists={setTeamLists}
+            setEventLists={setEventLists}
+            value="Explore"
+          />
         </div>
+        {console.log("This is peopleLists", peopleLists)}
+        {console.log("This is teamLists", teamLists)}
+        {console.log("This is eventLists", eventLists)}
+
+        {explorePage}
+      </div>
       {/* </Background> */}
     </motion.div>
   );
