@@ -61,7 +61,7 @@ export const getTeamMember = async (req: Request, res: Response) => {
  * @param req
  * @param res
  */
-export const addTeamMember = async (req: Request, res: Response) => {
+export const inviteMember = async (req: Request, res: Response) => {
   const sender = req.user!;
 
   const { teamName, newMemberId } = req.body;

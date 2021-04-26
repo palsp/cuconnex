@@ -17,11 +17,11 @@ router.get('/members/:name', requireUser, teamController.getTeamMember);
 router.post('/', requireUser, createTeamValidator, validateRequest, teamController.createTeam);
 
 router.post(
-  '/members',
+  '/invite-member',
   requireUser,
   addTeamMemberValidator,
   validateRequest,
-  teamController.addTeamMember
+  teamController.inviteMember
 );
 
 router.post(

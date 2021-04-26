@@ -65,6 +65,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // this addMember function just create PENDING status not ACCEPTED -> try use the 'addAndAcceptMember' function instead
   public addMember!: BelongsToManyAddAssociationMixin<IsMember, User>;
+  // public addMember!: BelongsToManyAddAssociationMixin<User, { status: TeamStatus }>;
   public getMember!: BelongsToManyGetAssociationsMixin<User>;
 
   // create PENDING status to the user
@@ -77,7 +78,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
 
     // why this make IsMember status PENDING ???
-    await this.addMember(user);
+    const cc = await this.addMember(user);
+    // console.log('cc', cc);
     isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
     if (!isMember) {
       throw new BadRequestError(`something went wrong with IsMember table`);

@@ -159,7 +159,11 @@ export const requetToJoinTeam = async (req: Request, res: Response) => {
     throw new NotFoundError('Team');
   }
 
-  // await team.inviteMember(user);
+  const isMember = await IsMember.findOne({ where: { teamName, userId: user.id } });
+  if (isMember) {
+    throw new BadRequestError('The user already pending a request to this team.');
+  }
+
   await user.addRequest(team);
 
   res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
@@ -214,18 +218,14 @@ export const manageStatus = async (req: Request, res: Response) => {
   const user = req.user!;
   const { teamName, newStatusFromUser } = req.body;
 
-  try {
-    const team = await Team.findOne({ where: { name: teamName } });
+  const team = await Team.findOne({ where: { name: teamName } });
 
-    if (!team) {
-      throw new NotFoundError('Team');
-    }
-    await team.editMemberStatus(user, newStatusFromUser);
-
-    res
-      .status(200)
-      .send({ message: `Invitation from ${team.name} to ${user.name} is ${newStatusFromUser}.` });
-  } catch (err) {
-    throw new BadRequestError(err.message);
+  if (!team) {
+    throw new NotFoundError('Team');
   }
+  await team.editMemberStatus(user, newStatusFromUser);
+
+  res
+    .status(200)
+    .send({ message: `Invitation from ${team.name} to ${user.name} is ${newStatusFromUser}.` });
 };
