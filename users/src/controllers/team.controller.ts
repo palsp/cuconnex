@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User } from '../models';
 import { IUserResponse, ITeamResponse, IIsMemberResponse } from '../interfaces';
-import { NotAuthorizedError } from '@bkatickets/common';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
