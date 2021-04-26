@@ -175,7 +175,6 @@ export const findRelation = async (req: Request, res: Response) => {
  * @param res 
  */
 export const editUser = async (req: Request, res: Response) => {
-    if(!req.currentUser!.id) throw new BadRequestError("Please enter a user ID!");
     console.log(req.currentUser!.id);
     const user = req.user;
     if(!user) throw new NotFoundError();
