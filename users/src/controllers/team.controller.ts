@@ -146,7 +146,7 @@ export const getOutGoingRequests = async (req: Request, res: Response) => {
 
     const response: IIsMemberResponse = await team.getOutgoingRequests();
 
-    return response;
+    res.status(200).send(response);
   } catch (err) {
     throw new BadRequestError(err.message);
   }
