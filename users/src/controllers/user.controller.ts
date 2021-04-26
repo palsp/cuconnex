@@ -204,14 +204,6 @@ export const editUser = async (req: Request, res: Response) => {
                 },
                 { where: { id: user!.id } }
             )
-                .then((rowsUpdated) => {
-                    console.log(rowsUpdated)
-                    res.status(200).send(user)
-                })
-                .catch((err) => {
-                    console.log(err.message)
-                    throw new BadRequestError("Update User error");
-                })
         } else {
             await user.update(
                 {
