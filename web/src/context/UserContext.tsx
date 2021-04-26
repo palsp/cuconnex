@@ -6,13 +6,18 @@ interface IUserContext {
   userData: IUser;
   fetchUserDataHandler: () => Promise<void>;
   setUserDataHandler: (updatedUserData: any) => void;
+  clearUserDataHandler: () => void;
 }
 
 export const UserContext = React.createContext<IUserContext>(
   {} as IUserContext
 );
 
-export const UserContextProvider = (props: any) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const UserContextProvider: React.FC<Props> = (props) => {
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
@@ -59,9 +64,31 @@ export const UserContextProvider = (props: any) => {
     }));
     console.log("setUserDataHandler data is...", updatedUserData);
   };
+
+  const clearUserDataHandler = () => {
+    setUserData({
+      id: "",
+      name: "",
+      interests: {
+        Technology: [],
+        Business: [],
+        Design: [],
+      },
+      faculty: "",
+      year: "",
+      role: "",
+      bio: "",
+      image: "",
+    });
+  };
   return (
     <UserContext.Provider
-      value={{ userData, fetchUserDataHandler, setUserDataHandler }}
+      value={{
+        userData,
+        fetchUserDataHandler,
+        setUserDataHandler,
+        clearUserDataHandler,
+      }}
     >
       {props.children}
     </UserContext.Provider>

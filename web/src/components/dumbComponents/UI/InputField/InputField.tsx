@@ -8,9 +8,10 @@ interface Props {
   name: string;
   type: string;
   label: string;
+  placeholder?: string;
 }
 
-const InputField: React.FC<Props> = ({ label, ...props }) => {
+const InputField: React.FC<Props> = ({ label, placeholder, ...props }) => {
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : "";
 
@@ -22,6 +23,7 @@ const InputField: React.FC<Props> = ({ label, ...props }) => {
       error={!!errorText}
       label={label}
       fullWidth
+      placeholder={placeholder}
     />
   );
   // return <TextField fullWidth type={props.type} label={props.value} />;

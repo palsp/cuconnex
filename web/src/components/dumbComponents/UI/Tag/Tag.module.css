@@ -6,6 +6,13 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.baseTag {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .disablealltagDiv {
   background-color: var(--main_pink, #9b9798);
   border-radius: 25px;
