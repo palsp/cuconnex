@@ -9,7 +9,7 @@ export const storage = multer.diskStorage({
         let extension = '.' + file.mimetype.split('/')[1];
         let fileName;
 
-        fileName = req.currentUser!.id + "_profile_pic";
+        fileName = req.currentUser!.id + "_profile_pic_" + (Date.now()).toString();
 
         cb(null, fileName + extension)
     }

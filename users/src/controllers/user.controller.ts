@@ -4,6 +4,21 @@ import { NotFoundError, BadRequestError, InterestDescription, currentUser } from
 import { User, Team, Interest } from '../models'
 import { deleteFile } from '../utils/file';
 import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
+//Test for empty object
+function isEmpty(obj: Object) {
+    for (var prop in obj) {
+        if (obj.hasOwnProperty(prop))
+            return false;
+    }
+
+    return true;
+}
+function isNull(obj: Object) {
+    Object.keys(obj).map(key => {
+        if (!key) return false;
+    })
+    return true;
+}
 
 /**
  * get current user profile
@@ -152,34 +167,63 @@ export const findRelation = async (req: Request, res: Response) => {
 }
 
 /**
- * Method for editing the name or bio of the user with the specified id.
- * Expects req.body to have either a name or bio field.
- * If there's only one field and the field is the same, will throw error.
- * Will throw NotFoundError if the user with the specified id cannot be found
- * If all checks pass, will update User with name and bio specified.
+ * Method for editing any field of the user with the specified id.
+ * Expects req.body to have a user object
+ * If all checks pass, will update User with the fields specified
  * Then sends 200 alongside the newly updated user object.
  * @param req 
  * @param res 
  */
 export const editUser = async (req: Request, res: Response) => {
-    if (!req.params.userId) throw new BadRequestError("Please enter a user ID!");
-
-    const user = await User.findOne({ where: { id: req.params.userId } });
-    console.log(user);
+    if (!req.currentUser!.id) throw new BadRequestError("Please enter a user ID!");
+    console.log(req.currentUser!.id);
+    const user = await User.findOne({ where: { id: req.currentUser!.id } });
     if (!user) throw new NotFoundError();
-    if (!req.body.name && !req.body.bio) throw new BadRequestError("Empty request!");
-    //Only throws duplicate errors if the duplicated field is the only one supplied.
-    if (!req.body.bio && user.name === req.body.name) throw new BadRequestError('Your name is the same!!');
-    if (!req.body.name && user.bio === req.body.bio) throw new BadRequestError("Your bio is the same!!");
+    let imagePath = "";
+    if (req.file) {
+        const oldPathDate = user.image.slice(user.image.indexOf("pic_") + 4, user.image.indexOf("."));
+        console.log("old image path: ", user.image, "old image date: ", oldPathDate);
+        const newPathDate = req.file.path.slice(req.file.path.indexOf("pic_") + 4, req.file.path.indexOf('.'));
+        console.log("new image path: ", req.file.path, "new image date: ", newPathDate);
+        if (newPathDate > oldPathDate) {
+            deleteFile(user.image);
+            imagePath = req.file.path
+        }
+        if (req.file.size > 1024 * 1024 * 1024) {
+            deleteFile(imagePath);
+            throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
+        }
+        console.log("imagePath: ", imagePath)
+    }
+
+    // if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
+    if (req.body.year) {
+        const pattern = /^[1-4]$/
+        if (!pattern.test(req.body.year)) {
+            throw new BadRequestError('Year must be valid')
+        }
+    }
+
     User.update(
-        { name: req.body.name || user.name, bio: req.body.bio || user.bio },
-        { returning: true, where: { id: req.params.userId } }
-    ).then(async (rowsUpdated) => {
-        console.log(rowsUpdated)
-        const user = await User.findOne({ where: { id: req.params.userId } })
-        res.status(200).send(user);
-    }).catch((err) => {
-        console.log(err.message)
-        res.status(500).send(err.message);
-    })
+        {
+            name: req.body.name || user.name,
+            bio: req.body.bio || user.bio,
+            faculty: req.body.faculty || user.faculty,
+            interests: req.body.interests || user.interests,
+            year: req.body.year || user.year,
+            major: req.body.major || user.major,
+            lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+            image: imagePath || user.image
+        },
+        { where: { id: req.currentUser!.id } }
+    )
+        .then(async (rowsUpdated) => {
+            console.log(rowsUpdated)
+            let user = await User.findOne({ where: { id: req.currentUser!.id } })
+            res.status(200).send(user)
+        })
+        .catch((err) => {
+            console.log(err.message)
+            throw new BadRequestError("Update User error");
+        })
 }
