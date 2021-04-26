@@ -1,8 +1,9 @@
 import { MyTeamListsData } from "@src/mockData/Models/index";
-const mockMyTeamListsData: MyTeamListsData[] | [] = [
-  { name: "Suki Tee Noi", event: "CUCONNEX Project", status: "Recruiting" },
-  { name: "Nature", event: "Park Sa Mart", status: "Awaiting" },
-  { name: "BMP", event: "Smart Toilet", status: "" },
+import { ITeam } from "@src/models";
+const mockMyTeamListsData: ITeam[] | [] = [
+  { name: "Suki Tee Noi", creatorId: "CUCONNEX Project", description: "Recruiting" ,lookingForMembers:true},
+
 ];
+
 
 export default mockMyTeamListsData;

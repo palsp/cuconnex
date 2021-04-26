@@ -49,10 +49,10 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
   };
 
   const handleInitialImage = () => {
-    const fileName = "myFile.jpg";
+    const fileName = "myFile.png";
     fetch(defaultProfilePic).then(async (response) => {
       const blob = await response.blob();
-      const file = new File([blob], fileName, { type: "image/*" });
+      const file = new File([blob], fileName, { type: "image/png" });
       setImagePreview(URL.createObjectURL(blob));
       setImageRaw(file);
     });
@@ -111,6 +111,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     onChange={handleUploadedImage}
                   />
                 </div>
+
                 {props.location?.state && (
                   <>
                     <div className={classes.idYearFaculty}>

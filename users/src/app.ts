@@ -6,7 +6,7 @@ import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconne
 import cors from 'cors';
 import { fetchUser } from './middlewares';
 import * as router from './routes';
-import { connectionRouter, userRouter, teamRouter } from './routes';
+import { connectionRouter, userRouter, teamRouter, interestRouter } from './routes';
 require('./config/multer.config');
 
 const app = express();
@@ -27,7 +27,14 @@ app.set('trust proxy', true);
 // });
 
 app.use(json());
+
+// app.use(urlencoded({ extended: true, limit: "800mb" }));
+// app.use(cors({
+//   allowedHeaders: ["Authorization"]
+// }));
+
 app.use(urlencoded({ extended: true, limit: '800mb' }));
+
 
 app.use(
   session({
@@ -43,6 +50,8 @@ app.use('/api/users/assets', express.static('assets'));
 app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
+
+app.use('/api/users', interestRouter);
 
 app.use('/api/users', connectionRouter);
 app.use('/api/users', userRouter);

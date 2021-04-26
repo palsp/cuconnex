@@ -10,9 +10,10 @@ import { ProfilePic } from "@smartComponents/index";
 import { Search } from "@icons/index";
 import classes from "./MemberList.module.css";
 import { UsersData } from "@src/mockData/Models";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  members: UsersData;
+  members: IUserFriend;
   selectMemberListHandler: any;
 }
 
@@ -21,25 +22,22 @@ const MemberList: React.FC<Props> = (props) => {
   const checkedMemberHandler = () => {
     setChecked((prevState) => !prevState);
   };
+  const facultyYear = props.members.faculty + ", " + props.members.year;
   useEffect(() => {
     props.selectMemberListHandler(checked);
   }, [checked]);
+
   return (
     <div className={classes.memberList}>
       <div className={classes.divFriendList}>
         <div>
-          <ProfilePic />
+          <ProfilePic PicUrl={props.members.image} />
         </div>
         <div className={classes.userInfo}>
-          <div className={classes.divUserInfo}>
-            <Username value={props.members.name} />
-          </div>
-          <div className={classes.divUserInfo}>
-            <Heading value={props.members.profilePic} size="small" />
-          </div>
-
-          <div className={classes.divUserInfo}>
-            <Subtitle value={props.members.faculty} />
+          <div className={classes.divUsernameInfo}>{props.members.name}</div>
+          <div className={classes.divRoleInfo}>{props.members.role}</div>
+          <div className={classes.divFacultyInfo}>
+            {props.members.faculty + ", " + props.members.year}
           </div>
         </div>
         <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>

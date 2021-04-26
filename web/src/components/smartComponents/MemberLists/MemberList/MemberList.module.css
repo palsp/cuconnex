@@ -18,6 +18,52 @@
   height: inherit;
 }
 
+.divUsernameInfo {
+  width: auto;
+  height: auto;
+  margin-top: 2vh;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--black, #000000);
+  font-size: 20px;
+  text-align: left;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.divRoleInfo {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--search_bar, #f33182);
+  font-size: 15px;
+  text-align: left;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.divFacultyInfo {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--search_bar, #c2c2c2);
+  font-size: 10px;
+  text-align: left;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
 .userInfo {
   display: flex;
   flex-direction: column;
@@ -29,9 +75,11 @@
 
 .divUserInfo {
   height: 2.46vh;
+  text-align: left;
 }
-.checkboxDiv{
-  display:flex;
-  padding-left:10vw;
+.checkboxDiv {
+  margin-bottom: 5vh;
+  display: flex;
+  padding-left: 10vw;
   align-items: center;
 }

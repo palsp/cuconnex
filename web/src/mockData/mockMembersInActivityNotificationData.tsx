@@ -5,14 +5,14 @@ const mockMembersInActivityNotification: MembersInActivityNotificationData[] = [
     profilePic: "",
     name: "Bank",
     role: "Developer",
-    teamName: "Suki Tee Noi",
+    faculty: "Engineering",
     status: "Pending",
   },
   {
     profilePic: "",
     name: "Bank",
     role: "Developer",
-    teamName: "Suki Tee Noi",
+    faculty: "Engineering",
     status: "Pending",
   },
 ];
