@@ -17,10 +17,12 @@ app.set('trust proxy', true);
 // app.use(corsHandler);
 
 app.use(json());
-app.use(urlencoded({ extended: true, limit: "800mb" }));
-app.use(cors({
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
+app.use(urlencoded({ extended: true, limit: '800mb' }));
+app.use(
+  cors({
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 app.use(
   session({
@@ -39,21 +41,13 @@ app.use(requireAuth);
 app.use(fetchUser);
 
 
-// user handler
-app.use(router.notificationUserRouter);
-app.use(router.manageStatusRouter);
-app.use(router.memberStatusRouter);
-
 app.use('/api/users', connectionRouter);
 app.use('/api/users', userRouter);
 
 app.use('/api/teams', teamRouter);
 
-
-
 // other handler
 app.use(router.searchRouter);
-app.use(router.userInfoRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();

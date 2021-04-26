@@ -9,13 +9,23 @@ import {
   Association,
   Sequelize,
 } from 'sequelize';
-import { BadRequestError, NotFoundError, FriendStatus, Description, faculty, getCurrentYear, getYearFromId, getFacultyCodeFromId, InternalServerError } from '@cuconnex/common';
+import {
+  BadRequestError,
+  NotFoundError,
+  FriendStatus,
+  Description,
+  faculty,
+  getCurrentYear,
+  getYearFromId,
+  getFacultyCodeFromId,
+  InternalServerError,
+} from '@cuconnex/common';
 
 import { TableName } from './types';
 import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
-
+import { IsMember } from './isMember.model';
 import { IUserResponse } from '../interfaces';
 
 // All attributes in user model
@@ -23,14 +33,15 @@ interface UserAttrs {
   id: string;
   name: string;
   image: string;
-  faculty?: string
-  year?: string,
-  role: string,
-  bio: string,
+  faculty?: string;
+  year?: string;
+  role: string;
+  bio: string;
   lookingForTeam: boolean;
   interests?: Interest[];
   friends?: User[];
   connections?: Connection;
+  isMembers?: IsMember;
 }
 
 interface UserCreationAttrs {
@@ -38,10 +49,9 @@ interface UserCreationAttrs {
   name: string;
   image?: string;
   lookingForTeam?: boolean;
-  role?: string,
-  bio?: string,
+  role?: string;
+  bio?: string;
 }
-
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
@@ -56,10 +66,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public interests?: Interest[];
   public connections?: Connection;
-
-
-
-
+  public isMembers?: IsMember;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -80,23 +87,23 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         faculty: {
           type: DataTypes.ENUM,
           // allowNull: false,
-          values: Object.values(faculty)
+          values: Object.values(faculty),
         },
         year: {
           type: DataTypes.STRING(1),
-          defaultValue: "",
+          defaultValue: '',
         },
         role: {
           type: DataTypes.STRING(255),
-          defaultValue: "",
+          defaultValue: '',
         },
         bio: {
           type: DataTypes.STRING(255),
-          defaultValue: "",
+          defaultValue: '',
         },
         image: {
           type: DataTypes.STRING(255),
-          defaultValue: "",
+          defaultValue: '',
         },
         lookingForTeam: {
           type: DataTypes.BOOLEAN,
@@ -111,17 +118,14 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     );
 
     User.beforeCreate(async (user) => {
-      // insert faculty and year according to user id 
+      // insert faculty and year according to user id
       const year = +getCurrentYear() - +getYearFromId(user.id);
       const fname = faculty[getFacultyCodeFromId(user.id)];
 
       user.year = year.toString();
       user.faculty = fname;
-
     });
   }
-
-
 
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
@@ -132,7 +136,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
-   * 
+   *
    * This is done via calling the `BelongsToManyAddAssociationMixin` on the `<Interest, User>` pair
    * @param {Description[]} interests - The array of interests the user is interested in.
    */
@@ -151,8 +155,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   /**
    * A method to retreive user from database which include user's interest
-   * @param userId 
-   * @returns 
+   * @param userId
+   * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
     return User.findOne({ where: { id: userId }, include: 'interests' });
@@ -160,13 +164,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   //Method for finding a relation attached here to minimize hassle
   /**A method to check if the current user has a relationship with the user with specified id.
-   * This is done by querying the Friend database for any ones with `senderId` equal to current user id 
+   * This is done by querying the Friend database for any ones with `senderId` equal to current user id
    * and `receiverId` equal to the specified id or vice versa.
-   * 
+   *
    * If a relationship is found, returns the friendship status between the two users
-   * 
+   *
    * else, returns `FriendStatus.toBeDefined`
-   * 
+   *
    * @param {string} userId - The id of the user we wish to check for a relationship with the current user id.
    * @returns {FriendStatus | null} friend.status - The friend status between the two users, if the relationship exists
    */
@@ -187,9 +191,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return friend.status;
   }
 
-
-
-
   /**
    * addConnection with additional logic to check whether the connection is established.
    * if not, this method will and connection to db. otherwise, it will reject the addConnection
@@ -208,11 +209,11 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
   /**
    * Get all pending connection requests
-   * 
+   *
    */
   public async getRequestConnection(): Promise<User[]> {
     const result: User[] = [];
-    const connections = await this.getConnection()
+    const connections = await this.getConnection();
     for (let conn of connections) {
       const status = await this.findRelation(conn.id);
       if (status === FriendStatus.Pending) {
@@ -220,7 +221,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       }
     }
     return result;
-
   }
   /**
    * Method for finding all pending friend requests this user has received
@@ -228,10 +228,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    */
   public async getReceivedFriendRequests() {
     const result: User[] = [];
-    const constraint = { receiverId: this.id, status: FriendStatus.Pending }
+    const constraint = { receiverId: this.id, status: FriendStatus.Pending };
     const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
     for (let conn of receivedRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId } })
+      const user = await User.findOne({ where: { id: conn.senderId } });
       if (user) {
         result.push(user);
       }
@@ -245,10 +245,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    */
   public async getSendFriendRequests() {
     const result: User[] = [];
-    const constraint = { senderId: this.id, status: FriendStatus.Pending }
+    const constraint = { senderId: this.id, status: FriendStatus.Pending };
     const sendRequests: Connection[] = await Connection.findAll({ where: constraint });
     for (let conn of sendRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId } })
+      const user = await User.findOne({ where: { id: conn.senderId } });
       if (user) {
         result.push(user);
       }
@@ -258,38 +258,39 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   /**
-   * A function for accepting the friend request. It first checks if the user whose id was passed in has sent 
-   * a friend request to the current user or not. If so, then it changes the friendStatus of the two according to the 
-   * passed in accepted parameter. 
+   * A function for accepting the friend request. It first checks if the user whose id was passed in has sent
+   * a friend request to the current user or not. If so, then it changes the friendStatus of the two according to the
+   * passed in accepted parameter.
    * @param userId - the user who send the friend request
    * @param accepted - whether or not the current user accepts the friend request
-   * @returns 
+   * @returns
    */
 
   public async acceptConnection(sendUser: User, accepted: Boolean): Promise<FriendStatus> {
-    let relations = await Connection.findAll({ where: { senderId: sendUser.id, receiverId: this.id } });
+    let relations = await Connection.findAll({
+      where: { senderId: sendUser.id, receiverId: this.id },
+    });
 
     if (relations.length === 0) {
       throw new BadRequestError('User has not send a request yet');
     }
 
     if (accepted) {
-      await this.addConnection(sendUser)
-      const recentAddedConn = await Connection.findAll({ where: { senderId: this.id, receiverId: sendUser.id } });
+      await this.addConnection(sendUser);
+      const recentAddedConn = await Connection.findAll({
+        where: { senderId: this.id, receiverId: sendUser.id },
+      });
       relations = relations.concat(recentAddedConn);
     }
-
 
     const status = accepted ? FriendStatus.Accept : FriendStatus.toBeDefined;
 
     for (let relation of relations) {
-
       if (accepted) {
         relation.status = status;
       } else {
         relation.status = status;
       }
-
 
       try {
         await relation.save();
@@ -298,19 +299,18 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       }
     }
 
-
     return status;
   }
 
   /**
- * Method for finding a user with the specified userId.
- * Returns a promise that resolves if a user is found.
- * 
- * if the user is not found, throws a new NotFoundError
- * @param userId - The id of the user we wish to find
- * @throws {NotFoundError} - if the user is not found
- * @return {User}`user` - the found user, if it exists 
- */
+   * Method for finding a user with the specified userId.
+   * Returns a promise that resolves if a user is found.
+   *
+   * if the user is not found, throws a new NotFoundError
+   * @param userId - The id of the user we wish to find
+   * @throws {NotFoundError} - if the user is not found
+   * @return {User}`user` - the found user, if it exists
+   */
   public static async findUser(userId: string): Promise<User> {
     const user = await User.findByPk(userId);
 
@@ -330,7 +330,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @param {TeamCreationAttrs} attrs - A TeamCreationAttrs object consisting of the team name and description
    * @param {string} attrs.name - The name of the team
    * @param {string} attrs.description - A description of the team
-   * @returns 
+   * @returns
    */
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
@@ -339,22 +339,18 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     });
   }
 
-
-
   public toJSON(): IUserResponse {
-    const values = { ...this.get() }
+    const values = { ...this.get() };
     let interests: string[] = [];
     if (this.interests) {
-      interests = this.interests.map(interest => interest.serializer());
+      interests = this.interests.map((interest) => interest.serializer());
     }
 
     if (this.connections) {
-      delete this.connections
+      delete values.connections;
     }
 
-
-    return { ...values, interests }
-
+    return { ...values, interests };
   }
 
   public static associations: {
@@ -364,7 +360,5 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     member: Association<User, Team>;
   };
 }
-
-
 
 export { User };
