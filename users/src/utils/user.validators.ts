@@ -66,6 +66,8 @@ export const editUserValidator = [
         .isString()
         .withMessage('Year must be a string!')
         .bail()
+        .isLength({ min: 1, max: 1 })
+        .withMessage('Year must only be one digit!')
         .isNumeric()
         .withMessage('Year must be a number inside!'),
     body('major')

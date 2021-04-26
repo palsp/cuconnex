@@ -181,11 +181,19 @@ export const editUser = async (req: Request, res: Response) => {
     if(!user) throw new NotFoundError();
     let imagePath = "";
     if (req.file) {
-        imagePath = req.file.path
+        const oldPathDate = user.image.slice(user.image.indexOf("pic_") + 4, user.image.indexOf("."));
+        console.log("old image path: ", user.image, "old image date: ", oldPathDate);
+        const newPathDate = req.file.path.slice(req.file.path.indexOf("pic_") + 4, req.file.path.indexOf('.'));
+        console.log("new image path: ", req.file.path, "new image date: ", newPathDate);
+        if(newPathDate > oldPathDate) {
+            deleteFile(user.image);
+            imagePath = req.file.path
+        }
         if (req.file.size > 1024 * 1024 * 1024) {
             deleteFile(imagePath);
             throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
         }
+        console.log("imagePath: ", imagePath)
     }
  
     // if(isEmpty(req.body)) throw new BadRequestError("Empty request!");

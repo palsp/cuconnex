@@ -8,7 +8,7 @@ const setup = async (id?: string, name?: string) => {
     const user = await User.create({
         id: id || '6131898121',
         name: name || 'Anon',
-        image: '/file/path',
+        image: '6131898121_profile_pic_15953434.png',
         bio: "Hello",
     });
 
@@ -88,12 +88,13 @@ describe('The edit User route', () => {
         const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
-            .send({
+            .field({
                 bio: 'Hello my name is Anon', 
                 name: 'John', 
                 year: '3', 
                 faculty: 'Engineering' 
             })
+            .attach('image', 'src/routes/__test__/test_images/testImage2.png')
             .expect(200)
         expect(res.name).toEqual('John');
         expect(res.bio).toEqual('Hello my name is Anon');
