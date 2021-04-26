@@ -12,8 +12,7 @@ import { IsMember } from './isMember.model';
 import { User } from './user.model';
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
-import { ITeamResponse } from '../interfaces/team';
-import { IUserResponse } from '../interfaces/user';
+import { ITeamResponse, IUserResponse, IOutGoingRequest, IIsMemberResponse } from '../interfaces';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -124,9 +123,31 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     return;
   }
 
+  public async getOutgoingRequests(): Promise<IIsMemberResponse> {
+    const membersWithAllStatus: User[] = await this.getMember();
+
+    if (!membersWithAllStatus) {
+      throw new BadRequestError('This team has no member');
+    }
+
+    let outGoingRequests: IOutGoingRequest[] = [];
+    for (let i = 0; i < membersWithAllStatus.length; i++) {
+      outGoingRequests.push({
+        user: membersWithAllStatus[i].toJSON(),
+        status: membersWithAllStatus[i].isMembers!.status,
+      });
+    }
+
+    const response: IIsMemberResponse = {
+      teamName: this.name,
+      outGoingRequests,
+    };
+    return response;
+  }
+
   // get accepted members
   public async getMembers(): Promise<User[]> {
-    const membersWithAllStatus = await this.getMember();
+    const membersWithAllStatus: User[] = await this.getMember();
 
     if (!membersWithAllStatus) {
       throw new BadRequestError('This team has no member');
