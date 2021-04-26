@@ -28,7 +28,12 @@ const validationSchema = yup.object({
     .string()
     .required("ID is required")
     .length(10, "Please enter valid Chula ID")
-    .matches(/^\d+$/, "Numbers only"),
+    .matches(/^\d+$/, "Numbers only")
+    .matches(/^[5-6][0-4|9]/, "Student ID should starts with 59-64")
+    .matches(
+      /([2-3][0-9]|01|02|40|51|53|55|56|58)$/,
+      "Please enter valid Chula Faculty"
+    ),
   password: yup
     .string()
     .required("No password provided.")
