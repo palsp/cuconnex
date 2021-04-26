@@ -39,6 +39,7 @@ const TeamList: React.FC<Props> = (props) => {
   return (
     <div className={cssArrayTeam.join(" ")} data-test="team-list">
       <Link
+        style={{ textDecoration: "none" }}
         to={{
           pathname: "/teamdetail",
           state: {
