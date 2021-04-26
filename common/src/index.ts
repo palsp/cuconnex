@@ -8,6 +8,7 @@ export * from './middlewares/requireAuth';
 export * from './db-status/friend';
 export * from './db-status/team';
 export * from './db-status/interest';
+export * from './db-status/faculty';
 
 // nats-events
 export * from './nats/events/friend-added-event';
@@ -25,3 +26,7 @@ export * from './errors/not-authorized-error';
 export * from './errors/not-found-error';
 export * from './errors/request-validation-error';
 export * from './errors/bad-request-error';
+export * from './errors/internal-server-error';
+
+//services 
+export * from './services'

@@ -9,6 +9,7 @@ type DBConfig struct {
 	Password string
 }
 
+
 var DB = DBConfig{
 	Name: os.Getenv("DB_NAME"),
 	Host: os.Getenv("DB_HOST"),

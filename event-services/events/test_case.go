@@ -1,9 +1,10 @@
 package events
 
 import (
-	"github.com/palsp/cuconnex/event-services/common"
 	"net/http"
 	"time"
+
+	"github.com/palsp/cuconnex/event-services/common"
 )
 
 var t = time.Now().UTC()
@@ -100,9 +101,6 @@ var ClosedEventBody = Event{
 	},
 }
 
-
-
-
 var RequestTests = []struct {
 	// init           func(*http.Request)
 	url            string
@@ -173,4 +171,35 @@ var RequestTests = []struct {
 	}`,
 		"valid data and should return Closed Status",
 	},
+}
+
+
+var GetEventRequest = []struct{
+	url            string
+	method         string
+	bodyData 	   string
+	expectedCode   int
+	responseRegexg string
+	msg            string
+}{
+	{
+		// func(req *http.Request) {
+		// 	resetDBWithMock()
+		// },
+		"/api/events",
+		"POST",
+		``,
+		http.StatusOK,
+		`{
+		"id": 0,
+		"event-name": "Test",
+		"bio": "This is great",
+		"location": "",
+		"start-date": "2021-01-18T12:00:00Z",
+		"end-date": "2021-03-18T12:00:00Z"
+		
+	}`,
+		"valid data and should return Upcoming status",
+	},
+		
 }

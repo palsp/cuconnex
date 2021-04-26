@@ -2,6 +2,7 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 import { Description } from '@cuconnex/common';
 import { InterestEnumVal } from './types'
 import { TableName } from './types';
+import { IInterestResponse } from '../interfaces/user';
 
 
 // all atributes interest model has
@@ -71,9 +72,10 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   }
 
 
-  public serializer(): string {
+  public serializer(): IInterestResponse {
     return this.description
   }
+
 }
 
 
