@@ -37,14 +37,25 @@ const SearchBar: React.FC<Props> = (props) => {
       "searchResult =",
       result.data
     );
-    if (props.setPeopleLists) {
+    if (props.setPeopleLists && props.setNoSearchResult) {
       props.setPeopleLists(result.data.users);
+      props.setNoSearchResult(false);
     }
-    if (props.setTeamLists) {
+    if (props.setTeamLists && props.setNoSearchResult) {
       props.setTeamLists(result.data.team);
+      props.setNoSearchResult(false);
     }
-    if (props.setEventLists) {
+    if (props.setEventLists && props.setNoSearchResult) {
       props.setEventLists(result.data.events);
+      props.setNoSearchResult(false);
+    }
+    if (
+      result.data.users.length === 0 &&
+      result.data.team.length === 0 &&
+      result.data.events.length === 0 &&
+      props.setNoSearchResult
+    ) {
+      props.setNoSearchResult(true);
     }
     return result;
   };

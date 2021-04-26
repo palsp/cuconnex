@@ -24,7 +24,43 @@ const ExplorePage = () => {
   const [teamLists, setTeamLists] = useState<ITeam[]>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
 
-  const explorePage = hasSearch ? (
+  const explorePage = !hasSearch ? (
+    <>
+      <div className={classes.exploreContent}>
+        <div className={classes.exploreSubtitle}>
+          <Subtitle value="Suggested for you" bold />
+        </div>
+
+        {/*Loong's work*/}
+        {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
+        <MyTeamLists page="explore" team={mockMyTeamListsData} />
+        <div className={classes.exploreSubtitle}>
+          <Subtitle value="Find from your interest..." bold />
+        </div>
+        <ActivityBoxes activitybox={mockActivityBoxes} />
+      </div>
+    </>
+  ) : noSearchResult ? (
+    <div className={classes.exploreContent}>
+      <div className={classes.exploreHeading}>
+        <Heading value="No Matches Found" />
+      </div>
+      <div style={{ marginTop: "-4vh" }} className={classes.exploreHeading}>
+        <Subtitle value="Please try another search" />
+      </div>
+      <div className={classes.exploreSubtitle}>
+        <Subtitle value="Try something that might interest you" bold />
+      </div>
+
+      {/*Loong's work*/}
+      {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
+      <MyTeamLists page="explore" team={mockMyTeamListsData} />
+      <div className={classes.exploreSubtitle}>
+        <Subtitle value="Find from your interest..." bold />
+      </div>
+      <ActivityBoxes activitybox={mockActivityBoxes} />
+    </div>
+  ) : (
     <div className={classes.exploreContent}>
       <Tag />
       <div className={classes.exploreHeading}>
@@ -42,22 +78,6 @@ const ExplorePage = () => {
       </div>
       <EventLists events={mockEventLists} />
     </div>
-  ) : (
-    <>
-      <div className={classes.exploreContent}>
-        <div className={classes.exploreSubtitle}>
-          <Subtitle value="Suggested for you" bold />
-        </div>
-
-        {/*Loong's work*/}
-        {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
-        <MyTeamLists page="explore" team={mockMyTeamListsData} />
-        <div className={classes.exploreSubtitle}>
-          <Subtitle value="Find from your interest..." bold />
-        </div>
-        <ActivityBoxes activitybox={mockActivityBoxes} />
-      </div>
-    </>
   );
   return (
     <motion.div variants={containerVariants} exit="exit">
