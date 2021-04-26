@@ -197,7 +197,7 @@ export const manageStatus = async (req: Request, res: Response) => {
     const team = await Team.findOne({ where: { name: teamName } });
 
     if (!team) {
-      throw new NotFoundError('Team not found');
+      throw new BadRequestError('Team not found');
     }
     await team.editMemberStatus(user, newStatusFromUser);
 
