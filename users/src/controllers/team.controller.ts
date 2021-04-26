@@ -96,21 +96,6 @@ export const addTeamMember = async (req: Request, res: Response) => {
   res.status(201).send({ message: 'Invite pending', userId: receiver!.id, team: team!.name });
 };
 
-export const requetToJoinTeam = async (req: Request, res: Response) => {
-  const user = req.user!;
-
-  const { teamName } = req.body;
-
-  const team = await Team.findOne({ where: { name: teamName } });
-  if (!team) {
-    throw new NotFoundError('Team');
-  }
-
-  await team.inviteMember(user);
-
-  res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
-};
-
 export const manageStatus = async (req: Request, res: Response) => {
   const { targetUserId, teamName, status } = req.body;
 

@@ -149,6 +149,22 @@ export const findRelation = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
+export const requetToJoinTeam = async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const { teamName } = req.body;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  // await team.inviteMember(user);
+  await user.addRequest(team);
+
+  res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
+};
+
 export const getInvitationNoti = async (req: Request, res: Response) => {
   try {
     const user = req.user!;
