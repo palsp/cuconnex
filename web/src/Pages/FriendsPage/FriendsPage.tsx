@@ -15,7 +15,9 @@ const FriendsPage: React.FC = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
-    fetchFriendsHandler().then((value: IUserFriend[] | []) => setFriendLists(value));
+    fetchFriendsHandler().then((value: IUserFriend[] | []) =>
+      setFriendLists(value)
+    );
   }, []);
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -24,7 +26,7 @@ const FriendsPage: React.FC = () => {
   };
   const test = fetchFriendsHandler();
   console.log(test);
-  
+
   return (
     <motion.div
       variants={containerVariants}
@@ -49,22 +51,21 @@ const FriendsPage: React.FC = () => {
             size="medium"
           />
           <div className={classes.searchDiv}>
-          <SearchBar
-            data-test="friends-page-search-bar"
-            value="Search By Name"
-          />
+            <SearchBar
+              data-test="friends-page-search-bar"
+              value="Search By Name"
+            />
           </div>
         </div>
       </div>
       <div className={classes.listDiv}>
         <FriendLists connections={friendLists} />
       </div>
-        {*/ Home's work
+      {/* Home's work
       <FriendLists
         data-test="friends-page-friend-lists"
         friendLists={mockFriendLists}
-      /> 
-          */}
+      />  */}
     </motion.div>
   );
 };
