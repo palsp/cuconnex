@@ -343,7 +343,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   // public addRequest!: BelongsToManyAddAssociationMixin<IsMember, Team>;
-  public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
+  // public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
 
   public async requestToJoin(team: Team) {
     await IsMember.create({
@@ -352,6 +352,26 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       status: TeamStatus.Pending,
       sender: 'user',
     });
+  }
+
+  // the team(s) that created by myself + the team(s) that I belongs to
+  public async getMyTeams(): Promise<Team[]> {
+    let teams: Team[] = [];
+    const myOwnTeams = await Team.findAll({ where: { creatorId: this.id } });
+    if (myOwnTeams && myOwnTeams.length > 0) {
+      teams = teams.concat(myOwnTeams);
+    }
+
+    // this find all except the creator himself
+    const isMembers = await IsMember.findAll({
+      where: { userId: this.id, status: TeamStatus.Accept },
+    });
+
+    for (let i = 0; i < isMembers.length; i++) {
+      let team = await Team.findOne({ where: { name: isMembers[i].teamName } });
+      teams.push(team!);
+    }
+    return teams;
   }
 
   public toJSON(): IUserResponse {

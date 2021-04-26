@@ -45,38 +45,40 @@ describe('USER--INFO: Get list of teams from user', () => {
     const res = await request(app)
       .get(`/api/users/teams/${user2.id}`)
       .set('Cookie', global.signin(user.id))
-      .send();
-    // .expect(200);
-    console.log(res.body);
+      .send()
+      .expect(200);
 
     expect(res.body.teams.length).toEqual(0);
   });
 
   it('should return list of team if the user is found and is a member of one or more team(s)', async () => {
-    const user = await User.create({
+    const user1 = await User.create({
       id: '6131886621',
       name: 'pal',
+    });
+    const user2 = await User.create({
+      id: '6131886622',
+      name: 'pal2',
     });
     const interest = await Interest.findOne({
       where: { description: Business.BusinessCase },
     });
-    await user.addInterest(interest!);
-    const team1 = await user.createTeams({ name: 'testTeam1', description: '' });
-    const team2 = await user.createTeams({ name: 'testTeam2', description: '' });
-    const team3 = await user.createTeams({ name: 'testTeam3', description: '' });
+    await user1.addInterest(interest!);
+    const team1 = await user1.createTeams({ name: 'testTeam1', description: '' });
+    const team2 = await user1.createTeams({ name: 'testTeam2', description: '' });
 
-    // await team1.addAndAcceptMember(user);
-    // await team2.addAndAcceptMember(user);
-    await team3.invite(user);
+    await user2.addInterest(interest!);
+    const team3 = await user2.createTeams({ name: 'testTeam3', description: '' });
+    await team3.invite(user1);
 
     const res = await request(app)
-      .get(`/api/users/teams/${user.id}`)
-      .set('Cookie', global.signin(user.id))
+      .get(`/api/users/teams/${user1.id}`)
+      .set('Cookie', global.signin(user1.id))
       .send()
       .expect(200);
 
-    expect(res.body.teams.length).toEqual(2);
-    expect(res.body.teams[0]).toEqual(team1.name);
-    expect(res.body.teams[1]).toEqual(team2.name);
+    expect(res.body.length).toEqual(2);
+    expect(res.body[0].name).toEqual(team1.name);
+    expect(res.body[1].name).toEqual(team2.name);
   });
 });

@@ -35,19 +35,17 @@ describe('notification for a user', () => {
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
     const team3 = await sender.createTeams({ name: 'testTeam3', description: '' });
 
+    await team1.invite(receiver);
+    await team2.invite(receiver);
     await receiver.requestToJoin(team3);
-
-    team1.invite(receiver);
-    team2.invite(receiver);
 
     const res = await request(app)
       .get('/api/users/notification/invite')
       .set('Cookie', global.signin(receiver.id))
-      .send();
-    // .expect(200);
-    console.log('eiei', res.body);
+      .send()
+      .expect(200);
 
-    // expect(res.body.teams[0]).toEqual('testTeam');
-    // expect(res.body.teams[1]).toEqual('testTeam2');
+    expect(res.body.teams[0]).toEqual('testTeam');
+    expect(res.body.teams[1]).toEqual('testTeam2');
   });
 });
