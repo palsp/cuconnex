@@ -18,10 +18,9 @@ export const searchHandler = async (req: Request, res: Response) => {
     try {
         // TODO: demo cookie is provided for development purpose only, it should be removed in production stage
         // fetch data from user service
-        userResp = await axiosUserInstance.get(`/api/users/general/${req.params.keyword}`, { headers: { cookie: req.headers.cookie || cookie } })
-
+        userResp = await axiosUserInstance.get(`/api/users/?keyword=${req.params.keyword}`, { headers: { cookie: req.headers.cookie || cookie } })
     } catch (err) {
-        console.error('User Failed', err)
+        console.error('User Failed', err.message)
     }
 
     let eventResp;
@@ -30,8 +29,9 @@ export const searchHandler = async (req: Request, res: Response) => {
         // fetch data from event service
         eventResp = await axiosEventInstance.get(`/api/events/${req.params.keyword}`, { headers: { cookie: req.headers.cookie || cookie } })
     } catch (err) {
-        console.error('Event Failed', err)
+        console.error('Event Failed', err.message)
     }
+
 
     // if fetch from any service failed, it should be replace with default response
     const userResult = userResp ? userResp.data : { users: [], team: [] };

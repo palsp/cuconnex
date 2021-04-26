@@ -9,29 +9,22 @@ import {
   IFetchEventsData,
   IEventData,
   ITeamData,
-  ISearchUserTeamResult,
+  IInviteData,
+  IInviteDataResult,
+  ISearchUserTeamEventResult,
   IUser,
+  ITeam,
+  IFetchTeamNotification,
+  IFetchFriendNotification,
+  IFetchFriendsData,
 } from "@src/models";
 
 //Auth Services
-const fetchUserDataAPI = async (): Promise<AxiosResponse<IFetchUserData>> => {
-  const userData: AxiosResponse<IFetchUserData> = await axios.get("/api/users");
+const fetchUserDataAPI = async (): Promise<AxiosResponse<IUser>> => {
+  const userData: AxiosResponse<IUser> = await axios.get(
+    "/api/users/current-user"
+  );
 
-  return userData;
-};
-const fetchUserDataAPINoAxiosResponse = async (): Promise<IFetchUserData> => {
-  const userData: IFetchUserData = await axios.get("/api/users");
-
-  return userData;
-};
-
-const testFetchUserData = async () => {
-  const userData = await axios.get("/api/users");
-  return userData;
-};
-
-const testIUSER = async (): Promise<AxiosResponse<IUser>> => {
-  const userData: AxiosResponse<IUser> = await axios.get("/api/users");
   return userData;
 };
 
@@ -52,6 +45,7 @@ const userSigninAPI = async (
     "/api/auth/signin",
     signinUserData
   );
+  console.log(userSigninData.data);
   return userSigninData;
 };
 const userLogoutAPI = async (): Promise<void> => {
@@ -85,43 +79,85 @@ const createTeamAPI = async (
   return createTeamData;
 };
 
+const teamInvitationAPI = async (
+  invitedData: IInviteData
+): Promise<AxiosResponse<IInviteDataResult>> => {
+  const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
+    "/api/members/invite/",
+    invitedData
+  );
+  return invitedUsersData;
+};
+
 const createUserDataAPI = async (
   createUserData: ICreateUserData
 ): Promise<AxiosResponse<IFetchUserData>> => {
   const formData = new FormData();
   formData.append("name", createUserData.name);
   formData.append("interests", JSON.stringify(createUserData.interests));
-  formData.append("faculy", createUserData.faculty);
-  formData.append("myFile", createUserData.profilePic);
+  formData.append("faculty", createUserData.faculty);
+  formData.append("image", createUserData.image);
+  formData.append("bio", createUserData.bio);
+  formData.append("year", createUserData.year);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",
-    data: createUserData,
+    data: formData,
     headers: { "Content-Type": "multipart/form-data" },
   });
   return userCreatedData;
 };
 
-const searchUserTeam = async (
+const searchUserTeamEvent = async (
   searchQuery: string
-): Promise<AxiosResponse<ISearchUserTeamResult>> => {
-  const searchResult: AxiosResponse<ISearchUserTeamResult> = await axios.get(
-    `/api/users/general/${searchQuery}`
+): Promise<AxiosResponse<ISearchUserTeamEventResult>> => {
+  const searchResult: AxiosResponse<ISearchUserTeamEventResult> = await axios.get(
+    `/api/query/${searchQuery}`
   );
 
   return searchResult;
 };
+
+const fetchTeamNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchTeamNotification>
+> => {
+  const teamNotificationData: AxiosResponse<IFetchTeamNotification> = await axios.get(
+    "/api/users/notification/invite/"
+  );
+
+  return teamNotificationData;
+};
+const fetchFriendNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchFriendNotification>
+> => {
+  const friendNotificationData: AxiosResponse<IFetchFriendNotification> = await axios.get(
+    "/api/users/friends/request/"
+  );
+
+  return friendNotificationData;
+};
+const fetchFriendsDataAPI = async (): Promise<
+  AxiosResponse<IFetchFriendsData>
+> => {
+  const userData: AxiosResponse<IFetchFriendsData> = await axios.get(
+    "/api/users/friends"
+  );
+
+  return userData;
+};
+
 export {
   fetchUserDataAPI,
-  fetchUserDataAPINoAxiosResponse,
   userLogoutAPI,
   userSignupAPI,
   userSigninAPI,
   createUserDataAPI,
+  teamInvitationAPI,
   fetchEventsDataAPI,
   createEventsAPI,
   createTeamAPI,
-  searchUserTeam,
-  testFetchUserData,
-  testIUSER,
+  searchUserTeamEvent,
+  fetchTeamNotificationAPI,
+  fetchFriendNotificationAPI,
+  fetchFriendsDataAPI,
 };

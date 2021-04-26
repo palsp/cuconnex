@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
+import { FormControl, TextField } from "@material-ui/core/";
 import * as yup from "yup";
 
 import {
@@ -17,7 +17,9 @@ import { ProfilePic } from "@smartComponents/index";
 import { ArrowRight } from "@icons/index";
 
 import classes from "./PersonalInfoPage.module.css";
+import { motion } from "framer-motion";
 import { FacultyListsEnum } from "@models/index";
+import defaultProfilePic from "@assets/tempProfilePic.png";
 
 const facultyArray: string[] = Object.values(FacultyListsEnum);
 
@@ -45,148 +47,207 @@ const facultyArray: string[] = Object.values(FacultyListsEnum);
 //   "Agricultural Resources",
 // ];
 
+interface Props {
+  location: {
+    state: {
+      year: number;
+      faculty: string;
+      id: string;
+    };
+  };
+}
+
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
+  bio: yup.string().required("Please fill in your bio"),
+  role: yup.string().required("Please fill in your role"),
 });
 
-const PersonalInfoPage: React.FC = () => {
+const PersonalInfoPage: React.FC<Props> = (props) => {
   const [redirect, setRedirect] = useState<JSX.Element>();
-
-  const [image, setImage] = useState({ preview: "", raw: File });
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageRaw, setImageRaw] = useState<File>();
 
   const handleUploadedImage = (e: any) => {
-    console.log(e.target.files);
+    // console.log("e.target.files: ", e.target.files);
     if (e.target.files.length) {
-      setImage({
-        preview: URL.createObjectURL(e.target.files[0]),
-        raw: e.target.files[0],
-      });
+      // console.log("Initial image raw: ", imageRaw);
+      setImagePreview(URL.createObjectURL(e.target.files[0]));
+      setImageRaw(e.target.files[0]);
     }
   };
 
+  const handleInitialImage = () => {
+    const fileName = "myFile.jpg";
+    fetch(defaultProfilePic).then(async (response) => {
+      const blob = await response.blob();
+      const file = new File([blob], fileName, { type: "image/*" });
+      setImagePreview(URL.createObjectURL(blob));
+      setImageRaw(file);
+    });
+  };
+
   return (
-    <div className={classes.background}>
-      <Background data-test="personal-info-background">
-        <div className={classes.content}>
-          <div className={classes.titleDiv}>
-            <Heading
-              data-test="personal-info-header"
-              value="Personal Information"
-            />
-          </div>
+    <div className={classes.main}>
+      <div className={classes.container}>
+        <div className={classes.background}>
+          <Background data-test="personal-info-background">
+            <div className={classes.content}>
+              <motion.div className={classes.motion}>
+                <div className={classes.titleDiv}>
+                  <Heading
+                    data-test="personal-info-header"
+                    value="Personal Information"
+                  />
+                </div>
 
-          <div className={classes.subtitleDiv}>
-            <Subtitle
-              data-test="personal-info-subtitle"
-              value="Setting up your profile"
-            />
-          </div>
-          <div
-            className={classes.profilePicDiv}
-            onChange={() => console.log(image.preview)}
-          >
-            <label htmlFor="upload-button">
-              {image.preview !== "" ? (
-                <>
-                  <ProfilePic
-                    size="medium"
-                    data-test="personal-info-personalImage"
-                    PicUrl={image.preview}
-                    uploadedProfile={true}
-                  />
-                </>
-              ) : (
-                <>
-                  <ProfilePic
-                    size="medium"
-                    data-test="personal-info-personalImage"
-                  />
-                </>
-              )}
-            </label>
-            <input
-              type="file"
-              accept="image/*"
-              name="myFile"
-              id="upload-button"
-              style={{ display: "none" }}
-              onChange={handleUploadedImage}
-            />
-          </div>
-          <Formik
-            data-test="personal-info-form"
-            initialValues={{ displayName: "", faculty: "" }}
-            onSubmit={(data, { setSubmitting }) => {
-              console.log("Data from PersonalInformationPage", data);
-              setSubmitting(true);
-              setTimeout(() => {
-                setSubmitting(false);
-              }, 500);
-              setTimeout(() => {
-                setRedirect(
-                  <Redirect
-                    to={{
-                      pathname: "/selectinterests",
-                      state: {
-                        name: data.displayName,
-                        faculty: data.faculty,
-                        profilePic: image.raw,
-                      },
-                    }}
-                  />
-                );
-              }, 1500);
-            }}
-            validationSchema={validationSchema}
-          >
-            {({ values }) => (
-              <Form>
-                <div className={classes.inputFieldDiv}>
-                  <InputField
-                    label="Display Name*"
-                    type="input"
-                    name="displayName"
+                <div className={classes.subtitleDiv}>
+                  <Subtitle
+                    data-test="personal-info-subtitle"
+                    value="Setting up your profile"
                   />
                 </div>
-                <div className={classes.selectDiv}>
-                  <FormControl style={{ width: "100%" }}>
-                    <InputLabel>Faculty</InputLabel>
-                    <Field
-                      name="faculty"
-                      type="select"
-                      label="Faculty"
-                      as={Select}
-                    >
-                      {facultyArray.map((faculty) => (
-                        <MenuItem key={faculty} value={faculty}>
-                          {faculty}
-                        </MenuItem>
-                      ))}
-                    </Field>
-                  </FormControl>
+                <div
+                  className={classes.profilePicDiv}
+                  onChange={() => console.log("Image raw: ", imageRaw)}
+                >
+                  <label htmlFor="upload-button">
+                    {imagePreview !== "" ? (
+                      <>
+                        <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                          PicUrl={imagePreview}
+                          previewImage={true}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        {handleInitialImage()}
+                        {/* <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                        /> */}
+                      </>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="myFile"
+                    id="upload-button"
+                    style={{ display: "none" }}
+                    onChange={handleUploadedImage}
+                  />
                 </div>
-                <div className={classes.Button}>
-                  <Button value="Save" />
-                </div>
-                <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
-                <div className={classes.footerNavigation}>
-                  {/*  This div is for centering footer navigation*/}
-                  <div style={{ width: "80px" }}></div>
-                  <DotMorePage data-test="personal-info-dotIcon" amount={2} />
-
-                  <button type="submit" className={classes.noStyleButton}>
-                    <div className={classes.footerIcon}>
-                      <Heading value="Skip" size="small" />
-                      <ArrowRight data-test="personal-info-arrowRight" />
+                {props.location && (
+                  <>
+                    <div className={classes.idYearFaculty}>
+                      {props.location.state.id}
                     </div>
-                  </button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+                    <div className={classes.idYearFaculty}>
+                      Faculty of {props.location.state.faculty}, Year{" "}
+                      {props.location.state.year}
+                    </div>
+                  </>
+                )}
+
+                <Formik
+                  data-test="personal-info-form"
+                  initialValues={{ displayName: "", bio: "", role: "" }}
+                  onSubmit={(data, { setSubmitting }) => {
+                    console.log("Data from PersonalInformationPage", data);
+                    setSubmitting(true);
+                    setTimeout(() => {
+                      setSubmitting(false);
+                    }, 500);
+                    setTimeout(() => {
+                      setRedirect(
+                        <Redirect
+                          to={{
+                            pathname: "/selectinterests",
+                            state: {
+                              name: data.displayName,
+                              bio: data.bio,
+                              role: data.role,
+                              profilePic: imageRaw,
+                              year: props.location.state.year.toString(10),
+                              faculty: props.location.state.faculty,
+                            },
+                          }}
+                        />
+                      );
+                    }, 1500);
+                  }}
+                  validationSchema={validationSchema}
+                >
+                  {({ values }) => (
+                    <Form>
+                      <div className={classes.inputFieldDiv}>
+                        <InputField
+                          label="Display Name*"
+                          type="input"
+                          name="displayName"
+                        />
+                      </div>
+                      <div className={classes.selectDiv}>
+                        <FormControl style={{ width: "100%" }}>
+                          {/* <InputLabel>Faculty</InputLabel>
+                          <Field
+                            name="faculty"
+                            type="select"
+                            label="Faculty"
+                            as={Select}
+                          >
+                            {facultyArray.map((faculty) => (
+                              <MenuItem key={faculty} value={faculty}>
+                                {faculty}
+                              </MenuItem>
+                            ))}
+                          </Field> */}
+                          <Field
+                            label="Bio"
+                            type="input"
+                            name="bio"
+                            multiline
+                            rowsMax={4}
+                            variant="outlined"
+                            as={TextField}
+                          />
+                          <Field
+                            label="Role"
+                            type="input"
+                            name="role"
+                            rowsMax={1}
+                            variant="outlined"
+                            as={TextField}
+                          />
+                        </FormControl>
+                      </div>
+                      <div className={classes.Button}>
+                        <Button value="Save" />
+                      </div>
+                      <div className={classes.footerNavigation}>
+                        {/*  This div is for centering footer navigation*/}
+                        <div style={{ width: "80px" }}></div>
+                        <DotMorePage
+                          data-test="personal-info-dotIcon"
+                          amount={2}
+                        />
+
+                        <button type="submit" className={classes.noStyleButton}>
+                          <div className={classes.emptyDiv}></div>
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </motion.div>
+            </div>
+            {redirect}
+          </Background>
         </div>
-        {redirect}
-      </Background>
+      </div>
     </div>
   );
 };

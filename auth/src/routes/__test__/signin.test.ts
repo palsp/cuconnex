@@ -65,8 +65,8 @@ describe('Sign in test', () => {
     });
 
     it('should return 400 if password is not matched', async () => {
-        const { email, password } = await signup();
-        const { body: res } = await request(app)
+        const { email } = await signup();
+        await request(app)
             .post('/api/auth/signin')
             .send({
                 email,
@@ -100,6 +100,7 @@ describe('Sign in test', () => {
             })
             .expect(200);
 
+
         expect(res.password).not.toBeDefined();
     });
 
@@ -117,3 +118,5 @@ describe('Sign in test', () => {
     });
 
 });
+
+it.todo('remove related bearer token logic')

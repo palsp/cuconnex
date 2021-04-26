@@ -2,49 +2,49 @@ import { ActivityBoxesData } from "@src/mockData/Models/index";
 
 const mockActivityBoxes: ActivityBoxesData[] = [
   {
-    activityName: "Technology",
+    activityName: "Ads",
     activityPic: "",
     activitySubHeading1: "BlockchainNers",
     activitySubHeading2: "DMP",
   },
   {
-    activityName: "Startup",
+    activityName: "Web Builder",
     activityPic: "",
     activitySubHeading1: "BMP",
     activitySubHeading2: "YSEPGangs",
   },
   {
-    activityName: "Design",
+    activityName: "Chatbot",
     activityPic: "",
     activitySubHeading1: "UXWOW",
     activitySubHeading2: "UIPeeps",
   },
   {
-    activityName: "Margeting",
+    activityName: "Coding",
     activityPic: "",
     activitySubHeading1: "CaseClub12",
     activitySubHeading2: "Saosaosao",
   },
   {
-    activityName: "Technology",
+    activityName: "FinTech",
     activityPic: "",
     activitySubHeading1: "BlockchainNers",
     activitySubHeading2: "DMP",
   },
   {
-    activityName: "Technology",
+    activityName: "Graphic",
     activityPic: "",
     activitySubHeading1: "BlockchainNers",
     activitySubHeading2: "DMP",
   },
   {
-    activityName: "Design",
+    activityName: "Fashion",
     activityPic: "",
     activitySubHeading1: "UXWOW",
     activitySubHeading2: "UIPeeps",
   },
   {
-    activityName: "Margeting",
+    activityName: "Marketing",
     activityPic: "",
     activitySubHeading1: "CaseClub12",
     activitySubHeading2: "Saosaosao",

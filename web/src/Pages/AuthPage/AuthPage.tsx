@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { motion } from "framer-motion";
 import { Redirect } from "react-router";
 
@@ -11,34 +10,38 @@ import {
   Subtitle,
   Heading,
 } from "@dumbComponents/UI/index";
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
-
-import { fetchUserDataAPI } from "@api/index";
-
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
-
 import classes from "./AuthPage.module.css";
+import { UserContext } from "@context/UserContext";
 
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { fetchUserDataHandler } = useContext(UserContext);
 
-  const fetchDataHandler = async () => {
+  const checkUserHasLogin = async () => {
     try {
-      const userData = await fetchUserDataAPI();
-      console.log("SUCCESS fetchDataHandler", userData);
+      await fetchUserDataHandler();
       setIsAuthenticated(true);
       setRedirect(true);
     } catch (e) {
-      console.log("fetchDataHandler error", e);
+      console.log("checkUserHasLogin error", e);
     }
   };
 
   useEffect(() => {
-    fetchDataHandler();
+    // let isMounted = true;
+    // if (isMounted) {
+    // if(isAuthenticated) {
+    checkUserHasLogin();
+    // }
+    // return () => {
+    //   isMounted = false;
+    // };
   }, []);
 
   const signupButtonClickedHandler = () => {
@@ -130,11 +133,13 @@ const AuthPage: React.FC = () => {
         <div className={classes.logoDiv}>
           <AppLogo data-test="auth-page-logo" />
         </div>
-        <div
-          className={classes.circle_overlay}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ ease: "linear", duration: 4, repeat: Infinity }}
           style={{ bottom: -(window.innerHeight * 0.33) }}
+          className={classes.circle_overlay}
           data-test="auth-page-halfcircleoverlay"
-        ></div>
+        ></motion.div>
         <div className={classes.Button}>
           <Button
             data-test="auth-page-login-button"
@@ -158,8 +163,18 @@ const AuthPage: React.FC = () => {
 
   return (
     <Background data-test="auth-page-background">
-      <div className={classes.content}>{authPrompt}</div>
-      {routeRedirect}
+      <motion.div
+        exit={{
+          opacity: 0.5,
+          transition: {
+            duration: 0.2,
+          },
+        }}
+        className={classes.content}
+      >
+        {authPrompt}
+        {routeRedirect}
+      </motion.div>
     </Background>
   );
 };

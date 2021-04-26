@@ -14,3 +14,6 @@ export { default as SelectTeamPage } from "@pages/SelectTeamPage/SelectTeamPage"
 export { default as TeamDetail } from "@pages/TeamDetailPage/TeamDetail";
 export { default as SelectMemberPage } from "@pages/SelectMemberPage/SelectMemberPage";
 export { default as ExplorePage } from "@pages/ExplorePage/ExplorePage";
+export { default as NotificationPage } from "@pages/NotificationPage/NotificationPage";
+export { default as PushPage } from "@pages/PushPage/PushPage";
+export { default as CreateTeamPage } from "@pages/CreateTeamPage/CreateTeamPage";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Heading, Tab } from "@dumbComponents/UI/index";
@@ -9,29 +9,49 @@ import { MyTeamLists } from "@smartComponents/index";
 
 import classes from "./MyTeamPage.module.css";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
+import { motion } from "framer-motion";
+
+import containerVariants from "@src/models/models";
+
+import { UserContext } from "@context/UserContext";
+
+import { fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-  const [clickOngoing, setOngoing] = useState(true);
-  const [clickFinished, setFinished] = useState(false);
+  const [onGoing, setOngoing] = useState(true);
+
+  // const { setTeamData } = useContext(UserDataContext);
+
+  // const fetchTeamHandler = async () => {
+  //   try {
+  //     const teamData = await fetchTeamNotificationAPI();
+  //     console.log("fetchTeamHandler", teamData)
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   fetchTeamHandler();
+  // }, []);
 
   const ongoingButtonHandler = () => {
     setOngoing(true);
-    setFinished(false);
     console.log("setOngoing");
   };
 
   const finishedButtonHandler = () => {
     setOngoing(false);
-    setFinished(true);
     console.log("setFinished");
   };
 
   let myteamsPrompt = null;
-  if (clickOngoing === true) {
+  if (onGoing === true) {
     myteamsPrompt = (
       <div className={classes.tabOngoing}>
         <div className={classes.relativeArrow}>
-          <Link data-test="myteam-page-back-link" to="/landing">
+          <Link
+            data-test="myteam-page-back-link"
+            to={{ pathname: "/landing", state: { hamburgerOn: true } }}
+          >
             <ArrowLeft data-test="myteam-page-arrow-left" />
           </Link>
         </div>
@@ -55,11 +75,14 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" team={mockMyTeamListsData} />
+          <MyTeamLists
+            data-test="myteam-page-team-lists"
+            team={mockMyTeamListsData}
+          />
         </div>
       </div>
     );
-  } else if (clickFinished === true) {
+  } else if (onGoing === false) {
     myteamsPrompt = (
       <div className={classes.tabFinished}>
         <div className={classes.relativeArrow}>
@@ -87,16 +110,24 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" team={mockMyTeamListsData} />
+          <MyTeamLists
+            data-test="myteam-page-team-lists"
+            team={mockMyTeamListsData}
+          />
         </div>
       </div>
     );
   }
 
   return (
-    <div data-test="myteam-page" className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      exit="exit"
+      data-test="myteam-page"
+      className={classes.main}
+    >
       {myteamsPrompt}
-    </div>
+    </motion.div>
   );
 };
 

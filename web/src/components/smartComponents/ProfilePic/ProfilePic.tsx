@@ -3,11 +3,13 @@ import classes from "./ProfilePic.module.css";
 interface Props {
   size?: string;
   uploadedProfile?: boolean;
+  previewImage?: boolean;
   PicUrl?: string;
 }
 const ProfilePic: React.FC<Props> = (props) => {
   let cssArray = null;
   let profileArray = null;
+  let url = null;
 
   if (props.size === "big") {
     cssArray = [classes.profileBig];
@@ -22,12 +24,17 @@ const ProfilePic: React.FC<Props> = (props) => {
   } else {
     cssArray = [classes.profile];
   }
+
   profileArray = [classes.profilePicDefault];
 
-  if (props.uploadedProfile === true) {
-    // console.log("here");
-    console.log("src: ", props.PicUrl);
+  if (props.PicUrl) {
     profileArray = [classes.profilePic];
+  }
+
+  url = window.location.origin + "/api/users/" + props.PicUrl;
+
+  if (props.previewImage) {
+    url = props.PicUrl;
   }
 
   return (
@@ -35,19 +42,19 @@ const ProfilePic: React.FC<Props> = (props) => {
       <div className={profileArray.join(" ")}>
         {props.PicUrl ? (
           <img
-            src={props.PicUrl}
-            style={{
-              objectFit: "cover",
-              width: "200px",
-              height: "200px",
-              borderRadius: "50%",
-            }}
+            src={url}
+            className={profileArray.join(" ")}
+            // style={{
+            //   objectFit: "cover",
+            //   width: "200px",
+            //   height: "200px",
+            //   borderRadius: "50%",
+            // }}
             alt="profilepic"
           />
         ) : (
           ""
         )}
-        {/* <p className={classes.pTag}>Add profile Picture</p> */}
       </div>
     </div>
   );

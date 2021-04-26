@@ -14,13 +14,16 @@ import mockEventLists from "@src/mockData/mockEventLists";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
 import { mockPeopleLists } from "@src/mockData";
+import { IEventData, ITeam, IUser } from "@src/models";
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [noSearchResult, setNoSearchResult] = useState<boolean>(false);
-  const [peopleLists, setPeopleLists] = useState([]);
-  const [teamLists, setTeamLists] = useState([]);
-  const [eventLists, setEventLists] = useState([]);
+  const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
+  const [teamLists, setTeamLists] = useState<ITeam[]>([]);
+  const [eventLists, setEventLists] = useState<IEventData[]>([]);
 
   const explorePage = hasSearch ? (
     <div className={classes.exploreContent}>
@@ -28,7 +31,7 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="People" />
       </div>
-      <PeopleLists peoplelist={mockPeopleLists} />
+      <PeopleLists peoplelist={peopleLists} />
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
@@ -53,10 +56,10 @@ const ExplorePage = () => {
     </>
   );
   return (
-    <Background>
-      {/* Background has display: flex so this div is for that */}
-
-      <div>
+    <motion.div variants={containerVariants} exit="exit">
+      <Background>
+        {/* Background has display: flex so this div is for that */}
+        <div>
         <div className={classes.exploreHeader}>
           <Link to="/landing">
             <ArrowLeft />
@@ -70,9 +73,14 @@ const ExplorePage = () => {
             value="Explore"
           />
         </div>
-        {explorePage}
-      </div>
-    </Background>
+        {console.log("This is peopleLists", peopleLists)}
+        {console.log("This is teamLists", teamLists)}
+        {console.log("This is eventLists", eventLists)}
+
+          {explorePage}
+        </div>
+      </Background>
+    </motion.div>
   );
 };
 

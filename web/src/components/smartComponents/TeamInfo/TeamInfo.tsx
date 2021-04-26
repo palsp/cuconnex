@@ -18,13 +18,15 @@ interface Props {
 
 const TeamInfo: React.FC<Props> = (props) => {
   return (
-    <div className={classes.profileInfo}>
+    <div className={classes.teamInfo}>
       <div className={classes.cover}>
         <CoverPic url="" />
       </div>
       <div className={classes.teamprofile}>
-        <div className={classes.profilePic}>
-          <ProfilePic size="mediumborder" />
+        <div className={classes.flex}>
+          <div className={classes.profilePic}>
+            <ProfilePic size="mediumborder" />
+          </div>
         </div>
         <div className={classes.namerole}>
           <div className={classes.name}>{props.name}</div>

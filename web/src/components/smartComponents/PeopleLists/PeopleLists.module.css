@@ -2,3 +2,6 @@
   text-align: left;
   margin-left: 3vw;
 }
+.linkDiv a{
+  text-decoration: none;
+}

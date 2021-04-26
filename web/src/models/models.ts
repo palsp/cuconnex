@@ -8,16 +8,23 @@ export interface IUser {
     Design: string[];
   };
   faculty: string;
+  year: string;
+  role: string;
+  bio: string;
   image: string;
 }
 
 export interface ITeam {
-  id: string;
+  name: string; // team name
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
 }
 
-export interface ISearchUserTeamResult {
+export interface ISearchUserTeamEventResult {
   users: IUser[];
-  team: ITeam[];
+  teams: ITeam[];
+  events: IEventData[];
 }
 export interface IUserSignup {
   email: string;
@@ -46,7 +53,10 @@ export interface IFetchUserData {
     Design: string[];
   };
   faculty: string;
-  profilePic: File;
+  year: string;
+  role: string;
+  bio: string;
+  image: string;
 }
 
 export interface ICreateUserData {
@@ -57,7 +67,10 @@ export interface ICreateUserData {
     Design: string[];
   };
   faculty: string;
-  profilePic: File;
+  bio: string;
+  year: string;
+  image: File;
+  role: string;
 }
 //events
 export interface IFetchEventsData {
@@ -69,7 +82,7 @@ export interface IFetchEventsDataResult {
 export interface IEventData {
   "event-name": string;
   bio: string;
-  status: string;
+  status?: string;
   "start-date": {
     month: number;
     day: number;
@@ -100,6 +113,22 @@ export interface ITeamDataResult {
   name: string;
   description: string;
 }
+
+export interface IFetchFriendsData {
+  connection: IFetchUserData[];
+}
+
+export interface IInviteData {
+  teamName: string;
+  newMemberId: string;
+}
+
+export interface IInviteDataResult {
+  message: string;
+  User: string;
+  Team: string;
+}
+
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",
@@ -123,3 +152,38 @@ export enum FacultyListsEnum {
   IntegratedInnovation = "Integrated Innovation", // วัฒนกรรมบูรณาการ
   AgriculturalResources = "Agricultural Resources",
 }
+
+//Notifications
+export interface IFetchTeamNotification {
+  teamNames: string[];
+}
+export interface IFetchFriendNotification {
+  request: IUser[];
+}
+//Search
+export interface ISearchGeneral {
+  users: IUser[];
+  teams: ITeam[];
+}
+
+const containerVariants = {
+  hidden: {
+    opacity: 0.85,
+    x: window.innerWidth,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.3,
+    },
+  },
+  exit: {
+    opacity: 0.8,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
+export default containerVariants;

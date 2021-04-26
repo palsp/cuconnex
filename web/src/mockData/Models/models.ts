@@ -5,14 +5,6 @@ export interface ActivityBoxesData {
   activitySubHeading2: string;
 }
 
-export interface MemberListsData{
-  name: string;
-  profilePic: string;
-  interest: string;
-  major: string;
-  year: number;
-}
-
 export interface PeopleListsData {
   name: string;
   profilePic: string;
@@ -27,7 +19,7 @@ export interface SelectedMemberLists {
 }
 
 export interface InterestListsData {
-  name:string;
+  name: string;
 }
 export interface SelectedMemberLists {
   name: string;
@@ -36,10 +28,7 @@ export interface SelectedMemberLists {
   selected: boolean;
 }
 export interface MemberTagData {
-  name: string;
-  role: string;
-  profilePic: string;
-  selected: boolean;
+  users:UsersData[]
 }
 export interface ActivityListsData {
   activityPic: string;
@@ -64,3 +53,45 @@ export interface TeamActivitiesData {
   event: string;
   status: string;
 }
+
+export interface ConnectionListsData {
+  profilePic: string;
+  name: string;
+  role: string;
+  faculty: string;
+  status: string;
+}
+
+export interface MembersInActivityNotificationData {
+  profilePic: string;
+  name: string;
+  role: string;
+  teamName: string;
+  status: string;
+}
+
+export interface PositionsInActivityNotificationData {
+  teamPic: string;
+  role: string;
+  teamName: string;
+  teamList: string;
+  status: string;
+}
+
+export interface UsersData {
+  id: string;
+  name: string;
+  interests: {
+    Technology: string[];
+    Business: string[];
+    Design: string[];
+  };
+  faculty: string;
+  profilePic: string;
+}
+export interface InterestData {
+  Business:string[],
+  Technology:string[],
+  Design:string[],
+}
+

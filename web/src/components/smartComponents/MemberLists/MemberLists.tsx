@@ -1,23 +1,37 @@
 import React, { useState } from "react";
 import MemberList from "@smartComponents/MemberLists/MemberList/MemberList";
 import mockMemberLists from "@src/mockData/mockMemberLists";
+import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
-import { MemberListsData } from "@src/mockData/Models";
+
+import { UsersData } from "@src/mockData/Models";
+
 interface Props {
-  memberlist: MemberListsData[] | [];
+  memberlist: UsersData[] | [];
   selectMemberListsHandler: (e: number) => void;
+  personHandler: (e: UsersData) => void;
 }
 const MemberLists: React.FC<Props> = (props) => {
+  // const fetchFriendsList:member[] = async () => {
+  //   try {
+  //     return await fetchFriendsDataAPI();
+  //   } catch(e){
+
+  //   }
+  // }
   return (
     <div>
-      {props.memberlist.map((person:MemberListsData, index:number) => {
+      {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
+      {props.memberlist.map((person: MemberListsData, index: number) => { */}
+      {props.memberlist.map((person: UsersData, index: number) => {
         return (
           <div key={index}>
             <MemberList
               key={index}
-              member={person}
+              members={person}
               selectMemberListHandler={(currentState: boolean) => {
                 props.selectMemberListsHandler(index);
+                props.personHandler(person);
               }}
             />
           </div>

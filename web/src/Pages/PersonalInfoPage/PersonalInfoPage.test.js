@@ -24,14 +24,14 @@ describe("render Personal Info Page", () => {
     const subtitle = findByTestAttr(wrapper, "personal-info-subtitle");
     expect(subtitle.length).toBe(1);
   });
-  it("should render personalImage", () => {
-    const wrapper = setup();
-    const personalImage = findByTestAttr(
-      wrapper,
-      "personal-info-personalImage"
-    );
-    expect(personalImage.length).toBe(1);
-  });
+  // it("should render personalImage", () => {
+  //   const wrapper = setup();
+  //   const personalImage = findByTestAttr(
+  //     wrapper,
+  //     "personal-info-personalImage"
+  //   );
+  //   expect(personalImage.length).toBe(1);
+  // });
 
   it("should render form", () => {
     const wrapper = setup();
@@ -68,11 +68,11 @@ describe("render Personal Info Page", () => {
     const dotIcon = findByTestAttr(wrapperDive, "personal-info-dotIcon");
     expect(dotIcon.length).toBe(1);
   });
-  it("should render arrowRight", () => {
-    const wrapper = setup();
-    const wrapperDive = findByTestAttr(wrapper, "personal-info-form").dive();
-    const arrowRight = findByTestAttr(wrapperDive, "personal-info-arrowRight");
+  // it("should render arrowRight", () => {
+  //   const wrapper = setup();
+  //   const wrapperDive = findByTestAttr(wrapper, "personal-info-form").dive();
+  //   const arrowRight = findByTestAttr(wrapperDive, "personal-info-arrowRight");
 
-    expect(arrowRight.length).toBe(1);
-  });
+  //   expect(arrowRight.length).toBe(1);
+  // });
 });

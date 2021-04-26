@@ -1,29 +1,33 @@
 import React from "react";
 import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
-
 import { Heading } from "@dumbComponents/UI/index";
-import { ArrowLeft, Close, Edit, PlusCircle } from "@icons/index";
+import { ArrowLeft, Close } from "@icons/index";
 import {
-  ActivityLists,
-  Biography,
-  EducationLists,
-  InterestList,
   MemberPicList,
-  ProfileInfo,
   RecruitmentLists,
   TeamActivityLists,
   TeamInfo,
 } from "@smartComponents/index";
 import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
+import { motion } from "framer-motion";
+
+import containerVariants from "@src/models/models";
 
 const TeamDetail: React.FC = () => {
   // Is user be team owner ?
-  const isTeamOwner = true;
+  const isTeamOwner = false;
   // Is team already exist ? (create team process)
   const isTeamExist = true;
+
   return (
-    <div className={classes.TeamDetail}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.TeamDetail}
+    >
       <div className={classes.header}>
         {isTeamExist ? (
           <div className={classes.relativeArrow}>
@@ -65,7 +69,7 @@ const TeamDetail: React.FC = () => {
       <div className={classes.activity}>
         <TeamActivityLists activity={mockTeamActivitiesData} />
       </div>
-    </div>
+    </motion.div>
   );
 };
 

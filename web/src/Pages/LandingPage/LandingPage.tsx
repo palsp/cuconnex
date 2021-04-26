@@ -1,19 +1,43 @@
+import React, { useState, useContext } from "react";
 import { ProfilePic } from "@smartComponents/index";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
 import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
 import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
+import containerVariants from "@src/models/models";
+import { motion } from "framer-motion";
+import { UserContext } from "@context/UserContext";
 
-const LandingPage: React.FC = () => {
-  const [clickHamburger, setClickHamburger] = useState<boolean>(false);
-  const [hasTeam] = useState<boolean>(true);
+interface Props {
+  location: {
+    state?: {
+      hamburgerOn?: boolean;
+    };
+  };
+}
+
+const LandingPage: React.FC<Props> = (props) => {
+  console.log(props.location);
+  const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
+  const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
+  const [hasTeam, setHasTeam] = useState<boolean>(true);
+  const { userData } = useContext(UserContext);
+  console.log(userData);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
+  };
+
+  const transition = {
+    // On Tap - Navigation
+    type: "spring",
+    delay: 0,
+    stiffness: 500,
+    damping: 60,
+    mass: 1,
   };
 
   let cssArray = [classes.content];
@@ -32,7 +56,10 @@ const LandingPage: React.FC = () => {
             <Search />
           </Link>
         </div>
-        <div className={classes.mailDiv}>
+        <div
+          onClick={() => setHasTeam((prev) => !prev)}
+          className={classes.mailDiv}
+        >
           <Mail />
         </div>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
@@ -40,7 +67,7 @@ const LandingPage: React.FC = () => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero hasTeam={hasTeam} />
+        <LandingHero userData={userData} hasTeam={hasTeam} />
       </div>
     </div>
   ) : (
@@ -55,11 +82,17 @@ const LandingPage: React.FC = () => {
   );
 
   return (
-    <div className={classes.main}>
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.main}
+    >
       <Background>
         <div>{LandingPrompt}</div>
       </Background>
-    </div>
+    </motion.div>
   );
 };
 

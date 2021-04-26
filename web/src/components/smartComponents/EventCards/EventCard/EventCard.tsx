@@ -4,7 +4,7 @@ interface Props {
   events: {
     "event-name": string;
     bio: string;
-    status:string;
+    status?: string;
     "start-date": {
       month: number;
       day: number;

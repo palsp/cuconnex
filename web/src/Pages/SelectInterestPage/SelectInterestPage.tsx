@@ -1,33 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "@src/api/axiosInstance/axiosInstance";
 import { Link } from "react-router-dom";
-
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
-import { Redirect } from "react-router";
-
+import { UserContext } from "@context/UserContext";
 import {
   Heading,
   Subtitle,
   DotMorePage,
   Button,
 } from "@dumbComponents/UI/index";
-
 import { InterestLists } from "@smartComponents/index";
-
-import { ArrowLeft, ArrowRight } from "@icons/index";
-
+import { ArrowLeft } from "@icons/index";
 import { createUserDataAPI } from "@api/index";
-
 import { ICreateUserData } from "@models/index";
-
 import classes from "./SelectInterestPage.module.css";
+import mockInterestListsData from "@src/mockData/mockInterestListsData";
 
 interface Props {
   location: {
     state: {
       name: string;
       faculty: string;
+      bio: string;
+      year: string;
       profilePic: File;
+      role: string;
     };
   };
   page?: string;
@@ -45,26 +40,14 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     Business: [],
     Design: [],
   });
-
-  const { isAuthenticated, setIsAuthenticated } = useContext(
-    AuthenticatedContext
-  );
-
+  const { fetchUserDataHandler } = useContext(UserContext);
   let name = "";
   let faculty = "";
-  let profilePic: File;
+  let bio = "";
+  let year = "";
+  let role = "";
+  let profileImage: File;
   let saveButton = null;
-
-  const emptyInterests: InterestListsArray = {
-    Technology: [],
-    Business: [],
-    Design: [],
-  };
-
-  // const [editInterest, setEditInterest] = useState(false);
-  // const setEditInterestHandler = () => {
-  //   setEditInterest(true);
-  // };
 
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
@@ -109,70 +92,37 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  //These are Nat's test
-  //   useEffect(() => {
-  //     console.log("Fetching data GET /api/users");
-  //     const fetchUserData = async () => {
-  //       // const fetchInterestArray = { Business: [] };
-  //       const fetchInterestArray = { Business: ["Marketing", "Ecommerce"] };
-
-  //       if (fetchInterestArray.Business.length !== 0) {
-  //         setEditInterest(true);
-  //       }
-
-  //       // try {
-  //       //   const userData = await axios.get("/api/users");
-  //       //   console.log("Successfully GET userData", userData);
-  //       // } catch (e) {
-  //       //   console.log("Errors FETCHING userData", e);
-  //       //   console.log("Am I Authen?", isAuthenticated);
-  //       // }
-  //     };
-  //     fetchUserData();
-  //   }, []);
-
   const setUserData = async () => {
     if (props.location.state) {
       name = props.location.state.name;
-      profilePic = props.location.state.profilePic;
+      profileImage = props.location.state.profilePic;
       faculty = props.location.state.faculty;
+      bio = props.location.state.bio;
+      year = props.location.state.year;
+      role = props.location.state.role;
     }
     const userData: ICreateUserData = {
       name: name,
       interests: interestArray,
       faculty: faculty,
-      profilePic: profilePic,
+      bio: bio,
+      role: role,
+      year: year,
+      image: profileImage,
     };
+    console.log("upload userdata...", userData);
     try {
       const result = await createUserDataAPI(userData);
-      console.log("POST to /api/users is successful", result);
+      console.log("POST createUserData to /api/users is successful", result);
+      try {
+        await fetchUserDataHandler();
+      } catch (e) {
+        console.log("POST signup success but failed GET fetching");
+      }
     } catch (e) {
       console.log("SelectInterestPage Error setting users data", e);
     }
   };
-
-  const setEmptyInterest = async () => {
-    if (props.location.state) {
-      name = props.location.state.name;
-      profilePic = props.location.state.profilePic;
-    }
-    const userData: ICreateUserData = {
-      name: name,
-      interests: emptyInterests,
-      faculty: faculty,
-      profilePic: profilePic,
-    };
-    try {
-      const result = await createUserDataAPI(userData);
-      console.log("POST to /api/users is successful", result);
-    } catch (e) {
-      console.log("SelectInterestPage Error setting users data", e);
-    }
-  };
-
-  useEffect(() => {
-    console.log("Items in interestArray", interestArray);
-  }, [interestArray]);
 
   useEffect(() => {
     console.log(
@@ -194,6 +144,8 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           state: {
             name: props.location.state.name,
             interests: interestArray,
+            faculty: props.location.state.faculty,
+            profilePic: props.location.state.profilePic,
           },
         }}
       >
@@ -227,12 +179,9 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           </div>
         </Link>
         <DotMorePage data-test="dot-icon" amount={3} />
-        <div onClick={setEmptyInterest}>
+        <div>
           <Link to="/success">
-            <div className={classes.footerIcon}>
-              <Heading size="small" value="Skip" />
-              <ArrowRight data-test="arrow-right" />
-            </div>
+            <div className={classes.emptyDiv}></div>
           </Link>
         </div>
       </div>
@@ -255,6 +204,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Business" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectBusinessInterestHandler}
             data-test="interest-list-business"
             type="BUSINESS"
@@ -263,6 +213,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Technology" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectTechnologyInterestHandler}
             data-test="interest-list-technology"
             type="TECHNOLOGY"
@@ -271,6 +222,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Design" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectDesignInterestHandler}
             data-test="interest-list-design"
             type="DESIGN"
@@ -282,22 +234,5 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     </>
   );
 };
-
-// SelectInterestPage.defaultProps = {
-//   location: {
-//     state: {
-//       name: "Micky",
-//     },
-//   },
-// };
-
-// const fetchUserData = async () => {
-//   console.log("GET /api/users");
-//   try {
-//     const response = await axios.get("/api/users/123");
-//   } catch (e) {
-//     console.log("SelectInterestPage Error getting users data", e);
-//   }
-// };
 
 export default SelectInterestPage;
