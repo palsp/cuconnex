@@ -13,6 +13,7 @@ import {
 import {
   BadRequestError,
   NotFoundError,
+  TeamStatus,
   FriendStatus,
   Description,
   faculty,
@@ -326,9 +327,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
-  public addRequest!: BelongsToManyAddAssociationMixin<IsMember, Team>;
-  public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
-
   /**
    * Creates Team with the specified name and description
    * @param {TeamCreationAttrs} attrs - A TeamCreationAttrs object consisting of the team name and description
@@ -341,6 +339,18 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.createTeam({
       name: attrs.name,
       description: attrs.description,
+    });
+  }
+
+  // public addRequest!: BelongsToManyAddAssociationMixin<IsMember, Team>;
+  public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
+
+  public async requestToJoin(team: Team) {
+    await IsMember.create({
+      teamName: team.name,
+      userId: this.id,
+      status: TeamStatus.Pending,
+      sender: 'user',
     });
   }
 

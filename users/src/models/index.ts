@@ -82,7 +82,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
       },
       sender: {
         type: DataTypes.STRING,
-        defaultValue: 'user',
+        defaultValue: 'team',
       },
     },
     { timestamps: false }

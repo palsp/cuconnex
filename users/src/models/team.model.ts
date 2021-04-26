@@ -78,17 +78,12 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       throw new BadRequestError(`This user already have status: ${isMember.status}`);
     }
 
-    const cc = await this.addMember(user);
-    // console.log('cc', cc);
-    isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
-    if (!isMember) {
-      throw new BadRequestError(`something went wrong with IsMember table`);
-    }
-
-    await isMember.save();
-    // console.log('eueu', isMember);
-
-    return;
+    await IsMember.create({
+      teamName: this.name,
+      userId: user.id,
+      status: TeamStatus.Pending,
+      sender: 'team',
+    });
   }
 
   // edit can be use to ACCEPT or REJECT status

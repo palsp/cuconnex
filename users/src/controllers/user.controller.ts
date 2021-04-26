@@ -8,6 +8,7 @@ import {
   IFindRelationResponse,
   IUserResponse,
   IViewProfileResponse,
+  ITeamResponse,
 } from '../interfaces';
 
 /**
@@ -164,7 +165,7 @@ export const requetToJoinTeam = async (req: Request, res: Response) => {
     throw new BadRequestError('The user already pending a request to this team.');
   }
 
-  await user.addRequest(team);
+  await user.requestToJoin(team);
 
   res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
 };
@@ -174,7 +175,7 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
     const user = req.user!;
 
     const invitations = await IsMember.findAll({
-      where: { userId: user.id, status: TeamStatus.Pending },
+      where: { userId: user.id, status: TeamStatus.Pending, sender: 'team' },
     });
 
     if (!invitations || invitations.length === 0) {
@@ -182,9 +183,10 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
       return res.status(204).send({ message: 'No invitaions', teams: [] });
     }
 
-    var teams = [];
+    var teams: ITeamResponse[] = [];
     for (let i = 0; i < invitations.length; i++) {
-      teams.push(invitations[i].teamName);
+      let team = await Team.findOne({ where: { name: invitations[i].teamName } });
+      teams.push(team!.toJSON());
     }
 
     res.status(200).send({ message: 'Invitation(s) is/are from these teams.', teams: teams });

@@ -31,8 +31,8 @@ describe('USER--INFO: Get list of teams from user', () => {
     });
 
     const user2 = await User.create({
-      id: '6131778821',
-      name: 'pal',
+      id: '6131778822',
+      name: 'pal2',
     });
 
     const interest = await Interest.findOne({
