@@ -28,12 +28,16 @@ app.use(
     secure: false,
   })
 );
+
+/* TODO: put this line below currentUser middleware */
+app.use('/api/users/assets', express.static('assets'));
+
+
 /*TODO: uncomment these three lines after development */
 app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
 
-app.use('/api/users/assets', express.static('assets'));
 
 // user handler
 app.use(router.notificationUserRouter);
