@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -23,10 +23,12 @@ import {
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import classes from "./App.module.css";
 import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamPrompt";
+import { ErrorContext } from "@context/ErrorContext";
 
 const App: React.FC = () => {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const { setErrorHandler } = useContext(ErrorContext);
   const [heightStyle, setHeightStyle] = useState({});
 
   useEffect(() => {
@@ -69,7 +71,13 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-        <AnimatePresence>{routes}</AnimatePresence>
+        <AnimatePresence>
+          {/* <button onClick={() => setErrorHandler("kuay")}>
+            Click me to show error pls
+          </button> */}
+
+          {routes}
+        </AnimatePresence>
       </AuthenticatedContext.Provider>
     </div>
   );
