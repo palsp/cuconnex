@@ -85,30 +85,51 @@ const TeamList: React.FC<Props> = (props) => {
               </div>
             </div>
           ) : props.page === "explore" ? (
+            // <div className={classes.landingLine}>
+            //   <div className={classes.teamEvent}>
+            //     <Subtitle
+            //       data-test="team-list-event"
+            //       value={props.team ? props.team.name : "test-value"}
+            //       size="small"
+            //     />
+            //   </div>
+            //   <div className={classes.flex}>
+            //     <div className={classes.teamEvent}>
+            //       <Subtitle
+            //         data-test="team-list-event"
+            //         value={props.team ? props.team.creatorId : "test-value"}
+            //         size="small"
+            //       />
+
+            //       <div className={classes.groupAmount}>5</div>
+            //   <div className={classes.groupIcon}>
+            //     <Group />
+            //     </div>
+            //     <div className={classes.teamStatus}>
+            //       <RecruitSign
+            //         data-test="team-list-status"
+            //         value={props.team.lookingForMembers + ""}
+            //       />
+            //     </div>
+            //   </div>
+            // </div>
             <div className={classes.landingLine}>
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.event : "test-value"}
+                  value={props.team ? props.team.name : "test-value"}
                   size="small"
                 />
               </div>
               <div className={classes.flex}>
-                <div className={classes.teamEvent}>
-                  <Subtitle
-                    data-test="team-list-event"
-                    value={props.team ? props.team.creatorId : "test-value"}
-                    size="small"
-                  />
-
-                  {/* <div className={classes.groupAmount}>5</div>
-              <div className={classes.groupIcon}>
-                <Group />  */}
+                <div className={classes.groupAmount}>5</div>
+                <div className={classes.groupIcon}>
+                  <Group />
                 </div>
                 <div className={classes.teamStatus}>
                   <RecruitSign
                     data-test="team-list-status"
-                    value={props.team.lookingForMembers + ""}
+                    value={"" + props.team.lookingForMembers}
                   />
                 </div>
               </div>
@@ -118,14 +139,14 @@ const TeamList: React.FC<Props> = (props) => {
               <div className={classes.teamEvent}>
                 <Subtitle
                   data-test="team-list-event"
-                  value={props.team ? props.team.event : "test-value"}
+                  value={props.team ? props.team.name : "test-value"}
                   size="small"
                 />
               </div>
               <div className={classes.teamStatus}>
                 <RecruitSign
                   data-test="team-list-status"
-                  value={props.team.status}
+                  value={props.team.lookingForMembers + ""}
                 />
               </div>
             </div>

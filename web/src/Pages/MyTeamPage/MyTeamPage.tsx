@@ -18,9 +18,8 @@ import { UserContext } from "@context/UserContext";
 import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-
   const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
-  const [clickOngoing, setOngoing] = useState(true);
+  const [clickOnGoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);
   const fetchTeamHandler = async () => {
@@ -29,14 +28,11 @@ const MyTeamPage: React.FC = () => {
     return teamData.data.teams;
   };
 
-
   useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) =>
-    setTeamLists(value)
-  );
+    fetchTeamHandler().then((value: ITeam[] | []) => setTeamLists(value));
   }, []);
 
-  const ButtonHandler = () => {
+  const onGoingButtonHandler = () => {
     setOngoing(true);
     console.log("setOngoing");
   };
@@ -65,7 +61,7 @@ const MyTeamPage: React.FC = () => {
           <div className={classes.ongoing}>
             <Tab
               data-test="myteam-page-ongoing"
-              onClick={ongoingButtonHandler}
+              onClick={onGoingButtonHandler}
               value="Ongoing"
             />
           </div>
@@ -78,14 +74,11 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists
-            data-test="myteam-page-team-lists"
-            team={teamLists}
-          />
+          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
         </div>
       </div>
     );
-  } else if (onGoing === false) {
+  } else if (clickOnGoing === false) {
     myteamsPrompt = (
       <div className={classes.tabFinished}>
         <div className={classes.relativeArrow}>
@@ -100,7 +93,7 @@ const MyTeamPage: React.FC = () => {
           <div className={classes.ongoing}>
             <Tab
               data-test="myteam-page-ongoing"
-              onClick={ongoingButtonHandler}
+              onClick={onGoingButtonHandler}
               value="Ongoing"
             />
           </div>
@@ -113,10 +106,7 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists
-            data-test="myteam-page-team-lists"
-            team={teamLists}
-          />
+          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
         </div>
       </div>
     );
