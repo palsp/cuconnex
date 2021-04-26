@@ -161,9 +161,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    const eiei = await User.findOne({ where: { id: userId }, include: 'interests' });
-    // console.log('eiei', eiei);
-    return eiei;
+    return await User.findOne({ where: { id: userId }, include: 'interests' });
   }
 
   //Method for finding a relation attached here to minimize hassle
