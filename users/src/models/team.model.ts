@@ -10,10 +10,9 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
-import { TeamStatus, BadRequestError } from '@cuconnex/common';
+import { TeamStatus, BadRequestError , NotFoundError} from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, IOutgoingRequestResponse } from '../interfaces';
-import { NotFoundError } from '@bkatickets/common';
 
 // keep member array as id of user
 export interface TeamAttrs {
