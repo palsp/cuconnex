@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
 import { FormControl, TextField } from "@material-ui/core/";
@@ -14,38 +14,9 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { ProfilePic } from "@smartComponents/index";
-import { ArrowRight } from "@icons/index";
-
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
-import { FacultyListsEnum } from "@models/index";
 import defaultProfilePic from "@assets/tempProfilePic.png";
-
-const facultyArray: string[] = Object.values(FacultyListsEnum);
-
-// const facultyArray = [
-//   "Allied Health Sciences",
-//   "Architecture",
-//   "Arts",
-//   "Communication Arts",
-//   "Commerce and Accountancy",
-//   "Dentistry",
-//   "Economics",
-//   "Education",
-//   "Engineering",
-//   "Fine and Applied Arts",
-//   "Law",
-//   "Medicine",
-//   "Nursing",
-//   "Pharmaceutical Sciences",
-//   "Political Sciences",
-//   "Psychology",
-//   "Science",
-//   "Sports Science",
-//   "VeterinaryScience",
-//   "Integrated Innovation",
-//   "Agricultural Resources",
-// ];
 
 interface Props {
   location: {
@@ -59,6 +30,8 @@ interface Props {
 
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
+  bio: yup.string().required("Please fill in your bio"),
+  role: yup.string().required("Please fill in your role"),
 });
 
 const PersonalInfoPage: React.FC<Props> = (props) => {
@@ -66,9 +39,9 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [imageRaw, setImageRaw] = useState<File>();
 
-  const handleUploadedImage = (e: any) => {
+  const handleUploadedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     // console.log("e.target.files: ", e.target.files);
-    if (e.target.files.length) {
+    if (e.target.files?.length) {
       // console.log("Initial image raw: ", imageRaw);
       setImagePreview(URL.createObjectURL(e.target.files[0]));
       setImageRaw(e.target.files[0]);
@@ -76,7 +49,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
   };
 
   const handleInitialImage = () => {
-    const fileName = "myFile.jpg";
+    const fileName = "myFile.png";
     fetch(defaultProfilePic).then(async (response) => {
       const blob = await response.blob();
       const file = new File([blob], fileName, { type: "image/*" });
@@ -138,7 +111,8 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     onChange={handleUploadedImage}
                   />
                 </div>
-                {props.location && (
+
+                {props.location?.state && (
                   <>
                     <div className={classes.idYearFaculty}>
                       {props.location.state.id}
@@ -152,7 +126,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
 
                 <Formik
                   data-test="personal-info-form"
-                  initialValues={{ displayName: "", bio: "" }}
+                  initialValues={{ displayName: "", bio: "", role: "" }}
                   onSubmit={(data, { setSubmitting }) => {
                     console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
@@ -167,6 +141,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                             state: {
                               name: data.displayName,
                               bio: data.bio,
+                              role: data.role,
                               profilePic: imageRaw,
                               year: props.location.state.year.toString(10),
                               faculty: props.location.state.faculty,
@@ -187,6 +162,15 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                           name="displayName"
                         />
                       </div>
+                      <div className={classes.inputFieldDiv}>
+                        <InputField
+                          label="Role*"
+                          type="input"
+                          name="role"
+                          placeholder="Developer, Business Analyst, etc."
+                        />
+                      </div>
+
                       <div className={classes.selectDiv}>
                         <FormControl style={{ width: "100%" }}>
                           {/* <InputLabel>Faculty</InputLabel>

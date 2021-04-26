@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import { UserContext } from "@context/UserContext";
 import {
   Heading,
@@ -7,14 +7,13 @@ import {
   DotMorePage,
   Button,
 } from "@dumbComponents/UI/index";
-
 import { InterestLists } from "@smartComponents/index";
-import { ArrowLeft, ArrowRight } from "@icons/index";
+import { ArrowLeft } from "@icons/index";
 import { createUserDataAPI } from "@api/index";
 import { ICreateUserData } from "@models/index";
 import classes from "./SelectInterestPage.module.css";
-import mockInterestLists from "@src/mockData/mockInterestListsData";
 import mockInterestListsData from "@src/mockData/mockInterestListsData";
+import { ErrorContext } from "@context/ErrorContext";
 
 interface Props {
   location: {
@@ -24,6 +23,7 @@ interface Props {
       bio: string;
       year: string;
       profilePic: File;
+      role: string;
     };
   };
   page?: string;
@@ -36,6 +36,8 @@ interface InterestListsArray {
 }
 
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
+  const { setErrorHandler } = useContext(ErrorContext);
+  const [redirect, setRedirect] = useState<JSX.Element>();
   const [interestArray, setInterestArray] = useState<InterestListsArray>({
     Technology: [],
     Business: [],
@@ -46,8 +48,16 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   let faculty = "";
   let bio = "";
   let year = "";
+  let role = "";
   let profileImage: File;
   let saveButton = null;
+
+  useEffect(() => {
+    console.log(
+      "State passed from PersonalInformationPage",
+      props.location.state
+    );
+  }, []);
 
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
@@ -92,19 +102,22 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  const setUserData = async () => {
+  const setUserDataFirstTime = async () => {
     if (props.location.state) {
       name = props.location.state.name;
       profileImage = props.location.state.profilePic;
       faculty = props.location.state.faculty;
       bio = props.location.state.bio;
       year = props.location.state.year;
+      role = props.location.state.role;
     }
     const userData: ICreateUserData = {
       name: name,
       interests: interestArray,
       faculty: faculty,
       bio: bio,
+      role: role,
+
       year: year,
       image: profileImage,
     };
@@ -114,24 +127,18 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("POST createUserData to /api/users is successful", result);
       try {
         await fetchUserDataHandler();
+        setRedirect(<Redirect to="/success" />);
       } catch (e) {
+        setErrorHandler(e.response.data.errors[0].message);
+        setRedirect(<Redirect to="/" />);
         console.log("POST signup success but failed GET fetching");
       }
     } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
       console.log("SelectInterestPage Error setting users data", e);
+      setRedirect(<Redirect to="/" />);
     }
   };
-
-  useEffect(() => {
-    console.log("Items in interestArray", interestArray);
-  }, [interestArray]);
-
-  useEffect(() => {
-    console.log(
-      "State passed from PersonalInformationPage",
-      props.location.state
-    );
-  }, []);
 
   if (
     (interestArray.Technology.length !== 0 ||
@@ -139,21 +146,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       interestArray.Design.length !== 0) &&
     props.location.state
   ) {
-    saveButton = (
-      <Link
-        to={{
-          pathname: "/success",
-          state: {
-            name: props.location.state.name,
-            interests: interestArray,
-            faculty: props.location.state.faculty,
-            profilePic: props.location.state.profilePic,
-          },
-        }}
-      >
-        <Button onClick={setUserData} value="SAVE" />
-      </Link>
-    );
+    saveButton = <Button onClick={setUserDataFirstTime} value="SAVE" />;
   } else {
     saveButton = null;
   }
@@ -168,7 +161,8 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           pathname: "/profile",
         }}
       >
-        <Button onClick={setUserData} value="SAVE" />
+        {/* Should not be setUserDataFirstTime bc this is for editing interests */}
+        <Button onClick={setUserDataFirstTime} value="SAVE" />
       </Link>
     );
   } else {
@@ -231,27 +225,11 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           />
           <div className={classes.divSaveButton}>{saveButton}</div>
           {selectInterestPrompt}
+          {redirect}
         </div>
       </div>
     </>
   );
 };
-
-// SelectInterestPage.defaultProps = {
-//   location: {
-//     state: {
-//       name: "Micky",
-//     },
-//   },
-// };
-
-// const fetchUserData = async () => {
-//   console.log("GET /api/users");
-//   try {
-//     const response = await axios.get("/api/users/123");
-//   } catch (e) {
-//     console.log("SelectInterestPage Error getting users data", e);
-//   }
-// };
 
 export default SelectInterestPage;

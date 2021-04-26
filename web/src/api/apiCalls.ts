@@ -13,7 +13,6 @@ import {
   IInviteDataResult,
   ISearchUserTeamEventResult,
   IUser,
-  ITeam,
   IFetchTeamNotification,
   IFetchFriendsData,
   IConnected,

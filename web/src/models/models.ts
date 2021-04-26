@@ -2,11 +2,12 @@
 export interface IUser {
   id: string;
   name: string;
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  // interests: {
+  //   Technology: string[];
+  //   Business: string[];
+  //   Design: string[];
+  // };
+  interests: string[];
   faculty: string;
   year: string;
   role: string;
@@ -26,7 +27,6 @@ export interface IUserFriend {
   year: string;
   role: string;
   bio: string;
-  image: string;
 }
 
 export interface ITeam {
@@ -50,6 +50,8 @@ export interface IUserSignup {
 export interface IResultSigninSignup {
   email: string;
   id: string;
+  faculty: string;
+  year: number;
 }
 
 export interface IUserSignin {
@@ -72,11 +74,12 @@ export interface IAddFriendResponse {
 export interface IFetchUserData {
   id: string;
   name: string;
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  // interests: {
+  //   Technology: string[];
+  //   Business: string[];
+  //   Design: string[];
+  // };
+  interests: string[];
   faculty: string;
   year: string;
   role: string;
@@ -95,8 +98,9 @@ export interface ICreateUserData {
   bio: string;
   year: string;
   image: File;
-  role?: string;
+  role: string;
 }
+
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }

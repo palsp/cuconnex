@@ -1,5 +1,6 @@
 import React from "react";
 import FriendList from "@smartComponents/FriendLists/FriendList/FriendList";
+
 import { IUser, IUserFriend } from "@src/models";
 
 interface Props{

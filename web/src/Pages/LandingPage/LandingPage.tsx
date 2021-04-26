@@ -14,9 +14,20 @@ import { UserContext } from "@context/UserContext";
 import { valueScaleCorrection } from "framer-motion/types/render/dom/projection/scale-correction";
 import { callTeamOfUserAPI } from "@src/api";
 
-const LandingPage: React.FC = () => {
-  const [clickHamburger, setClickHamburger] = useState<boolean>(false);
+interface Props {
+  location: {
+    state?: {
+      hamburgerOn?: boolean;
+    };
+  };
+}
+
+
+const LandingPage: React.FC<Props> = (props) => {
+  const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
+  const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
+  //const [hasTeam, setHasTeam] = useState<boolean>(true);
   const { userData } = useContext(UserContext);
   let hasTeam=false;
   const hamburgerClickedHandler = () => {

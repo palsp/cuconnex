@@ -4,15 +4,17 @@ import classes from "./HamburgerPrompt.module.css";
 import { Heading } from "@dumbComponents/UI";
 import { userLogoutAPI } from "@api/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import { UserContext } from "@context/UserContext";
 const HamburgerPrompt: React.FC = () => {
   const [redirect, setRedirect] = useState<JSX.Element>();
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
+  const { clearUserDataHandler } = useContext(UserContext);
   const logoutHandler = async () => {
     try {
       //clear cookie first
       await userLogoutAPI();
       //needs await and order is important here!!!
-
+      clearUserDataHandler();
       await setRedirect(<Redirect to="/" />);
       setIsAuthenticated(false);
 

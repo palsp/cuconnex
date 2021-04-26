@@ -49,7 +49,9 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
+      {/*Loong's work*/}
       {/* <MyTeamLists page="landing" team={teamLists} /> */}
+      <MyTeamLists page="explore" team={mockMyTeamListsData} />
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
       </div>
@@ -61,7 +63,10 @@ const ExplorePage = () => {
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Suggested for you" bold />
         </div>
+
+      {/*Loong's work*/}
         {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
+        <MyTeamLists page="explore" team={mockMyTeamListsData} />
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
         </div>
@@ -71,7 +76,7 @@ const ExplorePage = () => {
   );
   return (
     <motion.div variants={containerVariants} exit="exit">
-      <Background>
+      {/* <Background> */}
         {/* Background has display: flex so this div is for that */}
         <div>
           <div className={classes.exploreHeader}>
@@ -93,7 +98,7 @@ const ExplorePage = () => {
 
           {explorePage}
         </div>
-      </Background>
+      {/* </Background> */}
     </motion.div>
   );
 };

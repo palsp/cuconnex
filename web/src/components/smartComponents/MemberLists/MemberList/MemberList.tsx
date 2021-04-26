@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import {
   Heading,
@@ -22,11 +22,16 @@ const MemberList: React.FC<Props> = (props) => {
   const checkedMemberHandler = () => {
     setChecked((prevState) => !prevState);
   };
+  const facultyYear = props.members.faculty + ", " + props.members.year;
+  useEffect(() => {
+    props.selectMemberListHandler(checked);
+  }, [checked]);
+
   return (
     <div className={classes.memberList}>
       <div className={classes.divFriendList}>
         <div>
-          <ProfilePic />
+          <ProfilePic PicUrl={props.members.image} />
         </div>
         <div className={classes.userInfo}>
           <div className={classes.divUserInfo}>
@@ -35,15 +40,15 @@ const MemberList: React.FC<Props> = (props) => {
           <div className={classes.divUserInfo}>
             <Heading value={props.members.role} size="small" />
           </div>
-
           <div className={classes.divUserInfo}>
             <Subtitle value={props.members.faculty} />
           </div>
-        </div>
-        <div onClick={() => props.selectMemberListHandler(checked)}>
-          <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
-            <CheckBox />
+          <div className={classes.divUserInfo}>
+            <Subtitle value={props.members.year} />
           </div>
+        </div>
+        <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
+          <CheckBox />
         </div>
       </div>
     </div>

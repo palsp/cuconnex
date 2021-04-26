@@ -45,9 +45,10 @@ const SelectMemberPrompt: React.FC = () => {
     } else {
       const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
-      setSelectedMemberArray(
-        (selectedMemberArray) => (selectedMemberArray = newMemberArray)
-      );
+      // setSelectedMemberArray(
+      //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
+      // );
+      setSelectedMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
   const selectMemberHandler = (e: number) => {
@@ -57,7 +58,8 @@ const SelectMemberPrompt: React.FC = () => {
     } else {
       const newMemberArray = [...memberArray];
       newMemberArray.splice(positionOfE, 1);
-      setMemberArray((memberArray) => (memberArray = newMemberArray));
+      // setMemberArray((memberArray) => (memberArray = newMemberArray));
+      setMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
   const selectPrompt =

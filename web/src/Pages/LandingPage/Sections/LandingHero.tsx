@@ -10,10 +10,8 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-
 import { motion, useSpring } from "framer-motion";
 import { useNavigation } from "framer";
-
 import { ITeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
 import { UserContext } from "@context/UserContext";
@@ -68,7 +66,7 @@ const LandingHero: React.FC<Props> = (props) => {
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
-          <Link to="/profile">
+          <Link to={{ pathname: "/profile", state: { users: props.userData } }}>
             <ProfilePic size="small" PicUrl={props.userData.image} />
           </Link>
         </div>

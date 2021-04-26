@@ -9,6 +9,7 @@ import containerVariants, { IUser, IUserFriend } from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
 import { fetchFriendsDataAPI } from "@src/api";
+import { mockFriendLists } from "@src/mockData/index";
 
 const FriendsPage: React.FC = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -35,7 +36,10 @@ const FriendsPage: React.FC = () => {
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
           <div className={classes.relativeArrow}>
-            <Link data-test="friends-page-back-link" to="/landing">
+            <Link
+              data-test="friends-page-back-link"
+              to={{ pathname: "/landing", state: { hamburgerOn: true } }}
+            >
               <ArrowLeft data-test="friends-page-arrow-left" />
             </Link>
           </div>
@@ -55,6 +59,12 @@ const FriendsPage: React.FC = () => {
       <div className={classes.listDiv}>
         <FriendLists connections={friendLists} />
       </div>
+        {*/ Home's work
+      <FriendLists
+        data-test="friends-page-friend-lists"
+        friendLists={mockFriendLists}
+      /> 
+          */}
     </motion.div>
   );
 };

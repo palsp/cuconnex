@@ -1,8 +1,13 @@
+.baseSign {
+  padding: 2px;
+  border-radius: 7px;
+}
+
 .recruiting {
   width: 15vw;
-  height: 2vh;
+  /* height: 2vh; */
   background-color: rgb(80, 184, 80);
-  border-radius: 13px;
+  /* border-radius: 13px; */
   font: inherit;
   text-align: center;
 }
@@ -17,7 +22,7 @@
   width: 17vw;
   height: 2vh;
   background-color: #f33182;
-  border-radius: 13px;
+  /* border-radius: 13px; */
   font: inherit;
   text-align: center;
 }
@@ -30,9 +35,9 @@
 
 .awaiting {
   width: 15vw;
-  height: 2vh;
+  /* height: 2vh; */
   background-color: #c2c2c2;
-  border-radius: 13px;
+  /* border-radius: 13px; */
   font: inherit;
   text-align: center;
 }
@@ -47,7 +52,7 @@
   width: 30vw;
   height: 3vh;
   background-color: #f33182;
-  border-radius: 13px;
+  /* border-radius: 13px; */
   font: inherit;
   text-align: center;
   justify-content: center;
@@ -69,7 +74,7 @@
   width: 30vw;
   height: 3vh;
   background-color: #f33182;
-  border-radius: 13px;
+  /* border-radius: 13px; */
   font: inherit;
   text-align: center;
   justify-content: center;
@@ -87,7 +92,7 @@
   width: 20vw;
   height: 3vh;
   background-color: #767474;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   font: inherit;
   text-align: center;
   justify-content: center;
@@ -105,7 +110,7 @@
   width: 20vw;
   height: 3vh;
   background-color: #767474;
-  border-radius: 10px;
+  /* border-radius: 10px; */
   font: inherit;
   text-align: center;
   justify-content: center;
@@ -123,7 +128,7 @@
   width: 25vw;
   height: 3vh;
   background-color: rgb(80, 184, 80);
-  border-radius: 10px;
+  /* border-radius: 10px; */
   font: inherit;
   text-align: center;
   justify-content: center;

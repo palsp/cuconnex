@@ -23,7 +23,7 @@ import { IConnected, IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
 import { addFriendAPI, fetchRelationAPI } from "@src/api";
 import containerVariants, { IAddFriend, IUserFriend } from "@src/models/models";
-
+import { EducationListsData } from "@src/mockData/Models";
 interface Props {
   location: {
     state: {
@@ -31,6 +31,7 @@ interface Props {
     };
   };
 }
+
 const ProfilePage: React.FC<Props> = (props) => {
   const [isFriend, setIsFriend] = useState<string>("");
   const [clickEditProfile, setClickEdit] = useState(false);
@@ -53,6 +54,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEditOption(false);
     setClickEdit(true);
   };
+
   const fetchRelationHandler = async (userId: string) => {
     const relationResult = await fetchRelationAPI(userId);
     console.log(relationResult.data.status);
@@ -80,6 +82,19 @@ const ProfilePage: React.FC<Props> = (props) => {
   }
   const isMyFriend = fetchRelationHandler(props.location.state.users.id);
   console.log(props.location.state.users.interests);
+    
+  // Is it my profile ?
+  const selectBusinessInterestHandler = () => {
+    console.log("clicked");
+  };
+
+  const education: EducationListsData[] = [
+    {
+      faculty: props.location.state.users.faculty,
+      year: props.location.state.users.year,
+    },
+  ];
+
   let profilePrompt = null;
   if (clickEditProfile === false) {
     profilePrompt = (
@@ -100,6 +115,7 @@ const ProfilePage: React.FC<Props> = (props) => {
             <ProfileInfo
               name={props.location.state.users.name}
               role={props.location.state.users.role}
+              image={props.location.state.users.image}
             />
           </div>
           <div
@@ -147,11 +163,16 @@ const ProfilePage: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.education}>
+
           <EducationList
             faculty={props.location.state.users.faculty}
             year={props.location.state.users.year}
             major={props.location.state.users.bio}
           />
+
+          {/* <EducationLists education={mockEducationListsData} /> */}
+          {/* Home's work  <EducationLists education={education} /> */}
+
         </div>
         <div className={classes.activity}>
           <ActivityLists activity={mockActivityListsData} />
@@ -166,6 +187,7 @@ const ProfilePage: React.FC<Props> = (props) => {
                 <Link
                   to={{
                     pathname: "/selectinterests",
+                    state: { users: userData },
                   }}
                 >
                   <PlusCircle />{" "}
@@ -175,7 +197,11 @@ const ProfilePage: React.FC<Props> = (props) => {
               )}
             </div>
           </div>
+
+          {/* If we get return as 3 separate interests arrray */}
+
           <div className={classes.interestLists}>
+
           {props.location.state.users.interests.map((interest:string,index:number) => {
             return (
               <InterestList
@@ -188,6 +214,105 @@ const ProfilePage: React.FC<Props> = (props) => {
               />
             );
           })} 
+
+        {/* Starts of home's work
+            {/* {props.location.state.users.interests.Business ? (
+              props.location.state.users.interests.Business.map(
+                (interest: string) => {
+                  return (
+                    <InterestList
+                      data-test="interest-list-business"
+                      selectInterestHandlerDiv={() => {
+                        return;
+                      }}
+                      value={interest}
+                      key={interest}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div />
+            )}
+            {props.location.state.users.interests.Technology ? (
+              props.location.state.users.interests.Technology.map(
+                (interest: string) => {
+                  return (
+                    <InterestList
+                      data-test="interest-list-business"
+                      selectInterestHandlerDiv={() => {
+                        return;
+                      }}
+                      value={interest}
+                      key={interest}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div />
+            )}
+            {props.location.state.users.interests.Design ? (
+              props.location.state.users.interests.Design.map(
+                (interest: string) => {
+                  return (
+                    <InterestList
+                      data-test="interest-list-business"
+                      selectInterestHandlerDiv={() => {
+                        return;
+                      }}
+                      value={interest}
+                      key={interest}
+                    />
+                  );
+                }
+              )
+            ) : (
+              <div />
+            )} */}
+
+            {/* If Interest return in one Array This is home's work*/}
+        {/*
+            {props.location.state.users.interests ? (
+              props.location.state.users.interests.map((interest: string) => {
+                console.log(interest);
+                return (
+                  <InterestList
+                    data-test="interest-list-business"
+                    selectInterestHandlerDiv={() => {
+                      return;
+                    }}
+                    value={interest}
+                    key={interest}
+                  />
+                );
+              })
+            ) : (
+              <div />
+            )}
+
+*/}
+            {/* Mock Interest */}
+
+            {/* <InterestList
+              data-test="interest-list-business"
+              selectInterestHandlerDiv={() => {
+                return;
+              }}
+              value="Marketing"
+              key="Marketing"
+            />
+            <InterestList
+              data-test="interest-list-business"
+              selectInterestHandlerDiv={() => {
+                return;
+              }}
+              value="Ecommerce"
+              key="Ecommerce"
+            /> */}
+        
+        {/*    end of home's work  */}
+
           </div>
         </div>
       </div>
@@ -210,6 +335,7 @@ const ProfilePage: React.FC<Props> = (props) => {
           </div>
         </div>
         <EditPrompt type={clickEditOption} />
+        {/* <EditPrompt type={clickEditOption} users={props.location.state.users} /> */}
       </div>
     );
   }

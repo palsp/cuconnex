@@ -3,11 +3,12 @@ import classes from "./EducationList.module.css";
 import { Logo } from "@dumbComponents/UI/index";
 
 interface Props {
+
   educationBox?: {
     educationPic: any;
     faculty: string;
     year: string;
-    major: string;
+    // major: string;
   };
   faculty?:string;
   year?:string,
@@ -23,9 +24,10 @@ const EducationList: React.FC<Props> = (props) => {
         </div>
         <div className={classes.educationInfo}>
           <div className={classes.faculty}>
-            {props.faculty} - {props.year}
+            Faculty of {props.educationBox.faculty}
           </div>
-          <div className={classes.major}>{props.major}</div>
+          <div className={classes.faculty}>Year {props.educationBox.year}</div>
+          {/* <div className={classes.major}>{props.educationBox.major}</div> */}
         </div>
       </div>
     </div>
