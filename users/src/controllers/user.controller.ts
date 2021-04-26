@@ -177,22 +177,14 @@ export const findRelation = async (req: Request, res: Response) => {
 export const editUser = async (req: Request, res: Response) => {
     if (!req.currentUser!.id) throw new BadRequestError("Please enter a user ID!");
     console.log(req.currentUser!.id);
-    const user = await User.findOne({ where: { id: req.currentUser!.id } });
+    const user = req.user;
     if (!user) throw new NotFoundError();
     let imagePath = "";
     if (req.file) {
-        const oldPathDate = user.image.slice(user.image.indexOf("pic_") + 4, user.image.indexOf("."));
-        console.log("old image path: ", user.image, "old image date: ", oldPathDate);
-        const newPathDate = req.file.path.slice(req.file.path.indexOf("pic_") + 4, req.file.path.indexOf('.'));
-        console.log("new image path: ", req.file.path, "new image date: ", newPathDate);
-        if (newPathDate > oldPathDate) {
-            deleteFile(user.image);
-            imagePath = req.file.path
-        }
-        if (req.file.size > 1024 * 1024 * 1024) {
-            deleteFile(imagePath);
-            throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
-        }
+        deleteFile(user.image);
+        imagePath = req.file.path;
+
+
         console.log("imagePath: ", imagePath)
     }
 
@@ -211,9 +203,8 @@ export const editUser = async (req: Request, res: Response) => {
             faculty: req.body.faculty || user.faculty,
             interests: req.body.interests || user.interests,
             year: req.body.year || user.year,
-            major: req.body.major || user.major,
             lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
-            image: imagePath || user.image
+            image: imagePath
         },
         { where: { id: req.currentUser!.id } }
     )

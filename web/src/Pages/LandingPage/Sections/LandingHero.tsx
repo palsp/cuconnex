@@ -1,20 +1,16 @@
 import classes from "./LandingHero.module.css";
-import React, { useState } from "react";
+import React, {useState} from "react";
 import "react-toggle/style.css";
-import {
-  FindteamLogo,
-  RecruitMemberLogo,
-  Username,
-} from "@dumbComponents/UI/index";
-import { Link } from "react-router-dom";
-import { MyTeamLists, ProfilePic } from "@smartComponents/index";
-import { Plus } from "@icons/index";
+import {FindteamLogo, RecruitMemberLogo, Username} from "@dumbComponents/UI/index";
+import {Link} from "react-router-dom";
+import {MyTeamLists, ProfilePic} from "@smartComponents/index";
+import {Plus} from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 
-import { motion, useSpring } from "framer-motion";
-import { useNavigation } from "framer";
+import {motion, useSpring} from "framer-motion";
+import {useNavigation} from "framer";
 
-import { IUser } from "@models/index";
+import {IUser} from "@models/index";
 
 interface Props {
   hasTeam: boolean;
@@ -25,7 +21,7 @@ const LandingHero: React.FC<Props> = (props) => {
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={mockMyTeamListsData} />
-      <Link style={{ textDecoration: "none" }} to="/createteam">
+      <Link style={{textDecoration: "none"}} to="/createteam">
         <div className={classes.addTeam}>
           <div className={classes.plus}>
             <Plus />
@@ -37,12 +33,12 @@ const LandingHero: React.FC<Props> = (props) => {
   ) : (
     <div className={classes.buttonmainDiv}>
       <div className={classes.recruitmemberDiv}>
-        <Link style={{ textDecoration: "none" }} to="/createteam">
+        <Link style={{textDecoration: "none"}} to="/createteam">
           <RecruitMemberLogo />
         </Link>
       </div>
       <div className={classes.findteamDiv}>
-        <Link style={{ textDecoration: "none" }} to="/selectevents">
+        <Link style={{textDecoration: "none"}} to="/selectevents">
           <FindteamLogo />
         </Link>
       </div>
@@ -53,7 +49,7 @@ const LandingHero: React.FC<Props> = (props) => {
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
-          <Link to="/profile">
+          <Link to={{pathname: "/profile", state: {users: props.userData}}}>
             <ProfilePic size="small" PicUrl={props.userData.image} />
           </Link>
         </div>

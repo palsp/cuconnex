@@ -75,7 +75,7 @@ describe('get current user', () => {
     expect(res.interests).not.toBeNull();
     expect(res.interests[0]).toEqual(Business.BusinessCase);
     expect(res.year).toBeDefined();
-    expect(res.major).toBeDefined();
+    expect(res.role).toBeDefined();
     expect(res.bio).toBeDefined();
   });
 

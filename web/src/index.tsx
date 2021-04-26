@@ -5,12 +5,15 @@ import "./index.css";
 import App from "./App";
 import UserContext from "@context/UserContext";
 import reportWebVitals from "./reportWebVitals";
+import ErrorContext from "@context/ErrorContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <UserContext>
-        <App />
+        <ErrorContext>
+          <App />
+        </ErrorContext>
       </UserContext>
     </BrowserRouter>
   </React.StrictMode>,

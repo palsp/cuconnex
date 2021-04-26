@@ -8,12 +8,11 @@ export interface IUser {
     Design: string[];
   };
   faculty: string;
-  year:string;
-  major:string;
-  bio:string;
+  year: string;
+  role: string;
+  bio: string;
   image: string;
 }
-
 
 export interface ITeam {
   name: string; // team name
@@ -54,9 +53,9 @@ export interface IFetchUserData {
     Design: string[];
   };
   faculty: string;
-  year:string;
-  major:string;
-  bio:string;
+  year: string;
+  role: string;
+  bio: string;
   image: string;
 }
 
@@ -71,8 +70,7 @@ export interface ICreateUserData {
   bio: string;
   year: string;
   image: File;
-  major?: string;
-
+  role: string;
 }
 //events
 export interface IFetchEventsData {
@@ -183,7 +181,7 @@ const containerVariants = {
   exit: {
     opacity: 0.8,
     transition: {
-      duration: 0.2
+      duration: 0.2,
     },
   },
 };
