@@ -62,8 +62,11 @@ const SignupPrompt: React.FC<Props> = (props) => {
       }
       return resultSignup;
     } catch (e) {
-      setErrorHandler(e);
-      console.log("ERRORS occured while POST /api/auth/signup", e);
+      setErrorHandler(e.response.data.errors[0].message);
+      console.log(
+        "ERRORS occured while POST /api/auth/signup",
+        e.response.data.errors[0].message
+      );
     }
   };
 
@@ -105,18 +108,20 @@ const SignupPrompt: React.FC<Props> = (props) => {
           }
           console.log("Result Signup..", result);
           resetForm();
-          setRedirect(
-            <Redirect
-              to={{
-                pathname: "/personalinformation",
-                state: {
-                  year: year,
-                  faculty: faculty,
-                  id: data.id,
-                },
-              }}
-            />
-          );
+          if (result) {
+            setRedirect(
+              <Redirect
+                to={{
+                  pathname: "/personalinformation",
+                  state: {
+                    year: year,
+                    faculty: faculty,
+                    id: data.id,
+                  },
+                }}
+              />
+            );
+          }
         }}
         validationSchema={validationSchema}
       >
