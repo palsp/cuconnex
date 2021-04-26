@@ -46,3 +46,10 @@
 .tabFinished .finished {
   border-bottom: 5px solid rgb(196, 194, 194);
 }
+
+.teamList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
