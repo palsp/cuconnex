@@ -41,9 +41,6 @@ app.use('/api/users', userRouter);
 app.use('/api/users', interestRouter);
 app.use('/api/users', connectionRouter);
 
-
-
-app.use(interestRouter);
 // team handler
 app.use(router.getTeamRouter);
 app.use(router.newTeamRouter);
