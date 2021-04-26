@@ -34,7 +34,10 @@ const LoginPrompt: React.FC<Props> = (props) => {
   const signinHandler = async (signinData: IUserSignin) => {
     try {
       const resultSignin = await userSigninAPI(signinData);
-      console.log("Successfully sent a POST request to signin", resultSignin);
+      console.log(
+        "Successfully sent a POST request to signin",
+        resultSignin.status
+      );
       setIsAuthenticated(true);
       try {
         await fetchUserDataHandler();
@@ -43,7 +46,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
         console.log(
           "User has not finished filling in their personal information!"
         );
-        // setErrorHandler("Please fill out your information!");
+        setErrorHandler("Please fill out your information!");
         setRedirect(
           <Redirect
             to={{

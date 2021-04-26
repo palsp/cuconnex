@@ -189,6 +189,15 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                           name="displayName"
                         />
                       </div>
+                      <div className={classes.inputFieldDiv}>
+                        <InputField
+                          label="Role*"
+                          type="input"
+                          name="role"
+                          placeholder="Developer, Business Analyst, etc."
+                        />
+                      </div>
+
                       <div className={classes.selectDiv}>
                         <FormControl style={{ width: "100%" }}>
                           {/* <InputLabel>Faculty</InputLabel>
@@ -210,14 +219,6 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                             name="bio"
                             multiline
                             rowsMax={4}
-                            variant="outlined"
-                            as={TextField}
-                          />
-                          <Field
-                            label="Role"
-                            type="input"
-                            name="role"
-                            rowsMax={1}
                             variant="outlined"
                             as={TextField}
                           />
