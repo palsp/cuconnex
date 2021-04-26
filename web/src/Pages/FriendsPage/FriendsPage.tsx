@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
+import { mockFriendLists } from "@src/mockData/index";
 
 const FriendsPage: React.FC = () => {
   return (
@@ -38,7 +39,10 @@ const FriendsPage: React.FC = () => {
         </div>
       </div>
 
-      <FriendLists data-test="friends-page-friend-lists" />
+      <FriendLists
+        data-test="friends-page-friend-lists"
+        friendLists={mockFriendLists}
+      />
     </motion.div>
   );
 };

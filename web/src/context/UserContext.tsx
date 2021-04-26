@@ -21,11 +21,12 @@ export const UserContextProvider: React.FC<Props> = (props) => {
   const [userData, setUserData] = useState<IUser>({
     id: "",
     name: "",
-    interests: {
-      Technology: [],
-      Business: [],
-      Design: [],
-    },
+    // interests: {
+    //   Technology: [],
+    //   Business: [],
+    //   Design: [],
+    // },
+    interests: [],
     faculty: "",
     year: "",
     role: "",
@@ -48,14 +49,15 @@ export const UserContextProvider: React.FC<Props> = (props) => {
       ...prevState,
       id: updatedUserData.id || prevState.id,
       name: updatedUserData.name || prevState.name,
-      interests: {
-        Technology:
-          updatedUserData.interests.Technology ||
-          prevState.interests.Technology,
-        Business:
-          updatedUserData.interests.Business || prevState.interests.Business,
-        Design: updatedUserData.interests.Design || prevState.interests.Design,
-      },
+      // interests: {
+      //   Technology:
+      //     updatedUserData.interests.Technology ||
+      //     prevState.interests.Technology,
+      //   Business:
+      //     updatedUserData.interests.Business || prevState.interests.Business,
+      //   Design: updatedUserData.interests.Design || prevState.interests.Design,
+      // },
+      interests: updatedUserData.interests || prevState.interests,
       faculty: updatedUserData.faculty || prevState.faculty,
       image: updatedUserData.image || prevState.image,
       role: updatedUserData.role || prevState.role,

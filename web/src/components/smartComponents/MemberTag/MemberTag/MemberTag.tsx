@@ -9,7 +9,7 @@ interface Props {
 const MemberTag: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
-        <ProfilePic></ProfilePic>
+        <ProfilePic PicUrl={props.members.image}></ProfilePic>
         <div className={classes.textDiv}>
           <div className={classes.nameDiv}>{props.members.name}</div>
           <div className={classes.roleDiv}>{props.members.id}</div>
