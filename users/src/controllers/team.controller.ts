@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { BadRequestError } from '@cuconnex/common';
+import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User } from '../models';
 import { ITeamResponse } from '../interfaces/team';
 import { IUserResponse } from '../interfaces/user';

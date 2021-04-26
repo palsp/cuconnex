@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
-import { User, Team, Interest, IsMember } from '../models'
+import { User, Team, Interest, IsMember } from '../models';
 import { deleteFile } from '../utils/file';
 import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
 
@@ -14,7 +14,7 @@ import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../i
 export const getUser = async (req: Request, res: Response): Promise<void> => {
   if (!req.user) {
     res.status(302).send({});
-    return
+    return;
   }
 
   const response: IUserResponse = req.user.toJSON();
@@ -50,17 +50,14 @@ export const viewUserProfile = async (req: Request, res: Response): Promise<void
  */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
   const { interests, name, role, bio } = req.body;
-  let imagePath = "";
+  let imagePath = '';
   if (req.file) {
-    imagePath = req.file.path
+    imagePath = req.file.path;
     if (req.file.size > 1024 * 1024 * 1024) {
       deleteFile(imagePath);
-      throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
+      throw new BadRequestError('Max File Size Exceeded!! Max file size is 1 GB');
     }
   }
-
-
-
 
   // Make sure that user does not exist
   let user = await User.findOne({ where: { id: req.currentUser!.id } });
@@ -68,25 +65,24 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     throw new BadRequestError('User already existed');
   }
 
-
-
   let createsuccess = false;
-  // create users 
+  // create users
 
   try {
     user = await User.create({ id: req.currentUser!.id, name, role, bio, image: imagePath });
     createsuccess = true;
     for (let category in interests) {
-      // select only valid interest description 
-      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      // select only valid interest description
+      interests[category] = Interest.validateDescription(
+        interests[category],
+        Object.values(InterestDescription[category])
+      );
       await user.addInterestFromArray(interests[category]);
     }
   } catch (err) {
     createsuccess = false;
     console.log(err.message);
   }
-
-
 
   // destroy the created resource if something goes wrong
   if (!createsuccess && user) {
@@ -96,17 +92,14 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
   const response: IUserResponse = {
     ...user!.toJSON(),
-    interests
-  }
-
+    interests,
+  };
 
   res.status(201).send(response);
 };
 
 export const search = async (req: Request, res: Response) => {
-  const keyword = req.query.keyword
-
-
+  const keyword = req.query.keyword;
 
   const userConstraint = [
     { name: { [Op.startsWith]: keyword } },
@@ -114,10 +107,9 @@ export const search = async (req: Request, res: Response) => {
   ];
 
   /**
- * TODO: add role and lookingformember keyword for team search
- */
+   * TODO: add role and lookingformember keyword for team search
+   */
   const teamConstraint = { name: { [Op.startsWith]: keyword } };
-
 
   let users: User[];
   let team: Team[];
@@ -176,6 +168,7 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
   }
 };
 
+// get Team(s) that user is in
 export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { id: req.params.userId } });
   if (!user) {
@@ -204,7 +197,7 @@ export const manageStatus = async (req: Request, res: Response) => {
     const team = await Team.findOne({ where: { name: teamName } });
 
     if (!team) {
-      throw new BadRequestError('Team not found');
+      throw new NotFoundError('Team not found');
     }
     await team.editMemberStatus(user, newStatusFromUser);
 
