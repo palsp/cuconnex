@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./auth
           push: true
           tags: palsp/connex-auth
           cache-from: type=local,src=/tmp/.buildx-cache
