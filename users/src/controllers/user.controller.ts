@@ -186,7 +186,10 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
     var teams: ITeamResponse[] = [];
     for (let i = 0; i < invitations.length; i++) {
       let team = await Team.findOne({ where: { name: invitations[i].teamName } });
-      teams.push(team!.toJSON());
+      if (team) {
+        await team.fetchTeam();
+        teams.push(team.toJSON());
+      }
     }
 
     res.status(200).send({ message: 'Invitation(s) is/are from these teams.', teams: teams });
@@ -202,23 +205,15 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
     throw new NotFoundError();
   }
 
-  // const isMembers = await IsMember.findAll({ where: { userId: user.id } });
-
-  // let returnTeams: any = [];
-  // if (isMembers) {
-  //   isMembers.filter((isMember) => {
-  //     if (isMember.status === TeamStatus.Accept) {
-  //       returnTeams.push(isMember.teamName);
-  //     }
-  //   });
-  // }
-
   const teams: Team[] = await user.getMyTeams();
   if (teams.length === 0) {
     return res.status(200).send({ message: 'This user has no team yet.', teams: [] });
   }
 
-  const response: ITeamResponse[] = teams.map((team) => team.toJSON());
+  const response: Promise<ITeamResponse>[] = teams.map(async (team) => {
+    await team.fetchTeam();
+    return team.toJSON();
+  });
   res.status(200).send(response);
 };
 

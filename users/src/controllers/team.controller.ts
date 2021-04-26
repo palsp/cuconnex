@@ -1,7 +1,12 @@
 import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User } from '../models';
-import { IUserResponse, ITeamResponse, IIsMemberResponse } from '../interfaces';
+import {
+  IUserResponse,
+  ITeamResponse,
+  IIsMemberResponse,
+  IOutgoingRequestResponse,
+} from '../interfaces';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -12,6 +17,8 @@ export const getTeam = async (req: Request, res: Response) => {
   if (!team) {
     throw new NotFoundError('Team');
   }
+
+  await team.fetchTeam();
 
   const response: ITeamResponse = team.toJSON();
   res.status(200).send(response);
@@ -34,6 +41,7 @@ export const createTeam = async (req: Request, res: Response) => {
     throw new BadRequestError('Create Team Failed');
   }
 
+  await newTeam.fetchTeam();
   const response: ITeamResponse = newTeam.toJSON();
 
   res.status(201).send(response);
@@ -129,12 +137,12 @@ export const getOutGoingRequests = async (req: Request, res: Response) => {
     throw new NotFoundError('Team');
   }
 
-  const isMember = await IsMember.findOne({ where: { teamName, userId: user.id } });
+  const isMember = await team.findMember(user.id);
   if (!isMember) {
     throw new BadRequestError('The request user is not part of the team');
   }
 
-  const response: IIsMemberResponse = await team.getOutgoingRequests();
+  const response: IOutgoingRequestResponse = await team.getOutgoingRequests();
 
   res.status(200).send(response);
 };

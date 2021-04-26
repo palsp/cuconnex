@@ -161,7 +161,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include: 'interests' });
+    const eiei = await User.findOne({ where: { id: userId }, include: 'interests' });
+    // console.log('eiei', eiei);
+    return eiei;
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -369,7 +371,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
     for (let i = 0; i < isMembers.length; i++) {
       let team = await Team.findOne({ where: { name: isMembers[i].teamName } });
-      teams.push(team!);
+      if (team) {
+        teams.push(team);
+      }
     }
     return teams;
   }

@@ -45,7 +45,7 @@ describe('notification for a user', () => {
       .send()
       .expect(200);
 
-    expect(res.body.teams[0]).toEqual('testTeam');
-    expect(res.body.teams[1]).toEqual('testTeam2');
+    expect(res.body.teams[0].name).toEqual('testTeam');
+    expect(res.body.teams[1].name).toEqual('testTeam2');
   });
 });

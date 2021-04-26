@@ -69,7 +69,7 @@ describe('A user request to join team', () => {
     });
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'Team1', description: '' });
-    await user.addRequest(team);
+    await user.requestToJoin(team);
 
     const res = await request(app)
       .post('/api/users/request-to-join')

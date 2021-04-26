@@ -12,8 +12,8 @@ import { IsMember } from './isMember.model';
 import { User } from './user.model';
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
-import { ITeamResponse, IUserResponse, IOutGoingRequest, IIsMemberResponse } from '../interfaces';
-import { is } from 'sequelize/types/lib/operators';
+import { ITeamResponse, IUserResponse, IOutgoingRequestResponse } from '../interfaces';
+import { NotFoundError } from '@bkatickets/common';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -146,24 +146,28 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     return false;
   }
 
-  public async getOutgoingRequests(): Promise<IIsMemberResponse> {
+  public async getOutgoingRequests(): Promise<IOutgoingRequestResponse> {
     const membersWithAllStatus: User[] = await this.getMember();
+
+    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'team' } });
+
+    if (!isMembers || isMembers.length < 1) {
+      throw new BadRequestError('This team has no pending request to any user.');
+    }
 
     if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
       throw new BadRequestError('This team has no member');
     }
 
-    let outGoingRequests: IOutGoingRequest[] = [];
-    for (let i = 0; i < membersWithAllStatus.length; i++) {
-      outGoingRequests.push({
-        user: membersWithAllStatus[i].toJSON(),
-        status: membersWithAllStatus[i].isMembers!.status,
-      });
+    let pendingUsers: IUserResponse[] = [];
+    for (let i = 0; i < isMembers.length; i++) {
+      let user = await User.findByPk(isMembers[i].userId);
+      pendingUsers.push(user!.toJSON());
     }
 
-    const response: IIsMemberResponse = {
+    const response: IOutgoingRequestResponse = {
       teamName: this.name,
-      outGoingRequests,
+      pendingUsers,
     };
 
     return response;
@@ -181,9 +185,14 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
     const creator = await User.findByPk(this.creatorId);
     acceptedUsers.push(creator!);
-    this.members = acceptedUsers;
 
     return acceptedUsers;
+  }
+
+  public async fetchTeam() {
+    const members: User[] = await this.getMembers();
+    this.members = members;
+    // return this;
   }
 
   public toJSON(): ITeamResponse {
