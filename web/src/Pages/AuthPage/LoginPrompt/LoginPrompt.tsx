@@ -34,6 +34,7 @@ const LoginPrompt: React.FC<Props> = (props) => {
   const signinHandler = async (signinData: IUserSignin) => {
     try {
       const resultSignin = await userSigninAPI(signinData);
+      const { id, faculty, year } = resultSignin.data;
       console.log(
         "Successfully sent a POST request to signin",
         resultSignin.status
@@ -52,9 +53,9 @@ const LoginPrompt: React.FC<Props> = (props) => {
             to={{
               pathname: "/personalinformation",
               state: {
-                year: "3", // This should be sent back by server
-                faculty: "Engineering", // This should be sent back by server
-                id: "6131824721", // This should be sent back by server
+                year: year, // This should be sent back by server
+                faculty: faculty, // This should be sent back by server
+                id: id, // This should be sent back by server
               },
             }}
           />
