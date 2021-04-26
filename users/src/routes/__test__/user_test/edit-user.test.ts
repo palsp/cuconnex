@@ -84,7 +84,7 @@ describe('The edit User route', () => {
             })
     });
 
-    it('should return 200 if more than one fields are specified and update all specified fields', async () => {
+    it('should return 200 when a new file is uploaded and update the file accordingly', async () => {
         const { body: res2 } = await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
@@ -92,6 +92,7 @@ describe('The edit User route', () => {
             .field({ interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon' })
             .expect(201)
         const user = res2;
+        const oldImage = user.image;
         const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
@@ -107,7 +108,34 @@ describe('The edit User route', () => {
         expect(res.bio).toEqual('Hello my name is Anon');
         expect(res.year).toEqual('3');
         expect(res.faculty).toEqual('Engineering');
+        expect(res.image).not.toBeNull();
+        expect(res.image).not.toEqual(oldImage);
         // expect(deleteFile(res.image)).not.toThrowError();
         console.log(res);
+        deleteFile(res.image);
+    });
+    it('should return 200 with the old file if no new files are uploaded', async () => {
+        //First creates a new user so that a new image is created
+        const { body: res2 } = await request(app)
+            .post('/api/users')
+            .set('Cookie', global.signin())
+            .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
+            .field({ interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon' })
+            .expect(201)
+        const user = res2;
+        const oldImage = user.image;
+        //Then edits the user
+        const { body: res } = await request(app)
+            .put('/api/users')
+            .set('Cookie', global.signin(user.id))
+            .send({
+                bio: 'Hello my name is Anon',
+                name: 'John',
+                year: '3',
+                faculty: 'Engineering'
+            })
+            .expect(200)
+        expect(res.image).toEqual(oldImage);
+        deleteFile(res.image);
     });
 });
