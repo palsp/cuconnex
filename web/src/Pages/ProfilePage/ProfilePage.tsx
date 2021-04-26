@@ -11,6 +11,7 @@ import classes from "./ProfilePage.module.css";
 import {
   ActivityLists,
   Biography,
+  EducationList,
   EducationLists,
   InterestList,
   InterestLists,
@@ -18,26 +19,31 @@ import {
 } from "@smartComponents/index";
 import mockActivityListsData from "@src/mockData/mockActivityListsData";
 import mockEducationListsData from "@src/mockData/mockEducationListsData";
-import containerVariants from "@src/models/models";
-
-import { IUser } from "@src/models";
+import { IConnected, IUser } from "@src/models";
 import { UserContext } from "@context/UserContext";
-import { EducationListsData } from "@src/mockData/Models";
+import { addFriendAPI, fetchRelationAPI } from "@src/api";
+import containerVariants, {
+  IAddFriend,
+  IEducationData,
+  IUserFriend,
+} from "@src/models/models";
 interface Props {
   location: {
     state: {
-      users: IUser;
+      users: IUserFriend;
     };
   };
 }
 
 const ProfilePage: React.FC<Props> = (props) => {
-  const [isAdded, setIsAdded] = useState(false);
-  const [isFriend, setIsFriend] = useState(false);
+  const [isFriend, setIsFriend] = useState<string>("");
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
   const { userData } = useContext(UserContext);
   console.log(userData);
+  const friendId = {
+    userId: props.location.state.users.id,
+  };
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
@@ -51,29 +57,54 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEditOption(false);
     setClickEdit(true);
   };
+
+  const fetchRelationHandler = async (userId: string) => {
+    const relationResult = await fetchRelationAPI(userId);
+    console.log(relationResult.data.status);
+    setIsFriend(relationResult.data.status);
+    return relationResult;
+  };
+  const addFriendHandler = async (addData: IAddFriend) => {
+    try {
+      const resultAdd = await addFriendAPI(addData);
+      console.log(
+        "Successfully sent a POST request to users/friends",
+        resultAdd
+      );
+      setIsFriend("Pending");
+    } catch (e) {
+      console.log("ERRORS occured while POST /users/friends", e);
+    }
+  };
+  if (isFriend == null) {
+    console.log("This is user's own profile", { isFriend });
+  }
   let isMyProfile = false;
   if (props.location) {
-    isMyProfile = props.location.state.users.id === userData.id;
+    isMyProfile = props.location.state.users.id == userData.id;
   }
+  const isMyFriend = fetchRelationHandler(props.location.state.users.id);
+  console.log(props.location.state.users.interests);
+
   // Is it my profile ?
   const selectBusinessInterestHandler = () => {
     console.log("clicked");
   };
 
-  const education: EducationListsData[] = [
+  const education: IEducationData[] = [
     {
       faculty: props.location.state.users.faculty,
       year: props.location.state.users.year,
     },
   ];
-  let profilePrompt = null;
 
+  let profilePrompt = null;
   if (clickEditProfile === false) {
     profilePrompt = (
       <div className={classes.profile}>
         <div className={classes.header}>
           <div className={classes.relativeArrow}>
-            <Link data-test="profile-page-back-link" to="/landing">
+            <Link data-test="profile-page-back-link" to="/friendlists">
               <ArrowLeft data-test="profile-page-arrow-left" />
             </Link>
           </div>
@@ -94,12 +125,26 @@ const ProfilePage: React.FC<Props> = (props) => {
             className={classes.editProfile}
             onClick={EditProfileClickedHandler}
           >
-            {isMyProfile ? (
-              <Edit />
-            ) : (
-              <div className={classes.buttonDiv}>
+            {isMyProfile ? <Edit /> : <div />}
+          </div>
+          <div className={classes.addDiv}>
+            {isFriend == "toBedefined" ? (
+              <div
+                onClick={() => addFriendHandler(friendId)}
+                className={classes.buttonDiv}
+              >
                 <div className={classes.buttonTextDiv}>Connect</div>
               </div>
+            ) : isFriend == "Pending" ? (
+              <div className={classes.pendingButtonDiv}>
+                <div className={classes.buttonTextDiv}>Pending</div>
+              </div>
+            ) : isFriend == "Accept" ? (
+              <div className={classes.acceptButtonDiv}>
+                <div className={classes.buttonTextDiv}>Connected</div>
+              </div>
+            ) : (
+              <div />
             )}
           </div>
         </div>
@@ -117,7 +162,14 @@ const ProfilePage: React.FC<Props> = (props) => {
         </div>
 
         <div className={classes.education}>
+          {/* <EducationList
+            faculty={props.location.state.users.faculty}
+            year={props.location.state.users.year}
+            major={props.location.state.users.bio}
+          /> */}
+
           {/* <EducationLists education={mockEducationListsData} /> */}
+          {/* Home's work   */}
           <EducationLists education={education} />
         </div>
         <div className={classes.activity}>
@@ -147,6 +199,22 @@ const ProfilePage: React.FC<Props> = (props) => {
           {/* If we get return as 3 separate interests arrray */}
 
           <div className={classes.interestLists}>
+            {props.location.state.users.interests.map(
+              (interest: string, index: number) => {
+                return (
+                  <InterestList
+                    data-test="interest-list-business"
+                    selectInterestHandlerDiv={() => {
+                      return;
+                    }}
+                    value={props.location.state.users.interests[index]}
+                    key={index}
+                  />
+                );
+              }
+            )}
+
+            {/* Starts of home's work
             {/* {props.location.state.users.interests.Business ? (
               props.location.state.users.interests.Business.map(
                 (interest: string) => {
@@ -202,8 +270,8 @@ const ProfilePage: React.FC<Props> = (props) => {
               <div />
             )} */}
 
-            {/* If Interest return in one Array */}
-
+            {/* If Interest return in one Array This is home's work*/}
+            {/*
             {props.location.state.users.interests ? (
               props.location.state.users.interests.map((interest: string) => {
                 console.log(interest);
@@ -222,6 +290,7 @@ const ProfilePage: React.FC<Props> = (props) => {
               <div />
             )}
 
+*/}
             {/* Mock Interest */}
 
             {/* <InterestList
@@ -240,6 +309,8 @@ const ProfilePage: React.FC<Props> = (props) => {
               value="Ecommerce"
               key="Ecommerce"
             /> */}
+
+            {/*    end of home's work  */}
           </div>
         </div>
       </div>

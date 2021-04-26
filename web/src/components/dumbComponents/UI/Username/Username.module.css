@@ -4,3 +4,17 @@
   font-weight: 600;
   margin: auto;
 }
+.userNameBlack{
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--black, #000000);
+  font-size: 20px;
+  text-align: left;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}

@@ -1,10 +1,19 @@
+.default {
+  width: 100%;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  -moz-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  overflow: hidden;
+  background:white;
+  margin-bottom: 5%;
+}
 /* team */
 .team .teamContainer {
   width: 100%;
   height: 150px;
   display: flex;
   border-bottom: 0.1px solid rgb(196, 194, 194);
-  
 }
 
 .team .leftFlex {
@@ -59,19 +68,15 @@
   width: 100%;
   height: 150px;
   margin-bottom: 5%;
-  border-style: solid;
-  border-width: 0.1px;
-  border-radius: 20px;
-  border-color:#c2c2c2 ;
+  /* border-style: solid;
+  border-width: 0.1px; */
+  /* border-color: #c2c2c2; */
 }
 
 .explore .teamContainer {
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: white;
-  border-radius: 20px;
-  overflow: hidden;
 }
 
 .explore .leftFlex {
@@ -140,7 +145,6 @@
   margin-right: 75px;
 }
 
-
 /* landing */
 
 .landingDiv {
@@ -153,9 +157,6 @@
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: white;
-  border-radius: 20px;
-  overflow: hidden;
 }
 
 .landingDiv .leftFlex {

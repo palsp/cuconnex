@@ -1,14 +1,19 @@
 import React from "react";
 import classes from "./EducationList.module.css";
 import { Logo } from "@dumbComponents/UI/index";
+import { IEducationData } from "@src/models/index";
 
 interface Props {
-  educationBox: {
-    // educationPic: any;
-    faculty: string;
-    year: string;
-    // major: string;
-  };
+  // educationBox?: {
+  //   educationPic: any;
+  //   faculty: string;
+  //   year: string;
+  //   // major: string;
+  // };
+  // faculty?: string;
+  // year?: string;
+  // major?: string;
+  educationBox: IEducationData;
 }
 
 const EducationList: React.FC<Props> = (props) => {
@@ -19,9 +24,7 @@ const EducationList: React.FC<Props> = (props) => {
           <Logo />
         </div>
         <div className={classes.educationInfo}>
-          <div className={classes.faculty}>
-            Faculty of {props.educationBox.faculty}
-          </div>
+          <div className={classes.faculty}>{props.educationBox.faculty}</div>
           <div className={classes.faculty}>Year {props.educationBox.year}</div>
           {/* <div className={classes.major}>{props.educationBox.major}</div> */}
         </div>

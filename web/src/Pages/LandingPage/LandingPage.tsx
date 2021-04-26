@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ProfilePic } from "@smartComponents/index";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
 import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
@@ -8,9 +8,12 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import containerVariants from "@src/models/models";
+import containerVariants, { ITeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
+import { ErrorContext } from "@context/ErrorContext";
+import { callTeamOfUserAPI } from "@src/api";
+import { Button } from "@material-ui/core";
 
 interface Props {
   location: {
@@ -23,42 +26,54 @@ interface Props {
 const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
   const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
-  const [hasTeam, setHasTeam] = useState<boolean>(true);
+  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
+  const [hasTeam, setHasTeam] = useState<boolean>(false);
   const { userData } = useContext(UserContext);
+  const { setErrorHandler } = useContext(ErrorContext);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
+  useEffect(() => {
+    fetchTeamHandler();
+  }, []);
 
-  const transition = {
-    // On Tap - Navigation
-    type: "spring",
-    delay: 0,
-    stiffness: 500,
-    damping: 60,
-    mass: 1,
+  const fetchTeamHandler = async () => {
+    try {
+      const teamData = await callTeamOfUserAPI(userData.id);
+      console.log("fetchTeamHandler", teamData);
+      setCurrentTeamLists(teamData.data.teams);
+      setHasTeam(true);
+    } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
+      setHasTeam(false);
+      console.log(e);
+    }
   };
-
+  console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 
   const LandingPrompt = !clickHamburger ? (
     <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
-        {/* 
-    Loong's work
-    <div>
-      <div className={classes.toolbarDiv}> */}
-
+        <div style={{ position: "absolute", top: "0px", left: "50px" }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setHasTeam((prevState) => !prevState)}
+          >
+            Test Team
+          </Button>
+        </div>
         <div className={classes.searchDiv}>
           <Link to="/explore">
             <Search />
           </Link>
         </div>
-        <div
-          onClick={() => setHasTeam((prev) => !prev)}
-          className={classes.mailDiv}
-        >
-          <Mail />
+        <div className={classes.mailDiv}>
+          <Link to="/notification">
+            <Mail />
+          </Link>
         </div>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
           <Hamburger />

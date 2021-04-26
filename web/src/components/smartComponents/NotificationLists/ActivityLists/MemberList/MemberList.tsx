@@ -10,15 +10,10 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 
 import classes from "./MemberList.module.css";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  member: {
-    profilePic: string;
-    name: string;
-    role: string;
-    teamName: string;
-    status: string;
-  };
+  member:IUserFriend;
 }
 
 const MemberList: React.FC<Props> = (props) => {
@@ -46,12 +41,12 @@ const MemberList: React.FC<Props> = (props) => {
           />
         </div>
         <div className={classes.smallFlex}>
-          <div className={classes.teamName}>{props.member.teamName}</div>
+          <div className={classes.teamName}>{props.member.faculty}</div>
 
           <div className={classes.connectedSign}>
             <RecruitSign
               data-test="team-list-status"
-              value={props.member.status}
+              value={props.member.connections.status}
             />
           </div>
         </div>
