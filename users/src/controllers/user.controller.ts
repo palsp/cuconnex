@@ -202,7 +202,6 @@ export const editUser = async (req: Request, res: Response) => {
                     lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
                     image: imagePath
                 },
-                { where: { id: user!.id } }
             )
         } else {
             await user.update(
@@ -214,7 +213,6 @@ export const editUser = async (req: Request, res: Response) => {
                     year: req.body.year || user.year,
                     lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
                 },
-                { where: { id: user!.id } }
             )
         }
         res.status(200).send(user);

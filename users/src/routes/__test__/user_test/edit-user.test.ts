@@ -8,7 +8,7 @@ const setup = async (id?: string, name?: string) => {
     const user = await User.create({
         id: id || '6131898121',
         name: name || 'Anon',
-        image: '6131898121_profile_pic_15953434.png',
+        image: 'src/routes/__test__/test_images/testImage copy.jpg',
         bio: "Hello",
     });
 
