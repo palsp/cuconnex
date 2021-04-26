@@ -3,6 +3,7 @@ import { app } from '../../../app';
 import { User } from '../../../models/user.model';
 import { Interest } from '../../../models/interest.model';
 import { FriendStatus, Business, Technology } from '@cuconnex/common';
+import { deleteFile } from '../../../utils/file';
 
 const setup = async (id?: string, name?: string) => {
     const user = await User.create({
@@ -84,7 +85,13 @@ describe('The edit User route', () => {
     });
 
     it('should return 200 if more than one fields are specified and update all specified fields', async () => {
-        const { user } = await setup();
+        const { body: res2 } = await request(app)
+            .post('/api/users')
+            .set('Cookie', global.signin())
+            .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
+            .field({ interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon' })
+            .expect(201)
+        const user = res2;
         const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
@@ -100,6 +107,7 @@ describe('The edit User route', () => {
         expect(res.bio).toEqual('Hello my name is Anon');
         expect(res.year).toEqual('3');
         expect(res.faculty).toEqual('Engineering');
+        // expect(deleteFile(res.image)).not.toThrowError();
         console.log(res);
     });
 });
