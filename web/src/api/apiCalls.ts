@@ -130,6 +130,7 @@ const createUserDataAPI = async (
   formData.append("image", createUserData.image);
   formData.append("bio", createUserData.bio);
   formData.append("year", createUserData.year);
+  formData.append("role", createUserData.role);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",

@@ -117,7 +117,6 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       faculty: faculty,
       bio: bio,
       role: role,
-
       year: year,
       image: profileImage,
     };

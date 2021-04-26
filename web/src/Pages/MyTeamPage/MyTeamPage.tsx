@@ -18,7 +18,6 @@ import { UserContext } from "@context/UserContext";
 import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-
   const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
   const [clickOngoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
@@ -29,11 +28,8 @@ const MyTeamPage: React.FC = () => {
     return teamData.data.teams;
   };
 
-
   useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) =>
-    setTeamLists(value)
-  );
+    fetchTeamHandler().then((value: ITeam[] | []) => setTeamLists(value));
   }, []);
 
   const ButtonHandler = () => {
@@ -78,10 +74,7 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists
-            data-test="myteam-page-team-lists"
-            team={teamLists}
-          />
+          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
         </div>
       </div>
     );
@@ -113,10 +106,7 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists
-            data-test="myteam-page-team-lists"
-            team={teamLists}
-          />
+          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
         </div>
       </div>
     );
