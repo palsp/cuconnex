@@ -23,7 +23,7 @@ const MemberLists: React.FC<Props> = (props) => {
   const selectMemberListHandler = (
     checked: boolean,
     index: number,
-    person: UsersData
+    person: IUserFriend
   ) => {
     if (checked) {
       props.selectMemberListsHandler(index);

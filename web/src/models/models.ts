@@ -27,6 +27,7 @@ export interface IUserFriend {
   year: string;
   role: string;
   bio: string;
+  image: string;
 }
 
 export interface ITeam {
@@ -137,19 +138,20 @@ export interface IEventData {
   };
 }
 //team
-export interface IGetTeam{
-  team:ITeam;
+export interface IGetTeam {
+  team: ITeam;
 }
 export interface ITeamData {
   name: string;
   description: string;
 }
+
 export interface ITeamDataResult {
   message:string;
 }
 
-export interface ITeamMembers{
-  users:IUser[];
+export interface ITeamMembers {
+  users: IUser[];
 }
 
 export interface IInviteData {
@@ -201,7 +203,6 @@ export interface IFetchFriendReceivedNotification {
   requests: IUserFriend[];
 }
 
-
 //Search
 export interface ISearchGeneral {
   users: IUser[];
@@ -227,5 +228,12 @@ const containerVariants = {
     },
   },
 };
+
+//Education
+
+export interface IEducationData {
+  faculty: string;
+  year: string;
+}
 
 export default containerVariants;
