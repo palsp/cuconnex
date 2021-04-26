@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
-import { User, Team, Interest, IsMember } from '../models';
+import { User, Team, Interest, IsMember, Category } from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IIsMemberResponse,
@@ -213,3 +213,17 @@ export const manageStatus = async (req: Request, res: Response) => {
     throw new BadRequestError(err.message);
   }
 };
+
+export const getInterest = async (req: Request, res: Response): Promise<void> => {
+  const categories = await Category.findAll({ include: "interests" });
+
+  if (!categories) {
+    console.log(categories);
+  }
+
+  const response = categories.map((category: Category) => ({
+    category: category.category,
+    interests: category.interests!.map((interest: Interest) => interest.serializer())
+  }));
+  res.status(200).send({ interests: response });
+}

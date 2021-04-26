@@ -9,6 +9,7 @@ describe('Get Outgoing Requests', () => {
       id: '6131776621',
       name: 'test-user',
     });
+
     const res = await request(app)
       .get('/api/teams/outgoingrequests/notExistTeam')
       .set('Cookie', global.signin(user.id))
@@ -19,7 +20,7 @@ describe('Get Outgoing Requests', () => {
     expect(error.message).toEqual('TeamNot Found');
   });
 
-  it('should return 400 if the team has no member', async () => {
+  it('should return 401 not Authorized if the request user is not part of the team', async () => {
     const user = await User.create({
       id: '6131776621',
       name: 'test-user',
@@ -30,17 +31,46 @@ describe('Get Outgoing Requests', () => {
     });
 
     await user.addInterest(interest!);
-    await user.createTeams({ name: 'testTeam', description: '' });
+    const team = await user.createTeams({ name: 'testTeam', description: '' });
+    await team.addAndAcceptMember(user);
+
+    const user2 = await User.create({
+      id: '6131773621',
+      name: 'test-user2',
+    });
+    await user2.addInterest(interest!);
 
     const res = await request(app)
       .get('/api/teams/outgoingrequests/testTeam')
-      .set('Cookie', global.signin(user.id))
+      .set('Cookie', global.signin(user2.id))
       .send({})
       .expect(400);
-
-    const error = res.body.errors[0];
-    expect(error.message).toEqual('This team has no member');
+    expect(res.body.errors[0].message).toEqual('The request user is not part of the team');
   });
+
+  // it('should return 400 if the team has no member', async () => {
+  //   const user = await User.create({
+  //     id: '6131776621',
+  //     name: 'test-user',
+  //   });
+
+  //   const interest = await Interest.findOne({
+  //     where: { description: Business.BusinessCase },
+  //   });
+
+  //   await user.addInterest(interest!);
+  //   const team = await user.createTeams({ name: 'testTeam', description: '' });
+  //   await team.addAndAcceptMember(user);
+
+  //   const res = await request(app)
+  //     .get('/api/teams/outgoingrequests/testTeam')
+  //     .set('Cookie', global.signin(user.id))
+  //     .send({})
+  //     .expect(400);
+
+  //   const error = res.body.errors[0];
+  //   expect(error.message).toEqual('This team has no member');
+  // });
 
   it('should return 200 if successfully get outgoing requests', async () => {
     const user = await User.create({

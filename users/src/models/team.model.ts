@@ -151,9 +151,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
-    if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
-      throw new BadRequestError('This team has no member');
-    }
+    // if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
+    //   throw new BadRequestError('This team has no member');
+    // }
 
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.isMembers!.status === TeamStatus.Accept) {
