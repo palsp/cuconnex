@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User } from '../models';
 import { IUserResponse, ITeamResponse, IIsMemberResponse } from '../interfaces';
+import { NotAuthorizedError } from '@bkatickets/common';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -132,11 +133,17 @@ export const manageStatus = async (req: Request, res: Response) => {
 };
 
 export const getOutGoingRequests = async (req: Request, res: Response) => {
+  const user = req.user!;
   const teamName = req.params.name;
 
   const team = await Team.findOne({ where: { name: teamName } });
   if (!team) {
     throw new NotFoundError('Team');
+  }
+
+  const isMember = await IsMember.findOne({ where: { teamName, userId: user.id } });
+  if (!isMember) {
+    throw new BadRequestError('The request user is not part of the team');
   }
 
   const response: IIsMemberResponse = await team.getOutgoingRequests();

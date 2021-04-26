@@ -18,11 +18,6 @@ app.set('trust proxy', true);
 
 app.use(json());
 app.use(urlencoded({ extended: true, limit: '800mb' }));
-app.use(
-  cors({
-    allowedHeaders: ['Content-Type', 'Authorization'],
-  })
-);
 
 app.use(
   session({
@@ -34,12 +29,10 @@ app.use(
 /* TODO: put this line below currentUser middleware */
 app.use('/api/users/assets', express.static('assets'));
 
-
 /*TODO: uncomment these three lines after development */
 app.use(currentUser);
 app.use(requireAuth);
 app.use(fetchUser);
-
 
 app.use('/api/users', connectionRouter);
 app.use('/api/users', userRouter);
