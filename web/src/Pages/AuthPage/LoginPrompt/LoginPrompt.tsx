@@ -62,8 +62,8 @@ const LoginPrompt: React.FC<Props> = (props) => {
         );
       }
     } catch (e) {
-      console.log(e.message);
-      setErrorHandler(e);
+      console.log("FAILED Login");
+      setErrorHandler(e.response.data.errors[0].message);
     }
   };
   const loginPrompt = (
