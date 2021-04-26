@@ -54,8 +54,12 @@ const SignupPrompt: React.FC<Props> = (props) => {
   const signupHandler = async (signupData: IUserSignup) => {
     try {
       const resultSignup = await userSignupAPI(signupData);
-      console.log("Successfully sent a POST request to signup", resultSignup);
+      const resutlStatusCode = resultSignup.status;
       setIsAuthenticated(true);
+      console.log("ResultStatusCode", resutlStatusCode);
+      if (resutlStatusCode === 201) {
+        console.log("SIGNUP SUCCESS...", resultSignup);
+      }
       return resultSignup;
     } catch (e) {
       setErrorHandler(e);
@@ -99,8 +103,7 @@ const SignupPrompt: React.FC<Props> = (props) => {
             faculty = resultData.faculty;
             year = resultData.year;
           }
-          console.log("..result..", result);
-          console.log("POST /api/auth/signup", data);
+          console.log("Result Signup..", result);
           resetForm();
           setRedirect(
             <Redirect
