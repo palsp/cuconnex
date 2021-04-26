@@ -10,9 +10,10 @@ import { ProfilePic } from "@smartComponents/index";
 import { Search } from "@icons/index";
 import classes from "./MemberList.module.css";
 import { UsersData } from "@src/mockData/Models";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  members: UsersData;
+  members: IUserFriend;
   selectMemberListHandler: any;
 }
 

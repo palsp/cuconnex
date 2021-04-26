@@ -4,6 +4,7 @@ import { Heading } from "@dumbComponents/UI";
 import classes from "./EducationLists.module.css";
 import { EducationListsData } from "@src/mockData/Models";
 
+
 // const educationArray = [
 //   {
 //     educationPic: "",
@@ -25,6 +26,7 @@ interface Props {
   education: EducationListsData[] | [];
   // faculty: string;
   // year: string;
+
 }
 
 const EducationLists: React.FC<Props> = (props) => {

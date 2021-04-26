@@ -1,7 +1,7 @@
 .friendList {
   box-sizing: border-box;
-  width: 375px;
-  height: 128px;
+  width: 100vw;
+  height: 15.76vh;
   overflow: visible;
   border-color: #808080;
   border-style: solid;
@@ -26,7 +26,52 @@
   margin-top: -30px;
   width: 140px;
 }
-
+.divUsernameInfo {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--black, #000000);
+  font-size: 20px;
+  text-align: left;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+.divFacultyInfo{
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--search_bar, #c2c2c2);
+  font-size: 10px;
+  text-align: left;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
 .divUserInfo {
-  height: 20px;
+  height: 2.5vh;
+  text-align: left;
+}
+.divUserInterest {
+  height: 2.5vh;
+  text-align: left;
+  display:flex;
+  flex-direction: row;
+}
+.linkDiv a{
+  text-decoration: none;
+}
+.interestDiv{
+  font-size: 14px;
+  text-align: left;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  color: var(--main_pink, #f33182);
 }

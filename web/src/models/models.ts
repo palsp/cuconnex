@@ -14,6 +14,20 @@ export interface IUser {
   bio: string;
   image: string;
 }
+export interface IUserFriend {
+  id: string;
+  name: string;
+  connections: {
+    receiverId: string;
+    senderId: string;
+    status: string;
+  };
+  interests: string[];
+  faculty: string;
+  year: string;
+  role: string;
+  bio: string;
+}
 
 export interface ITeam {
   name: string; // team name
@@ -44,7 +58,17 @@ export interface IUserSignin {
   email: string;
   password: string;
 }
-
+//Friend
+export interface IConnected {
+  status: string;
+}
+export interface IAddFriend {
+  userId: string;
+}
+export interface IAddFriendResponse {
+  userId: string;
+  accepted: boolean;
+}
 // User Services
 
 export interface IFetchUserData {
@@ -75,6 +99,10 @@ export interface ICreateUserData {
   year: string;
   image: File;
   role: string;
+}
+
+export interface IFetchFriendsData {
+  connections: IUserFriend[];
 }
 //events
 export interface IFetchEventsData {
@@ -109,17 +137,19 @@ export interface IEventData {
   };
 }
 //team
+export interface IGetTeam{
+  team:ITeam;
+}
 export interface ITeamData {
   name: string;
   description: string;
 }
+export interface ITeamMembers{
+  users:IUser[];
+}
 export interface ITeamDataResult {
   name: string;
   description: string;
-}
-
-export interface IFetchFriendsData {
-  connection: IFetchUserData[];
 }
 
 export interface IInviteData {
@@ -131,6 +161,10 @@ export interface IInviteDataResult {
   message: string;
   User: string;
   Team: string;
+}
+
+export interface ICallTeamOfUser {
+  teams: ITeam[];
 }
 
 export enum FacultyListsEnum {
@@ -162,8 +196,13 @@ export interface IFetchTeamNotification {
   teamNames: string[];
 }
 export interface IFetchFriendNotification {
-  request: IUser[];
+  requests: IUserFriend[];
 }
+export interface IFetchFriendReceivedNotification {
+  requests: IUserFriend[];
+}
+
+
 //Search
 export interface ISearchGeneral {
   users: IUser[];

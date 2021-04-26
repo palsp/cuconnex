@@ -29,6 +29,7 @@
 
 .divUserInfo {
   height: 2.46vh;
+  text-align: left;
 }
 .checkboxDiv{
   display:flex;

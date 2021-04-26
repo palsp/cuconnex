@@ -1,27 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
-
 import { MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-
 import classes from "./SelectMemberPrompt.module.css";
-import { mockMemberLists } from "@src/mockData";
 import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
 import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
-interface Props {
-  members: UsersData[];
-}
-const SelectMemberPrompt: React.FC<Props> = (props) => {
+import { IUser, IUserFriend } from "@src/models";
+import { fetchFriendsDataAPI } from "@src/api";
+
+const SelectMemberPrompt: React.FC = () => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(true);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
-  const [selectedMemberArray, setSelectedMemberArray] = useState<UsersData[]>(
+  const [selectedMemberArray, setSelectedMemberArray] = useState< IUserFriend[]>(
     []
   );
+  const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
+  useEffect(() => {
+    fetchFriendsHandler().then((value: IUserFriend[] | []) => setFriendLists(value));
+  }, []);
+  const fetchFriendsHandler = async () => {
+    const friendsData = await fetchFriendsDataAPI();
+    console.log("SUCCESS fetchFriendsHandler", friendsData.data);
+    return friendsData.data.connections;
+  };
   const inviteClickedHandler = () => {
     setClickSelectMember(false);
     setClickCreateTeam(true);
@@ -32,12 +38,12 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     setClickSelectMember(false);
     setClickCreateTeam(false);
   };
-  const selectPersonHandler = (e: UsersData) => {
+  const selectPersonHandler = (e: IUserFriend) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: UsersData[] | [] = [...selectedMemberArray];
+      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       // setSelectedMemberArray(
       //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
@@ -96,7 +102,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
         </div>
         <div className={classes.memberListsDiv}>
           <MemberLists
-            memberlist={props.members}
+            memberlist={friendLists}
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
           />

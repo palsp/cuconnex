@@ -14,8 +14,15 @@ import {
   ISearchUserTeamEventResult,
   IUser,
   IFetchTeamNotification,
-  IFetchFriendNotification,
   IFetchFriendsData,
+  IConnected,
+  IAddFriend,
+  IAddFriendResponse,
+  ICallTeamOfUser,
+  IFetchFriendNotification,
+  IFetchFriendReceivedNotification,
+  IGetTeam,
+  ITeamMembers,
 } from "@src/models";
 
 //Auth Services
@@ -44,6 +51,7 @@ const userSigninAPI = async (
     "/api/auth/signin",
     signinUserData
   );
+  console.log(userSigninData.data);
   return userSigninData;
 };
 const userLogoutAPI = async (): Promise<void> => {
@@ -85,6 +93,31 @@ const teamInvitationAPI = async (
     invitedData
   );
   return invitedUsersData;
+};
+const fetchTeamDataAPI = async (
+  name: string
+): Promise<AxiosResponse<IGetTeam>> => {
+  const teamDetailsData: AxiosResponse<IGetTeam> = await axios.post(
+    `/api/teams/${name}`
+  );
+  return teamDetailsData;
+};
+const fetchTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<ITeamMembers>> => {
+  const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
+    `/api/teams/${teamName}`
+  );
+  return teamMembersData;
+};
+const callTeamOfUserAPI = async (
+  userId: string
+): Promise<AxiosResponse<ICallTeamOfUser>> => {
+  const calledResult: AxiosResponse<ICallTeamOfUser> = await axios.get(
+    `/api/users/teams/${userId}`
+  );
+
+  return calledResult;
 };
 
 const createUserDataAPI = async (
@@ -134,6 +167,24 @@ const fetchFriendNotificationAPI = async (): Promise<
 
   return friendNotificationData;
 };
+const fetchFriendReceivedNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchFriendReceivedNotification>
+> => {
+  const friendNotificationData: AxiosResponse<IFetchFriendReceivedNotification> = await axios.get(
+    "/api/users/friends/request/received"
+  );
+
+  return friendNotificationData;
+};
+const fetchRelationAPI = async (
+  userId: string
+): Promise<AxiosResponse<IConnected>> => {
+  const relationResult: AxiosResponse<IConnected> = await axios.get(
+    `/api/users/relation/${userId}`
+  );
+
+  return relationResult;
+};
 const fetchFriendsDataAPI = async (): Promise<
   AxiosResponse<IFetchFriendsData>
 > => {
@@ -142,6 +193,24 @@ const fetchFriendsDataAPI = async (): Promise<
   );
 
   return userData;
+};
+const addFriendAPI = async (
+  addFriendData: IAddFriend
+): Promise<AxiosResponse<IAddFriend>> => {
+  const friendAddData: AxiosResponse<IAddFriend> = await axios.post(
+    "/api/users/add-friend/",
+    addFriendData
+  );
+  return friendAddData;
+};
+const addFriendResponseAPI = async (
+  addFriendResponseData: IAddFriendResponse
+): Promise<AxiosResponse<IAddFriendResponse>> => {
+  const friendResponseData: AxiosResponse<IAddFriendResponse> = await axios.post(
+    "/api/users/add-friend/result/",
+    addFriendResponseData
+  );
+  return friendResponseData;
 };
 
 export {
@@ -158,4 +227,11 @@ export {
   fetchTeamNotificationAPI,
   fetchFriendNotificationAPI,
   fetchFriendsDataAPI,
+  fetchRelationAPI,
+  addFriendAPI,
+  callTeamOfUserAPI,
+  addFriendResponseAPI,
+  fetchFriendReceivedNotificationAPI,
+  fetchTeamDataAPI,
+  fetchTeamMembersAPI,
 };

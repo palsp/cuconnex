@@ -111,6 +111,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     onChange={handleUploadedImage}
                   />
                 </div>
+
                 {props.location?.state && (
                   <>
                     <div className={classes.idYearFaculty}>

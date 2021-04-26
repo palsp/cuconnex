@@ -1,5 +1,5 @@
 import classes from "./LandingHero.module.css";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "react-toggle/style.css";
 import {
   FindteamLogo,
@@ -10,7 +10,11 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-import { IUser } from "@models/index";
+import { motion, useSpring } from "framer-motion";
+import { useNavigation } from "framer";
+import { ITeam, IUser } from "@models/index";
+import { callTeamOfUserAPI } from "@src/api";
+import { UserContext } from "@context/UserContext";
 
 interface Props {
   hasTeam: boolean;
@@ -18,9 +22,22 @@ interface Props {
 }
 
 const LandingHero: React.FC<Props> = (props) => {
+  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
+  const { userData } = useContext(UserContext);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
+  };
+
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+    setCurrentTeamLists(value)
+  );
+  }, []);
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
-      <MyTeamLists page="landing" team={mockMyTeamListsData} />
+      <MyTeamLists page="landing" team={currentTeamLists} />
       <Link style={{ textDecoration: "none" }} to="/createteam">
         <div className={classes.addTeam}>
           <div className={classes.plus}>

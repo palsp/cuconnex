@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ProfilePic } from "@smartComponents/index";
 import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
 import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
@@ -8,9 +8,11 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import containerVariants from "@src/models/models";
+import containerVariants, { ITeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
+import { valueScaleCorrection } from "framer-motion/types/render/dom/projection/scale-correction";
+import { callTeamOfUserAPI } from "@src/api";
 
 interface Props {
   location: {
@@ -20,24 +22,31 @@ interface Props {
   };
 }
 
+
 const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
   const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
-  const [hasTeam, setHasTeam] = useState<boolean>(true);
+  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
+  //const [hasTeam, setHasTeam] = useState<boolean>(true);
   const { userData } = useContext(UserContext);
+  let hasTeam=false;
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
-
-  const transition = {
-    // On Tap - Navigation
-    type: "spring",
-    delay: 0,
-    stiffness: 500,
-    damping: 60,
-    mass: 1,
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+      setCurrentTeamLists(value)
+    );
+  }, []);
+  if(currentTeamLists.length!=0){
+    hasTeam=false;
+  }
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
   };
-
+  console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 
@@ -55,10 +64,12 @@ const LandingPage: React.FC<Props> = (props) => {
           </Link>
         </div>
         <div
-          onClick={() => setHasTeam((prev) => !prev)}
+          //onClick={() => setHasTeam((prev) => !prev)}
           className={classes.mailDiv}
         >
-          <Mail />
+          <Link to="/notification">
+            <Mail />
+          </Link>
         </div>
         <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
           <Hamburger />

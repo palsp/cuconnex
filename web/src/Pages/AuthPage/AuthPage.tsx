@@ -112,6 +112,7 @@ const AuthPage: React.FC = () => {
             stiffness: 270,
             damping: 29,
             mass: 3.3,
+            // duration: 2, repeat: Infinity
           }}
           className={classes.circle_overlay}
         ></motion.div>

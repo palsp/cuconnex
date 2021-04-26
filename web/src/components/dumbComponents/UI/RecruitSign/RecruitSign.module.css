@@ -145,3 +145,43 @@
   width: 20%;
   margin-top: 4%;
 }
+
+.declined {
+  width: 25vw;
+  height: 3vh;
+  background-color: #767474;
+  border-radius: 10px;
+  font: inherit;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.declined p {
+  font-size: 0.8rem;
+  color: white;
+}
+
+.declined .icon {
+  width: 20%;
+  margin-top: 4%;
+}
+
+.accept {
+  width: 25vw;
+  height: 3vh;
+  background-color: #f33182;
+  border-radius: 10px;
+  font: inherit;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.accept p {
+  font-size: 0.8rem;
+  color: white;
+  margin: 0;
+}

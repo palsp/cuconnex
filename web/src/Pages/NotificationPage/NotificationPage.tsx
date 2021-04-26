@@ -9,33 +9,65 @@ import classes from "./NotificationPage.module.css";
 import {
   ActivityNotificationLists,
   ConnectionLists,
+  TeamInvitationLists,
 } from "@smartComponents/index";
 
+import mockTeamInvitationListsData from "@src/mockData/mockTeamInvitationListsData";
 import mockConnectionListsData from "@src/mockData/mockConnectionListsData";
 import mockMembersInActivityNotification from "@src/mockData/mockMembersInActivityNotificationData";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
-import { IFetchFriendNotification, IFetchTeamNotification } from "@src/models";
-import { fetchFriendNotificationAPI, fetchTeamNotificationAPI } from "@src/api/apiCalls";
+import { IFetchFriendNotification, IFetchFriendsData, IFetchTeamNotification, IUser, IUserFriend } from "@src/models";
+import {
+  fetchFriendNotificationAPI,
+  fetchFriendReceivedNotificationAPI,
+  fetchFriendsDataAPI,
+  fetchTeamNotificationAPI,
+} from "@src/api/apiCalls";
+import { isPropertySignature } from "typescript";
+
+import { motion } from "framer-motion";
+import containerVariants from "@src/models/models";
 
 const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
-  const [teamNoti, setTeamNoti] = useState<IFetchTeamNotification| []>([]);
-  const [friendNoti, setFriendNoti] = useState<IFetchFriendNotification| []>([]);
+  const [teamNoti, setTeamNoti] = useState<IFetchTeamNotification | []>([]);
+  const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
+  const [friendReceivedNoti, setFriendReceivedNoti] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
-    fetchTeamNotiHandler().then( (value:IFetchTeamNotification | []) => setTeamNoti(value));
-    fetchFriendNotiHandler().then( (value:IFetchFriendNotification | []) => setFriendNoti(value));
+    fetchTeamNotiHandler().then((value: IFetchTeamNotification | []) =>
+      setTeamNoti(value)
+    );
+     fetchFriendNotiHandler().then((value: IUserFriend[] | []) =>
+       setFriendNoti(value)
+     );
+     fetchFriendReceivedNotiHandler().then((value: IUserFriend[] | []) =>
+       setFriendReceivedNoti(value)
+     );
+    // fetchCurrentFriendsHandler().then((value: IUser[] | []) =>
+    //   setCurrentFriends(value)
+    // );
   }, []);
   const fetchTeamNotiHandler = async () => {
-      const teamNotiData = await fetchTeamNotificationAPI();
-      console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.data);
-      return (teamNotiData.data);
+    const teamNotiData = await fetchTeamNotificationAPI();
+    console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.request);
+    return teamNotiData.request;
   };
+  // const fetchCurrentFriendsHandler = async () => {
+  //   const friendData = await fetchFriendsDataAPI();
+  //   console.log("SUCCESS fetchFriendsDataHandler", friendData.data);
+  //   return friendData.data;
+  // };
   const fetchFriendNotiHandler = async () => {
-    const friendNotiData = await fetchFriendNotificationAPI();
-    console.log("SUCCESS fetchFriendNotiHandler", friendNotiData.data);
-    return (friendNotiData.data);
-};
+    const friendsData = await fetchFriendNotificationAPI();
+    console.log("SUCCESS fetchFriendHandler", friendsData.data.requests);
+    return friendsData.data.requests;
+  };
+  const fetchFriendReceivedNotiHandler = async () => {
+    const friendsReceivedData = await fetchFriendReceivedNotificationAPI();
+    console.log("SUCCESS fetchFriendHandler", friendsReceivedData.data.requests);
+    return friendsReceivedData.data.requests;
+  };
   const connectionButtonHandler = () => {
     setConnection(true);
     setActivity(false);
@@ -47,7 +79,6 @@ const NotificationPage: React.FC = () => {
     setActivity(true);
     console.log("setActivity");
   };
-
   let NotificationsPrompt = null;
   if (clickConnection === true) {
     NotificationsPrompt = (
@@ -58,31 +89,37 @@ const NotificationPage: React.FC = () => {
           </Link>
         </div>
         <div className={classes.head}>
-          <Heading data-test="Notification-page-header" value="Notification" />
+          <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
           <div className={classes.connection}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
-              value="Connection"
-              number="3"
+              value="Incoming"
+              number={friendReceivedNoti.length+""}
             />
           </div>
           <div className={classes.activity}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
-              value="Activity"
-              number="2"
+              value="Outgoing"
+              number={friendNoti.length+""}
             />
           </div>
         </div>
-        <div className={classes.connectionList}>
-          <ConnectionLists
-            data-test="Notification-page-team-lists"
-            Connectionlist={mockConnectionListsData}
+        <div className={classes.teamInvitationList}>
+          <TeamInvitationLists
+            data-test="Notification-page-team-invitation-lists"
+            TeamInvitationlist={mockTeamInvitationListsData}
           />
+        </div>
+        <div className={classes.connectionList}>
+           <ConnectionLists
+            data-test="Notification-page-team-lists"
+            requests={friendReceivedNoti}
+          /> 
         </div>
       </div>
     );
@@ -95,22 +132,22 @@ const NotificationPage: React.FC = () => {
           </Link>
         </div>
         <div className={classes.head}>
-          <Heading data-test="Notification-page-header" value="Notification" />
+          <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
-          <div className={classes.connection}>
+        <div className={classes.connection}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
-              value="Connection"
+              value="Incoming"
               number="3"
             />
           </div>
           <div className={classes.activity}>
             <Tab
-              data-test="Notification-page-Connection"
+              data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
-              value="Activity"
+              value="Outgoing"
               number="2"
             />
           </div>
@@ -118,7 +155,7 @@ const NotificationPage: React.FC = () => {
         <div className={classes.activityList}>
           <ActivityNotificationLists
             data-test="Notification-page-team-lists"
-            Memberlist={mockMembersInActivityNotification}
+            Memberlist={friendNoti}
             Positionlist={mockPositionsInActivityNotification}
           />
         </div>
@@ -127,10 +164,16 @@ const NotificationPage: React.FC = () => {
   }
 
   return (
-    <div data-test="Notification-page" className={classes.main}>
+    <motion.div 
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    data-test="Notification-page" className={classes.main}>
       {NotificationsPrompt}
-    </div>
+    </motion.div>
   );
 };
 
 export default NotificationPage;
+

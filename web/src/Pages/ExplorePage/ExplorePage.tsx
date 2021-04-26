@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./ExplorePage.module.css";
 import {
   ActivityBoxes,
@@ -17,14 +17,28 @@ import { mockPeopleLists } from "@src/mockData";
 import { IEventData, ITeam, IUser } from "@src/models";
 import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
+import { callTeamOfUserAPI } from "@src/api";
+import { UserContext } from "@context/UserContext";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [noSearchResult, setNoSearchResult] = useState<boolean>(false);
   const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
   const [teamLists, setTeamLists] = useState<ITeam[]>([]);
+  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
+  const { userData } = useContext(UserContext);
 
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+      setCurrentTeamLists(value)
+    );
+  }, []);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
+  };
   const explorePage = hasSearch ? (
     <div className={classes.exploreContent}>
       <Tag />
@@ -35,6 +49,8 @@ const ExplorePage = () => {
       <div className={classes.exploreHeading}>
         <Heading value="Teams" />
       </div>
+      {/*Loong's work*/}
+      {/* <MyTeamLists page="landing" team={teamLists} /> */}
       <MyTeamLists page="explore" team={mockMyTeamListsData} />
       <div className={classes.exploreHeading}>
         <Heading value="Events" />
@@ -47,6 +63,9 @@ const ExplorePage = () => {
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Suggested for you" bold />
         </div>
+
+      {/*Loong's work*/}
+        {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
         <MyTeamLists page="explore" team={mockMyTeamListsData} />
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
@@ -60,22 +79,22 @@ const ExplorePage = () => {
       {/* <Background> */}
         {/* Background has display: flex so this div is for that */}
         <div>
-        <div className={classes.exploreHeader}>
-          <Link to="/landing">
-            <ArrowLeft />
-          </Link>
-          <SearchBar
-            setHasSearch={setHasSearch}
-            setNoSearchResult={setNoSearchResult}
-            setPeopleLists={setPeopleLists}
-            setTeamLists={setTeamLists}
-            setEventLists={setEventLists}
-            value="Explore"
-          />
-        </div>
-        {console.log("This is peopleLists", peopleLists)}
-        {console.log("This is teamLists", teamLists)}
-        {console.log("This is eventLists", eventLists)}
+          <div className={classes.exploreHeader}>
+            <Link to="/landing">
+              <ArrowLeft />
+            </Link>
+            <SearchBar
+              setHasSearch={setHasSearch}
+              setNoSearchResult={setNoSearchResult}
+              setPeopleLists={setPeopleLists}
+              setTeamLists={setTeamLists}
+              setEventLists={setEventLists}
+              value="Explore"
+            />
+          </div>
+          {console.log("This is peopleLists", peopleLists)}
+          {console.log("This is teamLists", teamLists)}
+          {console.log("This is eventLists", eventLists)}
 
           {explorePage}
         </div>

@@ -11,29 +11,32 @@ import classes from "./MyTeamPage.module.css";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { motion } from "framer-motion";
 
-import containerVariants from "@src/models/models";
+import containerVariants, { ITeam } from "@src/models/models";
 
 import { UserContext } from "@context/UserContext";
 
-import { fetchTeamNotificationAPI } from "@api/index";
+import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-  const [onGoing, setOngoing] = useState(true);
 
-  // const { setTeamData } = useContext(UserDataContext);
+  const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
+  const [clickOngoing, setOngoing] = useState(true);
+  const [clickFinished, setFinished] = useState(false);
+  const { userData } = useContext(UserContext);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
+  };
 
-  // const fetchTeamHandler = async () => {
-  //   try {
-  //     const teamData = await fetchTeamNotificationAPI();
-  //     console.log("fetchTeamHandler", teamData)
-  //   }
-  // }
 
-  // useEffect(() => {
-  //   fetchTeamHandler();
-  // }, []);
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) =>
+    setTeamLists(value)
+  );
+  }, []);
 
-  const ongoingButtonHandler = () => {
+  const ButtonHandler = () => {
     setOngoing(true);
     console.log("setOngoing");
   };
@@ -44,7 +47,7 @@ const MyTeamPage: React.FC = () => {
   };
 
   let myteamsPrompt = null;
-  if (onGoing === true) {
+  if (clickOnGoing === true) {
     myteamsPrompt = (
       <div className={classes.tabOngoing}>
         <div className={classes.relativeArrow}>
@@ -77,7 +80,7 @@ const MyTeamPage: React.FC = () => {
         <div className={classes.teamList}>
           <MyTeamLists
             data-test="myteam-page-team-lists"
-            team={mockMyTeamListsData}
+            team={teamLists}
           />
         </div>
       </div>
@@ -112,7 +115,7 @@ const MyTeamPage: React.FC = () => {
         <div className={classes.teamList}>
           <MyTeamLists
             data-test="myteam-page-team-lists"
-            team={mockMyTeamListsData}
+            team={teamLists}
           />
         </div>
       </div>
