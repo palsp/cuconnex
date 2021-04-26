@@ -185,35 +185,25 @@ export const editUser = async (req: Request, res: Response) => {
             throw new BadRequestError('Year must be valid')
         }
     }
-    let imagePath = "";
+    let imagePath = user.image;
     try{
         if (req.file) {
             deleteFile(user.image);
             imagePath = req.file.path;
             console.log("imagePath: ", imagePath)
-            await user.update(
-                {
-                    name: req.body.name || user.name,
-                    bio: req.body.bio || user.bio,
-                    faculty: req.body.faculty || user.faculty,
-                    interests: req.body.interests || user.interests,
-                    year: req.body.year || user.year,
-                    lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
-                    image: imagePath
-                },
-            )
-        } else {
-            await user.update(
-                {
-                    name: req.body.name || user.name,
-                    bio: req.body.bio || user.bio,
-                    faculty: req.body.faculty || user.faculty,
-                    interests: req.body.interests || user.interests,
-                    year: req.body.year || user.year,
-                    lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
-                },
-            )
+            
         }
+        await user.update(
+            {
+                name: req.body.name || user.name,
+                bio: req.body.bio || user.bio,
+                faculty: req.body.faculty || user.faculty,
+                interests: req.body.interests || user.interests,
+                year: req.body.year || user.year,
+                lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+                image: imagePath || user.image
+            },
+        )
         res.status(200).send(user);
     } catch (err){
         console.log(err.message)
