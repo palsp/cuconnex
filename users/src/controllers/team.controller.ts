@@ -29,10 +29,11 @@ export const createTeam = async (req: Request, res: Response) => {
   let newTeam;
   try {
     newTeam = await user.createTeams({ name, description });
-    await newTeam.addAndAcceptMember(user);
+    // await newTeam.addAndAcceptMember(user);
   } catch (err) {
     throw new BadRequestError('Create Team Failed');
   }
+
   const response: ITeamResponse = newTeam.toJSON();
 
   res.status(201).send(response);
@@ -61,6 +62,7 @@ export const getTeamMember = async (req: Request, res: Response) => {
  * @param req
  * @param res
  */
+
 export const inviteMember = async (req: Request, res: Response) => {
   const sender = req.user!;
 
@@ -81,17 +83,16 @@ export const inviteMember = async (req: Request, res: Response) => {
     throw new NotFoundError('Team');
   }
 
-  const isInviterAMember = await IsMember.findOne({ where: { teamName, userId: sender.id } });
+  const isInviterAMember = await team.findMember(sender.id);
   if (!isInviterAMember) {
     throw new BadRequestError('The inviter is not a team member.');
-  } else if (isInviterAMember.status !== 'Accept') {
-    throw new BadRequestError('The inviter is not yet a team member.');
   }
 
-  await team.inviteMember(receiver);
-  const isMember = await IsMember.findOne({ where: { teamName: team.name, userId: newMemberId } });
-
-  console.log('eiei', isMember);
+  try {
+    await team.invite(receiver);
+  } catch (err) {
+    throw new BadRequestError(err.message);
+  }
 
   res.status(201).send({ message: 'Invite pending', userId: receiver!.id, team: team!.name });
 };

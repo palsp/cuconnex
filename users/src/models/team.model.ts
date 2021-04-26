@@ -13,6 +13,7 @@ import { User } from './user.model';
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, IOutGoingRequest, IIsMemberResponse } from '../interfaces';
+import { is } from 'sequelize/types/lib/operators';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -69,7 +70,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public getMember!: BelongsToManyGetAssociationsMixin<User>;
 
   // create PENDING status to the user
-  public async inviteMember(user: User) {
+  public async invite(user: User) {
     let isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     // if there is a member status : 'accept || reject || pending ' do nothing
@@ -77,14 +78,13 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       throw new BadRequestError(`This user already have status: ${isMember.status}`);
     }
 
-    // why this make IsMember status PENDING ???
     const cc = await this.addMember(user);
     // console.log('cc', cc);
     isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
     if (!isMember) {
       throw new BadRequestError(`something went wrong with IsMember table`);
     }
-    isMember.sender = this;
+
     await isMember.save();
     // console.log('eueu', isMember);
 
@@ -108,7 +108,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
   }
 
-  // this will promptly create ACCEPT status for user >> mostly use for the creator of the team
+  // this will promptly create ACCEPT status for user promptly
   public async addAndAcceptMember(user: User) {
     const isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
@@ -134,6 +134,21 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     await newIsMember.save();
 
     return;
+  }
+
+  // check if member part of the team
+  public async findMember(userId: string): Promise<Boolean> {
+    if (userId === this.creatorId) {
+      return true;
+    }
+
+    const isMember = await IsMember.findOne({ where: { teamName: this.name, userId } });
+    if (isMember) {
+      if (isMember.status === TeamStatus.Accept) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public async getOutgoingRequests(): Promise<IIsMemberResponse> {
@@ -163,15 +178,15 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
-    // if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
-    //   throw new BadRequestError('This team has no member');
-    // }
-
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.isMembers!.status === TeamStatus.Accept) {
         return member;
       }
     });
+
+    const creator = await User.findByPk(this.creatorId);
+    acceptedUsers.push(creator!);
+    this.members = acceptedUsers;
 
     return acceptedUsers;
   }
@@ -181,7 +196,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     let returnMembers: IUserResponse[] = [];
 
     if (this.members) {
-      returnMembers = this.members.map((member) => member.toJSON());
+      returnMembers = this.members.map((member: User) => member.toJSON());
     }
 
     return { ...values, members: returnMembers };

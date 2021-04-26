@@ -32,7 +32,6 @@ describe('Get Outgoing Requests', () => {
 
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
-    await team.addAndAcceptMember(user);
 
     const user2 = await User.create({
       id: '6131773621',
@@ -94,10 +93,10 @@ describe('Get Outgoing Requests', () => {
 
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
-    await team.addAndAcceptMember(user);
+    // await team.addAndAcceptMember(user);
 
-    await team.inviteMember(user2);
-    await team.inviteMember(user3);
+    await team.invite(user2);
+    await team.invite(user3);
 
     const res = await request(app)
       .get('/api/teams/outgoingrequests/testTeam')

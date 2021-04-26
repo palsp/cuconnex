@@ -30,13 +30,24 @@ describe('USER--INFO: Get list of teams from user', () => {
       name: 'pal',
     });
 
-    await IsMember.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
+    const user2 = await User.create({
+      id: '6131778821',
+      name: 'pal',
+    });
+
+    const interest = await Interest.findOne({
+      where: { description: Business.BusinessCase },
+    });
+    await user.addInterest(interest!);
+    const team = await user.createTeams({ name: 'testTeam1', description: '' });
+    await team.invite(user2);
 
     const res = await request(app)
-      .get(`/api/users/teams/${user.id}`)
+      .get(`/api/users/teams/${user2.id}`)
       .set('Cookie', global.signin(user.id))
-      .send()
-      .expect(200);
+      .send();
+    // .expect(200);
+    console.log(res.body);
 
     expect(res.body.teams.length).toEqual(0);
   });
@@ -54,9 +65,9 @@ describe('USER--INFO: Get list of teams from user', () => {
     const team2 = await user.createTeams({ name: 'testTeam2', description: '' });
     const team3 = await user.createTeams({ name: 'testTeam3', description: '' });
 
-    await team1.addAndAcceptMember(user);
-    await team2.addAndAcceptMember(user);
-    await team3.inviteMember(user);
+    // await team1.addAndAcceptMember(user);
+    // await team2.addAndAcceptMember(user);
+    await team3.invite(user);
 
     const res = await request(app)
       .get(`/api/users/teams/${user.id}`)

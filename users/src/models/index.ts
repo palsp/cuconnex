@@ -80,6 +80,10 @@ export const autoMigrate = (sequelize: Sequelize) => {
         defaultValue: TeamStatus.Pending,
         allowNull: false,
       },
+      sender: {
+        type: DataTypes.STRING,
+        defaultValue: 'user',
+      },
     },
     { timestamps: false }
   );

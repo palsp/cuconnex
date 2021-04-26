@@ -33,16 +33,9 @@ describe('notification for a user', () => {
 
     const team1 = await sender.createTeams({ name: 'testTeam', description: '' });
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
-    await IsMember.create({
-      userId: receiver.id,
-      teamName: team1.name,
-      status: TeamStatus.Pending,
-    });
-    await IsMember.create({
-      userId: receiver.id,
-      teamName: team2.name,
-      status: TeamStatus.Pending,
-    });
+
+    team1.invite(receiver);
+    team2.invite(receiver);
 
     const res = await request(app)
       .get('/api/users/notification/invite')

@@ -336,6 +336,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @param {string} attrs.description - A description of the team
    * @returns
    */
+
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
       name: attrs.name,
