@@ -11,8 +11,9 @@ import LandingHero from "./Sections/LandingHero";
 import containerVariants, { ITeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
-import { valueScaleCorrection } from "framer-motion/types/render/dom/projection/scale-correction";
+import { ErrorContext } from "@context/ErrorContext";
 import { callTeamOfUserAPI } from "@src/api";
+import { Button } from "@material-ui/core";
 
 interface Props {
   location: {
@@ -26,24 +27,27 @@ const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
   const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
-  //const [hasTeam, setHasTeam] = useState<boolean>(true);
+  const [hasTeam, setHasTeam] = useState<boolean>(false);
   const { userData } = useContext(UserContext);
-  let hasTeam = false;
+  const { setErrorHandler } = useContext(ErrorContext);
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
   useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) =>
-      setCurrentTeamLists(value)
-    );
+    fetchTeamHandler();
   }, []);
-  if (currentTeamLists.length != 0) {
-    hasTeam = false;
-  }
+
   const fetchTeamHandler = async () => {
-    const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData);
-    return teamData.data.teams;
+    try {
+      const teamData = await callTeamOfUserAPI(userData.id);
+      console.log("fetchTeamHandler", teamData);
+      setCurrentTeamLists(teamData.data.teams);
+      setHasTeam(true);
+    } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
+      setHasTeam(false);
+      console.log(e);
+    }
   };
   console.log(hasTeam);
   let cssArray = [classes.content];
@@ -52,20 +56,21 @@ const LandingPage: React.FC<Props> = (props) => {
   const LandingPrompt = !clickHamburger ? (
     <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
-        {/* 
-    Loong's work
-    <div>
-      <div className={classes.toolbarDiv}> */}
-
+        <div style={{ position: "absolute", top: "0px", left: "50px" }}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setHasTeam((prevState) => !prevState)}
+          >
+            Test Team
+          </Button>
+        </div>
         <div className={classes.searchDiv}>
           <Link to="/explore">
             <Search />
           </Link>
         </div>
-        <div
-          //onClick={() => setHasTeam((prev) => !prev)}
-          className={classes.mailDiv}
-        >
+        <div className={classes.mailDiv}>
           <Link to="/notification">
             <Mail />
           </Link>
