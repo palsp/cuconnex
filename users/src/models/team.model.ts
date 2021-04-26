@@ -142,6 +142,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       teamName: this.name,
       outGoingRequests,
     };
+
     return response;
   }
 

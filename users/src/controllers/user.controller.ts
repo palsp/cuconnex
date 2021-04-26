@@ -3,7 +3,12 @@ import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
 import { User, Team, Interest, IsMember } from '../models';
 import { deleteFile } from '../utils/file';
-import { IIsMemberResponse, IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
+import {
+  IIsMemberResponse,
+  IFindRelationResponse,
+  IUserResponse,
+  IViewProfileResponse,
+} from '../interfaces';
 
 /**
  * get current user profile
@@ -208,22 +213,3 @@ export const manageStatus = async (req: Request, res: Response) => {
     throw new BadRequestError(err.message);
   }
 };
-
-export const getInvitationRequestOfTeam = async (req: Request, res: Response) => {
-  const user = req.user!;
-  const teamName = req.params.teamName;
-
-  try{
-    const isMembers = await IsMember.findAll({where: { teamName }})
-
-    if(!isMembers) {
-      throw new BadRequestError('No relation found with any user')
-    }
-
-
-    
-    // const response:IIsMemberResponse = rr
-
-    return
-  }
-}

@@ -41,4 +41,6 @@ router.post(
   teamController.manageStatus
 );
 
+router.get('/outgoingrequest/:name', requireUser, teamController.getOutGoingRequests);
+
 export { router as teamRouter };

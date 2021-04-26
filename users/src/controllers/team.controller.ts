@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User } from '../models';
-import { ITeamResponse } from '../interfaces/team';
-import { IUserResponse } from '../interfaces/user';
+import { IUserResponse, ITeamResponse, IIsMemberResponse } from '../interfaces';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -131,6 +130,23 @@ export const manageStatus = async (req: Request, res: Response) => {
     team.editMemberStatus(targetUser, status);
 
     res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
+  } catch (err) {
+    throw new BadRequestError(err.message);
+  }
+};
+
+export const getOutGoingRequests = async (req: Request, res: Response) => {
+  const teamName = req.params.name;
+
+  try {
+    const team = await Team.findOne({ where: { name: teamName } });
+    if (!team) {
+      throw new BadRequestError('Team not found!');
+    }
+
+    const response: IIsMemberResponse = await team.getOutgoingRequests();
+
+    return response;
   } catch (err) {
     throw new BadRequestError(err.message);
   }
