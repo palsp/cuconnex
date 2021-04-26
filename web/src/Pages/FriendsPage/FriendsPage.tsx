@@ -56,7 +56,10 @@ const FriendsPage: React.FC = () => {
         </div>
       </div>
       <div className={classes.listDiv}>
-        <FriendLists connections={friendLists} />
+        <FriendLists
+          data-test="friends-page-friend-lists"
+          connections={friendLists}
+        />
       </div>
       {/* Home's work
       <FriendLists
