@@ -34,17 +34,10 @@ const MemberList: React.FC<Props> = (props) => {
           <ProfilePic PicUrl={props.members.image} />
         </div>
         <div className={classes.userInfo}>
-          <div className={classes.divUserInfo}>
-            <Username value={props.members.name} />
-          </div>
-          <div className={classes.divUserInfo}>
-            <Heading value={props.members.role} size="small" />
-          </div>
-          <div className={classes.divUserInfo}>
-            <Subtitle value={props.members.faculty} />
-          </div>
-          <div className={classes.divUserInfo}>
-            <Subtitle value={props.members.year} />
+          <div className={classes.divUsernameInfo}>{props.members.name}</div>
+          <div className={classes.divRoleInfo}>{props.members.role}</div>
+          <div className={classes.divFacultyInfo}>
+            {props.members.faculty + ", " + props.members.year}
           </div>
         </div>
         <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
