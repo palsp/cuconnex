@@ -41,7 +41,7 @@ app.use(requireAuth);
 app.use(fetchUser);
 
 
-// app.use('/api/users', interestRouter);
+app.use('/api/users', interestRouter);
 app.use('/api/users', connectionRouter);
 app.use('/api/users', userRouter);
 

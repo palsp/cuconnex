@@ -3,7 +3,13 @@ import request from 'supertest';
 
 describe('Get interests', () => {
 	it('should return a list of interests', async () => {
-		const res = await request(app).get('/api/users/interests').send().expect(200);
+		const res = await request(app)
+			.get('/api/users/interests')
+			.set('Cookie', global.signin())
+			.send()
+			.expect(200);
+
+
 		const modelRes = {
 			interests: [
 				{
@@ -20,6 +26,6 @@ describe('Get interests', () => {
 				},
 			],
 		};
-        expect(res.body).toEqual(modelRes);
+		expect(res.body).toEqual(modelRes);
 	});
 });
