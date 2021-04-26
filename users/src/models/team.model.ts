@@ -69,14 +69,24 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // create PENDING status to the user
   public async inviteMember(user: User) {
-    const member = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
+    let isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     // if there is a member status : 'accept || reject || pending ' do nothing
-    if (member) {
-      throw new BadRequestError(`This user already have status: ${member.status}`);
+    if (isMember) {
+      throw new BadRequestError(`This user already have status: ${isMember.status}`);
     }
 
-    return this.addMember(user);
+    // why this make IsMember status PENDING ???
+    await this.addMember(user);
+    isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
+    if (!isMember) {
+      throw new BadRequestError(`something went wrong with IsMember table`);
+    }
+    isMember.sender = this;
+    await isMember.save();
+    // console.log('eueu', isMember);
+
+    return;
   }
 
   // edit can be use to ACCEPT or REJECT status

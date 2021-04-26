@@ -1,6 +1,8 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 import { TableName } from './types';
+import { User } from './user.model';
+import { Team } from './team.model';
 
 import { TeamStatus } from '@cuconnex/common';
 
@@ -9,6 +11,7 @@ export interface IsMemberAttrs {
   teamName: string;
   userId: string;
   status: TeamStatus;
+  sender?: User | Team;
 }
 
 export interface IsMemberCreationAttrs {
@@ -21,6 +24,7 @@ class IsMember extends Model<IsMemberAttrs, IsMemberCreationAttrs> implements Is
   public teamName!: string;
   public userId!: string;
   public status!: TeamStatus;
+  public sender?: User | Team;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.

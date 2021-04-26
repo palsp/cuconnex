@@ -89,6 +89,9 @@ export const addTeamMember = async (req: Request, res: Response) => {
   }
 
   await team.inviteMember(receiver);
+  const isMember = await IsMember.findOne({ where: { teamName: team.name, userId: newMemberId } });
+
+  console.log('eiei', isMember);
 
   res.status(201).send({ message: 'Invite pending', userId: receiver!.id, team: team!.name });
 };
