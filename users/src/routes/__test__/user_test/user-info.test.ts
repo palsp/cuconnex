@@ -64,21 +64,34 @@ describe('USER--INFO: Get list of teams from user', () => {
       where: { description: Business.BusinessCase },
     });
     await user1.addInterest(interest!);
-    const team1 = await user1.createTeams({ name: 'testTeam1', description: '' });
-    const team2 = await user1.createTeams({ name: 'testTeam2', description: '' });
-
     await user2.addInterest(interest!);
+
+    const team1 = await user1.createTeams({ name: 'testTeam1', description: '' });
+
+    const team2 = await user1.createTeams({ name: 'testTeam2', description: '' });
+    team2.addAndAcceptMember(user2);
+
     const team3 = await user2.createTeams({ name: 'testTeam3', description: '' });
     await team3.invite(user1);
 
-    const res = await request(app)
+    const { body: teams } = await request(app)
       .get(`/api/users/teams/${user1.id}`)
       .set('Cookie', global.signin(user1.id))
       .send()
       .expect(200);
 
-    expect(res.body.length).toEqual(2);
-    expect(res.body[0].name).toEqual(team1.name);
-    expect(res.body[1].name).toEqual(team2.name);
+    // console.log(res.body);
+    expect(teams.length).toEqual(2);
+
+    expect(teams[0].name).toEqual(team1.name);
+    expect(teams[0].members.length).toEqual(1);
+    expect(teams[0].members[0].id).toEqual(user1.id);
+
+    expect(teams[1].name).toEqual(team2.name);
+    expect(teams[1].members.length).toEqual(2);
+    expect(teams[1].members[0].id).toEqual(user2.id);
+    expect(teams[1].members[1].id).toEqual(user1.id);
+
+    // expect(res.body[1].members[0].id).toEqual(user1.id);
   });
 });

@@ -210,10 +210,12 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
     return res.status(200).send({ message: 'This user has no team yet.', teams: [] });
   }
 
-  const response: Promise<ITeamResponse>[] = teams.map(async (team) => {
+  const response: ITeamResponse[] = [];
+  for (let team of teams) {
     await team.fetchTeam();
-    return team.toJSON();
-  });
+    response.push(team.toJSON());
+  }
+
   res.status(200).send(response);
 };
 
@@ -234,7 +236,7 @@ export const manageStatus = async (req: Request, res: Response) => {
 };
 
 export const getInterest = async (req: Request, res: Response): Promise<void> => {
-  const categories = await Category.findAll({ include: "interests" });
+  const categories = await Category.findAll({ include: 'interests' });
 
   if (!categories) {
     console.log(categories);
@@ -242,7 +244,7 @@ export const getInterest = async (req: Request, res: Response): Promise<void> =>
 
   const response = categories.map((category: Category) => ({
     category: category.category,
-    interests: category.interests!.map((interest: Interest) => interest.serializer())
+    interests: category.interests!.map((interest: Interest) => interest.serializer()),
   }));
   res.status(200).send({ interests: response });
-}
+};
