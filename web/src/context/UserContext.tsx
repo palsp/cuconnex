@@ -69,11 +69,7 @@ export const UserContextProvider: React.FC<Props> = (props) => {
     setUserData({
       id: "",
       name: "",
-      interests: {
-        Technology: [],
-        Business: [],
-        Design: [],
-      },
+      interests: [],
       faculty: "",
       year: "",
       role: "",

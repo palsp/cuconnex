@@ -19,7 +19,7 @@ const RecommendedList: React.FC<Props> = (props) => {
     <div className={classes.marg} data-test="recommended-list">
       <div className={classes.flex}>
         <div className={classes.marg}>
-          <ProfilePic PicUrl={props.recommended.image} />
+          <ProfilePic PicUrl={props.recommended?.image} />
         </div>
         <div className={classes.titlePage}>
           <Username
