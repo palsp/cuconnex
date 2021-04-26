@@ -38,9 +38,9 @@ describe('get current user', () => {
     const { headers } = await request(app)
       .get('/api/users/current-user')
       .set('Cookie', global.signin())
-      .send();
+      .send()
+      .expect(302)
 
-    expect(headers.location).not.toBeNull();
   });
 
   it.todo('should redirect with specific url');
@@ -75,7 +75,7 @@ describe('get current user', () => {
     expect(res.interests).not.toBeNull();
     expect(res.interests[0]).toEqual(Business.BusinessCase);
     expect(res.year).toBeDefined();
-    expect(res.major).toBeDefined();
+    expect(res.role).toBeDefined();
     expect(res.bio).toBeDefined();
   });
 

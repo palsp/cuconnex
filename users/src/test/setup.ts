@@ -24,7 +24,7 @@ interface db {
 let testDB: db;
 
 beforeAll(async () => {
-  process.env.JWT_KEY = 'asdfasdfaf';
+  process.env.JWT_KEY = 'asdf';
   // create db if doesn't already existed
   try {
     testDB = await initializeDB();
@@ -60,9 +60,6 @@ global.signin = (id?: string) => {
 
   // create the JWT
   const token = jwt.sign(payload, process.env.JWT_KEY!);
-
-
-
   // build session
   const session = { jwt: token };
 

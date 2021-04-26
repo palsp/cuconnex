@@ -1,6 +1,7 @@
 import { app } from '../app';
 import request from 'supertest';
 import User from '../../models/user.model';
+import { faculty, getCurrentYear, getYearFromId } from '@cuconnex/common';
 
 
 
@@ -81,6 +82,9 @@ describe('Sign up test', () => {
         expect(res.email).toEqual(userInput.email);
         expect(res.id).toEqual(userInput.id);
         expect(res.password).not.toBeDefined();
+        expect(res.faculty).toEqual(faculty["21"]);
+        expect(res.year).toEqual(+getCurrentYear() - +getYearFromId(userInput.id))
+
     });
 
     it('should set cookie once successfully sign up', async () => {

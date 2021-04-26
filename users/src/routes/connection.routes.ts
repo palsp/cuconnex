@@ -11,6 +11,8 @@ router.get("/friends", requireUser, connectionController.getAllConnection);
 
 router.get("/friends/request", requireUser, connectionController.getAllFriendRequest);
 
+router.get("/friends/request/received", requireUser, connectionController.getAllReceivedFriendRequest);
+
 router.post("/add-friend", requireUser, addFriendValidator, validateRequest, connectionController.sendFriendRequest);
 
 router.post("/add-friend/result", requireUser, addFreindResultValidator, validateRequest, connectionController.acceptFriendRequest)

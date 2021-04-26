@@ -17,6 +17,8 @@ import (
 
 var test_db *gorm.DB
 
+
+
 //Reset test DB and create new one with mock data
 func resetDBWithMock() {
 	test_db.Where("1=1").Delete(&EventModel{})
@@ -48,6 +50,42 @@ func TestCreateEvent(t *testing.T) {
 		assert.Equal(t, testData.expectedCode, w.Code, "Response Status - "+testData.msg)
 		assert.Equal(t, testData.expectedStatus , resp.Status)
 	}
+}
+
+func TestGetEvent(t *testing.T){
+	r := gin.New()
+	r.GET("/api/events/:event_name", GetEvent)
+	SaveOne(&EventModel{
+		EventName : "Test_Event1",
+		Bio : "This is a test event",
+		Location : "",
+		StartDate : time.Now(),
+		EndDate   : time.Now(),
+		Status: common.EventStatus.Ongoing,
+		Registration: true,
+	})
+
+	SaveOne(&EventModel{
+		EventName : "Test_Event2",
+		Bio : "This is a test event",
+		Location : "",
+		StartDate : time.Now(),
+		EndDate   : time.Now(),
+		Status: common.EventStatus.Ongoing,
+		Registration: true,
+	})
+
+	req, err := http.NewRequest("GET", "/api/events/Test", bytes.NewBufferString(""))
+	req.Header.Set("Content-type", "application/json")
+	assert.NoError(t, err, "Should send a request successfully")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, 200, w.Code)
+	var resp EventsResponse
+	json.Unmarshal([]byte(w.Body.String()) , &resp)
+	assert.Equal(t, 2, len(resp.Events), "There must be 1 event in the result ")
+	resetDBWithMock()
 }
 
 func TestGetAllEvent(t *testing.T) {
