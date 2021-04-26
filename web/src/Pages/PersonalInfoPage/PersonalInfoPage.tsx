@@ -14,37 +14,9 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { ProfilePic } from "@smartComponents/index";
-
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
-import { FacultyListsEnum } from "@models/index";
 import defaultProfilePic from "@assets/tempProfilePic.png";
-
-const facultyArray: string[] = Object.values(FacultyListsEnum);
-
-// const facultyArray = [
-//   "Allied Health Sciences",
-//   "Architecture",
-//   "Arts",
-//   "Communication Arts",
-//   "Commerce and Accountancy",
-//   "Dentistry",
-//   "Economics",
-//   "Education",
-//   "Engineering",
-//   "Fine and Applied Arts",
-//   "Law",
-//   "Medicine",
-//   "Nursing",
-//   "Pharmaceutical Sciences",
-//   "Political Sciences",
-//   "Psychology",
-//   "Science",
-//   "Sports Science",
-//   "VeterinaryScience",
-//   "Integrated Innovation",
-//   "Agricultural Resources",
-// ];
 
 interface Props {
   location: {
