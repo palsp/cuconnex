@@ -11,7 +11,6 @@ export const postUserValidator = [
     .custom((input: { [key: string]: any }) => {
       // check for validity
       let valid = true;
-
       // check if key in interests filed is existed in InterestDescription
       for (let key in input) {
         valid = valid && key in InterestDescription;
@@ -26,6 +25,40 @@ export const postUserValidator = [
     })
     .withMessage('Valid interest must be provided'),
   body('name').notEmpty().withMessage('Name must be supplied'),
+];
+/**
+ * The fields must be of correct type
+ */
+
+export const editUserValidator = [
+  body('interests')
+    .custom((input: { [key: string]: any }) => {
+      // check for validity
+      let valid = true;
+      // check if key in interests filed is existed in InterestDescription
+      for (let key in input) {
+        valid = valid && (key in InterestDescription)
+        console.log(valid)
+        if (input[key]) {
+          valid = valid && Array.isArray(input[key])
+        }
+      }
+
+      // expect valid to be true so the process continue
+      return valid
+    })
+    .withMessage('Valid interest must be provided'),
+  body('name')
+    .notEmpty()
+    .withMessage('Name must be supplied'),
+  body('bio')
+    .notEmpty()
+    .withMessage('Bio must be supplied'),
+  body('lookingForTeam')
+    .notEmpty()
+    .withMessage('lookingForTeam must be supplied')
+    .isBoolean()
+    .withMessage('lookingForTeam is invalid')
 ];
 
 /**
