@@ -40,7 +40,6 @@ describe('The /api/upload', () => {
             .attach('image', 'src/routes/__test__/test_images/testImage2.png')
             .expect(201)
             .then(response => {
-                console.log(response.status);
                 expect(response.body.image).not.toEqual("")
 
                 deleteFile(response.body.image)
@@ -60,17 +59,4 @@ describe('The /api/upload', () => {
         expect(body.image).toEqual("");
     });
 
-
-    // describe('The /api/users endpoint with files', () => {
-    //     it('should return 201 without interests', async () => {
-    //         await request(app)
-    //             .post('/api/users')
-    //             .set('Cookie', global.signin())
-    //             .field({
-    //                 name: 'test' })
-    //             .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
-    //             .then(res => {
-    //               expect(res.body.errors).toEqual(null);
-    //             });
-    //     });
 });

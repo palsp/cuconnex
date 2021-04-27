@@ -6,7 +6,7 @@ import mockConnectionLists from "@src/mockData/mockConnectionListsData";
 import { IFetchFriendsData, IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  requests: [IUserFriend] | [];
+  requests: IUserFriend[] | [];
 }
 
 const ConnectionLists: React.FC<Props> = (props) => {

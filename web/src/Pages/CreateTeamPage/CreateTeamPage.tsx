@@ -6,17 +6,12 @@ import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
 import { mockMemberLists } from "@src/mockData";
 import { motion } from "framer-motion";
 import containerVariants, { IUser } from "@src/models/models";
-interface Props{
-  member:IUser[] | []
-}
-const CreateTeamPage: React.FC<Props> = (props) => {
+import { fetchFriendsDataAPI } from "@src/api";
+
+const CreateTeamPage: React.FC = () => {
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [scopeType, setScopeType] = useState<number>(0);
-  const [friendLists, setFriendLists] = useState<[string] | []>([]);
-  /* useEffect(() => {
-    fetchFriendListsHandler();
-  }, []);*/
   const personalButtonClickedHandler = () => {
     setClickSelectMember(true);
     setClickSelectScope(false);
@@ -70,7 +65,7 @@ const CreateTeamPage: React.FC<Props> = (props) => {
       </div>
     ) : clickSelectMember === true ? (
       <div>
-        <SelectMemberPrompt members={props.member} />
+        <SelectMemberPrompt />
       </div>
     ) : (
       <div>Error Occurs : Contact Staff</div>

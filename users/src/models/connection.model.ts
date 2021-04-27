@@ -3,9 +3,6 @@ import { FriendStatus } from '@cuconnex/common'
 import { TableName } from './types';
 
 
-
-
-
 interface ConnectionAttrs {
     senderId: string;
     receiverId: string;

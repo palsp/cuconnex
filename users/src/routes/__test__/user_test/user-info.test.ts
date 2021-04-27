@@ -1,17 +1,25 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { Member } from '../../models/member.model';
-import { User } from '../../models/user.model';
+import { app } from '../../../app';
+import { User, IsMember } from '../../../models';
 import { Business } from '@cuconnex/common';
 import { TeamStatus } from '@cuconnex/common';
-import { Interest } from '../../models/interest.model';
+import { Interest } from '../../../models/interest.model';
 
 describe('USER--INFO: Get list of teams from user', () => {
   it('should return 404 if userId is not found', async () => {
+    const user = await User.create({
+      id: '6131778821',
+      name: 'pal',
+    });
+    const interest = await Interest.findOne({
+      where: { description: Business.BusinessCase },
+    });
+    await user.addInterest(interest!);
+
     const searchId = '6131886621';
     const res = await request(app)
-      .get(`/api/members/${searchId}`)
-      .set('Cookie', global.signin('1'))
+      .get(`/api/users/teams/${searchId}`)
+      .set('Cookie', global.signin(user.id))
       .send()
       .expect(404);
   });
@@ -22,10 +30,10 @@ describe('USER--INFO: Get list of teams from user', () => {
       name: 'pal',
     });
 
-    await Member.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
+    await IsMember.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Pending });
 
     const res = await request(app)
-      .get(`/api/members/${user.id}`)
+      .get(`/api/users/teams/${user.id}`)
       .set('Cookie', global.signin(user.id))
       .send()
       .expect(200);
@@ -46,12 +54,12 @@ describe('USER--INFO: Get list of teams from user', () => {
     const team2 = await user.createTeams({ name: 'testTeam2', description: '' });
     const team3 = await user.createTeams({ name: 'testTeam3', description: '' });
 
-    await Member.create({ userId: user.id, teamName: 'testTeam1', status: TeamStatus.Accept });
-    await Member.create({ userId: user.id, teamName: 'testTeam2', status: TeamStatus.Accept });
-    await Member.create({ userId: user.id, teamName: 'testTeam3', status: TeamStatus.Pending });
+    await team1.addAndAcceptMember(user);
+    await team2.addAndAcceptMember(user);
+    await team3.inviteMember(user);
 
     const res = await request(app)
-      .get(`/api/members/${user.id}`)
+      .get(`/api/users/teams/${user.id}`)
       .set('Cookie', global.signin(user.id))
       .send()
       .expect(200);

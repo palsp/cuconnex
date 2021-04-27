@@ -22,9 +22,11 @@ const Tab: React.FC<Props> = (props) => {
     >
       <div className={classes.tabValue}>{props.value}</div>
       <div className={classes.tabNumber}>
-        <div className={classes.circle}>
-          <p>{props.number}</p>
-        </div>
+        {props.number ? (
+          <div className={classes.circle}>
+            <p>{props.number}</p>
+          </div>
+        ) : null}
       </div>
     </button>
   );

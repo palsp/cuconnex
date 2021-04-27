@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
+import { } from '@cuconnex/common';
 
 
 const validateEnvAttr = () => {
@@ -26,23 +27,24 @@ const validateEnvAttr = () => {
 };
 
 const start = async () => {
-
+  // check if all required env variable have been declared
   validateEnvAttr();
 
   try {
-    // check if all required env variable have been declared
 
     await initializeDB();
 
     // initial data for interest and category 
-    await startDB();
+    // it should be run only once
+    // await startDB();
 
   } catch (err) {
     console.log(err);
   }
   app.listen(3000, () => {
-    console.log('Listening on port 3000....');
+    console.log('Listening on port 3000');
   });
 };
 
 start();
+

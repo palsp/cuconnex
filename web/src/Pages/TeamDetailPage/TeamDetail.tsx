@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
 import { Heading } from "@dumbComponents/UI/index";
@@ -13,10 +13,24 @@ import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 import { motion } from "framer-motion";
 
 import containerVariants from "@src/models/models";
+import { ITeam } from "@src/models/index";
+import { UserContext } from "@context/UserContext";
 
-const TeamDetail: React.FC = () => {
+interface Props {
+  location: {
+    state: {
+      team: ITeam;
+    };
+  };
+}
+
+const TeamDetail: React.FC<Props> = (props) => {
+  const { userData } = useContext(UserContext);
   // Is user be team owner ?
-  const isTeamOwner = false;
+  let isTeamOwner = false;
+  if (userData.id === props.location.state.team.creatorId) {
+    isTeamOwner = true;
+  }
   // Is team already exist ? (create team process)
   const isTeamExist = true;
 
@@ -54,7 +68,11 @@ const TeamDetail: React.FC = () => {
 
       <div className={classes.info}>
         <div className={classes.profileInfo}>
-          <TeamInfo name="Suki Tee Noi" isTeamOwner={isTeamOwner} />
+          {/* <TeamInfo name="Suki Tee Noi" isTeamOwner={isTeamOwner} /> */}
+          <TeamInfo
+            name={props.location.state.team.name}
+            isTeamOwner={isTeamOwner}
+          />
         </div>
       </div>
 

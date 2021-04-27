@@ -10,10 +10,8 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-
 import { motion, useSpring } from "framer-motion";
 import { useNavigation } from "framer";
-
 import { ITeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
 import { UserContext } from "@context/UserContext";
@@ -26,16 +24,18 @@ interface Props {
 const LandingHero: React.FC<Props> = (props) => {
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const { userData } = useContext(UserContext);
-  const fetchTeamHandler = async () => {
-    const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData);
-    return teamData.data.teams;
-  };
 
+  const fetchTeamHandler = async () => {
+    try {
+      const teamData = await callTeamOfUserAPI(userData.id);
+      console.log("fetchTeamHandler", teamData);
+      setCurrentTeamLists(teamData.data.teams);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) =>
-    setCurrentTeamLists(value)
-  );
+    fetchTeamHandler();
   }, []);
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
@@ -68,7 +68,7 @@ const LandingHero: React.FC<Props> = (props) => {
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
-          <Link to="/profile">
+          <Link to={{ pathname: "/profile", state: { users: props.userData } }}>
             <ProfilePic size="small" PicUrl={props.userData.image} />
           </Link>
         </div>

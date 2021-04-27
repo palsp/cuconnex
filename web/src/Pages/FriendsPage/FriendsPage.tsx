@@ -5,25 +5,25 @@ import { FriendLists, SearchBar } from "@smartComponents/index";
 import { Heading } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 import { motion } from "framer-motion";
-import containerVariants, { IUser } from "@src/models/models";
+import containerVariants, { IUser, IUserFriend } from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
 import { fetchFriendsDataAPI } from "@src/api";
 
 const FriendsPage: React.FC = () => {
-  const [friendLists, setFriendLists] = useState<[IUser] | []>([]);
-   useEffect(() => {
-     fetchFriendsHandler().then((value: [IUser] | []) =>
-       setFriendLists(value)
-     );
+  const [hasSearch, setHasSearch] = useState<boolean>(false);
+  const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
+  useEffect(() => {
+    fetchFriendsHandler().then((value: IUserFriend[] | []) =>
+      setFriendLists(value)
+    );
   }, []);
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
     console.log("SUCCESS fetchFriendsHandler", friendsData.data);
     return friendsData.data.connections;
   };
-  const test= fetchFriendsHandler();
-  console.log(test);
+
   return (
     <motion.div
       variants={containerVariants}
@@ -35,7 +35,10 @@ const FriendsPage: React.FC = () => {
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
           <div className={classes.relativeArrow}>
-            <Link data-test="friends-page-back-link" to="/landing">
+            <Link
+              data-test="friends-page-back-link"
+              to={{ pathname: "/landing", state: { hamburgerOn: true } }}
+            >
               <ArrowLeft data-test="friends-page-arrow-left" />
             </Link>
           </div>
@@ -44,14 +47,25 @@ const FriendsPage: React.FC = () => {
             value="My connections"
             size="medium"
           />
-          <SearchBar
-            data-test="friends-page-search-bar"
-            value="Search By Name"
-          />
+          <div className={classes.searchDiv}>
+            <SearchBar
+              data-test="friends-page-search-bar"
+              value="Search By Name"
+            />
+          </div>
         </div>
       </div>
-
-      {/* <FriendLists connections={friendLists}/> */}
+      <div className={classes.listDiv}>
+        <FriendLists
+          data-test="friends-page-friend-lists"
+          connections={friendLists}
+        />
+      </div>
+      {/* Home's work
+      <FriendLists
+        data-test="friends-page-friend-lists"
+        friendLists={mockFriendLists}
+      />  */}
     </motion.div>
   );
 };

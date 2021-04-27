@@ -13,7 +13,6 @@ import {
   IInviteDataResult,
   ISearchUserTeamEventResult,
   IUser,
-  ITeam,
   IFetchTeamNotification,
   IFetchFriendsData,
   IConnected,
@@ -21,6 +20,9 @@ import {
   IAddFriendResponse,
   ICallTeamOfUser,
   IFetchFriendNotification,
+  IFetchFriendReceivedNotification,
+  IGetTeam,
+  ITeamMembers,
 } from "@src/models";
 
 //Auth Services
@@ -87,10 +89,26 @@ const teamInvitationAPI = async (
   invitedData: IInviteData
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
-    "/api/members/invite/",
+    "/api/teams/members/",
     invitedData
   );
   return invitedUsersData;
+};
+const fetchTeamDataAPI = async (
+  name: string
+): Promise<AxiosResponse<IGetTeam>> => {
+  const teamDetailsData: AxiosResponse<IGetTeam> = await axios.post(
+    `/api/teams/${name}`
+  );
+  return teamDetailsData;
+};
+const fetchTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<ITeamMembers>> => {
+  const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
+    `/api/teams/${teamName}`
+  );
+  return teamMembersData;
 };
 const callTeamOfUserAPI = async (
   userId: string
@@ -112,6 +130,7 @@ const createUserDataAPI = async (
   formData.append("image", createUserData.image);
   formData.append("bio", createUserData.bio);
   formData.append("year", createUserData.year);
+  formData.append("role", createUserData.role);
   const userCreatedData = await axios({
     method: "post",
     url: "/api/users/",
@@ -145,6 +164,15 @@ const fetchFriendNotificationAPI = async (): Promise<
 > => {
   const friendNotificationData: AxiosResponse<IFetchFriendNotification> = await axios.get(
     "/api/users/friends/request/"
+  );
+
+  return friendNotificationData;
+};
+const fetchFriendReceivedNotificationAPI = async (): Promise<
+  AxiosResponse<IFetchFriendReceivedNotification>
+> => {
+  const friendNotificationData: AxiosResponse<IFetchFriendReceivedNotification> = await axios.get(
+    "/api/users/friends/request/received"
   );
 
   return friendNotificationData;
@@ -204,4 +232,7 @@ export {
   addFriendAPI,
   callTeamOfUserAPI,
   addFriendResponseAPI,
+  fetchFriendReceivedNotificationAPI,
+  fetchTeamDataAPI,
+  fetchTeamMembersAPI,
 };

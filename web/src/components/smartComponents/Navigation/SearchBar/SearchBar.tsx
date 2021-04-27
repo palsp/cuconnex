@@ -6,7 +6,7 @@ import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
 import useDebounce from "@hooks/useDebounce";
 import { searchUserTeamEvent } from "@api/index";
-import { IEventData,  ITeam, IUser } from "@src/models";
+import { IEventData, ITeam, IUser } from "@src/models";
 
 interface Props {
   value: string;
@@ -37,14 +37,25 @@ const SearchBar: React.FC<Props> = (props) => {
       "searchResult =",
       result.data
     );
-    if (props.setPeopleLists) {
+    if (props.setPeopleLists && props.setNoSearchResult) {
       props.setPeopleLists(result.data.users);
+      props.setNoSearchResult(false);
     }
-    if (props.setTeamLists) {
-      props.setTeamLists(result.data.teams);
+    if (props.setTeamLists && props.setNoSearchResult) {
+      props.setTeamLists(result.data.team);
+      props.setNoSearchResult(false);
     }
-    if (props.setEventLists) {
+    if (props.setEventLists && props.setNoSearchResult) {
       props.setEventLists(result.data.events);
+      props.setNoSearchResult(false);
+    }
+    if (
+      result.data.users.length === 0 &&
+      result.data.team.length === 0 &&
+      result.data.events.length === 0 &&
+      props.setNoSearchResult
+    ) {
+      props.setNoSearchResult(true);
     }
     return result;
   };

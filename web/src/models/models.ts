@@ -2,14 +2,15 @@
 export interface IUser {
   id: string;
   name: string;
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  // interests: {
+  //   Technology: string[];
+  //   Business: string[];
+  //   Design: string[];
+  // };
+  interests: string[];
   faculty: string;
   year: string;
-  major: string;
+  role: string;
   bio: string;
   image: string;
 }
@@ -21,14 +22,10 @@ export interface IUserFriend {
     senderId: string;
     status: string;
   };
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  interests: string[];
   faculty: string;
   year: string;
-  major: string;
+  role: string;
   bio: string;
   image: string;
 }
@@ -42,7 +39,7 @@ export interface ITeam {
 
 export interface ISearchUserTeamEventResult {
   users: IUser[];
-  teams: ITeam[];
+  team: ITeam[];
   events: IEventData[];
 }
 export interface IUserSignup {
@@ -54,6 +51,8 @@ export interface IUserSignup {
 export interface IResultSigninSignup {
   email: string;
   id: string;
+  faculty: string;
+  year: number;
 }
 
 export interface IUserSignin {
@@ -76,14 +75,15 @@ export interface IAddFriendResponse {
 export interface IFetchUserData {
   id: string;
   name: string;
-  interests: {
-    Technology: string[];
-    Business: string[];
-    Design: string[];
-  };
+  // interests: {
+  //   Technology: string[];
+  //   Business: string[];
+  //   Design: string[];
+  // };
+  interests: string[];
   faculty: string;
   year: string;
-  major: string;
+  role: string;
   bio: string;
   image: string;
 }
@@ -99,10 +99,11 @@ export interface ICreateUserData {
   bio: string;
   year: string;
   image: File;
-  major?: string;
+  role: string;
 }
+
 export interface IFetchFriendsData {
-  connections: [IUser];
+  connections: IUserFriend[];
 }
 //events
 export interface IFetchEventsData {
@@ -137,13 +138,20 @@ export interface IEventData {
   };
 }
 //team
+export interface IGetTeam {
+  team: ITeam;
+}
 export interface ITeamData {
   name: string;
   description: string;
 }
+
 export interface ITeamDataResult {
-  name: string;
-  description: string;
+  message: string;
+}
+
+export interface ITeamMembers {
+  users: IUser[];
 }
 
 export interface IInviteData {
@@ -152,7 +160,6 @@ export interface IInviteData {
 }
 
 export interface IInviteDataResult {
-  message: string;
   User: string;
   Team: string;
 }
@@ -190,7 +197,10 @@ export interface IFetchTeamNotification {
   teamNames: string[];
 }
 export interface IFetchFriendNotification {
-  requests: [IUserFriend];
+  requests: IUserFriend[];
+}
+export interface IFetchFriendReceivedNotification {
+  requests: IUserFriend[];
 }
 
 //Search
@@ -218,5 +228,12 @@ const containerVariants = {
     },
   },
 };
+
+//Education
+
+export interface IEducationData {
+  faculty: string;
+  year: string;
+}
 
 export default containerVariants;

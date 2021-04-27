@@ -6,6 +6,7 @@ import TeamInvitationList from "@smartComponents/TeamInvitationLists/TeamInvitat
 
 interface Props {
   TeamInvitationlist: TeamInvitationListsData[] | [];
+  teamNames?:string[];
 }
 
 const TeamInvitationLists: React.FC<Props> = (props) => {

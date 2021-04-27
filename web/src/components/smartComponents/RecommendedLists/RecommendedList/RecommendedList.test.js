@@ -7,6 +7,7 @@ const recommended = {
   name: "Nat",
   profilePic: "",
   interest: "Marketing, Startup",
+  image: "",
   year: 3,
 };
 

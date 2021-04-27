@@ -125,8 +125,15 @@ describe(' accept friend request ', () => {
       })
       .expect(201);
 
-    const relation = await sender.findRelation(receiver.id);
-    expect(relation).toEqual(FriendStatus.Accept);
+
+    const sendConn = await sender.getConnection();
+    const rcvConn = await receiver.getConnection();
+    expect(sendConn).toHaveLength(1)
+    expect(rcvConn).toHaveLength(1)
+    const SR = await sender.findRelation(receiver.id);
+    const RS = await receiver.findRelation(sender.id);
+    expect(SR).toEqual(FriendStatus.Accept);
+    expect(RS).toEqual(FriendStatus.Accept);
   });
 
   it('should update relation status on rejected', async () => {
@@ -145,7 +152,14 @@ describe(' accept friend request ', () => {
       })
       .expect(201);
 
-    const relation = await sender.findRelation(receiver.id);
-    expect(relation).toEqual(FriendStatus.Reject);
+    const sendConn = await sender.getConnection();
+    const rcvConn = await receiver.getConnection();
+    expect(sendConn).toHaveLength(1)
+    expect(rcvConn).toHaveLength(0)
+    const SR = await sender.findRelation(receiver.id);
+    const RS = await receiver.findRelation(sender.id);
+    expect(SR).toEqual(FriendStatus.toBeDefined);
+    expect(RS).toEqual(FriendStatus.toBeDefined);
+
   });
 });

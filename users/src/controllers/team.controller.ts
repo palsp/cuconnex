@@ -1,147 +1,151 @@
 import { Request, Response } from 'express';
-import { NotFoundError, BadRequestError, TeamStatus } from '@cuconnex/common';
-import { Team, Member, UserInterest, User } from '../models'
+import { BadRequestError, NotFoundError } from '@cuconnex/common';
+import { Team, IsMember, User } from '../models';
+import { IUserResponse, ITeamResponse, IIsMemberResponse } from '../interfaces';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
-    const name = req.params.name;
+  const name = req.params.name;
 
-    const team = await Team.findOne({ where: { name } });
+  const team = await Team.findOne({ where: { name } });
 
-    if (!team) {
-        throw new BadRequestError('Team not found!');
-    }
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
 
-    res.status(200).send({ team: team });
-}
+  const response: ITeamResponse = team.toJSON();
+  res.status(200).send(response);
+};
 
 export const createTeam = async (req: Request, res: Response) => {
-    const { name, description } = req.body;
-    const user = req.user!;
+  const { name, description } = req.body;
+  const user = req.user!;
 
+  const team = await Team.findOne({ where: { name } });
+  if (team) {
+    throw new BadRequestError('Team name already existed.');
+  }
 
-    const team = await Team.findOne({ where: { name } });
-    if (team) {
-        throw new BadRequestError('Team name already existed.');
-    }
+  let newTeam;
+  try {
+    newTeam = await user.createTeams({ name, description });
+    await newTeam.addAndAcceptMember(user);
+  } catch (err) {
+    throw new BadRequestError('Create Team Failed');
+  }
+  const response: ITeamResponse = newTeam.toJSON();
 
-    let newTeam;
-    let status;
-    try {
-        newTeam = await user.createTeams({ name, description });
-        status = await Member.create({
-            userId: user.id,
-            teamName: name,
-            status: TeamStatus.Accept
-        });
-
-    } catch (err) {
-        throw new BadRequestError('Create Team Failed')
-    }
-
-    res.status(201).send({
-        creatorId: user.id,
-        name: newTeam!.name,
-        status
-    });
-
-}
+  res.status(201).send(response);
+};
 
 export const getTeamMember = async (req: Request, res: Response) => {
-    const teamName = req.params.name
+  const teamName = req.params.name;
 
-    const team = await Team.findOne({ where: { name: teamName } });
+  const team = await Team.findOne({ where: { name: teamName } });
 
-    if (!team) {
-        throw new BadRequestError('Team not found!');
-    }
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
 
-    /**
-     * TODO: It should return all user information such as bio and interests , it returns onlt userId and Status
-     */
-    const members = await Member.findAll({ where: { teamName } });
+  const acceptedUsers: User[] = await team.getMembers();
 
-    res.status(200).send({ members: members });
+  const response: IUserResponse[] = acceptedUsers.map((eachUser) => {
+    return eachUser.toJSON();
+  });
 
-}
+  res.status(200).send(response);
+};
 
 /**
- * 
- * @param req 
- * @param res 
+ *
+ * @param req
+ * @param res
  */
 export const addTeamMember = async (req: Request, res: Response) => {
-    const sender = req.user!;
+  const sender = req.user!;
 
-    const { teamName, newMemberId } = req.body;
+  const { teamName, newMemberId } = req.body;
 
-    //Find if there is a user in the database with the id we want to invite, and if their exists a team to add.
-    const receiver = await User.findOne({ where: { id: newMemberId } });
+  //Find if there is a user in the database with the id we want to invite, and if their exists a team to add.
+  const receiver = await User.findOne({ where: { id: newMemberId } });
 
-    const team = await Team.findOne({ where: { name: teamName } });
+  const team = await Team.findOne({ where: { name: teamName } });
 
-    if (!receiver) {
-        throw new BadRequestError('User not found!');
+  if (!receiver) {
+    throw new NotFoundError('User');
 
-        // else if มี receiver แต่ receiver not yet fill info.
-    }
+    // else if มี receiver แต่ receiver not yet fill info.
+  }
 
-    if (!team) {
-        throw new BadRequestError('Team not found!');
-    }
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
 
-    const isInviterAMember = await Member.findOne({ where: { teamName, userId: sender.id } });
-    if (!isInviterAMember) {
-        /**
-         * Logic มันแปลกๆนะ invitor ต้อง accpet ด้วยหรอ?
-         */
-        throw new BadRequestError('The inviter is not a team member.');
-    } else if (isInviterAMember.status !== 'Accept') {
-        throw new BadRequestError('The inviter is not yet a team member.');
-    }
+  const isInviterAMember = await IsMember.findOne({ where: { teamName, userId: sender.id } });
+  if (!isInviterAMember) {
+    throw new BadRequestError('The inviter is not a team member.');
+  } else if (isInviterAMember.status !== 'Accept') {
+    throw new BadRequestError('The inviter is not yet a team member.');
+  }
 
-    const member = await Member.findOne({ where: { teamName, userId: newMemberId } });
-    // if there is a member status : 'accept || reject || pending ' do nothing
-    if (member) {
-        throw new BadRequestError('This user already have status: ' + member.status);
-    }
+  await team.inviteMember(receiver);
 
-    /**
-     * TODO: this must not be create by a join table
-     */
-    await Member.create({ userId: newMemberId, teamName, status: TeamStatus.Pending });
-
-    res.status(201).send({ message: 'Invite pending', userId: receiver!.id, team: team!.name });
-
-}
-
+  res.status(201).send({ message: 'Invite pending', userId: receiver!.id, team: team!.name });
+};
 
 export const requetToJoinTeam = async (req: Request, res: Response) => {
+  const user = req.user!;
 
-    const user = req.user!;
+  const { teamName } = req.body;
 
-    const { teamName } = req.body;
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
 
+  await team.inviteMember(user);
 
-    const team = await Team.findOne({ where: { name: teamName } });
-    if (!team) {
-        throw new BadRequestError('Team not found!');
-    }
+  res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
+};
 
-    const member = await Member.findOne({ where: { teamName, userId: user.id } });
+export const manageStatus = async (req: Request, res: Response) => {
+  const { targetUserId, teamName, status } = req.body;
 
-    // if there is a member status : 'accept || reject || pending ' do nothing
-    if (member) {
-        throw new BadRequestError('This user already have status: ' + member.status);
-    }
+  const team = await Team.findOne({ where: { name: teamName } });
+  const targetUser = await User.findOne({ where: { id: targetUserId } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  } else if (!targetUser) {
+    throw new NotFoundError('User');
+  } else if (team.creatorId !== req.user!.id) {
+    throw new BadRequestError('You are not the team creator!');
+  }
 
-    const newMember = await Member.create({
-        userId: user.id,
-        teamName,
-        status: TeamStatus.Pending,
-    });
+  const member = await IsMember.findOne({ where: { teamName, userId: targetUserId } });
+  if (!member) {
+    throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
+  }
 
-    res.status(201).send({ message: 'Request pending', member: newMember });
+  team.editMemberStatus(targetUser, status);
 
+  res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
+};
 
-}
+export const getOutGoingRequests = async (req: Request, res: Response) => {
+  const user = req.user!;
+  const teamName = req.params.name;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  const isMember = await IsMember.findOne({ where: { teamName, userId: user.id } });
+  if (!isMember) {
+    throw new BadRequestError('The request user is not part of the team');
+  }
+
+  const response: IIsMemberResponse = await team.getOutgoingRequests();
+
+  res.status(200).send(response);
+};

@@ -12,13 +12,16 @@ const Username: React.FC<Props> = (props) => {
     case "pink":
       cssArray = [classes.usernamePink];
       break;
+    case "black":
+      cssArray = [classes.userNameBlack];
+      break;
     default:
       cssArray = [classes.pTag];
       break;
   }
   return (
     <div data-test="usernameComponent">
-      <p className={classes.pTag} data-test="username-prop-value">
+      <p className={cssArray.join(" ")} data-test="username-prop-value">
         {props.value}
       </p>
     </div>

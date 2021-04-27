@@ -70,16 +70,17 @@ func TestDBInit() (*gorm.DB, error) {
 
 }
 
-// TestDBFree delete the database after running testing case
-func TestDBFree(test_db *gorm.DB) error {
-	db, err := test_db.DB()
-	db.Exec("DROP DATABASE ?", "eventdb_test")
-	db.Close()
-
-	return err
-}
-
 // GetDB returns a connection
 func GetDB() *gorm.DB {
 	return DB
+}
+
+
+// TestDBFree delete the database after running testing case
+func TestDBFree(test_db *gorm.DB) error {
+	db, err := test_db.DB()
+	db.Exec("DROP TABLE ?", "events")
+	db.Close()
+
+	return err
 }

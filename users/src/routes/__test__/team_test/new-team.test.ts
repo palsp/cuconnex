@@ -1,24 +1,22 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { Member } from '../../../models/member.model';
-import { User } from '../../../models/user.model';
+import { User, IsMember } from '../../../models';
 import { Business, TeamStatus } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
 
 const setupTeam = async () => {
   const user = await User.create({
     id: '6131886621',
-    name: 'pal'
+    name: 'pal',
   });
   const interest = await Interest.findOne({
-    where: { description: Business.BusinessCase }
+    where: { description: Business.BusinessCase },
   });
   await user.addInterest(interest!);
   const team = await user.createTeams({ name: 'testTeam', description: 'this is a great team' });
 
-  return { user, interest, team }
-}
-
+  return { user, interest, team };
+};
 
 describe('Create a Team Test', () => {
   it('should return 400 if team name is already existed', async () => {
@@ -29,7 +27,7 @@ describe('Create a Team Test', () => {
       .set('Cookie', global.signin(user.id))
       .send({
         name: team.name,
-        description: team.description
+        description: team.description,
       })
       .expect(400);
 
@@ -57,7 +55,7 @@ describe('Create a Team Test', () => {
       .set('Cookie', global.signin(id))
       .send({
         name: 'testTeam',
-        description: "test description"
+        description: 'test description',
       })
       .expect(400);
 
@@ -68,8 +66,8 @@ describe('Create a Team Test', () => {
   it('should create team successfully if user is authorized and team name is unique.', async () => {
     const team = {
       name: 'newTeam',
-      description: 'my new team'
-    }
+      description: 'my new team',
+    };
     const { user } = await setupTeam();
 
     const { body } = await request(app)
@@ -77,11 +75,11 @@ describe('Create a Team Test', () => {
       .set('Cookie', global.signin(user.id))
       .send({
         name: team.name,
-        description: team.description
+        description: team.description,
       })
       .expect(201);
 
-    const status = await Member.findAll({ where: { userId: user.id, teamName: team.name } });
+    const status = await IsMember.findAll({ where: { userId: user.id, teamName: team.name } });
 
     expect(status[0].userId).toEqual(user.id);
     expect(status[0].teamName).toEqual('newTeam');
@@ -89,5 +87,7 @@ describe('Create a Team Test', () => {
 
     expect(body.creatorId).toEqual(user.id);
     expect(body.name).toEqual('newTeam');
+    // expect(body.dataValues.creatorId).toEqual(user.id);
+    // expect(body.dataValues.name).toEqual('newTeam');
   });
 });

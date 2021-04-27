@@ -28,7 +28,7 @@ export interface SelectedMemberLists {
   selected: boolean;
 }
 export interface MemberTagData {
-  users:UsersData[]
+  users: UsersData[];
 }
 export interface ActivityListsData {
   activityPic: string;
@@ -37,10 +37,10 @@ export interface ActivityListsData {
   status: string;
 }
 export interface EducationListsData {
-  educationPic: string;
+  // educationPic: string;
   faculty: string;
   year: string;
-  major: string;
+  // major: string;
 }
 export interface MyTeamListsData {
   name: string;
@@ -92,11 +92,13 @@ export interface UsersData {
     Design: string[];
   };
   faculty: string;
-  profilePic: string;
+  year: string;
+  role: string;
+  bio: string;
+  image: string;
 }
 export interface InterestData {
-  Business:string[],
-  Technology:string[],
-  Design:string[],
+  Business: string[];
+  Technology: string[];
+  Design: string[];
 }
-

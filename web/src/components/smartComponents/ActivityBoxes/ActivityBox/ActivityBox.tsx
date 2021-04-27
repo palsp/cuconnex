@@ -27,34 +27,50 @@ interface Props {
   };
 }
 
+export enum activityName {
+  ads = "Ads",
+  webBuilder = "Web Builder",
+  chatBot = "Chatbot",
+  coding = "Coding",
+  finTech = "FinTech",
+  graphic = "Graphic",
+  fashion = "Fashion",
+  marketing = "Marketing",
+  businessCase = "Business Case",
+  startup = "Startup",
+  ecommerce = "Ecommerce",
+  uxui = "UX/UI",
+  finance = "Finance",
+}
+
 const ActivityBox: React.FC<Props> = (props) => {
   let icon;
 
-  if (props.activityBox.activityName === "Ads") {
+  if (props.activityBox.activityName === activityName.ads) {
     icon = <Ads />;
-  } else if (props.activityBox.activityName === "Web Builder") {
+  } else if (props.activityBox.activityName === activityName.webBuilder) {
     icon = <WebBuilder />;
-  } else if (props.activityBox.activityName === "Chatbot") {
+  } else if (props.activityBox.activityName === activityName.chatBot) {
     icon = <Chatbot />;
-  } else if (props.activityBox.activityName === "Coding") {
+  } else if (props.activityBox.activityName === activityName.coding) {
     icon = <Coding />;
-  } else if (props.activityBox.activityName === "FinTech") {
+  } else if (props.activityBox.activityName === activityName.finTech) {
     icon = <FinTech />;
-  } else if (props.activityBox.activityName === "Graphic") {
+  } else if (props.activityBox.activityName === activityName.graphic) {
     icon = <Graphic />;
-  } else if (props.activityBox.activityName === "Fashion") {
+  } else if (props.activityBox.activityName === activityName.fashion) {
     icon = <Fashion />;
-  } else if (props.activityBox.activityName === "Marketing") {
+  } else if (props.activityBox.activityName === activityName.marketing) {
     icon = <Marketing />;
-  } else if (props.activityBox.activityName === "Business Case") {
+  } else if (props.activityBox.activityName === activityName.businessCase) {
     icon = <Case />;
-  } else if (props.activityBox.activityName === "Startup") {
+  } else if (props.activityBox.activityName === activityName.startup) {
     icon = <Startup />;
-  } else if (props.activityBox.activityName === "Ecommerce") {
+  } else if (props.activityBox.activityName === activityName.ecommerce) {
     icon = <Ecommerce />;
-  } else if (props.activityBox.activityName === "UXUI") {
+  } else if (props.activityBox.activityName === activityName.uxui) {
     icon = <UXUI />;
-  } else if (props.activityBox.activityName === "Finance") {
+  } else if (props.activityBox.activityName === activityName.finance) {
     icon = <Finance />;
   } else {
     icon = <Blockchain />;
