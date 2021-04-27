@@ -109,33 +109,34 @@ it('should not save duplicate interest list', async () => {
 });
 
 
-// it('should create user successfully with optional field', async () => {
-//   const id = '6131776621';
-//   const user = {
-//     interests: {
-//       Technology: [Technology.Coding, Technology.Coding],
-//     },
-//     name: 'test',
-//     role: 'developer',
-//     bio: 'I am the best programmer in the world',
-//   };
-//   const { body } = await request(app)
-//     .post('/api/users')
-//     .set('Cookie', global.signin(id))
-//     .send({
-//       ...user,
-//     })
-//     .expect(201);
+it('should create user successfully with optional field', async () => {
+  const id = '6131776621';
+  const user = {
+    interests: {
+      Technology: [Technology.Coding, Technology.Coding],
+    },
+    name: 'test',
+    role: 'developer',
+    bio: 'I am the best programmer in the world',
+  };
+
+  await request(app)
+    .post('/api/users')
+    .set('Cookie', global.signin(id))
+    .send({
+      ...user,
+    })
+    .expect(201);
 
 
-//   const saveUser = await User.findOne({ where: { id } });
-//   expect(saveUser).not.toBeNull();
-//   const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString()
-//   expect(saveUser!.name).toEqual(user.name);
-//   expect(saveUser!.year).toEqual(year);
-//   expect(saveUser!.faculty).toEqual(faculty["21"])
-//   expect(saveUser!.role).toEqual(user.role);
-//   expect(saveUser!.bio).toEqual(user.bio);
-// });
+  const saveUser = await User.findOne({ where: { id } });
+  expect(saveUser).not.toBeNull();
+  const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString()
+  expect(saveUser!.name).toEqual(user.name);
+  expect(saveUser!.year).toEqual(year);
+  expect(saveUser!.faculty).toEqual(faculty["21"])
+  expect(saveUser!.role).toEqual(user.role);
+  expect(saveUser!.bio).toEqual(user.bio);
+});
 
 // it.todo('add interest by category');

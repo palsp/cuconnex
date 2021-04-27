@@ -165,7 +165,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
     }
     return result;
-    // for (let interest of interests) {
   }
 
   /**
