@@ -6,12 +6,14 @@ import {
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
+  HasManyAddAssociationMixin,
   Association,
   Sequelize,
 } from 'sequelize';
 import {
   BadRequestError,
   NotFoundError,
+  TeamStatus,
   FriendStatus,
   Description,
   faculty,
@@ -159,7 +161,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include: 'interests' });
+    return await User.findOne({ where: { id: userId }, include: 'interests' });
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -332,11 +334,46 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @param {string} attrs.description - A description of the team
    * @returns
    */
+
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
       name: attrs.name,
       description: attrs.description,
     });
+  }
+
+  // public addRequest!: BelongsToManyAddAssociationMixin<IsMember, Team>;
+  // public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
+
+  public async requestToJoin(team: Team) {
+    await IsMember.create({
+      teamName: team.name,
+      userId: this.id,
+      status: TeamStatus.Pending,
+      sender: 'user',
+    });
+  }
+
+  // the team(s) that created by myself + the team(s) that I belongs to
+  public async getMyTeams(): Promise<Team[]> {
+    let teams: Team[] = [];
+    const myOwnTeams = await Team.findAll({ where: { creatorId: this.id } });
+    if (myOwnTeams && myOwnTeams.length > 0) {
+      teams = teams.concat(myOwnTeams);
+    }
+
+    // this find all except the creator himself
+    const isMembers = await IsMember.findAll({
+      where: { userId: this.id, status: TeamStatus.Accept },
+    });
+
+    for (let i = 0; i < isMembers.length; i++) {
+      let team = await Team.findOne({ where: { name: isMembers[i].teamName } });
+      if (team) {
+        teams.push(team);
+      }
+    }
+    return teams;
   }
 
   public toJSON(): IUserResponse {

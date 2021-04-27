@@ -10,9 +10,9 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
-import { TeamStatus, BadRequestError } from '@cuconnex/common';
+import { TeamStatus, BadRequestError, NotFoundError } from '@cuconnex/common';
 
-import { ITeamResponse, IUserResponse, IOutGoingRequest, IIsMemberResponse } from '../interfaces';
+import { ITeamResponse, IUserResponse, IOutgoingRequestResponse } from '../interfaces';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -65,18 +65,24 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // this addMember function just create PENDING status not ACCEPTED -> try use the 'addAndAcceptMember' function instead
   public addMember!: BelongsToManyAddAssociationMixin<IsMember, User>;
+  // public addMember!: BelongsToManyAddAssociationMixin<User, { status: TeamStatus }>;
   public getMember!: BelongsToManyGetAssociationsMixin<User>;
 
   // create PENDING status to the user
-  public async inviteMember(user: User) {
-    const member = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
+  public async invite(user: User) {
+    let isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     // if there is a member status : 'accept || reject || pending ' do nothing
-    if (member) {
-      throw new BadRequestError(`This user already have status: ${member.status}`);
+    if (isMember) {
+      throw new BadRequestError(`This user already have status: ${isMember.status}`);
     }
 
-    return this.addMember(user);
+    await IsMember.create({
+      teamName: this.name,
+      userId: user.id,
+      status: TeamStatus.Pending,
+      sender: 'team',
+    });
   }
 
   // edit can be use to ACCEPT or REJECT status
@@ -96,8 +102,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
   }
 
-  // this will promptly create ACCEPT status for user >> mostly use for the creator of the team
-  public async addAndAcceptMember(user: User) {
+  // this will promptly create ACCEPT status for user promptly
+  public async add(user: User) {
     const isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     if (isMember) {
@@ -113,8 +119,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
 
     await this.addMember(user);
-    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
+    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
     if (!newIsMember) {
       throw new BadRequestError('IsMember db went wrong');
     }
@@ -124,24 +130,43 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     return;
   }
 
-  public async getOutgoingRequests(): Promise<IIsMemberResponse> {
+  // check if member part of the team
+  public async findMember(userId: string): Promise<Boolean> {
+    if (userId === this.creatorId) {
+      return true;
+    }
+
+    const isMember = await IsMember.findOne({ where: { teamName: this.name, userId } });
+    if (isMember) {
+      if (isMember.status === TeamStatus.Accept) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public async getOutgoingRequests(): Promise<IOutgoingRequestResponse> {
     const membersWithAllStatus: User[] = await this.getMember();
+
+    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'team' } });
+
+    if (!isMembers || isMembers.length < 1) {
+      throw new BadRequestError('This team has no pending request to any user.');
+    }
 
     if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
       throw new BadRequestError('This team has no member');
     }
 
-    let outGoingRequests: IOutGoingRequest[] = [];
-    for (let i = 0; i < membersWithAllStatus.length; i++) {
-      outGoingRequests.push({
-        user: membersWithAllStatus[i].toJSON(),
-        status: membersWithAllStatus[i].isMembers!.status,
-      });
+    let pendingUsers: IUserResponse[] = [];
+    for (let i = 0; i < isMembers.length; i++) {
+      let user = await User.findByPk(isMembers[i].userId);
+      pendingUsers.push(user!.toJSON());
     }
 
-    const response: IIsMemberResponse = {
+    const response: IOutgoingRequestResponse = {
       teamName: this.name,
-      outGoingRequests,
+      pendingUsers,
     };
 
     return response;
@@ -151,17 +176,21 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
-    // if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
-    //   throw new BadRequestError('This team has no member');
-    // }
-
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.isMembers!.status === TeamStatus.Accept) {
         return member;
       }
     });
 
+    const creator = await User.findByPk(this.creatorId);
+    acceptedUsers.push(creator!);
+
     return acceptedUsers;
+  }
+
+  public async fetchTeam() {
+    const members: User[] = await this.getMembers();
+    this.members = members;
   }
 
   public toJSON(): ITeamResponse {
@@ -169,7 +198,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     let returnMembers: IUserResponse[] = [];
 
     if (this.members) {
-      returnMembers = this.members.map((member) => member.toJSON());
+      returnMembers = this.members.map((member: User) => member.toJSON());
     }
 
     return { ...values, members: returnMembers };

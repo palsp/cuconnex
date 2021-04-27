@@ -8,6 +8,7 @@ import {
   IFindRelationResponse,
   IUserResponse,
   IViewProfileResponse,
+  ITeamResponse,
 } from '../interfaces';
 
 /**
@@ -149,12 +150,32 @@ export const findRelation = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
+export const requetToJoinTeam = async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const { teamName } = req.body;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  const isMember = await IsMember.findOne({ where: { teamName, userId: user.id } });
+  if (isMember) {
+    throw new BadRequestError('The user already pending a request to this team.');
+  }
+
+  await user.requestToJoin(team);
+
+  res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
+};
+
 export const getInvitationNoti = async (req: Request, res: Response) => {
   try {
     const user = req.user!;
 
     const invitations = await IsMember.findAll({
-      where: { userId: user.id, status: TeamStatus.Pending },
+      where: { userId: user.id, status: TeamStatus.Pending, sender: 'team' },
     });
 
     if (!invitations || invitations.length === 0) {
@@ -162,9 +183,13 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
       return res.status(204).send({ message: 'No invitaions', teams: [] });
     }
 
-    var teams = [];
+    var teams: ITeamResponse[] = [];
     for (let i = 0; i < invitations.length; i++) {
-      teams.push(invitations[i].teamName);
+      let team = await Team.findOne({ where: { name: invitations[i].teamName } });
+      if (team) {
+        await team.fetchTeam();
+        teams.push(team.toJSON());
+      }
     }
 
     res.status(200).send({ message: 'Invitation(s) is/are from these teams.', teams: teams });
@@ -180,42 +205,38 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
     throw new NotFoundError();
   }
 
-  const isMembers = await IsMember.findAll({ where: { userId: user.id } });
-
-  let returnTeams: any = [];
-  if (isMembers) {
-    isMembers.filter((isMember) => {
-      if (isMember.status === TeamStatus.Accept) {
-        returnTeams.push(isMember.teamName);
-      }
-    });
+  const teams: Team[] = await user.getMyTeams();
+  if (teams.length === 0) {
+    return res.status(200).send({ message: 'This user has no team yet.', teams: [] });
   }
 
-  res.status(200).send({ teams: returnTeams });
+  const response: ITeamResponse[] = [];
+  for (let team of teams) {
+    await team.fetchTeam();
+    response.push(team.toJSON());
+  }
+
+  res.status(200).send(response);
 };
 
 export const manageStatus = async (req: Request, res: Response) => {
   const user = req.user!;
   const { teamName, newStatusFromUser } = req.body;
 
-  try {
-    const team = await Team.findOne({ where: { name: teamName } });
+  const team = await Team.findOne({ where: { name: teamName } });
 
-    if (!team) {
-      throw new NotFoundError('Team');
-    }
-    await team.editMemberStatus(user, newStatusFromUser);
-
-    res
-      .status(200)
-      .send({ message: `Invitation from ${team.name} to ${user.name} is ${newStatusFromUser}.` });
-  } catch (err) {
-    throw new BadRequestError(err.message);
+  if (!team) {
+    throw new NotFoundError('Team');
   }
+  await team.editMemberStatus(user, newStatusFromUser);
+
+  res
+    .status(200)
+    .send({ message: `Invitation from ${team.name} to ${user.name} is ${newStatusFromUser}.` });
 };
 
 export const getInterest = async (req: Request, res: Response): Promise<void> => {
-  const categories = await Category.findAll({ include: "interests" });
+  const categories = await Category.findAll({ include: 'interests' });
 
   if (!categories) {
     console.log(categories);
@@ -223,7 +244,7 @@ export const getInterest = async (req: Request, res: Response): Promise<void> =>
 
   const response = categories.map((category: Category) => ({
     category: category.category,
-    interests: category.interests!.map((interest: Interest) => interest.serializer())
+    interests: category.interests!.map((interest: Interest) => interest.serializer()),
   }));
   res.status(200).send({ interests: response });
-}
+};

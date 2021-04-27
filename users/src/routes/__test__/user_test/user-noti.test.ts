@@ -33,16 +33,11 @@ describe('notification for a user', () => {
 
     const team1 = await sender.createTeams({ name: 'testTeam', description: '' });
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
-    await IsMember.create({
-      userId: receiver.id,
-      teamName: team1.name,
-      status: TeamStatus.Pending,
-    });
-    await IsMember.create({
-      userId: receiver.id,
-      teamName: team2.name,
-      status: TeamStatus.Pending,
-    });
+    const team3 = await sender.createTeams({ name: 'testTeam3', description: '' });
+
+    await team1.invite(receiver);
+    await team2.invite(receiver);
+    await receiver.requestToJoin(team3);
 
     const res = await request(app)
       .get('/api/users/notification/invite')
@@ -50,7 +45,7 @@ describe('notification for a user', () => {
       .send()
       .expect(200);
 
-    expect(res.body.teams[0]).toEqual('testTeam');
-    expect(res.body.teams[1]).toEqual('testTeam2');
+    expect(res.body.teams[0].name).toEqual('testTeam');
+    expect(res.body.teams[1].name).toEqual('testTeam2');
   });
 });
