@@ -6,28 +6,24 @@ const mockConnectionListsData: ConnectionListsData[] = [
     name: "Bank",
     role: "Developer",
     faculty: "Engineer",
-    status: "Connected",
   },
   {
     profilePic: "",
     name: "Bank",
     role: "Developer",
     faculty: "Engineer",
-    status: "",
   },
   {
     profilePic: "",
     name: "Bank",
     role: "Developer",
     faculty: "Engineer",
-    status: "",
   },
   {
     profilePic: "",
     name: "Bank",
     role: "Developer",
     faculty: "Engineer",
-    status: "",
   },
 ];
 

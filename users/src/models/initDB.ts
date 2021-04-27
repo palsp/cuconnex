@@ -1,5 +1,5 @@
-import { InterestDescription, Description } from '@cuconnex/common'
-import { Category } from './category.model'
+import { InterestDescription, Description } from '@cuconnex/common';
+import { Category } from './category.model';
 
 /**
  *  startInterest create interests for the first time
@@ -28,4 +28,3 @@ const createInterest = async (category: Category, interests: Description[]) => {
     }
 
 }
-

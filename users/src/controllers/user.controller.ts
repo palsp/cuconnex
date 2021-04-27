@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
-import { NotFoundError, BadRequestError, InterestDescription, currentUser } from '@cuconnex/common';
-import { User, Team, Interest } from '../models'
+import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
+import { User, Team, Interest, IsMember, Category } from '../models';
 import { deleteFile } from '../utils/file';
 import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
 //Test for empty object
@@ -20,16 +20,17 @@ function isNull(obj: Object) {
     return true;
 }
 
+
 /**
  * get current user profile
- * @param req 
- * @param res 
- * @returns 
+ * @param req
+ * @param res
+ * @returns
  */
 export const getUser = async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
         res.status(302).send({});
-        return
+        return;
     }
 
     const response: IUserResponse = req.user.toJSON();
@@ -38,49 +39,39 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 
 /**
  * View other users profile
- * @param req 
- * @param res 
- * @returns 
+ * @param req
+ * @param res
+ * @returns
  */
 export const viewUserProfile = async (req: Request, res: Response): Promise<void> => {
-
     const user = await User.fetchUser(req.params.userId);
 
     if (!user) {
         throw new NotFoundError();
     }
 
-
     const status = await user.findRelation(req.user!.id);
 
     const response: IViewProfileResponse = {
         ...user.toJSON(),
         status,
-    }
+    };
     res.status(200).send(response);
-}
+};
 
 /**
  * create user for first time login
- * @param req 
- * @param res 
+ * @param req
+ * @param res
  */
 export const createUser = async (req: Request, res: Response): Promise<void> => {
-    const { interests, name, faculty, year, role, bio } = req.body;
-    // console.log(interests, name)
-    let imagePath = "";
+    const { interests, name, role, bio } = req.body;
+    let imagePath = '';
     if (req.file) {
-        imagePath = req.file.path
+        imagePath = req.file.path;
         if (req.file.size > 1024 * 1024 * 1024) {
             deleteFile(imagePath);
-            throw new BadRequestError("Max File Size Exceeded!! Max file size is 1 GB");
-        }
-    }
-
-    if (year) {
-        const pattern = /^[1-4]$/
-        if (!pattern.test(year)) {
-            throw new BadRequestError('Year must be valid')
+            throw new BadRequestError('Max File Size Exceeded!! Max file size is 1 GB');
         }
     }
 
@@ -90,20 +81,23 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         throw new BadRequestError('User already existed');
     }
 
-
     let createsuccess = false;
-    // create users 
+    // create users
 
     try {
-        user = await User.create({ id: req.currentUser!.id, name, faculty, year, role, bio, image: imagePath });
+        user = await User.create({ id: req.currentUser!.id, name, role, bio, image: imagePath });
+        createsuccess = true;
         for (let category in interests) {
-            // select only valid interest description 
-            interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+            // select only valid interest description
+            interests[category] = Interest.validateDescription(
+                interests[category],
+                Object.values(InterestDescription[category])
+            );
             await user.addInterestFromArray(interests[category]);
         }
-        createsuccess = true;
     } catch (err) {
         createsuccess = false;
+        console.log(err.message);
     }
 
     // destroy the created resource if something goes wrong
@@ -114,24 +108,24 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
     const response: IUserResponse = {
         ...user!.toJSON(),
-        interests
-    }
+        interests,
+    };
 
     res.status(201).send(response);
-}
+};
 
 export const search = async (req: Request, res: Response) => {
-    const keyword = req.query.keyword
+    const keyword = req.query.keyword;
+
     const userConstraint = [
         { name: { [Op.startsWith]: keyword } },
         { id: { [Op.startsWith]: keyword } },
     ];
 
     /**
-   * TODO: add role and lookingformember keyword for team search
-   */
+     * TODO: add role and lookingformember keyword for team search
+     */
     const teamConstraint = { name: { [Op.startsWith]: keyword } };
-
 
     let users: User[];
     let team: Team[];
@@ -146,25 +140,73 @@ export const search = async (req: Request, res: Response) => {
         users: users! || [],
         team: team! || [],
     });
-}
+};
 
 export const findRelation = async (req: Request, res: Response) => {
     if (!req.params.userId) {
         throw new NotFoundError();
     }
 
-    const conn = await User.findOne({ where: { id: req.params.userId } })
+    const conn = await User.findOne({ where: { id: req.params.userId } });
     if (!conn) {
         throw new NotFoundError();
     }
 
-    const relation = await req.user!.findRelation(req.params.userId)
+    const relation = await req.user!.findRelation(req.params.userId);
 
     const response: IFindRelationResponse = {
-        status: relation
-    }
+        status: relation,
+    };
     res.status(200).send(response);
-}
+};
+
+export const requetToJoinTeam = async (req: Request, res: Response) => {
+    const user = req.user!;
+
+    const { teamName } = req.body;
+
+    const team = await Team.findOne({ where: { name: teamName } });
+    if (!team) {
+        throw new NotFoundError('Team');
+    }
+
+    const isMember = await IsMember.findOne({ where: { teamName, userId: user.id } });
+    if (isMember) {
+        throw new BadRequestError('The user already pending a request to this team.');
+    }
+
+    await user.requestToJoin(team);
+
+    res.status(201).send({ message: 'Request pending', userId: user.id, team: team.name });
+};
+
+export const getInvitationNoti = async (req: Request, res: Response) => {
+    try {
+        const user = req.user!;
+
+        const invitations = await IsMember.findAll({
+            where: { userId: user.id, status: TeamStatus.Pending, sender: 'team' },
+        });
+
+        if (!invitations || invitations.length === 0) {
+            // 204 === no content
+            return res.status(204).send({ message: 'No invitaions', teams: [] });
+        }
+
+        var teams: ITeamResponse[] = [];
+        for (let i = 0; i < invitations.length; i++) {
+            let team = await Team.findOne({ where: { name: invitations[i].teamName } });
+            if (team) {
+                await team.fetchTeam();
+                teams.push(team.toJSON());
+            }
+        }
+
+        res.status(200).send({ message: 'Invitation(s) is/are from these teams.', teams: teams });
+    } catch (err) {
+        throw new BadRequestError(err.message);
+    }
+};
 
 /**
  * Method for editing any field of the user with the specified id.
@@ -215,3 +257,53 @@ export const editUser = async (req: Request, res: Response) => {
 
 
 }
+// get Team(s) that user is in
+export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
+    const user = await User.findOne({ where: { id: req.params.userId } });
+    if (!user) {
+        throw new NotFoundError();
+    }
+
+    const teams: Team[] = await user.getMyTeams();
+    if (teams.length === 0) {
+        return res.status(200).send({ message: 'This user has no team yet.', teams: [] });
+    }
+
+    const response: ITeamResponse[] = [];
+    for (let team of teams) {
+        await team.fetchTeam();
+        response.push(team.toJSON());
+    }
+
+    res.status(200).send(response);
+};
+
+export const manageStatus = async (req: Request, res: Response) => {
+    const user = req.user!;
+    const { teamName, newStatusFromUser } = req.body;
+
+    const team = await Team.findOne({ where: { name: teamName } });
+
+    if (!team) {
+        throw new NotFoundError('Team');
+    }
+    await team.editMemberStatus(user, newStatusFromUser);
+
+    res
+        .status(200)
+        .send({ message: `Invitation from ${team.name} to ${user.name} is ${newStatusFromUser}.` });
+};
+
+export const getInterest = async (req: Request, res: Response): Promise<void> => {
+    const categories = await Category.findAll({ include: 'interests' });
+
+    if (!categories) {
+        console.log(categories);
+    }
+
+    const response = categories.map((category: Category) => ({
+        category: category.category,
+        interests: category.interests!.map((interest: Interest) => interest.serializer()),
+    }));
+    res.status(200).send({ interests: response });
+};

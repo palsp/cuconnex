@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./HalfCircleOverlay.module.css";
-const HalfCircleOverlay = () => {
+const HalfCircleOverlay: React.FC<null> = () => {
   return (
     <svg
       className={classes.HalfCircleOverlay}

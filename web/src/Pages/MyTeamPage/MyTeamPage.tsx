@@ -11,29 +11,28 @@ import classes from "./MyTeamPage.module.css";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { motion } from "framer-motion";
 
-import containerVariants from "@src/models/models";
+import containerVariants, { ITeam } from "@src/models/models";
 
 import { UserContext } from "@context/UserContext";
 
-import { fetchTeamNotificationAPI } from "@api/index";
+import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-  const [onGoing, setOngoing] = useState(true);
+  const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
+  const [clickOnGoing, setOngoing] = useState(true);
+  const [clickFinished, setFinished] = useState(false);
+  const { userData } = useContext(UserContext);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    return teamData.data.teams;
+  };
 
-  // const { setTeamData } = useContext(UserDataContext);
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) => setTeamLists(value));
+  }, []);
 
-  // const fetchTeamHandler = async () => {
-  //   try {
-  //     const teamData = await fetchTeamNotificationAPI();
-  //     console.log("fetchTeamHandler", teamData)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchTeamHandler();
-  // }, []);
-
-  const ongoingButtonHandler = () => {
+  const onGoingButtonHandler = () => {
     setOngoing(true);
     console.log("setOngoing");
   };
@@ -44,7 +43,7 @@ const MyTeamPage: React.FC = () => {
   };
 
   let myteamsPrompt = null;
-  if (onGoing === true) {
+  if (clickOnGoing === true) {
     myteamsPrompt = (
       <div className={classes.tabOngoing}>
         <div className={classes.relativeArrow}>
@@ -62,7 +61,7 @@ const MyTeamPage: React.FC = () => {
           <div className={classes.ongoing}>
             <Tab
               data-test="myteam-page-ongoing"
-              onClick={ongoingButtonHandler}
+              onClick={onGoingButtonHandler}
               value="Ongoing"
             />
           </div>
@@ -75,14 +74,11 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists
-            data-test="myteam-page-team-lists"
-            team={mockMyTeamListsData}
-          />
+          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
         </div>
       </div>
     );
-  } else if (onGoing === false) {
+  } else if (clickOnGoing === false) {
     myteamsPrompt = (
       <div className={classes.tabFinished}>
         <div className={classes.relativeArrow}>
@@ -97,7 +93,7 @@ const MyTeamPage: React.FC = () => {
           <div className={classes.ongoing}>
             <Tab
               data-test="myteam-page-ongoing"
-              onClick={ongoingButtonHandler}
+              onClick={onGoingButtonHandler}
               value="Ongoing"
             />
           </div>
@@ -110,10 +106,7 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists
-            data-test="myteam-page-team-lists"
-            team={mockMyTeamListsData}
-          />
+          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
         </div>
       </div>
     );

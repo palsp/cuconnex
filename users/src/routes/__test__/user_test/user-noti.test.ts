@@ -1,10 +1,8 @@
 import request from 'supertest';
-import { app } from '../../app';
-import { User } from '../../models/user.model';
-import { Member } from '../../models/member.model';
-import { Team } from '../../models/team.model';
+import { app } from '../../../app';
+import { Team, IsMember, User } from '../../../models';
 
-import { validateRequest, TeamStatus, NotAuthorizedError, BadRequestError } from '@cuconnex/common';
+import { TeamStatus } from '@cuconnex/common';
 
 const setup = async () => {
   const sender = await User.create({
@@ -35,8 +33,11 @@ describe('notification for a user', () => {
 
     const team1 = await sender.createTeams({ name: 'testTeam', description: '' });
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
-    await Member.create({ userId: receiver.id, teamName: team1.name, status: TeamStatus.Pending });
-    await Member.create({ userId: receiver.id, teamName: team2.name, status: TeamStatus.Pending });
+    const team3 = await sender.createTeams({ name: 'testTeam3', description: '' });
+
+    await team1.invite(receiver);
+    await team2.invite(receiver);
+    await receiver.requestToJoin(team3);
 
     const res = await request(app)
       .get('/api/users/notification/invite')
@@ -44,7 +45,7 @@ describe('notification for a user', () => {
       .send()
       .expect(200);
 
-    expect(res.body.teams[0]).toEqual('testTeam');
-    expect(res.body.teams[1]).toEqual('testTeam2');
+    expect(res.body.teams[0].name).toEqual('testTeam');
+    expect(res.body.teams[1].name).toEqual('testTeam2');
   });
 });

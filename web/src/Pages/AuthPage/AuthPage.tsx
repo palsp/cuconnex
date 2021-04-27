@@ -15,7 +15,6 @@ import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 import classes from "./AuthPage.module.css";
 import { UserContext } from "@context/UserContext";
-
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
@@ -29,19 +28,12 @@ const AuthPage: React.FC = () => {
       setIsAuthenticated(true);
       setRedirect(true);
     } catch (e) {
-      console.log("checkUserHasLogin error", e);
+      console.log("FAILED checkUserHasLogin", e);
     }
   };
 
   useEffect(() => {
-    // let isMounted = true;
-    // if (isMounted) {
-    // if(isAuthenticated) {
     checkUserHasLogin();
-    // }
-    // return () => {
-    //   isMounted = false;
-    // };
   }, []);
 
   const signupButtonClickedHandler = () => {
@@ -120,6 +112,7 @@ const AuthPage: React.FC = () => {
             stiffness: 270,
             damping: 29,
             mass: 3.3,
+            // duration: 2, repeat: Infinity
           }}
           className={classes.circle_overlay}
         ></motion.div>

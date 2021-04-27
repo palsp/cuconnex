@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB'
+import { } from '@cuconnex/common';
 
 
 const validateEnvAttr = () => {
@@ -35,7 +36,7 @@ const start = async () => {
 
     // initial data for interest and category 
     // it should be run only once
-    await startDB();
+    // await startDB();
 
   } catch (err) {
     console.log(err);
@@ -46,3 +47,4 @@ const start = async () => {
 };
 
 start();
+

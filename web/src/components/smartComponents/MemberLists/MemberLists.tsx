@@ -5,11 +5,12 @@ import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
+import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  memberlist: UsersData[] | [];
+  memberlist: IUserFriend[] | [];
   selectMemberListsHandler: (e: number) => void;
-  personHandler: (e: UsersData) => void;
+  personHandler: (e: IUserFriend) => void;
 }
 const MemberLists: React.FC<Props> = (props) => {
   // const fetchFriendsList:member[] = async () => {
@@ -19,20 +20,29 @@ const MemberLists: React.FC<Props> = (props) => {
 
   //   }
   // }
+  const selectMemberListHandler = (
+    checked: boolean,
+    index: number,
+    person: IUserFriend
+  ) => {
+    if (checked) {
+      props.selectMemberListsHandler(index);
+      props.personHandler(person);
+    }
+  };
   return (
     <div>
       {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
       {props.memberlist.map((person: MemberListsData, index: number) => { */}
-      {props.memberlist.map((person: UsersData, index: number) => {
+      {props.memberlist.map((person: IUserFriend, index: number) => {
         return (
           <div key={index}>
             <MemberList
               key={index}
               members={person}
-              selectMemberListHandler={(currentState: boolean) => {
-                props.selectMemberListsHandler(index);
-                props.personHandler(person);
-              }}
+              selectMemberListHandler={(checked: boolean) =>
+                selectMemberListHandler(checked, index, person)
+              }
             />
           </div>
         );

@@ -19,6 +19,7 @@ __exportStar(require("./middlewares/requireAuth"), exports);
 __exportStar(require("./db-status/friend"), exports);
 __exportStar(require("./db-status/team"), exports);
 __exportStar(require("./db-status/interest"), exports);
+__exportStar(require("./db-status/faculty"), exports);
 // nats-events
 __exportStar(require("./nats/events/friend-added-event"), exports);
 __exportStar(require("./nats/events/friend-updated-event"), exports);
@@ -33,3 +34,6 @@ __exportStar(require("./errors/not-authorized-error"), exports);
 __exportStar(require("./errors/not-found-error"), exports);
 __exportStar(require("./errors/request-validation-error"), exports);
 __exportStar(require("./errors/bad-request-error"), exports);
+__exportStar(require("./errors/internal-server-error"), exports);
+//services 
+__exportStar(require("./services"), exports);

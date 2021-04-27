@@ -47,6 +47,10 @@
   border-bottom: 5px solid rgb(196, 194, 194);
 }
 
+.teamInvitationList {
+  margin-top: 5%;
+}
+
 .connectionList {
   margin-top: 5%;
 }

@@ -12,6 +12,7 @@ import {
 } from "@dumbComponents/UI/index";
 
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import { ErrorContext } from "@context/ErrorContext";
 import { ArrowLeft } from "@icons/index";
 import { userSignupAPI } from "@api/index";
 import { IUserSignup, FacultyListsEnum } from "@models/index";
@@ -27,7 +28,12 @@ const validationSchema = yup.object({
     .string()
     .required("ID is required")
     .length(10, "Please enter valid Chula ID")
-    .matches(/^\d+$/, "Numbers only"),
+    .matches(/^\d+$/, "Numbers only")
+    .matches(/^[5-6][0-4|9]/, "Student ID should starts with 59-64")
+    .matches(
+      /([2-3][0-9]|01|02|40|51|53|55|56|58)$/,
+      "Please enter valid Chula Faculty"
+    ),
   password: yup
     .string()
     .required("No password provided.")
@@ -104,19 +110,25 @@ const yearFacultyHandler = (id: string) => {
 };
 
 const SignupPrompt: React.FC<Props> = (props) => {
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<JSX.Element>();
-
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
-
+  const { setErrorHandler } = useContext(ErrorContext);
   const signupHandler = async (signupData: IUserSignup) => {
     try {
       const resultSignup = await userSignupAPI(signupData);
-      console.log("Successfully sent a POST request to signup", resultSignup);
+      const resutlStatusCode = resultSignup.status;
       setIsAuthenticated(true);
+      console.log("ResultStatusCode", resutlStatusCode);
+      if (resutlStatusCode === 201) {
+        console.log("SIGNUP SUCCESS...", resultSignup);
+      }
+      return resultSignup;
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/auth/signup");
-      console.log("ERRORS occured while POST /api/auth/signup", e);
+      setErrorHandler(e.response.data.errors[0].message);
+      console.log(
+        "ERRORS occured while POST /api/auth/signup",
+        e.response.data.errors[0].message
+      );
     }
   };
 
@@ -146,23 +158,30 @@ const SignupPrompt: React.FC<Props> = (props) => {
             password: data.password,
           };
           setSubmitting(true);
-          const { studentYear, studentFaculty } = yearFacultyHandler(data.id);
-          console.log("Faculty: ", studentFaculty, "Year: ", studentYear);
-          await signupHandler(userSignupData);
-          console.log("POST /api/auth/signup", data);
+          const result = await signupHandler(userSignupData);
+          const resultData = result?.data;
+          let faculty;
+          let year;
+          if (resultData) {
+            faculty = resultData.faculty;
+            year = resultData.year;
+          }
+          console.log("Result Signup..", result);
           resetForm();
-          setRedirect(
-            <Redirect
-              to={{
-                pathname: "/personalinformation",
-                state: {
-                  year: studentYear,
-                  faculty: studentFaculty,
-                  id: data.id,
-                },
-              }}
-            />
-          );
+          if (result) {
+            setRedirect(
+              <Redirect
+                to={{
+                  pathname: "/personalinformation",
+                  state: {
+                    year: year,
+                    faculty: faculty,
+                    id: data.id,
+                  },
+                }}
+              />
+            );
+          }
         }}
         validationSchema={validationSchema}
       >
@@ -194,7 +213,6 @@ const SignupPrompt: React.FC<Props> = (props) => {
         )}
       </Formik>
       {redirect}
-      {errorOnScreen}
       <div className={classes.footerNavigation}>
         <DotMorePage data-test="dot-icon" amount={1} />
         <div

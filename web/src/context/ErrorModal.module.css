@@ -1,9 +1,18 @@
-.modal {
-  position: fix;
-  top: 30vh;
-  left: 10%;
-  width: 80%;
-  z-index: 100;
+.error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
   overflow: hidden;
-  background: rgba(rgb(168, 111, 111), green, blue, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.card {
+  width: 80%;
+  /* position: absolute; */
 }

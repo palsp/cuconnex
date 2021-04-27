@@ -5,7 +5,7 @@ export interface IGetAllConnectionResponse {
     connections: IUserResponse[]
 }
 
-export interface IGetAllFreindRequest {
+export interface IGetAllFriendRequest {
     requests: IUserResponse[]
 }
 

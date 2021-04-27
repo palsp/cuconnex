@@ -7,7 +7,7 @@ import { Edit } from "@dumbComponents/UI/Icons";
 import { ProfilePic } from "@smartComponents/index";
 interface Props {
   cover?: string;
-  pic?: string;
+  image?: string;
   name: string;
   role: string;
 }
@@ -20,7 +20,7 @@ const ProfileInfo: React.FC<Props> = (props) => {
       </div>
       <div className={classes.flex}>
         <div className={classes.profilePic}>
-          <ProfilePic size="mediumborder" />
+          <ProfilePic size="mediumborder" PicUrl={props.image} />
         </div>
       </div>
       <div className={classes.name}>{props.name}</div>
