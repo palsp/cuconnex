@@ -3,7 +3,7 @@ import { Op } from 'sequelize';
 import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
 import { User, Team, Interest, IsMember, Category } from '../models';
 import { deleteFile } from '../utils/file';
-import { IFindRelationResponse, IUserResponse, IViewProfileResponse } from '../interfaces';
+import { IFindRelationResponse, IUserResponse, IViewProfileResponse, ITeamResponse, } from '../interfaces';
 //Test for empty object
 function isEmpty(obj: Object) {
     for (var prop in obj) {

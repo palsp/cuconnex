@@ -164,6 +164,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return await User.findOne({ where: { id: userId }, include: 'interests' });
   }
 
+  // public async updateUser(updatedUser: UserCreationAttrs) {
+  //   this.name = updatedUser.name
+  //   this.image = updatedUser.image ? updatedUser.image : '',
+  //     this.bio = updatedUser.bio || '',
+
+  // }
+
   //Method for finding a relation attached here to minimize hassle
   /**A method to check if the current user has a relationship with the user with specified id.
    * This is done by querying the Friend database for any ones with `senderId` equal to current user id
@@ -323,6 +330,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
     return user;
   }
+
 
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
