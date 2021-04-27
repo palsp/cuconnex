@@ -7,11 +7,18 @@ import {
   requestToJoinTeamValidator,
   postUserValidator,
   manageUserStatusValidator,
+  editUserValidator
 } from '../utils/user.validators';
+
 
 const router = express.Router();
 
-router.get('/current-user', userController.getUser);
+router.get("/current-user", userController.getUser);
+
+router.get("/relation/:userId", requireUser, userController.findRelation);
+
+router.put("/", requireUser, upload.single('image'), transformRequest, editUserValidator, validateRequest, requireUser, userController.editUser)
+
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
 
