@@ -10,7 +10,7 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
-import { TeamStatus, BadRequestError , NotFoundError} from '@cuconnex/common';
+import { TeamStatus, BadRequestError, NotFoundError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, IOutgoingRequestResponse } from '../interfaces';
 
@@ -103,7 +103,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   }
 
   // this will promptly create ACCEPT status for user promptly
-  public async addAndAcceptMember(user: User) {
+  public async add(user: User) {
     const isMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
     if (isMember) {
@@ -119,8 +119,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
 
     await this.addMember(user);
-    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
 
+    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
     if (!newIsMember) {
       throw new BadRequestError('IsMember db went wrong');
     }
@@ -191,7 +191,6 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
     this.members = members;
-    // return this;
   }
 
   public toJSON(): ITeamResponse {

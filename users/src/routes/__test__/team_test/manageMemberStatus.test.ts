@@ -16,7 +16,6 @@ describe('Status Changing Test', () => {
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    // await team.addAndAcceptMember(user1);
 
     const res = await request(app)
       .post('/api/teams/members/status')
@@ -65,14 +64,12 @@ describe('Status Changing Test', () => {
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    // await team.addAndAcceptMember(user1);
 
     const user2 = await User.create({
       id: '6131778822',
       name: 'pal2',
     });
     await user2.addInterest(interest!);
-    // await team.addAndAcceptMember(user2);
 
     const user3 = await User.create({
       id: '6131778823',
@@ -104,7 +101,6 @@ describe('Status Changing Test', () => {
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    // await team.addAndAcceptMember(user1);
 
     const user3 = await User.create({
       id: '6131778823',
@@ -137,7 +133,6 @@ describe('Status Changing Test', () => {
     });
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'Team1', description: '' });
-    // await team.addAndAcceptMember(user1);
 
     const user3 = await User.create({
       id: '6131778823',

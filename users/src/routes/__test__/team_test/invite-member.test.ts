@@ -68,8 +68,6 @@ describe('A Team Invite Member', () => {
       name: 'pal2',
     });
 
-    // await team.addAndAcceptMember(user1);
-
     await team.invite(user2);
 
     const res = await request(app)

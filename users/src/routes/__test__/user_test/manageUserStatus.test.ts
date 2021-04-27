@@ -25,10 +25,8 @@ describe('User manages his/her connection(s) with teams', () => {
     const { sender, receiver } = await setup();
 
     const team1 = await sender.createTeams({ name: 'testTeam', description: '' });
-    // await team1.addAndAcceptMember(sender);
 
     const team2 = await sender.createTeams({ name: 'testTeam2', description: '' });
-    // await team2.addAndAcceptMember(sender);
 
     await team1.invite(receiver);
     await team2.invite(receiver);

@@ -69,7 +69,7 @@ describe('USER--INFO: Get list of teams from user', () => {
     const team1 = await user1.createTeams({ name: 'testTeam1', description: '' });
 
     const team2 = await user1.createTeams({ name: 'testTeam2', description: '' });
-    team2.addAndAcceptMember(user2);
+    await team2.add(user2);
 
     const team3 = await user2.createTeams({ name: 'testTeam3', description: '' });
     await team3.invite(user1);

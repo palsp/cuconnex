@@ -36,7 +36,6 @@ export const createTeam = async (req: Request, res: Response) => {
   let newTeam;
   try {
     newTeam = await user.createTeams({ name, description });
-    // await newTeam.addAndAcceptMember(user);
   } catch (err) {
     throw new BadRequestError('Create Team Failed');
   }
