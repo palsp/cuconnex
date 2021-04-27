@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
-import { NotFoundError, BadRequestError, InterestDescription, TeamStatus } from '@cuconnex/common';
+import { NotFoundError, BadRequestError, InterestDescription, TeamStatus, InternalServerError } from '@cuconnex/common';
 import { User, Team, Interest, IsMember, Category } from '../models';
 import { deleteFile } from '../utils/file';
-import { IFindRelationResponse, IUserResponse, IViewProfileResponse, ITeamResponse, } from '../interfaces';
+import { IFindRelationResponse, IUserResponse, IViewProfileResponse, ITeamResponse, IUserRequest } from '../interfaces';
+import { userRouter } from '../routes';
 //Test for empty object
 function isEmpty(obj: Object) {
     for (var prop in obj) {
@@ -69,10 +70,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     let imagePath = '';
     if (req.file) {
         imagePath = req.file.path;
-        if (req.file.size > 1024 * 1024 * 1024) {
-            deleteFile(imagePath);
-            throw new BadRequestError('Max File Size Exceeded!! Max file size is 1 GB');
-        }
     }
 
     // Make sure that user does not exist
@@ -81,30 +78,18 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
         throw new BadRequestError('User already existed');
     }
 
-    let createsuccess = false;
-    // create users
+    user = await User.create({ id: req.currentUser!.id, name, role, bio, image: imagePath });
+    if (!user) {
+        throw new InternalServerError();
+    }
 
     try {
-        user = await User.create({ id: req.currentUser!.id, name, role, bio, image: imagePath });
-        createsuccess = true;
-        for (let category in interests) {
-            // select only valid interest description
-            interests[category] = Interest.validateDescription(
-                interests[category],
-                Object.values(InterestDescription[category])
-            );
-            await user.addInterestFromArray(interests[category]);
-        }
+        await user.addInterests(interests);
     } catch (err) {
-        createsuccess = false;
-        console.log(err.message);
+        await user.destroy();
+        throw new InternalServerError()
     }
 
-    // destroy the created resource if something goes wrong
-    if (!createsuccess && user) {
-        await user.destroy();
-        throw new BadRequestError('Create User Failed');
-    }
 
     const response: IUserResponse = {
         ...user!.toJSON(),
@@ -217,44 +202,35 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
  * @param res 
  */
 export const editUser = async (req: Request, res: Response) => {
-    console.log(req.currentUser!.id);
-    const user = req.user;
-    if (!user) throw new NotFoundError();
-    // if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
-    if (req.body.year) {
-        const pattern = /^[1-4]$/
-        if (!pattern.test(req.body.year)) {
-            throw new BadRequestError('Year must be valid')
-        }
+
+    const updatedUser = req.body as IUserRequest;
+    updatedUser.file = { ...req.file }
+
+    if (req.file) {
+        deleteFile(req.user!.image);
+        req.user!.image = updatedUser.file.path;
     }
-    let imagePath = user.image;
+
+    req.user!.name = updatedUser.name;
+    req.user!.role = updatedUser.role;
+    req.user!.bio = updatedUser.bio;
+    await req.user!.setInterests([]); // delete all association with interests
+    const interests = await req.user!.addInterests(updatedUser.interests); // add new interest
+    req.user!.lookingForTeam = updatedUser.lookingForTeam;
+
     try {
-        if (req.file) {
-            deleteFile(user.image);
-            imagePath = req.file.path;
-            console.log("imagePath: ", imagePath)
-
-        }
-        await user.update(
-            {
-                name: req.body.name || user.name,
-                bio: req.body.bio || user.bio,
-                faculty: req.body.faculty || user.faculty,
-                interests: req.body.interests || user.interests,
-                year: req.body.year || user.year,
-                lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
-                image: imagePath || user.image
-            },
-        )
-        res.status(200).send(user);
+        await req.user!.save();
     } catch (err) {
-        console.log(err.message)
+        throw new InternalServerError();
     }
 
+    req.user!.interests = interests; // attach new interest to users
 
+    const response: IUserResponse = {
+        ...req.user!.toJSON()
+    }
 
-
-
+    res.status(200).send(response);
 
 }
 // get Team(s) that user is in

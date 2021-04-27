@@ -11,7 +11,6 @@ export const postUserValidator = [
     .custom((input: { [key: string]: any }) => {
       // check for validity
       let valid = true;
-
       // check if key in interests filed is existed in InterestDescription
       for (let key in input) {
         valid = valid && key in InterestDescription;
@@ -36,11 +35,10 @@ export const editUserValidator = [
     .custom((input: { [key: string]: any }) => {
       // check for validity
       let valid = true;
-
       // check if key in interests filed is existed in InterestDescription
       for (let key in input) {
         valid = valid && (key in InterestDescription)
-
+        console.log(valid)
         if (input[key]) {
           valid = valid && Array.isArray(input[key])
         }
@@ -51,34 +49,14 @@ export const editUserValidator = [
     })
     .withMessage('Valid interest must be provided'),
   body('name')
-    .optional()
-    .isString()
-    .withMessage('Name is invalid'),
-  body('faculty')
-    .optional()
-    .isString()
-    .withMessage('Faculty must be a string!'),
-  body('year')
-    .optional()
-    .isString()
-    .withMessage('Year must be a string!')
-    .bail()
-    .isLength({ min: 1, max: 1 })
-    .withMessage('Year must only be one digit!')
-    .isNumeric()
-    .withMessage('Year must be a number inside!'),
-  body('major')
-    .optional()
-    .isString()
-    .withMessage('Major is invalid'),
+    .notEmpty()
+    .withMessage('Name must be supplied'),
   body('bio')
-    .optional()
-    .isString()
-    .withMessage('Bio is invalid')
-    .isLength({ min: 1 })
-    .withMessage('Bio must not be empty string'),
+    .notEmpty()
+    .withMessage('Bio must be supplied'),
   body('lookingForTeam')
-    .optional()
+    .notEmpty()
+    .withMessage('lookingForTeam must be supplied')
     .isBoolean()
     .withMessage('lookingForTeam is invalid')
 ];

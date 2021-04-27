@@ -1,6 +1,8 @@
 import multer from 'multer';
 import { BadRequestError } from '@cuconnex/common';
 
+const MAX_FILE_SIZE_IN_BYTES = 1000000000;
+
 //Storage config
 export const storage = multer.diskStorage({
     destination: './assets',
@@ -18,7 +20,6 @@ export const storage = multer.diskStorage({
 //Filters for only image files
 const fileFilter = (req: any, file: any, cb: any) => {
     //Only accept files smaller than 1 GB, adjust file size (in bytes) here
-    const max_size = 1000000000;
     if (file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
         cb(null, true);
 
@@ -27,6 +28,6 @@ const fileFilter = (req: any, file: any, cb: any) => {
     }
 }
 
-var limits = { fileSize: 1024 * 1024 * 1024 }
-export const upload = multer({ storage: storage, fileFilter: fileFilter });
+// var limits = { fileSize: 1024 * 1024 * 1024 }
+export const upload = multer({ storage: storage, fileFilter: fileFilter, limits: { fileSize: 1 * MAX_FILE_SIZE_IN_BYTES } });
 

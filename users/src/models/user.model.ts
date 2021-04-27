@@ -9,6 +9,7 @@ import {
   HasManyAddAssociationMixin,
   Association,
   Sequelize,
+  BelongsToManySetAssociationsMixin,
 } from 'sequelize';
 import {
   BadRequestError,
@@ -21,6 +22,7 @@ import {
   getYearFromId,
   getFacultyCodeFromId,
   InternalServerError,
+  InterestDescription,
 } from '@cuconnex/common';
 
 import { TableName } from './types';
@@ -28,7 +30,7 @@ import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
-import { IUserResponse } from '../interfaces';
+import { InterestBody, IUserResponse } from '../interfaces';
 
 // All attributes in user model
 interface UserAttrs {
@@ -132,7 +134,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
   public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
 
@@ -142,17 +144,45 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * This is done via calling the `BelongsToManyAddAssociationMixin` on the `<Interest, User>` pair
    * @param {Description[]} interests - The array of interests the user is interested in.
    */
-  public async addInterestFromArray(interests: Description[]) {
-    for (let interest of interests) {
-      try {
-        // find corresponding interest in db
-        const addedInterest = await Interest.findOne({ where: { description: interest } });
+  public async addInterests(interests: InterestBody): Promise<Interest[]> {
 
-        await this.addInterest(addedInterest!);
-      } catch (err) {
-        console.log(err);
+    const result: Interest[] = [];
+
+    for (let category in interests) {
+      // select only valid interest description
+      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      for (let interest of interests[category]) {
+        const addedInterest = await Interest.findOne({ where: { description: interest } })
+
+        // skip if interest not found
+        if (!addedInterest) {
+          continue;
+        }
+
+        await this.addInterest(addedInterest);
+        result.push(addedInterest);
       }
+
     }
+    return result;
+    //   for (let category in interests) {
+    //     // select only valid interest description
+    //     interests[category] = Interest.validateDescription(
+    //         interests[category],
+    //         Object.values(InterestDescription[category])
+    //     );
+    //     await user.addInterestFromArray(interests[category]);
+    // }
+    // for (let interest of interests) {
+    //   try {
+    //     // find corresponding interest in db
+    //     const addedInterest = await Interest.findOne({ where: { description: interest } });
+
+    //     await this.addInterest(addedInterest!);
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // }
   }
 
   /**

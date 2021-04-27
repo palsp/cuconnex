@@ -3,6 +3,7 @@ import { app } from '../../../app';
 import { User } from '../../../models/user.model';
 import { Interest } from '../../../models/interest.model';
 import { FriendStatus, Business, Technology } from '@cuconnex/common';
+import { IUserRequest } from '../../../interfaces'
 import { deleteFile } from '../../../utils/file';
 
 const setup = async (id?: string, name?: string) => {
@@ -25,117 +26,126 @@ describe('The edit User route', () => {
     it('should return 401 if user not signed in', async () => {
         await request(app)
             .put('/api/users/6131898121')
-            .send({ hello: "hello"})
+            .send({ hello: "hello" })
             .expect(401)
     });
-    // it('should return 400 if no fields are provided', async () => {
-    //     const { user } = await setup();
-    //     const { body: res} = await request(app)
-    //         .put('/api/users/6131898121')
-    //         .set('Cookie', global.signin(user.id))
-    //         .send({ })
-    //         .expect(400)
-    //     expect(res.errors[0].message).toEqual("Empty request!");
-    // });
-    it('should return 400 if invalid fields are provided', async () => {
+
+    it('should return 400 if  fields are missing', async () => {
         const { user } = await setup();
         const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
-            .send({ name: 4, bio: 2, year: 3 })
+            .send({})
             .expect(400)
-        console.log(res.errors);
-        expect(res.errors).toEqual(          
-            expect.arrayContaining([      
-                expect.objectContaining({   
-                    message: 'Year must be a string!'              
-                }), 
+        expect(res.errors).toEqual(
+            expect.arrayContaining([
                 expect.objectContaining({
-                    message: "Name is invalid"
+                    message: 'Name must be supplied'
                 }),
                 expect.objectContaining({
-                    message: "Bio is invalid"
+                    message: 'lookingForTeam must be supplied'
+                }),
+                expect.objectContaining({
+                    message: "Bio must be supplied"
                 }),
             ])
         )
     });
-    it('should return 200 if name is specified and should update only the name', async () => {
+
+
+    it('should return 200 and updated user information', async () => {
         const { user } = await setup();
-        await request(app)
+        const updatedInformation = {
+            name: 'John',
+            lookingForTeam: true,
+            role: "I am a developer",
+            bio: "test somthing",
+            interests: {
+                Technology: [Technology.Coding],
+            }
+        }
+        const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
-            .send({ name: 'John' })
-            .expect(200)
-            .then((res) =>{
-                expect(res.body.name).toEqual('John');
-                expect(res.body.bio).toEqual('Hello');
-            })
-    });
-    it('should return 200 if bio is specified and should update only the bio', async () => {
-        const { user } = await setup();
-        await request(app)
-            .put('/api/users')
-            .set('Cookie', global.signin(user.id))
-            .send({ bio: 'Hello my name is Anon' })
-            .expect(200)
-            .then((res) =>{
-                expect(res.body.name).toEqual('Anon');
-                expect(res.body.bio).toEqual('Hello my name is Anon');
-            })
+            .send(updatedInformation)
+            .expect(200);
+        const updatedUser = await User.fetchUser(user.id);
+        expect(updatedUser!.name).toEqual(updatedInformation.name);
+        expect(updatedUser!.lookingForTeam).toEqual(updatedInformation.lookingForTeam);
+        expect(updatedUser!.bio).toEqual(updatedInformation.bio);
+        expect(updatedUser!.interests).toHaveLength(1)
+
+
+
     });
 
+
+
+
     it('should return 200 when a new file is uploaded and update the file accordingly', async () => {
-        const { body: res2 } = await request(app)
+        const updatedInformation = {
+            name: 'John',
+            lookingForTeam: true,
+            role: "I am a developer",
+            bio: "test somthing",
+        }
+
+        const { body: user } = await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
+            .field({
+                name: 'Anon',
+                interests: JSON.stringify({ Technology: [Technology.Coding] })
+            })
             .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
-            .field({ interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon' })
             .expect(201)
-        const user = res2;
-        const oldImage = user.image;
+
+
         const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
-            .field({
-                bio: 'Hello my name is Anon', 
-                name: 'John', 
-                year: '3', 
-                faculty: 'Engineering' 
-            })
+            .field(updatedInformation)
             .attach('image', 'src/routes/__test__/test_images/testImage2.png')
             .expect(200)
-        expect(res.name).toEqual('John');
-        expect(res.bio).toEqual('Hello my name is Anon');
-        expect(res.year).toEqual('3');
-        expect(res.faculty).toEqual('Engineering');
-        expect(res.image).not.toBeNull();
-        expect(res.image).not.toEqual(oldImage);
-        // expect(deleteFile(res.image)).not.toThrowError();
-        console.log(res);
-        deleteFile(res.image);
+
+        const updatedUser = await User.fetchUser(user.id);
+        expect(updatedUser!.image).not.toEqual('');
+        expect(updatedUser!.image).not.toEqual(user.image);
+        deleteFile(updatedUser!.image);
+
+
     });
+
+
     it('should return 200 with the old file if no new files are uploaded', async () => {
-        //First creates a new user so that a new image is created
-        const { body: res2 } = await request(app)
+        const updatedInformation = {
+            name: 'John',
+            lookingForTeam: true,
+            role: "I am a developer",
+            bio: "test somthing",
+        }
+
+        const { body: user } = await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
+            .field({
+                name: 'Anon',
+                interests: JSON.stringify({ Technology: [Technology.Coding] })
+            })
             .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
-            .field({ interests: JSON.stringify({ Technology: [Technology.Coding] }), name: 'Anon' })
             .expect(201)
-        const user = res2;
-        const oldImage = user.image;
-        //Then edits the user
+
+
         const { body: res } = await request(app)
             .put('/api/users')
             .set('Cookie', global.signin(user.id))
-            .send({
-                bio: 'Hello my name is Anon',
-                name: 'John',
-                year: '3',
-                faculty: 'Engineering'
-            })
+            .field(updatedInformation)
             .expect(200)
-        expect(res.image).toEqual(oldImage);
-        deleteFile(res.image);
+
+        const updatedUser = await User.fetchUser(user.id);
+        expect(updatedUser!.image).not.toEqual('');
+        expect(updatedUser!.image).toEqual(user.image);
+        deleteFile(updatedUser!.image);
+
     });
 });
