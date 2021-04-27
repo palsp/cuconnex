@@ -31,7 +31,7 @@ describe('The /api/upload', () => {
     });
     it('should return 201 if there is a valid file uploaded', async () => {
 
-        await request(app)
+        const { body: res } = await request(app)
             .post('/api/users')
             .set('Cookie', global.signin())
             .field({
@@ -39,12 +39,10 @@ describe('The /api/upload', () => {
                 interests: JSON.stringify({ Technology: [Technology.Coding] })
             })
             .attach('image', 'src/routes/__test__/test_images/testImage2.png')
-            .expect(201)
-            .then(response => {
-                expect(response.body.image).not.toEqual("")
+            .expect(201);
 
-                deleteFile(response.body.image)
-            })
+        expect(res.image).not.toEqual("")
+        deleteFile(res.image)
     })
 
     it('should create user although file is not attached', async () => {
