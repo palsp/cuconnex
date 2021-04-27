@@ -165,24 +165,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
     }
     return result;
-    //   for (let category in interests) {
-    //     // select only valid interest description
-    //     interests[category] = Interest.validateDescription(
-    //         interests[category],
-    //         Object.values(InterestDescription[category])
-    //     );
-    //     await user.addInterestFromArray(interests[category]);
-    // }
     // for (let interest of interests) {
-    //   try {
-    //     // find corresponding interest in db
-    //     const addedInterest = await Interest.findOne({ where: { description: interest } });
-
-    //     await this.addInterest(addedInterest!);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // }
   }
 
   /**
@@ -194,12 +177,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return await User.findOne({ where: { id: userId }, include: 'interests' });
   }
 
-  // public async updateUser(updatedUser: UserCreationAttrs) {
-  //   this.name = updatedUser.name
-  //   this.image = updatedUser.image ? updatedUser.image : '',
-  //     this.bio = updatedUser.bio || '',
 
-  // }
 
   //Method for finding a relation attached here to minimize hassle
   /**A method to check if the current user has a relationship with the user with specified id.
