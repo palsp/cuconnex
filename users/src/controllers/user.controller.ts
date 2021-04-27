@@ -175,19 +175,9 @@ export const findRelation = async (req: Request, res: Response) => {
  * @param res 
  */
 export const editUser = async (req: Request, res: Response) => {
-    if (!req.currentUser!.id) throw new BadRequestError("Please enter a user ID!");
     console.log(req.currentUser!.id);
     const user = req.user;
     if (!user) throw new NotFoundError();
-    let imagePath = "";
-    if (req.file) {
-        deleteFile(user.image);
-        imagePath = req.file.path;
-
-
-        console.log("imagePath: ", imagePath)
-    }
-
     // if(isEmpty(req.body)) throw new BadRequestError("Empty request!");
     if (req.body.year) {
         const pattern = /^[1-4]$/
@@ -195,26 +185,33 @@ export const editUser = async (req: Request, res: Response) => {
             throw new BadRequestError('Year must be valid')
         }
     }
+    let imagePath = user.image;
+    try {
+        if (req.file) {
+            deleteFile(user.image);
+            imagePath = req.file.path;
+            console.log("imagePath: ", imagePath)
 
-    User.update(
-        {
-            name: req.body.name || user.name,
-            bio: req.body.bio || user.bio,
-            faculty: req.body.faculty || user.faculty,
-            interests: req.body.interests || user.interests,
-            year: req.body.year || user.year,
-            lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
-            image: imagePath
-        },
-        { where: { id: req.currentUser!.id } }
-    )
-        .then(async (rowsUpdated) => {
-            console.log(rowsUpdated)
-            let user = await User.findOne({ where: { id: req.currentUser!.id } })
-            res.status(200).send(user)
-        })
-        .catch((err) => {
-            console.log(err.message)
-            throw new BadRequestError("Update User error");
-        })
+        }
+        await user.update(
+            {
+                name: req.body.name || user.name,
+                bio: req.body.bio || user.bio,
+                faculty: req.body.faculty || user.faculty,
+                interests: req.body.interests || user.interests,
+                year: req.body.year || user.year,
+                lookingForTeam: req.body.lookingForTeam || user.lookingForTeam,
+                image: imagePath || user.image
+            },
+        )
+        res.status(200).send(user);
+    } catch (err) {
+        console.log(err.message)
+    }
+
+
+
+
+
+
 }
