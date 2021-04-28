@@ -61,7 +61,7 @@ const fetchEventsDataAPI = async (): Promise<
   AxiosResponse<IFetchEventsData>
 > => {
   const eventsData: AxiosResponse<IFetchEventsData> = await axios.get(
-    "/api/events/"
+    "/api/events"
   );
 
   return eventsData;
@@ -70,7 +70,7 @@ const createEventsAPI = async (
   eventsCreatedData: IEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
-    "/api/events/",
+    "/api/events",
     eventsCreatedData
   );
   return createEventsData;
@@ -79,9 +79,11 @@ const createTeamAPI = async (
   teamCreatedData: ITeamData
 ): Promise<AxiosResponse<ITeamData>> => {
   const createTeamData: AxiosResponse<ITeamData> = await axios.post(
-    "/api/teams/",
+    "/api/teams",
     teamCreatedData
   );
+  console.log("eiei111", createTeamData);
+
   return createTeamData;
 };
 
@@ -89,7 +91,7 @@ const teamInvitationAPI = async (
   invitedData: IInviteData
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
-    "/api/teams/members/",
+    "/api/teams/members",
     invitedData
   );
   return invitedUsersData;
@@ -97,7 +99,7 @@ const teamInvitationAPI = async (
 const fetchTeamDataAPI = async (
   name: string
 ): Promise<AxiosResponse<IGetTeam>> => {
-  const teamDetailsData: AxiosResponse<IGetTeam> = await axios.post(
+  const teamDetailsData: AxiosResponse<IGetTeam> = await axios.get(
     `/api/teams/${name}`
   );
   return teamDetailsData;
@@ -106,7 +108,7 @@ const fetchTeamMembersAPI = async (
   teamName: string
 ): Promise<AxiosResponse<ITeamMembers>> => {
   const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
-    `/api/teams/${teamName}`
+    `/api/teams/members${teamName}`
   );
   return teamMembersData;
 };

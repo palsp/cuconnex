@@ -25,30 +25,35 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     setClickCreateTeam(false);
   };
   const createTeamHandler = async (teamData: ITeamData) => {
+    console.log("eiei");
     try {
       const resultTeam = await createTeamAPI(teamData);
       console.log("Successfully sent a POST request to teams", resultTeam);
-      console.log("Hello"+{resultTeam});  
-      setRedirect(true);
+      // console.log("Hello"+{resultTeam});
+      // setRedirect(true);
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/teams/");
-      console.log("ERRORS occured while POST /api/teams/", e);
+      // console.log("ERRORS occured while POST /api/teams/", e.message);
+      console.log("kuy", e.message);
     }
   };
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
       const resultInvitation = await teamInvitationAPI(inviteData);
-      console.log("Hi, Successfully sent a POST request to api/teams/members/", resultInvitation);
+      console.log(
+        "Hi, Successfully sent a POST request to api/teams/members/",
+        resultInvitation
+      );
       setRedirect(true);
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST api/teams/members");
       console.log("ERRORS occured while POST api/teams/members", e);
     }
   };
-  const inviteMember = (teamNames:string,members:IUserFriend[] | []) => {
-    members.forEach(members => {
-      invitationHandler({teamName:teamNames, newMemberId:members.id });
-      console.log("POST /members/invite/", teamNames,members.id);
+  const inviteMember = (teamNames: string, members: IUserFriend[] | []) => {
+    members.forEach((members) => {
+      invitationHandler({ teamName: teamNames, newMemberId: members.id });
+      console.log("POST /members/invite/", teamNames, members.id);
     });
   };
 
@@ -63,7 +68,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
           initialValues={{
             name: "",
             description: "",
-          }} 
+          }}
           onSubmit={(data, { setSubmitting, resetForm }) => {
             const teamCreateData = {
               name: data.name,
@@ -71,7 +76,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
             };
 
             createTeamHandler(teamCreateData);
-            inviteMember(teamCreateData.name,props.members);
+            inviteMember(teamCreateData.name, props.members);
             console.log("POST /api/teams/", data);
             setSubmitting(true);
             resetForm();
@@ -129,7 +134,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         <div className={classes.deleteUnderlineDiv}>{MemberTag}</div>
       </div>
     ) : clickSelectMember === true ? (
-      <SelectMemberPrompt/>
+      <SelectMemberPrompt />
     ) : (
       <div>error</div>
     );
