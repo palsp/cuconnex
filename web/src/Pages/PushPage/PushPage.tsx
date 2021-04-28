@@ -25,12 +25,12 @@ const callTeamHandler = async (userId: string) => {
   console.log(relationResult.data);
   return relationResult;
 };
-const sampleteam = callTeamHandler("6131822233");
+// const sampleteam = callTeamHandler("6131822233");
 // const samplefriend = {
 //   userId: "6131824722",
 // };
 // const samplerequest = addFriendHandler(samplefriend);
-console.log("test callteamAPI" + sampleteam);
+// console.log("test callteamAPI" + sampleteam);
 const sampleevent = {
   "event-name": "BSAC Hackathon",
   bio: "Biggest competition in BSAC",
