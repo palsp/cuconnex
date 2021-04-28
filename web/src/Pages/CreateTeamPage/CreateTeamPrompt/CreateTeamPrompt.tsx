@@ -29,12 +29,11 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     try {
       const resultTeam = await createTeamAPI(teamData);
       console.log("Successfully sent a POST request to teams", resultTeam);
-      // console.log("Hello"+{resultTeam});
-      // setRedirect(true);
+      console.log("Hello" + { resultTeam });
+      setRedirect(true);
     } catch (e) {
       setErrorOnScreen("ERRORS occured while POST /api/teams/");
-      // console.log("ERRORS occured while POST /api/teams/", e.message);
-      console.log("kuy", e.message);
+      console.log("ERRORS occured while POST /api/teams/", e);
     }
   };
   const invitationHandler = async (inviteData: IInviteData) => {
