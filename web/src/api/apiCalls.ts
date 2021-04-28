@@ -108,7 +108,7 @@ const fetchTeamMembersAPI = async (
   teamName: string
 ): Promise<AxiosResponse<ITeamMembers>> => {
   const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
-    `/api/teams/members${teamName}`
+    `/api/teams/members/${teamName}`
   );
   return teamMembersData;
 };
