@@ -29,7 +29,7 @@ const LandingHero: React.FC<Props> = (props) => {
     try {
       const teamData = await callTeamOfUserAPI(userData.id);
       console.log("fetchTeamHandler", teamData);
-      setCurrentTeamLists(teamData.data.teams);
+      setCurrentTeamLists(teamData.data);
     } catch (e) {
       console.log(e);
     }

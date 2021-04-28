@@ -1,87 +1,86 @@
 .teamInvitationList {
-    width: 90%;
-    height: 150px;
-    margin: auto;
-    margin-bottom: 5%;
-    
-  }
-  
+  width: 90%;
+  height: 150px;
+  margin: auto;
+  margin-bottom: 5%;
+}
+
 .teamContainer {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background-color: white;
-    border-radius: 20px;
-    -webkit-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-  -moz-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-  box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-    overflow: hidden;
-  }
-  
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: white;
+  border-radius: 20px;
+  -webkit-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  overflow: hidden;
+}
+
 .leftFlex {
-    width: 40%;
-    margin-right: 1%;
-  }
-  
+  width: 40%;
+  margin-right: 1%;
+}
+
 .teamPic {
-    width: 100%;
-  }
-  
+  width: 100%;
+}
+
 .rightFlex {
-    width: 60%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-top: 1%;
-  }
-  
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1%;
+}
+
 .teamName {
-    text-align: start;
-    left: 10%;
-    height: 10%;
-    margin-bottom: 5%;
-  }
-  
+  text-align: start;
+  left: 10%;
+  height: 10%;
+  margin-bottom: 5%;
+}
+
 .landingLine {
-    width: 100%;
-    position: relative;
-    height: 50%;
-  }
-  
+  width: 100%;
+  position: relative;
+  height: 50%;
+}
+
 .teamEvent {
-    text-align: start;
-    margin-right: 3%;
-  }
-  
+  text-align: start;
+  margin-right: 3%;
+}
+
 .flex {
-    margin-top: -5%;
-    display: flex;
-    flex-direction: row;
-    height: 40%;
-  }
-  
+  margin-top: -5%;
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+}
+
 .groupAmount {
-    margin-left: 2%;
-    text-align: start;
-    color: #c2c2c2;
-  }
-  
+  margin-left: 2%;
+  text-align: start;
+  color: #c2c2c2;
+}
+
 .groupIcon {
-    margin-left: 5%;
-    margin-right: 10%;
- }
-   
+  margin-left: 5%;
+  margin-right: 10%;
+}
+
 .teamFriends {
-    position: relative;
-    display: flex;
-    margin-left: 5%;
-    margin-right: 75px;
+  position: relative;
+  display: flex;
+  margin-left: 5%;
+  margin-right: 75px;
 }
 
 .moreFriends {
-    margin-left: 5%;
-    margin-top: 2%;
-    width: 13vw;
+  margin-left: 5%;
+  margin-top: 2%;
+  width: 13vw;
   height: 3vh;
   background-color: #c2c2c2;
   border-radius: 15px;
@@ -90,13 +89,15 @@
 }
 
 .moreFriends p {
-    font-size: 1rem;
+  font-size: 1rem;
   color: #767474;
   margin: auto;
 }
-  
+
 .teamStatus {
-    margin-top: 7%;
-    width: 100%;
-    margin-left: 45%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 7%;
+  width: 100%;
+  margin-left: 25%;
 }

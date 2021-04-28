@@ -22,7 +22,7 @@ const addFriendHandler = async (friendId: IAddFriend) => {
 };
 const callTeamHandler = async (userId: string) => {
   const relationResult = await callTeamOfUserAPI(userId);
-  console.log(relationResult.data.teams);
+  console.log(relationResult.data);
   return relationResult;
 };
 const sampleteam = callTeamHandler("6131822233");

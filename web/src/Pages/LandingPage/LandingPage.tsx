@@ -12,7 +12,7 @@ import containerVariants, { ITeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
-import { callTeamOfUserAPI } from "@src/api";
+import { callTeamOfUserAPI, teamInvitationAPI } from "@src/api";
 import { Button } from "@material-ui/core";
 
 interface Props {
@@ -27,28 +27,27 @@ const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
   const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
-  const [hasTeam, setHasTeam] = useState<boolean>(false);
-  const { userData } = useContext(UserContext);
   const { setErrorHandler } = useContext(ErrorContext);
+  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const { userData } = useContext(UserContext);
+  useEffect(() => {
+    fetchTeamHandler().then((value: ITeam[] | []) => setMyTeamLists(value));
+  }, []);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData.data);
+    return teamData.data;
+  };
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
   useEffect(() => {
     fetchTeamHandler();
   }, []);
-
-  const fetchTeamHandler = async () => {
-    try {
-      const teamData = await callTeamOfUserAPI(userData.id);
-      console.log("fetchTeamHandler", teamData);
-      setCurrentTeamLists(teamData.data.teams);
-      setHasTeam(true);
-    } catch (e) {
-      setErrorHandler(e.response.data.errors[0].message);
-      setHasTeam(false);
-      console.log(e);
-    }
-  };
+  let hasTeam = false;
+  if (myTeamLists.length > 0) {
+    hasTeam = true;
+  }
   console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
@@ -57,13 +56,13 @@ const LandingPage: React.FC<Props> = (props) => {
     <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
         <div style={{ position: "absolute", top: "0px", left: "50px" }}>
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             onClick={() => setHasTeam((prevState) => !prevState)}
           >
             Test Team
-          </Button>
+          </Button> */}
         </div>
         <div className={classes.searchDiv}>
           <Link to="/explore">

@@ -17,7 +17,14 @@ const MyTeamLists: React.FC<Props> = (props) => {
   return (
     <div className={classes.teamLists} data-test="myTeamLists">
       {props.team.map((team: ITeam, index: number) => {
-        return <MyTeamList key={index} team={team} landingexplore={landingexplore} page={props.page} />;
+        return (
+          <MyTeamList
+            key={index}
+            team={team}
+            landingexplore={landingexplore}
+            page={props.page}
+          />
+        );
       })}
     </div>
   );
