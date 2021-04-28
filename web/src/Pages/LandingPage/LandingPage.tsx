@@ -31,11 +31,12 @@ const LandingPage: React.FC<Props> = (props) => {
   const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
   const { userData } = useContext(UserContext);
   useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) => setMyTeamLists(value));
+    fetchTeamHandler();
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData.data);
+    console.log("fetchTeamHandler", teamData.data.teams);
+    setMyTeamLists(teamData.data.teams);
     return teamData.data;
   };
   const hamburgerClickedHandler = () => {

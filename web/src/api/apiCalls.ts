@@ -25,6 +25,7 @@ import {
   ITeamMembers,
   IUserResponse,
   ITeam,
+  ITeamFetch,
 } from "@src/models";
 
 //Auth Services
@@ -94,7 +95,7 @@ const teamInvitationAPI = async (
     "/api/teams/invite-member",
     invitedData
   );
-  return invitedUsersData; 
+  return invitedUsersData;
 };
 const fetchTeamDataAPI = async (
   name: string
@@ -114,8 +115,8 @@ const fetchTeamMembersAPI = async (
 };
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<ITeam[]>> => {
-  const calledResult: AxiosResponse<ITeam[]> = await axios.get(
+): Promise<AxiosResponse<ITeamFetch>> => {
+  const calledResult: AxiosResponse<ITeamFetch> = await axios.get(
     `/api/users/teams/${userId}`
   );
 
@@ -224,7 +225,6 @@ const responseTeamInvitationAPI = async (
   );
   return responseData;
 };
-
 
 export {
   fetchUserDataAPI,

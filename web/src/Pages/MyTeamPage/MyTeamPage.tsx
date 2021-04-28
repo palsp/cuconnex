@@ -24,15 +24,15 @@ const MyTeamPage: React.FC = () => {
   const [clickOnGoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);
+  useEffect(() => {
+    fetchTeamHandler();
+  }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData.data);
+    console.log("fetchTeamHandler", teamData.data.teams);
+    setTeamLists(teamData.data.teams);
     return teamData.data;
   };
-
-  useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) => setTeamLists(value));
-  }, []);
 
   const onGoingButtonHandler = () => {
     setOngoing(true);
