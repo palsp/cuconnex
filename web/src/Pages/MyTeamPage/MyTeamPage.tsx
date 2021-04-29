@@ -19,18 +19,19 @@ import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
   const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
+  let ongoingTeamLists: ITeam[] | [] = [];
+  let finishedTeamLists: ITeam[] | [] = [];
   const [clickOnGoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);
+  useEffect(() => {
+    fetchTeamHandler();
+  }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData);
-    return teamData.data.teams;
+    setTeamLists(teamData.data);
   };
-
-  useEffect(() => {
-    fetchTeamHandler().then((value: ITeam[] | []) => setTeamLists(value));
-  }, []);
 
   const onGoingButtonHandler = () => {
     setOngoing(true);
@@ -41,6 +42,14 @@ const MyTeamPage: React.FC = () => {
     setOngoing(false);
     console.log("setFinished");
   };
+  console.log(teamLists.length);
+  for (let i = 0; i < teamLists.length; i++) {
+    if (teamLists[i].lookingForMembers) {
+      ongoingTeamLists = [...ongoingTeamLists, teamLists[i]];
+    } else {
+      finishedTeamLists = [...finishedTeamLists, teamLists[i]];
+    }
+  }
 
   let myteamsPrompt = null;
   if (clickOnGoing === true) {
@@ -74,7 +83,10 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
+          <MyTeamLists
+            data-test="myteam-page-team-lists"
+            team={ongoingTeamLists}
+          />
         </div>
       </div>
     );
@@ -106,7 +118,10 @@ const MyTeamPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamList}>
-          <MyTeamLists data-test="myteam-page-team-lists" team={teamLists} />
+          <MyTeamLists
+            data-test="myteam-page-team-lists"
+            team={finishedTeamLists}
+          />
         </div>
       </div>
     );

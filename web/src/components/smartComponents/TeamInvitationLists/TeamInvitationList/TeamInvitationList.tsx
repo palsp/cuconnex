@@ -6,40 +6,35 @@ import { Heading, RecruitSign, Subtitle, TeamPic } from "@dumbComponents/UI";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./TeamInvitationList.module.css";
 import { Group } from "@dumbComponents/UI/Icons";
-import { fetchTeamDataAPI, fetchTeamMembersAPI } from "@src/api";
-import { IGetTeam, ITeamMembers, IUser } from "@src/models";
+import {
+  fetchTeamDataAPI,
+  fetchTeamMembersAPI,
+  responseTeamInvitationAPI,
+} from "@src/api";
+import {
+  IGetTeam,
+  ITeam,
+  ITeamMembers,
+  IUser,
+  IUserResponse,
+} from "@src/models";
 
 interface Props {
-  TeamInvitation: {
-    teamPic: string;
-    teamName: string;
-    event: string;
-  };
-  name?: string;
+  teams: ITeam;
 }
 
 const TeamInvitationList: React.FC<Props> = (props) => {
-   const [getTeamDetails, setGetTeamDetails] = useState<IGetTeam>();
-   const [getTeamMembers, setGetTeamMembers] = useState<IUser[] |[]>();
-    useEffect(() => {
-     fetchTeamDetailsHandler().then((value: IGetTeam) =>
-        setGetTeamDetails(value)
+  const inviteResponseHandler = async (userResponse: IUserResponse) => {
+    try {
+      const resultResponse = await responseTeamInvitationAPI(userResponse);
+      console.log(
+        "Successfully sent a response to the target team",
+        resultResponse.data
       );
-     fetchTeamMembersHandler().then((value: IUser[]) =>
-        setGetTeamMembers(value)
-      );
-   }, []);
-   const fetchTeamDetailsHandler = async () => {
-     const teamData = await fetchTeamDataAPI(props.TeamInvitation.teamName);
-     console.log("SUCCESS fetchTeamDetailsHandler", teamData.data.team);
-     return teamData.data;
-   };
-   const fetchTeamMembersHandler = async () => {
-     const teamMembers = await fetchTeamMembersAPI(props.TeamInvitation.teamName);
-    console.log("SUCCESS fetchTeamMembersHandler", teamMembers.data.users);
-     return teamMembers.data.users;
-   };
-
+    } catch (e) {
+      console.log("ERRORS occured while sent a response to the target team", e);
+    }
+  };
   return (
     <div className={classes.teamInvitationList}>
       <div className={classes.teamContainer}>
@@ -52,7 +47,7 @@ const TeamInvitationList: React.FC<Props> = (props) => {
           <div className={classes.teamName}>
             <Heading
               data-test="team-invitation-list-name"
-              value={props.TeamInvitation.teamName}
+              value={props.teams.name}
               size="small"
             />
           </div>
@@ -60,7 +55,7 @@ const TeamInvitationList: React.FC<Props> = (props) => {
             <div className={classes.teamEvent}>
               <Subtitle
                 data-test="team-invitation-list-event"
-                value={props.TeamInvitation.event}
+                value={props.teams.description}
                 size="small"
               />
             </div>
@@ -78,10 +73,34 @@ const TeamInvitationList: React.FC<Props> = (props) => {
               </div>
             </div>
             <div className={classes.teamStatus}>
-              <RecruitSign
-                data-test="team-invitation-list-status"
-                value="Accept"
-              />
+              <div
+                onClick={() => {
+                  const response: IUserResponse = {
+                    teamName: props.teams.name,
+                    newStatusFromUser: "Accept",
+                  };
+                  inviteResponseHandler(response);
+                }}
+              >
+                <RecruitSign
+                  data-test="team-invitation-list-status"
+                  value="Accept"
+                />
+              </div>
+              <div
+                onClick={() => {
+                  const response: IUserResponse = {
+                    teamName: props.teams.name,
+                    newStatusFromUser: "Reject",
+                  };
+                  inviteResponseHandler(response);
+                }}
+              >
+                <RecruitSign
+                  data-test="team-invitation-list-status"
+                  value="Reject"
+                />
+              </div>
             </div>
           </div>
         </div>

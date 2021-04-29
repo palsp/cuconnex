@@ -33,6 +33,9 @@ interface Props {
       users: IUserFriend;
     };
   };
+  history: {
+    goBack: () => void;
+  };
 }
 
 const ProfilePage: React.FC<Props> = (props) => {
@@ -58,6 +61,9 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEdit(true);
   };
 
+  const goBackPreviousPageHandler = () => {
+    props.history.goBack();
+  };
   const fetchRelationHandler = async (userId: string) => {
     const relationResult = await fetchRelationAPI(userId);
     console.log(relationResult.data.status);
@@ -103,10 +109,11 @@ const ProfilePage: React.FC<Props> = (props) => {
     profilePrompt = (
       <div className={classes.profile}>
         <div className={classes.header}>
-          <div className={classes.relativeArrow}>
-            <Link data-test="profile-page-back-link" to="/friendlists">
-              <ArrowLeft data-test="profile-page-arrow-left" />
-            </Link>
+          <div
+            onClick={goBackPreviousPageHandler}
+            className={classes.relativeArrow}
+          >
+            <ArrowLeft data-test="profile-page-arrow-left" />
           </div>
           <div className={classes.head}>
             <Heading data-test="profile-page-header" value="My Profile" />

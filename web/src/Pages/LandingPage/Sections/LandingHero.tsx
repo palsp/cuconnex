@@ -25,18 +25,14 @@ const LandingHero: React.FC<Props> = (props) => {
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const { userData } = useContext(UserContext);
 
-  const fetchTeamHandler = async () => {
-    try {
-      const teamData = await callTeamOfUserAPI(userData.id);
-      console.log("fetchTeamHandler", teamData);
-      setCurrentTeamLists(teamData.data.teams);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   useEffect(() => {
     fetchTeamHandler();
   }, []);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    setCurrentTeamLists(teamData.data);
+  };
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={currentTeamLists} />
