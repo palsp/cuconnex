@@ -30,7 +30,7 @@ const MyTeamPage: React.FC = () => {
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData);
-    setTeamLists(teamData.data);
+    setTeamLists(teamData.data.teams);
   };
 
   const onGoingButtonHandler = () => {

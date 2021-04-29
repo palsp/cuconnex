@@ -38,9 +38,9 @@ const LandingHero: React.FC<Props> = (props) => {
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData);
-    setCurrentTeamLists(teamData.data);
+    setCurrentTeamLists(teamData.data.teams);
   };
-  
+
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={currentTeamLists} />
@@ -65,7 +65,7 @@ const LandingHero: React.FC<Props> = (props) => {
           <FindteamLogo />
         </Link>
       </div>
-      <motion.div 
+      <motion.div
         animate={{ rotate: 180 }}
         transition={{ ease: "linear", duration: 4, repeat: Infinity }}
         style={{ bottom: marginHeight }}

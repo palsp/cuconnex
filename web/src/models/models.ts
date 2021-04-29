@@ -102,6 +102,10 @@ export interface ICreateUserData {
   role: string;
 }
 
+export interface IFetchTeam {
+  teams: ITeam[];
+}
+
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }

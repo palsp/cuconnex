@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 import { IEventData } from "@src/models";
 
 interface Props {
-  events: [
-    IEventData
-  ] | []
+  events: [IEventData] | [];
 }
 
 const EventLists: React.FC<Props> = (props) => {
   const mappeddefault = (
     <div className={classes.mainDiv}>
-      {props.events.map((eventpulled:IEventData, index:number) => {
+      {props.events?.map((eventpulled: IEventData, index: number) => {
         return (
           <div key={index} className={classes.deleteunderlineDiv}>
             <Link
