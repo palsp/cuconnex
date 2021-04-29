@@ -21,7 +21,7 @@ export const getTeam = async (req: Request, res: Response) => {
   await team.fetchTeam();
 
   const response: ITeamResponse = team.toJSON();
-  res.status(200).send(response);
+  res.status(200).send({ team: response });
 };
 
 export const createTeam = async (req: Request, res: Response) => {
@@ -43,7 +43,7 @@ export const createTeam = async (req: Request, res: Response) => {
   await newTeam.fetchTeam();
   const response: ITeamResponse = newTeam.toJSON();
 
-  res.status(201).send(response);
+  res.status(201).send({ team: response });
 };
 
 export const getTeamMember = async (req: Request, res: Response) => {
@@ -61,7 +61,7 @@ export const getTeamMember = async (req: Request, res: Response) => {
     return eachUser.toJSON();
   });
 
-  res.status(200).send(response);
+  res.status(200).send({ users: response });
 };
 
 /**
@@ -143,5 +143,5 @@ export const getOutGoingRequests = async (req: Request, res: Response) => {
 
   const response: IOutgoingRequestResponse = await team.getOutgoingRequests();
 
-  res.status(200).send(response);
+  res.status(200).send({ outgoingRequests: response });
 };

@@ -103,8 +103,8 @@ describe('Get Outgoing Requests', () => {
       .send({})
       .expect(200);
 
-    expect(res.body.teamName).toEqual(team.name);
-    expect(res.body.pendingUsers[0].id).toEqual(user2.id);
-    expect(res.body.pendingUsers[1].id).toEqual(user3.id);
+    expect(res.body.outgoingRequests.teamName).toEqual(team.name);
+    expect(res.body.outgoingRequests.pendingUsers[0].id).toEqual(user2.id);
+    expect(res.body.outgoingRequests.pendingUsers[1].id).toEqual(user3.id);
   });
 });
