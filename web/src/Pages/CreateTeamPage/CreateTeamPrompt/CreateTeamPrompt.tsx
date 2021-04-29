@@ -50,7 +50,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       console.log("POST /members/invite/", teamNames, members.id);
     });
   };
-
+  console.log(props.members);
   const PageHero = (
     <div>
       {redirect ? (
@@ -80,9 +80,8 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
                 name: data.name,
                 description: data.description,
               };
-
+              console.log(teamCreateData);
               createTeamHandler(teamCreateData);
-
               setTimeout(
                 () => inviteMember(teamCreateData.name, props.members),
                 1000

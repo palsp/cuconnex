@@ -41,9 +41,6 @@ const LandingPage: React.FC<Props> = (props) => {
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
-  useEffect(() => {
-    fetchTeamHandler();
-  }, []);
   let hasTeam = false;
   if (myTeamLists.length > 0) {
     hasTeam = true;

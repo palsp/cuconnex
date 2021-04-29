@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { Heading, Tab } from "@dumbComponents/UI/index";
@@ -11,10 +11,7 @@ import {
   ConnectionLists,
   TeamInvitationLists,
 } from "@smartComponents/index";
-
-import mockTeamInvitationListsData from "@src/mockData/mockTeamInvitationListsData";
-import mockConnectionListsData from "@src/mockData/mockConnectionListsData";
-import mockMembersInActivityNotification from "@src/mockData/mockMembersInActivityNotificationData";
+import { UserContext } from "@context/UserContext";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
 import {
   IFetchFriendNotification,
@@ -24,21 +21,28 @@ import {
   IUserFriend,
 } from "@src/models";
 import {
+  callTeamOfUserAPI,
   fetchFriendNotificationAPI,
   fetchFriendReceivedNotificationAPI,
   fetchFriendsDataAPI,
   fetchTeamNotificationAPI,
+  fetchTeamOutgoingNotificationAPI,
 } from "@src/api/apiCalls";
 import { isPropertySignature } from "typescript";
 
 import { motion } from "framer-motion";
-import containerVariants, { ITeam } from "@src/models/models";
+import containerVariants, {
+  IFetchOutgoingTeamNotification,
+  ITeam,
+} from "@src/models/models";
 
 const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
   const [teamNoti, setTeamNoti] = useState<ITeam[] | []>([]);
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
+  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const { userData } = useContext(UserContext);
   const [friendReceivedNoti, setFriendReceivedNoti] = useState<
     IUserFriend[] | []
   >([]);
@@ -51,17 +55,18 @@ const NotificationPage: React.FC = () => {
       setFriendReceivedNoti(value)
     );
     fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
+    fetchTeamHandler();
   }, []);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData.data);
+    setMyTeamLists(teamData.data.teams);
+  };
   const fetchTeamNotiHandler = async () => {
     const teamNotiData = await fetchTeamNotificationAPI();
     console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.data.teams);
     return teamNotiData.data.teams;
   };
-  // const fetchCurrentFriendsHandler = async () => {
-  //   const friendData = await fetchFriendsDataAPI();
-  //   console.log("SUCCESS fetchFriendsDataHandler", friendData.data);
-  //   return friendData.data;
-  // };
   console.log(teamNoti);
   const fetchFriendNotiHandler = async () => {
     const friendsData = await fetchFriendNotificationAPI();

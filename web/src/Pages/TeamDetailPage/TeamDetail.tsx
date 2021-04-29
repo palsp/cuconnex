@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
 import { Heading } from "@dumbComponents/UI/index";
@@ -12,9 +12,10 @@ import {
 import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 import { motion } from "framer-motion";
 
-import containerVariants from "@src/models/models";
+import containerVariants, { IUser } from "@src/models/models";
 import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
+import { fetchTeamOutgoingNotificationAPI } from "@src/api";
 
 interface Props {
   location: {
@@ -28,6 +29,22 @@ interface Props {
 }
 
 const TeamDetail: React.FC<Props> = (props) => {
+  const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
+  useEffect(() => {
+    fetchOutgoingTeamNotiHandler();
+  }, []);
+  const myTeamName = props.location.state.team.name;
+  const fetchOutgoingTeamNotiHandler = async () => {
+    const teamOutgoingNotiData = await fetchTeamOutgoingNotificationAPI(
+      myTeamName
+    );
+    console.log(
+      "SUCCESS fetchOutgoingTeamNotiHandler",
+      teamOutgoingNotiData.data.pendingUsers
+    );
+    setPendingMembers(teamOutgoingNotiData.data.pendingUsers);
+  };
+  console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
   // Is user be team owner ?
   let isTeamOwner = false;
@@ -89,7 +106,7 @@ const TeamDetail: React.FC<Props> = (props) => {
       </div>
 
       <div className={classes.memberpic}>
-        <MemberPicList />
+        <MemberPicList members={pendingMembers} />
       </div>
 
       <div className={classes.activity}>

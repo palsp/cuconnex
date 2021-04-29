@@ -211,6 +211,10 @@ export interface IFetchFriendNotification {
 export interface IFetchFriendReceivedNotification {
   requests: IUserFriend[];
 }
+export interface IFetchOutgoingTeamNotification {
+  teamName: string;
+  pendingUsers: IUser[];
+}
 
 //Search
 export interface ISearchGeneral {

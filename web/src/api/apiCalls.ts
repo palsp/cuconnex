@@ -26,6 +26,7 @@ import {
   IUserResponse,
   ITeam,
   IFetchTeam,
+  IFetchOutgoingTeamNotification,
 } from "@src/models";
 
 //Auth Services
@@ -165,6 +166,17 @@ const fetchTeamNotificationAPI = async (): Promise<
 
   return teamNotificationData;
 };
+const fetchTeamOutgoingNotificationAPI = async (
+  teamName: string
+): Promise<
+  AxiosResponse<IFetchOutgoingTeamNotification>
+> => {
+  const teamOutgoingNotificationData: AxiosResponse<IFetchOutgoingTeamNotification> = await axios.get(
+    `/api/teams/outgoingrequests/${teamName}`
+  );
+
+  return teamOutgoingNotificationData;
+};
 const fetchFriendNotificationAPI = async (): Promise<
   AxiosResponse<IFetchFriendNotification>
 > => {
@@ -251,4 +263,5 @@ export {
   fetchTeamDataAPI,
   fetchTeamMembersAPI,
   responseTeamInvitationAPI,
+  fetchTeamOutgoingNotificationAPI,
 };

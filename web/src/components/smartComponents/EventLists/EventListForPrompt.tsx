@@ -6,19 +6,27 @@ import { IEventData } from "@src/models";
 
 interface Props {
   events: IEventData[] | [];
-  selectEventHandler: (e: IEventData) => void;
+  selectEventHandler: any;
 }
 
 const EventLists: React.FC<Props> = (props) => {
-  const selectEventHandler = (event: IEventData) => {
-    props.events;
+  const [click, setClick] = useState<boolean>(false);
+  const selectEventListHandler = (index: number) => {
+    props.selectEventHandler(props.events[index]);
+    console.log("selected events = ", props.events[index]);
   };
   const mappeddefault = (
     <div className={classes.mainDiv}>
       {props.events?.map((eventpulled: IEventData, index: number) => {
         return (
           <div key={index} className={classes.deleteunderlineDiv}>
-            <div onClick={() => selectEventHandler} className={classes.listDiv}>
+            <div
+              onClick={() => {
+                setClick(true);
+                selectEventListHandler(index);
+              }}
+              className={classes.listDiv}
+            >
               <GeneralLists key={index} events={eventpulled}></GeneralLists>
             </div>
           </div>

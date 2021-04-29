@@ -3,31 +3,28 @@ import { Redirect } from "react-router-dom";
 import { EventLists, MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
-import classes from "./SelectMemberPrompt.module.css";
-import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
+import classes from "./SelectEventPrompt.module.css";
 import CreateTeamPage from "../CreateTeamPage";
-import { motion } from "framer-motion";
-import { UsersData } from "@src/mockData/Models";
 import { IEventData, IUser, IUserFriend } from "@src/models";
-import { fetchEventsDataAPI, fetchFriendsDataAPI } from "@src/api";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import EventListForPrompt from "@smartComponents/EventLists/EventListForPrompt";
+import { mockEventLists } from "@src/mockData";
 
 const SelectEventPrompt: React.FC = () => {
   const [clickSelectEvent, setClickSelectEvent] = useState<boolean>(true);
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
-  const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
+  const eventLists: IEventData[] | [] = mockEventLists;
   const [selectedEventLists, setSelectedEventLists] = useState<IEventData>();
 
-  useEffect(() => {
-    fetchEventsHandler();
-  }, []);
-  const fetchEventsHandler = async () => {
-    const eventsData = await fetchEventsDataAPI();
-    console.log("SUCCESS fetchEventsHandler", eventsData.data.events);
-    setEventLists(eventsData.data.events);
-  };
+  //   useEffect(() => {
+  //     fetchEventsHandler();
+  //   }, []);
+  //   const fetchEventsHandler = async () => {
+  //     const eventsData = await fetchEventsDataAPI();
+  //     console.log("SUCCESS fetchEventsHandler", eventsData.data.events);
+  //     setEventLists(eventsData.data.events);
+  //   };
   const inviteClickedHandler = () => {
     setClickSelectEvent(false);
     setClickSelectMember(true);
@@ -40,6 +37,9 @@ const SelectEventPrompt: React.FC = () => {
   };
   const selectedEventHandler = (e: IEventData) => {
     setSelectedEventLists(e);
+    setClickSelectEvent(false);
+    setClickSelectScope(false);
+    setClickSelectMember(true);
   };
   const selectPrompt =
     clickSelectEvent === true ? (
@@ -69,7 +69,7 @@ const SelectEventPrompt: React.FC = () => {
         </div>
       </div>
     ) : clickSelectMember === true ? (
-      <SelectMemberPrompt />
+      <SelectMemberPrompt event={selectedEventLists} />
     ) : (
       <div>
         <CreateTeamPage />
@@ -79,4 +79,4 @@ const SelectEventPrompt: React.FC = () => {
   return <div>{selectPrompt}</div>;
 };
 
-export default SelectMemberPrompt;
+export default SelectEventPrompt;
