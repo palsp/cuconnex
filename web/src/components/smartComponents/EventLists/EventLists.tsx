@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { IEventData } from "@src/models";
 
 interface Props {
-  events: [IEventData] | [];
+  events: IEventData[] | [];
 }
 
 const EventLists: React.FC<Props> = (props) => {

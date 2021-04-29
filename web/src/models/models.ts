@@ -111,10 +111,10 @@ export interface IFetchFriendsData {
 }
 //events
 export interface IFetchEventsData {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IFetchEventsDataResult {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IEventData {
   "event-name": string;

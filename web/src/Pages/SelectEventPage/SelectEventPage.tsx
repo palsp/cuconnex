@@ -11,16 +11,14 @@ import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
 
 const SelectEventPage: React.FC = () => {
-  const [eventLists, setEventLists] = useState<[IEventData] | []>([]);
+  const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
   useEffect(() => {
-    fetchEventsHandler().then((value: [IEventData] | []) =>
-      setEventLists(value)
-    );
+    fetchEventsHandler();
   }, []);
   const fetchEventsHandler = async () => {
     const eventsData = await fetchEventsDataAPI();
     console.log("SUCCESS fetchDataHandler", eventsData.data.events);
-    return eventsData.data.events;
+    setEventLists(eventsData.data.events);
   };
   return (
     <motion.div
