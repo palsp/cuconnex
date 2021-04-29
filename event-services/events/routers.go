@@ -17,6 +17,7 @@ func EventRegister(router *gin.RouterGroup) {
 	router.OPTIONS("/" , func (ctx *gin.Context){
 		ctx.JSON(http.StatusOK,gin.H{})
 	})
+
 }
 
 
