@@ -15,9 +15,9 @@ func EventRegister(router *gin.RouterGroup) {
 
 
 	// TODO: Must be removed in production
-	router.OPTIONS("/" , func (ctx *gin.Context){
-		ctx.JSON(http.StatusOK,gin.H{})
-	})
+	//router.OPTIONS("/" , func (ctx *gin.Context){
+	//	ctx.JSON(http.StatusOK,gin.H{})
+	//})
 
 }
 
