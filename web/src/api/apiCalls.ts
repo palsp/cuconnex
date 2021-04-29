@@ -25,7 +25,6 @@ import {
   ITeamMembers,
   IUserResponse,
   ITeam,
-  ITeamFetch,
 } from "@src/models";
 
 //Auth Services
