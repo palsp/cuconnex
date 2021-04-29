@@ -5,8 +5,9 @@ import {
   IUserResponse,
   ITeamResponse,
   IIsMemberResponse,
-  IOutgoingRequestResponse,
+  ITeamRequestResponse,
 } from '../interfaces';
+import { NotAuthorizedError } from '@bkatickets/common';
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
@@ -127,7 +128,7 @@ export const manageStatus = async (req: Request, res: Response) => {
   res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
 };
 
-export const getOutGoingRequests = async (req: Request, res: Response) => {
+export const getOutgoingRequests = async (req: Request, res: Response) => {
   const user = req.user!;
   const teamName = req.params.name;
 
@@ -141,7 +142,26 @@ export const getOutGoingRequests = async (req: Request, res: Response) => {
     throw new BadRequestError('The request user is not part of the team');
   }
 
-  const response: IOutgoingRequestResponse = await team.getOutgoingRequests();
+  const response: ITeamRequestResponse = await team.getOutgoingRequests();
 
   res.status(200).send({ outgoingRequests: response });
+};
+
+export const getIncomingRequests = async (req: Request, res: Response) => {
+  const user = req.user!;
+  const teamName = req.params.name;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  if (user.id !== team.creatorId) {
+    // throw new NotAuthorizedError(); // this not return 401 I dont know why ??
+    throw new BadRequestError('The requester is not the team creator.');
+  }
+
+  const response: ITeamRequestResponse = await team.getIncomingRequests();
+
+  res.status(200).send({ incomingRequests: response });
 };
