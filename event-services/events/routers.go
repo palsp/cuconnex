@@ -1,9 +1,10 @@
 package events
 
 import (
-	"github.com/palsp/cuconnex/event-services/common"
 	"log"
 	"net/http"
+
+	"github.com/palsp/cuconnex/event-services/common"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,9 +16,9 @@ func EventRegister(router *gin.RouterGroup) {
 
 
 	// TODO: Must be removed in production
-	//router.OPTIONS("/" , func (ctx *gin.Context){
-	//	ctx.JSON(http.StatusOK,gin.H{})
-	//})
+	router.OPTIONS("/" , func (ctx *gin.Context){
+		ctx.JSON(http.StatusOK,gin.H{})
+	})
 
 }
 
@@ -74,7 +75,7 @@ func CreateEvent(c *gin.Context) {
 	err := common.PublishEventCreated(common.EventCreatedData{
 		ID: response.ID,
 		EventName: response.EventName,
-
+		Registration: response.Registration,
 	})
 	if err != nil {
 		log.Printf("error publish event:created : %v" , err)

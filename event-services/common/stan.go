@@ -37,6 +37,7 @@ func GetStanClient () stan.Conn {
 type EventCreatedData struct {
 	ID uint `json:"id"`
 	EventName string `json:"event-name"`
+	Registration bool `json:"registration"`
 }
 
 func PublishEventCreated( msg EventCreatedData) error {

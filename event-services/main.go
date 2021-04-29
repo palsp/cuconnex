@@ -1,11 +1,12 @@
 package main
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
-	"log"
-	"net/http"
 )
 
 func Migrate() {
@@ -31,7 +32,7 @@ func main() {
 	//config.AllowAllOrigins = true
 	//r.Use(cors.New(config))
 
-	//r.Use(CustomHeaderAPI)
+	r.Use(CustomHeaderAPI)
 
 
 	testEvent := r.Group("/api/ping")
@@ -49,12 +50,12 @@ func main() {
 
 }
 
-//func CustomHeaderAPI(c *gin.Context) {
-//	// Add CORS headers
-//	c.Header("Access-Control-Allow-Origin", "*")
-//	c.Header("Access-Control-Allow-Methods", "*")
-//	c.Header("Access-Control-Allow-Headers","Content-Type")
-//
-//	c.Next()
-//}
+func CustomHeaderAPI(c *gin.Context) {
+	// Add CORS headers
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Methods", "*")
+	c.Header("Access-Control-Allow-Headers","Content-Type")
+
+	c.Next()
+}
 
