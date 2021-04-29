@@ -8,22 +8,23 @@ import { UsersData } from "@src/mockData/Models";
 import { IInviteData, ITeamData, IUser, IUserFriend } from "@src/models";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
+import { ErrorContext } from "@context/ErrorContext";
 interface Props {
   members: IUserFriend[] | [];
 }
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(true);
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
   const backClickedHandler = () => {
     setClickSelectMember(true);
     setClickCreateTeam(false);
   };
+  const { setErrorHandler } = useContext(ErrorContext);
   const createTeamHandler = async (teamData: ITeamData) => {
     const resultTeam = await createTeamAPI(teamData);
     console.log("Successfully sent a POST request to teams", resultTeam);
@@ -39,7 +40,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       );
       setRedirect(true);
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/teams/invite-member");
+      setErrorHandler(e.response.data.errors[0].message);
       console.log("ERRORS occured while POST /api/teams/invite-member", e);
     }
   };
