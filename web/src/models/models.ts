@@ -37,10 +37,6 @@ export interface ITeam {
   lookingForMembers: boolean;
 }
 
-export interface ITeamFetch {
-  message: string;
-  teams: ITeam[] | [];
-}
 export interface ISearchUserTeamEventResult {
   users: IUser[];
   team: ITeam[];

@@ -32,9 +32,8 @@ const ExplorePage = () => {
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData.data.teams);
-    setMyTeamLists(teamData.data.teams);
-    return teamData.data;
+    console.log("fetchTeamHandler", teamData);
+    setMyTeamLists(teamData.data);
   };
 
   const explorePage = !hasSearch ? (

@@ -115,8 +115,8 @@ const fetchTeamMembersAPI = async (
 };
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<ITeamFetch>> => {
-  const calledResult: AxiosResponse<ITeamFetch> = await axios.get(
+): Promise<AxiosResponse<ITeam[]>> => {
+  const calledResult: AxiosResponse<ITeam[]> = await axios.get(
     `/api/users/teams/${userId}`
   );
 

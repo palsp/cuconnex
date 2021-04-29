@@ -35,9 +35,8 @@ const LandingPage: React.FC<Props> = (props) => {
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData.data.teams);
-    setMyTeamLists(teamData.data.teams);
-    return teamData.data;
+    console.log("fetchTeamHandler", teamData);
+    setMyTeamLists(teamData.data);
   };
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
@@ -45,10 +44,10 @@ const LandingPage: React.FC<Props> = (props) => {
   useEffect(() => {
     fetchTeamHandler();
   }, []);
-  let hasTeam = false;
-  if (myTeamLists.length > 0) {
-    hasTeam = true;
-  }
+  const hasTeam = false;
+  // if (myTeamLists.length > 0) {
+  //   hasTeam = true;
+  // }
   console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];

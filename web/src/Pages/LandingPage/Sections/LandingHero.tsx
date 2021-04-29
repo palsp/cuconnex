@@ -30,9 +30,8 @@ const LandingHero: React.FC<Props> = (props) => {
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData.data.teams);
-    setCurrentTeamLists(teamData.data.teams);
-    return teamData.data;
+    console.log("fetchTeamHandler", teamData);
+    setCurrentTeamLists(teamData.data);
   };
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
