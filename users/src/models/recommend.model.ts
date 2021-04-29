@@ -9,8 +9,6 @@ interface RecommendAttrs {
 
 interface RecommendCreationAttrs {
     score?: number;
-    userId?: string;
-    recommenderId?: string;
 }
 
 class Recommend extends Model<RecommendAttrs, RecommendCreationAttrs> implements RecommendAttrs {
