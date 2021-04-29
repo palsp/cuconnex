@@ -5,5 +5,6 @@ export interface EventCreated {
     data : {
         id : number,
         "event-name" : string,
+        registration : boolean,
     }
 }
