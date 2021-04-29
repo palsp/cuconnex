@@ -52,7 +52,7 @@ const SelectTeamPage: React.FC<Props> = (props) => {
           />
         </div>
         <div className={classes.eventcardsDiv}>
-          {/* <EventCards events={props.location?.state?.events}></EventCards> */}
+          <EventCards events={props.location?.state?.events}></EventCards>
         </div>
       </div>
       <div className={classes.teamContainer}>
