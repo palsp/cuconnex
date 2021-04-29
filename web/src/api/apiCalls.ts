@@ -109,14 +109,6 @@ const fetchTeamDataAPI = async (
   );
   return teamDetailsData;
 };
-const fetchTeamMembersAPI = async (
-  teamName: string
-): Promise<AxiosResponse<ITeamMembers>> => {
-  const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
-    `/api/teams/members/${teamName}`
-  );
-  return teamMembersData;
-};
 const callTeamOfUserAPI = async (
   userId: string
 ): Promise<AxiosResponse<IFetchTeam>> => {
@@ -203,6 +195,15 @@ const fetchRelationAPI = async (
   );
 
   return relationResult;
+};
+const fetchTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<ITeamMembers>> => {
+  const teamMembersResult: AxiosResponse<ITeamMembers> = await axios.get(
+    `/api/teams/members/${teamName}`
+  );
+
+  return teamMembersResult;
 };
 const fetchFriendsDataAPI = async (): Promise<
   AxiosResponse<IFetchFriendsData>
