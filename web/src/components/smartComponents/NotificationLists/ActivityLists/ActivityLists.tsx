@@ -10,12 +10,12 @@ import {
   PositionsInActivityNotificationList,
 } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI";
-import { ITeam, IUser, IUserFriend } from "@src/models";
+import { IFetchTeam, ITeam, IUser, IUserFriend } from "@src/models";
 import { UserContext } from "@context/UserContext";
 
 interface Props {
   Memberlist: IUserFriend[] | [];
-  requestedTeamList: ITeam[] | [];
+  requestedTeamList: IFetchTeam[] | [];
 }
 
 const ActivityNotificationLists: React.FC<Props> = (props) => {
@@ -24,7 +24,7 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
     <div className={classes.ActivityNotificationLists}>
       <div className={classes.positionlist}>
         <div className={classes.listHeader}>Pending Team</div>
-        {props.requestedTeamList.map((position: ITeam, index: number) => {
+        {props.requestedTeamList.map((position: IFetchTeam, index: number) => {
           return (
             <div key={index}>
               <PositionsInActivityNotificationList

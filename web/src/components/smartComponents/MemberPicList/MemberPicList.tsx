@@ -28,7 +28,7 @@ interface Props {
 const MemberPicList: React.FC<Props> = (props) => {
   return (
     <div>
-      {/* <div data-test="member-pic-list">
+      <div data-test="member-pic-list">
         <div className={classes.heading}>Members</div>
         <div className={classes.subheading}>
           {props.members.length} members in the team.
@@ -37,9 +37,9 @@ const MemberPicList: React.FC<Props> = (props) => {
           {props.members.map((person: IUser, index: number) => {
             return <ProfilePic size="mini" key={index} PicUrl={person.image} />;
           })}
-          <div className={classes.more}>{}</div>
+          <div className={classes.more}>{props.members.length}</div>
         </div>
-      </div> */}
+      </div>
       <div data-test="member-pic-list">
         <div className={classes.heading}>Pending Members</div>
         <div className={classes.subheading}>

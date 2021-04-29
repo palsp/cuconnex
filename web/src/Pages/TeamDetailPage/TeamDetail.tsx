@@ -18,6 +18,7 @@ import { UserContext } from "@context/UserContext";
 import {
   fetchTeamMembersAPI,
   fetchTeamOutgoingNotificationAPI,
+  userTeamRelationAPI,
   userTeamRequestAPI,
 } from "@src/api";
 
@@ -35,9 +36,11 @@ interface Props {
 const TeamDetail: React.FC<Props> = (props) => {
   const [teamMembers, setTeamMembers] = useState<IUser[] | []>([]);
   const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
+  const [relation, setRelation] = useState<string>("");
   useEffect(() => {
     fetchOutgoingTeamNotiHandler();
     fetchTeamMembersHandler();
+    fetchRelationHandler();
   }, []);
   const myTeamName = props.location.state.team.name;
   const fetchOutgoingTeamNotiHandler = async () => {
@@ -45,15 +48,20 @@ const TeamDetail: React.FC<Props> = (props) => {
       myTeamName
     );
     console.log(
-      "SUCCESS fetchOutgoingTeamNotiHandler",
-      teamOutgoingNotiData.data.pendingUsers
+      "SUCCESS pendingMember",
+      teamOutgoingNotiData.data.outgoingRequests.pendingUsers
     );
-    setPendingMembers(teamOutgoingNotiData.data.pendingUsers);
+    setPendingMembers(teamOutgoingNotiData.data.outgoingRequests.pendingUsers);
   };
   const fetchTeamMembersHandler = async () => {
     const teamMembersData = await fetchTeamMembersAPI(myTeamName);
-    console.log("SUCCESS fetchTeamMembersHandler", teamMembersData);
+    console.log("SUCCESS members =", teamMembersData.data.users);
     setTeamMembers(teamMembersData.data.users);
+  };
+  const fetchRelationHandler = async () => {
+    const relationData = await userTeamRelationAPI(myTeamName);
+    console.log("SUCCESS relation =", relationData.data);
+    setRelation(relationData.data.status);
   };
   console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
@@ -106,6 +114,7 @@ const TeamDetail: React.FC<Props> = (props) => {
         <div className={classes.profileInfo}>
           {/* <TeamInfo name="Suki Tee Noi" isTeamOwner={isTeamOwner} /> */}
           <TeamInfo
+            status={relation}
             name={props.location.state.team.name}
             isTeamOwner={isTeamOwner}
           />

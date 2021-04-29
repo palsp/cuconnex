@@ -16,6 +16,7 @@ interface Props {
   pic?: string;
   name: string;
   isTeamOwner: boolean;
+  status: string;
 }
 
 const TeamInfo: React.FC<Props> = (props) => {
@@ -47,7 +48,7 @@ const TeamInfo: React.FC<Props> = (props) => {
         <div className={classes.sign}>
           <RecruitSign value="Invite member" />
         </div>
-      ) : (
+      ) : props.status === null ? (
         <div
           onClick={() => {
             const name = {
@@ -59,6 +60,23 @@ const TeamInfo: React.FC<Props> = (props) => {
         >
           <RecruitSign value="Request to join" />
         </div>
+      ) : (
+        <div />
+      )}
+      {props.status === "Accept" ? (
+        <div className={classes.sign}>
+          <RecruitSign value="Accepted" />
+        </div>
+      ) : props.status === "Reject" ? (
+        <div className={classes.sign}>
+          <RecruitSign value="Reject" />
+        </div>
+      ) : props.status === "Pending" ? (
+        <div className={classes.sign}>
+          <RecruitSign value="Pending" />
+        </div>
+      ) : (
+        <div />
       )}
     </div>
   );

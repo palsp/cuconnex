@@ -34,6 +34,7 @@ import { isPropertySignature } from "typescript";
 import { motion } from "framer-motion";
 import containerVariants, {
   IFetchOutgoingTeamNotification,
+  IFetchTeam,
   ITeam,
 } from "@src/models/models";
 
@@ -41,7 +42,9 @@ const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
   const [teamNoti, setTeamNoti] = useState<ITeam[] | []>([]);
-  const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<ITeam[] | []>([]);
+  const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<IFetchTeam[] | []>(
+    []
+  );
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
   const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
   const { userData } = useContext(UserContext);
