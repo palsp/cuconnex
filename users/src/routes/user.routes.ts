@@ -7,18 +7,31 @@ import {
   requestToJoinTeamValidator,
   postUserValidator,
   manageUserStatusValidator,
-  editUserValidator
+  editUserValidator,
 } from '../utils/user.validators';
-
 
 const router = express.Router();
 
-router.get("/current-user", userController.getUser);
+router.get('/notification/invite', requireUser, validateRequest, userController.getInvitationNoti);
 
-router.get("/relation/:userId", requireUser, userController.findRelation);
+router.get('/teams/:userId', requireUser, userController.getListofTeamsBelongsTo);
 
-router.put("/", requireUser, upload.single('image'), transformRequest, editUserValidator, validateRequest, requireUser, userController.editUser)
+router.get('/get-my-requests', requireUser, userController.getMyRequests);
 
+router.get('/current-user', userController.getUser);
+
+router.get('/relation/:userId', requireUser, userController.findRelation);
+
+router.put(
+  '/',
+  requireUser,
+  upload.single('image'),
+  transformRequest,
+  editUserValidator,
+  validateRequest,
+  requireUser,
+  userController.editUser
+);
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
 
@@ -34,10 +47,6 @@ router.post(
   validateRequest,
   userController.createUser
 );
-
-router.get('/notification/invite', requireUser, validateRequest, userController.getInvitationNoti);
-
-router.get('/teams/:userId', requireUser, userController.getListofTeamsBelongsTo);
 
 router.post(
   '/status/invitation',

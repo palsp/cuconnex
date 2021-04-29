@@ -134,7 +134,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>;
   public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
 
@@ -145,14 +145,16 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @param {Description[]} interests - The array of interests the user is interested in.
    */
   public async addInterests(interests: InterestBody): Promise<Interest[]> {
-
     const result: Interest[] = [];
 
     for (let category in interests) {
       // select only valid interest description
-      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      interests[category] = Interest.validateDescription(
+        interests[category],
+        Object.values(InterestDescription[category])
+      );
       for (let interest of interests[category]) {
-        const addedInterest = await Interest.findOne({ where: { description: interest } })
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
 
         // skip if interest not found
         if (!addedInterest) {
@@ -162,7 +164,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         await this.addInterest(addedInterest);
         result.push(addedInterest);
       }
-
     }
     return result;
   }
@@ -175,8 +176,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public static async fetchUser(userId: string): Promise<User | null> {
     return User.findOne({ where: { id: userId }, include: 'interests' });
   }
-
-
 
   //Method for finding a relation attached here to minimize hassle
   /**A method to check if the current user has a relationship with the user with specified id.
@@ -338,7 +337,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return user;
   }
 
-
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
@@ -388,6 +386,26 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         teams.push(team);
       }
     }
+    return teams;
+  }
+
+  public async getMyPendingRequestsTeams(): Promise<Team[]> {
+    let teams: Team[] = [];
+    const isMembers = await IsMember.findAll({
+      where: { userId: this.id, status: TeamStatus.Pending, sender: 'user' },
+    });
+
+    if (!isMembers) {
+      return teams;
+    }
+
+    for (let i = 0; i < isMembers.length; i++) {
+      let team = await Team.findOne({ where: { name: isMembers[i].teamName } });
+      if (team) {
+        teams.push(team);
+      }
+    }
+
     return teams;
   }
 

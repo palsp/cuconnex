@@ -290,3 +290,20 @@ export const getInterest = async (req: Request, res: Response): Promise<void> =>
   }));
   res.status(200).send({ interests: response });
 };
+
+export const getMyRequests = async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const teams: Team[] = await user.getMyPendingRequestsTeams();
+  if (teams.length === 0) {
+    return res.status(200).send({ teams: [] });
+  }
+
+  const teamsResponse: ITeamResponse[] = [];
+  for (let team of teams) {
+    await team.fetchTeam();
+    teamsResponse.push(team.toJSON());
+  }
+
+  res.status(200).send({ teams: teamsResponse });
+};
