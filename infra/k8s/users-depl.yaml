@@ -40,7 +40,6 @@ spec:
                   fieldPath: metadata.name
             - name:  NATS_CLUSTER_ID
               value: 'connex'
-            
       initContainers:
         - name: init-wait
           image: alpine

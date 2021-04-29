@@ -1,33 +1,25 @@
 package common
 
 import (
-	"crypto/rand"
 	"encoding/json"
-	"fmt"
-	nats "github.com/nats-io/nats.go"
-	stan "github.com/nats-io/stan.go"
 	"log"
 	"os"
+
+	nats "github.com/nats-io/nats.go"
+	stan "github.com/nats-io/stan.go"
 )
 
 var SC stan.Conn
 
-func GenRandomBytes(size int) (blk []byte, err error) {
-	blk = make([]byte, size)
-	_, err = rand.Read(blk)
-	return
-}
-
 
 func InitStanClient() (stan.Conn , error){
 	//nc ,err := nats.Connect(os.Getenv("NATS_URL"))
-	nc ,err := nats.Connect(os.Getenv("http://localhost:4222"))
+	nc ,err := nats.Connect(os.Getenv("NATS_URL"))
 	if err != nil {
 		return nil , err
 	}
-	blk , _ := GenRandomBytes(4)
-
-	sc , err := stan.Connect("connex", fmt.Sprintf("%x",blk) , stan.NatsConn(nc))
+	
+	sc , err := stan.Connect(os.Getenv("NATS_CLUSTER_ID"), os.Getenv("NATS_CLIENT_ID") , stan.NatsConn(nc))
 
 	if err != nil {
 		return nil , err
