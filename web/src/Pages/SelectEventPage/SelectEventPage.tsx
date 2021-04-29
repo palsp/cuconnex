@@ -28,21 +28,25 @@ const SelectEventPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={classes.mainDiv}
     >
-      <div className={classes.fixHeaderDiv}>
-        <div className={classes.headingContainerDiv}>
-          <div className={classes.arrowDiv}>
+      <div className={classes.divHeading}>
+        <div className={classes.divFixed}>
+          <div className={classes.relativeArrow}>
             <Link to="/landing">
               <ArrowLeft />
             </Link>
           </div>
-          <div className={classes.headingDiv}>Technology</div>
+          <Heading
+            data-test="friends-page-header"
+            value="Technology"
+            size="medium"
+          />
+          <div className={classes.tagDiv}>
+            <Tag />
+          </div>
         </div>
       </div>
-      <div className={classes.tagDiv}>
-        <Tag />
-      </div>
+
       <div className={classes.eventDiv}>
         <EventLists events={eventLists}></EventLists>
       </div>
