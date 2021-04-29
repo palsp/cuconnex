@@ -89,6 +89,26 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
               </label>
             </div>
           </div>
+
+          <div className={classes.profilePicDiv}>
+            {imagePreview !== "" ? (
+              <ProfilePic
+                size="big"
+                data-test="personal-info-personalImage"
+                PicUrl={imagePreview}
+                previewImage={true}
+              />
+            ) : (
+              <>{handleInitialImage()}</>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              name="myFile"
+              style={{ display: "none" }}
+              onChange={handleUploadedImage}
+            />
+          </div>
           <Formik
             initialValues={{
               name: "",
@@ -112,9 +132,6 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
           >
             {({ isSubmitting, values }) => (
               <Form>
-                <div className={classes.profilePicDiv}>
-                  <ProfilePic size="big"></ProfilePic>
-                </div>
                 <div className={classes.InputFieldDiv}>
                   <InputField label="Team name" name="name" type="input" />
                 </div>

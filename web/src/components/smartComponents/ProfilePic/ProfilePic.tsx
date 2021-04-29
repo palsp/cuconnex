@@ -30,8 +30,8 @@ const ProfilePic: React.FC<Props> = (props) => {
   if (props.PicUrl) {
     profileArray = [classes.profilePic];
   }
-
-  url = window.location.origin + "/api/users/" + props.PicUrl;
+  url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+  // url = window.location.origin + "/api/users/" + props.PicUrl;
 
   if (props.previewImage) {
     url = props.PicUrl;
