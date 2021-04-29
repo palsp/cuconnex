@@ -71,7 +71,7 @@ func CreateEvent(c *gin.Context) {
 	c.Set("my_event_model" , eventModelValidator.eventModel)
 	serializer := EventSerializer{c}
 	response := serializer.Response()
-	err := common.EventCreatedPublisher(common.EventCreatedData{
+	err := common.PublishEventCreated(common.EventCreatedData{
 		ID: response.ID,
 		EventName: response.EventName,
 

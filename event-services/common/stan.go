@@ -47,7 +47,7 @@ type EventCreatedData struct {
 	EventName string `json:"event-name"`
 }
 
-func EventCreatedPublisher(msg EventCreatedData) error {
+func PublishEventCreated( msg EventCreatedData) error {
 	if SC == nil {
 		log.Printf("Cannot acces stan client")
 		return nil
