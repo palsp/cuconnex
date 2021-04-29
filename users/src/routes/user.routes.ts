@@ -3,11 +3,22 @@ import express from 'express';
 import { upload } from '../config/multer.config';
 import * as userController from '../controllers/user.controller';
 import { requireUser, transformRequest } from '../middlewares';
-import { postUserValidator, manageUserStatusValidator } from '../utils/user.validators';
+import {
+  requestToJoinTeamValidator,
+  postUserValidator,
+  manageUserStatusValidator,
+  editUserValidator
+} from '../utils/user.validators';
+
 
 const router = express.Router();
 
-router.get('/current-user', userController.getUser);
+router.get("/current-user", userController.getUser);
+
+router.get("/relation/:userId", requireUser, userController.findRelation);
+
+router.put("/", requireUser, upload.single('image'), transformRequest, editUserValidator, validateRequest, requireUser, userController.editUser)
+
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
 
@@ -34,6 +45,14 @@ router.post(
   manageUserStatusValidator,
   validateRequest,
   userController.manageStatus
+);
+
+router.post(
+  '/request-to-join',
+  requireUser,
+  requestToJoinTeamValidator,
+  validateRequest,
+  userController.requetToJoinTeam
 );
 
 export { router as userRouter };

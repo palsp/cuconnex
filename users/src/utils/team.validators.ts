@@ -14,10 +14,6 @@ export const addTeamMemberValidator = [
   body('newMemberId').notEmpty().isAlphanumeric().withMessage('New Member Id must be supplied'),
 ];
 
-export const requestToJoinTeamValidator = [
-  body('teamName').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
-];
-
 export const manageTeamStatusValidator = [
   body('targetUserId').notEmpty().isAlphanumeric(),
   body('teamName').notEmpty().isAlphanumeric(),

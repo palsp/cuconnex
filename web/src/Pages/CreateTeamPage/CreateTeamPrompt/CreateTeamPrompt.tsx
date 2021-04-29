@@ -34,6 +34,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       const resultInvitation = await teamInvitationAPI(inviteData);
       console.log(
         "Hi, Successfully sent a POST request to /api/teams/invite-member",
+
         resultInvitation
       );
       setRedirect(true);
@@ -68,6 +69,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
             };
 
             createTeamHandler(teamCreateData);
+
             setTimeout(
               () => inviteMember(teamCreateData.name, props.members),
               1000

@@ -9,18 +9,21 @@ export interface IsMemberAttrs {
   teamName: string;
   userId: string;
   status: TeamStatus;
+  sender: string;
 }
 
 export interface IsMemberCreationAttrs {
   teamName: string;
   userId: string;
   status: TeamStatus;
+  sender: string;
 }
 
 class IsMember extends Model<IsMemberAttrs, IsMemberCreationAttrs> implements IsMemberAttrs {
   public teamName!: string;
   public userId!: string;
   public status!: TeamStatus;
+  public sender!: string;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -35,13 +38,20 @@ class IsMember extends Model<IsMemberAttrs, IsMemberCreationAttrs> implements Is
           // references: { model: Team.tableName }
         },
         userId: {
-          type: DataTypes.STRING(11),
+          type: DataTypes.STRING(10),
           primaryKey: true,
           // references: { model: User.tableName }
         },
         status: {
           type: DataTypes.ENUM,
           values: Object.values(TeamStatus),
+          allowNull: false,
+        },
+        sender: {
+          // TODO add this enum to common --- not using boolean because the attrs name could be confused.
+          // type: DataTypes.ENUM,  // value === 'user' or 'team'
+          // values: Object.values(SenderBy),
+          type: DataTypes.STRING(255), // ใช้ string แก้ขัดไปก่อน
           allowNull: false,
         },
       },

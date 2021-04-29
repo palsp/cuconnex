@@ -84,6 +84,8 @@ const createTeamAPI = async (
     "/api/teams",
     teamCreatedData
   );
+  console.log("eiei111", createTeamData);
+
   return createTeamData;
 };
 
@@ -92,6 +94,7 @@ const teamInvitationAPI = async (
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
     "/api/teams/invite-member",
+
     invitedData
   );
   return invitedUsersData;

@@ -64,11 +64,19 @@ describe('Create a Team Test', () => {
   });
 
   it('should create team successfully if user is authorized and team name is unique.', async () => {
+    const user = await User.create({
+      id: '6131886621',
+      name: 'pal',
+    });
+    const interest = await Interest.findOne({
+      where: { description: Business.BusinessCase },
+    });
+    await user.addInterest(interest!);
+
     const team = {
       name: 'newTeam',
       description: 'my new team',
     };
-    const { user } = await setupTeam();
 
     const { body } = await request(app)
       .post('/api/teams')
@@ -79,11 +87,10 @@ describe('Create a Team Test', () => {
       })
       .expect(201);
 
-    const status = await IsMember.findAll({ where: { userId: user.id, teamName: team.name } });
-
-    expect(status[0].userId).toEqual(user.id);
-    expect(status[0].teamName).toEqual('newTeam');
-    expect(status[0].status).toEqual(TeamStatus.Accept);
+    const myTeam = await user.getMyTeams();
+    expect(myTeam.length).toEqual(1);
+    expect(myTeam[0].creatorId).toEqual(user.id);
+    expect(myTeam[0].name).toEqual('newTeam');
 
     expect(body.creatorId).toEqual(user.id);
     expect(body.name).toEqual('newTeam');
