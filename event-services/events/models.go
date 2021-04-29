@@ -17,8 +17,8 @@ type EventModel struct {
 	Location  string    `gorm:"column:location"`
 	StartDate time.Time `gorm:"column:start-date"`
 	EndDate   time.Time `gorm:"column:end-date"`
-	Status 	  string     `gorm:"column:status"`
-	Registration bool    `gorm:"column:registration"`
+	Status 	  string    `gorm:"column:status"`
+	Registration bool   `gorm:"column:registration"`
 }
 
 

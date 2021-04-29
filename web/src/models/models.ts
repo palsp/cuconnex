@@ -102,15 +102,19 @@ export interface ICreateUserData {
   role: string;
 }
 
+export interface IFetchTeam {
+  teams: ITeam[];
+}
+
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }
 //events
 export interface IFetchEventsData {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IFetchEventsDataResult {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IEventData {
   "event-name": string;
@@ -168,6 +172,11 @@ export interface ICallTeamOfUser {
   teams: ITeam[];
 }
 
+export interface IUserResponse {
+  teamName: string;
+  newStatusFromUser: string;
+}
+
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",
@@ -194,7 +203,7 @@ export enum FacultyListsEnum {
 
 //Notifications
 export interface IFetchTeamNotification {
-  teamNames: string[];
+  teams: ITeam[];
 }
 export interface IFetchFriendNotification {
   requests: IUserFriend[];

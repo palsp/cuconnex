@@ -23,6 +23,9 @@ import {
   IFetchFriendReceivedNotification,
   IGetTeam,
   ITeamMembers,
+  IUserResponse,
+  ITeam,
+  IFetchTeam,
 } from "@src/models";
 
 //Auth Services
@@ -91,7 +94,8 @@ const teamInvitationAPI = async (
   invitedData: IInviteData
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
-    "/api/teams/members",
+    "/api/teams/invite-member",
+
     invitedData
   );
   return invitedUsersData;
@@ -114,8 +118,8 @@ const fetchTeamMembersAPI = async (
 };
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<ICallTeamOfUser>> => {
-  const calledResult: AxiosResponse<ICallTeamOfUser> = await axios.get(
+): Promise<AxiosResponse<IFetchTeam>> => {
+  const calledResult: AxiosResponse<IFetchTeam> = await axios.get(
     `/api/users/teams/${userId}`
   );
 
@@ -215,6 +219,15 @@ const addFriendResponseAPI = async (
   );
   return friendResponseData;
 };
+const responseTeamInvitationAPI = async (
+  responseTeamData: IUserResponse
+): Promise<AxiosResponse<IUserResponse>> => {
+  const responseData: AxiosResponse<IUserResponse> = await axios.post(
+    "/api/users/status/invitation",
+    responseTeamData
+  );
+  return responseData;
+};
 
 export {
   fetchUserDataAPI,
@@ -237,4 +250,5 @@ export {
   fetchFriendReceivedNotificationAPI,
   fetchTeamDataAPI,
   fetchTeamMembersAPI,
+  responseTeamInvitationAPI,
 };

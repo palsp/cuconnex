@@ -16,7 +16,13 @@ import mockTeamInvitationListsData from "@src/mockData/mockTeamInvitationListsDa
 import mockConnectionListsData from "@src/mockData/mockConnectionListsData";
 import mockMembersInActivityNotification from "@src/mockData/mockMembersInActivityNotificationData";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
-import { IFetchFriendNotification, IFetchFriendsData, IFetchTeamNotification, IUser, IUserFriend } from "@src/models";
+import {
+  IFetchFriendNotification,
+  IFetchFriendsData,
+  IFetchTeamNotification,
+  IUser,
+  IUserFriend,
+} from "@src/models";
 import {
   fetchFriendNotificationAPI,
   fetchFriendReceivedNotificationAPI,
@@ -26,38 +32,37 @@ import {
 import { isPropertySignature } from "typescript";
 
 import { motion } from "framer-motion";
-import containerVariants from "@src/models/models";
+import containerVariants, { ITeam } from "@src/models/models";
 
 const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
-  const [teamNoti, setTeamNoti] = useState<IFetchTeamNotification | []>([]);
+  const [teamNoti, setTeamNoti] = useState<ITeam[] | []>([]);
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
-  const [friendReceivedNoti, setFriendReceivedNoti] = useState<IUserFriend[] | []>([]);
+  const [friendReceivedNoti, setFriendReceivedNoti] = useState<
+    IUserFriend[] | []
+  >([]);
   useEffect(() => {
-    fetchTeamNotiHandler().then((value: IFetchTeamNotification | []) =>
-      setTeamNoti(value)
+    fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
+    fetchFriendNotiHandler().then((value: IUserFriend[] | []) =>
+      setFriendNoti(value)
     );
-     fetchFriendNotiHandler().then((value: IUserFriend[] | []) =>
-       setFriendNoti(value)
-     );
-     fetchFriendReceivedNotiHandler().then((value: IUserFriend[] | []) =>
-       setFriendReceivedNoti(value)
-     );
-    // fetchCurrentFriendsHandler().then((value: IUser[] | []) =>
-    //   setCurrentFriends(value)
-    // );
+    fetchFriendReceivedNotiHandler().then((value: IUserFriend[] | []) =>
+      setFriendReceivedNoti(value)
+    );
+    fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
   }, []);
   const fetchTeamNotiHandler = async () => {
     const teamNotiData = await fetchTeamNotificationAPI();
-    console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.request);
-    return teamNotiData.request;
+    console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.data.teams);
+    return teamNotiData.data.teams;
   };
   // const fetchCurrentFriendsHandler = async () => {
   //   const friendData = await fetchFriendsDataAPI();
   //   console.log("SUCCESS fetchFriendsDataHandler", friendData.data);
   //   return friendData.data;
   // };
+  console.log(teamNoti);
   const fetchFriendNotiHandler = async () => {
     const friendsData = await fetchFriendNotificationAPI();
     console.log("SUCCESS fetchFriendHandler", friendsData.data.requests);
@@ -65,7 +70,10 @@ const NotificationPage: React.FC = () => {
   };
   const fetchFriendReceivedNotiHandler = async () => {
     const friendsReceivedData = await fetchFriendReceivedNotificationAPI();
-    console.log("SUCCESS fetchFriendHandler", friendsReceivedData.data.requests);
+    console.log(
+      "SUCCESS fetchFriendHandler",
+      friendsReceivedData.data.requests
+    );
     return friendsReceivedData.data.requests;
   };
   const connectionButtonHandler = () => {
@@ -97,7 +105,7 @@ const NotificationPage: React.FC = () => {
               data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
               value="Incoming"
-              number={friendReceivedNoti.length+""}
+              number={friendReceivedNoti.length + ""}
             />
           </div>
           <div className={classes.activity}>
@@ -105,21 +113,21 @@ const NotificationPage: React.FC = () => {
               data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
               value="Outgoing"
-              number={friendNoti.length+""}
+              number={friendNoti.length + ""}
             />
           </div>
         </div>
         <div className={classes.teamInvitationList}>
           <TeamInvitationLists
             data-test="Notification-page-team-invitation-lists"
-            TeamInvitationlist={mockTeamInvitationListsData}
+            teams={teamNoti}
           />
         </div>
         <div className={classes.connectionList}>
-           <ConnectionLists
+          <ConnectionLists
             data-test="Notification-page-team-lists"
             requests={friendReceivedNoti}
-          /> 
+          />
         </div>
       </div>
     );
@@ -135,7 +143,7 @@ const NotificationPage: React.FC = () => {
           <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
-        <div className={classes.connection}>
+          <div className={classes.connection}>
             <Tab
               data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
@@ -164,16 +172,17 @@ const NotificationPage: React.FC = () => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
-    data-test="Notification-page" className={classes.main}>
+      data-test="Notification-page"
+      className={classes.main}
+    >
       {NotificationsPrompt}
     </motion.div>
   );
 };
 
 export default NotificationPage;
-

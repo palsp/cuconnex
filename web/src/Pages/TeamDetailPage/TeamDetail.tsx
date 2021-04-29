@@ -22,6 +22,9 @@ interface Props {
       team: ITeam;
     };
   };
+  history: {
+    goBack: () => void;
+  };
 }
 
 const TeamDetail: React.FC<Props> = (props) => {
@@ -34,6 +37,10 @@ const TeamDetail: React.FC<Props> = (props) => {
   // Is team already exist ? (create team process)
   const isTeamExist = true;
 
+  const goBackPreviousPageHandler = () => {
+    props.history.goBack();
+  };
+
   return (
     <motion.div
       variants={containerVariants}
@@ -44,10 +51,11 @@ const TeamDetail: React.FC<Props> = (props) => {
     >
       <div className={classes.header}>
         {isTeamExist ? (
-          <div className={classes.relativeArrow}>
-            <Link data-test="team-detail-page-back-link" to="/landing">
-              <ArrowLeft data-test="team-detail-page-arrow-left" />
-            </Link>
+          <div
+            onClick={goBackPreviousPageHandler}
+            className={classes.relativeArrow}
+          >
+            <ArrowLeft data-test="team-detail-page-arrow-left" />
           </div>
         ) : (
           <div className={classes.closeLeft}>

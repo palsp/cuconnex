@@ -12,7 +12,7 @@ import containerVariants, { ITeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
-import { callTeamOfUserAPI } from "@src/api";
+import { callTeamOfUserAPI, teamInvitationAPI } from "@src/api";
 import { Button } from "@material-ui/core";
 
 interface Props {
@@ -27,43 +27,49 @@ const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
   const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
-  const [hasTeam, setHasTeam] = useState<boolean>(false);
-  const { userData } = useContext(UserContext);
   const { setErrorHandler } = useContext(ErrorContext);
+  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const { userData } = useContext(UserContext);
+  useEffect(() => {
+    fetchTeamHandler();
+  }, []);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData.data);
+    setMyTeamLists(teamData.data.teams);
+  };
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
   useEffect(() => {
     fetchTeamHandler();
   }, []);
-
-  const fetchTeamHandler = async () => {
-    try {
-      const teamData = await callTeamOfUserAPI(userData.id);
-      console.log("fetchTeamHandler", teamData);
-      setCurrentTeamLists(teamData.data.teams);
-      setHasTeam(true);
-    } catch (e) {
-      setErrorHandler(e.response.data.errors[0].message);
-      setHasTeam(false);
-      console.log(e);
-    }
-  };
+  const hasTeam = false;
+  // if (myTeamLists.length > 0) {
+  //   hasTeam = true;
+  // }
   console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
+
+  let marginHeight;
+  if (window.innerHeight > 800) {
+    marginHeight = window.innerHeight * 0.25;
+  } else {
+    marginHeight = window.innerHeight * 0.15;
+  }
 
   const LandingPrompt = !clickHamburger ? (
     <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
         <div style={{ position: "absolute", top: "0px", left: "50px" }}>
-          <Button
+          {/* <Button
             variant="contained"
             color="secondary"
             onClick={() => setHasTeam((prevState) => !prevState)}
           >
             Test Team
-          </Button>
+          </Button> */}
         </div>
         <div className={classes.searchDiv}>
           <Link to="/explore">
@@ -79,7 +85,7 @@ const LandingPage: React.FC<Props> = (props) => {
           <Hamburger />
         </div>
       </div>
-      <div className={classes.heroDiv}>
+      <div className={classes.heroDiv} style={{ marginTop: marginHeight }}>
         <LandingHero userData={userData} hasTeam={hasTeam} />
       </div>
     </div>

@@ -173,7 +173,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return await User.findOne({ where: { id: userId }, include: 'interests' });
+    return User.findOne({ where: { id: userId }, include: 'interests' });
   }
 
 

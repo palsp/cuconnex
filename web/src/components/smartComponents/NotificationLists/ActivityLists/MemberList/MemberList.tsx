@@ -13,7 +13,7 @@ import classes from "./MemberList.module.css";
 import { IUser, IUserFriend } from "@src/models";
 
 interface Props {
-  member:IUserFriend;
+  member: IUserFriend;
 }
 
 const MemberList: React.FC<Props> = (props) => {
@@ -46,7 +46,7 @@ const MemberList: React.FC<Props> = (props) => {
           <div className={classes.connectedSign}>
             <RecruitSign
               data-test="team-list-status"
-              value={props.member.connections.status}
+              value={props.member.connections?.status}
             />
           </div>
         </div>

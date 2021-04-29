@@ -64,12 +64,13 @@ describe('get current user', () => {
     const { user } = await setup();
 
     const { body: res } = await request(app)
-      .get('/api/users/current-user')
-      .set('Cookie', global.signin(user.id))
-      .send()
-      .expect(200);
+    .get('/api/users/current-user')
+    .set('Cookie', global.signin(user.id))
+    .send()
+    .expect(200);
+    
 
-
+    
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
     expect(res.interests).not.toBeNull();
@@ -77,6 +78,7 @@ describe('get current user', () => {
     expect(res.year).toBeDefined();
     expect(res.role).toBeDefined();
     expect(res.bio).toBeDefined();
+
   });
 
 });
