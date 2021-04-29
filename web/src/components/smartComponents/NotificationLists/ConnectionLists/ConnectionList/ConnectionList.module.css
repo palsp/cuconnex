@@ -67,11 +67,13 @@
 }
 
 .acceptIcon {
-  width: 30%;
+  width: 4.5vh;
+  margin-right: 1vh;
 }
 
 .declineIcon {
-  width: 30%;
+  width: 5vh;
+  margin-top: 0.1vh; 
 }
 
 .connectedSign {
