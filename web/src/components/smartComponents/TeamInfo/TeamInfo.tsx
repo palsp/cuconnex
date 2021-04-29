@@ -8,6 +8,8 @@ import {
   RecruitSign,
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
+import { IUserRequest } from "@src/models";
+import { userTeamRequestAPI } from "@src/api";
 
 interface Props {
   cover?: string;
@@ -17,6 +19,10 @@ interface Props {
 }
 
 const TeamInfo: React.FC<Props> = (props) => {
+  const userRequestHandler = async (request: IUserRequest) => {
+    const resultTeam = await userTeamRequestAPI(request);
+    console.log("Successfully sent a POST request to teams", resultTeam);
+  };
   return (
     <div className={classes.teamInfo}>
       <div className={classes.cover}>
@@ -42,7 +48,15 @@ const TeamInfo: React.FC<Props> = (props) => {
           <RecruitSign value="Invite member" />
         </div>
       ) : (
-        <div className={classes.sign}>
+        <div
+          onClick={() => {
+            const name = {
+              teamName: props.name,
+            };
+            userRequestHandler(name);
+          }}
+          className={classes.sign}
+        >
           <RecruitSign value="Request to join" />
         </div>
       )}

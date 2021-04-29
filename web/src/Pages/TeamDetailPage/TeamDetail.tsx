@@ -12,12 +12,13 @@ import {
 import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 import { motion } from "framer-motion";
 
-import containerVariants, { IUser } from "@src/models/models";
+import containerVariants, { IUser, IUserRequest } from "@src/models/models";
 import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
 import {
   fetchTeamMembersAPI,
   fetchTeamOutgoingNotificationAPI,
+  userTeamRequestAPI,
 } from "@src/api";
 
 interface Props {

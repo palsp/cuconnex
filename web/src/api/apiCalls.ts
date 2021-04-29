@@ -27,6 +27,9 @@ import {
   ITeam,
   IFetchTeam,
   IFetchOutgoingTeamNotification,
+  IUserRequest,
+  IUserRequestResponse,
+  IFetchUserRequestTeam,
 } from "@src/models";
 
 //Auth Services
@@ -160,9 +163,7 @@ const fetchTeamNotificationAPI = async (): Promise<
 };
 const fetchTeamOutgoingNotificationAPI = async (
   teamName: string
-): Promise<
-  AxiosResponse<IFetchOutgoingTeamNotification>
-> => {
+): Promise<AxiosResponse<IFetchOutgoingTeamNotification>> => {
   const teamOutgoingNotificationData: AxiosResponse<IFetchOutgoingTeamNotification> = await axios.get(
     `/api/teams/outgoingrequests/${teamName}`
   );
@@ -241,6 +242,24 @@ const responseTeamInvitationAPI = async (
   );
   return responseData;
 };
+const userTeamRequestAPI = async (
+  requestData: IUserRequest
+): Promise<AxiosResponse<IUserRequestResponse>> => {
+  const userData: AxiosResponse<IUserRequestResponse> = await axios.post(
+    "/api/users/request-to-join",
+    requestData
+  );
+  return userData;
+};
+const fetchUserTeamRequestAPI = async (): Promise<
+  AxiosResponse<IFetchUserRequestTeam>
+> => {
+  const teamData: AxiosResponse<IFetchUserRequestTeam> = await axios.get(
+    "/api/users/get-my-requests"
+  );
+
+  return teamData;
+};
 
 export {
   fetchUserDataAPI,
@@ -265,4 +284,6 @@ export {
   fetchTeamMembersAPI,
   responseTeamInvitationAPI,
   fetchTeamOutgoingNotificationAPI,
+  userTeamRequestAPI,
+  fetchUserTeamRequestAPI,
 };

@@ -27,6 +27,7 @@ import {
   fetchFriendsDataAPI,
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
+  fetchUserTeamRequestAPI,
 } from "@src/api/apiCalls";
 import { isPropertySignature } from "typescript";
 
@@ -40,6 +41,7 @@ const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
   const [teamNoti, setTeamNoti] = useState<ITeam[] | []>([]);
+  const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<ITeam[] | []>([]);
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
   const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
   const { userData } = useContext(UserContext);
@@ -56,6 +58,7 @@ const NotificationPage: React.FC = () => {
     );
     fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
     fetchTeamHandler();
+    fetchOutgoingTeamNotiHandler();
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
@@ -68,10 +71,16 @@ const NotificationPage: React.FC = () => {
     return teamNotiData.data.teams;
   };
   console.log(teamNoti);
+  console.log(friendNoti.length);
   const fetchFriendNotiHandler = async () => {
     const friendsData = await fetchFriendNotificationAPI();
     console.log("SUCCESS fetchFriendHandler", friendsData.data.requests);
     return friendsData.data.requests;
+  };
+  const fetchOutgoingTeamNotiHandler = async () => {
+    const teamNotiData = await fetchUserTeamRequestAPI();
+    console.log("SUCCESS Outgoing team request =", teamNotiData.data.teams);
+    setOutgoingTeamNoti(teamNotiData.data.teams);
   };
   const fetchFriendReceivedNotiHandler = async () => {
     const friendsReceivedData = await fetchFriendReceivedNotificationAPI();
@@ -92,6 +101,21 @@ const NotificationPage: React.FC = () => {
     setActivity(true);
     console.log("setActivity");
   };
+  let incomingNoti = 0;
+  let outgoingNoti = 0;
+  if (friendReceivedNoti != undefined) {
+    incomingNoti = incomingNoti + friendReceivedNoti.length;
+  }
+  if (teamNoti != undefined) {
+    incomingNoti = incomingNoti + teamNoti.length;
+  }
+  if (friendNoti != undefined) {
+    outgoingNoti = outgoingNoti + friendNoti.length;
+  }
+  if (outgoingTeamNoti != undefined) {
+    outgoingNoti = outgoingNoti + outgoingTeamNoti.length;
+  }
+  console.log(incomingNoti, outgoingNoti);
   let NotificationsPrompt = null;
   if (clickConnection === true) {
     NotificationsPrompt = (
@@ -110,7 +134,7 @@ const NotificationPage: React.FC = () => {
               data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
               value="Incoming"
-              number={friendReceivedNoti.length + ""}
+              number={incomingNoti + ""}
             />
           </div>
           <div className={classes.activity}>
@@ -118,7 +142,7 @@ const NotificationPage: React.FC = () => {
               data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
               value="Outgoing"
-              number={friendNoti.length + ""}
+              number={outgoingNoti + ""}
             />
           </div>
         </div>
@@ -153,7 +177,7 @@ const NotificationPage: React.FC = () => {
               data-test="Notification-page-Incoming"
               onClick={connectionButtonHandler}
               value="Incoming"
-              number="3"
+              number={incomingNoti + ""}
             />
           </div>
           <div className={classes.activity}>
@@ -161,7 +185,7 @@ const NotificationPage: React.FC = () => {
               data-test="Notification-page-Outgoing"
               onClick={activityButtonHandler}
               value="Outgoing"
-              number="2"
+              number={outgoingNoti + ""}
             />
           </div>
         </div>
@@ -169,7 +193,7 @@ const NotificationPage: React.FC = () => {
           <ActivityNotificationLists
             data-test="Notification-page-team-lists"
             Memberlist={friendNoti}
-            Positionlist={mockPositionsInActivityNotification}
+            requestedTeamList={outgoingTeamNoti}
           />
         </div>
       </div>

@@ -9,15 +9,11 @@ import {
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./PositionList.module.css";
+import { ITeam } from "@src/models";
 
 interface Props {
-  position: {
-    teamPic: string;
-    role: string;
-    teamName: string;
-    teamList: string;
-    status: string;
-  };
+  teams: ITeam;
+  position: string;
 }
 
 const PositionList: React.FC<Props> = (props) => {
@@ -32,12 +28,12 @@ const PositionList: React.FC<Props> = (props) => {
         <div className={classes.role}>
           <Subtitle
             data-test="position-list-role"
-            value={props.position.role}
+            value={props.position}
             size="small-medium"
             color="pink"
           />
         </div>
-        <div className={classes.teamName}>{props.position.teamName}</div>
+        <div className={classes.teamName}>{props.teams.name}</div>
         <div className={classes.smallFlex}>
           <div className={classes.memberPic}>
             <ProfilePic size="small" />
@@ -45,10 +41,7 @@ const PositionList: React.FC<Props> = (props) => {
           </div>
           <div className={classes.more}>7+</div>
           <div className={classes.pendingSign}>
-            <RecruitSign
-              data-test="position-list-status"
-              value={props.position.status}
-            />
+            <RecruitSign data-test="position-list-status" value={"Pending"} />
           </div>
         </div>
       </div>

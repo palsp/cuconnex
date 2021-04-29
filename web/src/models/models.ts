@@ -171,10 +171,19 @@ export interface IInviteDataResult {
 export interface ICallTeamOfUser {
   teams: ITeam[];
 }
+export interface IUserRequest {
+  teamName: string;
+}
+export interface IUserRequestResponse {
+  Member: IUser;
+}
 
 export interface IUserResponse {
   teamName: string;
   newStatusFromUser: string;
+}
+export interface IFetchUserRequestTeam {
+  teams: ITeam[];
 }
 
 export enum FacultyListsEnum {
