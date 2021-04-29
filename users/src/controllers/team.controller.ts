@@ -7,7 +7,7 @@ import {
   IIsMemberResponse,
   ITeamRequestResponse,
 } from '../interfaces';
-import { NotAuthorizedError } from '@bkatickets/common';
+
 require('express-async-errors');
 
 export const getTeam = async (req: Request, res: Response) => {
