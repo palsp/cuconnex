@@ -15,6 +15,7 @@ import {
   IViewProfileResponse,
   ITeamResponse,
   IUserRequest,
+  IIsMemberResponse,
 } from '../interfaces';
 import { userRouter } from '../routes';
 //Test for empty object
@@ -248,9 +249,9 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   }
 
   const teams: Team[] = await user.getMyTeams();
-  if (teams.length === 0) {
-    return res.status(200).send({ teams: [] });
-  }
+  // if (teams.length === 0) {
+  //   return res.status(200).send({ teams: [] });
+  // }
 
   const teamsResponse: ITeamResponse[] = [];
   for (let team of teams) {
@@ -295,9 +296,9 @@ export const getMyRequests = async (req: Request, res: Response) => {
   const user = req.user!;
 
   const teams: Team[] = await user.getMyPendingRequestsTeams();
-  if (teams.length === 0) {
-    return res.status(200).send({ teams: [] });
-  }
+  // if (teams.length === 0) {
+  //   return res.status(200).send({ teams: [] });
+  // }
 
   const teamsResponse: ITeamResponse[] = [];
   for (let team of teams) {
@@ -306,4 +307,16 @@ export const getMyRequests = async (req: Request, res: Response) => {
   }
 
   res.status(200).send({ teams: teamsResponse });
+};
+
+export const getTeamStatus = async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const { teamName } = req.params;
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+  const response: IIsMemberResponse = await user.getMyStatusWith(team);
+  res.status(200).send(response);
 };

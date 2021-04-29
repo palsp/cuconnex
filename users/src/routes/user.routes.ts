@@ -22,6 +22,8 @@ router.get('/current-user', userController.getUser);
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
 
+router.get('/status/:teamName', requireUser, userController.getTeamStatus);
+
 router.put(
   '/',
   requireUser,
