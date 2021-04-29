@@ -35,6 +35,12 @@
   height: 30px;
   width: 30px;
 }
+
+.profileSmallMedium {
+  margin: auto;
+  height: 70px;
+  width: 70px;
+}
 .profilePicDefault {
   background-image: url("../../../assets/tempProfile.png");
   background-repeat: round;

@@ -91,18 +91,20 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
           </div>
 
           <div className={classes.profilePicDiv}>
-            {imagePreview !== "" ? (
-              <ProfilePic
-                size="big"
-                data-test="personal-info-personalImage"
-                PicUrl={imagePreview}
-                previewImage={true}
-              />
-            ) : (
-              <>{handleInitialImage()}</>
-            )}
+            <label htmlFor="upload-button">
+              {imagePreview !== "" ? (
+                <ProfilePic
+                  size="big"
+                  PicUrl={imagePreview}
+                  previewImage={true}
+                />
+              ) : (
+                <>{handleInitialImage()}</>
+              )}
+            </label>
             <input
               type="file"
+              id="upload-button"
               accept="image/*"
               name="myFile"
               style={{ display: "none" }}
