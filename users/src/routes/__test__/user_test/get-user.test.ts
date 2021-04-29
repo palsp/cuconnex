@@ -2,7 +2,7 @@ import request from 'supertest';
 import { app } from '../../../app';
 import { User } from '../../../models/user.model';
 import { FriendStatus, Business } from '@cuconnex/common';
-import { Interest } from '../../../models/interest.model';
+import { Interest } from '../../../models';
 import { body } from 'express-validator';
 
 /**
@@ -12,7 +12,7 @@ const setup = async (id?: string, name?: string) => {
   const user = await User.create({
     id: id || '6131778821',
     name: name || 'pal',
-    image: '/file/path'
+    image: '/file/path',
   });
 
   const interest = await Interest.findOne({
@@ -26,10 +26,7 @@ const setup = async (id?: string, name?: string) => {
 
 describe('get current user', () => {
   it('should return 401 if user is not authenticated', async () => {
-    const { body } = await request(app)
-      .get('/api/users/current-user')
-      .send()
-      .expect(401);
+    const { body } = await request(app).get('/api/users/current-user').send().expect(401);
 
     expect(body.errors[0].message).toEqual('Not Authorized');
   });
@@ -39,8 +36,7 @@ describe('get current user', () => {
       .get('/api/users/current-user')
       .set('Cookie', global.signin())
       .send()
-      .expect(302)
-
+      .expect(302);
   });
 
   it.todo('should redirect with specific url');
@@ -54,7 +50,6 @@ describe('get current user', () => {
       .send({})
       .expect(200);
 
-
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
     expect(res.image).toEqual(user.image);
@@ -64,13 +59,11 @@ describe('get current user', () => {
     const { user } = await setup();
 
     const { body: res } = await request(app)
-    .get('/api/users/current-user')
-    .set('Cookie', global.signin(user.id))
-    .send()
-    .expect(200);
-    
+      .get('/api/users/current-user')
+      .set('Cookie', global.signin(user.id))
+      .send()
+      .expect(200);
 
-    
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
     expect(res.interests).not.toBeNull();
@@ -78,11 +71,8 @@ describe('get current user', () => {
     expect(res.year).toBeDefined();
     expect(res.role).toBeDefined();
     expect(res.bio).toBeDefined();
-
   });
-
 });
-
 
 describe('view user profile', () => {
   it('should return 400 if user is not fill info', async () => {
@@ -137,40 +127,35 @@ describe('view user profile', () => {
   });
 });
 
-
-describe("Get Relation", () => {
+describe('Get Relation', () => {
   it('should return 404 if userId is not provided', async () => {
-    const { user } = await setup()
+    const { user } = await setup();
     await request(app)
-      .get("/api/users/relation")
+      .get('/api/users/relation')
       .set('Cookie', global.signin(user.id))
       .send({})
-      .expect(404)
-  })
+      .expect(404);
+  });
 
   it('should return 404 user not found', async () => {
-
-    const { user } = await setup()
+    const { user } = await setup();
     await request(app)
-      .get("/api/users/relation/1")
+      .get('/api/users/relation/1')
       .set('Cookie', global.signin(user.id))
       .send({})
-      .expect(404)
+      .expect(404);
   });
 
   it('should return  user status if user is found', async () => {
-
-    const { user } = await setup()
-    const { user: conn } = await setup("6131111121", "test_user")
-
+    const { user } = await setup();
+    const { user: conn } = await setup('6131111121', 'test_user');
 
     const { body } = await request(app)
       .get(`/api/users/relation/${conn.id}`)
       .set('Cookie', global.signin(user.id))
       .send({})
-      .expect(200)
+      .expect(200);
 
     expect(body.status).toEqual(FriendStatus.toBeDefined);
   });
-
-})
+});
