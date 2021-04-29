@@ -1,13 +1,16 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
+import { Sequelize, Model, DataTypes, BelongsToManyGetAssociationsMixin} from 'sequelize';
 import { TableName } from './types';
 
 interface RecommendAttrs {
     userId: string;
     recommenderId: string;
     score: number;
+    version? : any;
 }
 
 interface RecommendCreationAttrs {
+    userId: string;
+    recommenderId: string;
     score?: number;
 }
 
@@ -32,7 +35,7 @@ class Recommend extends Model<RecommendAttrs, RecommendCreationAttrs> implements
 
             },
             score: {
-                type: DataTypes.DOUBLE(2,2),
+                type: DataTypes.DOUBLE(5,2),
                 defaultValue: 0,
                 allowNull: false,
             }

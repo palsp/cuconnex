@@ -6,7 +6,6 @@ import {
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
-  HasManyAddAssociationMixin,
   Association,
   Sequelize,
   BelongsToManySetAssociationsMixin,
@@ -16,7 +15,6 @@ import {
   NotFoundError,
   TeamStatus,
   FriendStatus,
-  Description,
   faculty,
   getCurrentYear,
   getYearFromId,
@@ -135,8 +133,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
   public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
-  public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
+  public addConnection!: BelongsToManyAddAssociationMixin<User, { through : {status: FriendStatus }}>;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
+  public getRecommendation! : BelongsToManyGetAssociationsMixin<User>;
+  public addRecommendation!: BelongsToManyAddAssociationMixin<User , { through : { score : number}}>
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
@@ -407,9 +407,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public static associations: {
     interests: Association<Interest>;
-    friend: Association<User, User>;
+    connection: Association<User, User>;
     teams: Association<User, Team>;
     member: Association<User, Team>;
+    recommendation : Association < User,User>
   };
 }
 

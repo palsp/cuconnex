@@ -13,6 +13,11 @@ import { IsMember } from './isMember.model';
 
 export { User, Interest, UserInterest, Category, Team, IsMember };
 
+
+
+// TODO: add version key
+
+
 export const autoMigrate = (sequelize: Sequelize) => {
   // -------------------- User and Interest -----------------------------------
   User.autoMigrate(sequelize);
@@ -58,14 +63,14 @@ export const autoMigrate = (sequelize: Sequelize) => {
         allowNull: false,
       },
     },
-    { timestamps: false }
+    { timestamps: false  }
   );
 
   User.belongsToMany(User, {
     as: 'recommendation',
     through: recommendation,
-    foreignKey: 'recommenderId',
-    otherKey: 'userId',
+    foreignKey: 'userId',
+    otherKey: 'recommenderId',
   });
 
   Recommend.autoMigrate(sequelize);
