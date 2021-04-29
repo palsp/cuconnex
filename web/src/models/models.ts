@@ -102,15 +102,19 @@ export interface ICreateUserData {
   role: string;
 }
 
+export interface IFetchTeam {
+  teams: ITeam[];
+}
+
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }
 //events
 export interface IFetchEventsData {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IFetchEventsDataResult {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IEventData {
   "event-name": string;

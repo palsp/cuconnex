@@ -25,6 +25,7 @@ import {
   ITeamMembers,
   IUserResponse,
   ITeam,
+  IFetchTeam,
 } from "@src/models";
 
 //Auth Services
@@ -117,8 +118,8 @@ const fetchTeamMembersAPI = async (
 };
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<ITeam[]>> => {
-  const calledResult: AxiosResponse<ITeam[]> = await axios.get(
+): Promise<AxiosResponse<IFetchTeam>> => {
+  const calledResult: AxiosResponse<IFetchTeam> = await axios.get(
     `/api/users/teams/${userId}`
   );
 

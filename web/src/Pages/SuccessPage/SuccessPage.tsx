@@ -22,19 +22,22 @@ const SuccessPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={classes.main}
+      className={classes.background}
     >
-      <div className={classes.container}>
-        <div className={classes.background}>
-          <Background data-test="auth-page-background">
-            <div className={classes.contentContainer}>
+      <Background data-test="auth-page-background">
+              <motion.div
+                // animate={{y: -window.innerHeight*0.2}}
+                animate={{ y: -(window.innerHeight * 0.1) }}
+                className={classes.contentContainer}>
               <div className={classes.logoDiv}>
                 <Logo />
               </div>
-              <div
+              <motion.div
+                transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+                style={{ bottom: -(window.innerHeight * 0.33) }}
                 className={classes.circle_overlay}
-                data-test="auth-page-halfcircleoverlay"
-              ></div>
+                data-test="success-page-halfcircleoverlay"
+              ></motion.div>
               <div className={classes.divHeader}>
                 <Heading
                   data-test="success-page-header"
@@ -58,10 +61,8 @@ const SuccessPage: React.FC = () => {
                   ></Button>
                 </div>
               </Link>
-            </div>
+              </motion.div>
           </Background>
-        </div>
-      </div>
     </motion.div>
   );
 };

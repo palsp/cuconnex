@@ -9,8 +9,8 @@ import {
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./ConnectionList.module.css";
-import { Check } from "@dumbComponents/UI/Icons";
 import { IUser, IUserFriend } from "@src/models";
+import { Accept, Check, Decline } from "@dumbComponents/UI/Icons";
 import { addFriendResponseAPI } from "@src/api";
 interface Props {
   connection: IUserFriend;
@@ -48,19 +48,24 @@ const ConnectionList: React.FC<Props> = (props) => {
     ButtonPrompt = (
       <div className={classes.selectSign}>
         <div className={classes.acceptIcon} onClick={acceptButtonHandler}>
-          <Check circle={true} />
+          <Accept />
         </div>
         <div className={classes.declineIcon} onClick={declineButtonHandler}>
-          <Check circle={true} />
+          <Decline />
         </div>
       </div>
     );
   } else if (clickAccept) {
     ButtonPrompt = (
-      <div className={classes.connectedSign}>
-        <RecruitSign data-test="team-list-status" value="Connected" />
-      </div>
-    );
+      <div 
+        className={classes.connectedSign} 
+        >
+          <RecruitSign
+            data-test="team-list-status"
+            value="Connected"
+          />
+    </div>
+    );   
   } else if (clickDecline) {
     ButtonPrompt = (
       <div className={classes.declineSign}>
