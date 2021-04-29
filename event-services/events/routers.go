@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/palsp/cuconnex/event-services/common"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -66,8 +68,20 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
+
 	c.Set("my_event_model" , eventModelValidator.eventModel)
 	serializer := EventSerializer{c}
-	c.JSON(http.StatusCreated, serializer.Response())
+	response := serializer.Response()
+	err := common.PublishEventCreated(common.EventCreatedData{
+		ID: response.ID,
+		EventName: response.EventName,
+		Registration: response.Registration,
+	})
+	if err != nil {
+		log.Printf("error publish event:created : %v" , err)
+	}else{
+		log.Printf("Event published to subject %v" , "event:created")
+	}
+	c.JSON(http.StatusCreated, response)
 
 }
