@@ -30,7 +30,7 @@ import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
-import { InterestBody, IUserResponse } from '../interfaces';
+import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
 
 // All attributes in user model
 interface UserAttrs {
@@ -407,6 +407,23 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
 
     return teams;
+  }
+
+  public async getMyStatusWith(team: Team): Promise<IIsMemberResponse> {
+    if (this.id === team.creatorId) {
+      return { status: TeamStatus.Accept, sender: '' };
+    }
+    const isMember = await IsMember.findOne({ where: { userId: this.id, teamName: team.name } });
+    if (!isMember) {
+      return { status: null, sender: '' };
+    }
+
+    const response: IIsMemberResponse = {
+      status: isMember.status,
+      sender: isMember.sender,
+    };
+
+    return response;
   }
 
   public toJSON(): IUserResponse {

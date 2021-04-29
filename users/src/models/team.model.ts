@@ -12,7 +12,7 @@ import { IsMember } from './isMember.model';
 import { User } from './user.model';
 import { TeamStatus, BadRequestError, NotFoundError } from '@cuconnex/common';
 
-import { ITeamResponse, IUserResponse, IOutgoingRequestResponse } from '../interfaces';
+import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -145,17 +145,11 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     return false;
   }
 
-  public async getOutgoingRequests(): Promise<IOutgoingRequestResponse> {
-    const membersWithAllStatus: User[] = await this.getMember();
-
-    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'team' } });
+  public async getIncomingRequests(): Promise<ITeamRequestResponse> {
+    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'user' } });
 
     if (!isMembers || isMembers.length < 1) {
-      throw new BadRequestError('This team has no pending request to any user.');
-    }
-
-    if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
-      throw new BadRequestError('This team has no member');
+      throw new BadRequestError('This team has no incoming request from any user.');
     }
 
     let pendingUsers: IUserResponse[] = [];
@@ -164,7 +158,34 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       pendingUsers.push(user!.toJSON());
     }
 
-    const response: IOutgoingRequestResponse = {
+    const response: ITeamRequestResponse = {
+      teamName: this.name,
+      pendingUsers,
+    };
+
+    return response;
+  }
+
+  public async getOutgoingRequests(): Promise<ITeamRequestResponse> {
+    // const membersWithAllStatus: User[] = await this.getMember();
+
+    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'team' } });
+
+    if (!isMembers || isMembers.length < 1) {
+      throw new BadRequestError('This team has no pending request to any user.');
+    }
+
+    // if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
+    //   throw new BadRequestError('This team has no member');
+    // }
+
+    let pendingUsers: IUserResponse[] = [];
+    for (let i = 0; i < isMembers.length; i++) {
+      let user = await User.findByPk(isMembers[i].userId);
+      pendingUsers.push(user!.toJSON());
+    }
+
+    const response: ITeamRequestResponse = {
       teamName: this.name,
       pendingUsers,
     };

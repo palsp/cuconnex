@@ -11,7 +11,7 @@ describe('Get Outgoing Requests', () => {
     });
 
     const res = await request(app)
-      .get('/api/teams/outgoing-requests/notExistTeam')
+      .get('/api/teams/incoming-requests/notExistTeam')
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(404);
@@ -20,7 +20,7 @@ describe('Get Outgoing Requests', () => {
     expect(error.message).toEqual('TeamNot Found');
   });
 
-  it('should return 401 not Authorized if the request user is not part of the team', async () => {
+  it('should return 401 not Authorized if the request user is the team creator', async () => {
     const user = await User.create({
       id: '6131776621',
       name: 'test-user',
@@ -40,14 +40,14 @@ describe('Get Outgoing Requests', () => {
     await user2.addInterest(interest!);
 
     const res = await request(app)
-      .get('/api/teams/outgoing-requests/testTeam')
+      .get('/api/teams/incoming-requests/testTeam')
       .set('Cookie', global.signin(user2.id))
       .send({})
       .expect(400);
-    expect(res.body.errors[0].message).toEqual('The request user is not part of the team');
+    expect(res.body.errors[0].message).toEqual('The requester is not the team creator.');
   });
 
-  it('should return 200 if successfully get outgoing requests', async () => {
+  it('should return 200 if successfully get incoming requests', async () => {
     const user = await User.create({
       id: '6131776621',
       name: 'test-user',
@@ -69,18 +69,20 @@ describe('Get Outgoing Requests', () => {
 
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
+    await user2.addInterest(interest!);
 
-    await team.invite(user2);
+    await user2.requestToJoin(team);
     await team.invite(user3);
 
     const res = await request(app)
-      .get('/api/teams/outgoing-requests/testTeam')
+      .get('/api/teams/incoming-requests/testTeam')
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
-    expect(res.body.outgoingRequests.teamName).toEqual(team.name);
-    expect(res.body.outgoingRequests.pendingUsers[0].id).toEqual(user2.id);
-    expect(res.body.outgoingRequests.pendingUsers[1].id).toEqual(user3.id);
+    // console.log(res.body.incomingRequests.pendingUsers);
+    expect(res.body.incomingRequests.teamName).toEqual(team.name);
+    expect(res.body.incomingRequests.pendingUsers.length).toEqual(1);
+    expect(res.body.incomingRequests.pendingUsers[0].id).toEqual(user2.id);
   });
 });
