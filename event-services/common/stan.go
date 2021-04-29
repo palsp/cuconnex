@@ -3,8 +3,10 @@ package common
 import (
 	"crypto/rand"
 	"encoding/json"
+	"fmt"
 	nats "github.com/nats-io/nats.go"
 	stan "github.com/nats-io/stan.go"
+	"log"
 	"os"
 )
 
@@ -18,20 +20,21 @@ func GenRandomBytes(size int) (blk []byte, err error) {
 
 
 func InitStanClient() (stan.Conn , error){
-	nc ,err := nats.Connect(os.Getenv("NATS_URL"))
+	//nc ,err := nats.Connect(os.Getenv("NATS_URL"))
+	nc ,err := nats.Connect(os.Getenv("http://localhost:4222"))
 	if err != nil {
 		return nil , err
 	}
-	defer nc.Close()
 	blk , _ := GenRandomBytes(4)
-	sc , err := stan.Connect("connex", string(blk) , stan.NatsConn(nc))
+
+	sc , err := stan.Connect("connex", fmt.Sprintf("%x",blk) , stan.NatsConn(nc))
 
 	if err != nil {
 		return nil , err
 	}
-	defer sc.Close()
 
 	SC = sc
+
 	return SC , nil
 }
 
@@ -40,15 +43,24 @@ func GetStanClient () stan.Conn {
 }
 
 type EventCreatedData struct {
-	ID string `json:"id"`
+	ID uint `json:"id"`
 	EventName string `json:"event-name"`
 }
 
 func EventCreatedPublisher(msg EventCreatedData) error {
+	if SC == nil {
+		log.Printf("Cannot acces stan client")
+		return nil
+	}
+
 	b ,err := json.Marshal(msg)
 	if err != nil {
 		return err
 	}
-	SC.Publish("event:created" , b)
+	err = SC.Publish("event:created" , b)
+	if err != nil {
+		return err
+	}
+	log.Println("event publish")
 	return nil
 }
