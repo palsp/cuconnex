@@ -8,22 +8,23 @@ import { UsersData } from "@src/mockData/Models";
 import { IInviteData, ITeamData, IUser, IUserFriend } from "@src/models";
 import { Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
+import { ErrorContext } from "@context/ErrorContext";
 interface Props {
   members: IUserFriend[] | [];
 }
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(true);
-  const [errorOnScreen, setErrorOnScreen] = useState<string>("");
   const [redirect, setRedirect] = useState<boolean>(false);
   const backClickedHandler = () => {
     setClickSelectMember(true);
     setClickCreateTeam(false);
   };
+  const { setErrorHandler } = useContext(ErrorContext);
   const createTeamHandler = async (teamData: ITeamData) => {
     const resultTeam = await createTeamAPI(teamData);
     console.log("Successfully sent a POST request to teams", resultTeam);
@@ -39,7 +40,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       );
       setRedirect(true);
     } catch (e) {
-      setErrorOnScreen("ERRORS occured while POST /api/teams/invite-member");
+      setErrorHandler(e.response.data.errors[0].message);
       console.log("ERRORS occured while POST /api/teams/invite-member", e);
     }
   };
@@ -57,61 +58,59 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
           <Redirect to="/" />
         </div>
       ) : (
-        <Formik
-          initialValues={{
-            name: "",
-            description: "",
-          }}
-          onSubmit={(data, { setSubmitting, resetForm }) => {
-            const teamCreateData = {
-              name: data.name,
-              description: data.description,
-            };
+        <>
+          <div className={classes.pageHeaderDiv}>
+            <div onClick={backClickedHandler} className={classes.arrowDiv}>
+              <ArrowLeft />
+            </div>
+            <div className={classes.newTeamDiv}>New team</div>
+            <div>
+              <button className={classes.createDiv} value="Next" type="submit">
+                Create
+              </button>
+            </div>
+          </div>
+          <Formik
+            initialValues={{
+              name: "",
+              description: "",
+            }}
+            onSubmit={(data, { setSubmitting, resetForm }) => {
+              const teamCreateData = {
+                name: data.name,
+                description: data.description,
+              };
 
-            createTeamHandler(teamCreateData);
+              createTeamHandler(teamCreateData);
 
-            setTimeout(
-              () => inviteMember(teamCreateData.name, props.members),
-              1000
-            );
-            console.log("POST /api/teams/", data);
-            setSubmitting(true);
-            resetForm();
-          }}
-        >
-          {({ isSubmitting, values }) => (
-            <Form>
-              <div className={classes.pageHeaderDiv}>
-                <div onClick={backClickedHandler} className={classes.arrowDiv}>
-                  <ArrowLeft />
+              setTimeout(
+                () => inviteMember(teamCreateData.name, props.members),
+                1000
+              );
+              console.log("POST /api/teams/", data);
+              setSubmitting(true);
+              resetForm();
+            }}
+          >
+            {({ isSubmitting, values }) => (
+              <Form>
+                <div className={classes.profilePicDiv}>
+                  <ProfilePic size="big"></ProfilePic>
                 </div>
-                <div className={classes.newTeamDiv}>New team</div>
-                <div>
-                  <button
-                    className={classes.createDiv}
-                    value="Next"
-                    type="submit"
-                  >
-                    Create
-                  </button>
+                <div className={classes.InputFieldDiv}>
+                  <InputField label="Team name" name="name" type="input" />
                 </div>
-              </div>
-              <div className={classes.profilePicDiv}>
-                <ProfilePic size="medium"></ProfilePic>
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField label="Team name" name="name" type="input" />
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField
-                  label="Team description"
-                  name="description"
-                  type="input"
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
+                <div className={classes.InputFieldDiv}>
+                  <InputField
+                    label="Team description"
+                    name="description"
+                    type="input"
+                  />
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </>
       )}
     </div>
   );

@@ -1,77 +1,74 @@
 .backgroundDiv {
-    width: 100vw;
-    height: auto;
-    margin-top:9.359vh;
-    text-decoration: none !important;
-  }
-  .deleteUnderlineDiv{
-      text-decoration: none !important;
-  }
-  
-  .memberTagDiv{
-      display:flex;
-      height:38.177vh;
-      width:100vw;
-      text-decoration: none !important;
-  }
-  .pageHeaderDiv {
-    width: 100vw;
-    height: 7.389vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-bottom: solid 0.1px grey;
-  }
-  .arrowDiv {
-    margin-top: 0.3694vh;
-    width: 7.47vw;
-    height: 3.448vh;
-  }
-  .newTeamDiv {
-    padding-left: 18.67vw;
-    padding-right: 18.67vw;
-    width: 30.28vw;
-    height: 4.325vh;
-    overflow: visible;
-    color: var(--main_pink, #f33182);
-    font-size: 22px;
-    font-weight: 600;
-    font-style: normal;
-    font-family: "Nunito", serif;
-  }
-  .createDiv {
-    margin-top: 0.4926vh;
-    width: 14.67vw;
-    height: 2.709vh;
-    overflow: visible;
-    font-size: 18px;
-    color: var(--green_toggle, #00c300);
-    font-weight: 400;
-    font-style: normal;
-    font-family: "Nunito", serif;
-  }
-  .profilePicDiv {
-    width: 100vw;
-    height: 19.46vh;
-    display: flex;
-    flex-direction: column;
-    margin-top:8px;
-  }
-  .createDiv {
-    width: 14.67vw;
-    height: 2.709vh;
-    font-size: 18px;
-    color: var(--green_toggle, #00c300);
-    font-weight: 400;
-    font-style: normal;
-    font-family: "Nunito", serif;
-    border: none;
-    background-color: inherit;
-    cursor: pointer;
-    display: inline-block;
-  }
-  .InputFieldDiv {
-      width: 80%;
-      margin: 3% auto;
-    }
+  width: 100vw;
+  height: auto;
+  margin-top: 7vh;
+  text-decoration: none !important;
+}
+.deleteUnderlineDiv {
+  text-decoration: none !important;
+}
+
+.memberTagDiv {
+  display: flex;
+  height: 38.177vh;
+  width: 100vw;
+  text-decoration: none !important;
+}
+.pageHeaderDiv {
+  width: 100vw;
+  height: 9.45vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-bottom: solid 0.1px grey;
+}
+.arrowDiv {
+  margin-top: 0.3694vh;
+  width: 7.47vw;
+  height: 3.448vh;
+}
+.newTeamDiv {
+  padding-left: 18.67vw;
+  padding-right: 18.67vw;
+  width: 30.28vw;
+  height: 4.325vh;
+  overflow: visible;
+  color: var(--main_pink, #f33182);
+  font-size: 22px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+.createDiv {
+  width: 14.67vw;
+  height: 2.709vh;
+  overflow: visible;
+  font-size: 18px;
+  color: var(--green_toggle, #00c300);
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+.profilePicDiv {
+  width: 200px;
+  height: 200px;
+  margin: 3vh auto;
+}
+.createDiv {
+  width: 14.67vw;
+  height: 2.709vh;
+  font-size: 18px;
+  color: var(--green_toggle, #00c300);
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  display: inline-block;
+}
+.InputFieldDiv {
+  width: 80%;
+  margin: 3% auto;
+}
