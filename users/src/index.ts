@@ -1,8 +1,6 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
-// TODO: removed before deploy
-import { randomBytes } from 'crypto';
 import { natsWrapper, EventCreatedSub } from './nats';
 
 
@@ -45,12 +43,12 @@ if (!process.env.NATS_CLUSTER_ID) {
 
 const start = async () => {
   // check if all required env variable have been declared
-  // validateEnvAttr();
+  validateEnvAttr();
 
   try {
 
 
-    await natsWrapper.connect("connex",randomBytes(4).toString('hex'),"http://localhost:4222")
+    await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
 
 
     natsWrapper.client.on('close', () => {
