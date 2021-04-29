@@ -109,6 +109,7 @@ it('should not save duplicate interest list', async () => {
 });
 
 
+
 it('should create user successfully with optional field', async () => {
   const id = '6131776621';
   const user = {
@@ -129,7 +130,8 @@ it('should create user successfully with optional field', async () => {
     .expect(201);
 
 
-  const saveUser = await User.findOne({ where: { id } });
+
+  const saveUser = await User.findOne({ where: { id } , include : "interests" });
   expect(saveUser).not.toBeNull();
   const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString()
   expect(saveUser!.name).toEqual(user.name);
@@ -137,6 +139,8 @@ it('should create user successfully with optional field', async () => {
   expect(saveUser!.faculty).toEqual(faculty["21"])
   expect(saveUser!.role).toEqual(user.role);
   expect(saveUser!.bio).toEqual(user.bio);
+
+
 });
 
 // it.todo('add interest by category');
