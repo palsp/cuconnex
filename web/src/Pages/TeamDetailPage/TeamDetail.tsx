@@ -37,6 +37,10 @@ const TeamDetail: React.FC<Props> = (props) => {
   // Is team already exist ? (create team process)
   const isTeamExist = true;
 
+  const goBackPreviousPageHandler = () => {
+    props.history.goBack();
+  };
+
   return (
     <motion.div
       variants={containerVariants}
@@ -48,7 +52,7 @@ const TeamDetail: React.FC<Props> = (props) => {
       <div className={classes.header}>
         {isTeamExist ? (
           <div
-            onClick={() => props.history.goBack()}
+            onClick={goBackPreviousPageHandler}
             className={classes.relativeArrow}
           >
             <ArrowLeft data-test="team-detail-page-arrow-left" />
