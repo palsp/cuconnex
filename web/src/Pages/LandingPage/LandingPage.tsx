@@ -44,10 +44,10 @@ const LandingPage: React.FC<Props> = (props) => {
   useEffect(() => {
     fetchTeamHandler();
   }, []);
-  const hasTeam = false;
-  // if (myTeamLists.length > 0) {
-  //   hasTeam = true;
-  // }
+  let hasTeam = false;
+  if (myTeamLists.length > 0) {
+    hasTeam = true;
+  }
   console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
@@ -85,7 +85,7 @@ const LandingPage: React.FC<Props> = (props) => {
           <Hamburger />
         </div>
       </div>
-      <div className={classes.heroDiv} style={{ marginTop: marginHeight }}>
+      <div className={classes.heroDiv}>
         <LandingHero userData={userData} hasTeam={hasTeam} />
       </div>
     </div>
