@@ -57,61 +57,59 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
           <Redirect to="/" />
         </div>
       ) : (
-        <Formik
-          initialValues={{
-            name: "",
-            description: "",
-          }}
-          onSubmit={(data, { setSubmitting, resetForm }) => {
-            const teamCreateData = {
-              name: data.name,
-              description: data.description,
-            };
+        <>
+          <div className={classes.pageHeaderDiv}>
+            <div onClick={backClickedHandler} className={classes.arrowDiv}>
+              <ArrowLeft />
+            </div>
+            <div className={classes.newTeamDiv}>New team</div>
+            <div>
+              <button className={classes.createDiv} value="Next" type="submit">
+                Create
+              </button>
+            </div>
+          </div>
+          <Formik
+            initialValues={{
+              name: "",
+              description: "",
+            }}
+            onSubmit={(data, { setSubmitting, resetForm }) => {
+              const teamCreateData = {
+                name: data.name,
+                description: data.description,
+              };
 
-            createTeamHandler(teamCreateData);
+              createTeamHandler(teamCreateData);
 
-            setTimeout(
-              () => inviteMember(teamCreateData.name, props.members),
-              1000
-            );
-            console.log("POST /api/teams/", data);
-            setSubmitting(true);
-            resetForm();
-          }}
-        >
-          {({ isSubmitting, values }) => (
-            <Form>
-              <div className={classes.pageHeaderDiv}>
-                <div onClick={backClickedHandler} className={classes.arrowDiv}>
-                  <ArrowLeft />
+              setTimeout(
+                () => inviteMember(teamCreateData.name, props.members),
+                1000
+              );
+              console.log("POST /api/teams/", data);
+              setSubmitting(true);
+              resetForm();
+            }}
+          >
+            {({ isSubmitting, values }) => (
+              <Form>
+                <div className={classes.profilePicDiv}>
+                  <ProfilePic size="big"></ProfilePic>
                 </div>
-                <div className={classes.newTeamDiv}>New team</div>
-                <div>
-                  <button
-                    className={classes.createDiv}
-                    value="Next"
-                    type="submit"
-                  >
-                    Create
-                  </button>
+                <div className={classes.InputFieldDiv}>
+                  <InputField label="Team name" name="name" type="input" />
                 </div>
-              </div>
-              <div className={classes.profilePicDiv}>
-                <ProfilePic size="medium"></ProfilePic>
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField label="Team name" name="name" type="input" />
-              </div>
-              <div className={classes.InputFieldDiv}>
-                <InputField
-                  label="Team description"
-                  name="description"
-                  type="input"
-                />
-              </div>
-            </Form>
-          )}
-        </Formik>
+                <div className={classes.InputFieldDiv}>
+                  <InputField
+                    label="Team description"
+                    name="description"
+                    type="input"
+                  />
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </>
       )}
     </div>
   );
