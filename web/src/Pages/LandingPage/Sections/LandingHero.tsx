@@ -32,18 +32,15 @@ const LandingHero: React.FC<Props> = (props) => {
     marginHeight = -(window.innerHeight * 0.9);
   }
 
-  const fetchTeamHandler = async () => {
-    try {
-      const teamData = await callTeamOfUserAPI(userData.id);
-      console.log("fetchTeamHandler", teamData);
-      setCurrentTeamLists(teamData.data.teams);
-    } catch (e) {
-      console.log(e);
-    }
-  };
   useEffect(() => {
     fetchTeamHandler();
   }, []);
+  const fetchTeamHandler = async () => {
+    const teamData = await callTeamOfUserAPI(userData.id);
+    console.log("fetchTeamHandler", teamData);
+    setCurrentTeamLists(teamData.data);
+  };
+  
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={currentTeamLists} />
