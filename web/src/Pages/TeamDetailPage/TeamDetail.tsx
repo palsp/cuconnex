@@ -15,7 +15,10 @@ import { motion } from "framer-motion";
 import containerVariants, { IUser } from "@src/models/models";
 import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
-import { fetchTeamOutgoingNotificationAPI } from "@src/api";
+import {
+  fetchTeamMembersAPI,
+  fetchTeamOutgoingNotificationAPI,
+} from "@src/api";
 
 interface Props {
   location: {
@@ -29,9 +32,11 @@ interface Props {
 }
 
 const TeamDetail: React.FC<Props> = (props) => {
+  const [teamMembers, setTeamMembers] = useState<IUser[] | []>([]);
   const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
   useEffect(() => {
     fetchOutgoingTeamNotiHandler();
+    fetchTeamMembersHandler();
   }, []);
   const myTeamName = props.location.state.team.name;
   const fetchOutgoingTeamNotiHandler = async () => {
@@ -43,6 +48,11 @@ const TeamDetail: React.FC<Props> = (props) => {
       teamOutgoingNotiData.data.pendingUsers
     );
     setPendingMembers(teamOutgoingNotiData.data.pendingUsers);
+  };
+  const fetchTeamMembersHandler = async () => {
+    const teamMembersData = await fetchTeamMembersAPI(myTeamName);
+    console.log("SUCCESS fetchTeamMembersHandler", teamMembersData);
+    setTeamMembers(teamMembersData.data.users);
   };
   console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
@@ -106,7 +116,7 @@ const TeamDetail: React.FC<Props> = (props) => {
       </div>
 
       <div className={classes.memberpic}>
-        <MemberPicList members={pendingMembers} />
+        <MemberPicList members={teamMembers} pendingMembers={pendingMembers} />
       </div>
 
       <div className={classes.activity}>
