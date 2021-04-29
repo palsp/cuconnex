@@ -41,9 +41,7 @@ const SelectEventPage: React.FC = () => {
             value="Technology"
             size="medium"
           />
-          <div className={classes.tagDiv}>
-            <Tag />
-          </div>
+          <Tag />
         </div>
       </div>
 

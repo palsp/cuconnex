@@ -73,23 +73,26 @@ const ExplorePage = () => {
       <ActivityBoxes activitybox={mockActivityBoxes} />
     </div>
   ) : (
-    <div className={classes.exploreContent}>
+    <>
       <Tag />
-      <div className={classes.exploreHeading}>
-        <Heading value="People" />
+
+      <div className={classes.exploreContent}>
+        <div className={classes.exploreHeading}>
+          <Heading value="People" />
+        </div>
+        <PeopleLists peoplelist={peopleLists} />
+        <div className={classes.exploreHeading}>
+          <Heading value="Teams" />
+        </div>
+        {/*Loong's work*/}
+        {/* <MyTeamLists page="landing" team={teamLists} /> */}
+        {/* <MyTeamLists page="explore" team={teamLists} /> */}
+        <div className={classes.exploreHeading}>
+          <Heading value="Events" />
+        </div>
+        <EventLists events={mockEventLists} />
       </div>
-      <PeopleLists peoplelist={peopleLists} />
-      <div className={classes.exploreHeading}>
-        <Heading value="Teams" />
-      </div>
-      {/*Loong's work*/}
-      {/* <MyTeamLists page="landing" team={teamLists} /> */}
-      {/* <MyTeamLists page="explore" team={teamLists} /> */}
-      <div className={classes.exploreHeading}>
-        <Heading value="Events" />
-      </div>
-      <EventLists events={mockEventLists} />
-    </div>
+    </>
   );
   return (
     <motion.div variants={containerVariants} exit="exit">
