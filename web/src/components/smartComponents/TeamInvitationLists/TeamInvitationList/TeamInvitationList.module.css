@@ -60,16 +60,18 @@
 }
 
 .groupAmount {
-  margin-left: 2%;
-  text-align: start;
-  color: #c2c2c2;
-}
-
+    width: 25%;
+    margin-left: 2%;
+    margin-right: 15%;
+    text-align: start;
+    color: #c2c2c2;
+    display: flex;
+  }
+  
 .groupIcon {
-  margin-left: 5%;
-  margin-right: 10%;
+    width: 100%;
 }
-
+   
 .teamFriends {
   position: relative;
   display: flex;
@@ -78,20 +80,20 @@
 }
 
 .moreFriends {
-  margin-left: 5%;
-  margin-top: 2%;
-  width: 13vw;
-  height: 3vh;
-  background-color: #c2c2c2;
-  border-radius: 15px;
-  font: inherit;
-  text-align: center;
+    margin-left: 5%;
+    margin-top: 2%;
+    width: 13vw;
+    height: 3vh;
+    background-color: #c2c2c2;
+    border-radius: 15px;
+    font: inherit;
+    text-align: center;
 }
 
 .moreFriends p {
-  font-size: 1rem;
-  color: #767474;
-  margin: auto;
+    font-size: 1rem;
+    color: #767474;
+    margin: auto;
 }
 
 .teamStatus {

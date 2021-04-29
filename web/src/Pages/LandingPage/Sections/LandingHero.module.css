@@ -55,6 +55,15 @@
   size: 100%;
 }
 
+.circle_overlay {
+  position: absolute;
+  background: white;
+  opacity: 0.8;
+  border-radius: 50%;
+  width: 250%;
+  height: 100%;
+}
+
 .myteamDiv {
   margin-top: 10%;
 }

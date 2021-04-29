@@ -52,6 +52,13 @@ const LandingPage: React.FC<Props> = (props) => {
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 
+  let marginHeight;
+  if (window.innerHeight > 800) {
+    marginHeight = window.innerHeight*0.25;
+  } else {
+    marginHeight = window.innerHeight*0.15;
+  }
+
   const LandingPrompt = !clickHamburger ? (
     <div className={cssArray.join(" ")}>
       <div className={classes.headerDiv}>
@@ -78,7 +85,7 @@ const LandingPage: React.FC<Props> = (props) => {
           <Hamburger />
         </div>
       </div>
-      <div className={classes.heroDiv}>
+      <div className={classes.heroDiv} style={{ marginTop: marginHeight }}>
         <LandingHero userData={userData} hasTeam={hasTeam} />
       </div>
     </div>

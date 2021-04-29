@@ -1,29 +1,21 @@
 import { ConnectionListsData } from "@src/mockData/Models/index";
+import { IUserFriend } from "@src/models";
 
-const mockConnectionListsData: ConnectionListsData[] = [
+const mockConnectionListsData: IUserFriend[] = [
   {
-    profilePic: "",
-    name: "Bank",
-    role: "Developer",
+    id: "6131866921",
+    name: "Kuy",
+    connections: {
+      receiverId: "",
+      senderId: "",
+      status: "",
+    },
+    interests: [],
     faculty: "Engineer",
-  },
-  {
-    profilePic: "",
-    name: "Bank",
+    year: "3",
     role: "Developer",
-    faculty: "Engineer",
-  },
-  {
-    profilePic: "",
-    name: "Bank",
-    role: "Developer",
-    faculty: "Engineer",
-  },
-  {
-    profilePic: "",
-    name: "Bank",
-    role: "Developer",
-    faculty: "Engineer",
+    bio: "Hi",
+    image: "",
   },
 ];
 
