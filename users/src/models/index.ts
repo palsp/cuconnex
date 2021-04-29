@@ -7,6 +7,7 @@ import { TableName } from '../models/types';
 import { UserInterest } from './UserInterest.model';
 import { Category } from './category.model';
 import { Connection } from './connection.model';
+import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
 
@@ -47,7 +48,29 @@ export const autoMigrate = (sequelize: Sequelize) => {
   });
 
   // -------------------- User and User -----------------------------------
-  // definde relation for connection
+  //Define relation for Recommendation
+  const recommendation = sequelize.define(
+    TableName.recommendations,
+    {
+      score: {
+        type: DataTypes.DOUBLE(2,2),
+        defaultValue: 0,
+        allowNull: false,
+      },
+    },
+    { timestamps: false }
+  );
+
+  User.belongsToMany(User, {
+    as: 'recommendation',
+    through: recommendation,
+    foreignKey: 'recommenderId',
+    otherKey: 'userId',
+  });
+
+  Recommend.autoMigrate(sequelize);
+
+  // define relation for connection
   const connection = sequelize.define(
     TableName.connections,
     {
