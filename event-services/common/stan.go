@@ -2,6 +2,7 @@ package common
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 
@@ -13,18 +14,20 @@ var SC stan.Conn
 
 
 func InitStanClient() (stan.Conn , error){
+	nc ,err := nats.Connect(os.Getenv("http://localhost:4222"))
 	//nc ,err := nats.Connect(os.Getenv("NATS_URL"))
-	nc ,err := nats.Connect(os.Getenv("NATS_URL"))
 	if err != nil {
 		return nil , err
 	}
 	
-	sc , err := stan.Connect(os.Getenv("NATS_CLUSTER_ID"), os.Getenv("NATS_CLIENT_ID") , stan.NatsConn(nc))
+	//sc , err := stan.Connect(os.Getenv("NATS_CLUSTER_ID"), os.Getenv("NATS_CLIENT_ID") , stan.NatsConn(nc));
+	sc , err := stan.Connect( "connex", "1234" , stan.NatsConn(nc))
 
 	if err != nil {
 		return nil , err
 	}
 
+	fmt.Println("Connect to NATs")
 	SC = sc
 
 	return SC , nil

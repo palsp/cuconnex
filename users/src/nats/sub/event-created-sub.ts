@@ -1,7 +1,8 @@
-// import { Listener, ExpirationCompleteEvent, Subjects, OrderStatus } from '@palspticket/common';
+import { Event } from '../../models';
 import { Listener, EventCreated, Subjects } from '@cuconnex/common';
 import { Message } from 'node-nats-streaming';
 import { queueGroupName } from '../queue-group-name';
+
 
 export class EventCreatedSub extends Listener<EventCreated> {
   queueGroupName = queueGroupName;
@@ -9,7 +10,13 @@ export class EventCreatedSub extends Listener<EventCreated> {
 
   // TODO: save to event databasa
   async onMessage(data: EventCreated['data'], msg: Message) {
-    console.log(data);
-    msg.ack();
+      await Event.create({
+        id : data.id,
+        eventName : data['event-name'],
+        registration : data.registration,
+
+      });
+      
+      msg.ack();
   }
 }

@@ -49,8 +49,9 @@ const start = async () => {
   try {
 
 
-    await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
+    // await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
 
+    await natsWrapper.connect("connex", "3231", "http://localhost:4222");
 
     natsWrapper.client.on('close', () => {
       console.log('NATs connection close');
@@ -72,7 +73,8 @@ const start = async () => {
     console.log(err);
   }
 
-  app.listen(3000, () => {
+  // TODO : change back to 3000
+  app.listen(3001, () => {
     console.log('Listening on port 3000');
   });
 };

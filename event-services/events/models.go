@@ -19,6 +19,7 @@ type EventModel struct {
 	EndDate   time.Time `gorm:"column:end-date"`
 	Status 	  string    `gorm:"column:status"`
 	Registration bool   `gorm:"column:registration"`
+	Version int
 }
 
 
@@ -31,6 +32,11 @@ func (EventModel) TableName() string{
 func AutoMigrate() {
 	db := common.GetDB()
 	db.AutoMigrate(&EventModel{})
+}
+
+func (e *EventModel) BeforeUpdate(tx *gorm.DB) (err error) {
+	e.Version = e.Version + 1
+	return
 }
 
 
@@ -64,10 +70,22 @@ func SearchByName(name string) ([]EventModel , error) {
 
 
 // SaveOne save event to db
-func SaveOne(data interface{}) error {
+func SaveOne(data *EventModel) error {
 	db := common.GetDB()
 	err := db.Save(data).Error
 	return err
+}
+
+// UpdateOne update event which required all field  and save to database
+func (e *EventModel) UpdateOne(data *EventModel){
+	db := common.GetDB()
+	e.EventName = data.EventName
+	e.Bio = data.Bio
+	e.Location = data.Location
+	e.Registration = data.Registration
+	e.StartDate = data.StartDate
+	e.EndDate = data.EndDate
+	db.Save(e)
 }
 
 
