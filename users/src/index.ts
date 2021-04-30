@@ -65,8 +65,7 @@ const start = async () => {
 
     // initial data for interest and category 
     // it should be run only once
-    // await startDB();
-
+    await startDB();
 
   } catch (err) {
     console.log(err);

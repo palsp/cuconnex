@@ -10,7 +10,7 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
-import { TeamStatus, BadRequestError, NotFoundError } from '@cuconnex/common';
+import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
 
@@ -189,8 +189,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
+    
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
-      if (member.isMembers!.status === TeamStatus.Accept) {
+      if (member.IsMember!.status === TeamStatus.Accept) {
         return member;
       }
     });

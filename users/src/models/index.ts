@@ -1,16 +1,20 @@
-import { Sequelize, DataTypes } from 'sequelize';
-import { FriendStatus, TeamStatus } from '@cuconnex/common';
+import { Sequelize } from 'sequelize';
+
 
 import { User } from './user.model';
 import { Interest } from './interest.model';
-import { TableName } from '../models/types';
 import { UserInterest } from './UserInterest.model';
 import { Category } from './category.model';
 import { Connection } from './connection.model';
+import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
 
 export { User, Interest, UserInterest, Category, Team, IsMember };
+
+
+
+// TODO: add version key
 
 export const autoMigrate = (sequelize: Sequelize) => {
   // -------------------- User and Interest -----------------------------------
@@ -18,24 +22,26 @@ export const autoMigrate = (sequelize: Sequelize) => {
   Interest.autoMigrate(sequelize);
   Team.autoMigrate(sequelize);
   Category.autoMigrate(sequelize);
+  UserInterest.autoMigrate(sequelize);
+  IsMember.autoMigrate(sequelize);
+  Connection.autoMigrate(sequelize);
+  Recommend.autoMigrate(sequelize);
 
-  const userInterest = sequelize.define(TableName.userInterest, {}, { timestamps: false });
+
   // M-M user and interest
   User.belongsToMany(Interest, {
-    through: userInterest,
-    as: 'interests',
+    through: UserInterest,
     foreignKey: 'userId',
     onDelete: 'CASCADE',
   });
 
   Interest.belongsToMany(User, {
-    through: userInterest,
+    through: UserInterest,
     as: 'interests',
     sourceKey: 'description',
-    foreignKey: 'interest',
+    foreignKey : 'interest',
+    onDelete : 'CASCADE',
   });
-
-  UserInterest.autoMigrate(sequelize);
 
   // -------------------- Interest and Category -----------------------------------
 
@@ -47,46 +53,28 @@ export const autoMigrate = (sequelize: Sequelize) => {
   });
 
   // -------------------- User and User -----------------------------------
-  // definde relation for connection
-  const connection = sequelize.define(
-    TableName.connections,
-    {
-      status: {
-        type: DataTypes.ENUM,
-        values: Object.values(FriendStatus),
-        defaultValue: FriendStatus.Pending,
-        allowNull: false,
-      },
-    },
-    { timestamps: false }
-  );
+  //Define relation for Recommendation
+ 
 
   User.belongsToMany(User, {
+    as: 'recommendation',
+    through: Recommend,
+    foreignKey: 'userId',
+    otherKey: 'recommenderId',
+  });
+
+
+
+  // define relation for connection
+  User.belongsToMany(User, {
     as: 'connection',
-    through: connection,
+    through: Connection,
     foreignKey: 'senderId',
     otherKey: 'receiverId',
   });
 
-  Connection.autoMigrate(sequelize);
-
   // -------------------- User and Team -----------------------------------
-  const isMember = sequelize.define(
-    TableName.isMembers,
-    {
-      status: {
-        type: DataTypes.ENUM,
-        values: Object.values(TeamStatus),
-        defaultValue: TeamStatus.Pending,
-        allowNull: false,
-      },
-      sender: {
-        type: DataTypes.STRING,
-        defaultValue: 'team',
-      },
-    },
-    { timestamps: false }
-  );
+ 
 
   User.hasMany(Team, {
     sourceKey: 'id',
@@ -98,12 +86,12 @@ export const autoMigrate = (sequelize: Sequelize) => {
   // M-M
   Team.belongsToMany(User, {
     as: 'member',
-    through: isMember,
+    through: IsMember,
     sourceKey: 'name',
     foreignKey: 'teamName',
   });
 
-  User.belongsToMany(Team, { as: 'member', through: isMember, foreignKey: 'userId' });
+  User.belongsToMany(Team, { as: 'member', through: IsMember, foreignKey: 'userId' });
 
-  IsMember.autoMigrate(sequelize);
+ 
 };

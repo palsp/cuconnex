@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes } from 'sequelize'
+import { Sequelize, Model, DataTypes, Association } from 'sequelize'
 import { FriendStatus } from '@cuconnex/common'
 import { TableName } from './types';
 
@@ -46,7 +46,6 @@ class Connection extends Model<ConnectionAttrs, ConnectionCreationAttrs> impleme
             timestamps: false
         });
     }
-
 }
 
 
