@@ -1,9 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
-import { Event } from './models';
-import { natsWrapper, EventCreatedSub } from './nats';
-import { EventUpdatedSub } from './nats/sub/event-updated-sub';
+import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 
 
 
@@ -45,14 +43,13 @@ if (!process.env.NATS_CLUSTER_ID) {
 
 const start = async () => {
   // check if all required env variable have been declared
-  // validateEnvAttr();
+  validateEnvAttr();
 
   try {
 
 
-    // await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
+    await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
 
-    await natsWrapper.connect("connex", "3231", "http://localhost:4222");
 
     natsWrapper.client.on('close', () => {
       console.log('NATs connection close');
@@ -75,8 +72,7 @@ const start = async () => {
     console.log(err);
   }
 
-  // TODO : change back to 3000
-  app.listen(3001, () => {
+  app.listen(3000, () => {
     console.log('Listening on port 3000');
   });
 };

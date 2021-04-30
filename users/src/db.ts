@@ -30,7 +30,7 @@ const initializeDB = async () => {
 
   autoMigrate(myDB.sequelize);
 
-  await myDB.sequelize.sync({ logging: false , force: true});
+  await myDB.sequelize.sync({ logging: false });
 
   return myDB;
 };

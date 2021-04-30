@@ -9,6 +9,7 @@ export class EventCreatedSub extends Listener<EventCreated> {
   readonly subject = Subjects.EventCreated;
 
   async onMessage(data: EventCreated['data'], msg: Message) {
+    console.log('message received from subject', this.subject , data)
       await Event.create({
         id : data.id,
         eventName : data['event-name'],
