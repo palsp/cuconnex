@@ -3,6 +3,7 @@ import { initializeDB } from './db';
 import { startDB } from './models/initDB';
 import { Event } from './models';
 import { natsWrapper, EventCreatedSub } from './nats';
+import { EventUpdatedSub } from './nats/sub/event-updated-sub';
 
 
 
@@ -62,6 +63,7 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
 
     new EventCreatedSub(natsWrapper.client).listen();
+    new EventUpdatedSub(natsWrapper.client).listen();
 
     await initializeDB();
 

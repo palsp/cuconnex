@@ -77,7 +77,7 @@ func SaveOne(data *EventModel) error {
 }
 
 // UpdateOne update event which required all field  and save to database
-func (e *EventModel) UpdateOne(data *EventModel){
+func (e *EventModel) UpdateOne(data *EventModel) error{
 	db := common.GetDB()
 	e.EventName = data.EventName
 	e.Bio = data.Bio
@@ -85,7 +85,8 @@ func (e *EventModel) UpdateOne(data *EventModel){
 	e.Registration = data.Registration
 	e.StartDate = data.StartDate
 	e.EndDate = data.EndDate
-	db.Save(e)
+	err := db.Save(e).Error
+	return err
 }
 
 
