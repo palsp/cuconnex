@@ -13,7 +13,7 @@ func EventRegister(router *gin.RouterGroup) {
 	router.GET("/:event_name", GetEvent)
 	router.GET("/", GetAllEvent)
 	router.POST("/", CreateEvent)
-
+	router.PUT("/:id",UpdatedEvent)
 
 	// TODO: Must be removed in production
 	router.OPTIONS("/" , func (ctx *gin.Context){
@@ -83,5 +83,52 @@ func CreateEvent(c *gin.Context) {
 		log.Printf("Event published to subject %v" , "event:created")
 	}
 	c.JSON(http.StatusCreated, response)
+
+}
+
+// UpdatedEvent handle PUT
+func UpdatedEvent(c *gin.Context){
+	eventModelValidator := NewEventModelValidator()
+	if err := eventModelValidator.Bind(c) ; err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"errors" : err.Error(),
+		})
+		return
+	}
+	db := common.GetDB()
+	e  := &EventModel{}
+	id := c.Param("id")
+
+	err := db.Where("id = ?" , id).First(e).Error
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"errors" : []struct{ message string}{{message: "event not found"}},
+		})
+		return
+	}
+
+	if err := e.UpdateOne(&eventModelValidator.eventModel); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"errors" : err.Error(),
+		})
+	}
+
+	c.Set("my_event_model" , *e)
+	serializer := EventSerializer{c}
+	response := serializer.Response()
+	err = common.PublishEventUpdated(common.EventUpdatedData{
+		ID: e.ID,
+		EventName: e.EventName,
+		Registration: e.Registration,
+		Version: e.Version,
+	})
+	if err != nil {
+		log.Printf("error publish event:created : %v" , err)
+	}else{
+		log.Printf("Event published to subject %v" , "event:created")
+	}
+	c.JSON(http.StatusCreated, response)
+
+
 
 }

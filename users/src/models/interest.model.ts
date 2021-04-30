@@ -5,7 +5,7 @@ import { TableName } from './types';
 import { IInterestResponse } from '../interfaces/user';
 
 
-// all atributes interest model has
+// all attributes interest model has
 export interface InterestAttrs {
   // description: InterestDescription;
   category_id: number,
