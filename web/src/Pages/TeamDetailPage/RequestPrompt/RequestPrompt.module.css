@@ -1,0 +1,17 @@
+.divHeading {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 20vh;
+  z-index: 1;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 18px;
+  top: 5vh;
+}
+.listDiv {
+}
+.searchDiv {
+}

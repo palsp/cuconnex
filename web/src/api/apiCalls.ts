@@ -31,6 +31,8 @@ import {
   IUserRequestResponse,
   IFetchUserRequestTeam,
   IUserRelationTeam,
+  IFetchIncomingTeamNotification,
+  ITeamCreatorResponse,
 } from "@src/models";
 
 //Auth Services
@@ -171,6 +173,15 @@ const fetchTeamOutgoingNotificationAPI = async (
 
   return teamOutgoingNotificationData;
 };
+const fetchTeamIncomingNotificationAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchIncomingTeamNotification>> => {
+  const teamIncomingNotificationData: AxiosResponse<IFetchIncomingTeamNotification> = await axios.get(
+    `/api/teams/incoming-requests/${teamName}`
+  );
+
+  return teamIncomingNotificationData;
+};
 const fetchFriendNotificationAPI = async (): Promise<
   AxiosResponse<IFetchFriendNotification>
 > => {
@@ -269,6 +280,15 @@ const fetchUserTeamRequestAPI = async (): Promise<
 
   return teamData;
 };
+const teamOwnerResponseAPI = async (
+  ownerResponseData: ITeamCreatorResponse
+): Promise<AxiosResponse<ITeamCreatorResponse>> => {
+  const responseData: AxiosResponse<ITeamCreatorResponse> = await axios.post(
+    "/api/teams/members/status",
+    ownerResponseData
+  );
+  return responseData;
+};
 
 export {
   fetchUserDataAPI,
@@ -296,4 +316,6 @@ export {
   userTeamRequestAPI,
   fetchUserTeamRequestAPI,
   userTeamRelationAPI,
+  fetchTeamIncomingNotificationAPI,
+  teamOwnerResponseAPI,
 };

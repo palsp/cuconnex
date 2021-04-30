@@ -38,7 +38,7 @@ export interface ITeam {
 }
 export interface IFetchTeam {
   name: string; // team name
-  members:IUser[];
+  members: IUser[];
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
@@ -236,6 +236,17 @@ export interface IFetchOutgoingTeamNotification {
     teamName: string;
     pendingUsers: IUser[];
   };
+}
+export interface IFetchIncomingTeamNotification {
+  incomingRequests: {
+    teamName: string;
+    pendingUsers: IUserFriend[];
+  };
+}
+export interface ITeamCreatorResponse {
+  targetUserId: string;
+  teamName: string;
+  status: string;
 }
 
 //Search

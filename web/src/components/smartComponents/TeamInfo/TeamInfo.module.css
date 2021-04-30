@@ -1,13 +1,13 @@
 .teamInfo {
   width: 100%;
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   display: flex;
   flex-direction: column;
 }
 
 .cover {
   width: 100%;
-  height: 15%;
+  height: 13%;
   overflow: visible;
   background-size: cover;
   background-repeat: no-repeat;
@@ -33,7 +33,6 @@
   overflow: hidden;
   position: relative;
   margin-left: 45%;
-  margin-top: -13%;
   width: 50%;
 }
 

@@ -2,11 +2,8 @@ import classes from "./CreateTeamPage.module.css";
 import React, { useEffect, useState } from "react";
 import { Close } from "@dumbComponents/UI/Icons";
 import { Link } from "react-router-dom";
-import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
-import { mockMemberLists } from "@src/mockData";
 import { motion } from "framer-motion";
 import containerVariants, { IUser } from "@src/models/models";
-import { fetchFriendsDataAPI } from "@src/api";
 import SelectEventPrompt from "./SelectEventPrompt/SelectEventPrompt";
 
 const CreateTeamPage: React.FC = () => {
