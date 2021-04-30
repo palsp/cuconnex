@@ -10,9 +10,9 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
-import { TeamStatus, BadRequestError, NotFoundError } from '@cuconnex/common';
+import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
-import { ITeamResponse, IUserResponse, IOutgoingRequestResponse } from '../interfaces';
+import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -116,16 +116,18 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
         isMember.status = TeamStatus.Accept;
         await isMember.save();
       }
+      return;
     }
 
-    await this.addMember(user);
-
-    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
+    const newIsMember = await IsMember.create({
+      teamName: this.name,
+      userId: user.id,
+      status: TeamStatus.Accept,
+      sender: 'team',
+    });
     if (!newIsMember) {
       throw new BadRequestError('IsMember db went wrong');
     }
-    newIsMember.status = TeamStatus.Accept;
-    await newIsMember.save();
 
     return;
   }
@@ -145,18 +147,10 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     return false;
   }
 
-  public async getOutgoingRequests(): Promise<IOutgoingRequestResponse> {
-    const membersWithAllStatus: User[] = await this.getMember();
-
-    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'team' } });
-
-    if (!isMembers || isMembers.length < 1) {
-      throw new BadRequestError('This team has no pending request to any user.');
-    }
-
-    if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
-      throw new BadRequestError('This team has no member');
-    }
+  public async getIncomingRequests(): Promise<ITeamRequestResponse> {
+    const isMembers = await IsMember.findAll({
+      where: { teamName: this.name, status: TeamStatus.Pending, sender: 'user' },
+    });
 
     let pendingUsers: IUserResponse[] = [];
     for (let i = 0; i < isMembers.length; i++) {
@@ -164,7 +158,26 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       pendingUsers.push(user!.toJSON());
     }
 
-    const response: IOutgoingRequestResponse = {
+    const response: ITeamRequestResponse = {
+      teamName: this.name,
+      pendingUsers,
+    };
+
+    return response;
+  }
+
+  public async getOutgoingRequests(): Promise<ITeamRequestResponse> {
+    const isMembers = await IsMember.findAll({
+      where: { teamName: this.name, status: TeamStatus.Pending, sender: 'team' },
+    });
+
+    let pendingUsers: IUserResponse[] = [];
+    for (let i = 0; i < isMembers.length; i++) {
+      let user = await User.findByPk(isMembers[i].userId);
+      pendingUsers.push(user!.toJSON());
+    }
+
+    const response: ITeamRequestResponse = {
       teamName: this.name,
       pendingUsers,
     };
@@ -176,8 +189,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
+    
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
-      if (member.isMembers!.status === TeamStatus.Accept) {
+      if (member.IsMember!.status === TeamStatus.Accept) {
         return member;
       }
     });

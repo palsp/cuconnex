@@ -11,7 +11,7 @@ describe('Get Outgoing Requests', () => {
     });
 
     const res = await request(app)
-      .get('/api/teams/outgoingrequests/notExistTeam')
+      .get('/api/teams/outgoing-requests/notExistTeam')
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(404);
@@ -40,36 +40,12 @@ describe('Get Outgoing Requests', () => {
     await user2.addInterest(interest!);
 
     const res = await request(app)
-      .get('/api/teams/outgoingrequests/testTeam')
+      .get('/api/teams/outgoing-requests/testTeam')
       .set('Cookie', global.signin(user2.id))
       .send({})
       .expect(400);
     expect(res.body.errors[0].message).toEqual('The request user is not part of the team');
   });
-
-  // it('should return 400 if the team has no member', async () => {
-  //   const user = await User.create({
-  //     id: '6131776621',
-  //     name: 'test-user',
-  //   });
-
-  //   const interest = await Interest.findOne({
-  //     where: { description: Business.BusinessCase },
-  //   });
-
-  //   await user.addInterest(interest!);
-  //   const team = await user.createTeams({ name: 'testTeam', description: '' });
-  //   await team.addAndAcceptMember(user);
-
-  //   const res = await request(app)
-  //     .get('/api/teams/outgoingrequests/testTeam')
-  //     .set('Cookie', global.signin(user.id))
-  //     .send({})
-  //     .expect(400);
-
-  //   const error = res.body.errors[0];
-  //   expect(error.message).toEqual('This team has no member');
-  // });
 
   it('should return 200 if successfully get outgoing requests', async () => {
     const user = await User.create({
@@ -98,13 +74,24 @@ describe('Get Outgoing Requests', () => {
     await team.invite(user3);
 
     const res = await request(app)
-      .get('/api/teams/outgoingrequests/testTeam')
+      .get('/api/teams/outgoing-requests/testTeam')
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);
 
-    expect(res.body.teamName).toEqual(team.name);
-    expect(res.body.pendingUsers[0].id).toEqual(user2.id);
-    expect(res.body.pendingUsers[1].id).toEqual(user3.id);
+    expect(res.body.outgoingRequests.teamName).toEqual(team.name);
+    expect(res.body.outgoingRequests.pendingUsers[0].id).toEqual(user2.id);
+    expect(res.body.outgoingRequests.pendingUsers[1].id).toEqual(user3.id);
+
+    await team.add(user2);
+    await team.add(user3);
+
+    const res2 = await request(app)
+      .get('/api/teams/outgoing-requests/testTeam')
+      .set('Cookie', global.signin(user.id))
+      .send({})
+      .expect(200);
+
+    expect(res2.body.outgoingRequests.pendingUsers.length).toEqual(0);
   });
 });

@@ -14,10 +14,16 @@ func Migrate() {
 }
 
 func main() {
-	_ , err := common.InitDB()
-	Migrate()
+	_ ,err := common.InitStanClient()
+
 	if err != nil {
-		log.Fatalln("db err:", err)
+		log.Printf("error connect to nats: %v\n" , err)
+	}
+	_ , err = common.InitDB()
+	if err != nil {
+		log.Printf("db err: %v\n", err)
+	}else{
+		Migrate()
 	}
 
 	// Create a router
@@ -40,8 +46,8 @@ func main() {
 	events.EventRegister(v1)
 
 
-
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
+
 }
 
 func CustomHeaderAPI(c *gin.Context) {

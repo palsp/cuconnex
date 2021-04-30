@@ -1,6 +1,10 @@
+import { Technology } from '@cuconnex/common';
 import { app } from './app';
 import { initializeDB } from './db';
-import { startDB } from './models/initDB'
+import { Interest, User } from './models';
+import { startDB } from './models/initDB';
+import { natsWrapper, EventCreatedSub } from './nats';
+
 
 
 const validateEnvAttr = () => {
@@ -23,13 +27,41 @@ const validateEnvAttr = () => {
   if (!process.env.DB_PASSWORD) {
     throw new Error('DB_PASSWORD must be defined');
   }
+
+  if (!process.env.NATS_CLIENT_ID) {
+    throw new Error('NATS_CLIENT_ID must be defined');
+}
+
+
+if (!process.env.NATS_URL) {
+    throw new Error('NATS_URL must be defined');
+}
+
+
+if (!process.env.NATS_CLUSTER_ID) {
+    throw new Error(' NATS_CLUSTER_ID must be defined');
+}
 };
 
 const start = async () => {
   // check if all required env variable have been declared
-  validateEnvAttr();
+  // validateEnvAttr();
 
   try {
+
+
+    await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
+
+
+    natsWrapper.client.on('close', () => {
+      console.log('NATs connection close');
+      process.exit();
+    })
+
+    process.on('SIGINT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new EventCreatedSub(natsWrapper.client).listen();
 
     await initializeDB();
 
@@ -40,6 +72,7 @@ const start = async () => {
   } catch (err) {
     console.log(err);
   }
+
   app.listen(3000, () => {
     console.log('Listening on port 3000');
   });

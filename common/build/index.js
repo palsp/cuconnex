@@ -26,9 +26,9 @@ __exportStar(require("./nats/events/friend-updated-event"), exports);
 __exportStar(require("./nats/events/team-added-event"), exports);
 __exportStar(require("./nats/events/team-updated-event"), exports);
 // pub-sub
-__exportStar(require("./nats/base-listener"), exports);
-__exportStar(require("./nats/based-publisher"), exports);
-__exportStar(require("./nats/subjects"), exports);
+// export * from './nats/base-listener';
+// export * from './nats/based-publisher';
+// export * from './nats/subjects';
 // errors
 __exportStar(require("./errors/not-authorized-error"), exports);
 __exportStar(require("./errors/not-found-error"), exports);
@@ -37,3 +37,8 @@ __exportStar(require("./errors/bad-request-error"), exports);
 __exportStar(require("./errors/internal-server-error"), exports);
 //services 
 __exportStar(require("./services"), exports);
+//nats 
+__exportStar(require("./events/base-pub"), exports);
+__exportStar(require("./events/base-sub"), exports);
+__exportStar(require("./events/subjects"), exports);
+__exportStar(require("./events/events"), exports);
