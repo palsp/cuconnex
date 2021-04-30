@@ -38,7 +38,6 @@ export const editUserValidator = [
       // check if key in interests filed is existed in InterestDescription
       for (let key in input) {
         valid = valid && (key in InterestDescription)
-        console.log(valid)
         if (input[key]) {
           valid = valid && Array.isArray(input[key])
         }

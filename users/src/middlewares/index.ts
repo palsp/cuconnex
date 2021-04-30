@@ -38,7 +38,7 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
-
+  
   try {
     const user = await User.fetchUser(req.currentUser.id)
     req.user = user;

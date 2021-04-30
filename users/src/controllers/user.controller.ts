@@ -17,21 +17,6 @@ import {
   IUserRequest,
   IIsMemberResponse,
 } from '../interfaces';
-import { userRouter } from '../routes';
-//Test for empty object
-function isEmpty(obj: Object) {
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) return false;
-  }
-
-  return true;
-}
-function isNull(obj: Object) {
-  Object.keys(obj).map((key) => {
-    if (!key) return false;
-  });
-  return true;
-}
 
 /**
  * get current user profile
@@ -99,7 +84,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   } catch (err) {
     await user.destroy();
     throw new InternalServerError();
-  }
+  } 
+  
 
   const response: IUserResponse = {
     ...user!.toJSON(),
@@ -108,6 +94,47 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
   res.status(201).send(response);
 };
+
+
+
+/**
+ * Method for editing any field of the user with the specified id.
+ * Expects req.body to have a user object
+ * If all checks pass, will update User with the fields specified
+ * Then sends 200 alongside the newly updated user object.
+ * @param req
+ * @param res
+ */
+ export const editUser = async (req: Request, res: Response) => {
+  const updatedUser = req.body as IUserRequest;
+  updatedUser.file = { ...req.file };
+
+  if (req.file) {
+    deleteFile(req.user!.image);
+    req.user!.image = updatedUser.file.path;
+  }
+
+  req.user!.name = updatedUser.name;
+  req.user!.role = updatedUser.role;
+  req.user!.bio = updatedUser.bio;
+  await req.user!.setInterests([]); // delete all association with interests
+  await req.user!.addInterests(updatedUser.interests); // add new interest
+  req.user!.lookingForTeam = updatedUser.lookingForTeam;
+
+  try {
+    await req.user!.save();
+  } catch (err) {
+    throw new InternalServerError();
+  }
+
+
+  const response: IUserResponse = {
+    ...req.user!.toJSON(),
+  };
+
+  res.status(200).send(response);
+};
+
 
 export const search = async (req: Request, res: Response) => {
   const keyword = req.query.keyword;
@@ -125,7 +152,7 @@ export const search = async (req: Request, res: Response) => {
   let users: User[];
   let team: Team[];
   try {
-    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: 'interests' });
+    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: Interest});
     team = await Team.findAll({ where: teamConstraint });
   } catch (err) {
     console.log(err);
@@ -155,7 +182,7 @@ export const findRelation = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
-export const requetToJoinTeam = async (req: Request, res: Response) => {
+export const requestToJoinTeam = async (req: Request, res: Response) => {
   const user = req.user!;
 
   const { teamName } = req.body;
@@ -203,44 +230,6 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * Method for editing any field of the user with the specified id.
- * Expects req.body to have a user object
- * If all checks pass, will update User with the fields specified
- * Then sends 200 alongside the newly updated user object.
- * @param req
- * @param res
- */
-export const editUser = async (req: Request, res: Response) => {
-  const updatedUser = req.body as IUserRequest;
-  updatedUser.file = { ...req.file };
-
-  if (req.file) {
-    deleteFile(req.user!.image);
-    req.user!.image = updatedUser.file.path;
-  }
-
-  req.user!.name = updatedUser.name;
-  req.user!.role = updatedUser.role;
-  req.user!.bio = updatedUser.bio;
-  await req.user!.setInterests([]); // delete all association with interests
-  const interests = await req.user!.addInterests(updatedUser.interests); // add new interest
-  req.user!.lookingForTeam = updatedUser.lookingForTeam;
-
-  try {
-    await req.user!.save();
-  } catch (err) {
-    throw new InternalServerError();
-  }
-
-  req.user!.interests = interests; // attach new interest to users
-
-  const response: IUserResponse = {
-    ...req.user!.toJSON(),
-  };
-
-  res.status(200).send(response);
-};
 // get Team(s) that user is in
 export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { id: req.params.userId } });
