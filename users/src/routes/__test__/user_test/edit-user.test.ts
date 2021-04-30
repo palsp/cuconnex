@@ -73,9 +73,7 @@ describe('The edit User route', () => {
         expect(updatedUser!.name).toEqual(updatedInformation.name);
         expect(updatedUser!.lookingForTeam).toEqual(updatedInformation.lookingForTeam);
         expect(updatedUser!.bio).toEqual(updatedInformation.bio);
-        expect(updatedUser!.interests).toHaveLength(1)
-
-
+        expect(updatedUser!.Interests).toHaveLength(1)
 
     });
 
