@@ -1,5 +1,9 @@
 .content {
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .circle_overlay {
@@ -43,7 +47,6 @@
 }
 
 .logo {
-  margin-top: 70%;
   margin-bottom: 5%;
   width: 25%;
 }
@@ -115,7 +118,7 @@
 @media only screen and (max-width: 350px) {
   /* small phone */
   .logoDiv {
-    margin-top: 50%;
+    /* margin-top: 50%; */
     margin-bottom: 5%;
     width: 60%;
   }
@@ -124,7 +127,7 @@
 @media only screen and (min-width: 350px) {
   /* iphone X */
   .logoDiv {
-    margin-top: 60%;
+    /* margin-top: 60%; */
     margin-bottom: 5%;
     width: 70%;
   }
@@ -133,7 +136,7 @@
 @media only screen and (min-width: 376px) {
   /* iphone Max */
   .logoDiv {
-    margin-top: 40%;
+    /* margin-top: 40%; */
     margin-bottom: 5%;
     width: 70%;
   }
@@ -142,13 +145,13 @@
 @media only screen and (min-width: 430px) {
   /* tablet */
   .logoDiv {
-    margin-top: 30%;
+    /* margin-top: 30%; */
     margin-bottom: 5%;
     width: 50%;
   }
 
   .logo {
-    margin-top: 50%;
+    /* margin-top: 50%; */
     margin-bottom: 5%;
     width: 25%;
   }
