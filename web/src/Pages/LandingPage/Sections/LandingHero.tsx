@@ -83,7 +83,7 @@ const LandingHero: React.FC<Props> = (props) => {
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
           <Link to={{ pathname: "/profile", state: { users: props.userData } }}>
-            <ProfilePic size="smallMedium" PicUrl={props.userData.image} />
+            <ProfilePic size="s" PicUrl={props.userData.image} />
           </Link>
         </div>
         <div className={classes.subupperpartDiv}>

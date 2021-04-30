@@ -3,20 +3,26 @@ import ConnectionList from "@smartComponents/NotificationLists/ConnectionLists/C
 import classes from "./ConnectionLists.module.css";
 import { ConnectionListsData } from "@src/mockData/Models";
 import mockConnectionLists from "@src/mockData/mockConnectionListsData";
-import { IFetchFriendsData, IUser, IUserFriend } from "@src/models";
+import { IFetchFriendsData, IFetchTeam, IUser, IUserFriend } from "@src/models";
+import ConnectionListForPrompt from "./ConnectionList/ConnectionListForPrompt";
 
 interface Props {
   requests: IUserFriend[] | [];
+  teams: IFetchTeam;
 }
 
-const ConnectionLists: React.FC<Props> = (props) => {
+const ConnectionListsForPrompt: React.FC<Props> = (props) => {
   return (
     <div className={classes.ConnectionLists}>
-      <div className={classes.listHeader}>Connections</div>
+      <div className={classes.listHeader}>Member Requests</div>
       {props.requests.map((friendNoti: IUserFriend, index: number) => {
         return (
           <div key={index}>
-            <ConnectionList key={index} connection={friendNoti} />
+            <ConnectionListForPrompt
+              teams={props.teams}
+              key={index}
+              connection={friendNoti}
+            />
           </div>
         );
       })}
@@ -24,4 +30,4 @@ const ConnectionLists: React.FC<Props> = (props) => {
   );
 };
 
-export default ConnectionLists;
+export default ConnectionListsForPrompt;

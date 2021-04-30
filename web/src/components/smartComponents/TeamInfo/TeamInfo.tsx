@@ -32,7 +32,7 @@ const TeamInfo: React.FC<Props> = (props) => {
       <div className={classes.teamprofile}>
         <div className={classes.flex}>
           <div className={classes.profilePic}>
-            <ProfilePic size="mediumborder" />
+            <ProfilePic size="lwithborder" />
           </div>
         </div>
         <div className={classes.namerole}>
@@ -61,22 +61,23 @@ const TeamInfo: React.FC<Props> = (props) => {
           <RecruitSign value="Request to join" />
         </div>
       ) : (
-        <div />
-      )}
-      {props.status === "Accept" ? (
-        <div className={classes.sign}>
-          <RecruitSign value="Accepted" />
+        <div>
+          {props.status === "Accept" ? (
+            <div className={classes.sign}>
+              <RecruitSign value="Accepted" />
+            </div>
+          ) : props.status === "Reject" ? (
+            <div className={classes.sign}>
+              <RecruitSign value="Reject" />
+            </div>
+          ) : props.status === "Pending" ? (
+            <div className={classes.sign}>
+              <RecruitSign value="Pending" />
+            </div>
+          ) : (
+            <div />
+          )}
         </div>
-      ) : props.status === "Reject" ? (
-        <div className={classes.sign}>
-          <RecruitSign value="Reject" />
-        </div>
-      ) : props.status === "Pending" ? (
-        <div className={classes.sign}>
-          <RecruitSign value="Pending" />
-        </div>
-      ) : (
-        <div />
       )}
     </div>
   );
