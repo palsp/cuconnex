@@ -34,3 +34,6 @@
   display: flex;
   color: #5e5e5e;
 }
+.borderBottom {
+  border-bottom: 0.01px solid rgb(196, 194, 194);
+}

@@ -1,8 +1,9 @@
 .divHeading {
   display: flex;
   flex-direction: column;
+
   width: 100vw;
-  height: 20vh;
+  height: auto;
   z-index: 1;
 }
 
@@ -11,7 +12,9 @@
   left: 18px;
   top: 5vh;
 }
-.listDiv {
+.statusDiv {
+  text-align: left;
+  margin-left: 8vw;
 }
 .searchDiv {
 }

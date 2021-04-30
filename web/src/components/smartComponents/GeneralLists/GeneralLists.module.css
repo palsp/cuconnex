@@ -3,16 +3,16 @@
   flex-direction: row;
   justify-content: flex-start;
   text-align: left;
-  width:100vw;
+  width: 100vw;
   height: 14vh;
-  border-top:0.5px solid grey;
+  border-top: 0.01px solid rgb(196, 194, 194);
 }
 .textbodyDiv {
-  padding-top:1vh;
+  padding-top: 1vh;
   display: flex;
   flex-direction: column;
   width: 88.8vw;
-  height: 13.3vh; 
+  height: 13.3vh;
 }
 .profileContainer {
   margin-left: 5%;
@@ -26,7 +26,7 @@
   background-size: contain;
   border-radius: 50%;
   opacity: 1;
-  width:57px;
+  width: 57px;
   height: 57px;
   display: flex;
   justify-content: center;
