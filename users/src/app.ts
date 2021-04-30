@@ -43,6 +43,8 @@ app.use(
   })
 );
 
+
+
 /* TODO: put this line below currentUser middleware */
 app.use('/api/users/assets', express.static('assets'));
 

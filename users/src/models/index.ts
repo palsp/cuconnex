@@ -17,7 +17,6 @@ export { User, Interest, UserInterest, Category, Team, IsMember };
 
 // TODO: add version key
 
-
 export const autoMigrate = (sequelize: Sequelize) => {
   // -------------------- User and Interest -----------------------------------
   User.autoMigrate(sequelize);
