@@ -66,4 +66,10 @@ router.post(
   userController.requestToJoinTeam
 );
 
+router.post(
+  '/ratings',
+  requireUser,
+  validateRequest
+);
+
 export { router as userRouter };
