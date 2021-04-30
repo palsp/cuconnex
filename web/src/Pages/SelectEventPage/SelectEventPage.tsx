@@ -51,7 +51,7 @@ const SelectEventPage: React.FC = () => {
           <Heading
             data-test="friends-page-header"
             value="Technology"
-            size="medium"
+            size="small"
           />
           <Tag />
         </div>
