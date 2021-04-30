@@ -56,7 +56,10 @@ export const getTeamMember = async (req: Request, res: Response) => {
     throw new NotFoundError('Team');
   }
 
+
+
   const acceptedUsers: User[] = await team.getMembers();
+
 
   const response: IUserResponse[] = acceptedUsers.map((eachUser) => {
     return eachUser.toJSON();

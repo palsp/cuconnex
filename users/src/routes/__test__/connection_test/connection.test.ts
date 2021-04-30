@@ -1,7 +1,7 @@
-import { FriendStatus, Technology } from '@cuconnex/common';
+import { Technology } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../../app';
-import { Interest, User } from '../../../models';
+import {  Interest, User } from '../../../models';
 
 describe('Get Connections', () => {
   it('should return 401 if user not signin', async () => {
@@ -85,7 +85,7 @@ describe('Get Friend Request', () => {
       .expect(400);
   });
 
-  it('should return users frined request if user exist', async () => {
+  it('should return users friend request if user exist', async () => {
     const user1 = await User.create({ id: '6131775521', name: 'test_1' });
     const user2 = await User.create({ id: '6131775621', name: 'test_2' });
     const user3 = await User.create({ id: '6131775721', name: 'test_3' });
@@ -101,7 +101,7 @@ describe('Get Friend Request', () => {
     expect(body.requests).toHaveLength(2);
   });
 
-  it('should return users frined request only the user with status pending', async () => {
+  it('should return users friend request only the user with status pending', async () => {
     const user1 = await User.create({ id: '6131775521', name: 'test_1' });
     const user2 = await User.create({ id: '6131775621', name: 'test_2' });
     const user3 = await User.create({ id: '6131775721', name: 'test_3' });
@@ -115,10 +115,16 @@ describe('Get Friend Request', () => {
       .set('Cookie', global.signin(user1.id))
       .send({})
       .expect(200);
-
+    
+    
     expect(body.requests).toHaveLength(1);
   });
+
+
+
 });
+
+
 describe('Get Received Requests', () => {
   it('should return all received connection requests with pending status', async () => {
     const user1 = await User.create({ id: '6131775521', name: 'test_1' });
@@ -131,16 +137,17 @@ describe('Get Received Requests', () => {
       .set('Cookie', global.signin(user2.id))
       .send({})
       .expect(200);
+      
     expect(body.requests).toHaveLength(1);
     expect(body.requests[0].name).toEqual('test_1');
   });
+
   it('should return all received connection requests with pending status if there are multiple', async () => {
     const user1 = await User.create({ id: '6131775521', name: 'test_1' });
     const user2 = await User.create({ id: '6131775621', name: 'test_2' });
     const user3 = await User.create({ id: '6131775721', name: 'test_3' });
     await user1.requestConnection(user2);
     await user3.requestConnection(user2);
-    // console.log(await user1.getReceivedFriendRequests())
     const { body } = await request(app)
       .get('/api/users/friends/request/received')
       .set('Cookie', global.signin(user2.id))

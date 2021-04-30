@@ -3,7 +3,6 @@ import { app } from '../../../app';
 import { User } from '../../../models/user.model';
 import { FriendStatus, Business } from '@cuconnex/common';
 import { Interest } from '../../../models';
-import { body } from 'express-validator';
 
 /**
  *  its return user instance and interest instance
@@ -59,11 +58,11 @@ describe('get current user', () => {
     const { user } = await setup();
 
     const { body: res } = await request(app)
-      .get('/api/users/current-user')
-      .set('Cookie', global.signin(user.id))
-      .send()
-      .expect(200);
-
+    .get('/api/users/current-user')
+    .set('Cookie', global.signin(user.id))
+    .send()
+    .expect(200);
+    
     expect(res.id).toEqual(user.id);
     expect(res.name).toEqual(user.name);
     expect(res.interests).not.toBeNull();

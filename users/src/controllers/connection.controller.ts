@@ -1,7 +1,7 @@
-import { BadRequestError, FriendStatus } from '@cuconnex/common';
+import { BadRequestError, FriendStatus, InternalServerError, NotFoundError } from '@cuconnex/common';
 import { Request, Response } from 'express';
 import { IAcceptFriendRequest, IGetAllConnectionResponse, IGetAllFriendRequest } from '../interfaces';
-import { User } from '../models'
+import { User, Interest } from '../models'
 
 
 /**
@@ -10,42 +10,51 @@ import { User } from '../models'
  * @param res 
  */
 export const getAllConnection = async (req: Request, res: Response): Promise<void> => {
-  const connections = await req.user!.getConnection();
-  const helper = [];
 
-  for (let conn of connections) {
-    const status = await req.user!.findRelation(conn.id);
-    // skip if there is not establish connection
-    if (status !== FriendStatus.Accept) {
-      continue;
-    }
-    // const userSerielizer = await conn.serializer()
-    conn.interests = await conn.getInterests();
-    helper.push(conn);
+  try {
+    const connections = await req.user!.getAllConnectionWithStatus(FriendStatus.Accept);
+  
+    const response: IGetAllConnectionResponse = { connections: connections.map((ele) => ele.toJSON()) };
+  
+    res.status(200).send(response);
+  }catch(err){
+    throw new InternalServerError();
   }
-
-  const response: IGetAllConnectionResponse = { connections: helper.map((ele) => ele.toJSON()) };
-
-  res.status(200).send(response);
 };
 
 /**
  * get all friend request handler (Relations whose status is still pending)
  */
 export const getAllFriendRequest = async (req: Request, res: Response): Promise<void> => {
-  const requests = await req.user!.getRequestConnection();
-  const helper = [];
-  for (let request of requests) {
-    request.interests = await request.getInterests();
-    helper.push(request);
+  try {
+    const requests = await req.user!.getAllConnectionWithStatus(FriendStatus.Pending);
+  
+    const response: IGetAllFriendRequest = {
+      requests: requests.map((ele) => ele.toJSON()),
+    };
+  
+    res.status(200).send(response);    
+  }catch(err){
+    throw new InternalServerError();
   }
-
-  const response: IGetAllFriendRequest = {
-    requests: helper.map((ele) => ele.toJSON()),
-  };
-
-  res.status(200).send(response);
 };
+
+
+export const getAllReceivedFriendRequest = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const requests = await req.user!.getReceivedFriendRequests();
+  
+    const response: IGetAllFriendRequest = {
+      requests: requests.map(ele => ele.toJSON())
+    }
+  
+    res.status(200).send(response)
+
+  }catch(err){
+    throw new InternalServerError();
+  }
+}
+
 
 /**
  * Send friend request handler
@@ -53,7 +62,12 @@ export const getAllFriendRequest = async (req: Request, res: Response): Promise<
  * @param res
  */
 export const sendFriendRequest = async (req: Request, res: Response): Promise<void> => {
-  const addedUser = await User.findUser(req.body.userId);
+  const addedUser = await User.fetchUser(req.body.userId);
+  
+  if(!addedUser){
+    throw new NotFoundError('User');
+  }
+
 
   await req.user!.requestConnection(addedUser);
 
@@ -66,7 +80,7 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
  * @param res
  */
 export const acceptFriendRequest = async (req: Request, res: Response): Promise<void> => {
-  const sendUser = await User.findUser(req.body.userId);
+  const sendUser = await User.fetchUser(req.body.userId);
 
   if (!sendUser) {
     throw new BadRequestError('Sender not found')
@@ -78,19 +92,4 @@ export const acceptFriendRequest = async (req: Request, res: Response): Promise<
     status,
   }
   res.status(201).send(response);
-}
-
-export const getAllReceivedFriendRequest = async (req: Request, res: Response): Promise<void> => {
-  const requests = await req.user!.getReceivedFriendRequests();
-  const helper = [];
-  for (let request of requests) {
-    request.interests = await request.getInterests()
-    helper.push(request);
-  }
-
-  const response: IGetAllFriendRequest = {
-    requests: helper.map(ele => ele.toJSON())
-  }
-
-  res.status(200).send(response)
 }
