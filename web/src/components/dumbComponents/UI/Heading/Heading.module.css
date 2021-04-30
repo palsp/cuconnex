@@ -29,6 +29,10 @@
   font-weight: 500;
 }
 
+.smallMediumSize {
+  font-size: 1.5rem;
+}
+
 .mediumSize {
   font-size: 2rem;
 }
