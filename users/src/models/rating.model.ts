@@ -1,20 +1,20 @@
 import { Model, Sequelize, DataTypes } from 'sequelize';
 import { TableName } from './types';
 
-interface RatingAttrs {
+export interface RatingAttrs {
 	raterId: string;
 	rateeId: string;
 	rating: number;
 	version?: any;
 }
 
-interface RatingCreationAttrs {
+export interface RatingCreationAttrs {
 	raterId: string;
 	rateeId: string;
 	rating?: number;
 }
 
-class Rating
+export class Rating
 	extends Model<RatingAttrs, RatingCreationAttrs>
 	implements RatingAttrs {
 	public raterId!: string;
@@ -46,5 +46,3 @@ class Rating
 		);
 	}
 }
-
-export { Rating };
