@@ -36,7 +36,7 @@ const PositionList: React.FC<Props> = (props) => {
         <div className={classes.teamName}>{props.teams.name}</div>
         <div className={classes.smallFlex}>
           <div className={classes.memberPic}>
-            <ProfilePic PicUrl={props.teams.members[0].image} size="small" />
+            <ProfilePic PicUrl={props.teams.members[0].image} size="m" />
           </div>
           <div className={classes.more}>+{props.teams.members.length - 1}</div>
           <div className={classes.pendingSign}>

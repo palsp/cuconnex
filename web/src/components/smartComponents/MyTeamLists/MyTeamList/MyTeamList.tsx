@@ -162,10 +162,10 @@ const TeamList: React.FC<Props> = (props) => {
               </div>
             )}
             <div className={classes.teamFriends}>
-              <ProfilePic size="mini" />
-              <ProfilePic size="mini" />
-              <ProfilePic size="mini" />
-              <ProfilePic size="mini" />
+              <ProfilePic size="xs" />
+              <ProfilePic size="xs" />
+              <ProfilePic size="xs" />
+              <ProfilePic size="xs" />
               <div className={classes.moreFriends}></div>
             </div>
           </div>

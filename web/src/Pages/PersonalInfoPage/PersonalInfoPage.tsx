@@ -91,7 +91,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     {imagePreview !== "" ? (
                       <>
                         <ProfilePic
-                          size="big"
+                          size="xl"
                           data-test="personal-info-personalImage"
                           PicUrl={imagePreview}
                           previewImage={true}
