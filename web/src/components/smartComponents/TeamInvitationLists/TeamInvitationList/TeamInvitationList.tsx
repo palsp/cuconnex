@@ -63,8 +63,8 @@ const TeamInvitationList: React.FC<Props> = (props) => {
               <div className={classes.groupAmount}>5</div>
               <Group />
               <div className={classes.teamFriends}>
-                <ProfilePic size="mini" />
-                <ProfilePic size="mini" />
+                <ProfilePic size="xs" />
+                <ProfilePic size="xs" />
                 <div className={classes.moreFriends}>
                   <p>7+</p>
                 </div>

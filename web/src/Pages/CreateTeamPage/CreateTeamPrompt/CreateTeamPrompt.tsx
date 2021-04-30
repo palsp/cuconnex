@@ -13,7 +13,7 @@ import { Link, Redirect } from "react-router-dom";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
 import { ErrorContext } from "@context/ErrorContext";
-import defaultProfilePic from "@assets/tempProfilePic.png";
+import defaultProfilePic from "@assets/defaultProfilePic.png";
 interface Props {
   members: IUserFriend[] | [];
 }
@@ -94,7 +94,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
             <label htmlFor="upload-button">
               {imagePreview !== "" ? (
                 <ProfilePic
-                  size="big"
+                  size="xl"
                   PicUrl={imagePreview}
                   previewImage={true}
                 />
