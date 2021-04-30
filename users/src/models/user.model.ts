@@ -12,7 +12,6 @@ import {
 } from 'sequelize';
 import {
   BadRequestError,
-  NotFoundError,
   TeamStatus,
   FriendStatus,
   faculty,
@@ -29,6 +28,7 @@ import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
 import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
+import { Recommend } from './recommend.model';
 
 // All attributes in user model
 interface UserAttrs {
@@ -44,6 +44,7 @@ interface UserAttrs {
   friends?: User[];
   Connection?: Connection;
   IsMember?: IsMember;
+  Recommend? : Recommend;
 }
 
 interface UserCreationAttrs {
@@ -69,6 +70,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public Interests?: Interest[];
   public Connection?: Connection;
   public IsMember?: IsMember;
+  public Recommend? : Recommend;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
