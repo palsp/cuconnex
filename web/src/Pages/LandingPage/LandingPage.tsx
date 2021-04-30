@@ -14,6 +14,7 @@ import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
 import { callTeamOfUserAPI, teamInvitationAPI } from "@src/api";
 import { Button } from "@material-ui/core";
+import { relative } from "node:path";
 
 interface Props {
   location: {
@@ -41,6 +42,7 @@ const LandingPage: React.FC<Props> = (props) => {
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
+
   let hasTeam = false;
   if (myTeamLists.length > 0) {
     hasTeam = true;
@@ -49,12 +51,32 @@ const LandingPage: React.FC<Props> = (props) => {
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 
-  let marginHeight;
+  let marginHeight, circleHeight;
   if (window.innerHeight > 800) {
-    marginHeight = window.innerHeight * 0.25;
+    marginHeight = -window.innerHeight * 0.25;
+    circleHeight = -window.innerHeight * 0.8;
   } else {
-    marginHeight = window.innerHeight * 0.15;
+    marginHeight = -window.innerHeight * 0.15;
+    circleHeight = -window.innerHeight * 0.93;
   }
+
+  const circleAnimate = !clickHamburger ? (
+    <motion.div 
+            animate={{ rotate: 180 }}
+            transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+            style={{ bottom: circleHeight }}
+            className={classes.circle_overlay}
+            data-test="landing-hero-halfcircleoverlay"
+          ></motion.div>
+  ) : (
+    <motion.div 
+            animate={{ rotate: 180 }}
+            transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+            style={{ bottom: marginHeight, opacity: 0.5, zIndex: 1,  }}
+            className={classes.circle_overlay}
+            data-test="landing-hero-halfcircleoverlay"
+      ></motion.div>
+  );
 
   const LandingPrompt = !clickHamburger ? (
     <div className={cssArray.join(" ")}>
@@ -83,11 +105,12 @@ const LandingPage: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero userData={userData} hasTeam={hasTeam} />
+        <LandingHero userData={userData} hasTeam={!hasTeam} />
       </div>
     </div>
   ) : (
     <div className={classes.promptDiv}>
+      
       <div onClick={hamburgerClickedHandler} className={classes.arrowDiv}>
         <ArrowLeft />
       </div>
@@ -105,15 +128,9 @@ const LandingPage: React.FC<Props> = (props) => {
       exit="exit"
       className={classes.main}
     >
-      <Background>
+    <Background>
         <div>{LandingPrompt}</div>
-        <motion.div 
-        animate={{ rotate: 180 }}
-        transition={{ ease: "linear", duration: 4, repeat: Infinity }}
-        style={{ bottom: marginHeight }}
-        className={classes.circle_overlay}
-        data-test="landing-hero-halfcircleoverlay"
-      ></motion.div>
+        {circleAnimate}
       </Background>
     </motion.div>
   );

@@ -32,6 +32,16 @@ const LandingHero: React.FC<Props> = (props) => {
     marginHeight = -(window.innerHeight * 0.9);
   }
 
+  // const circle_overlay = (     
+  //   <motion.div 
+  //     animate={{ rotate: 180 }}
+  //     transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+  //     style={{ bottom: -window.innerHeight*0.8 }}
+  //     className={classes.circle_overlay}
+  //     data-test="landing-hero-halfcircleoverlay"
+  //   ></motion.div>
+  // );
+
   useEffect(() => {
     fetchTeamHandler();
   }, []);
