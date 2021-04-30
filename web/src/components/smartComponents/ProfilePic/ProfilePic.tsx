@@ -19,6 +19,8 @@ const ProfilePic: React.FC<Props> = (props) => {
     cssArray = [classes.profileMediumBorder];
   } else if (props.size === "small") {
     cssArray = [classes.profileSmall];
+  } else if (props.size === "smallMedium") {
+    cssArray = [classes.profileSmallMedium];
   } else if (props.size === "mini") {
     cssArray = [classes.profileMini];
   } else {
@@ -30,8 +32,8 @@ const ProfilePic: React.FC<Props> = (props) => {
   if (props.PicUrl) {
     profileArray = [classes.profilePic];
   }
-
-  url = window.location.origin + "/api/users/" + props.PicUrl;
+  url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+  // url = window.location.origin + "/api/users/" + props.PicUrl;
 
   if (props.previewImage) {
     url = props.PicUrl;

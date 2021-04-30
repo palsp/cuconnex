@@ -1,5 +1,15 @@
-import { FriendStatus } from "@cuconnex/common";
+import { Business, Design, FriendStatus, Technology } from "@cuconnex/common";
 import { ITeamResponse } from "./team";
+
+export interface IUserRequest {
+    name: string,
+    image: string,
+    role: string,
+    interests: InterestBody,
+    bio: string,
+    lookingForTeam: boolean,
+    file: any
+}
 
 export interface IUserResponse {
     id: string,
@@ -13,6 +23,16 @@ export interface IUserResponse {
     interests: IInterestResponse[];
 }
 
+
+// export type InterestBody = {
+//     Technology?: Technology[],
+//     Design?: Design[],
+//     Business?: Business[],
+// }
+
+export interface InterestBody {
+    [key: string]: string[]
+}
 export type IInterestResponse = string;
 
 export interface IViewProfileResponse extends IUserResponse {

@@ -38,9 +38,9 @@ const LandingHero: React.FC<Props> = (props) => {
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData);
-    setCurrentTeamLists(teamData.data);
+    setCurrentTeamLists(teamData.data.teams);
   };
-  
+
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={currentTeamLists} />
@@ -73,7 +73,7 @@ const LandingHero: React.FC<Props> = (props) => {
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
           <Link to={{ pathname: "/profile", state: { users: props.userData } }}>
-            <ProfilePic size="small" PicUrl={props.userData.image} />
+            <ProfilePic size="smallMedium" PicUrl={props.userData.image} />
           </Link>
         </div>
         <div className={classes.subupperpartDiv}>

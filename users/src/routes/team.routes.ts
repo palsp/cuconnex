@@ -5,7 +5,6 @@ import { requireUser } from '../middlewares';
 import {
   createTeamValidator,
   addTeamMemberValidator,
-  requestToJoinTeamValidator,
   manageTeamStatusValidator,
 } from '../utils/team.validators';
 
@@ -18,19 +17,11 @@ router.get('/members/:name', requireUser, teamController.getTeamMember);
 router.post('/', requireUser, createTeamValidator, validateRequest, teamController.createTeam);
 
 router.post(
-  '/members',
+  '/invite-member',
   requireUser,
   addTeamMemberValidator,
   validateRequest,
-  teamController.addTeamMember
-);
-
-router.post(
-  '/request-to-join',
-  requireUser,
-  requestToJoinTeamValidator,
-  validateRequest,
-  teamController.requetToJoinTeam
+  teamController.inviteMember
 );
 
 router.post(

@@ -6,12 +6,15 @@ import {
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
+  HasManyAddAssociationMixin,
   Association,
   Sequelize,
+  BelongsToManySetAssociationsMixin,
 } from 'sequelize';
 import {
   BadRequestError,
   NotFoundError,
+  TeamStatus,
   FriendStatus,
   Description,
   faculty,
@@ -19,6 +22,7 @@ import {
   getYearFromId,
   getFacultyCodeFromId,
   InternalServerError,
+  InterestDescription,
 } from '@cuconnex/common';
 
 import { TableName } from './types';
@@ -26,7 +30,7 @@ import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
-import { IUserResponse } from '../interfaces';
+import { InterestBody, IUserResponse } from '../interfaces';
 
 // All attributes in user model
 interface UserAttrs {
@@ -130,7 +134,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
   public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
 
@@ -140,17 +144,27 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * This is done via calling the `BelongsToManyAddAssociationMixin` on the `<Interest, User>` pair
    * @param {Description[]} interests - The array of interests the user is interested in.
    */
-  public async addInterestFromArray(interests: Description[]) {
-    for (let interest of interests) {
-      try {
-        // find corresponding interest in db
-        const addedInterest = await Interest.findOne({ where: { description: interest } });
+  public async addInterests(interests: InterestBody): Promise<Interest[]> {
 
-        await this.addInterest(addedInterest!);
-      } catch (err) {
-        console.log(err);
+    const result: Interest[] = [];
+
+    for (let category in interests) {
+      // select only valid interest description
+      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      for (let interest of interests[category]) {
+        const addedInterest = await Interest.findOne({ where: { description: interest } })
+
+        // skip if interest not found
+        if (!addedInterest) {
+          continue;
+        }
+
+        await this.addInterest(addedInterest);
+        result.push(addedInterest);
       }
+
     }
+    return result;
   }
 
   /**
@@ -159,8 +173,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include: 'interests' });
+    return await User.findOne({ where: { id: userId }, include: 'interests' });
   }
+
+
 
   //Method for finding a relation attached here to minimize hassle
   /**A method to check if the current user has a relationship with the user with specified id.
@@ -322,6 +338,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return user;
   }
 
+
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
@@ -332,11 +349,46 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @param {string} attrs.description - A description of the team
    * @returns
    */
+
   public createTeams(attrs: TeamCreationAttrs) {
     return this.createTeam({
       name: attrs.name,
       description: attrs.description,
     });
+  }
+
+  // public addRequest!: BelongsToManyAddAssociationMixin<IsMember, Team>;
+  // public getRequest!: BelongsToManyGetAssociationsMixin<Team>;
+
+  public async requestToJoin(team: Team) {
+    await IsMember.create({
+      teamName: team.name,
+      userId: this.id,
+      status: TeamStatus.Pending,
+      sender: 'user',
+    });
+  }
+
+  // the team(s) that created by myself + the team(s) that I belongs to
+  public async getMyTeams(): Promise<Team[]> {
+    let teams: Team[] = [];
+    const myOwnTeams = await Team.findAll({ where: { creatorId: this.id } });
+    if (myOwnTeams && myOwnTeams.length > 0) {
+      teams = teams.concat(myOwnTeams);
+    }
+
+    // this find all except the creator himself
+    const isMembers = await IsMember.findAll({
+      where: { userId: this.id, status: TeamStatus.Accept },
+    });
+
+    for (let i = 0; i < isMembers.length; i++) {
+      let team = await Team.findOne({ where: { name: isMembers[i].teamName } });
+      if (team) {
+        teams.push(team);
+      }
+    }
+    return teams;
   }
 
   public toJSON(): IUserResponse {

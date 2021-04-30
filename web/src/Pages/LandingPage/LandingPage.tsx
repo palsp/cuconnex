@@ -35,28 +35,25 @@ const LandingPage: React.FC<Props> = (props) => {
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData);
-    setMyTeamLists(teamData.data);
+    console.log("fetchTeamHandler", teamData.data);
+    setMyTeamLists(teamData.data.teams);
   };
   const hamburgerClickedHandler = () => {
     setClickHamburger(!clickHamburger);
   };
-  useEffect(() => {
-    fetchTeamHandler();
-  }, []);
-  const hasTeam = false;
-  // if (myTeamLists.length > 0) {
-  //   hasTeam = true;
-  // }
+  let hasTeam = false;
+  if (myTeamLists.length > 0) {
+    hasTeam = true;
+  }
   console.log(hasTeam);
   let cssArray = [classes.content];
   if (!hasTeam) cssArray = [classes.flexDiv];
 
   let marginHeight;
   if (window.innerHeight > 800) {
-    marginHeight = window.innerHeight*0.25;
+    marginHeight = window.innerHeight * 0.25;
   } else {
-    marginHeight = window.innerHeight*0.15;
+    marginHeight = window.innerHeight * 0.15;
   }
 
   const LandingPrompt = !clickHamburger ? (
@@ -85,7 +82,7 @@ const LandingPage: React.FC<Props> = (props) => {
           <Hamburger />
         </div>
       </div>
-      <div className={classes.heroDiv} style={{ marginTop: marginHeight }}>
+      <div className={classes.heroDiv}>
         <LandingHero userData={userData} hasTeam={hasTeam} />
       </div>
     </div>

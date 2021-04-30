@@ -8,20 +8,26 @@ import CreateTeamPrompt from "../CreateTeamPrompt/CreateTeamPrompt";
 import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
-import { IUser, IUserFriend } from "@src/models";
+import { IEventData, IUser, IUserFriend } from "@src/models";
 import { fetchFriendsDataAPI } from "@src/api";
+import SelectEventPrompt from "../SelectEventPrompt/SelectEventPrompt";
 
-const SelectMemberPrompt: React.FC = () => {
+interface Props {
+  event?: IEventData;
+}
+const SelectMemberPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(true);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(false);
-  const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
+  const [clickSelectEvent, setClickSelectEvent] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
-  const [selectedMemberArray, setSelectedMemberArray] = useState< IUserFriend[]>(
+  const [selectedMemberArray, setSelectedMemberArray] = useState<IUserFriend[]>(
     []
   );
   const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
-    fetchFriendsHandler().then((value: IUserFriend[] | []) => setFriendLists(value));
+    fetchFriendsHandler().then((value: IUserFriend[] | []) =>
+      setFriendLists(value)
+    );
   }, []);
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -31,10 +37,10 @@ const SelectMemberPrompt: React.FC = () => {
   const inviteClickedHandler = () => {
     setClickSelectMember(false);
     setClickCreateTeam(true);
-    setClickSelectScope(false);
+    setClickSelectEvent(false);
   };
   const backClickedHandler = () => {
-    setClickSelectScope(true);
+    setClickSelectEvent(true);
     setClickSelectMember(false);
     setClickCreateTeam(false);
   };
@@ -114,7 +120,7 @@ const SelectMemberPrompt: React.FC = () => {
       <CreateTeamPrompt members={selectedMemberArray} />
     ) : (
       <div>
-        <CreateTeamPage />
+        <SelectEventPrompt />
       </div>
     );
 

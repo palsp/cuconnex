@@ -36,6 +36,13 @@ export interface ITeam {
   description: string;
   lookingForMembers: boolean;
 }
+export interface IFetchTeam {
+  name: string; // team name
+  members:IUser[];
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
+}
 
 export interface ISearchUserTeamEventResult {
   users: IUser[];
@@ -102,15 +109,19 @@ export interface ICreateUserData {
   role: string;
 }
 
+export interface IFetchTeam {
+  teams: ITeam[];
+}
+
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }
 //events
 export interface IFetchEventsData {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IFetchEventsDataResult {
-  events: [IEventData];
+  events: IEventData[];
 }
 export interface IEventData {
   "event-name": string;
@@ -167,10 +178,23 @@ export interface IInviteDataResult {
 export interface ICallTeamOfUser {
   teams: ITeam[];
 }
+export interface IUserRequest {
+  teamName: string;
+}
+export interface IUserRequestResponse {
+  Member: IUser;
+}
 
 export interface IUserResponse {
   teamName: string;
   newStatusFromUser: string;
+}
+export interface IFetchUserRequestTeam {
+  teams: IFetchTeam[];
+}
+export interface IUserRelationTeam {
+  status: string;
+  sender: string;
 }
 
 export enum FacultyListsEnum {
@@ -206,6 +230,12 @@ export interface IFetchFriendNotification {
 }
 export interface IFetchFriendReceivedNotification {
   requests: IUserFriend[];
+}
+export interface IFetchOutgoingTeamNotification {
+  outgoingRequests: {
+    teamName: string;
+    pendingUsers: IUser[];
+  };
 }
 
 //Search

@@ -61,6 +61,9 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEdit(true);
   };
 
+  const goBackPreviousPageHandler = () => {
+    props.history.goBack();
+  };
   const fetchRelationHandler = async (userId: string) => {
     const relationResult = await fetchRelationAPI(userId);
     console.log(relationResult.data.status);
@@ -107,9 +110,7 @@ const ProfilePage: React.FC<Props> = (props) => {
       <div className={classes.profile}>
         <div className={classes.header}>
           <div
-            onClick={() => {
-              props.history.goBack();
-            }}
+            onClick={goBackPreviousPageHandler}
             className={classes.relativeArrow}
           >
             <ArrowLeft data-test="profile-page-arrow-left" />

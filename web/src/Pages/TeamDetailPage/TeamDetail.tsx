@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
 import { Heading } from "@dumbComponents/UI/index";
@@ -12,9 +12,15 @@ import {
 import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 import { motion } from "framer-motion";
 
-import containerVariants from "@src/models/models";
+import containerVariants, { IUser, IUserRequest } from "@src/models/models";
 import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
+import {
+  fetchTeamMembersAPI,
+  fetchTeamOutgoingNotificationAPI,
+  userTeamRelationAPI,
+  userTeamRequestAPI,
+} from "@src/api";
 
 interface Props {
   location: {
@@ -28,6 +34,36 @@ interface Props {
 }
 
 const TeamDetail: React.FC<Props> = (props) => {
+  const [teamMembers, setTeamMembers] = useState<IUser[] | []>([]);
+  const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
+  const [relation, setRelation] = useState<string>("");
+  useEffect(() => {
+    fetchOutgoingTeamNotiHandler();
+    fetchTeamMembersHandler();
+    fetchRelationHandler();
+  }, []);
+  const myTeamName = props.location.state.team.name;
+  const fetchOutgoingTeamNotiHandler = async () => {
+    const teamOutgoingNotiData = await fetchTeamOutgoingNotificationAPI(
+      myTeamName
+    );
+    console.log(
+      "SUCCESS pendingMember",
+      teamOutgoingNotiData.data.outgoingRequests.pendingUsers
+    );
+    setPendingMembers(teamOutgoingNotiData.data.outgoingRequests.pendingUsers);
+  };
+  const fetchTeamMembersHandler = async () => {
+    const teamMembersData = await fetchTeamMembersAPI(myTeamName);
+    console.log("SUCCESS members =", teamMembersData.data.users);
+    setTeamMembers(teamMembersData.data.users);
+  };
+  const fetchRelationHandler = async () => {
+    const relationData = await userTeamRelationAPI(myTeamName);
+    console.log("SUCCESS relation =", relationData.data);
+    setRelation(relationData.data.status);
+  };
+  console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
   // Is user be team owner ?
   let isTeamOwner = false;
@@ -36,6 +72,10 @@ const TeamDetail: React.FC<Props> = (props) => {
   }
   // Is team already exist ? (create team process)
   const isTeamExist = true;
+
+  const goBackPreviousPageHandler = () => {
+    props.history.goBack();
+  };
 
   return (
     <motion.div
@@ -48,7 +88,7 @@ const TeamDetail: React.FC<Props> = (props) => {
       <div className={classes.header}>
         {isTeamExist ? (
           <div
-            onClick={() => props.history.goBack()}
+            onClick={goBackPreviousPageHandler}
             className={classes.relativeArrow}
           >
             <ArrowLeft data-test="team-detail-page-arrow-left" />
@@ -74,6 +114,7 @@ const TeamDetail: React.FC<Props> = (props) => {
         <div className={classes.profileInfo}>
           {/* <TeamInfo name="Suki Tee Noi" isTeamOwner={isTeamOwner} /> */}
           <TeamInfo
+            status={relation}
             name={props.location.state.team.name}
             isTeamOwner={isTeamOwner}
           />
@@ -85,7 +126,7 @@ const TeamDetail: React.FC<Props> = (props) => {
       </div>
 
       <div className={classes.memberpic}>
-        <MemberPicList />
+        <MemberPicList members={teamMembers} pendingMembers={pendingMembers} />
       </div>
 
       <div className={classes.activity}>
