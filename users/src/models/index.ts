@@ -9,8 +9,9 @@ import { Connection } from './connection.model';
 import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
+import { Rating } from './rating.model';
 
-export { User, Interest, UserInterest, Category, Team, IsMember };
+export { User, Interest, UserInterest, Category, Team, IsMember, Rating };
 
 
 
@@ -26,7 +27,15 @@ export const autoMigrate = (sequelize: Sequelize) => {
   IsMember.autoMigrate(sequelize);
   Connection.autoMigrate(sequelize);
   Recommend.autoMigrate(sequelize);
+  Rating.autoMigrate(sequelize);
 
+  // Rating M-M user
+  User.belongsToMany(User, {
+    as: 'rating',
+    through: Rating,
+    foreignKey: 'raterId',
+    otherKey: 'rateeId',
+  })
 
   // M-M user and interest
   User.belongsToMany(Interest, {
