@@ -9,7 +9,15 @@
   flex-direction: column;
 }
 
-.content .heroDiv {
+.circle_overlay {
+  position: absolute;
+  z-index: -1;
+  background: white;
+  opacity: 0.5;
+  border-radius: 50%;
+  width: 250%;
+  height: 100%;
+  bottom: -33%;
 }
 
 .content .searchDiv {

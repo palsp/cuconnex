@@ -110,6 +110,13 @@ const LandingPage: React.FC<Props> = (props) => {
     >
       <Background>
         <div>{LandingPrompt}</div>
+        <motion.div 
+        animate={{ rotate: 180 }}
+        transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+        style={{ bottom: marginHeight }}
+        className={classes.circle_overlay}
+        data-test="landing-hero-halfcircleoverlay"
+      ></motion.div>
       </Background>
     </motion.div>
   );
