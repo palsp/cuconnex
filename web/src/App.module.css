@@ -4,3 +4,7 @@
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch; /* enables “momentum” (smooth) scrolling */
 }
+
+.mainContainer > div {
+  height: 100%;
+}
