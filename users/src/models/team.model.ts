@@ -116,16 +116,18 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
         isMember.status = TeamStatus.Accept;
         await isMember.save();
       }
+      return;
     }
 
-    await this.addMember(user);
-
-    const newIsMember = await IsMember.findOne({ where: { teamName: this.name, userId: user.id } });
+    const newIsMember = await IsMember.create({
+      teamName: this.name,
+      userId: user.id,
+      status: TeamStatus.Accept,
+      sender: 'team',
+    });
     if (!newIsMember) {
       throw new BadRequestError('IsMember db went wrong');
     }
-    newIsMember.status = TeamStatus.Accept;
-    await newIsMember.save();
 
     return;
   }
@@ -146,11 +148,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   }
 
   public async getIncomingRequests(): Promise<ITeamRequestResponse> {
-    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'user' } });
-
-    if (!isMembers || isMembers.length < 1) {
-      throw new BadRequestError('This team has no incoming request from any user.');
-    }
+    const isMembers = await IsMember.findAll({
+      where: { teamName: this.name, status: TeamStatus.Pending, sender: 'user' },
+    });
 
     let pendingUsers: IUserResponse[] = [];
     for (let i = 0; i < isMembers.length; i++) {
@@ -167,17 +167,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   }
 
   public async getOutgoingRequests(): Promise<ITeamRequestResponse> {
-    // const membersWithAllStatus: User[] = await this.getMember();
-
-    const isMembers = await IsMember.findAll({ where: { teamName: this.name, sender: 'team' } });
-
-    if (!isMembers || isMembers.length < 1) {
-      throw new BadRequestError('This team has no pending request to any user.');
-    }
-
-    // if (!membersWithAllStatus || membersWithAllStatus.length < 1) {
-    //   throw new BadRequestError('This team has no member');
-    // }
+    const isMembers = await IsMember.findAll({
+      where: { teamName: this.name, status: TeamStatus.Pending, sender: 'team' },
+    });
 
     let pendingUsers: IUserResponse[] = [];
     for (let i = 0; i < isMembers.length; i++) {
