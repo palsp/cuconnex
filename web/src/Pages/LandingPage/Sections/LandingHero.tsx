@@ -19,6 +19,9 @@ import { UserContext } from "@context/UserContext";
 interface Props {
   hasTeam: boolean;
   userData: IUser;
+  pageHeight: {
+    height: string;
+  };
 }
 
 const LandingHero: React.FC<Props> = (props) => {
@@ -68,7 +71,7 @@ const LandingHero: React.FC<Props> = (props) => {
       <motion.div
         animate={{ rotate: 180 }}
         transition={{ ease: "linear", duration: 4, repeat: Infinity }}
-        style={{ bottom: marginHeight }}
+        style={{ bottom: marginHeight, position: "absolute" }}
         className={classes.circle_overlay}
         data-test="landing-hero-halfcircleoverlay"
       ></motion.div>
