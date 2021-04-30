@@ -1,16 +1,20 @@
-import { Model, Optional, Sequelize, DataTypes } from 'sequelize';
+import { Model, Sequelize, DataTypes } from 'sequelize';
 import { TableName } from './types';
 
 interface RatingAttrs {
 	raterId: string;
 	rateeId: string;
 	rating: number;
+	version?: any;
 }
 
-interface RatingCreationAttrs
-	extends Optional<RatingAttrs, 'raterId' | 'rateeId'> {}
+interface RatingCreationAttrs {
+	raterId: string;
+	rateeId: string;
+	rating?: number;
+}
 
-export class Rating
+class Rating
 	extends Model<RatingAttrs, RatingCreationAttrs>
 	implements RatingAttrs {
 	public raterId!: string;
@@ -29,7 +33,8 @@ export class Rating
 					primaryKey: true,
 				},
 				rating: {
-					type: DataTypes.DOUBLE(),
+					type: DataTypes.DOUBLE(1, 1),
+					defaultValue: 0,
 					allowNull: false,
 				},
 			},
@@ -41,3 +46,5 @@ export class Rating
 		);
 	}
 }
+
+export { Rating };
