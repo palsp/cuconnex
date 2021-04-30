@@ -63,7 +63,7 @@ router.post(
   requireUser,
   requestToJoinTeamValidator,
   validateRequest,
-  userController.requetToJoinTeam
+  userController.requestToJoinTeam
 );
 
 export { router as userRouter };
