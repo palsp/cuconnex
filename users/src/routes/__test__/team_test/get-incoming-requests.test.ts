@@ -80,9 +80,18 @@ describe('Get Outgoing Requests', () => {
       .send({})
       .expect(200);
 
-    // console.log(res.body.incomingRequests.pendingUsers);
     expect(res.body.incomingRequests.teamName).toEqual(team.name);
     expect(res.body.incomingRequests.pendingUsers.length).toEqual(1);
     expect(res.body.incomingRequests.pendingUsers[0].id).toEqual(user2.id);
+
+    await team.add(user2);
+
+    const res2 = await request(app)
+      .get('/api/teams/incoming-requests/testTeam')
+      .set('Cookie', global.signin(user.id))
+      .send({})
+      .expect(200);
+
+    expect(res2.body.incomingRequests.pendingUsers.length).toEqual(0);
   });
 });
