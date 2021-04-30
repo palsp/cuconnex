@@ -4,6 +4,7 @@ export enum TableName {
   users = 'users',
   interests = 'interests',
   connections = 'connections',
+  recommendations = 'recommendations',
   isMembers = 'isMembers',
   userInterest = 'userInterests',
   category = 'categories',

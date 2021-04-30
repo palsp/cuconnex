@@ -12,10 +12,8 @@ import {
 } from 'sequelize';
 import {
   BadRequestError,
-  NotFoundError,
   TeamStatus,
   FriendStatus,
-  Description,
   faculty,
   getCurrentYear,
   getYearFromId,
@@ -30,6 +28,7 @@ import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
 import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
+import { Recommend } from './recommend.model';
 
 // All attributes in user model
 interface UserAttrs {
@@ -45,6 +44,7 @@ interface UserAttrs {
   friends?: User[];
   Connection?: Connection;
   IsMember?: IsMember;
+  Recommend? : Recommend;
 }
 
 interface UserCreationAttrs {
@@ -70,6 +70,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public Interests?: Interest[];
   public Connection?: Connection;
   public IsMember?: IsMember;
+  public Recommend? : Recommend;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -133,9 +134,11 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>;
-  public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
+  public addConnection!: BelongsToManyAddAssociationMixin<User, { through : {status: FriendStatus }}>;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
+  public getRecommendation! : BelongsToManyGetAssociationsMixin<User>;
+  public addRecommendation!: BelongsToManyAddAssociationMixin<User , { through : { score : number}}>
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
@@ -400,9 +403,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
   public static associations: {
     interests: Association<Interest>;
-    friend: Association<User, User>;
+    connection: Association<User, User>;
     teams: Association<User, Team>;
     member: Association<User, Team>;
+    recommendation : Association < User,User>
   };
 }
 
