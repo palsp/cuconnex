@@ -1,6 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
+import { Event } from './models';
 import { natsWrapper, EventCreatedSub } from './nats';
 
 
@@ -43,7 +44,7 @@ if (!process.env.NATS_CLUSTER_ID) {
 
 const start = async () => {
   // check if all required env variable have been declared
-  validateEnvAttr();
+  // validateEnvAttr();
 
   try {
 

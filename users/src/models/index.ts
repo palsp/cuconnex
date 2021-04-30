@@ -9,8 +9,9 @@ import { Connection } from './connection.model';
 import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
+import { Event } from './event.model';
 
-export { User, Interest, UserInterest, Category, Team, IsMember };
+export { User, Interest, UserInterest, Category, Team, IsMember , Event};
 
 
 
@@ -20,6 +21,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
   // -------------------- User and Interest -----------------------------------
   User.autoMigrate(sequelize);
   Interest.autoMigrate(sequelize);
+  Event.autoMigrate(sequelize);
   Team.autoMigrate(sequelize);
   Category.autoMigrate(sequelize);
   UserInterest.autoMigrate(sequelize);
