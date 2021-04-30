@@ -1,7 +1,5 @@
-import { Technology } from '@cuconnex/common';
 import { app } from './app';
 import { initializeDB } from './db';
-import { Interest, User } from './models';
 import { startDB } from './models/initDB';
 import { natsWrapper, EventCreatedSub } from './nats';
 
@@ -45,7 +43,7 @@ if (!process.env.NATS_CLUSTER_ID) {
 
 const start = async () => {
   // check if all required env variable have been declared
-  // validateEnvAttr();
+  validateEnvAttr();
 
   try {
 

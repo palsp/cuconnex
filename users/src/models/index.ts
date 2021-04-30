@@ -6,10 +6,15 @@ import { Interest } from './interest.model';
 import { UserInterest } from './UserInterest.model';
 import { Category } from './category.model';
 import { Connection } from './connection.model';
+import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
 
 export { User, Interest, UserInterest, Category, Team, IsMember };
+
+
+
+// TODO: add version key
 
 export const autoMigrate = (sequelize: Sequelize) => {
   // -------------------- User and Interest -----------------------------------
@@ -20,6 +25,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
   UserInterest.autoMigrate(sequelize);
   IsMember.autoMigrate(sequelize);
   Connection.autoMigrate(sequelize);
+  Recommend.autoMigrate(sequelize);
 
 
   // M-M user and interest
@@ -47,8 +53,19 @@ export const autoMigrate = (sequelize: Sequelize) => {
   });
 
   // -------------------- User and User -----------------------------------
+  //Define relation for Recommendation
+ 
+
+  User.belongsToMany(User, {
+    as: 'recommendation',
+    through: Recommend,
+    foreignKey: 'userId',
+    otherKey: 'recommenderId',
+  });
 
 
+
+  // define relation for connection
   User.belongsToMany(User, {
     as: 'connection',
     through: Connection,
