@@ -11,7 +11,7 @@ var errorHandling = function (err, req, res, next) {
     // allow developer to debug error
     console.error(err);
     res.status(400).send({
-        errors: [{ message: 'Something Went Wrong' }]
+        errors: [{ message: "Something Went Wrong " + err.message }],
     });
 };
 exports.errorHandling = errorHandling;

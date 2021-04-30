@@ -25,6 +25,12 @@ import {
   ITeamMembers,
   IUserResponse,
   ITeam,
+  IFetchTeam,
+  IFetchOutgoingTeamNotification,
+  IUserRequest,
+  IUserRequestResponse,
+  IFetchUserRequestTeam,
+  IUserRelationTeam,
 } from "@src/models";
 
 //Auth Services
@@ -84,6 +90,8 @@ const createTeamAPI = async (
     "/api/teams",
     teamCreatedData
   );
+  console.log("eiei111", createTeamData);
+
   return createTeamData;
 };
 
@@ -92,6 +100,7 @@ const teamInvitationAPI = async (
 ): Promise<AxiosResponse<IInviteDataResult>> => {
   const invitedUsersData: AxiosResponse<IInviteDataResult> = await axios.post(
     "/api/teams/invite-member",
+
     invitedData
   );
   return invitedUsersData;
@@ -104,18 +113,10 @@ const fetchTeamDataAPI = async (
   );
   return teamDetailsData;
 };
-const fetchTeamMembersAPI = async (
-  teamName: string
-): Promise<AxiosResponse<ITeamMembers>> => {
-  const teamMembersData: AxiosResponse<ITeamMembers> = await axios.post(
-    `/api/teams/members/${teamName}`
-  );
-  return teamMembersData;
-};
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<ITeam[]>> => {
-  const calledResult: AxiosResponse<ITeam[]> = await axios.get(
+): Promise<AxiosResponse<IFetchTeam>> => {
+  const calledResult: AxiosResponse<IFetchTeam> = await axios.get(
     `/api/users/teams/${userId}`
   );
 
@@ -161,6 +162,15 @@ const fetchTeamNotificationAPI = async (): Promise<
 
   return teamNotificationData;
 };
+const fetchTeamOutgoingNotificationAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchOutgoingTeamNotification>> => {
+  const teamOutgoingNotificationData: AxiosResponse<IFetchOutgoingTeamNotification> = await axios.get(
+    `/api/teams/outgoing-requests/${teamName}`
+  );
+
+  return teamOutgoingNotificationData;
+};
 const fetchFriendNotificationAPI = async (): Promise<
   AxiosResponse<IFetchFriendNotification>
 > => {
@@ -187,6 +197,15 @@ const fetchRelationAPI = async (
   );
 
   return relationResult;
+};
+const fetchTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<ITeamMembers>> => {
+  const teamMembersResult: AxiosResponse<ITeamMembers> = await axios.get(
+    `/api/teams/members/${teamName}`
+  );
+
+  return teamMembersResult;
 };
 const fetchFriendsDataAPI = async (): Promise<
   AxiosResponse<IFetchFriendsData>
@@ -224,6 +243,32 @@ const responseTeamInvitationAPI = async (
   );
   return responseData;
 };
+const userTeamRequestAPI = async (
+  requestData: IUserRequest
+): Promise<AxiosResponse<IUserRequestResponse>> => {
+  const userData: AxiosResponse<IUserRequestResponse> = await axios.post(
+    "/api/users/request-to-join",
+    requestData
+  );
+  return userData;
+};
+const userTeamRelationAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IUserRelationTeam>> => {
+  const relationData: AxiosResponse<IUserRelationTeam> = await axios.get(
+    `/api/users/status/${teamName}`
+  );
+  return relationData;
+};
+const fetchUserTeamRequestAPI = async (): Promise<
+  AxiosResponse<IFetchUserRequestTeam>
+> => {
+  const teamData: AxiosResponse<IFetchUserRequestTeam> = await axios.get(
+    "/api/users/get-my-requests"
+  );
+
+  return teamData;
+};
 
 export {
   fetchUserDataAPI,
@@ -247,4 +292,8 @@ export {
   fetchTeamDataAPI,
   fetchTeamMembersAPI,
   responseTeamInvitationAPI,
+  fetchTeamOutgoingNotificationAPI,
+  userTeamRequestAPI,
+  fetchUserTeamRequestAPI,
+  userTeamRelationAPI,
 };

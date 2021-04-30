@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-import { motion, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { useNavigation } from "framer";
 import { ITeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
@@ -25,14 +25,22 @@ const LandingHero: React.FC<Props> = (props) => {
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const { userData } = useContext(UserContext);
 
+  let marginHeight;
+  if (window.innerHeight > 800) {
+    marginHeight = -(window.innerHeight * 0.8);
+  } else {
+    marginHeight = -(window.innerHeight * 0.9);
+  }
+
   useEffect(() => {
     fetchTeamHandler();
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData);
-    setCurrentTeamLists(teamData.data);
+    setCurrentTeamLists(teamData.data.teams);
   };
+
   const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={currentTeamLists} />
@@ -57,6 +65,13 @@ const LandingHero: React.FC<Props> = (props) => {
           <FindteamLogo />
         </Link>
       </div>
+      <motion.div
+        animate={{ rotate: 180 }}
+        transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+        style={{ bottom: marginHeight }}
+        className={classes.circle_overlay}
+        data-test="landing-hero-halfcircleoverlay"
+      ></motion.div>
     </div>
   );
 
@@ -65,7 +80,7 @@ const LandingHero: React.FC<Props> = (props) => {
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
           <Link to={{ pathname: "/profile", state: { users: props.userData } }}>
-            <ProfilePic size="small" PicUrl={props.userData.image} />
+            <ProfilePic size="smallMedium" PicUrl={props.userData.image} />
           </Link>
         </div>
         <div className={classes.subupperpartDiv}>

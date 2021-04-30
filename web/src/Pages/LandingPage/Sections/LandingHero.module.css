@@ -26,8 +26,7 @@
 }
 
 .welcome {
-  margin-top: -2%;
-  margin-left: 4%;
+  margin-top: 10%;
 }
 
 .headingDiv {
@@ -55,6 +54,15 @@
   size: 100%;
 }
 
+.circle_overlay {
+  position: absolute;
+  background: white;
+  opacity: 0.8;
+  border-radius: 50%;
+  width: 250%;
+  height: 100%;
+}
+
 .myteamDiv {
   margin-top: 10%;
 }
@@ -67,9 +75,9 @@
   opacity: 0.6;
   border-radius: 20px;
   margin-bottom: 5%;
-  -webkit-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-  -moz-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-  box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  -webkit-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
   overflow: hidden;
 }
 

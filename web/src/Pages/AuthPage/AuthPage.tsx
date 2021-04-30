@@ -50,17 +50,22 @@ const AuthPage: React.FC = () => {
 
   const routeRedirect = redirect ? <Redirect to="/landing" /> : null;
 
-  let animateHeight = window.innerHeight;
-  if (window.innerHeight < 750) {
-    animateHeight = -(window.innerHeight * 0.25);
-  } else if (window.innerHeight > 750) {
-    animateHeight = -(window.innerHeight * 0.05);
-  }
+  // let animateHeight = window.innerHeight;
+  // if (window.innerHeight < 750) {
+  //   animateHeight = -(window.innerHeight * 0.25);
+  // } else if (window.innerHeight > 750) {
+  //   animateHeight = -(window.innerHeight * 0.05);
+  // }
+
+  const variants = {
+    visible: { y: 0 },
+    hidden: { y: 100 },
+  };
 
   const authPrompt =
     clickSignup === true ? (
       <motion.div
-        animate={{ y: animateHeight }}
+        // animate={{ y: animateHeight }}
         transition={{
           type: "spring",
           delay: 0,
@@ -68,13 +73,16 @@ const AuthPage: React.FC = () => {
           damping: 29,
           mass: 3.3,
         }}
+        initial="hidden"
+        animate="visible"
+        variants={variants}
         className={classes.signupPrompt}
       >
         <div className={classes.logo}>
           <Logo data-test="auth-page-logo" />
         </div>
         <motion.div
-          animate={{ y: -60 }}
+          // animate={{ y: -60 }}
           transition={{
             type: "spring",
             delay: 0,
@@ -82,6 +90,9 @@ const AuthPage: React.FC = () => {
             damping: 29,
             mass: 3.3,
           }}
+          initial="hidden"
+          animate="visible"
+          variants={variants}
           className={classes.circle_overlay}
         ></motion.div>
         <SignupPrompt
@@ -91,7 +102,7 @@ const AuthPage: React.FC = () => {
       </motion.div>
     ) : clickLogin === true ? (
       <motion.div
-        animate={{ y: animateHeight * 0.75 }}
+        // animate={{ y: animateHeight * 0.75 }}
         transition={{
           type: "spring",
           delay: 0,
@@ -99,13 +110,16 @@ const AuthPage: React.FC = () => {
           damping: 29,
           mass: 3.3,
         }}
+        initial="hidden"
+        animate="visible"
+        variants={variants}
         className={classes.loginPrompt}
       >
         <div className={classes.logo}>
           <Logo />
         </div>
         <motion.div
-          animate={{ y: -100 }}
+          // animate={{ y: -100 }}
           transition={{
             type: "spring",
             delay: 0,
@@ -114,6 +128,9 @@ const AuthPage: React.FC = () => {
             mass: 3.3,
             // duration: 2, repeat: Infinity
           }}
+          initial="hidden"
+          animate="visible"
+          variants={variants}
           className={classes.circle_overlay}
         ></motion.div>
         <LoginPrompt

@@ -32,7 +32,6 @@ describe('Get Outgoing Requests', () => {
 
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
-    await team.addAndAcceptMember(user);
 
     const user2 = await User.create({
       id: '6131773621',
@@ -94,10 +93,9 @@ describe('Get Outgoing Requests', () => {
 
     await user.addInterest(interest!);
     const team = await user.createTeams({ name: 'testTeam', description: '' });
-    await team.addAndAcceptMember(user);
 
-    await team.inviteMember(user2);
-    await team.inviteMember(user3);
+    await team.invite(user2);
+    await team.invite(user3);
 
     const res = await request(app)
       .get('/api/teams/outgoingrequests/testTeam')
@@ -106,13 +104,7 @@ describe('Get Outgoing Requests', () => {
       .expect(200);
 
     expect(res.body.teamName).toEqual(team.name);
-    expect(res.body.outGoingRequests[0].user.id).toEqual(user2.id);
-    expect(res.body.outGoingRequests[0].status).toEqual(TeamStatus.Pending);
-
-    expect(res.body.outGoingRequests[1].user.id).toEqual(user.id);
-    expect(res.body.outGoingRequests[1].status).toEqual(TeamStatus.Accept);
-
-    expect(res.body.outGoingRequests[2].user.id).toEqual(user3.id);
-    expect(res.body.outGoingRequests[2].status).toEqual(TeamStatus.Pending);
+    expect(res.body.pendingUsers[0].id).toEqual(user2.id);
+    expect(res.body.pendingUsers[1].id).toEqual(user3.id);
   });
 });

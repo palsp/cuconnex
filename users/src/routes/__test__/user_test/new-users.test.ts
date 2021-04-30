@@ -119,7 +119,8 @@ it('should create user successfully with optional field', async () => {
     role: 'developer',
     bio: 'I am the best programmer in the world',
   };
-  const { body } = await request(app)
+
+  await request(app)
     .post('/api/users')
     .set('Cookie', global.signin(id))
     .send({
@@ -138,4 +139,4 @@ it('should create user successfully with optional field', async () => {
   expect(saveUser!.bio).toEqual(user.bio);
 });
 
-it.todo('add interest by category');
+// it.todo('add interest by category');

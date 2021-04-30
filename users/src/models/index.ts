@@ -19,7 +19,6 @@ export const autoMigrate = (sequelize: Sequelize) => {
   Team.autoMigrate(sequelize);
   Category.autoMigrate(sequelize);
 
-
   const userInterest = sequelize.define(TableName.userInterest, {}, { timestamps: false });
   // M-M user and interest
   User.belongsToMany(Interest, {
@@ -80,6 +79,10 @@ export const autoMigrate = (sequelize: Sequelize) => {
         values: Object.values(TeamStatus),
         defaultValue: TeamStatus.Pending,
         allowNull: false,
+      },
+      sender: {
+        type: DataTypes.STRING,
+        defaultValue: 'team',
       },
     },
     { timestamps: false }

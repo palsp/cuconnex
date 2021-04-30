@@ -39,9 +39,8 @@ describe('Get Members', () => {
 
     await user1.addInterest(interest!);
     const team = await user1.createTeams({ name: 'testTeam', description: '' });
-    await team.addAndAcceptMember(user1);
-    await team.inviteMember(user2);
-    await team.inviteMember(user3);
+    await team.invite(user2);
+    await team.invite(user3);
 
     const res = await request(app)
       .get(`/api/teams/members/${team.name}`)
