@@ -1,12 +1,8 @@
 .appBackground {
-  position: relative;
   width: 100%;
   min-height: 100%;
   display: flex;
   justify-content: center;
-  overflow: hidden;
-  top: 0;
-  left: 0;
   background: linear-gradient(
     335deg,
     #ffc2db 0%,

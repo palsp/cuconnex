@@ -87,8 +87,26 @@ const ExplorePage = () => {
       </div>
     </>
   );
+
+  const variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  };
   return (
-    <motion.div variants={containerVariants} exit="exit">
+    <motion.div
+      variants={variants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+    >
       {/* <Background> */}
       {/* Background has display: flex so this div is for that */}
       <div>
