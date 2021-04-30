@@ -34,11 +34,11 @@ const LandingPage: React.FC<Props> = (props) => {
   const { setErrorHandler } = useContext(ErrorContext);
   const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
   const { userData } = useContext(UserContext);
-  const [heightStyle, setHeightStyle] = useState({});
+  const [menuHeightStyle, setMenuHeightStyle] = useState({ height: "" });
 
   useEffect(() => {
     fetchTeamHandler();
-    setHeightStyle({ height: `${window.innerHeight - 80}px` });
+    setMenuHeightStyle({ height: `${window.innerHeight - 80}px` });
   }, []);
 
   const fetchTeamHandler = async () => {
@@ -46,16 +46,11 @@ const LandingPage: React.FC<Props> = (props) => {
     console.log("fetchTeamHandler", teamData.data);
     setMyTeamLists(teamData.data.teams);
   };
-  const hamburgerClickedHandler = () => {
-    setDisplayHamburgerMenu((prev) => !prev);
-  };
   let hasTeam = false;
   if (myTeamLists.length > 0) {
     hasTeam = true;
   }
   console.log(hasTeam);
-  let cssArray = [classes.content];
-  if (!hasTeam) cssArray = [classes.flexDiv];
 
   let marginHeight;
   if (window.innerHeight > 800) {
@@ -94,7 +89,7 @@ const LandingPage: React.FC<Props> = (props) => {
         animate="visible"
         exit="exit"
       >
-        <div className={classes.hamburgerPrompt} style={heightStyle}>
+        <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
           <HamburgerPrompt />
         </div>
       </motion.div>
@@ -107,11 +102,13 @@ const LandingPage: React.FC<Props> = (props) => {
       exit="exit"
       className={classes.main}
     >
-      <Background>
-        <div className={cssArray.join(" ")}>
-          <div className={classes.heroDiv}>
-            <LandingHero userData={userData} hasTeam={hasTeam} />
-          </div>
+      <Background hasTeam={hasTeam} heightStyle={menuHeightStyle}>
+        <div className={classes.heroDiv}>
+          <LandingHero
+            pageHeight={menuHeightStyle}
+            userData={userData}
+            hasTeam={hasTeam}
+          />
         </div>
       </Background>
     </motion.div>

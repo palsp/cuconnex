@@ -25,6 +25,9 @@ const Heading: React.FC<Props> = (props) => {
     case "small":
       cssArray.push(classes.smallSize);
       break;
+    case "smallMedium":
+      cssArray.push(classes.smallMediumSize);
+      break;
     case "medium":
       cssArray.push(classes.mediumSize);
       break;
