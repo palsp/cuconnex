@@ -35,7 +35,7 @@ const MemberPicList: React.FC<Props> = (props) => {
         </div>
         <div className={classes.piclist}>
           {props.members.map((person: IUser, index: number) => {
-            return <ProfilePic size="mini" key={index} PicUrl={person.image} />;
+            return <ProfilePic size="xs" key={index} PicUrl={person.image} />;
           })}
           <div className={classes.more}>{props.members.length}</div>
         </div>
@@ -47,7 +47,7 @@ const MemberPicList: React.FC<Props> = (props) => {
         </div>
         <div className={classes.piclist}>
           {props.pendingMembers.map((person: IUser, index: number) => {
-            return <ProfilePic size="mini" key={index} PicUrl={person.image} />;
+            return <ProfilePic size="xs" key={index} PicUrl={person.image} />;
           })}
           <div className={classes.more}>{props.pendingMembers.length}</div>
         </div>

@@ -32,7 +32,7 @@ const TeamInfo: React.FC<Props> = (props) => {
       <div className={classes.teamprofile}>
         <div className={classes.flex}>
           <div className={classes.profilePic}>
-            <ProfilePic size="mediumborder" />
+            <ProfilePic size="lwithborder" />
           </div>
         </div>
         <div className={classes.namerole}>
