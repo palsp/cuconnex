@@ -48,7 +48,7 @@ const TeamInfo: React.FC<Props> = (props) => {
       </div>
       {props.isTeamOwner ? (
         <div
-          onClick={() => props.inviteMembersClickedHandler}
+          onClick={() => props.inviteMembersClickedHandler()}
           className={classes.sign}
         >
           <RecruitSign value="Invite member" />
