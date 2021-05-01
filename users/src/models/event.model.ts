@@ -1,5 +1,7 @@
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import { TableName } from './types';
+import { BelongsToManyGetAssociationsMixin } from 'sequelize';
+import { Team } from './team.model';
 
 interface EventAttrs {
   id: number;
@@ -20,6 +22,21 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
   public registration!: boolean;
 
   public version?: number;
+
+  public getCandidate!: BelongsToManyGetAssociationsMixin<Team>;
+
+  public async getMyCandidates(): Promise<Team[]> {
+    const candidates = await this.getCandidate();
+
+    let teams: Team[] = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+      await candidates[i].fetchTeam();
+      teams.push(candidates[i]);
+    }
+
+    return teams;
+  }
 
   public static autoMigrate(sequelize: Sequelize): void {
     Event.init(

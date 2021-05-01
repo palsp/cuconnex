@@ -229,10 +229,18 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
   }
 
-  public async getMyEvents() {
+  public async getMyEvents(): Promise<Event[]> {
     const candidates = await this.getCandidate();
-    console.log('candy', candidates);
+    // console.log('candy', candidates);
     // let connections = await this.getConnection({ include : [Interest]});
+
+    let events: Event[] = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+      events.push(candidates[i]);
+    }
+
+    return events;
   }
 
   public toJSON(): ITeamResponse {
