@@ -51,4 +51,6 @@
 }
 .closeDiv {
   margin-left: 80vw;
+  width: 25px;
+  height: 50px;
 }
