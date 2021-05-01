@@ -23,7 +23,7 @@ describe('Get List of Teams', () => {
     const { user } = await setup();
 
     const res = await request(app)
-      .get(`/api/events/candidates/0`)
+      .get(`/api/teams/events/candidates/0`)
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(404);
@@ -38,7 +38,7 @@ describe('Get List of Teams', () => {
     await team2.register(event);
 
     const res = await request(app)
-      .get(`/api/events/candidates/${event.id}`)
+      .get(`/api/teams/events/candidates/${event.id}`)
       .set('Cookie', global.signin(user.id))
       .send({})
       .expect(200);

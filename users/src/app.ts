@@ -40,7 +40,7 @@ app.use('/api/users', userRouter);
 
 app.use('/api/teams', teamRouter);
 
-app.use('/api/events', eventRouter);
+app.use('/api/teams', eventRouter);
 
 // other handler
 app.use(router.searchRouter);

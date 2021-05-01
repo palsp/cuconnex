@@ -107,7 +107,7 @@ describe('Register Event', () => {
 
     expect(isCandidate!.eventId).toEqual(event.id);
     expect(isCandidate!.teamName).toEqual(team.name);
-    expect(isCandidate!.status).toEqual(true);
+    expect(isCandidate!.isCompete).toEqual(true);
 
     const eiei = await event.getMyCandidates();
     console.log('eiei', eiei);

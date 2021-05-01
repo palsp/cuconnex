@@ -4,7 +4,7 @@ import { TableName } from './types';
 interface CandidateAttrs {
   eventId: number;
   teamName: string;
-  status: boolean;
+  isCompete: boolean;
 }
 
 interface CandidateCreationAttrs {
@@ -15,7 +15,7 @@ interface CandidateCreationAttrs {
 class Candidate extends Model<CandidateAttrs, CandidateCreationAttrs> {
   public eventId!: number;
   public teamName!: string;
-  public status!: boolean;
+  public isCompete!: boolean;
 
   public static autoMigrate(sequelize: Sequelize): void {
     Candidate.init(
@@ -28,7 +28,7 @@ class Candidate extends Model<CandidateAttrs, CandidateCreationAttrs> {
           type: DataTypes.STRING(255),
           primaryKey: true,
         },
-        status: {
+        isCompete: {
           type: DataTypes.BOOLEAN,
           defaultValue: true,
           allowNull: false,
