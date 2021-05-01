@@ -216,18 +216,4 @@ export const getRecommendedUserForTeam = async (req: Request , res : Response) =
 
   res.status(200).send(response)
 
-
-  // if(team!.member){
-  //   for(let m of team!.member){
-  //     const added = await Recommend.CalculateScore(m.id ,"6131886921") 
-  //     meanScore += added;
-  //   }
-  //   meanScore = meanScore / (team!.member.length + 1)
-  // }
-  // console.log(meanScore);
-
-  //TODO: check if request is from members of the team
-
-
-
 }

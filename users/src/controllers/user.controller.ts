@@ -309,3 +309,12 @@ export const getTeamStatus = async (req: Request, res: Response) => {
   const response: IIsMemberResponse = await user.getMyStatusWith(team);
   res.status(200).send(response);
 };
+
+
+export const getRecommendTeam = async (req : Request , res : Response) => {
+    const { eventId } = req.body;
+
+
+
+
+}

@@ -72,11 +72,9 @@ const start = async () => {
     await startDB();
 
     await init();
-
-    const coding = await Interest.findOne({ where : { description : Technology.Coding}});
     
-    const like  = await coding!.getLike()
-    console.log("🚀 ~ file: index.ts ~ line 79 ~ start ~ like", like)
+
+
     
     const team = await Team.findOne({ where : { name : "test_team_0"} , include : ['owner' , 'member']});
 
@@ -97,11 +95,17 @@ const start = async () => {
     result.sort((a , b) => a - b);
     console.log(result)
 
+    const coding = await Interest.findOne({ where : { description : Technology.Coding}});
+
+    await coding!.getLike()
+
+
 
     // const recommend = await Recommend.findOne({ where : { userId : team!.owner!.id , recommenderId : "6131886921"}}) 
     // let meanScore = recommend ? recommend.score : 0 ;
 
     // if(team!.member){
+    console.log("🚀 ~ file: index.ts ~ line 108 ~ start ~     await coding!.getLike()",     await coding!.getLike())
     //   for(let m of team!.member){
     //     const recommend = await Recommend.findOne({ where : { userId : m.id , recommenderId : "6131886921"}}) 
     //     const added =  recommend ? recommend.score : 0 ;
