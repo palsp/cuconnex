@@ -179,6 +179,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
         </div>
         <div className={classes.memberListsDiv}>
           <MemberListsForPrompt
+            team={props.teams}
             memberlist={friendsNotInTeam}
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
