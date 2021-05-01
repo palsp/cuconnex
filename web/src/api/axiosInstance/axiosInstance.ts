@@ -1,13 +1,13 @@
 import axios from "axios";
 
- const token =
- "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYzMjEiLCJpYXQiOjE2MTk3OTc0MTJ9.BeMcj-CogN3IewAwd7ekZMwJIHebenhIw9IA3DmA5Rg" ;
+//  const token =
+//  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYzMjEiLCJpYXQiOjE2MTk3OTc0MTJ9.BeMcj-CogN3IewAwd7ekZMwJIHebenhIw9IA3DmA5Rg" ;
 const axiosInstance = axios.create({
   baseURL: "https://www.cu-connex.com",
   //baseURL: window.location.origin,
 });
 
- axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+//  axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 export default axiosInstance;
 //loong01

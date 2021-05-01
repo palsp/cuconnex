@@ -15,6 +15,7 @@ import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 import classes from "./AuthPage.module.css";
 import { UserContext } from "@context/UserContext";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
@@ -81,7 +82,7 @@ const AuthPage: React.FC = () => {
         <div className={classes.logo}>
           <Logo data-test="auth-page-logo" />
         </div>
-        <motion.div
+        {/* <motion.div
           // animate={{ y: -60 }}
           transition={{
             type: "spring",
@@ -94,7 +95,7 @@ const AuthPage: React.FC = () => {
           animate="visible"
           variants={variants}
           className={classes.circle_overlay}
-        ></motion.div>
+        ></motion.div> */}
         <SignupPrompt
           data-test="auth-page-signup-prompt"
           backButtonClickedHandler={backButtonClickedHandler}
@@ -118,7 +119,7 @@ const AuthPage: React.FC = () => {
         <div className={classes.logo}>
           <Logo />
         </div>
-        <motion.div
+        {/* <motion.div
           // animate={{ y: -100 }}
           transition={{
             type: "spring",
@@ -132,7 +133,7 @@ const AuthPage: React.FC = () => {
           animate="visible"
           variants={variants}
           className={classes.circle_overlay}
-        ></motion.div>
+        ></motion.div> */}
         <LoginPrompt
           data-test="auth-page-login-prompt"
           backButtonClickedHandler={backButtonClickedHandler}
@@ -143,13 +144,13 @@ const AuthPage: React.FC = () => {
         <div className={classes.logoDiv}>
           <AppLogo data-test="auth-page-logo" />
         </div>
-        <motion.div
+        {/* <motion.div
           animate={{ rotate: 360 }}
           transition={{ ease: "linear", duration: 4, repeat: Infinity }}
           style={{ bottom: -(window.innerHeight * 0.33) }}
           className={classes.circle_overlay}
           data-test="auth-page-halfcircleoverlay"
-        ></motion.div>
+        ></motion.div> */}
         <div className={classes.Button}>
           <Button
             data-test="auth-page-login-button"
@@ -182,6 +183,9 @@ const AuthPage: React.FC = () => {
         }}
         className={classes.content}
       >
+        <div className={classes.waveBg}>
+          <WaveCanvasBg width={window.innerWidth} height={window.innerHeight} />
+        </div>
         {authPrompt}
         {routeRedirect}
       </motion.div>

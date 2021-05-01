@@ -26,6 +26,11 @@ const NavBar: React.FC<Props> = (props) => {
         </Link>
 
         <div className={classes.rightIcons}>
+          <Link to="/test">
+            <div className={classes.mail}>
+              <Mail />
+            </div>
+          </Link>
           <Link to="/notification">
             <div className={classes.mail}>
               <Mail />
