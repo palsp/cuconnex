@@ -57,11 +57,11 @@
 .memberListsDiv {
   display: flex;
   justify-content: center;
-
+  margin-top: 16vh;
   width: 100vw;
 }
 .subtitleDiv {
-  margin-top: 18vh;
+  margin-top: 18%;
   text-align: left;
   margin-left: 10vw;
 }
