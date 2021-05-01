@@ -6,7 +6,7 @@ import { createTeamAPI, teamInvitationAPI } from "@src/api";
 import { mockMemberLists } from "@src/mockData";
 import { UsersData } from "@src/mockData/Models";
 import { IInviteData, ITeamData, IUser, IUserFriend } from "@src/models";
-import { Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
@@ -14,6 +14,7 @@ import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
 import { ErrorContext } from "@context/ErrorContext";
 import defaultProfilePic from "@assets/defaultProfilePic.png";
+import { TextField } from "@material-ui/core";
 interface Props {
   members: IUserFriend[] | [];
 }
@@ -115,11 +116,13 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
             initialValues={{
               name: "",
               description: "",
+              currentRecruitment: "",
             }}
             onSubmit={(data, { setSubmitting, resetForm }) => {
               const teamCreateData = {
-                name: data.name,
+                name: data.name.replace(/\s/g, ""),
                 description: data.description,
+                currentRecruitment: data.currentRecruitment,
               };
               console.log(teamCreateData);
               createTeamHandler(teamCreateData);
@@ -142,6 +145,18 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
                     label="Team description"
                     name="description"
                     type="input"
+                  />
+                </div>
+                <div className={classes.InputFieldDiv}>
+                  <Field
+                    style={{ width: "100%", marginTop: "10px" }}
+                    label="Current Recruitment"
+                    type="input"
+                    name="currentRecruitment"
+                    multiline
+                    rowsMax={2}
+                    variant="outlined"
+                    as={TextField}
                   />
                 </div>
                 <button
