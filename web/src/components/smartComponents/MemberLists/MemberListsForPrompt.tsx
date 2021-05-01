@@ -5,10 +5,16 @@ import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
-import { IUser, IUserFriend, IUserFriendExtended } from "@src/models";
+import {
+  IFetchTeam,
+  IUser,
+  IUserFriend,
+  IUserFriendExtended,
+} from "@src/models";
 import MemberListForPrompt from "./MemberList/MemberListForPrompt";
 
 interface Props {
+  team: IFetchTeam;
   memberlist: IUserFriendExtended[] | [];
   selectMemberListsHandler: (e: number) => void;
   personHandler: (e: IUserFriend) => void;
@@ -39,6 +45,7 @@ const MemberListsForPrompt: React.FC<Props> = (props) => {
         return (
           <div key={index}>
             <MemberListForPrompt
+              team={props.team}
               key={index}
               members={person}
               selectMemberListHandler={(checked: boolean) =>
