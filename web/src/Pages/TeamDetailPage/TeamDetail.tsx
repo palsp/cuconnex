@@ -127,9 +127,10 @@ const TeamDetail: React.FC<Props> = (props) => {
               <ArrowLeft data-test="team-detail-page-arrow-left" />
             </div>
           ) : (
-            <div className={classes.closeLeft}>
-              <Close data-test="team-detail-page-close-left" />
-            </div>
+            // <div className={classes.closeLeft}>
+            //   <Close data-test="team-detail-page-close-left" />
+            // </div>
+            <div />
           )}
 
           <div className={classes.head}>
@@ -138,9 +139,10 @@ const TeamDetail: React.FC<Props> = (props) => {
           {isTeamOwner ? (
             <div />
           ) : (
-            <div className={classes.closeRight}>
-              <Close data-test="team-detail-page-close-right" />
-            </div>
+            // <div className={classes.closeRight}>
+            //   <Close data-test="team-detail-page-close-right" />
+            // </div>
+            <div />
           )}
         </div>
 
