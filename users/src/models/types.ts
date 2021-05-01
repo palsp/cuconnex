@@ -10,7 +10,8 @@ export enum TableName {
   userInterest = 'userInterests',
   category = 'categories',
   teams = 'teams',
-  faculty = 'faculty'
+  faculty = 'faculty',
+  candidates = 'candidates',
 }
 
 /**

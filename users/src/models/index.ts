@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize';
 
-
 import { User } from './user.model';
 import { Interest } from './interest.model';
 import { UserInterest } from './UserInterest.model';
@@ -10,10 +9,9 @@ import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
 import { Event } from './event.model';
+import { Candidate } from './candidate.model';
 
-export { User, Interest, UserInterest, Category, Team, IsMember , Event};
-
-
+export { User, Interest, UserInterest, Category, Team, IsMember, Event, Candidate };
 
 // TODO: add version key
 
@@ -28,7 +26,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
   IsMember.autoMigrate(sequelize);
   Connection.autoMigrate(sequelize);
   Recommend.autoMigrate(sequelize);
-
+  Candidate.autoMigrate(sequelize);
 
   // M-M user and interest
   User.belongsToMany(Interest, {
@@ -41,8 +39,8 @@ export const autoMigrate = (sequelize: Sequelize) => {
     through: UserInterest,
     as: 'interests',
     sourceKey: 'description',
-    foreignKey : 'interest',
-    onDelete : 'CASCADE',
+    foreignKey: 'interest',
+    onDelete: 'CASCADE',
   });
 
   // -------------------- Interest and Category -----------------------------------
@@ -56,7 +54,6 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   // -------------------- User and User -----------------------------------
   //Define relation for Recommendation
- 
 
   User.belongsToMany(User, {
     as: 'recommendation',
@@ -64,8 +61,6 @@ export const autoMigrate = (sequelize: Sequelize) => {
     foreignKey: 'userId',
     otherKey: 'recommenderId',
   });
-
-
 
   // define relation for connection
   User.belongsToMany(User, {
@@ -76,7 +71,6 @@ export const autoMigrate = (sequelize: Sequelize) => {
   });
 
   // -------------------- User and Team -----------------------------------
- 
 
   User.hasMany(Team, {
     sourceKey: 'id',
@@ -95,5 +89,8 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   User.belongsToMany(Team, { as: 'member', through: IsMember, foreignKey: 'userId' });
 
- 
+  // -------------------- Team and Event -----------------------------------
+
+  Team.belongsToMany(Event, { as: 'candidate', through: Candidate, foreignKey: 'teamName' });
+  Event.belongsToMany(Team, { as: 'candidate', through: Candidate, foreignKey: 'eventId' });
 };
