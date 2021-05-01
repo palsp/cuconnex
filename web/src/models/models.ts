@@ -253,6 +253,13 @@ export interface ITeamCreatorResponse {
   teamName: string;
   status: string;
 }
+export interface IRegisterTeamEvent{
+  teamName:string;
+  eventId:number;
+}
+export interface IFetchTeamEvent{
+  events:IEventData[];
+}
 
 //Search
 export interface ISearchGeneral {
