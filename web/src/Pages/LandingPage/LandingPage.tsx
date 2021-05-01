@@ -103,7 +103,7 @@ const LandingPage: React.FC<Props> = (props) => {
       className={classes.main}
     >
       <Background hasTeam={hasTeam} heightStyle={menuHeightStyle}>
-        <div className={classes.heroDiv}>
+        <div className={hasTeam ? classes.heroDivHasTeam : classes.heroDiv}>
           <LandingHero
             pageHeight={menuHeightStyle}
             userData={userData}

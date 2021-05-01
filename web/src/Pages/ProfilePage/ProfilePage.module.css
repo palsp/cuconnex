@@ -77,6 +77,7 @@
 
 .interestLists {
   display: flex;
+  flex-wrap: wrap;
   margin-left: 3%;
 }
 
@@ -101,9 +102,9 @@
   right: 5%;
   margin-top: 7%;
 }
-.buttonDiv{
+.buttonDiv {
   margin-top: 7vh;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 24.8vw;
@@ -112,9 +113,9 @@
   overflow: visible;
   border-radius: 25px;
 }
-.pendingButtonDiv{
+.pendingButtonDiv {
   margin-top: 7vh;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 24.8vw;
@@ -123,18 +124,18 @@
   overflow: visible;
   border-radius: 25px;
 }
-.acceptButtonDiv{
+.acceptButtonDiv {
   margin-top: 7vh;
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 24.8vw;
   height: 3.2vh;
-  background-color:var(--green_toggle, #00c300);
+  background-color: var(--green_toggle, #00c300);
   overflow: visible;
   border-radius: 25px;
 }
-.buttonTextDiv{
+.buttonTextDiv {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,8 +150,8 @@
   color: var(--white, #ffffff);
   font-size: 12px;
 }
-.addDiv{
-  position:absolute;
-  right:4vw;
-  top:26vh;
+.addDiv {
+  position: absolute;
+  right: 4vw;
+  top: 26vh;
 }

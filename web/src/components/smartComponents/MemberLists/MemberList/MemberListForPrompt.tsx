@@ -11,18 +11,28 @@ import { ProfilePic } from "@smartComponents/index";
 import { Search } from "@icons/index";
 import classes from "./MemberList.module.css";
 import { UsersData } from "@src/mockData/Models";
-import { IUser, IUserFriend, IUserFriendExtended } from "@src/models";
+import {
+  IFetchTeam,
+  IUser,
+  IUserFriend,
+  IUserFriendExtended,
+} from "@src/models";
+import { Redirect } from "react-router";
 
 interface Props {
   members: IUserFriendExtended;
   selectMemberListHandler: any;
+  team: IFetchTeam;
 }
 
 const MemberListForPrompt: React.FC<Props> = (props) => {
   const [checked, setChecked] = useState(false);
+  const [sent, setSent] = useState(false);
   const checkedMemberHandler = () => {
     setChecked((prevState) => !prevState);
+    setSent(true);
   };
+
   const facultyYear = props.members.faculty + ", " + props.members.year;
   useEffect(() => {
     props.selectMemberListHandler(checked);
@@ -32,9 +42,13 @@ const MemberListForPrompt: React.FC<Props> = (props) => {
     statusTab = <RecruitSign value="Pending"></RecruitSign>;
   }
   if (props.members.status === "notInvited") {
-    <div onClick={checkedMemberHandler}>
-      <CheckBox />
-    </div>;
+    if (sent == false) {
+      statusTab = (
+        <div onClick={checkedMemberHandler}>
+          <CheckBox />
+        </div>
+      );
+    }
   }
   if (props.members.status === "requestedToJoin") {
     statusTab = <RecruitSign value="Pending"></RecruitSign>;
@@ -53,7 +67,7 @@ const MemberListForPrompt: React.FC<Props> = (props) => {
             {props.members.faculty + ", " + props.members.year}
           </div>
         </div>
-        {statusTab}
+        <div className={classes.checkboxDiv}>{statusTab}</div>
       </div>
     </div>
   );

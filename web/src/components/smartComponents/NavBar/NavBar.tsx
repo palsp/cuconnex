@@ -3,6 +3,7 @@ import classes from "./NavBar.module.css";
 import { Link } from "react-router-dom";
 import { Close, Mail, Search } from "@dumbComponents/UI/Icons";
 import { Hamburger } from "@dumbComponents/UI";
+import SideNavToggle from "./SideNavToggle";
 
 interface Props {
   displayHamburgerMenu: boolean;
@@ -37,8 +38,12 @@ const NavBar: React.FC<Props> = (props) => {
             </div>
           </Link>
 
-          <div onClick={hamburgerHandler} className={classes.hamburger}>
-            {displayHamburgerMenu ? <Close /> : <Hamburger />}
+          <div className={classes.hamburger}>
+            {/* {displayHamburgerMenu ? <Close /> : <Hamburger />} */}
+            <SideNavToggle
+              toggleHamburger={displayHamburgerMenu}
+              setToggleHamburger={hamburgerHandler}
+            />
           </div>
         </div>
       </div>
