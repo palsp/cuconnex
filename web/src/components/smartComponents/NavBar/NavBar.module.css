@@ -4,9 +4,9 @@
   padding-top: 10px;
   padding-bottom: 10px;
   position: relative;
-  -webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.16);
--moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.16);
-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.16);
+  -webkit-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.16);
 }
 
 .nav {
@@ -32,7 +32,8 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.16);
 .hamburger {
   height: 100%;
   width: 8vw;
-  margin-right: 3vw;
+  margin-top: 2vh;
+  margin-right: 4vw;
 }
 
 .mail {
