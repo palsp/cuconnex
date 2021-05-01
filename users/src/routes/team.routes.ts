@@ -11,9 +11,13 @@ import {
 
 const router = express.Router();
 
+router.get('/events/:teamName', teamController.getRegisteredEvents);
+
 router.get('/:name', teamController.getTeam);
 
 router.get('/members/:name', requireUser, teamController.getTeamMember);
+
+router.get('/');
 
 router.post(
   '/events/register',

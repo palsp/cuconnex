@@ -6,6 +6,7 @@ import {
   ITeamResponse,
   IIsMemberResponse,
   ITeamRequestResponse,
+  IEventResponse,
 } from '../interfaces';
 
 require('express-async-errors');
@@ -198,7 +199,10 @@ export const getRegisteredEvents = async (req: Request, res: Response) => {
   }
 
   const events: Event[] = await team.getMyEvents();
+  const response: IEventResponse[] = [];
 
-  // TODO: IEventResponse
-  res.status(200).send({ events: events });
+  for (let event of events) {
+    response.push(event.toJSON());
+  }
+  res.status(200).send(response);
 };

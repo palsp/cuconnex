@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { User, IsMember, Event, Candidate } from '../../../models';
-import { Business, TeamStatus } from '@cuconnex/common';
+import { User, Event, Candidate } from '../../../models';
+import { Business } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
 
 const setup = async () => {
