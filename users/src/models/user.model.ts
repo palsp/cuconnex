@@ -182,7 +182,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include: Interest });
+    return User.findOne({ where: { id: userId }, include:Interest });
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -279,6 +279,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public async getAllConnectionWithStatus(status : FriendStatus): Promise<User[]>{
     let connections = await this.getConnection({ include : [Interest]});
 
+  
     connections = connections.filter(conn => conn.Connection!.status === status);
 
     return connections;

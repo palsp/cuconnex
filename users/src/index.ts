@@ -1,7 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
-import { natsWrapper, EventCreatedSub } from './nats';
+import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 
 
 
@@ -60,6 +60,7 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
 
     new EventCreatedSub(natsWrapper.client).listen();
+    new EventUpdatedSub(natsWrapper.client).listen();
 
     await initializeDB();
 
