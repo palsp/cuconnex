@@ -10,9 +10,13 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
+import { Event } from './event.model';
+import { Candidate } from './Candidate.model';
+
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
+import { NotFoundError } from '@bkatickets/common';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -189,7 +193,6 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
-    
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.IsMember!.status === TeamStatus.Accept) {
         return member;
@@ -205,6 +208,19 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
     this.members = members;
+  }
+
+  public async register(e: Event) {
+    const event = await Event.findOne({ where: { id: e.id } });
+    if (!event) {
+      throw new NotFoundError('Event');
+    }
+
+    try {
+      await Candidate.create({ eventId: event.id, teamName: this.name });
+    } catch (err) {
+      throw new BadRequestError(`Candidate table error: ${err.message}`);
+    }
   }
 
   public toJSON(): ITeamResponse {
