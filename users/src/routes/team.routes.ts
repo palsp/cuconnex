@@ -6,6 +6,7 @@ import {
   createTeamValidator,
   addTeamMemberValidator,
   manageTeamStatusValidator,
+  registerEventValidator,
 } from '../utils/team.validators';
 
 const router = express.Router();
@@ -14,7 +15,13 @@ router.get('/:name', teamController.getTeam);
 
 router.get('/members/:name', requireUser, teamController.getTeamMember);
 
-router.post('/', requireUser, createTeamValidator, validateRequest, teamController.createTeam);
+router.post(
+  '/events/register',
+  requireUser,
+  registerEventValidator,
+  validateRequest,
+  teamController.registerEvent
+);
 
 router.post(
   '/invite-member',
@@ -31,6 +38,8 @@ router.post(
   validateRequest,
   teamController.manageStatus
 );
+
+router.post('/', requireUser, createTeamValidator, validateRequest, teamController.createTeam);
 
 router.get('/outgoing-requests/:name', requireUser, teamController.getOutgoingRequests);
 

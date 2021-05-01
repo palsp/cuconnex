@@ -9,7 +9,7 @@ import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
 import { Event } from './event.model';
-import { Candidate } from './Candidate.model';
+import { Candidate } from './candidate.model';
 
 export { User, Interest, UserInterest, Category, Team, IsMember, Event, Candidate };
 

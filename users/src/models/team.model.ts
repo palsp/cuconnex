@@ -11,7 +11,7 @@ import { TableName } from './types';
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
 import { Event } from './event.model';
-import { Candidate } from './Candidate.model';
+import { Candidate } from './candidate.model';
 
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
@@ -210,10 +210,16 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     this.members = members;
   }
 
-  public async register(e: Event) {
-    const event = await Event.findOne({ where: { id: e.id } });
-    if (!event) {
-      throw new NotFoundError('Event');
+  // public addCandidate!: BelongsToManyAddAssociationMixin<Candidate, Event>;
+  public getCandidate!: BelongsToManyGetAssociationsMixin<Event>;
+
+  public async register(event: Event) {
+    const isCandidate = await Candidate.findOne({
+      where: { eventId: event.id, teamName: this.name },
+    });
+
+    if (isCandidate) {
+      throw new BadRequestError('This team already register for this event.');
     }
 
     try {
@@ -221,6 +227,12 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     } catch (err) {
       throw new BadRequestError(`Candidate table error: ${err.message}`);
     }
+  }
+
+  public async getMyEvents() {
+    const candidates = await this.getCandidate();
+    console.log('candy', candidates);
+    // let connections = await this.getConnection({ include : [Interest]});
   }
 
   public toJSON(): ITeamResponse {

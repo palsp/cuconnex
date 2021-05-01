@@ -19,3 +19,8 @@ export const manageTeamStatusValidator = [
   body('teamName').notEmpty().isAlphanumeric(),
   body('status').notEmpty(),
 ];
+
+export const registerEventValidator = [
+  body('eventId').notEmpty(),
+  body('teamName').notEmpty().isAlphanumeric(),
+];
