@@ -31,7 +31,6 @@ export const autoMigrate = (sequelize: Sequelize) => {
   // // M-M user and interest
   User.belongsToMany(Interest, {
     through: UserInterest,
-    as : "interests",
     foreignKey: 'userId',
     onDelete: 'CASCADE',
   });

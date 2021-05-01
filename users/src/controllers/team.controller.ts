@@ -1,15 +1,13 @@
-import { request, Request, Response } from 'express';
+import {  Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User , Interest , Event} from '../models';
+import { getUserWhoLike } from '../utils/recommend';
 import {
   IUserResponse,
   ITeamResponse,
-  IIsMemberResponse,
   ITeamRequestResponse,
   IEventResponse,
 } from '../interfaces';
-import { not } from 'sequelize/types/lib/operators';
-import { resourceLimits } from 'node:worker_threads';
 import { filter } from 'lodash';
 
 require('express-async-errors');
@@ -171,26 +169,29 @@ export const getIncomingRequests = async (req: Request, res: Response) => {
 };
 
 
+
+
+
 export const getRecommendedUserForTeam = async (req: Request , res : Response) => {
   const filterInterest = req.query.filter;
+  
   const teamName  =  req.params.teamName;
+  
 
+  // TODO: find team according to event name
   const team = await Team.findOne({ where : { name : teamName} , include : ['owner' , 'member']});
 
   if(!team){
-    throw new NotFoundError('Team not found')
+    throw new NotFoundError('Team')
   }
 
-  let users: User[];
-  if(!filterInterest){
-    users = await User.findAll();
-  }else{
-    const interest = await Interest.findOne({ where : { description : filterInterest }});
-    if(!interest){
-      throw new BadRequestError('Interest is not existed')
-    }
-    users = await interest.getLike();
+  // TODO: check members credential;
+
+  if(typeof filterInterest !== "string" && filterInterest !== undefined ){
+    throw new BadRequestError('invalid query params');
   }
+  
+  const users = await getUserWhoLike(filterInterest);
 
   let result: {
     user : User,
@@ -206,8 +207,9 @@ export const getRecommendedUserForTeam = async (req: Request , res : Response) =
     }
   }
 
+  
   // sort by score
-  result.sort((a , b) => a.score - b.score);
+  result.sort((a , b) => b.score - a.score);
   
   // TODO: create interface
   const response = { users : result.map(r => r.user)};
@@ -215,6 +217,14 @@ export const getRecommendedUserForTeam = async (req: Request , res : Response) =
   res.status(200).send(response)
 
 }
+
+
+
+
+
+
+
+
 export const registerEvent = async (req: Request, res: Response) => {
   const user = req.user!;
   const { eventId, teamName } = req.body;

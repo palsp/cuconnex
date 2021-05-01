@@ -1,13 +1,9 @@
 import { app } from './app';
 import { initializeDB } from './db';
-import config from './config/db.config';
 import { startDB } from './models/initDB';
 import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 import { init } from './data/dummy';
-import { Team , IsMember , User , Interest} from './models';
-import { includes } from 'lodash';
-import { Recommend } from './models/recommend.model';
-import { Technology } from '@cuconnex/common';
+
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -47,23 +43,23 @@ if (!process.env.NATS_CLUSTER_ID) {
 
 const start = async () => {
   // check if all required env variable have been declared
-  // validateEnvAttr();
+  validateEnvAttr();
   try {
 
 
-    // await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
+    await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
 
 
-    // natsWrapper.client.on('close', () => {
-    //   console.log('NATs connection close');
-    //   process.exit();
-    // })
+    natsWrapper.client.on('close', () => {
+      console.log('NATs connection close');
+      process.exit();
+    })
 
-    // process.on('SIGINT', () => natsWrapper.client.close());
-    // process.on('SIGTERM', () => natsWrapper.client.close());
+    process.on('SIGINT', () => natsWrapper.client.close());
+    process.on('SIGTERM', () => natsWrapper.client.close());
 
-    // new EventCreatedSub(natsWrapper.client).listen();
-    // new EventUpdatedSub(natsWrapper.client).listen();
+    new EventCreatedSub(natsWrapper.client).listen();
+    new EventUpdatedSub(natsWrapper.client).listen();
 
     await initializeDB();
 
@@ -71,69 +67,9 @@ const start = async () => {
     // it should be run only once
     await startDB();
 
+    // TODO: delete dummy data 
     await init();
     
-
-
-    
-    const team = await Team.findOne({ where : { name : "test_team_0"} , include : ['owner' , 'member']});
-
-    let users = await User.findAll();
-
-    let result:  number[] = []
-  
-    for(let user of users){
-      const isMember = await team!.findMember(user.id);
-      let score: number;
-      if(!isMember){
-        score = await team!.CalculateUserScore(user.id);
-        result.push(score);
-      }
-    }
-  
-    // sort by score
-    result.sort((a , b) => a - b);
-    console.log(result)
-
-    const coding = await Interest.findOne({ where : { description : Technology.Coding}});
-
-    await coding!.getLike()
-
-
-
-    // const recommend = await Recommend.findOne({ where : { userId : team!.owner!.id , recommenderId : "6131886921"}}) 
-    // let meanScore = recommend ? recommend.score : 0 ;
-
-    // if(team!.member){
-    console.log("🚀 ~ file: index.ts ~ line 108 ~ start ~     await coding!.getLike()",     await coding!.getLike())
-    //   for(let m of team!.member){
-    //     const recommend = await Recommend.findOne({ where : { userId : m.id , recommenderId : "6131886921"}}) 
-    //     const added =  recommend ? recommend.score : 0 ;
-    //     meanScore += added;
-    //   }
-    //   meanScore = meanScore / (team!.member.length + 1)
-    // }
-    // console.log('old',meanScore);
-    // meanScore = await team!.CalculateUserScore("6131886921");
-    // console.log("🚀 ~ file: index.ts ~ line 92 ~ start ~ meanScore", meanScore)
-
-
-    // const team2 = await Team.findOne({ where : { name : "test_team_0"} , include : ['owner' , 'member']});
-
-    // const recommend2 = await Recommend.CalculateScore(team2!.owner!.id , "6131886921" )
-
-    // meanScore = recommend2 ;
-
-    // if(team!.member){
-    //   for(let m of team!.member){
-    //     const added = await Recommend.CalculateScore(m.id ,"6131886921") 
-    //     meanScore += added;
-    //   }
-    //   meanScore = meanScore / (team!.member.length + 1)
-    // }
-    // console.log(meanScore);
-
-
   } catch (err) {
     console.log(err);
   }
