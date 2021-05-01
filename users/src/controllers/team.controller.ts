@@ -188,3 +188,17 @@ export const registerEvent = async (req: Request, res: Response) => {
   await team.register(event);
   res.status(200).send();
 };
+
+export const getRegisteredEvents = async (req: Request, res: Response) => {
+  const { teamName } = req.params;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  const events: Event[] = await team.getMyEvents();
+
+  // TODO: IEventResponse
+  res.status(200).send({ events: events });
+};
