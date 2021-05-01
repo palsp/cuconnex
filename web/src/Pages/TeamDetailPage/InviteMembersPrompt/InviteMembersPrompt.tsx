@@ -9,6 +9,7 @@ import { UsersData } from "@src/mockData/Models";
 import {
   IEventData,
   IFetchTeam,
+  IInviteData,
   IUser,
   IUserFriend,
   IUserFriendExtended,
@@ -18,6 +19,7 @@ import {
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
   fetchUserTeamRequestAPI,
+  teamInvitationAPI,
 } from "@src/api";
 import { number } from "yup/lib/locale";
 import MemberListsForPrompt from "@smartComponents/MemberLists/MemberListsForPrompt";
@@ -41,7 +43,26 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   useEffect(() => {
     fetchFriendsHandler();
   }, []);
-
+  const invitationHandler = async (inviteData: IInviteData) => {
+    try {
+      const resultInvitation = await teamInvitationAPI(inviteData);
+      console.log(
+        "Hi, Successfully sent a POST request to /api/teams/invite-member",
+        resultInvitation
+      );
+    } catch (e) {
+      console.log("ERRORS occured while POST /api/teams/invite-member", e);
+    }
+  };
+  const inviteMember = () => {
+    selectedMemberArray.forEach((members) => {
+      invitationHandler({
+        teamName: props.teams.name,
+        newMemberId: members.id,
+      });
+      console.log("POST /members/invite/", props.teams.name, members.id);
+    });
+  };
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
     console.log("SUCCESS fetchFriendsHandler", friendsData.data.connections);
@@ -88,7 +109,16 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       return extendedFriend;
     });
 
-    setFriendsNotInTeam(extendedFriends);
+    const extendedFriendsNotInTeam: IUserFriendExtended[] = extendedFriends.filter(
+      (extendedFriend) => {
+        let inTeam = false;
+        currentMembers.forEach((member) => {
+          inTeam = inTeam || member.id === extendedFriend.id;
+        });
+        return !inTeam;
+      }
+    );
+    setFriendsNotInTeam(extendedFriendsNotInTeam);
   };
 
   const selectPersonHandler = (e: IUserFriend) => {
@@ -121,7 +151,9 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
           <Heading value="Invite Members" size="small-medium" />
-          <div className={classes.noStyleButton}>Invite</div>
+          <div onClick={() => inviteMember()} className={classes.noStyleButton}>
+            Invite
+          </div>
           {/* <div onClick={() => props.backHandler()} className={classes.arrowDiv}>
             <ArrowLeft />
           </div> */}

@@ -32,9 +32,11 @@ const MemberListForPrompt: React.FC<Props> = (props) => {
     statusTab = <RecruitSign value="Pending"></RecruitSign>;
   }
   if (props.members.status === "notInvited") {
-    <div onClick={checkedMemberHandler}>
-      <CheckBox />
-    </div>;
+    statusTab = (
+      <div onClick={checkedMemberHandler}>
+        <CheckBox />
+      </div>
+    );
   }
   if (props.members.status === "requestedToJoin") {
     statusTab = <RecruitSign value="Pending"></RecruitSign>;
@@ -53,7 +55,7 @@ const MemberListForPrompt: React.FC<Props> = (props) => {
             {props.members.faculty + ", " + props.members.year}
           </div>
         </div>
-        {statusTab}
+        <div className={classes.checkboxDiv}>{statusTab}</div>
       </div>
     </div>
   );
