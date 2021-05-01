@@ -1,5 +1,4 @@
 import { body } from 'express-validator';
-import { InterestDescription } from '@cuconnex/common';
 
 /**
  * name and description is required to create team
