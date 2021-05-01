@@ -33,6 +33,7 @@ import {
   IUserRelationTeam,
   IFetchIncomingTeamNotification,
   ITeamCreatorResponse,
+  IFetchTeams,
 } from "@src/models";
 
 //Auth Services
@@ -117,8 +118,8 @@ const fetchTeamDataAPI = async (
 };
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<IFetchTeam>> => {
-  const calledResult: AxiosResponse<IFetchTeam> = await axios.get(
+): Promise<AxiosResponse<IFetchTeams>> => {
+  const calledResult: AxiosResponse<IFetchTeams> = await axios.get(
     `/api/users/teams/${userId}`
   );
 
