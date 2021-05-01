@@ -31,6 +31,7 @@ interface Props {
 }
 
 const inviteMembersPrompt: React.FC<Props> = (props) => {
+  const [clicked, setClicked] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
   const [numberFriends, setNumberFriends] = useState<number>(0);
   const [selectedMemberArray, setSelectedMemberArray] = useState<IUserFriend[]>(
@@ -61,6 +62,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
         newMemberId: members.id,
       });
       console.log("POST /members/invite/", props.teams.name, members.id);
+      setClicked(true);
     });
   };
   const fetchFriendsHandler = async () => {
@@ -179,6 +181,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
         </div>
         <div className={classes.memberListsDiv}>
           <MemberListsForPrompt
+            clicked={clicked}
             team={props.teams}
             memberlist={friendsNotInTeam}
             selectMemberListsHandler={selectMemberHandler}

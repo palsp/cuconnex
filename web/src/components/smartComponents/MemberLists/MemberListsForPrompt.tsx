@@ -14,6 +14,7 @@ import {
 import MemberListForPrompt from "./MemberList/MemberListForPrompt";
 
 interface Props {
+  clicked: boolean;
   team: IFetchTeam;
   memberlist: IUserFriendExtended[] | [];
   selectMemberListsHandler: (e: number) => void;
@@ -45,6 +46,7 @@ const MemberListsForPrompt: React.FC<Props> = (props) => {
         return (
           <div key={index}>
             <MemberListForPrompt
+              clicked={props.clicked}
               team={props.team}
               key={index}
               members={person}
