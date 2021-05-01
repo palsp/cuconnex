@@ -1,12 +1,15 @@
-import { Request, Response } from 'express';
+import { request, Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
-import { Team, IsMember, User } from '../models';
+import { Team, IsMember, User , Interest} from '../models';
 import {
   IUserResponse,
   ITeamResponse,
   IIsMemberResponse,
   ITeamRequestResponse,
 } from '../interfaces';
+import { not } from 'sequelize/types/lib/operators';
+import { resourceLimits } from 'node:worker_threads';
+import { filter } from 'lodash';
 
 require('express-async-errors');
 
@@ -168,3 +171,63 @@ export const getIncomingRequests = async (req: Request, res: Response) => {
 
   res.status(200).send({ incomingRequests: response });
 };
+
+
+export const getRecommendedUserForTeam = async (req: Request , res : Response) => {
+  const filterInterest = req.query.filter;
+  const teamName  =  req.params.teamName;
+
+  const team = await Team.findOne({ where : { name : teamName} , include : ['owner' , 'member']});
+
+  if(!team){
+    throw new NotFoundError('Team not found')
+  }
+
+  let users: User[];
+  if(!filterInterest){
+    users = await User.findAll();
+  }else{
+    const interest = await Interest.findOne({ where : { description : filterInterest }});
+    if(!interest){
+      throw new BadRequestError('Interest is not existed')
+    }
+    users = await interest.getLike();
+  }
+
+  let result: {
+    user : User,
+    score : number
+  }[] = []
+
+  for(let user of users){
+    const isMember = await team.findMember(user.id);
+    let score: number;
+    if(!isMember){
+      score = await team.CalculateUserScore(user.id);
+      result.push({ user , score});
+    }
+  }
+
+  // sort by score
+  result.sort((a , b) => a.score - b.score);
+  
+  // TODO: create interface
+  const response = { users : result.map(r => r.user)};
+
+  res.status(200).send(response)
+
+
+  // if(team!.member){
+  //   for(let m of team!.member){
+  //     const added = await Recommend.CalculateScore(m.id ,"6131886921") 
+  //     meanScore += added;
+  //   }
+  //   meanScore = meanScore / (team!.member.length + 1)
+  // }
+  // console.log(meanScore);
+
+  //TODO: check if request is from members of the team
+
+
+
+}
