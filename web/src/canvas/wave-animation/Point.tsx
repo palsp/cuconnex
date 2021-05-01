@@ -14,7 +14,7 @@ export class Point {
     this.max = Math.random() * 50 + 20;
   }
 
-  update() {
+  update(): void {
     this.cur += this.speed;
     this.y = this.fixedY + Math.sin(this.cur) * this.max;
   }
