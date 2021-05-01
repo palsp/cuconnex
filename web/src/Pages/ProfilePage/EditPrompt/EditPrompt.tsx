@@ -21,7 +21,7 @@ const EditPrompt: React.FC<Props> = (props) => {
     prompt = (
       <div className={classes.edit}>
         <div className={classes.profilePicDiv}>
-          <ProfilePic size="big" data-test="personal-info-personalImage" />
+          <ProfilePic size="xl" data-test="personal-info-personalImage" />
         </div>
         <div className={classes.toggle}>
           <div className={classes.toggleText}>Looking for a team</div>

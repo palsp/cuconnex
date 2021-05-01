@@ -37,8 +37,58 @@
   background-color: white;
 }
 
-.relativeArrow {
+/* .relativeArrow {
   position: absolute;
   left: 18px;
   top: 5vh;
+} */
+.relativeArrow {
+  position: absolute;
+  left: 4.8vw;
+  top: 3.201vh;
+}
+
+.eventTypeListContainer {
+  padding: 10px;
+}
+
+.eventTypeList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.eventTypeCardContainer {
+  height: 10vh;
+  padding: 10px;
+}
+
+.eventTypeCard {
+  height: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+
+  -webkit-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+}
+
+.cardContent {
+  width: 100%;
+  height: 100%;
+  color: var(--grey_text, #484747);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.icon {
+  margin-left: 5%;
+  margin-right: 5%;
+  position: relative;
+  /* align-items: flex-start; */
+  width: 20px;
+  height: 20px;
 }

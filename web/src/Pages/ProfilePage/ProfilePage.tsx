@@ -159,7 +159,7 @@ const ProfilePage: React.FC<Props> = (props) => {
         <div className={classes.about}>
           <div className={classes.bio}>
             <Biography
-              nickname={props.location.state.users.role}
+              nickname={props.location.state.users.name}
               detail={props.location.state.users.bio}
             />
           </div>
