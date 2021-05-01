@@ -38,7 +38,7 @@ export interface ITeam {
 }
 export interface IFetchTeam {
   name: string; // team name
-  members: IUser[];
+  members: IUserFriend[];
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
@@ -196,6 +196,10 @@ export interface IUserRelationTeam {
   status: string;
   sender: string;
 }
+export interface IUserFriendExtended extends IUserFriend {
+  status: "notInvited" | "invited" | "requestedToJoin" | "inTeam";
+}
+
 
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
@@ -234,7 +238,7 @@ export interface IFetchFriendReceivedNotification {
 export interface IFetchOutgoingTeamNotification {
   outgoingRequests: {
     teamName: string;
-    pendingUsers: IUser[];
+    pendingUsers: IUserFriend[];
   };
 }
 export interface IFetchIncomingTeamNotification {
