@@ -1,9 +1,9 @@
 import { app } from './app';
 import { initializeDB } from './db';
+import config from './config/db.config';
 import { startDB } from './models/initDB';
 import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
-
-
+import { init } from './data/dummy';
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -43,30 +43,31 @@ if (!process.env.NATS_CLUSTER_ID) {
 
 const start = async () => {
   // check if all required env variable have been declared
-  validateEnvAttr();
-
+  // validateEnvAttr();
   try {
 
 
-    await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
+    // await natsWrapper.connect(process.env.NATS_CLUSTER_ID!, process.env.NATS_CLIENT_ID!, process.env.NATS_URL!)
 
 
-    natsWrapper.client.on('close', () => {
-      console.log('NATs connection close');
-      process.exit();
-    })
+    // natsWrapper.client.on('close', () => {
+    //   console.log('NATs connection close');
+    //   process.exit();
+    // })
 
-    process.on('SIGINT', () => natsWrapper.client.close());
-    process.on('SIGTERM', () => natsWrapper.client.close());
+    // process.on('SIGINT', () => natsWrapper.client.close());
+    // process.on('SIGTERM', () => natsWrapper.client.close());
 
-    new EventCreatedSub(natsWrapper.client).listen();
-    new EventUpdatedSub(natsWrapper.client).listen();
+    // new EventCreatedSub(natsWrapper.client).listen();
+    // new EventUpdatedSub(natsWrapper.client).listen();
 
     await initializeDB();
 
     // initial data for interest and category 
     // it should be run only once
     await startDB();
+
+    await init();
 
   } catch (err) {
     console.log(err);
