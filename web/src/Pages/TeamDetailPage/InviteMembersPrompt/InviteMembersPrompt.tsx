@@ -6,29 +6,91 @@ import { ArrowLeft } from "@icons/index";
 import classes from "./InviteMembersPrompt.module.css";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
-import { IEventData, IFetchTeam, IUser, IUserFriend } from "@src/models";
-import { fetchFriendsDataAPI } from "@src/api";
+import {
+  IEventData,
+  IFetchTeam,
+  IUser,
+  IUserFriend,
+  IUserFriendExtended,
+} from "@src/models";
+import {
+  fetchFriendsDataAPI,
+  fetchTeamNotificationAPI,
+  fetchTeamOutgoingNotificationAPI,
+  fetchUserTeamRequestAPI,
+} from "@src/api";
+import { number } from "yup/lib/locale";
+import MemberListsForPrompt from "@smartComponents/MemberLists/MemberListsForPrompt";
 
 interface Props {
   teams: IFetchTeam;
   backHandler: any;
+  incomingRequest: IUserFriend[] | [];
 }
+
 const inviteMembersPrompt: React.FC<Props> = (props) => {
   const [memberArray, setMemberArray] = useState<number[]>([]);
+  const [numberFriends, setNumberFriends] = useState<number>(0);
   const [selectedMemberArray, setSelectedMemberArray] = useState<IUserFriend[]>(
     []
   );
-  const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
+  const [friendsNotInTeam, setFriendsNotInTeam] = useState<
+    IUserFriendExtended[]
+  >([]);
+  // const [newFriendLists, setNewFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
-    fetchFriendsHandler().then((value: IUserFriend[] | []) =>
-      setFriendLists(value)
-    );
+    fetchFriendsHandler();
   }, []);
+
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
-    console.log("SUCCESS fetchFriendsHandler", friendsData.data);
-    return friendsData.data.connections;
+    console.log("SUCCESS fetchFriendsHandler", friendsData.data.connections);
+
+    const invitedData = await fetchTeamOutgoingNotificationAPI(
+      props.teams.name
+    );
+    console.log(
+      "SUCCESS Outgoing team request =",
+      invitedData.data.outgoingRequests.pendingUsers
+    );
+
+    const friends = friendsData.data.connections;
+    const invitedFriends = invitedData.data.outgoingRequests.pendingUsers;
+    const currentMembers = props.teams.members;
+    const requestedFriends = props.incomingRequest;
+
+    const extendedFriends: IUserFriendExtended[] = friends.map((friend) => {
+      const extendedFriend = friend as IUserFriendExtended;
+      invitedFriends.forEach((invitedFriend) => {
+        if (friend.id === invitedFriend.id) {
+          extendedFriend.status = "invited";
+        }
+      });
+      requestedFriends.forEach((requestedFriend) => {
+        if (friend.id === requestedFriend.id) {
+          extendedFriend.status = "requestedToJoin";
+        }
+      });
+
+      if (!extendedFriend.status) {
+        extendedFriend.status = "notInvited";
+      }
+
+      let inTeam = false;
+      currentMembers.forEach((member) => {
+        inTeam = inTeam || member.id === extendedFriend.id;
+      });
+
+      if (inTeam) {
+        extendedFriend.status = "inTeam";
+      }
+
+      return extendedFriend;
+    });
+
+    setFriendsNotInTeam(extendedFriends);
   };
+
   const selectPersonHandler = (e: IUserFriend) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
@@ -53,6 +115,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       setMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
+
   const selectPrompt = (
     <div>
       <div className={classes.divHeading}>
@@ -83,18 +146,17 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
           </div>
         </div>
         <div className={classes.memberListsDiv}>
-          <MemberLists
-            memberlist={friendLists}
+          <MemberListsForPrompt
+            memberlist={friendsNotInTeam}
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
           />
-          {console.log("Array Contain: ", selectedMemberArray)}
-          {console.log("Array Contain: ", memberArray)}
+          {console.log("SelectedArray Contain: ", selectedMemberArray)}
+          {console.log("AllArray Contain: ", memberArray)}
         </div>
       </div>
     </div>
   );
-
   return <div>{selectPrompt}</div>;
 };
 

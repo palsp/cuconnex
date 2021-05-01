@@ -6,13 +6,14 @@ import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
 import { IUser, IUserFriend, IUserFriendExtended } from "@src/models";
+import MemberListForPrompt from "./MemberList/MemberListForPrompt";
 
 interface Props {
-  memberlist: IUserFriend[] | [];
+  memberlist: IUserFriendExtended[] | [];
   selectMemberListsHandler: (e: number) => void;
   personHandler: (e: IUserFriend) => void;
 }
-const MemberLists: React.FC<Props> = (props) => {
+const MemberListsForPrompt: React.FC<Props> = (props) => {
   // const fetchFriendsList:member[] = async () => {
   //   try {
   //     return await fetchFriendsDataAPI();
@@ -23,7 +24,7 @@ const MemberLists: React.FC<Props> = (props) => {
   const selectMemberListHandler = (
     checked: boolean,
     index: number,
-    person: IUserFriend
+    person: IUserFriendExtended
   ) => {
     if (checked) {
       props.selectMemberListsHandler(index);
@@ -34,10 +35,10 @@ const MemberLists: React.FC<Props> = (props) => {
     <div>
       {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
       {props.memberlist.map((person: MemberListsData, index: number) => { */}
-      {props.memberlist.map((person: IUserFriend, index: number) => {
+      {props.memberlist.map((person: IUserFriendExtended, index: number) => {
         return (
           <div key={index}>
-            <MemberList
+            <MemberListForPrompt
               key={index}
               members={person}
               selectMemberListHandler={(checked: boolean) =>
@@ -51,4 +52,4 @@ const MemberLists: React.FC<Props> = (props) => {
   );
 };
 
-export default MemberLists;
+export default MemberListsForPrompt;

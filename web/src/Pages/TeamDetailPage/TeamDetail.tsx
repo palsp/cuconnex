@@ -176,6 +176,7 @@ const TeamDetail: React.FC<Props> = (props) => {
       </motion.div>
     ) : (
       <InviteMembersPrompt
+        incomingRequest={incomingTeamNoti}
         backHandler={() => backClickedHandler}
         teams={props.location.state.team}
       />
