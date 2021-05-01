@@ -27,12 +27,14 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  max-width: 224px;
 }
 
 .loginPrompt {
   display: flex;
   align-items: center;
   flex-direction: column;
+  max-width: 224px;
 }
 
 /* Content */

@@ -61,6 +61,9 @@ const SelectEventPrompt: React.FC = () => {
             </div>
           </div>
         </div>
+        <div className={classes.subtitleDiv}>
+          <Subtitle size="Medium" value="Select events to attend" />
+        </div>
         <div className={classes.memberListsDiv}>
           <EventListForPrompt
             selectEventHandler={selectedEventHandler}

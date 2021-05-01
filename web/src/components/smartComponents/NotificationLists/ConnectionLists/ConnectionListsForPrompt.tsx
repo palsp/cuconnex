@@ -14,7 +14,9 @@ interface Props {
 const ConnectionListsForPrompt: React.FC<Props> = (props) => {
   return (
     <div className={classes.ConnectionLists}>
-      <div className={classes.listHeader}>Member Requests</div>
+      <div className={classes.listHeader}>
+        Member Requests ({props.requests.length})
+      </div>
       {props.requests.map((friendNoti: IUserFriend, index: number) => {
         return (
           <div key={index}>
