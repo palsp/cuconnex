@@ -37,10 +37,15 @@
   background-color: white;
 }
 
-.relativeArrow {
+/* .relativeArrow {
   position: absolute;
   left: 18px;
   top: 5vh;
+} */
+.relativeArrow {
+  position: absolute;
+  left: 4.8vw;
+  top: 3.201vh;
 }
 
 .eventTypeListContainer {
@@ -48,8 +53,8 @@
 }
 
 .eventTypeList {
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .eventTypeCardContainer {
@@ -62,10 +67,10 @@
   border-radius: 10px;
   overflow: hidden;
   background: white;
-  
-  -webkit-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-  -moz-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
-  box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+
+  -webkit-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
+  box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
 }
 
 .cardContent {
