@@ -16,7 +16,7 @@ import { Candidate } from './candidate.model';
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
-import { NotFoundError } from '@bkatickets/common';
+
 
 // keep member array as id of user
 export interface TeamAttrs {
