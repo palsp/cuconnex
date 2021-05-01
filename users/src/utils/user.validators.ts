@@ -81,3 +81,5 @@ export const manageUserStatusValidator = [
 export const requestToJoinTeamValidator = [
   body('teamName').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
 ];
+
+export const addRatingValidator = [];
