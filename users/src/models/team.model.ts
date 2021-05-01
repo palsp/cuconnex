@@ -11,11 +11,14 @@ import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
+import { Event } from './event.model';
+import { Candidate } from './candidate.model';
+
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
 import { Recommend } from './recommend.model';
-import { teamRouter } from '../routes';
+
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -201,7 +204,6 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
-    
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.IsMember!.status === TeamStatus.Accept) {
         return member;
@@ -238,6 +240,38 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
     return meanScore / (this.member.length + 1)
 
+  }
+  // public addCandidate!: BelongsToManyAddAssociationMixin<Candidate, Event>;
+  public getCandidate!: BelongsToManyGetAssociationsMixin<Event>;
+
+  public async register(event: Event) {
+    const isCandidate = await Candidate.findOne({
+      where: { eventId: event.id, teamName: this.name },
+    });
+
+    if (isCandidate) {
+      throw new BadRequestError('This team already register for this event.');
+    }
+
+    try {
+      await Candidate.create({ eventId: event.id, teamName: this.name });
+    } catch (err) {
+      throw new BadRequestError(`Candidate table error: ${err.message}`);
+    }
+  }
+
+  public async getMyEvents(): Promise<Event[]> {
+    const candidates = await this.getCandidate();
+    // console.log('candy', candidates);
+    // let connections = await this.getConnection({ include : [Interest]});
+
+    let events: Event[] = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+      events.push(candidates[i]);
+    }
+
+    return events;
   }
 
   public toJSON(): ITeamResponse {

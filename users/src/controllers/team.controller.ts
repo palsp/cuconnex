@@ -1,11 +1,12 @@
 import { request, Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
-import { Team, IsMember, User , Interest} from '../models';
+import { Team, IsMember, User , Interest , Event} from '../models';
 import {
   IUserResponse,
   ITeamResponse,
   IIsMemberResponse,
   ITeamRequestResponse,
+  IEventResponse,
 } from '../interfaces';
 import { not } from 'sequelize/types/lib/operators';
 import { resourceLimits } from 'node:worker_threads';
@@ -59,10 +60,7 @@ export const getTeamMember = async (req: Request, res: Response) => {
     throw new NotFoundError('Team');
   }
 
-
-
   const acceptedUsers: User[] = await team.getMembers();
-
 
   const response: IUserResponse[] = acceptedUsers.map((eachUser) => {
     return eachUser.toJSON();
@@ -217,3 +215,42 @@ export const getRecommendedUserForTeam = async (req: Request , res : Response) =
   res.status(200).send(response)
 
 }
+export const registerEvent = async (req: Request, res: Response) => {
+  const user = req.user!;
+  const { eventId, teamName } = req.body;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  const event = await Event.findOne({ where: { id: eventId } });
+  if (!event) {
+    throw new NotFoundError('Event');
+  }
+
+  if (user.id !== team.creatorId) {
+    // throw new NotAuthorizedError(); // this not return 401 I dont know why ??
+    throw new BadRequestError('The requester is not the team creator.');
+  }
+
+  await team.register(event);
+  res.status(200).send();
+};
+
+export const getRegisteredEvents = async (req: Request, res: Response) => {
+  const { teamName } = req.params;
+
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  const events: Event[] = await team.getMyEvents();
+  const response: IEventResponse[] = [];
+
+  for (let event of events) {
+    response.push(event.toJSON());
+  }
+  res.status(200).send(response);
+};
