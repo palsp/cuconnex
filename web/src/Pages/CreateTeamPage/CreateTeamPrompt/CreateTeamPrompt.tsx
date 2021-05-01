@@ -15,8 +15,10 @@ import classes from "./CreateTeamPrompt.module.css";
 import { ErrorContext } from "@context/ErrorContext";
 import defaultProfilePic from "@assets/defaultProfilePic.png";
 import { TextField } from "@material-ui/core";
+import { IEventData } from "@models/index";
 interface Props {
   members: IUserFriend[] | [];
+  event?: IEventData;
 }
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
@@ -123,6 +125,8 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
                 name: data.name.replace(/\s/g, ""),
                 description: data.description,
                 currentRecruitment: data.currentRecruitment,
+                event: props.event,
+                profilePic: imageRaw,
               };
               console.log(teamCreateData);
               createTeamHandler(teamCreateData);
