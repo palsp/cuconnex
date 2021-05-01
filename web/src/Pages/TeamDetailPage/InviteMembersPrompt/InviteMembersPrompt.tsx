@@ -88,7 +88,16 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       return extendedFriend;
     });
 
-    setFriendsNotInTeam(extendedFriends);
+    const extendedFriendsNotInTeam: IUserFriendExtended[] = extendedFriends.filter(
+      (extendedFriend) => {
+        let inTeam = false;
+        currentMembers.forEach((member) => {
+          inTeam = inTeam || member.id === extendedFriend.id;
+        });
+        return !inTeam;
+      }
+    );
+    setFriendsNotInTeam(extendedFriendsNotInTeam);
   };
 
   const selectPersonHandler = (e: IUserFriend) => {
