@@ -17,7 +17,10 @@ spec:
           image: palsp/connex-users
           env:
             - name: DB_HOST
-              value: "cuconnex-user-database.coriwyl3oyc8.ap-southeast-1.rds.amazonaws.com"
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-host
+                  key: DB_HOST
             - name: DB_USER
               value: "root"
             - name: DB_SCHEMA
