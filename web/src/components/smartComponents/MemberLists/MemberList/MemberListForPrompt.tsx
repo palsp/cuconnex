@@ -20,6 +20,7 @@ import {
 import { Redirect } from "react-router";
 
 interface Props {
+  clicked: boolean;
   members: IUserFriendExtended;
   selectMemberListHandler: any;
   team: IFetchTeam;
@@ -39,19 +40,33 @@ const MemberListForPrompt: React.FC<Props> = (props) => {
   }, [checked]);
   let statusTab = null;
   if (props.members.status === "invited") {
-    statusTab = <RecruitSign value="Pending"></RecruitSign>;
+    statusTab = (
+      <div className={classes.tabDiv}>
+        <RecruitSign value="Pending"></RecruitSign>
+      </div>
+    );
   }
   if (props.members.status === "notInvited") {
-    if (sent == false) {
+    if (props.clicked == false) {
       statusTab = (
-        <div onClick={checkedMemberHandler}>
+        <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
           <CheckBox />
+        </div>
+      );
+    } else {
+      statusTab = (
+        <div className={classes.tabDiv}>
+          <RecruitSign value="Pending"></RecruitSign>
         </div>
       );
     }
   }
   if (props.members.status === "requestedToJoin") {
-    statusTab = <RecruitSign value="Pending"></RecruitSign>;
+    statusTab = (
+      <div className={classes.tabDiv}>
+        <RecruitSign value="Pending"></RecruitSign>
+      </div>
+    );
   }
 
   return (

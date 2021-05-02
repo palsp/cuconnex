@@ -42,7 +42,7 @@
 }
 
 .Close .SideNavLine:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -2px);
+  transform: rotate(-45deg) translate(4px, -4px);
 }
 
 @media (min-width: 40rem) {

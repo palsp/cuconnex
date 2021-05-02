@@ -14,7 +14,7 @@ import mockEventLists from "@src/mockData/mockEventLists";
 import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
 import { IEventData, ITeam, IUser } from "@src/models";
 import { motion } from "framer-motion";
-import containerVariants from "@src/models/models";
+import containerVariants, { IFetchTeam } from "@src/models/models";
 import { UserContext } from "@context/UserContext";
 import { callTeamOfUserAPI } from "@src/api";
 
@@ -22,9 +22,9 @@ const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [noSearchResult, setNoSearchResult] = useState<boolean>(false);
   const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
-  const [teamLists, setTeamLists] = useState<ITeam[]>([]);
+  const [teamLists, setTeamLists] = useState<IFetchTeam[]>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
-  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   useEffect(() => {
     fetchTeamHandler();
