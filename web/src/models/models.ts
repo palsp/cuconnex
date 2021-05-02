@@ -36,10 +36,17 @@ export interface ITeam {
   description: string;
   lookingForMembers: boolean;
 }
+export interface IFetchTeam {
+  name: string; // team name
+  members: IUserFriend[];
+  creatorId: string;
+  description: string;
+  lookingForMembers: boolean;
+}
 
 export interface ISearchUserTeamEventResult {
   users: IUser[];
-  team: ITeam[];
+  team: IFetchTeam[];
   events: IEventData[];
 }
 export interface IUserSignup {
@@ -102,8 +109,9 @@ export interface ICreateUserData {
   role: string;
 }
 
-export interface IFetchTeam {
-  teams: ITeam[];
+
+export interface IFetchTeams {
+  teams :IFetchTeam[];
 }
 
 export interface IFetchFriendsData {
@@ -171,11 +179,28 @@ export interface IInviteDataResult {
 export interface ICallTeamOfUser {
   teams: ITeam[];
 }
+export interface IUserRequest {
+  teamName: string;
+}
+export interface IUserRequestResponse {
+  Member: IUser;
+}
 
 export interface IUserResponse {
   teamName: string;
   newStatusFromUser: string;
 }
+export interface IFetchUserRequestTeam {
+  teams: IFetchTeam[];
+}
+export interface IUserRelationTeam {
+  status: string;
+  sender: string;
+}
+export interface IUserFriendExtended extends IUserFriend {
+  status: "notInvited" | "invited" | "requestedToJoin" | "inTeam";
+}
+
 
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
@@ -210,6 +235,30 @@ export interface IFetchFriendNotification {
 }
 export interface IFetchFriendReceivedNotification {
   requests: IUserFriend[];
+}
+export interface IFetchOutgoingTeamNotification {
+  outgoingRequests: {
+    teamName: string;
+    pendingUsers: IUserFriend[];
+  };
+}
+export interface IFetchIncomingTeamNotification {
+  incomingRequests: {
+    teamName: string;
+    pendingUsers: IUserFriend[];
+  };
+}
+export interface ITeamCreatorResponse {
+  targetUserId: string;
+  teamName: string;
+  status: string;
+}
+export interface IRegisterTeamEvent{
+  teamName:string;
+  eventId:number;
+}
+export interface IFetchTeamEvent{
+  events:IEventData[];
 }
 
 //Search

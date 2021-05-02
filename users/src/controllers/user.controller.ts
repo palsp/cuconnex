@@ -3,11 +3,10 @@ import { Op } from 'sequelize';
 import {
   NotFoundError,
   BadRequestError,
-  InterestDescription,
   TeamStatus,
   InternalServerError,
 } from '@cuconnex/common';
-import { User, Team, Interest, IsMember, Category } from '../models';
+import { User, Team, Interest, IsMember, Category, Event } from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IFindRelationResponse,
@@ -16,6 +15,8 @@ import {
   ITeamResponse,
   IUserRequest,
   IIsMemberResponse,
+  IRecommendUserResponse,
+  IRecommendTeam,
 } from '../interfaces';
 
 /**
@@ -320,4 +321,53 @@ export const addRatings = async (req: Request, res: Response) => {
   // }
 
   // await user.addRating()
+}
+
+export const getRecommendTeam = async (req : Request , res : Response) => {
+    const eventId = req.params.eventId;
+    // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
+    const event = await Event.findOne({
+      where : { id : eventId } , 
+      include : { 
+        model : Team ,
+        as : 'candidate',
+        attributes : { include : ["name"] },
+        include : [
+            { model : User, 
+              as: 'owner', 
+              attributes :  ["id"],
+            },
+            { model : User, 
+              as : 'member' , 
+              attributes : ["id"] , 
+            }
+        ]
+      }
+    })
+
+    if(!event){
+      throw new NotFoundError("Event");
+    }
+    let result : {
+      team : Team,
+      score : number
+    }[] = [];
+
+    for(let team of event.candidate!){
+      // DO not predict user's team
+      const isMember = await team.findMember(req.user!.id);
+      if(isMember){
+        continue;
+      }
+      let score:number;
+      score = await req.user!.calculateTeamScore(team)
+      result.push({ team , score})
+    }
+
+    result.sort((a,b) => b.score - a.score)
+ 
+
+    const response : IRecommendTeam = { teams : result.map(r => r.team.toJSON())};
+
+    res.status(200).send(response);
 }

@@ -12,6 +12,7 @@ export enum TableName {
   teams = 'teams',
   faculty = 'faculty',
   rating = 'rating',
+  candidates = 'candidates',
 }
 
 /**

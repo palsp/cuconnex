@@ -1,8 +1,9 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, BelongsToManyGetAssociationsMixin } from 'sequelize';
 import { Description } from '@cuconnex/common';
 import { InterestEnumVal } from './types'
 import { TableName } from './types';
 import { IInterestResponse } from '../interfaces/user';
+import { User } from './user.model';
 
 
 // all attributes interest model has
@@ -21,6 +22,11 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   // public description!: InterestDescription;
   public category_id!: number
   public description!: Description
+
+
+
+  public getLike!: BelongsToManyGetAssociationsMixin<User>;
+
 
   /**
     * Automatically migrate schema, to keep your schema up to date.

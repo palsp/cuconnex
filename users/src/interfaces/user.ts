@@ -48,3 +48,7 @@ export interface ISearchAllResponse {
 export interface IFindRelationResponse {
     status: FriendStatus | null
 }
+
+export interface IRecommendTeam {
+    teams : ITeamResponse[];
+}

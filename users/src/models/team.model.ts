@@ -4,15 +4,22 @@ import {
   Sequelize,
   BelongsToManyAddAssociationMixin,
   BelongsToManyGetAssociationsMixin,
+  BelongsToGetAssociationMixin,
 } from 'sequelize';
 
 import { TableName } from './types';
 
 import { IsMember } from './isMember.model';
 import { User } from './user.model';
+import { Event } from './event.model';
+import { Candidate } from './candidate.model';
+
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
+import { Recommend } from './recommend.model';
+import { Connection } from './connection.model';
+
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -21,6 +28,8 @@ export interface TeamAttrs {
   description: string;
   lookingForMembers: boolean;
   members?: User[];
+  member?: User[];
+  owner?: User;
 }
 
 export interface TeamCreationAttrs {
@@ -34,6 +43,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public description!: string;
   public lookingForMembers: boolean = true;
   public members?: User[];
+  public owner?:User;
+  public member?: User[];
 
   public static autoMigrate(sequelize: Sequelize) {
     Team.init(
@@ -45,6 +56,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
         creatorId: {
           type: DataTypes.STRING(11),
           allowNull: false,
+          references : {
+            model : User
+          }
         },
         description: {
           type: DataTypes.STRING(255),
@@ -62,6 +76,8 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
       }
     );
   }
+
+  public getOwner!: BelongsToGetAssociationMixin<User>;
 
   // this addMember function just create PENDING status not ACCEPTED -> try use the 'addAndAcceptMember' function instead
   public addMember!: BelongsToManyAddAssociationMixin<IsMember, User>;
@@ -189,7 +205,6 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async getMembers(): Promise<User[]> {
     const membersWithAllStatus: User[] = await this.getMember();
 
-    
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.IsMember!.status === TeamStatus.Accept) {
         return member;
@@ -205,6 +220,89 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
     this.members = members;
+  }
+
+  /**
+   * This function is for complex query, its functionality is the same as CalculateUserScore
+   * before function call, make sure that team's owner and team's member is included 
+   * with team instance
+   * @param userId 
+   */
+  public async CalculateUserScoreComplexQuery(userId : string) : Promise<number>{ 
+    let meanScore;
+    const ownerRecommend = this.owner!.recommendation;
+    if(!ownerRecommend){
+      const status = await Connection.findConnection(userId , this.owner!.id);
+      const score = Connection.isConnection(status) ? 4 : 0;
+      meanScore = score
+    }else{
+      meanScore = ownerRecommend[0].Recommend!.score
+    }
+
+    for(let member of this.member!){
+      const MemberRecommend = member.recommendation
+      if(!MemberRecommend){
+        const status = await Connection.findConnection(userId , member.id);
+        const score = Connection.isConnection(status) ? 4 : 0;
+        meanScore += score
+      }else{
+        meanScore += MemberRecommend[0].Recommend!.score
+      }
+    }
+    return meanScore / (this.member!.length + 1)
+  }
+
+  public async CalculateUserScore(userId: string): Promise<number>{
+
+    if(!this.owner){
+      this.owner = await  this.getOwner()
+    }
+
+    if(!this.member){
+      this.member = await this.getMember();
+    }
+
+    // score from team owner
+    let meanScore = await Recommend.CalculateScore(this.owner.id , userId);
+
+    for(let member of this.member){
+      meanScore += await Recommend.CalculateScore(member.id, userId);
+    }
+
+    return meanScore / (this.member.length + 1)
+
+  }
+  // public addCandidate!: BelongsToManyAddAssociationMixin<Candidate, Event>;
+  public getCandidate!: BelongsToManyGetAssociationsMixin<Event>;
+
+  public async register(event: Event) {
+    const isCandidate = await Candidate.findOne({
+      where: { eventId: event.id, teamName: this.name },
+    });
+
+    if (isCandidate) {
+      throw new BadRequestError('This team already register for this event.');
+    }
+
+    try {
+      await Candidate.create({ eventId: event.id, teamName: this.name });
+    } catch (err) {
+      throw new BadRequestError(`Candidate table error: ${err.message}`);
+    }
+  }
+
+  public async getMyEvents(): Promise<Event[]> {
+    const candidates = await this.getCandidate();
+    // console.log('candy', candidates);
+    // let connections = await this.getConnection({ include : [Interest]});
+
+    let events: Event[] = [];
+
+    for (let i = 0; i < candidates.length; i++) {
+      events.push(candidates[i]);
+    }
+
+    return events;
   }
 
   public toJSON(): ITeamResponse {

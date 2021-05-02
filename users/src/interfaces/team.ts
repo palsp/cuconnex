@@ -7,3 +7,7 @@ export interface ITeamResponse {
   lookingForMembers: boolean;
   members: IUserResponse[];
 }
+
+export interface IRecommendUserResponse {
+  users : IUserResponse[];
+}

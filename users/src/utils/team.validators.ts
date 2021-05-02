@@ -1,5 +1,4 @@
 import { body } from 'express-validator';
-import { InterestDescription } from '@cuconnex/common';
 
 /**
  * name and description is required to create team
@@ -18,4 +17,9 @@ export const manageTeamStatusValidator = [
   body('targetUserId').notEmpty().isAlphanumeric(),
   body('teamName').notEmpty().isAlphanumeric(),
   body('status').notEmpty(),
+];
+
+export const registerEventValidator = [
+  body('eventId').notEmpty(),
+  body('teamName').notEmpty().isAlphanumeric(),
 ];

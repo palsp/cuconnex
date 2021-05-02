@@ -5,7 +5,7 @@ import { fetchFriendsDataAPI } from "@api/index";
 import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
-import { IUser, IUserFriend } from "@src/models";
+import { IUser, IUserFriend, IUserFriendExtended } from "@src/models";
 
 interface Props {
   memberlist: IUserFriend[] | [];
