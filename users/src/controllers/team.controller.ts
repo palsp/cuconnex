@@ -172,7 +172,6 @@ export const getRecommendedUserForTeam = async (req : Request , res : Response) 
   const filterInterest = req.query.filter;
   
   const teamName  =  req.params.teamName;
-  
 
   const team = await Team.findOne({ where : { name : teamName} , include : ['owner' , 'member']});
 

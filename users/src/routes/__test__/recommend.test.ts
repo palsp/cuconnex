@@ -123,13 +123,11 @@ describe( 'recommend User for team', () => {
         const users = await createDummyUser();
         const teams = await createTeamForDummyUsers(users);
         await createRecommendForDummyUsers(users);
-
         const {body} = await request(app)
         .get(`/api/teams/recommend-user/${teams[0].name}`)
         .set('Cookie' , global.signin(users[0].id))
         .send()
 
-            // i = 0
         expect(body.users.length).toEqual(5);
         const recommendUser = body.users
         expect(recommendUser[0].id).toEqual(users[5].id)
