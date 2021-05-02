@@ -309,3 +309,15 @@ export const getTeamStatus = async (req: Request, res: Response) => {
   const response: IIsMemberResponse = await user.getMyStatusWith(team);
   res.status(200).send(response);
 };
+
+export const addRatings = async (req: Request, res: Response) => {
+  const user = req.user!;
+  // const { rateeId, rating } = req.body;
+
+  // const isUser = await User.findOne({ where: { id: rateeId as string } });
+  // if (!isUser) {
+  //   throw new BadRequestError(`Ratee is not a user.`);
+  // }
+
+  // await user.addRating()
+}

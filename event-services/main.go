@@ -1,12 +1,11 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
+	"log"
+	"net/http"
 )
 
 func Migrate() {
@@ -21,10 +20,12 @@ func main() {
 	}
 	_ , err = common.InitDB()
 	if err != nil {
-		log.Printf("db err: %v\n", err)
-	}else{
-		Migrate()
+		log.Fatalf("db err: %v\n", err)
 	}
+		Migrate()
+
+
+
 
 	// Create a router
 	r := gin.Default()
@@ -33,7 +34,6 @@ func main() {
 	//r.Use(cors.New(config))
 
 	r.Use(CustomHeaderAPI)
-
 
 	testEvent := r.Group("/api/ping")
 	testEvent.GET("/", func(c *gin.Context) {
@@ -49,6 +49,7 @@ func main() {
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
 
 }
+
 
 func CustomHeaderAPI(c *gin.Context) {
 	// Add CORS headers

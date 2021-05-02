@@ -82,4 +82,7 @@ export const requestToJoinTeamValidator = [
   body('teamName').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
 ];
 
-export const addRatingValidator = [];
+export const addRatingValidator = [
+  body('rateeId').notEmpty().isAlphanumeric().withMessage('Ratee id is not valid'),
+  body('ratings').notEmpty().isNumeric(),
+];
