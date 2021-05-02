@@ -47,6 +47,7 @@ const ProfilePic: React.FC<Props> = (props) => {
   }
 
   return (
+    // <div className={classes.test}>
     <div data-test="profile-pic" className={cssArray.join(" ")}>
       <div className={profileArray.join(" ")}>
         {props.PicUrl ? (
@@ -67,6 +68,7 @@ const ProfilePic: React.FC<Props> = (props) => {
         )}
       </div>
     </div>
+    // </div>
   );
 };
 

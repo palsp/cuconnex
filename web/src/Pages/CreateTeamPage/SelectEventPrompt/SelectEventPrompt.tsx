@@ -9,22 +9,23 @@ import { IEventData, IUser, IUserFriend } from "@src/models";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import EventListForPrompt from "@smartComponents/EventLists/EventListForPrompt";
 import { mockEventLists } from "@src/mockData";
+import { fetchEventsDataAPI } from "@src/api";
 
 const SelectEventPrompt: React.FC = () => {
   const [clickSelectEvent, setClickSelectEvent] = useState<boolean>(true);
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(false);
-  const eventLists: IEventData[] | [] = mockEventLists;
+  const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
   const [selectedEventLists, setSelectedEventLists] = useState<IEventData>();
 
-  //   useEffect(() => {
-  //     fetchEventsHandler();
-  //   }, []);
-  //   const fetchEventsHandler = async () => {
-  //     const eventsData = await fetchEventsDataAPI();
-  //     console.log("SUCCESS fetchEventsHandler", eventsData.data.events);
-  //     setEventLists(eventsData.data.events);
-  //   };
+  useEffect(() => {
+    fetchEventsHandler();
+  }, []);
+  const fetchEventsHandler = async () => {
+    const eventsData = await fetchEventsDataAPI();
+    console.log("SUCCESS fetchEventsHandler", eventsData.data.events);
+    setEventLists(eventsData.data.events);
+  };
   const inviteClickedHandler = () => {
     setClickSelectEvent(false);
     setClickSelectMember(true);
@@ -61,13 +62,14 @@ const SelectEventPrompt: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className={classes.subtitleDiv}>
-          <Subtitle size="Medium" value="Select events to attend" />
-        </div>
         <div className={classes.memberListsDiv}>
           <EventListForPrompt
             selectEventHandler={selectedEventHandler}
             events={eventLists}
+          />
+          <EventListForPrompt
+            selectEventHandler={selectedEventHandler}
+            events={mockEventLists}
           />
         </div>
       </div>

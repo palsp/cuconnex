@@ -25,7 +25,7 @@ const EventLists: React.FC<Props> = (props) => {
                 setClick(true);
                 selectEventListHandler(index);
               }}
-              className={classes.listDiv}
+              className={classes.promptListDiv}
             >
               <GeneralLists key={index} events={eventpulled}></GeneralLists>
             </div>

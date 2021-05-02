@@ -2,10 +2,20 @@ import { Button, InputField } from "@dumbComponents/UI";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import MemberTags from "@smartComponents/MemberTag/MemberTags";
 import ProfilePic from "@smartComponents/ProfilePic/ProfilePic";
-import { createTeamAPI, teamInvitationAPI } from "@src/api";
+import {
+  createTeamAPI,
+  registerTeamEventAPI,
+  teamInvitationAPI,
+} from "@src/api";
 import { mockMemberLists } from "@src/mockData";
 import { UsersData } from "@src/mockData/Models";
-import { IInviteData, ITeamData, IUser, IUserFriend } from "@src/models";
+import {
+  IInviteData,
+  IRegisterTeamEvent,
+  ITeamData,
+  IUser,
+  IUserFriend,
+} from "@src/models";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
@@ -52,6 +62,15 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     const resultTeam = await createTeamAPI(teamData);
     console.log("Successfully sent a POST request to teams", resultTeam);
     console.log("Hello" + { resultTeam });
+  };
+  const registerEventHandler = async (eventTeamData: IRegisterTeamEvent) => {
+    const registerTeam = await registerTeamEventAPI(eventTeamData);
+    console.log(
+      "Register team to event =",
+      props.event?.["event-name"],
+      "Succesfully",
+      registerTeam
+    );
   };
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
