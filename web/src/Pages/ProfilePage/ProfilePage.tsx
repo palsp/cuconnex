@@ -210,6 +210,7 @@ const ProfilePage: React.FC<Props> = (props) => {
               (interest: string, index: number) => {
                 return (
                   <InterestList
+                    forShow
                     data-test="interest-list-business"
                     selectInterestHandlerDiv={() => {
                       return;
