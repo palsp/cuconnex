@@ -40,7 +40,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 40%;
+  margin-top: 20%;
 }
 
 /* FirstTime Login */
@@ -65,7 +65,7 @@
 }
 
 .myteamDiv {
-  margin-top: 10%;
+  margin-top: 20%;
 }
 
 .addTeam {

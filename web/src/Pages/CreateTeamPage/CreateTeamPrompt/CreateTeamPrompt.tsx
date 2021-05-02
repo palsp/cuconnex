@@ -12,7 +12,7 @@ import { UsersData } from "@src/mockData/Models";
 import {
   IInviteData,
   IRegisterTeamEvent,
-  ITeamData,
+  ICreateTeamData,
   IUser,
   IUserFriend,
 } from "@src/models";
@@ -58,25 +58,32 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     setClickSelectMember(true);
     setClickCreateTeam(false);
   };
-  const createTeamHandler = async (teamData: ITeamData) => {
-    const resultTeam = await createTeamAPI(teamData);
-    console.log("Successfully sent a POST request to teams", resultTeam);
-    console.log("Hello" + { resultTeam });
+  const createTeamHandler = async (teamData: ICreateTeamData) => {
+    try {
+      const resultTeam = await createTeamAPI(teamData);
+      console.log("Successfully sent a POST request to teams", resultTeam);
+    } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
+    }
   };
   const registerEventHandler = async (eventTeamData: IRegisterTeamEvent) => {
-    const registerTeam = await registerTeamEventAPI(eventTeamData);
-    console.log(
-      "Register team to event =",
-      props.event?.["event-name"],
-      "Succesfully",
-      registerTeam
-    );
+    try {
+      const registerTeam = await registerTeamEventAPI(eventTeamData);
+      console.log(
+        "Register team to event =",
+        props.event?.["event-name"],
+        "Succesfully",
+        registerTeam
+      );
+    } catch (e) {
+      setErrorHandler(e.resonse.data.errors[0].message);
+    }
   };
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
       const resultInvitation = await teamInvitationAPI(inviteData);
       console.log(
-        "Hi, Successfully sent a POST request to /api/teams/invite-member",
+        "Successful POST request to /api/teams/invite-member",
         resultInvitation
       );
       setRedirect(true);
@@ -91,7 +98,6 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       console.log("POST /members/invite/", teamNames, members.id);
     });
   };
-  console.log(props.members);
   const PageHero = (
     <div>
       {redirect ? (
@@ -139,21 +145,33 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
               description: "",
               currentRecruitment: "",
             }}
-            onSubmit={(data, { setSubmitting, resetForm }) => {
+            onSubmit={async (data, { setSubmitting, resetForm }) => {
+              let thisEventId = 0;
+              if (props.event) {
+                thisEventId = props.event.id;
+              }
               const teamCreateData = {
                 name: data.name.replace(/\s/g, ""),
                 description: data.description,
                 currentRecruitment: data.currentRecruitment,
-                event: props.event,
-                profilePic: imageRaw,
+                image: imageRaw,
               };
-              console.log(teamCreateData);
-              createTeamHandler(teamCreateData);
+              const registerEventData = {
+                teamName: data.name.replace(/\s/g, ""),
+                eventId: thisEventId,
+              };
+              console.log(
+                "teamCreateData...",
+                teamCreateData,
+                "registerEventData...",
+                registerEventData
+              );
+              await createTeamHandler(teamCreateData);
+              await registerEventHandler(registerEventData);
               setTimeout(
                 () => inviteMember(teamCreateData.name, props.members),
                 1000
               );
-              console.log("POST /api/teams/", data);
               setSubmitting(true);
               resetForm();
             }}
@@ -210,7 +228,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         <div className={classes.deleteUnderlineDiv}>{MemberTag}</div>
       </div>
     ) : clickSelectMember === true ? (
-      <SelectMemberPrompt />
+      <SelectMemberPrompt event={props.event} />
     ) : (
       <div>error</div>
     );

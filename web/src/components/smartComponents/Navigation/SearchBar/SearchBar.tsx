@@ -91,11 +91,13 @@ const SearchBar: React.FC<Props> = (props) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <Search />
+              <div style={{ width: "30px", height: "30px" }}>
+                <Search />
+              </div>
             </InputAdornment>
           ),
         }}
-      ></TextField>
+      />
     </div>
   );
 };
