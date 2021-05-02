@@ -109,9 +109,8 @@ export interface ICreateUserData {
   role: string;
 }
 
-
 export interface IFetchTeams {
-  teams :IFetchTeam[];
+  teams: IFetchTeam[];
 }
 
 export interface IFetchFriendsData {
@@ -201,7 +200,6 @@ export interface IUserFriendExtended extends IUserFriend {
   status: "notInvited" | "invited" | "requestedToJoin" | "inTeam";
 }
 
-
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
   Architecture = "Architecture",
@@ -253,12 +251,12 @@ export interface ITeamCreatorResponse {
   teamName: string;
   status: string;
 }
-export interface IRegisterTeamEvent{
-  teamName:string;
-  eventId:number;
+export interface IRegisterTeamEvent {
+  teamName: string;
+  eventId: number;
 }
-export interface IFetchTeamEvent{
-  events:IEventData[];
+export interface IFetchTeamEvent {
+  events: IEventData[];
 }
 
 //Search

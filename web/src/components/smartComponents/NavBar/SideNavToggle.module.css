@@ -12,7 +12,7 @@
 .SideNavToggle .SideNavLine {
   width: 32px;
   height: 5px;
-  margin: 0 0 5px 0;
+  margin: 1px 0 3.5px 0;
   background: rgb(0, 0, 0);
   transition: all 0.5s ease-out;
 }
@@ -33,8 +33,7 @@
 
 /* Styling the three lines to make it an X */
 .Close .SideNavLine:nth-child(1) {
-  transform: translateY(-50%);
-  transform: rotate(45deg) translate(10px, 10px);
+  transform: rotate(45deg) translate(12px, 5px);
 }
 
 .Close .SideNavLine:nth-child(2) {
@@ -42,7 +41,7 @@
 }
 
 .Close .SideNavLine:nth-child(3) {
-  transform: rotate(-45deg) translate(4px, -4px);
+  transform: rotate(-45deg) translate(8px, -2px);
 }
 
 @media (min-width: 40rem) {
