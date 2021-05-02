@@ -89,3 +89,16 @@
 p {
   position: relative;
 } */
+.test {
+  background: -webkit-linear-gradient(
+    #b827fc 0%,
+    #2c90fc 25%,
+    #b8fd33 50%,
+    #fec837 75%,
+    #fd1892 100%
+  );
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  padding: 2px;
+}
