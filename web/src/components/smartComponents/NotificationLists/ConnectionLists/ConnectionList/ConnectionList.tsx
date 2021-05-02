@@ -57,15 +57,10 @@ const ConnectionList: React.FC<Props> = (props) => {
     );
   } else if (clickAccept) {
     ButtonPrompt = (
-      <div 
-        className={classes.connectedSign} 
-        >
-          <RecruitSign
-            data-test="team-list-status"
-            value="Connected"
-          />
-    </div>
-    );   
+      <div className={classes.connectedSign}>
+        <RecruitSign data-test="team-list-status" value="Connected" />
+      </div>
+    );
   } else if (clickDecline) {
     ButtonPrompt = (
       <div className={classes.declineSign}>

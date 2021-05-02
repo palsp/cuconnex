@@ -6,6 +6,9 @@ export { default as Search } from "@icons/Search/Search";
 export { default as Send } from "@icons/Send/Send";
 export { default as Check } from "@icons/Check/Check";
 export { default as Mail } from "@icons/Mail/Mail";
+export { default as Star } from "@icons/Star/Star";
+export { default as ChevronRight } from "@icons/ChevronRight/ChevronRight";
+export { default as CircleFilledGrey } from "@icons/CircleFilledGrey/CircleFilledGrey";
 
 export { default as WebBuilder } from "@icons/InterestList/Technology/Web builder/Webbuilder";
 export { default as Blockchain } from "@icons/InterestList/Technology/Blockchain/Blockchain";

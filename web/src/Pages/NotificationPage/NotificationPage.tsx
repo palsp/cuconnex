@@ -150,6 +150,9 @@ const NotificationPage: React.FC = () => {
             />
           </div>
         </div>
+        <div className={classes.teamRatingList}>
+          <TeamRatingLists teams={myTeamLists} />
+        </div>
         <div className={classes.teamInvitationList}>
           <TeamInvitationLists
             data-test="Notification-page-team-invitation-lists"

@@ -1,17 +1,16 @@
 import axios from "axios";
 
-
 const token =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM3MjgzMjMiLCJpYXQiOjE2MTk3NjQyMjd9.107PhLfTC8EndfbwuN8FilKW7qAX2uthS60bW6VKhZo";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzQ2ODc2MjEiLCJpYXQiOjE2MTk5NjAxNTd9.y_-rh2UUqqqp4nU8tRh2oWQda9CY5uFaixjDhMezPtA";
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzQ2ODc2MjEiLCJpYXQiOjE2MTk5NDExMDd9.zBEQytdGr6smmNSaDOIolDk4YDHGcM8gfrNt_kc-CjY";
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM3MjgzMjMiLCJpYXQiOjE2MTk3NjQyMjd9.107PhLfTC8EndfbwuN8FilKW7qAX2uthS60bW6VKhZo";
 
 const axiosInstance = axios.create({
   baseURL: "https://www.cu-connex.com",
   //baseURL: window.location.origin,
 });
 
-
 axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
-
 
 export default axiosInstance;
 //loong01

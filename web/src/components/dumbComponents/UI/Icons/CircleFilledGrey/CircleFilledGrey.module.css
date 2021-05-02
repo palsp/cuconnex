@@ -1,0 +1,4 @@
+.FilledGrey {
+  color: var(--grey_dot, #e0e0e0);
+  overflow: visible;
+}
