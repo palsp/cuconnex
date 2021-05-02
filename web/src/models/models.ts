@@ -125,9 +125,11 @@ export interface IFetchEventsDataResult {
   events: IEventData[];
 }
 export interface IEventData {
+  id:number;
   "event-name": string;
   bio: string;
-  status?: string;
+  location:string;
+  registration:boolean;
   "start-date": {
     month: number;
     day: number;
@@ -148,6 +150,7 @@ export interface IEventData {
       second: number;
     };
   };
+  status?: string;
 }
 //team
 export interface IGetTeam {

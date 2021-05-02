@@ -2,9 +2,11 @@ import React from "react";
 import classes from "./EventCard.module.css";
 interface Props {
   events: {
+    id: number;
     "event-name": string;
     bio: string;
-    status?: string;
+    location: string;
+    registration: boolean;
     "start-date": {
       month: number;
       day: number;
@@ -25,6 +27,7 @@ interface Props {
         second: number;
       };
     };
+    status?: string;
   };
 }
 

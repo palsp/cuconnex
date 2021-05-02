@@ -147,6 +147,15 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
                 event: props.event,
                 profilePic: imageRaw,
               };
+              let thisEventId = 0;
+              if (props.event) {
+                thisEventId = props.event.id;
+              }
+              const registerEventData = {
+                teamName: data.name.replace(/\s/g, ""),
+                eventId: thisEventId,
+              };
+              registerEventHandler(registerEventData);
               console.log(teamCreateData);
               createTeamHandler(teamCreateData);
               setTimeout(
@@ -210,7 +219,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         <div className={classes.deleteUnderlineDiv}>{MemberTag}</div>
       </div>
     ) : clickSelectMember === true ? (
-      <SelectMemberPrompt />
+      <SelectMemberPrompt event={props.event} />
     ) : (
       <div>error</div>
     );
