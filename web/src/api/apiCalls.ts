@@ -8,7 +8,7 @@ import {
   IResultSigninSignup,
   IFetchEventsData,
   IEventData,
-  ITeamData,
+  ICreateTeamData,
   IInviteData,
   IInviteDataResult,
   ISearchUserTeamEventResult,
@@ -88,15 +88,19 @@ const createEventsAPI = async (
   );
   return createEventsData;
 };
-const createTeamAPI = async (
-  teamCreatedData: ITeamData
-): Promise<AxiosResponse<ITeamData>> => {
-  const createTeamData: AxiosResponse<ITeamData> = await axios.post(
-    "/api/teams",
-    teamCreatedData
-  );
-  console.log("eiei111", createTeamData);
-
+const createTeamAPI = async (teamCreatedData: ICreateTeamData) => {
+  const formData = new FormData();
+  formData.append("name", teamCreatedData.name);
+  formData.append("description", teamCreatedData.description);
+  // formData.append("currentRecruiment", teamCreatedData.currentRecruitment);
+  // formData.append("image", teamCreatedData.image ? teamCreatedData.image : "");
+  const createTeamData = await axios({
+    method: "post",
+    url: "/api/teams",
+    data: formData,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  // const createTeamData = await axios.post("/api/teams", teamCreatedData);
   return createTeamData;
 };
 
@@ -317,7 +321,6 @@ const fetchEventTeamAPI = async (
   );
   return teamData;
 };
-
 
 export {
   fetchUserDataAPI,

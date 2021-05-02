@@ -124,11 +124,11 @@ export interface IFetchEventsDataResult {
   events: IEventData[];
 }
 export interface IEventData {
-  id:number;
+  id: number;
   "event-name": string;
   bio: string;
-  location:string;
-  registration:boolean;
+  location: string;
+  registration: boolean;
   "start-date": {
     month: number;
     day: number;
@@ -155,9 +155,11 @@ export interface IEventData {
 export interface IGetTeam {
   team: ITeam;
 }
-export interface ITeamData {
+export interface ICreateTeamData {
   name: string;
   description: string;
+  currentRecruitment: string;
+  image: File | undefined;
 }
 
 export interface ITeamDataResult {

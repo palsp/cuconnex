@@ -12,7 +12,7 @@ import { UsersData } from "@src/mockData/Models";
 import {
   IInviteData,
   IRegisterTeamEvent,
-  ITeamData,
+  ICreateTeamData,
   IUser,
   IUserFriend,
 } from "@src/models";
@@ -58,10 +58,9 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     setClickSelectMember(true);
     setClickCreateTeam(false);
   };
-  const createTeamHandler = async (teamData: ITeamData) => {
+  const createTeamHandler = async (teamData: ICreateTeamData) => {
     const resultTeam = await createTeamAPI(teamData);
     console.log("Successfully sent a POST request to teams", resultTeam);
-    console.log("Hello" + { resultTeam });
   };
   const registerEventHandler = async (eventTeamData: IRegisterTeamEvent) => {
     const registerTeam = await registerTeamEventAPI(eventTeamData);
@@ -139,30 +138,34 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
               description: "",
               currentRecruitment: "",
             }}
-            onSubmit={(data, { setSubmitting, resetForm }) => {
-              const teamCreateData = {
-                name: data.name.replace(/\s/g, ""),
-                description: data.description,
-                currentRecruitment: data.currentRecruitment,
-                event: props.event,
-                profilePic: imageRaw,
-              };
+            onSubmit={async (data, { setSubmitting, resetForm }) => {
               let thisEventId = 0;
               if (props.event) {
                 thisEventId = props.event.id;
               }
+              const teamCreateData = {
+                name: data.name.replace(/\s/g, ""),
+                description: data.description,
+                currentRecruitment: data.currentRecruitment,
+                image: imageRaw,
+              };
               const registerEventData = {
                 teamName: data.name.replace(/\s/g, ""),
                 eventId: thisEventId,
               };
-              registerEventHandler(registerEventData);
-              console.log(teamCreateData);
+              console.log(
+                "teamCreateData...",
+                teamCreateData,
+                "registerEventData...",
+                registerEventData
+              );
               createTeamHandler(teamCreateData);
+              // registerEventHandler(registerEventData);
+
               setTimeout(
                 () => inviteMember(teamCreateData.name, props.members),
                 1000
               );
-              console.log("POST /api/teams/", data);
               setSubmitting(true);
               resetForm();
             }}
