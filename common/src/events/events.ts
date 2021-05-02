@@ -6,6 +6,7 @@ export interface EventCreated {
         id : number,
         "event-name" : string,
         registration : boolean,
+        endDate : Date,
     }
 }
 
@@ -16,5 +17,12 @@ export interface EventUpdated {
         "event-name" : string,
         registration : boolean,
         version : number,        
+    }
+}
+
+export interface EventEnd {
+    subject : Subjects.EventEnded,
+    data : {
+        id : number,
     }
 }

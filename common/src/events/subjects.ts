@@ -1,6 +1,7 @@
 export enum Subjects {
     EventCreated = "event:created",
-    EventUpdated = "event:updated"
+    EventUpdated = "event:updated",
+    EventEnded = "event:ended"
 }
 
 
