@@ -13,7 +13,12 @@ const setup = async () => {
     where: { description: Business.BusinessCase },
   });
   await user.addInterest(interest!);
-  const team = await user.createTeams({ name: 'testTeam', description: '' });
+  const team = await user.createTeams({
+    name: 'testTeam',
+    description: '',
+    image: '',
+    currentRecruitment: 'Developers',
+  });
 
   return { user, team, event, interest };
 };
@@ -43,7 +48,7 @@ describe('Edit Team', () => {
   it('should return 200 if user can edit team successfully.', async () => {
     const { user } = await setup();
 
-    const res = await request(app)
+    await request(app)
       .put('/api/teams')
       .set('Cookie', global.signin(user.id))
       .field({
@@ -52,20 +57,16 @@ describe('Edit Team', () => {
         currentRecruitment: 'updated recruitment',
         lookingForMembers: true,
       })
-      .attach('image', 'src/routes/__test__/test_images/testImage.jpg');
-    // .expect(200);
-    console.log(res.body);
+      .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
+      .expect(200);
 
     const myTeam = await user.getMyTeams();
     expect(myTeam.length).toEqual(1);
     expect(myTeam[0].creatorId).toEqual(user.id);
     expect(myTeam[0].name).toEqual('testTeam');
     expect(myTeam[0].image).not.toEqual('');
-    expect(myTeam[0].currentRecruitment).toEqual('Developers');
+    expect(myTeam[0].currentRecruitment).toEqual('updated recruitment');
 
-    expect(res.body.team.creatorId).toEqual(user.id);
-    expect(res.body.team.name).toEqual('newTeam');
-
-    deleteFile(res.body.team.image);
+    deleteFile(myTeam[0].image);
   });
 });

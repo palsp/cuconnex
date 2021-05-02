@@ -84,8 +84,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   } catch (err) {
     await user.destroy();
     throw new InternalServerError();
-  } 
-  
+  }
 
   const response: IUserResponse = {
     ...user!.toJSON(),
@@ -95,8 +94,6 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   res.status(201).send(response);
 };
 
-
-
 /**
  * Method for editing any field of the user with the specified id.
  * Expects req.body to have a user object
@@ -105,12 +102,15 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
  * @param req
  * @param res
  */
- export const editUser = async (req: Request, res: Response) => {
+export const editUser = async (req: Request, res: Response) => {
   const updatedUser = req.body as IUserRequest;
   updatedUser.file = { ...req.file };
 
+  const user = await User.findOne({ where: { id: req.user!.id } });
   if (req.file) {
-    deleteFile(req.user!.image);
+    if (user!.image !== '') {
+      deleteFile(req.user!.image);
+    }
     req.user!.image = updatedUser.file.path;
   }
 
@@ -127,14 +127,12 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     throw new InternalServerError();
   }
 
-
   const response: IUserResponse = {
     ...req.user!.toJSON(),
   };
 
   res.status(200).send(response);
 };
-
 
 export const search = async (req: Request, res: Response) => {
   const keyword = req.query.keyword;
@@ -152,7 +150,7 @@ export const search = async (req: Request, res: Response) => {
   let users: User[];
   let team: Team[];
   try {
-    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: Interest});
+    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: Interest });
     team = await Team.findAll({ where: teamConstraint });
   } catch (err) {
     console.log(err);

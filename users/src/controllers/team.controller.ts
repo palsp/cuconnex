@@ -72,8 +72,11 @@ export const editTeam = async (req: Request, res: Response) => {
   }
 
   updatedTeam.file = { ...req.file };
+
   if (req.file) {
-    deleteFile(team.image);
+    if (team.image !== '') {
+      deleteFile(team.image);
+    }
     team.image = updatedTeam.file.path;
   }
 
