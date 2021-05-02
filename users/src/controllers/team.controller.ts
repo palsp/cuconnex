@@ -7,6 +7,7 @@ import {
   ITeamResponse,
   ITeamRequestResponse,
   IEventResponse,
+  IRecommendUserResponse,
 } from '../interfaces';
 
 require('express-async-errors');
@@ -201,11 +202,11 @@ export const getRecommendedUserForTeam = async (req : Request , res : Response) 
     }
   }
 
-    //   // sort by score
+  // sort by score
   result.sort((a , b) => b.score - a.score);
 
   // TODO: create interface
-  const response = { users : result.map(r => r.user)};
+  const response : IRecommendUserResponse= { users : result.map(r => r.user.toJSON())};
 
   res.status(200).send(response)
 }

@@ -1,4 +1,4 @@
-  import { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import {
   NotFoundError,
@@ -15,6 +15,8 @@ import {
   ITeamResponse,
   IUserRequest,
   IIsMemberResponse,
+  IRecommendUserResponse,
+  IRecommendTeam,
 } from '../interfaces';
 
 /**
@@ -354,7 +356,7 @@ export const getRecommendTeam = async (req : Request , res : Response) => {
     result.sort((a,b) => b.score - a.score)
  
 
-    const response = { teams : result.map(r => r.team)};
+    const response : IRecommendTeam = { teams : result.map(r => r.team.toJSON())};
 
     res.status(200).send(response);
 }
