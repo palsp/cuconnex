@@ -28,6 +28,7 @@ import {
   userTeamRequestAPI,
 } from "@src/api";
 import RequestPrompt from "./RequestPrompt/RequestPrompt";
+import InviteMembersPrompt from "./InviteMembersPrompt/InviteMembersPrompt";
 
 interface Props {
   location: {
@@ -44,7 +45,7 @@ const TeamDetail: React.FC<Props> = (props) => {
   const [teamMembers, setTeamMembers] = useState<IUser[] | []>([]);
   const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
   const [clickTeamDetail, setClickTeamDetail] = useState<boolean>(true);
-  const [clickMemberRequest, setClickMemberRequest] = useState<boolean>(false);
+  const [clickInviteMembers, setClickInviteMembers] = useState<boolean>(false);
 
   const [incomingTeamNoti, setIncomingTeamNoti] = useState<IUserFriend[] | []>(
     []
@@ -99,13 +100,14 @@ const TeamDetail: React.FC<Props> = (props) => {
   const goBackPreviousPageHandler = () => {
     props.history.goBack();
   };
-  const requestButtonClickedHandler = () => {
-    setClickMemberRequest(true);
+  const inviteMembersClickedHandler = () => {
+    setClickInviteMembers(true);
     setClickTeamDetail(false);
   };
-  const backButtonClickedHandler = () => {
-    setClickMemberRequest(false);
+  const backClickedHandler = () => {
+    setClickInviteMembers(false);
     setClickTeamDetail(true);
+    console.log("Status", clickInviteMembers, clickTeamDetail);
   };
   const teamDetailPrompt =
     clickTeamDetail === true ? (
@@ -125,9 +127,10 @@ const TeamDetail: React.FC<Props> = (props) => {
               <ArrowLeft data-test="team-detail-page-arrow-left" />
             </div>
           ) : (
-            <div className={classes.closeLeft}>
-              <Close data-test="team-detail-page-close-left" />
-            </div>
+            // <div className={classes.closeLeft}>
+            //   <Close data-test="team-detail-page-close-left" />
+            // </div>
+            <div />
           )}
 
           <div className={classes.head}>
@@ -136,25 +139,23 @@ const TeamDetail: React.FC<Props> = (props) => {
           {isTeamOwner ? (
             <div />
           ) : (
-            <div className={classes.closeRight}>
-              <Close data-test="team-detail-page-close-right" />
-            </div>
+            // <div className={classes.closeRight}>
+            //   <Close data-test="team-detail-page-close-right" />
+            // </div>
+            <div />
           )}
         </div>
 
         <div className={classes.info}>
           <div className={classes.profileInfo}>
-            {/* <TeamInfo name="Suki Tee Noi" isTeamOwner={isTeamOwner} /> */}
             <TeamInfo
+              fetchRelationHandler={fetchRelationHandler}
+              inviteMembersClickedHandler={inviteMembersClickedHandler}
               status={relation}
               name={props.location.state.team.name}
               isTeamOwner={isTeamOwner}
             />
           </div>
-        </div>
-
-        <div className={classes.recruitment}>
-          <RecruitmentLists />
         </div>
 
         <div className={classes.memberpic}>
@@ -176,7 +177,11 @@ const TeamDetail: React.FC<Props> = (props) => {
         )}
       </motion.div>
     ) : (
-      <div />
+      <InviteMembersPrompt
+        incomingRequest={incomingTeamNoti}
+        backHandler={() => backClickedHandler}
+        teams={props.location.state.team}
+      />
     );
 
   return <div>{teamDetailPrompt}</div>;

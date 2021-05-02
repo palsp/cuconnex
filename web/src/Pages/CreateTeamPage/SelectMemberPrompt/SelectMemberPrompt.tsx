@@ -117,7 +117,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
         </div>
       </div>
     ) : clickCreateTeam === true ? (
-      <CreateTeamPrompt members={selectedMemberArray} />
+      <CreateTeamPrompt event={props.event} members={selectedMemberArray} />
     ) : (
       <div>
         <SelectEventPrompt />

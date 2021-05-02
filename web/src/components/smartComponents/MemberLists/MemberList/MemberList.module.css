@@ -70,7 +70,7 @@
   justify-content: center;
   align-items: flex-start;
   margin-top: -3.7vh;
-  width: 0.4vw;
+  /* width: 0.4vw; */
 }
 
 .divUserInfo {
@@ -78,8 +78,15 @@
   text-align: left;
 }
 .checkboxDiv {
-  margin-bottom: 5vh;
   display: flex;
-  padding-left: 10vw;
+  align-items: center;
+  justify-content: center;
+}
+.tabDiv {
+  margin-top: 1vh;
+  display: flex;
+  width: 14.77vh;
+  height: 14vh;
+  justify-content: center;
   align-items: center;
 }

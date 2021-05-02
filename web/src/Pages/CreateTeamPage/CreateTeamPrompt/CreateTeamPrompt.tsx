@@ -2,11 +2,21 @@ import { Button, InputField } from "@dumbComponents/UI";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import MemberTags from "@smartComponents/MemberTag/MemberTags";
 import ProfilePic from "@smartComponents/ProfilePic/ProfilePic";
-import { createTeamAPI, teamInvitationAPI } from "@src/api";
+import {
+  createTeamAPI,
+  registerTeamEventAPI,
+  teamInvitationAPI,
+} from "@src/api";
 import { mockMemberLists } from "@src/mockData";
 import { UsersData } from "@src/mockData/Models";
-import { IInviteData, ITeamData, IUser, IUserFriend } from "@src/models";
-import { Form, Formik } from "formik";
+import {
+  IInviteData,
+  IRegisterTeamEvent,
+  ICreateTeamData,
+  IUser,
+  IUserFriend,
+} from "@src/models";
+import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
 import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
@@ -14,8 +24,11 @@ import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
 import { ErrorContext } from "@context/ErrorContext";
 import defaultProfilePic from "@assets/defaultProfilePic.png";
+import { TextField } from "@material-ui/core";
+import { IEventData } from "@models/index";
 interface Props {
   members: IUserFriend[] | [];
+  event?: IEventData;
 }
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
@@ -45,16 +58,32 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
     setClickSelectMember(true);
     setClickCreateTeam(false);
   };
-  const createTeamHandler = async (teamData: ITeamData) => {
-    const resultTeam = await createTeamAPI(teamData);
-    console.log("Successfully sent a POST request to teams", resultTeam);
-    console.log("Hello" + { resultTeam });
+  const createTeamHandler = async (teamData: ICreateTeamData) => {
+    try {
+      const resultTeam = await createTeamAPI(teamData);
+      console.log("Successfully sent a POST request to teams", resultTeam);
+    } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
+    }
+  };
+  const registerEventHandler = async (eventTeamData: IRegisterTeamEvent) => {
+    try {
+      const registerTeam = await registerTeamEventAPI(eventTeamData);
+      console.log(
+        "Register team to event =",
+        props.event?.["event-name"],
+        "Succesfully",
+        registerTeam
+      );
+    } catch (e) {
+      setErrorHandler(e.resonse.data.errors[0].message);
+    }
   };
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
       const resultInvitation = await teamInvitationAPI(inviteData);
       console.log(
-        "Hi, Successfully sent a POST request to /api/teams/invite-member",
+        "Successful POST request to /api/teams/invite-member",
         resultInvitation
       );
       setRedirect(true);
@@ -69,7 +98,6 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
       console.log("POST /members/invite/", teamNames, members.id);
     });
   };
-  console.log(props.members);
   const PageHero = (
     <div>
       {redirect ? (
@@ -115,19 +143,35 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
             initialValues={{
               name: "",
               description: "",
+              currentRecruitment: "",
             }}
-            onSubmit={(data, { setSubmitting, resetForm }) => {
+            onSubmit={async (data, { setSubmitting, resetForm }) => {
+              let thisEventId = 0;
+              if (props.event) {
+                thisEventId = props.event.id;
+              }
               const teamCreateData = {
-                name: data.name,
+                name: data.name.replace(/\s/g, ""),
                 description: data.description,
+                currentRecruitment: data.currentRecruitment,
+                image: imageRaw,
               };
-              console.log(teamCreateData);
-              createTeamHandler(teamCreateData);
+              const registerEventData = {
+                teamName: data.name.replace(/\s/g, ""),
+                eventId: thisEventId,
+              };
+              console.log(
+                "teamCreateData...",
+                teamCreateData,
+                "registerEventData...",
+                registerEventData
+              );
+              await createTeamHandler(teamCreateData);
+              await registerEventHandler(registerEventData);
               setTimeout(
                 () => inviteMember(teamCreateData.name, props.members),
                 1000
               );
-              console.log("POST /api/teams/", data);
               setSubmitting(true);
               resetForm();
             }}
@@ -142,6 +186,18 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
                     label="Team description"
                     name="description"
                     type="input"
+                  />
+                </div>
+                <div className={classes.InputFieldDiv}>
+                  <Field
+                    style={{ width: "100%", marginTop: "10px" }}
+                    label="Current Recruitment"
+                    type="input"
+                    name="currentRecruitment"
+                    multiline
+                    rowsMax={2}
+                    variant="outlined"
+                    as={TextField}
                   />
                 </div>
                 <button
@@ -172,7 +228,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         <div className={classes.deleteUnderlineDiv}>{MemberTag}</div>
       </div>
     ) : clickSelectMember === true ? (
-      <SelectMemberPrompt />
+      <SelectMemberPrompt event={props.event} />
     ) : (
       <div>error</div>
     );

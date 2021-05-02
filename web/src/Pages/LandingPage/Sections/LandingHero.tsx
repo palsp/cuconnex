@@ -12,17 +12,20 @@ import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { motion } from "framer-motion";
 import { useNavigation } from "framer";
-import { ITeam, IUser } from "@models/index";
+import { IFetchTeam, ITeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
 import { UserContext } from "@context/UserContext";
 
 interface Props {
   hasTeam: boolean;
   userData: IUser;
+  pageHeight: {
+    height: string;
+  };
 }
 
 const LandingHero: React.FC<Props> = (props) => {
-  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
+  const [currentTeamLists, setCurrentTeamLists] = useState<IFetchTeam[]>([]);
   const { userData } = useContext(UserContext);
 
   let marginHeight;
@@ -75,6 +78,13 @@ const LandingHero: React.FC<Props> = (props) => {
           <FindteamLogo />
         </Link>
       </div>
+      <motion.div
+        animate={{ rotate: 180 }}
+        transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+        style={{ bottom: marginHeight, position: "absolute" }}
+        className={classes.circle_overlay}
+        data-test="landing-hero-halfcircleoverlay"
+      ></motion.div>
     </div>
   );
 

@@ -5,18 +5,15 @@
 
 .exploreHeader {
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin: auto;
   width: 90vw;
 }
 
 .exploreHeader a {
   margin-top: 2vh;
+  margin-right: 2vw;
   flex: 1;
-}
-
-.exploreHeader div {
-  flex: 8;
 }
 
 .exploreSubtitle,

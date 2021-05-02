@@ -6,6 +6,13 @@
   justify-content: center;
 }
 
+.waveBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
 .circle_overlay {
   position: absolute;
   z-index: -1;
@@ -21,18 +28,23 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  z-index: 2;
 }
 
 .signupPrompt {
   display: flex;
   align-items: center;
   flex-direction: column;
+  max-width: 224px;
+  z-index: 2;
 }
 
 .loginPrompt {
   display: flex;
   align-items: center;
   flex-direction: column;
+  max-width: 224px;
+  z-index: 2;
 }
 
 /* Content */

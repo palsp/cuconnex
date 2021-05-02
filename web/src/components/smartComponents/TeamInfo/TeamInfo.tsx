@@ -17,6 +17,8 @@ interface Props {
   name: string;
   isTeamOwner: boolean;
   status: string;
+  inviteMembersClickedHandler: any;
+  fetchRelationHandler: any;
 }
 
 const TeamInfo: React.FC<Props> = (props) => {
@@ -45,7 +47,10 @@ const TeamInfo: React.FC<Props> = (props) => {
         </div>
       </div>
       {props.isTeamOwner ? (
-        <div className={classes.sign}>
+        <div
+          onClick={() => props.inviteMembersClickedHandler()}
+          className={classes.sign}
+        >
           <RecruitSign value="Invite member" />
         </div>
       ) : props.status === null ? (
@@ -55,6 +60,7 @@ const TeamInfo: React.FC<Props> = (props) => {
               teamName: props.name,
             };
             userRequestHandler(name);
+            setTimeout(() => props.fetchRelationHandler(), 1000);
           }}
           className={classes.sign}
         >

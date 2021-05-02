@@ -8,7 +8,7 @@ import {
   IResultSigninSignup,
   IFetchEventsData,
   IEventData,
-  ITeamData,
+  ICreateTeamData,
   IInviteData,
   IInviteDataResult,
   ISearchUserTeamEventResult,
@@ -33,6 +33,9 @@ import {
   IUserRelationTeam,
   IFetchIncomingTeamNotification,
   ITeamCreatorResponse,
+  IFetchTeams,
+  IRegisterTeamEvent,
+  IFetchTeamEvent,
 } from "@src/models";
 
 //Auth Services
@@ -85,15 +88,19 @@ const createEventsAPI = async (
   );
   return createEventsData;
 };
-const createTeamAPI = async (
-  teamCreatedData: ITeamData
-): Promise<AxiosResponse<ITeamData>> => {
-  const createTeamData: AxiosResponse<ITeamData> = await axios.post(
-    "/api/teams",
-    teamCreatedData
-  );
-  console.log("eiei111", createTeamData);
-
+const createTeamAPI = async (teamCreatedData: ICreateTeamData) => {
+  const formData = new FormData();
+  formData.append("name", teamCreatedData.name);
+  formData.append("description", teamCreatedData.description);
+  // formData.append("currentRecruiment", teamCreatedData.currentRecruitment);
+  // formData.append("image", teamCreatedData.image ? teamCreatedData.image : "");
+  const createTeamData = await axios({
+    method: "post",
+    url: "/api/teams",
+    data: formData,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  // const createTeamData = await axios.post("/api/teams", teamCreatedData);
   return createTeamData;
 };
 
@@ -117,8 +124,8 @@ const fetchTeamDataAPI = async (
 };
 const callTeamOfUserAPI = async (
   userId: string
-): Promise<AxiosResponse<IFetchTeam>> => {
-  const calledResult: AxiosResponse<IFetchTeam> = await axios.get(
+): Promise<AxiosResponse<IFetchTeams>> => {
+  const calledResult: AxiosResponse<IFetchTeams> = await axios.get(
     `/api/users/teams/${userId}`
   );
 
@@ -289,6 +296,31 @@ const teamOwnerResponseAPI = async (
   );
   return responseData;
 };
+const registerTeamEventAPI = async (
+  registerData: IRegisterTeamEvent
+): Promise<AxiosResponse<IRegisterTeamEvent>> => {
+  const registeredData: AxiosResponse<IRegisterTeamEvent> = await axios.post(
+    "/api/teams/events/register",
+    registerData
+  );
+  return registeredData;
+};
+const fetchTeamEventAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchTeamEvent>> => {
+  const eventData: AxiosResponse<IFetchTeamEvent> = await axios.get(
+    `/api/teams/incoming-requests/${teamName}`
+  );
+  return eventData;
+};
+const fetchEventTeamAPI = async (
+  eventId: number
+): Promise<AxiosResponse<IFetchTeams>> => {
+  const teamData: AxiosResponse<IFetchTeams> = await axios.get(
+    `/api/teams/events/candidates/${eventId}`
+  );
+  return teamData;
+};
 
 export {
   fetchUserDataAPI,
@@ -318,4 +350,7 @@ export {
   userTeamRelationAPI,
   fetchTeamIncomingNotificationAPI,
   teamOwnerResponseAPI,
+  registerTeamEventAPI,
+  fetchTeamEventAPI,
+  fetchEventTeamAPI,
 };

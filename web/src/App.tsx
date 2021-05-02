@@ -71,7 +71,9 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-        <AnimatePresence>{routes}</AnimatePresence>
+        <AnimatePresence exitBeforeEnter initial={false}>
+          {routes}
+        </AnimatePresence>
       </AuthenticatedContext.Provider>
     </div>
   );

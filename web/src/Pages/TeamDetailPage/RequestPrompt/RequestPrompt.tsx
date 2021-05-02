@@ -35,6 +35,10 @@ const RequestPrompt: React.FC<Props> = (props) => {
     const resultTeam = await teamOwnerResponseAPI(response);
     console.log("User Status:", resultTeam);
   };
+  let status = "";
+  if (props.requests.length == 0) {
+    status = "Currently, there is no pending request";
+  }
   return (
     <motion.div
       variants={containerVariants}
@@ -49,9 +53,9 @@ const RequestPrompt: React.FC<Props> = (props) => {
             teams={props.teams}
             requests={props.requests}
           ></ConnectionListsForPrompt>
+          <div className={classes.statusDiv}>{status}</div>
         </div>
       </div>
-      <div className={classes.listDiv}></div>
     </motion.div>
   );
 };
