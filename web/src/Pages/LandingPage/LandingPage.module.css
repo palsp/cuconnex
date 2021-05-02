@@ -1,5 +1,61 @@
-@media only screen and (max-width: 375px) {
-  /* iPhone X */
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.landingPrompt {
+  height: 100%;
+}
+
+.heroDiv {
+  margin-top: 90px;
+}
+
+.heroDivHasTeam {
+  margin-top: 30px;
+}
+
+.content .searchDiv {
+  zoom: 160%;
+  margin-left: -10%;
+  margin-right: 53%;
+}
+
+.flexDiv {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.headerDiv {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+.arrowDiv {
+  align-items: flex-end;
+  position: fixed;
+  top: 5vh;
+  left: 10vw;
+}
+
+.promptDiv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+.hamburgerPrompt {
+  height: 100%;
+}
+
+/* @media only screen and (max-width: 375px) {
+  /* iPhone X 
 
   .main .container {
     width: 100vw;
@@ -49,53 +105,48 @@
     width: 100%;
     height: 100%;
   }
+.toolbarDiv {
+  justify-content: center;
+  display:flex;
+  flex-direction: row;
+  width: 375px;
+  height: 30px;
+  margin-top:30px;
 }
-@media only screen and (min-width: 414px) {
-  .main .container {
-    width: 100vw;
-    height: 100vh;
-  }
-  .headerDiv {
-    display: flex;
-    flex-direction: row;
-    margin-top: 3%;
-  }
-  .flexDiv {
-    display: flex;
-    flex-direction: column;
-    width: 100vw;
-    height: 100vh;
-  }
-  .heroDiv {
-  }
-  .mailDiv {
-    zoom: 500%;
-    margin-top: -2.5%;
-    margin-left: 70%;
-  }
-  .hamburgerDiv {
-    margin-left: 2%;
-    zoom: 200%;
-  }
-  .arrowDiv {
-    align-items: flex-end;
-    position: fixed;
-    right: 10%;
-  }
-  .promptDiv {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10%;
-  }
-  .hamburgerPromptDiv {
-    display: flex;
-  }
-  .searchDiv {
-    zoom: 320%;
-    margin-left: 5%;
-  }
-  .background {
-    width: 100%;
-    height: 100%;
-  }
+.mailDiv {
+  margin-left:70px;
+  width:23px;
+  height:30px;
+  zoom: 250%;
 }
+.hamburgerDiv {
+  width:23px;
+  height:30px;
+}
+.arrowDiv {
+  align-items: flex-end;
+  position: fixed;
+  right: 10%;
+  margin:auto;
+}
+.promptDiv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+.heroDiv{
+  margin-top:98px;
+}
+.searchDiv {
+  margin-right:25px;
+  zoom: 160%;
+  height: 30px;
+  width: 23px;
+  
+}
+.background {
+  width: 375px;
+  height: 812px;
+}
+
+*/

@@ -1,21 +1,20 @@
 .interestList {
   margin: 2vw;
-  border-radius: 10%;
-  height: 100%;
 }
 
 .interest {
-  background-color: hsl(0, 29%, 59%);
+  /* background-color: hsl(0, 29%, 59%); */
+  border: 1px solid #f33182;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10%;
-  height: 40px;
+  border-radius: 10px;
+  height: 35px;
 }
 
 .icon {
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 5px;
+  margin-right: 5px;
   position: relative;
   align-items: flex-start;
   width: 20px;
@@ -24,21 +23,23 @@
 
 .text {
   margin: 0;
+  white-space: nowrap;
+  font-size: 12px;
   /* position: relative; */
 }
 
-p::after {
+p.interestP::after {
   content: " ";
   white-space: pre;
 }
-p::before {
+p.interestP::before {
   content: " ";
   white-space: pre;
 }
 
 .isClicked {
   background-color: #f33182;
-  border-radius: 10%;
+  border-radius: 10px;
   color: white;
 }
 

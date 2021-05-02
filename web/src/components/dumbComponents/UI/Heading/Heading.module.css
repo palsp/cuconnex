@@ -1,6 +1,6 @@
 .titlePage {
   /* width: 106px; */
-  height: 1.7rem;
+  /* height: 1.7rem; */
   overflow: visible;
   letter-spacing: 0px;
   line-height: 1.2;
@@ -13,7 +13,7 @@
 
 .titlePageBlack {
   /* width: 106px; */
-  height: 1.7rem;
+  /* height: 1.7rem; */
   overflow: visible;
   letter-spacing: 0px;
   line-height: 1.2;
@@ -29,10 +29,23 @@
   font-weight: 500;
 }
 
+.smallMediumSize {
+  font-size: 1.5rem;
+}
+
 .mediumSize {
   font-size: 2rem;
 }
 
 .bigSize {
   font-size: 3rem;
+}
+
+.smallMediumSize {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.bold {
+  font-weight: 600;
 }

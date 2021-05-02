@@ -1,19 +1,17 @@
-.marg{
-  margin-top:0%;
-  position:relative;
-  display:relative;
-  top:10px;
+.marg {
+  margin-top: 0%;
+  position: relative;
+  display: relative;
+  top: 10px;
 }
 .flex {
   border: 0.5px solid grey;
-  border-radius:25px;
+  border-radius: 25px;
   justify-content: space-around;
-  width:170px;
+  width: 170px;
   height: 200px;
   margin-bottom: 20px;
-  margin-left:8px;
-
-
+  margin-left: 8px;
 }
 
 .divFriendList {

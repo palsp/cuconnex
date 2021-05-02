@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Formik, Form, Field } from "formik";
-import { FormControl, InputLabel, MenuItem, Select } from "@material-ui/core/";
+import { FormControl, TextField } from "@material-ui/core/";
 import * as yup from "yup";
 
 import {
@@ -10,44 +10,58 @@ import {
   DotMorePage,
   Heading,
   InputField,
-  ProfilePic,
   Subtitle,
 } from "@dumbComponents/UI/index";
 
-import { ArrowRight } from "@icons/index";
-
+import { ProfilePic } from "@smartComponents/index";
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
+import defaultProfilePic from "@assets/defaultProfilePic.png";
+import tempProfilePicture from "@assets/tempProfilePic.jpg";
 
-const facultyArray = [
-  "Allied Health Sciences",
-  "Architecture",
-  "Arts",
-  "Communication Arts",
-  "Commerce and Accountancy",
-  "Dentistry",
-  "Economics",
-  "Education",
-  "Engineering",
-  "Fine and Applied Arts",
-  "Law",
-  "Medicine",
-  "Nursing",
-  "Pharmaceutical Sciences",
-  "Political Sciences",
-  "Psychology",
-  "Science",
-  "Sports Science",
-  "VeterinaryScience",
-  "Integrated Innovation",
-  "Agricultural Resources",
-];
+interface Props {
+  location: {
+    state: {
+      year: number;
+      faculty: string;
+      id: string;
+    };
+  };
+}
 
 const validationSchema = yup.object({
   displayName: yup.string().required("Display name is required"),
+  bio: yup.string().required("Please fill in your bio"),
+  role: yup.string().required("Please fill in your role"),
 });
-const PersonalInfoPage: React.FC = () => {
-  const [redirect, setRedirect] = useState<any>();
+
+const PersonalInfoPage: React.FC<Props> = (props) => {
+  const [redirect, setRedirect] = useState<JSX.Element>();
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [imageRaw, setImageRaw] = useState<File>();
+
+  const handleUploadedImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log("e.target.files: ", e.target.files);
+    if (e.target.files?.length) {
+      // console.log("Initial image raw: ", imageRaw);
+      setImagePreview(URL.createObjectURL(e.target.files[0]));
+      setImageRaw(e.target.files[0]);
+    }
+  };
+
+  const handleInitialImage = () => {
+    const fileName = "myFile.png";
+    fetch(defaultProfilePic).then(async (response) => {
+      const blob = await response.blob();
+      const file = new File([blob], fileName, { type: "image/png" });
+      // setImagePreview(URL.createObjectURL(blob));
+      setImageRaw(file);
+    });
+    fetch(tempProfilePicture).then(async (response) => {
+      const blob = await response.blob();
+      setImagePreview(URL.createObjectURL(blob));
+    });
+  };
 
   return (
     <div className={classes.main}>
@@ -69,22 +83,55 @@ const PersonalInfoPage: React.FC = () => {
                     value="Setting up your profile"
                   />
                 </div>
-                <div className={classes.profilePicDiv}>
-                  <ProfilePic
-                    size="big"
-                    data-test="personal-info-personalImage"
+                <div
+                  className={classes.profilePicDiv}
+                  onChange={() => console.log("Image raw: ", imageRaw)}
+                >
+                  <label htmlFor="upload-button">
+                    {imagePreview !== "" ? (
+                      <>
+                        <ProfilePic
+                          size="xl"
+                          data-test="personal-info-personalImage"
+                          PicUrl={imagePreview}
+                          previewImage={true}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        {handleInitialImage()}
+                        {/* <ProfilePic
+                          size="big"
+                          data-test="personal-info-personalImage"
+                        /> */}
+                      </>
+                    )}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="myFile"
+                    id="upload-button"
+                    style={{ display: "none" }}
+                    onChange={handleUploadedImage}
                   />
                 </div>
-                {/* <div className={classes.usernameDiv}>
-                  <Username
-                    data-test="personal-info-username"
-                    value="@micky_ngub"
-                  />
-                  <Edit />
-                </div> */}
+
+                {props.location?.state && (
+                  <>
+                    <div className={classes.idYearFaculty}>
+                      {props.location.state.id}
+                    </div>
+                    <div className={classes.idYearFaculty}>
+                      Faculty of {props.location.state.faculty}, Year{" "}
+                      {props.location.state.year}
+                    </div>
+                  </>
+                )}
+
                 <Formik
                   data-test="personal-info-form"
-                  initialValues={{ displayName: "", faculty: "" }}
+                  initialValues={{ displayName: "", bio: "", role: "" }}
                   onSubmit={(data, { setSubmitting }) => {
                     console.log("Data from PersonalInformationPage", data);
                     setSubmitting(true);
@@ -98,7 +145,11 @@ const PersonalInfoPage: React.FC = () => {
                             pathname: "/selectinterests",
                             state: {
                               name: data.displayName,
-                              faculty: data.faculty,
+                              bio: data.bio,
+                              role: data.role,
+                              profilePic: imageRaw,
+                              year: props.location.state.year.toString(10),
+                              faculty: props.location.state.faculty,
                             },
                           }}
                         />
@@ -107,7 +158,7 @@ const PersonalInfoPage: React.FC = () => {
                   }}
                   validationSchema={validationSchema}
                 >
-                  {({ values, handleSubmit }) => (
+                  {({ values }) => (
                     <Form>
                       <div className={classes.inputFieldDiv}>
                         <InputField
@@ -116,9 +167,18 @@ const PersonalInfoPage: React.FC = () => {
                           name="displayName"
                         />
                       </div>
+                      <div className={classes.inputFieldDiv}>
+                        <InputField
+                          label="Role*"
+                          type="input"
+                          name="role"
+                          placeholder="Developer, Business Analyst, etc."
+                        />
+                      </div>
+
                       <div className={classes.selectDiv}>
                         <FormControl style={{ width: "100%" }}>
-                          <InputLabel>Faculty</InputLabel>
+                          {/* <InputLabel>Faculty</InputLabel>
                           <Field
                             name="faculty"
                             type="select"
@@ -130,13 +190,21 @@ const PersonalInfoPage: React.FC = () => {
                                 {faculty}
                               </MenuItem>
                             ))}
-                          </Field>
+                          </Field> */}
+                          <Field
+                            label="Bio"
+                            type="input"
+                            name="bio"
+                            multiline
+                            rowsMax={4}
+                            variant="outlined"
+                            as={TextField}
+                          />
                         </FormControl>
                       </div>
                       <div className={classes.Button}>
                         <Button value="Save" />
                       </div>
-                      <p style={{ width: "300px" }}>{JSON.stringify(values)}</p>
                       <div className={classes.footerNavigation}>
                         {/*  This div is for centering footer navigation*/}
                         <div style={{ width: "80px" }}></div>
@@ -146,27 +214,12 @@ const PersonalInfoPage: React.FC = () => {
                         />
 
                         <button type="submit" className={classes.noStyleButton}>
-                          <div className={classes.footerIcon}>
-                            <Heading value="Skip" size="small" />
-                            <ArrowRight data-test="personal-info-arrowRight" />
-                          </div>
+                          <div className={classes.emptyDiv}></div>
                         </button>
                       </div>
                     </Form>
                   )}
                 </Formik>
-                {/* <div className={classes.InputFieldDiv}>
-                  <InputField
-                    data-test="personal-info-setDisplayedName"
-                    value="Displayed Name" />
-                  <InputField 
-                    data-test="personal-info-setFaculty" 
-                    value="Faculty" />
-                  <InputField data-test="personal-info-setMajor" 
-                    value="Major" />
-                  <InputField data-test="personal-info-setYear" 
-                    value="Year of study" />
-                </div> */}
               </motion.div>
             </div>
             {redirect}

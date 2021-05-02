@@ -15,4 +15,4 @@ interface WriteResult {
   doc: any; //cheating here
 }
 
-export {User, SomeValueEnum, WriteResult};
+export { User, SomeValueEnum, WriteResult };

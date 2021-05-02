@@ -1,0 +1,92 @@
+.memberList {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 15.763vh;
+  overflow: visible;
+  border-color: #808080;
+  border-style: solid;
+  border-top-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+.divFriendList {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: inherit;
+}
+
+.divUsernameInfo {
+  width: auto;
+  height: auto;
+  margin-top: 2vh;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--black, #000000);
+  font-size: 20px;
+  text-align: left;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.divRoleInfo {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--search_bar, #f33182);
+  font-size: 15px;
+  text-align: left;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.divFacultyInfo {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--search_bar, #c2c2c2);
+  font-size: 10px;
+  text-align: left;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -3.7vh;
+  /* width: 0.4vw; */
+}
+
+.divUserInfo {
+  height: 2.46vh;
+  text-align: left;
+}
+.checkboxDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tabDiv {
+  margin-top: 1vh;
+  display: flex;
+  width: 14.77vh;
+  height: 14vh;
+  justify-content: center;
+  align-items: center;
+}

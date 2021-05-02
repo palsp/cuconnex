@@ -1,18 +1,10 @@
-.mainDiv {
-  width: 375px;
+.pageNameContainer {
   display: flex;
-  flex-direction: column;
-  height: 900px;
-}
-.headerContainer{
-  display:flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 }
-.headingDiv{
-  width: auto;
-  height: auto;
+.headingDiv {
   overflow: visible;
   white-space: pre;
   color: var(--main_pink, #f33182);
@@ -24,14 +16,18 @@
   font-family: "Nunito", serif;
 }
 .teamContainer {
+  margin-top: 40vh;
+  margin-bottom: 2vh;
   display: flex;
+  justify-content: flex-start;
   flex-direction: row;
-  height: 20px;
-  width: 325px;
-  align-items: center;
-  margin-left:6%;
+  height: 2.46vh;
+  width: 100vw;
 }
 .teamDiv {
+  margin-left: 6vw;
+  text-align: left;
+  width: 100vw;
   overflow: visible;
   white-space: pre;
   letter-spacing: 0px;
@@ -42,18 +38,42 @@
   font-size: 20px;
   color: var(--main_pink, #f33182);
 }
-.eventcardsDiv{
+.arrowDiv {
+  height: 6.21vh;
+  display: flex;
+  align-items: center;
+  margin-right: 25vw;
+  margin-left: 5vw;
 }
-.arrowDiv{
-  position:absolute;
-  left:5%;
-  top:1.5%; 
-}
-.arrowheaderContainer{
-  width: 375px;
-  height:50px;
-  display:flex;
-  justify-content: center;
+.headerContainer {
+  width: 100vw;
+  height: 4.92vh;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
   border-bottom: 0.5px solid grey;
+}
+.fixHeaderDiv {
+  position: fixed;
+  background-color: white;
+}
+
+.divHeading {
+  display: flex;
+  width: 100vw;
+  height: 15vh;
+  z-index: 1;
+  align-items: center;
+}
+
+.divFixed {
+  position: fixed;
+  width: 100vw;
+  background-color: white;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 18px;
+  top: 5vh;
 }

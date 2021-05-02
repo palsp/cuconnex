@@ -11,10 +11,11 @@ import { InterestDescription } from '@cuconnex/common';
 import { TableName } from './types';
 import { Interest, InterestCreationAttrs } from './interest.model';
 
-// all atributes interest model has
+// all attributes interest model has
 export interface CategoryAttrs {
   id: number;
   category: string;
+  interests?: Interest[];
 }
 
 // all arguments require to create interest
@@ -25,6 +26,7 @@ export interface CategoryCreationAttrs {
 class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
   public id!: number;
   public category!: string;
+  public interests?: Interest[];
 
   public addInterest!: HasManyAddAssociationMixin<Interest, 'id'>;
   public getInterests!: HasManyGetAssociationsMixin<Interest>;
@@ -46,6 +48,7 @@ class Category extends Model<CategoryAttrs, CategoryCreationAttrs> {
           type: DataTypes.ENUM,
           values: Object.keys(InterestDescription),
           primaryKey: true,
+          unique: true,
         },
       },
       {

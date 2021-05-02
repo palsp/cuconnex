@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
-import { BadRequestError } from '@cuconnex/common'
+import { BadRequestError, getYearFromId } from '@cuconnex/common'
+import { Op } from 'sequelize';
 import { Password } from '../services/password';
 require('express-async-errors');
+import { faculty, getFacultyCodeFromId, getCurrentYear } from '@cuconnex/common';
 
 interface UserPayload {
     id: string,
@@ -13,20 +15,24 @@ interface UserPayload {
 export const signUp = async (req: Request, res: Response) => {
     const { id, email, password } = req.body
 
-    const existingUser = await User.findOne({ where: { email } }); //This works too because email is unique
+
+    const existingUser = await User.findOne({ where: { [Op.or]: [{ id }, { email }] } }); //This works too because email is unique
 
     if (existingUser) throw new BadRequestError('User existed');
 
-
-    const user = await User.create({
-        id,
-        email,
-        password,
-    });
+    let user: User;
+    try {
+        user = await User.create({
+            id,
+            email,
+            password,
+        });
+    } catch (err) {
+        throw new BadRequestError('Create User Failed')
+    }
 
     const userPayload: UserPayload = {
         id: user.id,
-
     }
 
     const userJwt = jwt.sign(userPayload, process.env.JWT_KEY!); //Needs exclamation mark because typescript doesn't know if we already have a key
@@ -35,7 +41,14 @@ export const signUp = async (req: Request, res: Response) => {
         jwt: userJwt
     };
 
-    res.status(201).send(user);
+    const response = {
+        ...user.toJSON(),
+        faculty: faculty[getFacultyCodeFromId(id)],
+        year: +getCurrentYear() - +getYearFromId(id)
+    }
+
+    // Token must be removed in production
+    res.status(201).send({ ...response, token: userJwt });
 
 };
 
@@ -62,7 +75,13 @@ export const signIn = async (req: Request, res: Response) => {
         jwt: userJwt,
     };
 
-    res.status(200).send({ email: existingUser.email, id: existingUser.id });
+    const response = {
+        ...existingUser.toJSON(),
+        faculty: faculty[getFacultyCodeFromId(existingUser.id)],
+        year: +getCurrentYear() - +getYearFromId(existingUser.id)
+    }
+    // Token must be removed in production
+    res.status(200).send({ ...response, token: userJwt });
 };
 
 

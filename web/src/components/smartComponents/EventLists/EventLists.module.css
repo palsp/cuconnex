@@ -1,25 +1,29 @@
-.mainDiv{
-    display:flex;
-    flex-direction: column;
-    width: 375px;
-    height: 812px;
+.mainDiv {
+  display: flex;
+  flex-direction: column;
 }
-.headingcontainerDiv{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+.headingcontainerDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-.listDiv{
-    width:375px;
-    height:103px;
-    border-bottom: 0.5px solid grey;
+.listDiv {
+  width: 100vw;
+  height: 12.7vh;
 }
-.arrowDiv{
-    zoom:150%;
-    width: 28px;
-    height:28px;
-    position:fixed;
-    left:5%;
-    top:3.3%;
+.promptListDiv {
+  width: 100vw;
+  height: 12.7vh;
+}
+.arrowDiv {
+  zoom: 150%;
+  width: 28px;
+  height: 28px;
+  position: fixed;
+  left: 5%;
+  top: 3.3%;
+}
+.deleteunderlineDiv a {
+  text-decoration: none;
 }

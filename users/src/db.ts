@@ -21,7 +21,6 @@ interface myDB {
 const initializeDB = async () => {
   const myDB: myDB = {};
   const { host, db: database, user, password } = config;
-
   myDB.connection = await mysql.createConnection({ host: host, user, password });
 
   await myDB.connection.query(`CREATE DATABASE IF NOT EXISTS \`${database}\`;`);
@@ -30,7 +29,7 @@ const initializeDB = async () => {
 
   autoMigrate(myDB.sequelize);
 
-  await myDB.sequelize.sync({ force: true });
+  await myDB.sequelize.sync({ logging: false });
 
   return myDB;
 };

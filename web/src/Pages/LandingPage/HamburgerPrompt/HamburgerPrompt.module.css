@@ -1,8 +1,13 @@
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -5vh;
+}
+
 .main {
   display: flex;
-  margin-top: 100%;
   flex-direction: column;
-}
-.MenuDiv {
-  margin-top: 10%;
 }

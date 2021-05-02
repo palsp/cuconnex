@@ -1,0 +1,56 @@
+.heroDiv {
+  display: flex;
+  flex-direction: column;
+  height: 75vh;
+  width: 100vw;
+  justify-content: center;
+}
+.topicDiv {
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 20px;
+  color: var(--icon, #555555);
+}
+.scopeDiv {
+  margin: 10%;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: pre;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "nunito", serif;
+  color: var(--main_pink, #f33182);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 18px;
+}
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 8.93vh;
+  background-color: var(--white, #ffffff);
+  overflow: visible;
+  border-color: var(--token-ee10fcc7-dc56-4004-b598-344157627b44, #ebebeb)
+    /* {"name":"light grey"} */;
+  border-style: solid;
+  border-top-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+.closeDiv {
+  margin-left: 80vw;
+  width: 25px;
+  height: 50px;
+}

@@ -3,6 +3,7 @@
         {
             "event-name" : "Test",
             "bio" : "This is great",
+            "registration" : true,
             "start-date" : {
                      "month" : 1,
                      "day" : 18,

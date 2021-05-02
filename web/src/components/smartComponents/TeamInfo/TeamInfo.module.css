@@ -1,0 +1,56 @@
+.teamInfo {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover {
+  width: 100%;
+  height: 18%;
+  overflow: visible;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.profilePic {
+  left: 5%;
+  margin-top: 15%;
+  position: relative;
+  overflow: hidden;
+}
+
+.namerole {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  margin-left: 45%;
+  width: 50%;
+}
+
+.name {
+  font-size: 1.3rem;
+  text-align: start;
+  font-weight: 800;
+  margin-bottom: 1%;
+}
+
+.role {
+  font-size: 1rem;
+  text-align: start;
+  font-weight: 500;
+  color: #00c300;
+}
+
+.sign {
+  margin-top: 1.5%;
+  margin-left: 45%;
+}

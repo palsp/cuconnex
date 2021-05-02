@@ -1,10 +1,12 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, BelongsToManyGetAssociationsMixin } from 'sequelize';
 import { Description } from '@cuconnex/common';
 import { InterestEnumVal } from './types'
 import { TableName } from './types';
+import { IInterestResponse } from '../interfaces/user';
+import { User } from './user.model';
 
 
-// all atributes interest model has
+// all attributes interest model has
 export interface InterestAttrs {
   // description: InterestDescription;
   category_id: number,
@@ -20,6 +22,11 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   // public description!: InterestDescription;
   public category_id!: number
   public description!: Description
+
+
+
+  public getLike!: BelongsToManyGetAssociationsMixin<User>;
+
 
   /**
     * Automatically migrate schema, to keep your schema up to date.
@@ -69,6 +76,12 @@ class Interest extends Model<InterestAttrs, InterestCreationAttrs> {
   public static removeDuplicate(interests: any[]): any[] {
     return Array.from(new Set(interests))
   }
+
+
+  public serializer(): IInterestResponse {
+    return this.description
+  }
+
 }
 
 

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "react-toggle/style.css";
-import Hamburger from "../../../components/dumbComponents/UI/Hamburger/Hamburger";
-import Mail from "../../../components/dumbComponents/UI/Icons/Mail/Mail";
-import Toggles from "../../../components/dumbComponents/UI/Toggles/Toggles";
+import { Hamburger, Toggles } from "@dumbComponents/UI/index";
+import { Mail } from "@icons/index";
 import classes from "./LandingHeader.module.css";
 const LandingHeader: React.FC = () => {
   return (

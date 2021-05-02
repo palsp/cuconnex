@@ -9,16 +9,13 @@ type DBConfig struct {
 	Password string
 }
 
+
 var DB = DBConfig{
 	Name: os.Getenv("DB_NAME"),
 	Host: os.Getenv("DB_HOST"),
 	User: os.Getenv("DB_USER"),
 	Password: os.Getenv("DB_PASSWORD"),
 }
-
-
-
-
 
 
 var TestDB = DBConfig{

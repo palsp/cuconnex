@@ -1,18 +1,30 @@
 import React from "react";
-import MyTeamList from "@smartComponents/MyTeamLists/TeamList/TeamList";
+import MyTeamList from "@smartComponents/MyTeamLists/MyTeamList/MyTeamList";
 import classes from "./MyTeamLists.module.css";
+import { MyTeamListsData } from "@src/mockData/Models";
+import { IFetchTeam, ITeam } from "@src/models";
 
-const teamArray = [
-  { name: "Suki Tee Noi", event: "CUCONNEX Project", status: "Recruiting" },
-  { name: "Nature", event: "Park Sa Mart", status: "Recruiting" },
-  { name: "BMP", event: "Smart Toilet", status: "" },
-];
+interface Props {
+  page?: string;
+  team: IFetchTeam[] | [];
+}
 
-const MyTeamLists: React.FC = () => {
+const MyTeamLists: React.FC<Props> = (props) => {
+  let landingexplore = false;
+  if (props.page === "landing" || props.page === "explore") {
+    landingexplore = true;
+  }
   return (
-    <div className={classes.container} data-test="teamLists">
-      {teamArray.map((team, index) => {
-        return <MyTeamList key={index} team={team} />;
+    <div className={classes.teamLists} data-test="myTeamLists">
+      {props.team?.map((team: IFetchTeam, index: number) => {
+        return (
+          <MyTeamList
+            key={index}
+            team={team}
+            landingexplore={landingexplore}
+            page={props.page}
+          />
+        );
       })}
     </div>
   );

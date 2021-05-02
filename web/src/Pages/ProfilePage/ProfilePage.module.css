@@ -29,6 +29,13 @@
   top: 25%;
 }
 
+.editAbout {
+  position: absolute;
+  overflow: hidden;
+  right: 5%;
+  top: 37%;
+}
+
 .about {
   margin-top: 5%;
   border-bottom: 0.01px solid rgb(196, 194, 194);
@@ -70,6 +77,7 @@
 
 .interestLists {
   display: flex;
+  flex-wrap: wrap;
   margin-left: 3%;
 }
 
@@ -81,7 +89,7 @@
 
 .editPrompt .relativeArrow {
   left: 5%;
-  top: 5%;
+  margin-top: 7%;
 }
 
 .editPrompt .saveBtn {
@@ -92,5 +100,58 @@
   font-weight: 700;
   font-family: inherit;
   right: 5%;
-  top: 5%;
+  margin-top: 7%;
+}
+.buttonDiv {
+  margin-top: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  background-color: var(--main_pink, #f33182);
+  overflow: visible;
+  border-radius: 25px;
+}
+.pendingButtonDiv {
+  margin-top: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  background-color: grey;
+  overflow: visible;
+  border-radius: 25px;
+}
+.acceptButtonDiv {
+  margin-top: 7vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  background-color: var(--green_toggle, #00c300);
+  overflow: visible;
+  border-radius: 25px;
+}
+.buttonTextDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24.8vw;
+  height: 3.2vh;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  color: var(--white, #ffffff);
+  font-size: 12px;
+}
+.addDiv {
+  position: absolute;
+  right: 4vw;
+  top: 26vh;
 }

@@ -5,7 +5,7 @@
   font-weight: 400;
   font-style: normal;
   font-family: inherit;
-  color: #c0bfbf;
+  color: #979797;
   font-size: 1rem;
 }
 .subtitlePagePink {
@@ -43,4 +43,21 @@
 
 .bigSize {
   font-size: 3rem;
+}
+
+.smallMediumSize {
+  font-size: 1.25rem;
+  font-weight: 500;
+  /* height: 19px; */
+}
+
+.smallerSize {
+  font-size: 0.75rem;
+  font-weight: 500;
+  height: 19px;
+}
+
+.bold {
+  font-weight: 800;
+  color: #636363;
 }

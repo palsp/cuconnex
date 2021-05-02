@@ -7,3 +7,11 @@ export const deleteFile = (filePath: string) => {
         }
     })
 }
+
+export const renameFile = (oldPath: string, newPath: string) => {
+    fs.rename(oldPath, newPath, (err) => {
+        if (err) {
+            throw err;
+        }
+    })
+}

@@ -1,0 +1,64 @@
+.TeamDetail {
+  width: 100vw;
+  position: relative;
+}
+
+.relativeArrow {
+  position: absolute;
+  left: 5%;
+  align-items: center;
+}
+
+.closeLeft {
+  position: absolute;
+  left: 5%;
+  align-items: center;
+  opacity: 0.7;
+}
+
+.head {
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.closeRight {
+  position: absolute;
+  right: 5%;
+  margin-top: -15%;
+  opacity: 0.7;
+}
+
+.info {
+  width: 100%;
+}
+
+.profileInfo {
+  overflow: hidden;
+}
+
+.about {
+  margin-top: 5%;
+  border-bottom: 0.01px solid rgb(196, 194, 194);
+}
+
+.recruitment {
+  margin-top: 2%;
+}
+
+.memberpic {
+  margin-top: -1%;
+  border-bottom: 0.01px solid rgb(196, 194, 194);
+}
+
+.activity {
+  margin-top: 4%;
+  margin-bottom: 5%;
+  border-bottom: 0.01px solid rgb(196, 194, 194);
+}
+
+.heading {
+  font-size: 1.2rem;
+  text-align: start;
+  font-weight: 900;
+  margin-left: 5%;
+  margin-bottom: 5%;
+}

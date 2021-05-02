@@ -1,14 +1,11 @@
-import React, { useState } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { AuthenticatedContext } from "@src/AuthenticatedContext";
-import "./App.css";
+import React, { useState, useEffect, useContext } from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import {
   AuthPage,
   PersonalInfoPage,
   SelectInterestPage,
   FriendsPage,
-  FindTeamPage,
-  RecruitMemberPage,
   TestPage,
   SuccessPage,
   MyTeamPage,
@@ -16,95 +13,68 @@ import {
   LandingPage,
   SelectEventPage,
   SelectTeamPage,
+  SelectMemberPage,
+  TeamDetail,
+  ExplorePage,
+  NotificationPage,
+  CreateTeamPage,
+  PushPage,
 } from "@pages/index";
-
-import { fetchUserDataAPI, userLogoutAPI } from "@api/index";
+import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
+import classes from "./App.module.css";
+import CreateTeamPrompt from "@pages/CreateTeamPage/CreateTeamPrompt/CreateTeamPrompt";
+import { ErrorContext } from "@context/ErrorContext";
 
 const App: React.FC = () => {
+  const location = useLocation();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [redirect, setRedirect] = useState<JSX.Element>();
+  const { setErrorHandler } = useContext(ErrorContext);
+  const [heightStyle, setHeightStyle] = useState({});
 
-  const fetchDataHandler = async () => {
-    try {
-      const userData = await fetchUserDataAPI();
-      setIsAuthenticated(true);
-      console.log("SUCCESS fetchDataHandler", userData);
-    } catch (e) {
-      console.log("fetchDataHandler error", e);
-    }
-  };
-  const logoutHandler = async () => {
-    try {
-      await userLogoutAPI();
-      setIsAuthenticated(false);
-      setRedirect(<Redirect to="/" />);
-    } catch (e) {
-      console.log("FAILED loggingout", e);
-    }
-  };
+  useEffect(() => {
+    setHeightStyle({ height: `${window.innerHeight}px` });
+  }, []);
 
   const routes = isAuthenticated ? (
-    <BrowserRouter>
-      <AuthenticatedContext.Provider
-        value={{ isAuthenticated, setIsAuthenticated }}
-      >
-        <Switch>
-          <Route path="/" exact component={AuthPage} />
-          <Route path="/selectinterests" exact component={SelectInterestPage} />
-          <Route
-            path="/personalInformation"
-            exact
-            component={PersonalInfoPage}
-          />
-          <Route path="/friendlists" exact component={FriendsPage} />
-          <Route path="/findteams" exact component={FindTeamPage} />
-          <Route path="/recruitmembers" exact component={RecruitMemberPage} />
-          <Route path="/success" exact component={SuccessPage} />
-          <Route path="/landing" exact component={LandingPage} />
-          <Route path="/myteams" exact component={MyTeamPage} />
-          <Route path="/profile" exact component={ProfilePage} />
-          <Route path="/selectevents" exact component={SelectEventPage} />
-          <Route path="/selectteams" exact component={SelectTeamPage} />
-          <Route path="/test" exact component={TestPage} />
-          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-        </Switch>
-      </AuthenticatedContext.Provider>
-    </BrowserRouter>
+    <Switch location={location} key={location.pathname}>
+      <Route path="/" exact component={AuthPage} />
+      <Route path="/selectinterests" exact component={SelectInterestPage} />
+      <Route path="/personalInformation" exact component={PersonalInfoPage} />
+      <Route path="/friendlists" exact component={FriendsPage} />
+      <Route path="/success" exact component={SuccessPage} />
+      <Route path="/landing" exact component={LandingPage} />
+      <Route path="/myteams" exact component={MyTeamPage} />
+      <Route path="/profile" exact component={ProfilePage} />
+      <Route path="/selectevents" exact component={SelectEventPage} />
+      <Route path="/selectteams" exact component={SelectTeamPage} />
+      <Route path="/post" exact component={PushPage} />
+      <Route path="/selectmember" exact component={SelectMemberPage} />
+      <Route path="/createteam" exact component={CreateTeamPage} />
+      <Route path="/teamdetail" exact component={TeamDetail} />
+      <Route path="/explore" exact component={ExplorePage} />
+      <Route path="/notification" exact component={NotificationPage} />
+      <Route path="/testprompt" exact component={CreateTeamPrompt} />
+      <Route path="/test" exact component={TestPage} />
+      {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
+      {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
+      {/* <Route path="/" component={LandingPage} /> */}
+    </Switch>
   ) : (
-    <BrowserRouter>
-      <AuthenticatedContext.Provider
-        value={{ isAuthenticated, setIsAuthenticated }}
-      >
-        <Switch>
-          <Route path="/" exact component={AuthPage} />
-          {redirect}
-          <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
-        </Switch>
-      </AuthenticatedContext.Provider>
-    </BrowserRouter>
+    <Switch location={location} key={location.pathname}>
+      <Route path="/" exact component={AuthPage} />
+      <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+    </Switch>
   );
 
   return (
-    <div>
-      {routes}
-      <button
-        onClick={() => {
-          setIsAuthenticated(true);
-        }}
+    <div className={classes.mainContainer} style={heightStyle}>
+      <AuthenticatedContext.Provider
+        value={{ isAuthenticated, setIsAuthenticated }}
       >
-        LOG IN
-      </button>
-      <button
-        onClick={() => {
-          console.log("show state", isAuthenticated);
-        }}
-      >
-        Show state
-      </button>
-
-      <button onClick={fetchDataHandler}>FETCH</button>
-      <button onClick={logoutHandler}>LOGOUT</button>
-      {/* {numUseEffect} */}
+        <AnimatePresence exitBeforeEnter initial={false}>
+          {routes}
+        </AnimatePresence>
+      </AuthenticatedContext.Provider>
     </div>
   );
 };

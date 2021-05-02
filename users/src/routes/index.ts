@@ -1,13 +1,6 @@
-export * from './team-routes/add-member';
-export * from './team-routes/get-member';
-export * from './team-routes/get-team';
-export * from './team-routes/new-team';
-
-export * from './user-routes/new-user';
-export * from './user-routes/get-user';
-export * from './user-routes/add-friend';
-export * from './user-routes/notification';
-export * from './user-routes/manageStatus';
-
+export * from './user.routes';
+export * from './team.routes';
+export * from './connection.routes';
+export * from './interest.routes';
 export * from './search';
-export * from './status';
+export * from './event.routes';

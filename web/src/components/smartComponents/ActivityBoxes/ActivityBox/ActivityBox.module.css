@@ -1,0 +1,103 @@
+.flexboxContainer {
+  display: inline-flex;
+}
+
+.flexboxText {
+  justify-content: left;
+  align-items: top;
+}
+
+.flexboxItem {
+  /* width: 350px;
+  height: 125px; */
+  /* border: 3px solid #333; */
+  width: 40vw;
+  height: 80px;
+  margin: 2vw 0vh;
+
+  border-radius: 20px;
+  /* background: #ffffff; */
+  background-color: white;
+  color: #484747;
+  display: flex;
+  flex-direction: column;
+  color: var(--grey_text, #484747);
+  /* align-items: center; */
+  /* margin: 6%;
+  margin-left: 8%; */
+  /* display: flex; */
+  /* justify-content: space-evenly; */
+  /* align-items: top; */
+  /* background-color: var(--search_bar, #c2c2c2); */
+  /* opacity: 0.44; */
+  /* font-family: "Nunito", serif;
+  color: var(--grey_text, #484747); */
+  -webkit-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  -moz-box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  box-shadow: 0px 4px 15px -7px rgba(0,0,0,0.66);
+  /* opacity: 1;
+  position: relative;
+  width: 100%;
+  height: inherit;
+  display: flex;
+  justify-content: left;
+  align-items: top;
+  color: black;
+  border-radius: 20px;
+  margin: 10%; */
+
+  /* width: 168px;
+  height: 74px;
+  background-color: var(--search_bar, #c2c2c2);
+  overflow: visible;
+  opacity: 0.44;
+  border-radius: 10px; */
+}
+
+.flexboxItem:active {
+  background: #f33182;
+  color: white;
+}
+
+.box {
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.heading {
+  opacity: 1;
+  position: relative;
+  height: inherit;
+  /* display: flex; */
+  justify-content: left;
+  align-items: top;
+  text-align: left;
+  /* margin-top: 3%; */
+  font-family: "Nunito", serif;
+  /* color: var(--grey_text, #484747); */
+}
+
+.icon {
+  margin-left: 5%;
+  margin-right: 5%;
+  position: relative;
+  /* align-items: flex-start; */
+  width: 20px;
+  height: 20px;
+}
+
+.subheading {
+  opacity: 1;
+  position: relative;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  /* justify-content: left;
+  align-items: top;
+  text-align: left; */
+  /* margin-top: 3%; */
+  font-family: "Nunito", serif;
+  font-size: 12px;
+}

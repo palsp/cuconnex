@@ -1,55 +1,50 @@
 import React from "react";
 
-import {
-  Heading,
-  Subtitle,
-  Username,
-  ProfilePic,
-} from "@dumbComponents/UI/index";
+import { ProfilePic } from "@smartComponents/index";
+import { Heading, Subtitle, Username } from "@dumbComponents/UI/index";
 import { PlusCircle } from "@icons/index";
 import classes from "./FriendList.module.css";
+import { IUser, IUserFriend } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
-  friend: {
-    name: string;
-    profilePic: any;
-    interest: string;
-    major: string;
-    year: number;
-  };
+  friend: IUserFriend;
 }
 const FriendList: React.FC<Props> = (props) => {
   return (
-    <div data-test="friend-list" className={classes.friendList}>
-      <div className={classes.divFriendList}>
-        <div>
-          <ProfilePic />
-        </div>
-        <div className={classes.userInfo}>
-          <div className={classes.divUserInfo}>
-            <Username
-              data-test="friend-list-object-name"
-              value={props.friend ? props.friend.name : "test-value"}
-            />
-          </div>
-          <div className={classes.divUserInfo}>
-            <Heading
-              value={props.friend ? props.friend.interest : "test-value"}
-              size="small"
-            />
-          </div>
+    <div className={classes.linkDiv}>
+      <Link
+        to={{
+          pathname: "/profile",
+          state: {
+            users: props.friend,
+          },
+        }}
+      >
+        <div data-test="friend-list" className={classes.friendList}>
+          <div className={classes.divFriendList}>
+            <div>
+              <ProfilePic PicUrl={props.friend?.image} />
+            </div>
+            <div className={classes.userInfo}>
+              <div className={classes.divUsernameInfo}>
+                {props.friend ? props.friend.name : "test-value"}
+              </div>
+              <div className={classes.divUserRole}>
+                <div className={classes.roleDiv}>
+                  {props.friend ? props.friend.role : "test-value"}
+                </div>
+              </div>
+              <div className={classes.divFacultyInfo}>
+                {props.friend ? props.friend.faculty : "test-value"},
+                {` ${props.friend?.year}`}
+              </div>
+            </div>
 
-          <div className={classes.divUserInfo}>
-            <Subtitle
-              value={props.friend ? props.friend.major : "test-value"}
-            />
+            <div className={classes.divUserInfo}></div>
           </div>
         </div>
-
-        <div className={classes.divUserInfo}>
-          <PlusCircle />
-        </div>
-      </div>
+      </Link>
     </div>
   );
 };

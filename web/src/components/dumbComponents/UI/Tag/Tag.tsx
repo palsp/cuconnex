@@ -1,48 +1,52 @@
 import React, { useState } from "react";
 import classes from "./Tag.module.css";
+
+enum tagTypes {
+  all = "all",
+  onGoing = "onGoing",
+  upComing = "upComing",
+  closed = "closed",
+}
+
 const Tag: React.FC = () => {
-  const [clickAllTag, setClickAllTag] = useState(false);
-  const [clickOngoingTag, setClickOngoingTag] = useState(false);
-  const [clickUpcomingTag, setClickUpcomingTag] = useState(false);
-  const [clickClosedTag, setClickClosedTag] = useState(false);
+  const [tag, setTag] = useState<tagTypes>(tagTypes.all);
   const allTagClickedHandler = () => {
-    setClickAllTag(!clickAllTag);
+    setTag(tagTypes.all);
   };
   const ongoingTagClickedHandler = () => {
-    setClickOngoingTag(!clickOngoingTag);
+    setTag(tagTypes.onGoing);
   };
   const upcomingTagClickedHandler = () => {
-    setClickUpcomingTag(!clickUpcomingTag);
+    setTag(tagTypes.upComing);
   };
   const closedTagClickedHandler = () => {
-    setClickClosedTag(!clickClosedTag);
+    setTag(tagTypes.closed);
   };
-  let cssArrayAll = null;
-  let cssArrayOngoing = null;
-  let cssArrayUpcoming = null;
-  let cssArrayClosed = null;
-  if (clickAllTag) {
-    cssArrayAll = [classes.enablealltagDiv];
+  const cssArrayAll = [classes.baseTag];
+  const cssArrayOngoing = [classes.baseTag];
+  const cssArrayUpcoming = [classes.baseTag];
+  const cssArrayClosed = [classes.baseTag];
+  if (tag === tagTypes.all) {
+    cssArrayAll.push(classes.enablealltagDiv);
   } else {
-    cssArrayAll = [classes.disablealltagDiv];
+    cssArrayAll.push(classes.disablealltagDiv);
   }
-  if (clickOngoingTag) {
-    cssArrayOngoing = [classes.enableongoingtagDiv];
+  if (tag === tagTypes.onGoing) {
+    cssArrayOngoing.push(classes.enableongoingtagDiv);
   } else {
-    cssArrayOngoing = [classes.disableongoingtagDiv];
+    cssArrayOngoing.push(classes.disableongoingtagDiv);
   }
-  if (clickUpcomingTag) {
-    cssArrayUpcoming = [classes.enableupcomingtagDiv];
+  if (tag === tagTypes.upComing) {
+    cssArrayUpcoming.push(classes.enableupcomingtagDiv);
   } else {
-    cssArrayUpcoming = [classes.disableupcomingtagDiv];
-  }
-
-  if (clickClosedTag) {
-    cssArrayClosed = [classes.enableclosedtagDiv];
-  } else {
-    cssArrayClosed = [classes.disableclosedtagDiv];
+    cssArrayUpcoming.push(classes.disableupcomingtagDiv);
   }
 
+  if (tag === tagTypes.closed) {
+    cssArrayClosed.push(classes.enableclosedtagDiv);
+  } else {
+    cssArrayClosed.push(classes.disableclosedtagDiv);
+  }
   return (
     <div className={classes.mainDiv}>
       <div onClick={allTagClickedHandler} className={cssArrayAll.join(" ")}>

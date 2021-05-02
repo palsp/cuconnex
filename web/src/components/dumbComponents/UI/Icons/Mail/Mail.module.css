@@ -1,5 +1,5 @@
-.mailDiv{
-    width:16px;
-    height:40px;
-    margin-top:auto;
+.mail {
+  width: 100%;
+  height: 100%;
+  fill: #000000;
 }

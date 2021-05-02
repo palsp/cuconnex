@@ -17,6 +17,8 @@ import (
 
 var test_db *gorm.DB
 
+
+
 //Reset test DB and create new one with mock data
 func resetDBWithMock() {
 	test_db.Where("1=1").Delete(&EventModel{})
@@ -32,7 +34,9 @@ func TestCreateEvent(t *testing.T) {
 	r.POST("/api/events", CreateEvent)
 	for _, testData := range RequestTests {
 		bodyData := testData.bodyData
-		req, err := http.NewRequest(testData.method, testData.url, bytes.NewBufferString(bodyData))
+		body , _ := json.Marshal(bodyData)
+
+		req, err := http.NewRequest(testData.method, testData.url, bytes.NewBufferString(string(body)))
 		req.Header.Set("Content-type", "application/json")
 		assert.NoError(t, err, "Should send a request successfully")
 
@@ -41,8 +45,47 @@ func TestCreateEvent(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		resetDBWithMock()
+		var resp EventResponse
+		json.Unmarshal([]byte(w.Body.String()) , &resp)
 		assert.Equal(t, testData.expectedCode, w.Code, "Response Status - "+testData.msg)
+		assert.Equal(t, testData.expectedStatus , resp.Status)
 	}
+}
+
+func TestGetEvent(t *testing.T){
+	r := gin.New()
+	r.GET("/api/events/:event_name", GetEvent)
+	SaveOne(&EventModel{
+		EventName : "Test_Event1",
+		Bio : "This is a test event",
+		Location : "",
+		StartDate : time.Now(),
+		EndDate   : time.Now(),
+		Status: common.EventStatus.Ongoing,
+		Registration: true,
+	})
+
+	SaveOne(&EventModel{
+		EventName : "Test_Event2",
+		Bio : "This is a test event",
+		Location : "",
+		StartDate : time.Now(),
+		EndDate   : time.Now(),
+		Status: common.EventStatus.Ongoing,
+		Registration: true,
+	})
+
+	req, err := http.NewRequest("GET", "/api/events/Test", bytes.NewBufferString(""))
+	req.Header.Set("Content-type", "application/json")
+	assert.NoError(t, err, "Should send a request successfully")
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, 200, w.Code)
+	var resp EventsResponse
+	json.Unmarshal([]byte(w.Body.String()) , &resp)
+	assert.Equal(t, 2, len(resp.Events), "There must be 1 event in the result ")
+	resetDBWithMock()
 }
 
 func TestGetAllEvent(t *testing.T) {
@@ -54,6 +97,8 @@ func TestGetAllEvent(t *testing.T) {
 		Location : "",
 		StartDate : time.Now(),
 		EndDate   : time.Now(),
+		Status: common.EventStatus.Ongoing,
+		Registration: true,
 	}
 
 	err := SaveOne(&event)
@@ -73,6 +118,9 @@ func TestGetAllEvent(t *testing.T) {
 	assert.Equal(t, event.EventName , resp.Events[0].EventName )
 	assert.Equal(t, event.Bio , resp.Events[0].Bio )
 	assert.Equal(t, event.Location , resp.Events[0].Location )
+	assert.Equal(t, event.Status , resp.Events[0].Status)
+	assert.Equal(t, event.Registration , resp.Events[0].Registration)
+
 	// TODO : Test Time
 
 	resetDBWithMock()

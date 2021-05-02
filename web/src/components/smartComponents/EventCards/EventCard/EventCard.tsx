@@ -1,16 +1,36 @@
 import React from "react";
 import classes from "./EventCard.module.css";
 interface Props {
-  event?: {
-    name: string;
-    description: string;
-    status: string;
+  events: {
+    "event-name": string;
+    bio: string;
+    status?: string;
+    "start-date": {
+      month: number;
+      day: number;
+      year: number;
+      time: {
+        hour: number;
+        minute: number;
+        second: number;
+      };
+    };
+    "end-date": {
+      month: number;
+      day: number;
+      year: number;
+      time: {
+        hour: number;
+        minute: number;
+        second: number;
+      };
+    };
   };
 }
 
 const EventCard: React.FC<Props> = (props) => {
   let cssArrayEvent = null;
-  switch (props.event?.status) {
+  switch (props.events.status) {
     case "Open for application":
       cssArrayEvent = [classes.eventstatusDiv];
       break;
@@ -27,14 +47,15 @@ const EventCard: React.FC<Props> = (props) => {
       cssArrayEvent = [classes.nullDiv];
       break;
   }
+  console.log(props);
   return (
     <div className={classes.mainDiv}>
       <div className={classes.textbodyDiv}>
-        <div className={classes.eventnameDiv}>{props.event?.name}</div>
-        <div className={classes.eventdescriptionDiv}>
-          {props.event?.description}
+        <div className={classes.eventnameDiv}>
+          {props.events?.["event-name"]}
         </div>
-        <div className={cssArrayEvent.join(" ")}>{props.event?.status}</div>
+        <div className={classes.eventdescriptionDiv}>{props.events?.bio}</div>
+        <div className={cssArrayEvent.join(" ")}>{props.events?.status}</div>
         <div className={classes.eventPic}></div>
       </div>
     </div>

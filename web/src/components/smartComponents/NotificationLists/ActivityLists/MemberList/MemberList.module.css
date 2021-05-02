@@ -1,0 +1,58 @@
+.memberList {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.leftFlex {
+  width: 40%;
+}
+
+.profilePic {
+  margin-top: 25px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.rightFlex {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 6%;
+  margin-left: 3%;
+}
+
+.name {
+  text-align: start;
+  left: 10%;
+  height: 10%;
+  margin-bottom: 7%;
+}
+
+.role {
+  text-align: start;
+  left: 10%;
+  height: 10%;
+  margin-bottom: 5%;
+}
+
+.smallFlex {
+  margin-top: 5%;
+  display: flex;
+  flex-direction: row;
+  height: 50px;
+}
+
+.teamName {
+  text-align: start;
+  margin-left: 2%;
+  margin-top: 1%;
+  width: 50%;
+  color: #c2c2c2;
+}
+
+.connectedSign {
+  position: relative;
+}

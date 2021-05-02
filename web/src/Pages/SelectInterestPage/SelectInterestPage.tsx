@@ -1,26 +1,32 @@
-import React, { useState, useEffect } from "react";
-import axios from "@src/api/axiosInstance/axiosInstance";
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect, useContext } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { UserContext } from "@context/UserContext";
 import {
   Heading,
   Subtitle,
   DotMorePage,
   Button,
 } from "@dumbComponents/UI/index";
-
 import { InterestLists } from "@smartComponents/index";
-
-import { ArrowLeft, ArrowRight } from "@icons/index";
-
+import { ArrowLeft } from "@icons/index";
+import { createUserDataAPI } from "@api/index";
+import { ICreateUserData } from "@models/index";
 import classes from "./SelectInterestPage.module.css";
+import mockInterestListsData from "@src/mockData/mockInterestListsData";
+import { ErrorContext } from "@context/ErrorContext";
 
 interface Props {
   location: {
     state: {
       name: string;
+      faculty: string;
+      bio: string;
+      year: string;
+      profilePic: File;
+      role: string;
     };
   };
+  page?: string;
 }
 
 interface InterestListsArray {
@@ -28,21 +34,34 @@ interface InterestListsArray {
   Business: string[];
   Design: string[];
 }
+
 const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
+  const { setErrorHandler } = useContext(ErrorContext);
+  const [redirect, setRedirect] = useState<JSX.Element>();
   const [interestArray, setInterestArray] = useState<InterestListsArray>({
     Technology: [],
     Business: [],
     Design: [],
   });
+  const { fetchUserDataHandler } = useContext(UserContext);
   let name = "";
+  let faculty = "";
+  let bio = "";
+  let year = "";
+  let role = "";
+  let profileImage: File;
   let saveButton = null;
+
+  useEffect(() => {
+    console.log(
+      "State passed from PersonalInformationPage",
+      props.location.state
+    );
+  }, []);
 
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
     if (positionOfE === -1) {
-      // let { Technology } = interestArray;
-      // Technology.push(e);
-      // setInterestArray({ Technology: Technology });
       setInterestArray({
         ...interestArray,
         Technology: [...interestArray.Technology, e],
@@ -83,70 +102,87 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     }
   };
 
-  const setUserData = async () => {
+  const setUserDataFirstTime = async () => {
     if (props.location.state) {
       name = props.location.state.name;
+      profileImage = props.location.state.profilePic;
+      faculty = props.location.state.faculty;
+      bio = props.location.state.bio;
+      year = props.location.state.year;
+      role = props.location.state.role;
     }
-    const data = {
+    const userData: ICreateUserData = {
       name: name,
       interests: interestArray,
+      faculty: faculty,
+      bio: bio,
+      role: role,
+      year: year,
+      image: profileImage,
     };
-    console.log("POST /api/users", data);
+    console.log("upload userdata...", userData);
     try {
-      const result = await axios.post("/api/users", data);
-      console.log("POST to /api/users is successful", result);
+      const result = await createUserDataAPI(userData);
+      console.log("POST createUserData to /api/users is successful", result);
+      try {
+        await fetchUserDataHandler();
+        setRedirect(<Redirect to="/success" />);
+      } catch (e) {
+        setErrorHandler(e.response.data.errors[0].message);
+        setRedirect(<Redirect to="/" />);
+        console.log("POST signup success but failed GET fetching");
+      }
     } catch (e) {
+      setErrorHandler(e.response.data.errors[0].message);
       console.log("SelectInterestPage Error setting users data", e);
+      setRedirect(<Redirect to="/" />);
     }
   };
-  const setEmptyInterest = async () => {
-    if (props.location.state) {
-      name = props.location.state.name;
-    }
-    const data = {
-      name: name,
-      interest: { Technology: [], Business: [], Design: [] },
-    };
-    console.log("Empty Interest POST /api/users", data);
 
-    try {
-      const result = await axios.post("/api/users/", data);
-      console.log("POST Empty interests to /api/users is successful", result);
-    } catch (e) {
-      console.log("SelectInterestPage Error setting empty interest", e);
-    }
-  };
-  useEffect(() => {
-    console.log("Items in interestArray", interestArray);
-  }, [interestArray]);
-  useEffect(() => {
-    console.log(
-      "State passed from PersonalInformationPage",
-      props.location.state
-    );
-  }, []);
   if (
     (interestArray.Technology.length !== 0 ||
       interestArray.Business.length !== 0 ||
       interestArray.Design.length !== 0) &&
     props.location.state
   ) {
-    saveButton = (
-      <Link
-        to={{
-          pathname: "/success",
-          state: {
-            name: props.location.state.name,
-            interests: interestArray,
-          },
-        }}
-      >
-        <Button onClick={setUserData} value="SAVE" />
-      </Link>
-    );
+    saveButton = <Button onClick={setUserDataFirstTime} value="SAVE" />;
   } else {
     saveButton = null;
   }
+
+  let selectInterestPrompt = null;
+
+  if (!props.location.state) {
+    selectInterestPrompt = <div></div>;
+    saveButton = (
+      <Link
+        to={{
+          pathname: "/profile",
+        }}
+      >
+        {/* Should not be setUserDataFirstTime bc this is for editing interests */}
+        <Button onClick={setUserDataFirstTime} value="SAVE" />
+      </Link>
+    );
+  } else {
+    selectInterestPrompt = (
+      <div className={classes.footerNavigation}>
+        <Link to="/personalinformation">
+          <div className={classes.footerIcon}>
+            <ArrowLeft data-test="arrow-left" />
+            <Heading size="small" value="Back" />
+          </div>
+        </Link>
+        <DotMorePage data-test="dot-icon" amount={3} />
+        <div>
+          <Link to="/success">
+            <div className={classes.emptyDiv}></div>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className={classes.main}>
@@ -159,11 +195,11 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
               <Subtitle value="Please Select at least 1 interest" />
             </div>
           </div>
-
           <div className={classes.heading}>
             <Heading size="small" value="Business" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectBusinessInterestHandler}
             data-test="interest-list-business"
             type="BUSINESS"
@@ -172,6 +208,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Technology" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectTechnologyInterestHandler}
             data-test="interest-list-technology"
             type="TECHNOLOGY"
@@ -180,42 +217,18 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
             <Heading size="small" value="Design" />
           </div>
           <InterestLists
+            data={mockInterestListsData}
             selectInterestHandler={selectDesignInterestHandler}
             data-test="interest-list-design"
             type="DESIGN"
           />
-
           <div className={classes.divSaveButton}>{saveButton}</div>
-
-          <div className={classes.footerNavigation}>
-            <Link to="/personalinformation">
-              <div className={classes.footerIcon}>
-                <ArrowLeft data-test="arrow-left" />
-                <Heading size="small" value="Back" />
-              </div>
-            </Link>
-            <DotMorePage data-test="dot-icon" amount={3} />
-            <div onClick={setEmptyInterest}>
-              <Link to="/success">
-                <div className={classes.footerIcon}>
-                  <Heading size="small" value="Skip" />
-                  <ArrowRight data-test="arrow-right" />
-                </div>
-              </Link>
-            </div>
-          </div>
+          {selectInterestPrompt}
+          {redirect}
         </div>
       </div>
     </>
   );
 };
-
-// SelectInterestPage.defaultProps = {
-//   location: {
-//     state: {
-//       name: "Micky",
-//     },
-//   },
-// };
 
 export default SelectInterestPage;
