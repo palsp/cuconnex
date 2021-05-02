@@ -1,9 +1,12 @@
 import { validateRequest } from '@cuconnex/common';
 import express from 'express';
+import { teamUpload, upload } from '../config/multer.config';
+
 import * as teamController from '../controllers/team.controller';
-import { requireUser } from '../middlewares';
+import { requireUser, transformTeamRequest } from '../middlewares';
 import {
   createTeamValidator,
+  editTeamValidator,
   addTeamMemberValidator,
   manageTeamStatusValidator,
   registerEventValidator,
@@ -43,7 +46,25 @@ router.post(
   teamController.manageStatus
 );
 
-router.post('/', requireUser, createTeamValidator, validateRequest, teamController.createTeam);
+router.post(
+  '/',
+  requireUser,
+  teamUpload.single('image'),
+  transformTeamRequest,
+  createTeamValidator,
+  validateRequest,
+  teamController.createTeam
+);
+
+router.put(
+  '/',
+  requireUser,
+  teamUpload.single('image'),
+  transformTeamRequest,
+  editTeamValidator,
+  validateRequest,
+  teamController.editTeam
+);
 
 router.get('/outgoing-requests/:name', requireUser, teamController.getOutgoingRequests);
 

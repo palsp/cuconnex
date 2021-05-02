@@ -44,7 +44,7 @@ interface UserAttrs {
   friends?: User[];
   Connection?: Connection;
   IsMember?: IsMember;
-  Recommend? : Recommend;
+  Recommend?: Recommend;
 }
 
 interface UserCreationAttrs {
@@ -70,7 +70,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public Interests?: Interest[];
   public Connection?: Connection;
   public IsMember?: IsMember;
-  public Recommend? : Recommend;
+  public Recommend?: Recommend;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -134,11 +134,14 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
-  public addConnection!: BelongsToManyAddAssociationMixin<User, { through : {status: FriendStatus }}>;
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>;
+  public addConnection!: BelongsToManyAddAssociationMixin<
+    User,
+    { through: { status: FriendStatus } }
+  >;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
-  public getRecommendation! : BelongsToManyGetAssociationsMixin<User>;
-  public addRecommendation!: BelongsToManyAddAssociationMixin<User , { through : { score : number}}>
+  public getRecommendation!: BelongsToManyGetAssociationsMixin<User>;
+  public addRecommendation!: BelongsToManyAddAssociationMixin<User, { through: { score: number } }>;
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
 
@@ -178,7 +181,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include:Interest });
+    return User.findOne({ where: { id: userId }, include: Interest });
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -227,7 +230,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.addConnection(user);
   }
 
-    /**
+  /**
    * A function for accepting the friend request. It first checks if the user whose id was passed in has sent
    * a friend request to the current user or not. If so, then it changes the friendStatus of the two according to the
    * passed in accepted parameter.
@@ -236,47 +239,46 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
 
-     public async acceptConnection(sendUser: User, accepted: Boolean): Promise<FriendStatus> {
-      let relations = await Connection.findAll({
-        where: { senderId: sendUser.id, receiverId: this.id },
-      });
-  
-      if (relations.length === 0) {
-        throw new BadRequestError('User has not send a request yet');
-      }
-  
-      if (accepted) {
-        await this.addConnection(sendUser);
-        const recentAddedConn = await Connection.findAll({
-          where: { senderId: this.id, receiverId: sendUser.id },
-        });
-        relations = relations.concat(recentAddedConn);
-      }
-  
-      const status = accepted ? FriendStatus.Accept : FriendStatus.toBeDefined;
-  
-      for (let relation of relations) {
-        if (accepted) {
-          relation.status = status;
-        } else {
-          relation.status = status;
-        }
-  
-        try {
-          await relation.save();
-        } catch (err) {
-          throw new InternalServerError();
-        }
-      }
-  
-      return status;
+  public async acceptConnection(sendUser: User, accepted: Boolean): Promise<FriendStatus> {
+    let relations = await Connection.findAll({
+      where: { senderId: sendUser.id, receiverId: this.id },
+    });
+
+    if (relations.length === 0) {
+      throw new BadRequestError('User has not send a request yet');
     }
 
-  public async getAllConnectionWithStatus(status : FriendStatus): Promise<User[]>{
-    let connections = await this.getConnection({ include : [Interest]});
+    if (accepted) {
+      await this.addConnection(sendUser);
+      const recentAddedConn = await Connection.findAll({
+        where: { senderId: this.id, receiverId: sendUser.id },
+      });
+      relations = relations.concat(recentAddedConn);
+    }
 
-  
-    connections = connections.filter(conn => conn.Connection!.status === status);
+    const status = accepted ? FriendStatus.Accept : FriendStatus.toBeDefined;
+
+    for (let relation of relations) {
+      if (accepted) {
+        relation.status = status;
+      } else {
+        relation.status = status;
+      }
+
+      try {
+        await relation.save();
+      } catch (err) {
+        throw new InternalServerError();
+      }
+    }
+
+    return status;
+  }
+
+  public async getAllConnectionWithStatus(status: FriendStatus): Promise<User[]> {
+    let connections = await this.getConnection({ include: [Interest] });
+
+    connections = connections.filter((conn) => conn.Connection!.status === status);
 
     return connections;
   }
@@ -288,9 +290,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public async getReceivedFriendRequests() {
     const result: User[] = [];
     const constraint = { receiverId: this.id, status: FriendStatus.Pending };
-    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint});
+    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
     for (let conn of receivedRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId } , include : Interest});
+      const user = await User.findOne({ where: { id: conn.senderId }, include: Interest });
       if (user) {
         result.push(user);
       }
@@ -311,6 +313,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.createTeam({
       name: attrs.name,
       description: attrs.description,
+      image: attrs.image,
+      currentRecruitment: attrs.currentRecruitment,
     });
   }
 
@@ -392,7 +396,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       interests = this.Interests.map((interest) => interest.serializer());
     }
 
-    delete values.Interests
+    delete values.Interests;
 
     if (this.Connection) {
       delete values.Connection;
@@ -406,7 +410,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     connection: Association<User, User>;
     teams: Association<User, Team>;
     member: Association<User, Team>;
-    recommendation : Association < User,User>
+    recommendation: Association<User, User>;
   };
 }
 

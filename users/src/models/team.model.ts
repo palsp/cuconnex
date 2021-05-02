@@ -15,8 +15,7 @@ import { Candidate } from './candidate.model';
 
 import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
-import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
-
+import { ITeamResponse, IUserResponse, ITeamRequestResponse, IEventResponse } from '../interfaces';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -24,12 +23,18 @@ export interface TeamAttrs {
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
+  image: string;
+  currentRecruitment: string;
+
   members?: User[];
+  eventsParticipating?: Event[];
 }
 
 export interface TeamCreationAttrs {
   name: string;
   description: string;
+  image?: string;
+  currentRecruitment?: string;
 }
 
 class Team extends Model<TeamAttrs, TeamCreationAttrs> {
@@ -38,6 +43,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public description!: string;
   public lookingForMembers: boolean = true;
   public members?: User[];
+  public eventsParticipating?: Event[];
+  public image!: string;
+  public currentRecruitment?: string;
 
   public static autoMigrate(sequelize: Sequelize) {
     Team.init(
@@ -57,6 +65,14 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
         lookingForMembers: {
           type: DataTypes.BOOLEAN,
           allowNull: false,
+        },
+        image: {
+          type: DataTypes.STRING(255),
+          defaultValue: '',
+        },
+        currentRecruitment: {
+          type: DataTypes.STRING(255),
+          defaultValue: '',
         },
       },
       {
@@ -207,7 +223,9 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
+    const events: Event[] = await this.getCandidate();
     this.members = members;
+    this.eventsParticipating = events;
   }
 
   // public addCandidate!: BelongsToManyAddAssociationMixin<Candidate, Event>;
@@ -245,12 +263,18 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   public toJSON(): ITeamResponse {
     const values = { ...this.get() };
-    let returnMembers: IUserResponse[] = [];
 
+    let returnMembers: IUserResponse[] = [];
     if (this.members) {
       returnMembers = this.members.map((member: User) => member.toJSON());
     }
 
+    // let returnEvents: IEventResponse[] = [];
+    // if (this.eventsParticipating) {
+    //   returnEvents = this.eventsParticipating.map((event: Event) => event.toJSON());
+    // }
+
+    // return { ...values, members: returnMembers, eventsParticipating: returnEvents };
     return { ...values, members: returnMembers };
   }
 }

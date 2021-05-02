@@ -26,6 +26,10 @@ export const transformRequest = async (req: Request, res: Response, next: NextFu
   next();
 };
 
+export const transformTeamRequest = async (req: Request, res: Response, next: NextFunction) => {
+  req.body = JSON.parse(JSON.stringify(req.body));
+  next();
+};
 /**
  * A middleware function used to fetch user data from MySQL.
  *
@@ -38,12 +42,11 @@ export const fetchUser = async (req: Request, res: Response, next: NextFunction)
   if (!req.currentUser) {
     throw new NotAuthorizedError();
   }
-  
+
   try {
-    const user = await User.fetchUser(req.currentUser.id)
+    const user = await User.fetchUser(req.currentUser.id);
     req.user = user;
-  } catch (err) {
-  }
+  } catch (err) {}
 
   next();
 };
@@ -96,14 +99,8 @@ export const uploadFileWithName = (name: string) => {
 };
 
 export const corsHandler = (req: Request, res: Response, next: NextFunction) => {
-
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET , POST , PUT , PATCH , DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET , POST , PUT , PATCH , DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization');
   next();
-
-
-}
+};

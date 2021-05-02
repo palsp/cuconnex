@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
-import { BadRequestError, NotFoundError } from '@cuconnex/common';
+import { BadRequestError, InternalServerError, NotFoundError } from '@cuconnex/common';
 import { Team, IsMember, User, Event } from '../models';
 import {
   IUserResponse,
   ITeamResponse,
-  IIsMemberResponse,
   ITeamRequestResponse,
   IEventResponse,
+  ITeamRequest,
 } from '../interfaces';
+import { deleteFile } from '../utils/file';
 
 require('express-async-errors');
 
@@ -27,25 +28,67 @@ export const getTeam = async (req: Request, res: Response) => {
 };
 
 export const createTeam = async (req: Request, res: Response) => {
-  const { name, description } = req.body;
-  const user = req.user!;
+  const { name, description, currentRecruitment } = req.body;
+
+  let imagePath = '';
+  if (req.file) {
+    imagePath = req.file.path;
+  }
 
   const team = await Team.findOne({ where: { name } });
   if (team) {
     throw new BadRequestError('Team name already existed.');
   }
 
+  const user = req.user!;
   let newTeam;
   try {
-    newTeam = await user.createTeams({ name, description });
+    newTeam = await user.createTeams({ name, description, image: imagePath, currentRecruitment });
   } catch (err) {
-    throw new BadRequestError('Create Team Failed');
+    throw new BadRequestError(`Create Team Failed ${err.message}`);
   }
 
   await newTeam.fetchTeam();
   const response: ITeamResponse = newTeam.toJSON();
 
   res.status(201).send({ team: response });
+};
+
+export const editTeam = async (req: Request, res: Response) => {
+  const updatedTeam = req.body as ITeamRequest;
+  const team = await Team.findOne({ where: { name: updatedTeam.name } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+  // try {
+  //   await team.destroy();
+  //   return res.send();
+  // } catch (err) {
+  //   console.log('destroy err', err.message);
+  // }
+
+  if (req.user!.id !== team.creatorId) {
+    throw new BadRequestError('The requester is not the team creator.');
+  }
+
+  updatedTeam.file = { ...req.file };
+  if (req.file) {
+    deleteFile(team.image);
+    team.image = updatedTeam.file.path;
+  }
+
+  team.description = updatedTeam.description;
+  team.currentRecruitment = updatedTeam.currentRecruitment;
+  team.lookingForMembers = updatedTeam.lookingForMembers;
+
+  try {
+    await team.save();
+    // await team.destroy();
+  } catch (err) {
+    throw new BadRequestError(`${err.message}`);
+  }
+
+  res.status(200).send();
 };
 
 export const getTeamMember = async (req: Request, res: Response) => {

@@ -9,6 +9,17 @@ export const createTeamValidator = [
   body('description').notEmpty().withMessage('Team description must be supplied'),
 ];
 
+export const editTeamValidator = [
+  body('name').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
+  body('description').notEmpty().withMessage('Team description must be supplied'),
+  // body('image').notEmpty().withMessage('Team image must be supplied'),
+  body('currentRecruitment').notEmpty().withMessage('Team currentRecruitment must be supplied'),
+  body('lookingForMembers')
+    .notEmpty()
+    .isBoolean()
+    .withMessage('LookingForMembers attribute must be supplied'),
+];
+
 export const addTeamMemberValidator = [
   body('teamName').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
   body('newMemberId').notEmpty().isAlphanumeric().withMessage('New Member Id must be supplied'),
