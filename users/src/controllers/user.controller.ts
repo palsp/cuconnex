@@ -312,35 +312,36 @@ export const getTeamStatus = async (req: Request, res: Response) => {
 };
 
 export const addRatings = async (req: Request, res: Response) => {
-  const { rateeId , ratings} = req.body as IAddRatingRequest;
-  const ratee = await User.findByPk(rateeId);
-  
-  if(!ratee){
-    throw new BadRequestError('ratee does not existed');
-  }
+	const { rateeId, ratings } = req.body as IAddRatingRequest;
 
-  if(ratee.id === req.user!.id){
-    throw new BadRequestError('cannot rate yourself');
-  }
-  
-  const rate = await Rating.findOne({ where : { raterId : req.user!.id , rateeId : ratee.id}});
-  
-  try{
-    if(!rate){
+	if (rateeId === req.user!.id) {
+		throw new BadRequestError('cannot rate yourself');
+	}
 
-      await req.user!.addRating(ratee , { through : { rating : ratings.toFixed(2) }})
-    }else{
-      rate.rating = +ratings.toFixed(2)
-      await rate.save();
-    }
-  }catch(err){
+	const ratee = await User.findByPk(rateeId);
 
-    throw new InternalServerError();
-  }
+	if (!ratee) {
+		throw new BadRequestError('ratee does not existed');
+	}
 
+	const rate = await Rating.findOne({
+		where: { raterId: req.user!.id, rateeId: ratee.id },
+	});
 
-  res.status(201).send({})
-}
+	try {
+		if (!rate) {
+			await req.user!.addRating(ratee, {
+				through: { rating: ratings.toFixed(2) },
+			});
+		} else {
+			rate.rating = +ratings.toFixed(2);
+			await rate.save();
+		}
+	} catch (err) {
+		throw new InternalServerError();
+	}
+	res.status(201).send();
+};
 
 export const getRecommendTeam = async (req : Request , res : Response) => {
     const eventId = req.params.eventId;
