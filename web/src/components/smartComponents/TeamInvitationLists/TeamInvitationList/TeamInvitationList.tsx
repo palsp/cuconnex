@@ -24,9 +24,11 @@ interface Props {
 }
 
 const TeamInvitationList: React.FC<Props> = (props) => {
+  const [clickResponse, setClickResponse] = useState<string>("");
   const inviteResponseHandler = async (userResponse: IUserResponse) => {
     try {
       const resultResponse = await responseTeamInvitationAPI(userResponse);
+      setClickResponse(userResponse.newStatusFromUser);
       console.log(
         "Successfully sent a response to the target team",
         resultResponse.data
@@ -63,42 +65,54 @@ const TeamInvitationList: React.FC<Props> = (props) => {
               <div className={classes.groupAmount}>5</div>
               <Group />
               <div className={classes.teamFriends}>
-                <ProfilePic size="mini" />
-                <ProfilePic size="mini" />
+                <ProfilePic size="xs" />
+                <ProfilePic size="xs" />
                 <div className={classes.moreFriends}>
                   <p>7+</p>
                 </div>
               </div>
             </div>
-            <div className={classes.teamStatus}>
-              <div
-                onClick={() => {
-                  const response: IUserResponse = {
-                    teamName: props.teams.name,
-                    newStatusFromUser: "Accept",
-                  };
-                  inviteResponseHandler(response);
-                }}
-              >
-                <RecruitSign
-                  data-test="team-invitation-list-status"
-                  value="Accept"
-                />
-              </div>
-              <div
-                onClick={() => {
-                  const response: IUserResponse = {
-                    teamName: props.teams.name,
-                    newStatusFromUser: "Reject",
-                  };
-                  inviteResponseHandler(response);
-                }}
-              >
-                <RecruitSign
-                  data-test="team-invitation-list-status"
-                  value="Reject"
-                />
-              </div>
+            <div>
+              {clickResponse === "Accept" ? (
+                <div className={classes.teamStatus}>
+                  <RecruitSign value="Accepted" />
+                </div>
+              ) : clickResponse === "Reject" ? (
+                <div className={classes.teamStatus}>
+                  <RecruitSign value="Declined" />
+                </div>
+              ) : (
+                <div className={classes.teamStatus}>
+                  <div
+                    onClick={() => {
+                      const response: IUserResponse = {
+                        teamName: props.teams.name,
+                        newStatusFromUser: "Accept",
+                      };
+                      inviteResponseHandler(response);
+                    }}
+                  >
+                    <RecruitSign
+                      data-test="team-invitation-list-status"
+                      value="Accept"
+                    />
+                  </div>
+                  <div
+                    onClick={() => {
+                      const response: IUserResponse = {
+                        teamName: props.teams.name,
+                        newStatusFromUser: "Reject",
+                      };
+                      inviteResponseHandler(response);
+                    }}
+                  >
+                    <RecruitSign
+                      data-test="team-invitation-list-status"
+                      value="Reject"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

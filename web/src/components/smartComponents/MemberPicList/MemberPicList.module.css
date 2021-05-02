@@ -15,8 +15,8 @@
 }
 
 .piclist {
-  width: 60%;
-  margin-left: 20%;
+  width: 100vw;
+  justify-content: center;
   display: flex;
   margin-bottom: 5%;
 }
@@ -33,4 +33,7 @@
   align-items: center;
   display: flex;
   color: #5e5e5e;
+}
+.borderBottom {
+  border-bottom: 0.01px solid rgb(196, 194, 194);
 }

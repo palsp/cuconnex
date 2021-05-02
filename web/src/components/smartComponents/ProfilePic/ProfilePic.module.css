@@ -31,9 +31,27 @@
 }
 
 .profileMini {
-  margin: auto;
+  margin-left: 1vw;
+  margin-right: 1vw;
   height: 30px;
   width: 30px;
+}
+
+.profileSmallMedium {
+  margin: auto;
+  height: 70px;
+  width: 70px;
+  /* border: 5px solid transparent;
+  border-image: linear-gradient(
+      to bottom right,
+      #b827fc 0%,
+      #2c90fc 25%,
+      #b8fd33 50%,
+      #fec837 75%,
+      #fd1892 100%
+    )
+    round;
+  border-image-slice: 1; */
 }
 .profilePicDefault {
   background-image: url("../../../assets/tempProfile.png");

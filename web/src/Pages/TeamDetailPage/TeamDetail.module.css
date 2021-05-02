@@ -52,6 +52,7 @@
 .activity {
   margin-top: 4%;
   margin-bottom: 5%;
+  border-bottom: 0.01px solid rgb(196, 194, 194);
 }
 
 .heading {

@@ -14,6 +14,8 @@ import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
 import { callTeamOfUserAPI, teamInvitationAPI } from "@src/api";
 import { Button } from "@material-ui/core";
+import NavBar from "@smartComponents/NavBar/NavBar";
+import { AnimatePresence } from "framer-motion";
 
 interface Props {
   location: {
@@ -25,32 +27,30 @@ interface Props {
 
 const LandingPage: React.FC<Props> = (props) => {
   const hamburgerOn = props.location.state !== undefined; // to display hamburger when transitioning from previous menu. This is a temporary fix.
-  const [clickHamburger, setClickHamburger] = useState<boolean>(hamburgerOn);
+  const [displayHamburgerMenu, setDisplayHamburgerMenu] = useState<boolean>(
+    hamburgerOn
+  );
   const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const { setErrorHandler } = useContext(ErrorContext);
   const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
   const { userData } = useContext(UserContext);
+  const [menuHeightStyle, setMenuHeightStyle] = useState({ height: "" });
+
   useEffect(() => {
     fetchTeamHandler();
+    setMenuHeightStyle({ height: `${window.innerHeight - 80}px` });
   }, []);
+
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData.data);
     setMyTeamLists(teamData.data.teams);
   };
-  const hamburgerClickedHandler = () => {
-    setClickHamburger(!clickHamburger);
-  };
-  useEffect(() => {
-    fetchTeamHandler();
-  }, []);
-  const hasTeam = false;
-  // if (myTeamLists.length > 0) {
-  //   hasTeam = true;
-  // }
+  let hasTeam = false;
+  if (myTeamLists.length > 0) {
+    hasTeam = true;
+  }
   console.log(hasTeam);
-  let cssArray = [classes.content];
-  if (!hasTeam) cssArray = [classes.flexDiv];
 
   let marginHeight;
   if (window.innerHeight > 800) {
@@ -59,58 +59,77 @@ const LandingPage: React.FC<Props> = (props) => {
     marginHeight = window.innerHeight * 0.15;
   }
 
-  const LandingPrompt = !clickHamburger ? (
-    <div className={cssArray.join(" ")}>
-      <div className={classes.headerDiv}>
-        <div style={{ position: "absolute", top: "0px", left: "50px" }}>
-          {/* <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => setHasTeam((prevState) => !prevState)}
-          >
-            Test Team
-          </Button> */}
-        </div>
-        <div className={classes.searchDiv}>
-          <Link to="/explore">
-            <Search />
-          </Link>
-        </div>
-        <div className={classes.mailDiv}>
-          <Link to="/notification">
-            <Mail />
-          </Link>
-        </div>
-        <div onClick={hamburgerClickedHandler} className={classes.hamburgerDiv}>
-          <Hamburger />
-        </div>
-      </div>
-      <div className={classes.heroDiv} style={{ marginTop: marginHeight }}>
-        <LandingHero userData={userData} hasTeam={hasTeam} />
-      </div>
-    </div>
-  ) : (
-    <div className={classes.promptDiv}>
-      <div onClick={hamburgerClickedHandler} className={classes.arrowDiv}>
-        <ArrowLeft />
-      </div>
-      <div className={classes.hamburgerPromptDiv}>
-        <HamburgerPrompt />
-      </div>
-    </div>
-  );
+  const landingVariants = {
+    hidden: { x: -400 },
+    visible: {
+      x: 0,
+      transition: {
+        duration: 0.4,
+      },
+    },
+    exit: { x: -400 },
+  };
 
-  return (
+  const hamburgerMenuVariants = {
+    hidden: { x: 400 },
+    visible: {
+      x: 0,
+      transition: {
+        duration: 0.4,
+      },
+    },
+    exit: { x: 400 },
+  };
+
+  const LandingPrompt = displayHamburgerMenu ? (
+    <AnimatePresence>
+      <motion.div
+        variants={hamburgerMenuVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+      >
+        <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
+          <HamburgerPrompt />
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  ) : (
     <motion.div
-      variants={containerVariants}
+      variants={landingVariants}
       initial="hidden"
       animate="visible"
       exit="exit"
       className={classes.main}
     >
-      <Background>
-        <div>{LandingPrompt}</div>
+      <Background hasTeam={hasTeam} heightStyle={menuHeightStyle}>
+        <div className={hasTeam ? classes.heroDivHasTeam : classes.heroDiv}>
+          <LandingHero
+            pageHeight={menuHeightStyle}
+            userData={userData}
+            hasTeam={hasTeam}
+          />
+        </div>
       </Background>
+    </motion.div>
+  );
+
+  return (
+    <motion.div
+      exit={{
+        opacity: 0,
+        transition: {
+          duration: 0.2,
+        },
+      }}
+    >
+      <div className={classes.main}>
+        <NavBar
+          displayHamburgerMenu={displayHamburgerMenu}
+          setDisplayHamburgerMenu={setDisplayHamburgerMenu}
+        />
+        {LandingPrompt}
+      </div>
     </motion.div>
   );
 };
