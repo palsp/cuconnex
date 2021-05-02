@@ -6,7 +6,7 @@ export interface EventCreated {
         id : number,
         "event-name" : string,
         registration : boolean,
-        endDate : Date,
+        endDate : string,
     }
 }
 
