@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.main {
+  height: 100%;
+}
+
 .landingPrompt {
   height: 100%;
 }
