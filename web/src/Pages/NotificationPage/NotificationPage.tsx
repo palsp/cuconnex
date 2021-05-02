@@ -10,6 +10,7 @@ import {
   ActivityNotificationLists,
   ConnectionLists,
   TeamInvitationLists,
+  TeamRatingLists,
 } from "@smartComponents/index";
 import { UserContext } from "@context/UserContext";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
@@ -39,8 +40,8 @@ import containerVariants, {
 } from "@src/models/models";
 
 const NotificationPage: React.FC = () => {
-  const [clickConnection, setConnection] = useState(true);
-  const [clickActivity, setActivity] = useState(false);
+  const [clickIncoming, setIncoming] = useState(true);
+  const [clickOutgoing, setOutgoing] = useState(false);
   const [teamNoti, setTeamNoti] = useState<ITeam[] | []>([]);
   const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<IFetchTeam[] | []>(
     []
@@ -93,16 +94,16 @@ const NotificationPage: React.FC = () => {
     );
     return friendsReceivedData.data.requests;
   };
-  const connectionButtonHandler = () => {
-    setConnection(true);
-    setActivity(false);
-    console.log("setConnection");
+  const incomingButtonHandler = () => {
+    setIncoming(true);
+    setOutgoing(false);
+    console.log("setIncoming");
   };
 
-  const activityButtonHandler = () => {
-    setConnection(false);
-    setActivity(true);
-    console.log("setActivity");
+  const outgoingButtonHandler = () => {
+    setIncoming(false);
+    setOutgoing(true);
+    console.log("setOutgoing");
   };
   let incomingNoti = 0;
   let outgoingNoti = 0;
@@ -120,9 +121,9 @@ const NotificationPage: React.FC = () => {
   }
   console.log(incomingNoti, outgoingNoti);
   let NotificationsPrompt = null;
-  if (clickConnection === true) {
+  if (clickIncoming === true) {
     NotificationsPrompt = (
-      <div className={classes.tabConnection}>
+      <div className={classes.tabIncoming}>
         <div className={classes.relativeArrow}>
           <Link data-test="Notification-page-back-link" to="/landing">
             <ArrowLeft data-test="Notification-page-arrow-left" />
@@ -132,18 +133,18 @@ const NotificationPage: React.FC = () => {
           <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
-          <div className={classes.connection}>
+          <div className={classes.incoming}>
             <Tab
               data-test="Notification-page-Incoming"
-              onClick={connectionButtonHandler}
+              onClick={incomingButtonHandler}
               value="Incoming"
               number={incomingNoti + ""}
             />
           </div>
-          <div className={classes.activity}>
+          <div className={classes.outgoing}>
             <Tab
               data-test="Notification-page-Outgoing"
-              onClick={activityButtonHandler}
+              onClick={outgoingButtonHandler}
               value="Outgoing"
               number={outgoingNoti + ""}
             />
@@ -163,9 +164,9 @@ const NotificationPage: React.FC = () => {
         </div>
       </div>
     );
-  } else if (clickActivity === true) {
+  } else if (clickOutgoing === true) {
     NotificationsPrompt = (
-      <div className={classes.tabActivity}>
+      <div className={classes.tabOutgoing}>
         <div className={classes.relativeArrow}>
           <Link data-test="Notification-page-back-link" to="/landing">
             <ArrowLeft data-test="Notification-page-arrow-left" />
@@ -175,18 +176,18 @@ const NotificationPage: React.FC = () => {
           <Heading data-test="Notification-page-header" value="Requests" />
         </div>
         <div className={classes.tab}>
-          <div className={classes.connection}>
+          <div className={classes.incoming}>
             <Tab
               data-test="Notification-page-Incoming"
-              onClick={connectionButtonHandler}
+              onClick={incomingButtonHandler}
               value="Incoming"
               number={incomingNoti + ""}
             />
           </div>
-          <div className={classes.activity}>
+          <div className={classes.outgoing}>
             <Tab
               data-test="Notification-page-Outgoing"
-              onClick={activityButtonHandler}
+              onClick={outgoingButtonHandler}
               value="Outgoing"
               number={outgoingNoti + ""}
             />
