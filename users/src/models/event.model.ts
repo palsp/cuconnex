@@ -3,6 +3,7 @@ import { TableName } from './types';
 import { BelongsToManyGetAssociationsMixin } from 'sequelize';
 import { Team } from './team.model';
 import { IEventResponse } from '../interfaces/event';
+import { ITeamResponse } from '../interfaces';
 
 interface EventAttrs {
   id: number;
@@ -69,7 +70,12 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
   //TODO: add team[] in event attrs
   public toJSON(): IEventResponse {
     const values = { ...this.get() };
-    return { ...values };
+    let candidate : ITeamResponse[] = []
+    if(this.candidate){
+     candidate = this.candidate.map(c => c.toJSON())
+    }
+
+    return { ...values , candidate };
   }
 }
 

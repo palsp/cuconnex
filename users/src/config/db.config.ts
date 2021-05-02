@@ -1,7 +1,3 @@
-if(process.env.NODE_ENV !== 'production'){
-  require('dotenv').config();
-}
-
 export default {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -13,6 +9,6 @@ export default {
 export const test_config = {
   host: 'localhost',
   user: 'root',
-  password: 'liulaks123',
+  password: 'password',
   db: 'testdb',
 };

@@ -314,20 +314,24 @@ export const getRecommendTeam = async (req : Request , res : Response) => {
     const eventId = req.params.eventId;
     // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
     const event = await Event.findOne({
-      where : { id : 1 } , 
+      where : { id : eventId } , 
       include : { 
         model : Team ,
         as : 'candidate',
-        // where : { id : "6131776121"}
         attributes : { include : ["name"] },
-        
         include : [
-            { model : User, as: 'owner', attributes :  ["id"] , include : [{ model : User , as : "recommendation" , through : { attributes : ["score"]}}]},
-            { model : User, as : 'member' , attributes : ["id"] , include : [{ model : User , as : "recommendation" , through : {attributes : ["score"]}}]}
+            { model : User, 
+              as: 'owner', 
+              attributes :  ["id"],
+            },
+            { model : User, 
+              as : 'member' , 
+              attributes : ["id"] , 
+            }
         ]
       }
     })
-    
+
     if(!event){
       throw new NotFoundError("Event");
     }
