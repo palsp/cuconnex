@@ -64,7 +64,7 @@ const LandingPage: React.FC<Props> = (props) => {
     <motion.div 
             animate={{ rotate: 180 }}
             transition={{ ease: "linear", duration: 4, repeat: Infinity }}
-            style={{ bottom: circleHeight }}
+            style={{ bottom: circleHeight, opacity: 0.7, zIndex: 1, }}
             className={classes.circle_overlay}
             data-test="landing-hero-halfcircleoverlay"
           ></motion.div>
@@ -72,7 +72,7 @@ const LandingPage: React.FC<Props> = (props) => {
     <motion.div 
             animate={{ rotate: 180 }}
             transition={{ ease: "linear", duration: 4, repeat: Infinity }}
-            style={{ bottom: marginHeight, opacity: 0.5, zIndex: 1,  }}
+            style={{ bottom: marginHeight, opacity: 0.7, zIndex: 1,  }}
             className={classes.circle_overlay}
             data-test="landing-hero-halfcircleoverlay"
       ></motion.div>
@@ -105,12 +105,11 @@ const LandingPage: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className={classes.heroDiv}>
-        <LandingHero userData={userData} hasTeam={!hasTeam} />
+        <LandingHero userData={userData} hasTeam={hasTeam} />
       </div>
     </div>
   ) : (
     <div className={classes.promptDiv}>
-      
       <div onClick={hamburgerClickedHandler} className={classes.arrowDiv}>
         <ArrowLeft />
       </div>

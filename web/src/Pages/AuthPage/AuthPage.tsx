@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { motion } from "framer-motion";
+import { motion, usePresence } from "framer-motion";
 import { Redirect } from "react-router";
 
 import {
@@ -15,12 +15,14 @@ import LoginPrompt from "./LoginPrompt/LoginPrompt";
 import SignupPrompt from "./SignupPrompt/SignupPrompt";
 import classes from "./AuthPage.module.css";
 import { UserContext } from "@context/UserContext";
+import { start } from "node:repl";
 const AuthPage: React.FC = () => {
   const [clickSignup, setClickSignup] = useState<boolean>(false);
   const [clickLogin, setClickLogin] = useState<boolean>(false);
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const { fetchUserDataHandler } = useContext(UserContext);
+  const [timeOut, setTimeOut ] = useState<boolean>(false);
 
   const checkUserHasLogin = async () => {
     try {
@@ -60,7 +62,45 @@ const AuthPage: React.FC = () => {
   const variants = {
     visible: { y: 0 },
     hidden: { y: 100 },
+    exit: { x: 100 },
   };
+
+  // let infiniteCircle = false;
+  // const startTimer = Date.now();
+  // console.log(startTimer);
+  // const endTimer = startTimer + 9000;
+  // if (startTimer > endTimer) infiniteCircle = true;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setTimeOut(true);
+    }, 100);
+  }, []);
+
+  const circle_overlay = timeOut ? (
+    <motion.div
+    // animate={{ y: -60 }}
+    transition={{
+      type: "spring",
+      delay: 0,
+      stiffness: 270,
+      damping: 29,
+      mass: 3.3,
+    }}
+    initial="hidden"
+    animate="visible"
+    variants={variants}
+    className={classes.circle_overlay}
+  ></motion.div>
+) : (
+<motion.div
+  animate={{ rotate: 360 }}
+  transition={{ delay: 2, ease: "linear", duration: 4, repeat: Infinity }}
+  style={{ bottom: -(window.innerHeight * 0.33) }}
+  className={classes.circle_overlay}
+  data-test="auth-page-halfcircleoverlay"
+></motion.div>
+  );
 
   const authPrompt =
     clickSignup === true ? (
@@ -81,20 +121,7 @@ const AuthPage: React.FC = () => {
         <div className={classes.logo}>
           <Logo data-test="auth-page-logo" />
         </div>
-        <motion.div
-          // animate={{ y: -60 }}
-          transition={{
-            type: "spring",
-            delay: 0,
-            stiffness: 270,
-            damping: 29,
-            mass: 3.3,
-          }}
-          initial="hidden"
-          animate="visible"
-          variants={variants}
-          className={classes.circle_overlay}
-        ></motion.div>
+        {circle_overlay}
         <SignupPrompt
           data-test="auth-page-signup-prompt"
           backButtonClickedHandler={backButtonClickedHandler}
@@ -120,18 +147,28 @@ const AuthPage: React.FC = () => {
         </div>
         <motion.div
           // animate={{ y: -100 }}
+          custom={0}
           transition={{
             type: "spring",
             delay: 0,
             stiffness: 270,
             damping: 29,
             mass: 3.3,
-            // duration: 2, repeat: Infinity
+            duration: 4,
+            
           }}
           initial="hidden"
           animate="visible"
           variants={variants}
           className={classes.circle_overlay}
+        ></motion.div>
+        <motion.div
+          custom={1}
+          animate={{ rotate: 360 }}
+          transition={{ delay: 4, ease: "linear", duration: 4, repeatDelay: 4, }}
+          style={{ bottom: -(window.innerHeight * 0.33) }}
+          className={classes.circle_overlay}
+          data-test="auth-page-halfcircleoverlay"
         ></motion.div>
         <LoginPrompt
           data-test="auth-page-login-prompt"
