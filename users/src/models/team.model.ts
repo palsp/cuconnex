@@ -18,6 +18,7 @@ import { TeamStatus, BadRequestError } from '@cuconnex/common';
 
 import { ITeamResponse, IUserResponse, ITeamRequestResponse } from '../interfaces';
 import { Recommend } from './recommend.model';
+import { Connection } from './connection.model';
 
 
 // keep member array as id of user
@@ -219,6 +220,36 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
     this.members = members;
+  }
+
+  /**
+   * This function is for complex query, its functionality is the same as CalculateUserScore
+   * before function call, make sure that team's owner and team's member is included 
+   * with team instance
+   * @param userId 
+   */
+  public async CalculateUserScoreComplexQuery(userId : string) : Promise<number>{ 
+    let meanScore;
+    const ownerRecommend = this.owner!.recommendation;
+    if(!ownerRecommend){
+      const status = await Connection.findConnection(userId , this.owner!.id);
+      const score = Connection.isConnection(status) ? 4 : 0;
+      meanScore = score
+    }else{
+      meanScore = ownerRecommend[0].Recommend!.score
+    }
+
+    for(let member of this.member!){
+      const MemberRecommend = member.recommendation
+      if(!MemberRecommend){
+        const status = await Connection.findConnection(userId , member.id);
+        const score = Connection.isConnection(status) ? 4 : 0;
+        meanScore += score
+      }else{
+        meanScore += MemberRecommend[0].Recommend!.score
+      }
+    }
+    return meanScore / (this.member!.length + 1)
   }
 
   public async CalculateUserScore(userId: string): Promise<number>{

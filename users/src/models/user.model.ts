@@ -45,6 +45,7 @@ interface UserAttrs {
   Connection?: Connection;
   IsMember?: IsMember;
   Recommend? : Recommend;
+  recommendation? : User[];
 }
 
 interface UserCreationAttrs {
@@ -66,6 +67,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public year!: string;
   public role!: string;
   public bio!: string;
+  public recommendation? : User[];
 
   public Interests?: Interest[];
   public Connection?: Connection;

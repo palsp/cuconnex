@@ -4,7 +4,9 @@ import { startDB } from './models/initDB';
 import { Event, Recommend, Team, User } from './models';
 import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 import { init } from './data/dummy';
-import { NotFoundError } from '@cuconnex/common';
+import { NotFoundError, TeamStatus } from '@cuconnex/common';
+import { includes } from 'lodash';
+import { convertCompilerOptionsFromJson } from 'typescript';
 
 
 const validateEnvAttr = () => {
@@ -72,6 +74,73 @@ const start = async () => {
     // TODO: delete dummy data 
     await init();
 
+    // const event = await Event.findOne({ where : { id : 1} , include : [{ model : Team , as : "candidate", include : ['owner','member'] , attributes : ["teamName"]}]})
+    // const event = await Event.findOne({
+    //   where : { id : 1 } , 
+    //   include : { 
+    //     model : Team ,
+    //     as : 'candidate',
+    //     // where : { id : "6131776121"}
+    //     attributes : { include : ["name"] },
+        
+    //     include : [
+    //         { model : User, as: 'owner', attributes :  ["id"] , include : [{ model : User , as : "recommendation" , attributes : ["id"] , where : { id : "6131776121"}}]},
+    //         {model : User, as : 'member' , attributes : ["id"] , include : [{ model : User , as : "recommendation" , attributes : ["id"] , where : { id : "6131776121"}}]}
+    //     ]
+    //   }
+    // })
+     // @ts-ignore
+    // console.log("🚀 ~ file: index.ts ~ line 76 ~ start ~ event", event!.candidate![0].member![0].id , event!.candidate![0].member![0].recommendation!)
+    // @ts-ignore
+
+    // const event = await Event.findOne({
+    //   where : { id : 1 } , 
+    //   include : { 
+    //     model : Team ,
+    //     as : 'candidate',
+    //     // where : { id : "6131776121"}
+    //     attributes : { include : ["name"] },
+        
+    //     include : [
+    //         { model : User, as: 'owner', attributes :  ["id"] , include : [{ model : User , as : "recommendation" , through : { attributes : ["score"]}}]},
+    //         { model : User, as : 'member' , attributes : ["id"] , include : [{ model : User , as : "recommendation" , through : {attributes : ["score"]}}]}
+    //     ]
+    //   }
+    // })
+    // console.log("🚀 ~ file: index.ts ~ line 108 ~ start ~ event", event?.candidate![0].member)
+
+    const team = await Team.findOne({ 
+      where : { name : "test_team_0"},
+      include : [
+        { model : User , as : 'member' , attributes :["id"], include : [{model : User , as : "recommendation" , where : { id : "6131776321"} , attributes :["id"] , through : { attributes : ["score"]}}]},
+        { model : User , as : 'owner'  , attributes : ["id"], include : [{model : User , as : "recommendation" , where : { id : "6131776321"} , attributes : ["id"] ,through : { attributes : ["score"]}}] },
+      ]
+    })
+    if(!team){
+      throw new Error('not found')
+    }
+    // console.log("🚀 ~ file: index.ts ~ line 118 ~ start ~ team", team.owner!.recommendation!)
+
+    let meanScore;
+    const ownerRecommend = team.owner!.recommendation;
+    if(!ownerRecommend){
+      meanScore = 0
+    }else{
+      meanScore = ownerRecommend[0].Recommend!.score
+    }
+
+    for(let member of team.member!){
+      const MemberRecommend = member.recommendation
+      if(!MemberRecommend){
+        meanScore += 0
+      }else{
+        meanScore += MemberRecommend[0].Recommend!.score
+      }
+    }
+
+    console.log(meanScore / ( team.member!.length + 1))
+    console.log(await team.CalculateUserScore("6131776321"));
+    
     // const users = await User.findAll();
 
     // const user = await User.create({

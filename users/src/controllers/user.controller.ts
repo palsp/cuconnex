@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+  import { Request, Response } from 'express';
 import { Op } from 'sequelize';
 import {
   NotFoundError,
@@ -312,8 +312,22 @@ export const getTeamStatus = async (req: Request, res: Response) => {
 
 export const getRecommendTeam = async (req : Request , res : Response) => {
     const eventId = req.params.eventId;
-    const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
-
+    // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
+    const event = await Event.findOne({
+      where : { id : 1 } , 
+      include : { 
+        model : Team ,
+        as : 'candidate',
+        // where : { id : "6131776121"}
+        attributes : { include : ["name"] },
+        
+        include : [
+            { model : User, as: 'owner', attributes :  ["id"] , include : [{ model : User , as : "recommendation" , through : { attributes : ["score"]}}]},
+            { model : User, as : 'member' , attributes : ["id"] , include : [{ model : User , as : "recommendation" , through : {attributes : ["score"]}}]}
+        ]
+      }
+    })
+    
     if(!event){
       throw new NotFoundError("Event");
     }

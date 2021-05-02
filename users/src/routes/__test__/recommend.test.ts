@@ -3,9 +3,6 @@ import { app } from '../../app';
 import { getUserWhoLike } from '../../utils/recommend';
 import { User, Interest, Team, Event } from '../../models';
 import { TeamStatus, Technology } from '@cuconnex/common';
-import { exec } from 'node:child_process';
-import { create, set } from 'lodash';
-
 
 const  createDummyUser =  async () : Promise<User[]> => {
     const users : User[] = [];

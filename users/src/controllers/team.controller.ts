@@ -8,10 +8,8 @@ import {
   ITeamRequestResponse,
   IEventResponse,
 } from '../interfaces';
-import { filter } from 'lodash';
 
 require('express-async-errors');
-
 export const getTeam = async (req: Request, res: Response) => {
   const name = req.params.name;
 
@@ -169,16 +167,12 @@ export const getIncomingRequests = async (req: Request, res: Response) => {
 };
 
 
-
-
-
-export const getRecommendedUserForTeam = async (req: Request , res : Response) => {
+export const getRecommendedUserForTeam = async (req : Request , res : Response) => {
   const filterInterest = req.query.filter;
   
   const teamName  =  req.params.teamName;
   
 
-  // TODO: find team according to event name
   const team = await Team.findOne({ where : { name : teamName} , include : ['owner' , 'member']});
 
   if(!team){
@@ -207,22 +201,71 @@ export const getRecommendedUserForTeam = async (req: Request , res : Response) =
     }
   }
 
-  
-  // sort by score
+    //   // sort by score
   result.sort((a , b) => b.score - a.score);
-  
+
   // TODO: create interface
   const response = { users : result.map(r => r.user)};
 
   res.status(200).send(response)
-
 }
 
 
 
+/**
+ * Complex query 
+ * @param req 
+ * @param res 
+ */
+// export const getRecommendedUserForTeam = async (req: Request , res : Response) => {
+//   const t0 = performance.now();
+//   const filterInterest = req.query.filter;
+  
+//   const teamName  =  req.params.teamName;
+//   // TODO: check members credential;
 
+//   if(typeof filterInterest !== "string" && filterInterest !== undefined ){
+//     throw new BadRequestError('invalid query params');
+//   }
+  
+//   const users = await getUserWhoLike(filterInterest);
 
+//   let result: {
+//     user : User,
+//     score : number
+//   }[] = []
 
+//   for(let user of users){
+//     const team = await Team.findOne({ 
+//       where : { name : "test_team_0"},
+//       include : [
+//         { model : User , as : 'member' , attributes :["id"], include : [{model : User , as : "recommendation" , where : { id : user.id } , attributes :["id"] , through : { attributes : ["score"]}}]},
+//         { model : User , as : 'owner'  , attributes : ["id"], include : [{model : User , as : "recommendation" , where : { id : user.id} , attributes : ["id"] ,through : { attributes : ["score"]}}] },
+//       ]
+//     });
+
+//     if(!team){
+//       throw new NotFoundError('Team');
+//     }
+
+//     const isMember = await team.findMember(user.id);
+//     let score: number;
+//     if(!isMember){
+//       // score = await team.CalculateUserScore(user.id);
+//       score = await team.CalculateUserScoreComplexQuery(user.id);
+//       result.push({ user , score});
+//     }
+//   } 
+//   // sort by score
+//   result.sort((a , b) => b.score - a.score);
+  
+//   // TODO: create interface
+//   const response = { users : result.map(r => r.user)};
+//   const t1 = performance.now();
+//   console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+//   res.status(200).send(response)
+
+// }
 
 
 export const registerEvent = async (req: Request, res: Response) => {
