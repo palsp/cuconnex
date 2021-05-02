@@ -8,10 +8,11 @@ import { Connection } from './connection.model';
 import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
+import { Rating } from './rating.model';
 import { Event } from './event.model';
 import { Candidate } from './candidate.model';
 
-export { User, Interest, UserInterest, Category, Team, IsMember, Event, Candidate };
+export { User, Interest, UserInterest, Category, Team, IsMember , Event, Rating , Recommend , Candidate};
 
 // TODO: add version key
 
@@ -26,7 +27,16 @@ export const autoMigrate = (sequelize: Sequelize) => {
   IsMember.autoMigrate(sequelize);
   Connection.autoMigrate(sequelize);
   Recommend.autoMigrate(sequelize);
+  Rating.autoMigrate(sequelize);
   Candidate.autoMigrate(sequelize);
+
+  // Rating M-M user
+  User.belongsToMany(User, {
+    as: 'rating',
+    through: Rating,
+    foreignKey: 'raterId',
+    otherKey: 'rateeId',
+  })
 
   // M-M user and interest
   User.belongsToMany(Interest, {
@@ -37,7 +47,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   Interest.belongsToMany(User, {
     through: UserInterest,
-    as: 'interests',
+    as: 'like',
     sourceKey: 'description',
     foreignKey: 'interest',
     onDelete: 'CASCADE',
@@ -59,7 +69,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
     as: 'recommendation',
     through: Recommend,
     foreignKey: 'userId',
-    otherKey: 'recommenderId',
+    otherKey: 'recommendeeId',
   });
 
   // define relation for connection
@@ -72,12 +82,18 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   // -------------------- User and Team -----------------------------------
 
+
   User.hasMany(Team, {
     sourceKey: 'id',
+    as : 'teams',
     foreignKey: 'creatorId',
-    as: 'teams',
     onDelete: 'CASCADE',
   });
+
+  Team.belongsTo(User,{
+    as : 'owner',
+    foreignKey : 'creatorId'
+  })
 
   // M-M
   Team.belongsToMany(User, {

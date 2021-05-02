@@ -1,17 +1,18 @@
 import { Request, Response } from 'express';
-import { BadRequestError, InternalServerError, NotFoundError } from '@cuconnex/common';
-import { Team, IsMember, User, Event } from '../models';
+import { BadRequestError, NotFoundError } from '@cuconnex/common';
+import { Team, IsMember, User, Interest, Event } from '../models';
+import { getUserWhoLike } from '../utils/recommend';
 import {
   IUserResponse,
   ITeamResponse,
   ITeamRequestResponse,
   IEventResponse,
   ITeamRequest,
+  IRecommendUserResponse,
 } from '../interfaces';
 import { deleteFile } from '../utils/file';
 
 require('express-async-errors');
-
 export const getTeam = async (req: Request, res: Response) => {
   const name = req.params.name;
 
@@ -170,7 +171,7 @@ export const manageStatus = async (req: Request, res: Response) => {
     throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
   }
 
-  team.editMemberStatus(targetUser, status);
+  await team.editMemberStatus(targetUser, status);
 
   res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
 };
@@ -212,6 +213,103 @@ export const getIncomingRequests = async (req: Request, res: Response) => {
 
   res.status(200).send({ incomingRequests: response });
 };
+
+export const getRecommendedUserForTeam = async (req: Request, res: Response) => {
+  const filterInterest = req.query.filter;
+
+  const teamName = req.params.teamName;
+
+  const team = await Team.findOne({ where: { name: teamName }, include: ['owner', 'member'] });
+
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+
+  // TODO: check members credential;
+
+  if (typeof filterInterest !== 'string' && filterInterest !== undefined) {
+    throw new BadRequestError('invalid query params');
+  }
+
+  const users = await getUserWhoLike(filterInterest);
+
+  let result: {
+    user: User;
+    score: number;
+  }[] = [];
+
+  for (let user of users) {
+    const isMember = await team.findMember(user.id);
+    let score: number;
+    if (!isMember) {
+      score = await team.CalculateUserScore(user.id);
+      result.push({ user, score });
+    }
+  }
+
+  // sort by score
+  result.sort((a, b) => b.score - a.score);
+
+  // TODO: create interface
+  const response: IRecommendUserResponse = { users: result.map((r) => r.user.toJSON()) };
+
+  res.status(200).send(response);
+};
+
+/**
+ * Complex query
+ * @param req
+ * @param res
+ */
+// export const getRecommendedUserForTeam = async (req: Request , res : Response) => {
+//   const t0 = performance.now();
+//   const filterInterest = req.query.filter;
+
+//   const teamName  =  req.params.teamName;
+//   // TODO: check members credential;
+
+//   if(typeof filterInterest !== "string" && filterInterest !== undefined ){
+//     throw new BadRequestError('invalid query params');
+//   }
+
+//   const users = await getUserWhoLike(filterInterest);
+
+//   let result: {
+//     user : User,
+//     score : number
+//   }[] = []
+
+//   for(let user of users){
+//     const team = await Team.findOne({
+//       where : { name : "test_team_0"},
+//       include : [
+//         { model : User , as : 'member' , attributes :["id"], include : [{model : User , as : "recommendation" , where : { id : user.id } , attributes :["id"] , through : { attributes : ["score"]}}]},
+//         { model : User , as : 'owner'  , attributes : ["id"], include : [{model : User , as : "recommendation" , where : { id : user.id} , attributes : ["id"] ,through : { attributes : ["score"]}}] },
+//       ]
+//     });
+
+//     if(!team){
+//       throw new NotFoundError('Team');
+//     }
+
+//     const isMember = await team.findMember(user.id);
+//     let score: number;
+//     if(!isMember){
+//       // score = await team.CalculateUserScore(user.id);
+//       score = await team.CalculateUserScoreComplexQuery(user.id);
+//       result.push({ user , score});
+//     }
+//   }
+//   // sort by score
+//   result.sort((a , b) => b.score - a.score);
+
+//   // TODO: create interface
+//   const response = { users : result.map(r => r.user)};
+//   const t1 = performance.now();
+//   console.log("Call to doSomething took " + (t1 - t0) + " milliseconds.")
+//   res.status(200).send(response)
+
+// }
 
 export const registerEvent = async (req: Request, res: Response) => {
   const user = req.user!;

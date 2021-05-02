@@ -4,7 +4,6 @@ import { startDB } from './models/initDB';
 import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 
 
-
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
     throw new Error('DB_HOST must be defined');
@@ -44,7 +43,6 @@ if (!process.env.NATS_CLUSTER_ID) {
 const start = async () => {
   // check if all required env variable have been declared
   validateEnvAttr();
-
   try {
 
 
@@ -67,6 +65,10 @@ const start = async () => {
     // initial data for interest and category 
     // it should be run only once
     await startDB();
+
+    // TODO: delete dummy data 
+    // await init();
+
 
   } catch (err) {
     console.log(err);

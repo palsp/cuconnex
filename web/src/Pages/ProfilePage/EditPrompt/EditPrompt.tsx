@@ -11,6 +11,10 @@ import { ProfilePic } from "@smartComponents/index";
 
 interface Props {
   type?: boolean; // true == 'Profile', false = 'About'
+  profileURL?: string;
+  displayName?: string;
+  role?: string;
+  bio?: string;
 }
 
 const EditPrompt: React.FC<Props> = (props) => {
@@ -21,7 +25,11 @@ const EditPrompt: React.FC<Props> = (props) => {
     prompt = (
       <div className={classes.edit}>
         <div className={classes.profilePicDiv}>
-          <ProfilePic size="big" data-test="personal-info-personalImage" />
+          <ProfilePic
+            size="xl"
+            PicUrl={props.profileURL}
+            data-test="personal-info-personalImage"
+          />
         </div>
         <div className={classes.toggle}>
           <div className={classes.toggleText}>Looking for a team</div>
@@ -62,6 +70,7 @@ const EditPrompt: React.FC<Props> = (props) => {
                     label="Display Name*"
                     type="input"
                     name="displayName"
+                    placeholder={props.displayName}
                   />
                 </div>
                 <div className={classes.roleFieldDiv}>
@@ -69,6 +78,15 @@ const EditPrompt: React.FC<Props> = (props) => {
                     label="Current Position*"
                     type="input"
                     name="currentPosition"
+                    placeholder={props.role}
+                  />
+                </div>
+                <div className={classes.inputFieldDiv}>
+                  <InputField
+                    label="Tell Something About You*"
+                    type="input"
+                    name="about"
+                    placeholder={props.bio}
                   />
                 </div>
               </div>

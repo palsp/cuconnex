@@ -1,0 +1,51 @@
+.SideNavToggle {
+  display: flex;
+  flex-direction: column;
+  z-index: 10000001;
+
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+/* Styling the hamburger lines */
+.SideNavToggle .SideNavLine {
+  width: 32px;
+  height: 5px;
+  margin: 1px 0 3.5px 0;
+  background: rgb(0, 0, 0);
+  transition: all 0.5s ease-out;
+}
+
+/* Adding tranform to the X */
+.SideNavLine.close {
+  transform: rotate(180deg);
+}
+
+/* Adding tranform to the X */
+.Close {
+  transform: rotate(180deg);
+}
+
+.Close .SideNavLine {
+  background: black;
+}
+
+/* Styling the three lines to make it an X */
+.Close .SideNavLine:nth-child(1) {
+  transform: rotate(45deg) translate(12px, 5px);
+}
+
+.Close .SideNavLine:nth-child(2) {
+  opacity: 0;
+}
+
+.Close .SideNavLine:nth-child(3) {
+  transform: rotate(-45deg) translate(8px, -2px);
+}
+
+@media (min-width: 40rem) {
+  .SideNavToggle {
+    display: none;
+  }
+}

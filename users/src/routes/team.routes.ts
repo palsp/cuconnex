@@ -16,9 +16,12 @@ const router = express.Router();
 
 router.get('/events/:teamName', teamController.getRegisteredEvents);
 
+router.get('/recommend-user/:teamName' , requireUser , teamController.getRecommendedUserForTeam);
+
 router.get('/:name', teamController.getTeam);
 
 router.get('/members/:name', requireUser, teamController.getTeamMember);
+
 
 router.get('/');
 

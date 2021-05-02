@@ -4,6 +4,7 @@ import { addFriendAPI, callTeamOfUserAPI, createEventsAPI } from "@api/index";
 import { IAddFriend, IEventData } from "@src/models";
 import MemberTag from "@smartComponents/MemberTag/MemberTag/MemberTag";
 import MemberTags from "@smartComponents/MemberTag/MemberTags";
+import { mockEventLists } from "@src/mockData";
 const postEventsHandler = async (eventsData: IEventData) => {
   try {
     const resultEvents = await createEventsAPI(eventsData);
@@ -61,7 +62,7 @@ const PushPage: React.FC = () => {
     <div>
       <Button
         value="press to send data"
-        onClick={() => postEventsHandler(sampleevent)}
+        onClick={() => postEventsHandler(mockEventLists[1])}
       ></Button>
     </div>
   );

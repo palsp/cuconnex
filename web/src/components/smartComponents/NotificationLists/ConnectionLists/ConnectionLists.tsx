@@ -13,7 +13,7 @@ const ConnectionLists: React.FC<Props> = (props) => {
   return (
     <div className={classes.ConnectionLists}>
       <div className={classes.listHeader}>Connections</div>
-      {props.requests.map((friendNoti:IUserFriend, index: number) => {
+      {props.requests.map((friendNoti: IUserFriend, index: number) => {
         return (
           <div key={index}>
             <ConnectionList key={index} connection={friendNoti} />

@@ -2,29 +2,27 @@ import classes from "./CreateTeamPage.module.css";
 import React, { useEffect, useState } from "react";
 import { Close } from "@dumbComponents/UI/Icons";
 import { Link } from "react-router-dom";
-import SelectMemberPrompt from "./SelectMemberPrompt/SelectMemberPrompt";
-import { mockMemberLists } from "@src/mockData";
 import { motion } from "framer-motion";
 import containerVariants, { IUser } from "@src/models/models";
-import { fetchFriendsDataAPI } from "@src/api";
+import SelectEventPrompt from "./SelectEventPrompt/SelectEventPrompt";
 
 const CreateTeamPage: React.FC = () => {
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
-  const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
+  const [clickSelectEvent, setClickSelectEvent] = useState<boolean>(false);
   const [scopeType, setScopeType] = useState<number>(0);
   const personalButtonClickedHandler = () => {
-    setClickSelectMember(true);
+    setClickSelectEvent(true);
     setClickSelectScope(false);
     setScopeType(1);
   };
 
   const chulaButtonClickedHandler = () => {
-    setClickSelectMember(true);
+    setClickSelectEvent(true);
     setClickSelectScope(false);
     setScopeType(2);
   };
   const nonChulaButtonClickedHandler = () => {
-    setClickSelectMember(true);
+    setClickSelectEvent(true);
     setClickSelectScope(false);
     setScopeType(3);
   };
@@ -63,9 +61,9 @@ const CreateTeamPage: React.FC = () => {
           </div>
         </div>
       </div>
-    ) : clickSelectMember === true ? (
+    ) : clickSelectEvent === true ? (
       <div>
-        <SelectMemberPrompt />
+        <SelectEventPrompt />
       </div>
     ) : (
       <div>Error Occurs : Contact Staff</div>

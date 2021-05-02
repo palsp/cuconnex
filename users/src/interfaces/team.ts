@@ -17,3 +17,7 @@ export interface ITeamRequest {
   lookingForMembers: boolean;
   file: any;
 }
+
+export interface IRecommendUserResponse {
+  users : IUserResponse[];
+}
