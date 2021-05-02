@@ -46,7 +46,7 @@ export interface IFetchTeam {
 
 export interface ISearchUserTeamEventResult {
   users: IUser[];
-  team: ITeam[];
+  team: IFetchTeam[];
   events: IEventData[];
 }
 export interface IUserSignup {
@@ -109,8 +109,9 @@ export interface ICreateUserData {
   role: string;
 }
 
-export interface IFetchTeam {
-  teams: ITeam[];
+
+export interface IFetchTeams {
+  teams :IFetchTeam[];
 }
 
 export interface IFetchFriendsData {
@@ -251,6 +252,13 @@ export interface ITeamCreatorResponse {
   targetUserId: string;
   teamName: string;
   status: string;
+}
+export interface IRegisterTeamEvent{
+  teamName:string;
+  eventId:number;
+}
+export interface IFetchTeamEvent{
+  events:IEventData[];
 }
 
 //Search

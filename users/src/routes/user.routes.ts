@@ -9,6 +9,7 @@ import {
   postUserValidator,
   manageUserStatusValidator,
   editUserValidator,
+  addRatingValidator,
 } from '../utils/user.validators';
 
 const router = express.Router();
@@ -20,6 +21,8 @@ router.get('/teams/:userId', requireUser, userController.getListofTeamsBelongsTo
 router.get('/get-my-requests', requireUser, userController.getMyRequests);
 
 router.get('/current-user', userController.getUser);
+
+
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
 
@@ -66,6 +69,15 @@ router.post(
   requestToJoinTeamValidator,
   validateRequest,
   userController.requestToJoinTeam
+);
+
+router.post(
+  '/rate',
+  requireUser,
+  addRatingValidator,
+  validateRequest,
+  userController.addRatings
+
 );
 
 export { router as userRouter };

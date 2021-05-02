@@ -29,6 +29,7 @@ import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
 import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
 import { Recommend } from './recommend.model';
+import { Rating, RatingCreationAttrs } from './rating.model';
 
 // All attributes in user model
 interface UserAttrs {
@@ -73,6 +74,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public Connection?: Connection;
   public IsMember?: IsMember;
   public Recommend? : Recommend;
+  public Rating?: Rating;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -143,6 +145,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addRecommendation!: BelongsToManyAddAssociationMixin<User , { through : { score : number}}>
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
+  public addRating!: BelongsToManyAddAssociationMixin<User, { through: { rating: number} }>;
+  public getRating!: BelongsToManyGetAssociationsMixin<User>;
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.

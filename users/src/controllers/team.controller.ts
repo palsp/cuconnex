@@ -124,7 +124,7 @@ export const manageStatus = async (req: Request, res: Response) => {
     throw new BadRequestError(`Status for ${targetUserId} and ${teamName} not found!`);
   }
 
-  team.editMemberStatus(targetUser, status);
+  await team.editMemberStatus(targetUser, status);
 
   res.status(200).send({ message: `Change status of ${targetUserId} to ${status}` });
 };

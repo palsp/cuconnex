@@ -1,4 +1,5 @@
 import { SearchBar } from "@smartComponents/index";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
 import React, { useState, useEffect } from "react";
 const TestPage = () => {
   const [interestArray, setInterestArray] = useState<any>({
@@ -24,13 +25,16 @@ const TestPage = () => {
     // newwe.Tech.splice(1, 1);
     // console.log("this is original", testarrayobject);
     // console.log("this is splice", newwe);
-
     console.log("testpage is working!");
   }, []);
   return (
     <div>
       <SearchBar value="test" />
       This is testpage
+      <WaveCanvasBg
+        height={window.innerHeight - 80}
+        width={window.innerWidth}
+      />
     </div>
   );
 };
