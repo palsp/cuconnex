@@ -109,9 +109,8 @@ export interface ICreateUserData {
   role: string;
 }
 
-
 export interface IFetchTeams {
-  teams :IFetchTeam[];
+  teams: IFetchTeam[];
 }
 
 export interface IFetchFriendsData {
@@ -125,9 +124,11 @@ export interface IFetchEventsDataResult {
   events: IEventData[];
 }
 export interface IEventData {
+  id: number;
   "event-name": string;
   bio: string;
-  status?: string;
+  location: string;
+  registration: boolean;
   "start-date": {
     month: number;
     day: number;
@@ -148,14 +149,17 @@ export interface IEventData {
       second: number;
     };
   };
+  status?: string;
 }
 //team
 export interface IGetTeam {
   team: ITeam;
 }
-export interface ITeamData {
+export interface ICreateTeamData {
   name: string;
   description: string;
+  currentRecruitment: string;
+  image: File | undefined;
 }
 
 export interface ITeamDataResult {
@@ -200,7 +204,6 @@ export interface IUserRelationTeam {
 export interface IUserFriendExtended extends IUserFriend {
   status: "notInvited" | "invited" | "requestedToJoin" | "inTeam";
 }
-
 
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
@@ -253,12 +256,12 @@ export interface ITeamCreatorResponse {
   teamName: string;
   status: string;
 }
-export interface IRegisterTeamEvent{
-  teamName:string;
-  eventId:number;
+export interface IRegisterTeamEvent {
+  teamName: string;
+  eventId: number;
 }
-export interface IFetchTeamEvent{
-  events:IEventData[];
+export interface IFetchTeamEvent {
+  events: IEventData[];
 }
 
 //Search

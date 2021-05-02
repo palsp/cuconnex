@@ -26,27 +26,27 @@ const NavBar: React.FC<Props> = (props) => {
           </div>
         </Link>
 
-        <div className={classes.rightIcons}>
-          <Link to="/test">
+        {/* <div className={classes.rightIcons}> */}
+        {/* <Link to="/test">
             <div className={classes.mail}>
               <Mail />
             </div>
-          </Link>
+          </Link> */}
+        <div className={classes.mail}>
           <Link to="/notification">
-            <div className={classes.mail}>
-              <Mail />
-            </div>
+            <Mail />
           </Link>
+        </div>
 
-          <div className={classes.hamburger}>
-            {/* {displayHamburgerMenu ? <Close /> : <Hamburger />} */}
-            <SideNavToggle
-              toggleHamburger={displayHamburgerMenu}
-              setToggleHamburger={hamburgerHandler}
-            />
-          </div>
+        <div className={classes.hamburger}>
+          {/* {displayHamburgerMenu ? <Close /> : <Hamburger />} */}
+          <SideNavToggle
+            toggleHamburger={displayHamburgerMenu}
+            setToggleHamburger={hamburgerHandler}
+          />
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 };

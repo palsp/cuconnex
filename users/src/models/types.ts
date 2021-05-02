@@ -11,6 +11,7 @@ export enum TableName {
   category = 'categories',
   teams = 'teams',
   faculty = 'faculty',
+  rating = 'rating',
   candidates = 'candidates',
 }
 

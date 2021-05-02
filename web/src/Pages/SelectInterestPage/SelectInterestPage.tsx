@@ -27,6 +27,7 @@ interface Props {
     };
   };
   page?: string;
+  history: { goBack: () => void };
 }
 
 interface InterestListsArray {
@@ -59,6 +60,9 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
     );
   }, []);
 
+  const backButtonHandler = () => {
+    props.history.goBack();
+  };
   const selectTechnologyInterestHandler = (e: string) => {
     const positionOfE = interestArray.Technology.indexOf(e);
     if (positionOfE === -1) {
@@ -167,12 +171,10 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
   } else {
     selectInterestPrompt = (
       <div className={classes.footerNavigation}>
-        <Link to="/personalinformation">
-          <div className={classes.footerIcon}>
-            <ArrowLeft data-test="arrow-left" />
-            <Heading size="small" value="Back" />
-          </div>
-        </Link>
+        <div onClick={backButtonHandler} className={classes.footerIcon}>
+          <ArrowLeft data-test="arrow-left" />
+          <Heading size="small" value="Back" />
+        </div>
         <DotMorePage data-test="dot-icon" amount={3} />
         <div>
           <Link to="/success">

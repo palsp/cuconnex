@@ -1,12 +1,12 @@
 import express from 'express';
-require('express-async-errors');
+import 'express-async-errors';
 import session from 'cookie-session';
 import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 import cors from 'cors';
 import { fetchUser } from './middlewares';
 import * as router from './routes';
-import { eventRouter, connectionRouter, userRouter, teamRouter, interestRouter } from './routes';
+import { eventRouter,connectionRouter, userRouter, teamRouter, interestRouter } from './routes';
 require('./config/multer.config');
 
 const app = express();
