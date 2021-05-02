@@ -81,3 +81,11 @@ func PublishEventUpdated(msg EventUpdatedData) error {
 	log.Println("event publish")
 	return nil
 }
+
+func SubscribeEventEnd() error{
+	if SC == nil {
+		log.Printf("Cannot acces stan client")
+		return nil
+	}
+
+}
