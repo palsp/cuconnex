@@ -21,11 +21,13 @@ import {
 interface Props {
   value: string;
   selectInterestHandlerDiv?: any;
+  forShow?: boolean;
 }
 
 const InterestList: React.FC<Props> = (props) => {
   const [clicked, setClicked] = useState(false);
   let icon;
+
   const interestClickHandler = () => {
     setClicked((prevState) => !prevState);
   };
@@ -40,7 +42,7 @@ const InterestList: React.FC<Props> = (props) => {
   // }
 
   const btnCSS = [classes.interest];
-  if (clicked) {
+  if (clicked && !props.forShow) {
     btnCSS.push(classes["isClicked"]);
   }
 
@@ -83,7 +85,12 @@ const InterestList: React.FC<Props> = (props) => {
       <div onClick={interestClickHandler} className={btnCSS.join(" ")}>
         <div className={classes.icon}>{icon}</div>
         <div className={classes.text}>
-          <p className={classes.interestP} data-test="interest-list-props-value">{props.value + " "}</p>
+          <p
+            className={classes.interestP}
+            data-test="interest-list-props-value"
+          >
+            {props.value + " "}
+          </p>
         </div>
       </div>
     </div>
