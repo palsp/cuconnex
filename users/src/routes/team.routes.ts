@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/events/:teamName', teamController.getRegisteredEvents);
 
-router.get('/recommend/:teamName' , requireUser , teamController.getRecommendedUserForTeam);
+router.get('/recommend-user/:teamName' , requireUser , teamController.getRecommendedUserForTeam);
 
 router.get('/:name', teamController.getTeam);
 

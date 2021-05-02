@@ -3,11 +3,10 @@ import { Op } from 'sequelize';
 import {
   NotFoundError,
   BadRequestError,
-  InterestDescription,
   TeamStatus,
   InternalServerError,
 } from '@cuconnex/common';
-import { User, Team, Interest, IsMember, Category } from '../models';
+import { User, Team, Interest, IsMember, Category, Event } from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IFindRelationResponse,
@@ -312,9 +311,32 @@ export const getTeamStatus = async (req: Request, res: Response) => {
 
 
 export const getRecommendTeam = async (req : Request , res : Response) => {
-    const { eventId } = req.body;
+    const eventId = req.params.eventId;
+    const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
 
+    if(!event){
+      throw new NotFoundError("Event");
+    }
+    let result : {
+      team : Team,
+      score : number
+    }[] = [];
 
+    for(let team of event.candidate!){
+      // DO not predict user's team
+      const isMember = await team.findMember(req.user!.id);
+      if(isMember){
+        continue;
+      }
+      let score:number;
+      score = await req.user!.calculateTeamScore(team)
+      result.push({ team , score})
+    }
 
+    result.sort((a,b) => b.score - a.score)
+ 
 
+    const response = { teams : result.map(r => r.team)};
+
+    res.status(200).send(response);
 }

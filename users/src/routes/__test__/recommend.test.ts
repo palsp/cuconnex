@@ -1,8 +1,10 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { getUserWhoLike } from '../../utils/recommend';
-import { User, Interest, Team } from '../../models';
+import { User, Interest, Team, Event } from '../../models';
 import { TeamStatus, Technology } from '@cuconnex/common';
+import { exec } from 'node:child_process';
+import { create, set } from 'lodash';
 
 
 const  createDummyUser =  async () : Promise<User[]> => {
@@ -43,13 +45,37 @@ const createTeamForDummyUsers = async ( users : User[]) : Promise<Team[]> => {
     return teams;
 }
 
+const createEventForTeam = async (teams : Team[]) : Promise<Event> => {
+    const event = await Event.create({
+        id : 1,
+        eventName : "test_event",
+        registration : true,
+    });
+
+    for(let team of teams){
+        await team.register(event);
+    }
+
+    return event;
+}
+
 const createRecommendForDummyUsers = async (users : User[]) : Promise<void> => {
     for(let i = 0 ; i < users.length ; i++){
-        for(let j = users.length ;  i < j ; j--){
-            await users[i].addRecommendation(users[j], { through : {score : (Math.random() * 5).toFixed(2)}}) 
+        let c = 0;
+        for(let j = 0 ;  j < users.length ; j++){
+            if(c === 5){
+                c = 0;
+            }
+            if(j === i){
+                continue;
+            }
+            await users[i].addRecommendation(users[j], { through : {score : c }}) 
+            c++;
         }
     }
+
 }
+
 
 describe('getUserWhoLike' , () => {
 
@@ -81,10 +107,9 @@ describe( 'recommend User for team', () => {
         const users = await createDummyUser();
 
         await request(app)
-            .get('/api/teams/recommend/not_found')
+            .get('/api/teams/recommend-user/not_found')
             .set('Cookie', global.signin(users[0].id))
             .expect(404);
-
     });
 
     it('should return 400 if invalid params is provided' , async () => {
@@ -92,7 +117,7 @@ describe( 'recommend User for team', () => {
         const teams = await createTeamForDummyUsers(users);
 
         await request(app)
-            .get(`/api/teams/recommend/${teams[0].name}?filter=invalid&filter=invalid`)
+            .get(`/api/teams/recommend-user/${teams[0].name}?filter=invalid&filter=invalid`)
             .set('Cookie', global.signin(users[0].id))
             .expect(400);
     });
@@ -103,18 +128,127 @@ describe( 'recommend User for team', () => {
         await createRecommendForDummyUsers(users);
 
         const {body} = await request(app)
-        .get(`/api/teams/recommend/${teams[0].name}`)
+        .get(`/api/teams/recommend-user/${teams[0].name}`)
         .set('Cookie' , global.signin(users[0].id))
         .send()
 
+            // i = 0
         expect(body.users.length).toEqual(5);
-        // TODO: check for descending order
+        const recommendUser = body.users
+        expect(recommendUser[0].id).toEqual(users[5].id)
+        expect(recommendUser[1].id).toEqual(users[9].id)
+        expect(recommendUser[2].id).toEqual(users[8].id)
+        expect(recommendUser[3].id).toEqual(users[7].id)
+        expect(recommendUser[4].id).toEqual(users[6].id)
 
     });
 
 });
 
 
-// describe( 'recommend team for user', () => {
+describe( 'recommend team for user', () => {
+    it('should return 404 if team is not found' , async () => {
+        const user = await User.create({
+            id : "6131776621",
+            name : "dummy_user",
+        });
+        await request(app)
+            .get('/api/users/recommend-team/2')
+            .set('Cookie' , global.signin(user.id))
+            .send()
+            .expect(404)
+    })
 
-// });
+    it('should return empty array if team is empty' , async () => {
+        const user = await User.create({
+            id : "6131776621",
+            name : "dummy_user",
+        });
+        await Event.create({
+            id : 1,
+            eventName : "dummy_event",
+            registration: true,
+        })
+        const {body} = await request(app)
+        .get('/api/users/recommend-team/1')
+        .set('Cookie' , global.signin(user.id))
+        .send();
+
+        expect(body.teams.length).toEqual(0);
+    });
+
+    it('should not return the team where user is in' , async () => {
+        const users = await createDummyUser();
+        const teams = await createTeamForDummyUsers(users);
+        await createEventForTeam(teams);
+        await createRecommendForDummyUsers(users);
+        const {body} = await request(app)
+        .get('/api/users/recommend-team/1')
+        .set('Cookie' , global.signin(users[0].id))
+        .send();
+        
+        expect(body.teams.length).toEqual(1);
+        expect(body.teams[0].name).toEqual(teams[1].name);
+    });
+
+    
+    it('should return team rank by score' , async () => {
+        const users = await createDummyUser();
+        const teams = await createTeamForDummyUsers(users);
+        await createEventForTeam(teams);
+
+        const dummyUser = await User.create({
+            id : "613176621",
+            name : "dummy_user"
+        });
+
+
+        //  all members of the first team will be recommended to dummyUser with score of one and
+        //  all members of the second team will be recommended to dummyUser with score of five
+        //  therefore, second team will be recommended first 
+        let c = 1
+        for(let i = 0 ; i < users.length ; i++){
+            if(i === 5){
+                c = 5;
+            }
+            await dummyUser.addRecommendation(users[i] , { through : { score : c}})
+        }
+
+
+        const {body} = await request(app)
+        .get('/api/users/recommend-team/1')
+        .set('Cookie' , global.signin(dummyUser.id))
+        .send();
+        
+        expect(body.teams).toHaveLength(2);
+        expect(body.teams[0].name).toEqual(teams[1].name);
+        expect(body.teams[1].name).toEqual(teams[0].name);
+
+    });
+
+    it('should not return team that is not participate in the event' , async () => {
+        const users = await createDummyUser();
+        const teams = await createTeamForDummyUsers(users);
+        await createEventForTeam(teams);
+
+        const dummyUser = await User.create({
+            id : "613176621",
+            name : "dummy_user"
+        });
+
+        const t = await dummyUser.createTeams({ name : "dummy_team" , description : "idk"});
+        const e = await Event.create({ id : 2 , eventName : "dummy_event" , registration : true});
+        await t.register(e);
+        
+        const {body} = await request(app)
+            .get('/api/users/recommend-team/1')
+            .set('Cookie' , global.signin(dummyUser.id))
+            .send();
+
+        expect(body.teams.length).toEqual(2);
+        expect(body.teams[0].name).not.toEqual(e.eventName);
+        expect(body.teams[1].name).not.toEqual(e.eventName);
+    })
+
+
+});

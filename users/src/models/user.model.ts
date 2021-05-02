@@ -368,6 +368,26 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return teams;
   }
 
+  public async calculateTeamScore(team : Team){
+    if(!team.owner){
+      team.owner = await team.getOwner();
+    }
+
+    if(!team.member){
+      team.member = await team.getMember();
+    }
+
+    // TODO: double check with bird whether owner is in isMember Table
+    let meanScore = await Recommend.CalculateScore(this.id , team.owner.id);
+
+    for(let member of team.member){
+        meanScore += await Recommend.CalculateScore(this.id , member.id);
+    }
+
+    return meanScore / (team.member.length + 1)
+
+  }
+
   public async getMyStatusWith(team: Team): Promise<IIsMemberResponse> {
     if (this.id === team.creatorId) {
       return { status: TeamStatus.Accept, sender: '' };

@@ -53,6 +53,7 @@ class Recommend extends Model<RecommendAttrs, RecommendCreationAttrs> implements
     public static async CalculateScore(userId : string , recommenderId : string) : Promise<number> {
         const recommend = await Recommend.findOne({ where : { userId ,recommenderId }});
         let score : number;
+
         if(!recommend){
             const status = await Connection.findConnection(userId , recommenderId);
             score = Connection.isConnection(status) ? 4 : 0;

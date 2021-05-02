@@ -8,6 +8,7 @@ interface EventAttrs {
   id: number;
   eventName: string;
   registration: boolean;
+  candidate? : Team[];
   version?: number;
 }
 
@@ -21,6 +22,7 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
   public id!: number;
   public eventName!: string;
   public registration!: boolean;
+  public candidate? : Team[];
 
   public version?: number;
 
