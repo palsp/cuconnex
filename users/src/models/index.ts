@@ -59,7 +59,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
     as: 'recommendation',
     through: Recommend,
     foreignKey: 'userId',
-    otherKey: 'recommenderId',
+    otherKey: 'recommendeeId',
   });
 
   // define relation for connection
