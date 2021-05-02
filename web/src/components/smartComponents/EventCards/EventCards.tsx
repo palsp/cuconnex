@@ -3,8 +3,8 @@ import classes from "./EventCards.module.css";
 import EventCard from "./EventCard/EventCard";
 import { IEventData } from "@src/models";
 
-interface Props{
-  events:IEventData
+interface Props {
+  events: IEventData;
 }
 const EventCards: React.FC<Props> = (props) => {
   return (

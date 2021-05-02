@@ -9,7 +9,7 @@ import { IEventData, IUser, IUserFriend } from "@src/models";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import EventListForPrompt from "@smartComponents/EventLists/EventListForPrompt";
 import { mockEventLists } from "@src/mockData";
-import { fetchEventsDataAPI } from "@src/api";
+import { createEventsAPI, fetchEventsDataAPI } from "@src/api";
 
 const SelectEventPrompt: React.FC = () => {
   const [clickSelectEvent, setClickSelectEvent] = useState<boolean>(true);
