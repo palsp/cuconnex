@@ -20,7 +20,7 @@ const ProfileInfo: React.FC<Props> = (props) => {
       </div>
       <div className={classes.flex}>
         <div className={classes.profilePic}>
-          <ProfilePic size="mediumborder" PicUrl={props.image} />
+          <ProfilePic size="lwithborder" PicUrl={props.image} />
         </div>
       </div>
       <div className={classes.name}>{props.name}</div>

@@ -12,7 +12,7 @@ const PeopleList: React.FC<Props> = (props) => {
   return (
     <div className={classes.divPeople}>
       <div className={classes.divProfile}>
-        <ProfilePic size="mini" PicUrl={props.people.image} />
+        <ProfilePic size="xs" PicUrl={props.people.image} />
       </div>
       <div className={classes.divName}>
         <Subtitle value={props.people.name} color="black" size="small-medium" />

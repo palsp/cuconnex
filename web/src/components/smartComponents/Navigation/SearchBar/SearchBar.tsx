@@ -6,14 +6,14 @@ import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
 import useDebounce from "@hooks/useDebounce";
 import { searchUserTeamEvent } from "@api/index";
-import { IEventData, ITeam, IUser } from "@src/models";
+import { IEventData, IFetchTeam, ITeam, IUser } from "@src/models";
 
 interface Props {
   value: string;
   setHasSearch?: React.Dispatch<React.SetStateAction<boolean>>;
   setNoSearchResult?: React.Dispatch<React.SetStateAction<boolean>>;
   setPeopleLists?: React.Dispatch<React.SetStateAction<IUser[]>>;
-  setTeamLists?: React.Dispatch<React.SetStateAction<ITeam[]>>;
+  setTeamLists?: React.Dispatch<React.SetStateAction<IFetchTeam[]>>;
   setEventLists?: React.Dispatch<React.SetStateAction<IEventData[]>>;
 }
 const SearchBar: React.FC<Props> = (props) => {
@@ -91,11 +91,13 @@ const SearchBar: React.FC<Props> = (props) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <Search />
+              <div style={{ width: "30px", height: "30px" }}>
+                <Search />
+              </div>
             </InputAdornment>
           ),
         }}
-      ></TextField>
+      />
     </div>
   );
 };

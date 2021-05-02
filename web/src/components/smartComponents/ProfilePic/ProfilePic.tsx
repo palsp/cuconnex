@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./ProfilePic.module.css";
+import tempProfile from "@assets/tempProfile.png";
 interface Props {
   size?: string;
   uploadedProfile?: boolean;
@@ -11,15 +12,23 @@ const ProfilePic: React.FC<Props> = (props) => {
   let profileArray = null;
   let url = null;
 
-  if (props.size === "big") {
+  if (props.size === "xl") {
+    //xl big
     cssArray = [classes.profileBig];
-  } else if (props.size === "medium") {
+  } else if (props.size === "l") {
+    //l medium
     cssArray = [classes.profileMedium];
-  } else if (props.size === "mediumborder") {
+  } else if (props.size === "lwithborder") {
+    //lwithborder mediumborder
     cssArray = [classes.profileMediumBorder];
-  } else if (props.size === "small") {
+  } else if (props.size === "m") {
+    //m small
     cssArray = [classes.profileSmall];
-  } else if (props.size === "mini") {
+  } else if (props.size === "s") {
+    //s smallMedium
+    cssArray = [classes.profileSmallMedium];
+  } else if (props.size === "xs") {
+    //xs xs
     cssArray = [classes.profileMini];
   } else {
     cssArray = [classes.profile];
@@ -30,20 +39,22 @@ const ProfilePic: React.FC<Props> = (props) => {
   if (props.PicUrl) {
     profileArray = [classes.profilePic];
   }
-
-  url = window.location.origin + "/api/users/" + props.PicUrl;
+  url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+  // url = window.location.origin + "/api/users/" + props.PicUrl;
 
   if (props.previewImage) {
     url = props.PicUrl;
   }
 
   return (
+    // <div className={classes.test}>
     <div data-test="profile-pic" className={cssArray.join(" ")}>
       <div className={profileArray.join(" ")}>
         {props.PicUrl ? (
           <img
             src={url}
             className={profileArray.join(" ")}
+            // onError={tempProfile}
             // style={{
             //   objectFit: "cover",
             //   width: "200px",
@@ -57,6 +68,7 @@ const ProfilePic: React.FC<Props> = (props) => {
         )}
       </div>
     </div>
+    // </div>
   );
 };
 

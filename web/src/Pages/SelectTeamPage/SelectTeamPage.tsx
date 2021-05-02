@@ -8,9 +8,11 @@ interface Props {
   location: {
     state: {
       events: {
+        id: number;
         "event-name": string;
         bio: string;
-        status: string;
+        location: string;
+        registration: boolean;
         "start-date": {
           month: number;
           day: number;
@@ -31,6 +33,7 @@ interface Props {
             second: number;
           };
         };
+        status?: string;
       };
     };
   };
@@ -52,7 +55,7 @@ const SelectTeamPage: React.FC<Props> = (props) => {
           />
         </div>
         <div className={classes.eventcardsDiv}>
-          {/* <EventCards events={props.location?.state?.events}></EventCards> */}
+          <EventCards events={props.location?.state?.events}></EventCards>
         </div>
       </div>
       <div className={classes.teamContainer}>

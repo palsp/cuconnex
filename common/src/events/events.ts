@@ -8,3 +8,13 @@ export interface EventCreated {
         registration : boolean,
     }
 }
+
+export interface EventUpdated {
+    subject : Subjects.EventUpdated,
+    data : {
+        id : number,
+        "event-name" : string,
+        registration : boolean,
+        version : number,        
+    }
+}

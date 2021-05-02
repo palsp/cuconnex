@@ -11,16 +11,16 @@ import classes from "./MyTeamPage.module.css";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { motion } from "framer-motion";
 
-import containerVariants, { ITeam } from "@src/models/models";
+import containerVariants, { IFetchTeam, ITeam } from "@src/models/models";
 
 import { UserContext } from "@context/UserContext";
 
 import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
 
 const MyTeamPage: React.FC = () => {
-  const [teamLists, setTeamLists] = useState<ITeam[] | []>([]);
-  let ongoingTeamLists: ITeam[] | [] = [];
-  let finishedTeamLists: ITeam[] | [] = [];
+  const [teamLists, setTeamLists] = useState<IFetchTeam[] | []>([]);
+  let ongoingTeamLists: IFetchTeam[] | [] = [];
+  let finishedTeamLists: IFetchTeam[] | [] = [];
   const [clickOnGoing, setOngoing] = useState(true);
   const [clickFinished, setFinished] = useState(false);
   const { userData } = useContext(UserContext);

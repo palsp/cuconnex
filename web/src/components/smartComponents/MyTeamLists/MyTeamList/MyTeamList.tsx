@@ -12,11 +12,11 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./MyTeamList.module.css";
 import { Ecommerce, Group } from "@dumbComponents/UI/Icons";
-import { ITeam } from "@src/models";
+import { IFetchTeam, IFetchTeams, ITeam, IUserFriend } from "@src/models";
 import { Link } from "react-router-dom";
 
 interface Props {
-  team: ITeam;
+  team: IFetchTeam;
   landingexplore?: boolean;
   page?: string;
 }
@@ -82,7 +82,9 @@ const TeamList: React.FC<Props> = (props) => {
                   />
                 </div>
                 <div className={classes.flex}>
-                  <div className={classes.groupAmount}>5</div>
+                  <div className={classes.groupAmount}>
+                    {props.team.members.length}
+                  </div>
                   <div className={classes.groupIcon}>
                     <Group />
                   </div>
@@ -162,10 +164,10 @@ const TeamList: React.FC<Props> = (props) => {
               </div>
             )}
             <div className={classes.teamFriends}>
-              <ProfilePic size="mini" />
-              <ProfilePic size="mini" />
-              <ProfilePic size="mini" />
-              <ProfilePic size="mini" />
+              {props.team.members.map((user: IUserFriend, index: number) => {
+                return <ProfilePic key={index} size="xs" PicUrl={user.image} />;
+              })}
+
               <div className={classes.moreFriends}></div>
             </div>
           </div>

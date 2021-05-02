@@ -1,8 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
-import { natsWrapper, EventCreatedSub } from './nats';
-
+import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 
 
 const validateEnvAttr = () => {
@@ -44,7 +43,6 @@ if (!process.env.NATS_CLUSTER_ID) {
 const start = async () => {
   // check if all required env variable have been declared
   validateEnvAttr();
-
   try {
 
 
@@ -60,12 +58,16 @@ const start = async () => {
     process.on('SIGTERM', () => natsWrapper.client.close());
 
     new EventCreatedSub(natsWrapper.client).listen();
+    new EventUpdatedSub(natsWrapper.client).listen();
 
     await initializeDB();
 
     // initial data for interest and category 
     // it should be run only once
-    // await startDB();
+    await startDB();
+
+    // TODO: delete dummy data 
+    // await init();
 
 
   } catch (err) {

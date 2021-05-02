@@ -1,16 +1,23 @@
 import axios from "axios";
 
-// const token =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODU3NDY1MjEiLCJpYXQiOjE2MTkzNzM4NTJ9.XJOBxI1g_cvL4Gvj1X2UkObSLK6EeZjTbpN_r8Ydn30";
+//const token =
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzMzMzMzMzQiLCJpYXQiOjE2MTk5NjY3OTJ9.t2-VG3yJ6u72PGW8Ae_k_X5Y9k7DVSpdCwaSv3FZRGI";
+
 const axiosInstance = axios.create({
   baseURL: "https://www.cu-connex.com",
   //baseURL: window.location.origin,
 });
 
-// axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+//axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 export default axiosInstance;
-//loong2
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODM3NDgzMjEiLCJpYXQiOjE2MTk2MjEyNDV9.oGQV9USOlf0T7vHE5E1ZRmySuEk0dshaIegoBp2PKp8"
-//loong
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzQ3Mzg0MjEiLCJpYXQiOjE2MTk1MDg3NjZ9.iO6bKJ7OWSqMWRjd8qY5s2Zma082MlCWX0YVn4j2m9E"
+//loong01
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYzMjEiLCJpYXQiOjE2MTk3OTc0MTJ9.BeMcj-CogN3IewAwd7ekZMwJIHebenhIw9IA3DmA5Rg"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzcyNjM3MjEiLCJpYXQiOjE2MTk3NzQwMDd9.TvE3aIPUcjI8K068fNPkPKtFaveFK7gBoiENwlM8jbE"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM3MjgzMjMiLCJpYXQiOjE2MTk3NjQyMjd9.107PhLfTC8EndfbwuN8FilKW7qAX2uthS60bW6VKhZo"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzcyODM3MjMiLCJpYXQiOjE2MTk3NjQxMjJ9.SG1ojaQWwckAVYmu5qSCzIpR3N8Y76cdhA9JERPNcgo"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM2NDczMjQiLCJpYXQiOjE2MTk3NjQwMjV9.vqC70C14TUr5oa5G1vb7ZiMDao3rNc_G9xliuifclko"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzM4NDczMjQiL CJpYXQiOjE2MTk3MzI4OTJ9.zUOpLehL2E0w5G09aAx_Dmx2-j5L4iC9Nxpg_PRCATA"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzI1MzY0MjUiLCJpYXQiOjE2MTk3MzAwNzd9.NmzR-aQ0cTXf_oSBY7SgUHOkf1Qe3eVUGH8IbPNAZFI"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzQ2NTc0MjQiLCJpYXQiOjE2MTk3Mjc1NTF9.lj34-XRjR2wynIbslS292_OYpWTpvWqCwLp0rZeN4AA"
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzQ1NjM3MjEiLCJpYXQiOjE2MTk3MTUzMDJ9.S8TRYPPLmF2-Qn9N1mrV7GHH5068tO1yS-5XXG7yqq8"

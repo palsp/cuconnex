@@ -10,6 +10,8 @@ body {
   position: fixed;
   overflow: hidden;
   /* disable text select */
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
   -webkit-user-select: none;  /* Chrome all / Safari all */
   -moz-user-select: none;     /* Firefox all */
   -ms-user-select: none;      /* IE 10+ */

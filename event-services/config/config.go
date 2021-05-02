@@ -17,6 +17,7 @@ var DB = DBConfig{
 	Password: os.Getenv("DB_PASSWORD"),
 }
 
+
 var TestDB = DBConfig{
 	Name: "eventdb_test",
 	Host: "localhost",

@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { User } from '../../../models/user.model';
+import { User, Interest } from '../../../models';
 import { InterestDescription, Technology, getCurrentYear, getYearFromId, faculty } from '@cuconnex/common';
 
 it('should return 400 if users send invalid type of interest list', async () => {
@@ -131,7 +131,7 @@ it('should create user successfully with optional field', async () => {
 
 
 
-  const saveUser = await User.findOne({ where: { id } , include : "interests" });
+  const saveUser = await User.findOne({ where: { id } , include : Interest});
   expect(saveUser).not.toBeNull();
   const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString()
   expect(saveUser!.name).toEqual(user.name);
@@ -140,7 +140,6 @@ it('should create user successfully with optional field', async () => {
   expect(saveUser!.role).toEqual(user.role);
   expect(saveUser!.bio).toEqual(user.bio);
 
-
 });
 
-// it.todo('add interest by category');
+it.todo('add interest by category');

@@ -2,13 +2,17 @@ import { InterestDescription } from '@cuconnex/common';
 
 export enum TableName {
   users = 'users',
+  events = 'events',
   interests = 'interests',
   connections = 'connections',
+  recommendations = 'recommendations',
   isMembers = 'isMembers',
   userInterest = 'userInterests',
   category = 'categories',
   teams = 'teams',
-  faculty = 'faculty'
+  faculty = 'faculty',
+  rating = 'rating',
+  candidates = 'candidates',
 }
 
 /**

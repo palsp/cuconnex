@@ -16,7 +16,8 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./PersonalInfoPage.module.css";
 import { motion } from "framer-motion";
-import defaultProfilePic from "@assets/tempProfilePic.png";
+import defaultProfilePic from "@assets/defaultProfilePic.png";
+import tempProfilePicture from "@assets/tempProfilePic.jpg";
 
 interface Props {
   location: {
@@ -53,8 +54,12 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
     fetch(defaultProfilePic).then(async (response) => {
       const blob = await response.blob();
       const file = new File([blob], fileName, { type: "image/png" });
-      setImagePreview(URL.createObjectURL(blob));
+      // setImagePreview(URL.createObjectURL(blob));
       setImageRaw(file);
+    });
+    fetch(tempProfilePicture).then(async (response) => {
+      const blob = await response.blob();
+      setImagePreview(URL.createObjectURL(blob));
     });
   };
 
@@ -86,7 +91,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
                     {imagePreview !== "" ? (
                       <>
                         <ProfilePic
-                          size="big"
+                          size="xl"
                           data-test="personal-info-personalImage"
                           PicUrl={imagePreview}
                           previewImage={true}

@@ -3,11 +3,10 @@ import { Op } from 'sequelize';
 import {
   NotFoundError,
   BadRequestError,
-  InterestDescription,
   TeamStatus,
   InternalServerError,
 } from '@cuconnex/common';
-import { User, Team, Interest, IsMember, Category } from '../models';
+import { User, Team, Interest, IsMember, Category, Event, Rating } from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IFindRelationResponse,
@@ -15,22 +14,10 @@ import {
   IViewProfileResponse,
   ITeamResponse,
   IUserRequest,
+  IIsMemberResponse,
+  IAddRatingRequest,
+  IRecommendTeam,
 } from '../interfaces';
-import { userRouter } from '../routes';
-//Test for empty object
-function isEmpty(obj: Object) {
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) return false;
-  }
-
-  return true;
-}
-function isNull(obj: Object) {
-  Object.keys(obj).map((key) => {
-    if (!key) return false;
-  });
-  return true;
-}
 
 /**
  * get current user profile
@@ -98,7 +85,8 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   } catch (err) {
     await user.destroy();
     throw new InternalServerError();
-  }
+  } 
+  
 
   const response: IUserResponse = {
     ...user!.toJSON(),
@@ -107,6 +95,47 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
   res.status(201).send(response);
 };
+
+
+
+/**
+ * Method for editing any field of the user with the specified id.
+ * Expects req.body to have a user object
+ * If all checks pass, will update User with the fields specified
+ * Then sends 200 alongside the newly updated user object.
+ * @param req
+ * @param res
+ */
+ export const editUser = async (req: Request, res: Response) => {
+  const updatedUser = req.body as IUserRequest;
+  updatedUser.file = { ...req.file };
+
+  if (req.file) {
+    deleteFile(req.user!.image);
+    req.user!.image = updatedUser.file.path;
+  }
+
+  req.user!.name = updatedUser.name;
+  req.user!.role = updatedUser.role;
+  req.user!.bio = updatedUser.bio;
+  await req.user!.setInterests([]); // delete all association with interests
+  await req.user!.addInterests(updatedUser.interests); // add new interest
+  req.user!.lookingForTeam = updatedUser.lookingForTeam;
+
+  try {
+    await req.user!.save();
+  } catch (err) {
+    throw new InternalServerError();
+  }
+
+
+  const response: IUserResponse = {
+    ...req.user!.toJSON(),
+  };
+
+  res.status(200).send(response);
+};
+
 
 export const search = async (req: Request, res: Response) => {
   const keyword = req.query.keyword;
@@ -124,7 +153,7 @@ export const search = async (req: Request, res: Response) => {
   let users: User[];
   let team: Team[];
   try {
-    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: 'interests' });
+    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: Interest});
     team = await Team.findAll({ where: teamConstraint });
   } catch (err) {
     console.log(err);
@@ -154,7 +183,7 @@ export const findRelation = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
-export const requetToJoinTeam = async (req: Request, res: Response) => {
+export const requestToJoinTeam = async (req: Request, res: Response) => {
   const user = req.user!;
 
   const { teamName } = req.body;
@@ -202,44 +231,6 @@ export const getInvitationNoti = async (req: Request, res: Response) => {
   }
 };
 
-/**
- * Method for editing any field of the user with the specified id.
- * Expects req.body to have a user object
- * If all checks pass, will update User with the fields specified
- * Then sends 200 alongside the newly updated user object.
- * @param req
- * @param res
- */
-export const editUser = async (req: Request, res: Response) => {
-  const updatedUser = req.body as IUserRequest;
-  updatedUser.file = { ...req.file };
-
-  if (req.file) {
-    deleteFile(req.user!.image);
-    req.user!.image = updatedUser.file.path;
-  }
-
-  req.user!.name = updatedUser.name;
-  req.user!.role = updatedUser.role;
-  req.user!.bio = updatedUser.bio;
-  await req.user!.setInterests([]); // delete all association with interests
-  const interests = await req.user!.addInterests(updatedUser.interests); // add new interest
-  req.user!.lookingForTeam = updatedUser.lookingForTeam;
-
-  try {
-    await req.user!.save();
-  } catch (err) {
-    throw new InternalServerError();
-  }
-
-  req.user!.interests = interests; // attach new interest to users
-
-  const response: IUserResponse = {
-    ...req.user!.toJSON(),
-  };
-
-  res.status(200).send(response);
-};
 // get Team(s) that user is in
 export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   const user = await User.findOne({ where: { id: req.params.userId } });
@@ -248,9 +239,9 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   }
 
   const teams: Team[] = await user.getMyTeams();
-  if (teams.length === 0) {
-    return res.status(200).send({ teams: [] });
-  }
+  // if (teams.length === 0) {
+  //   return res.status(200).send({ teams: [] });
+  // }
 
   const teamsResponse: ITeamResponse[] = [];
   for (let team of teams) {
@@ -290,3 +281,112 @@ export const getInterest = async (req: Request, res: Response): Promise<void> =>
   }));
   res.status(200).send({ interests: response });
 };
+
+export const getMyRequests = async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const teams: Team[] = await user.getMyPendingRequestsTeams();
+  // if (teams.length === 0) {
+  //   return res.status(200).send({ teams: [] });
+  // }
+
+  const teamsResponse: ITeamResponse[] = [];
+  for (let team of teams) {
+    await team.fetchTeam();
+    teamsResponse.push(team.toJSON());
+  }
+
+  res.status(200).send({ teams: teamsResponse });
+};
+
+export const getTeamStatus = async (req: Request, res: Response) => {
+  const user = req.user!;
+
+  const { teamName } = req.params;
+  const team = await Team.findOne({ where: { name: teamName } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+  const response: IIsMemberResponse = await user.getMyStatusWith(team);
+  res.status(200).send(response);
+};
+
+export const addRatings = async (req: Request, res: Response) => {
+  const { rateeId , ratings} = req.body as IAddRatingRequest;
+  const ratee = await User.findByPk(rateeId);
+  
+  if(!ratee){
+    throw new BadRequestError('ratee does not existed');
+  }
+
+  if(ratee.id === req.user!.id){
+    throw new BadRequestError('cannot rate yourself');
+  }
+  
+  const rate = await Rating.findOne({ where : { raterId : req.user!.id , rateeId : ratee.id}});
+  
+  try{
+    if(!rate){
+
+      await req.user!.addRating(ratee , { through : { rating : ratings.toFixed(2) }})
+    }else{
+      rate.rating = +ratings.toFixed(2)
+      await rate.save();
+    }
+  }catch(err){
+
+    throw new InternalServerError();
+  }
+
+
+  res.status(201).send({})
+}
+
+export const getRecommendTeam = async (req : Request , res : Response) => {
+    const eventId = req.params.eventId;
+    // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
+    const event = await Event.findOne({
+      where : { id : eventId } , 
+      include : { 
+        model : Team ,
+        as : 'candidate',
+        attributes : { include : ["name"] },
+        include : [
+            { model : User, 
+              as: 'owner', 
+              attributes :  ["id"],
+            },
+            { model : User, 
+              as : 'member' , 
+              attributes : ["id"] , 
+            }
+        ]
+      }
+    })
+
+    if(!event){
+      throw new NotFoundError("Event");
+    }
+    let result : {
+      team : Team,
+      score : number
+    }[] = [];
+
+    for(let team of event.candidate!){
+      // DO not predict user's team
+      const isMember = await team.findMember(req.user!.id);
+      if(isMember){
+        continue;
+      }
+      let score:number;
+      score = await req.user!.calculateTeamScore(team)
+      result.push({ team , score})
+    }
+
+    result.sort((a,b) => b.score - a.score)
+ 
+
+    const response : IRecommendTeam = { teams : result.map(r => r.team.toJSON())};
+
+    res.status(200).send(response);
+}

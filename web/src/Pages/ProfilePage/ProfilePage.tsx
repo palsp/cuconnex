@@ -159,12 +159,12 @@ const ProfilePage: React.FC<Props> = (props) => {
         <div className={classes.about}>
           <div className={classes.bio}>
             <Biography
-              nickname={props.location.state.users.role}
+              nickname={props.location.state.users.name}
               detail={props.location.state.users.bio}
             />
           </div>
           <div className={classes.editAbout} onClick={EditAboutClickedHandler}>
-            {isMyProfile ? <Edit /> : <div />}
+            {/* {isMyProfile ? <Edit /> : ""} */}
           </div>
         </div>
 
@@ -210,6 +210,7 @@ const ProfilePage: React.FC<Props> = (props) => {
               (interest: string, index: number) => {
                 return (
                   <InterestList
+                    forShow
                     data-test="interest-list-business"
                     selectInterestHandlerDiv={() => {
                       return;
@@ -339,7 +340,13 @@ const ProfilePage: React.FC<Props> = (props) => {
             Save
           </div>
         </div>
-        <EditPrompt type={clickEditOption} />
+        <EditPrompt
+          displayName={props.location.state.users.name}
+          role={props.location.state.users.role}
+          profileURL={props.location.state.users.image}
+          bio={props.location.state.users.bio}
+          type={clickEditOption}
+        />
         {/* <EditPrompt type={clickEditOption} users={props.location.state.users} /> */}
       </div>
     );
