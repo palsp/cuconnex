@@ -6,7 +6,7 @@ import {
   TeamStatus,
   InternalServerError,
 } from '@cuconnex/common';
-import { User, Team, Interest, IsMember, Category, Event } from '../models';
+import { User, Team, Interest, IsMember, Category, Event, Rating } from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IFindRelationResponse,
@@ -15,7 +15,7 @@ import {
   ITeamResponse,
   IUserRequest,
   IIsMemberResponse,
-  IRecommendUserResponse,
+  IAddRatingRequest,
   IRecommendTeam,
 } from '../interfaces';
 
@@ -312,15 +312,34 @@ export const getTeamStatus = async (req: Request, res: Response) => {
 };
 
 export const addRatings = async (req: Request, res: Response) => {
-  const user = req.user!;
-  // const { rateeId, rating } = req.body;
+  const { rateeId , ratings} = req.body as IAddRatingRequest;
+  const ratee = await User.findByPk(rateeId);
+  
+  if(!ratee){
+    throw new BadRequestError('ratee does not existed');
+  }
 
-  // const isUser = await User.findOne({ where: { id: rateeId as string } });
-  // if (!isUser) {
-  //   throw new BadRequestError(`Ratee is not a user.`);
-  // }
+  if(ratee.id === req.user!.id){
+    throw new BadRequestError('cannot rate yourself');
+  }
+  
+  const rate = await Rating.findOne({ where : { raterId : req.user!.id , rateeId : ratee.id}});
+  
+  try{
+    if(!rate){
 
-  // await user.addRating()
+      await req.user!.addRating(ratee , { through : { rating : ratings.toFixed(2) }})
+    }else{
+      rate.rating = +ratings.toFixed(2)
+      await rate.save();
+    }
+  }catch(err){
+
+    throw new InternalServerError();
+  }
+
+
+  res.status(201).send({})
 }
 
 export const getRecommendTeam = async (req : Request , res : Response) => {

@@ -84,5 +84,9 @@ export const requestToJoinTeamValidator = [
 
 export const addRatingValidator = [
   body('rateeId').notEmpty().isAlphanumeric().withMessage('Ratee id is not valid'),
-  body('ratings').notEmpty().isNumeric(),
+  body('ratings')
+    .notEmpty()
+    .isNumeric()
+    .custom((input : number) => input >= 0 && input <= 5)
+    .withMessage('Ratings must be a number and its value must be between 0 and 5 inclusively'),
 ];
