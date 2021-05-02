@@ -11,7 +11,7 @@ import { IsMember } from './isMember.model';
 import { Event } from './event.model';
 import { Candidate } from './candidate.model';
 
-export { User, Interest, UserInterest, Category, Team, IsMember, Event, Candidate };
+export { User, Interest, UserInterest, Category, Team, IsMember , Event, Recommend , Candidate};
 
 // TODO: add version key
 
@@ -28,7 +28,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
   Recommend.autoMigrate(sequelize);
   Candidate.autoMigrate(sequelize);
 
-  // M-M user and interest
+  // // M-M user and interest
   User.belongsToMany(Interest, {
     through: UserInterest,
     foreignKey: 'userId',
@@ -37,7 +37,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   Interest.belongsToMany(User, {
     through: UserInterest,
-    as: 'interests',
+    as: 'like',
     sourceKey: 'description',
     foreignKey: 'interest',
     onDelete: 'CASCADE',
@@ -72,12 +72,18 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   // -------------------- User and Team -----------------------------------
 
+
   User.hasMany(Team, {
     sourceKey: 'id',
+    as : 'teams',
     foreignKey: 'creatorId',
-    as: 'teams',
     onDelete: 'CASCADE',
   });
+
+  Team.belongsTo(User,{
+    as : 'owner',
+    foreignKey : 'creatorId'
+  })
 
   // M-M
   Team.belongsToMany(User, {

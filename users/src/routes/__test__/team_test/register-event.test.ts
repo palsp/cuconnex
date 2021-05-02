@@ -109,7 +109,5 @@ describe('Register Event', () => {
     expect(isCandidate!.teamName).toEqual(team.name);
     expect(isCandidate!.isCompete).toEqual(true);
 
-    const eiei = await event.getMyCandidates();
-    console.log('eiei', eiei);
   });
 });

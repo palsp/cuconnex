@@ -11,7 +11,7 @@ import { InterestDescription } from '@cuconnex/common';
 import { TableName } from './types';
 import { Interest, InterestCreationAttrs } from './interest.model';
 
-// all atributes interest model has
+// all attributes interest model has
 export interface CategoryAttrs {
   id: number;
   category: string;
