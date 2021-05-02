@@ -44,7 +44,7 @@ const LandingHero: React.FC<Props> = (props) => {
     setCurrentTeamLists(teamData.data.teams);
   };
 
-  const heroPrompt1 = props.hasTeam ? (
+  const heroPrompt = props.hasTeam ? (
     <div className={classes.myteamDiv}>
       <MyTeamLists page="landing" team={currentTeamLists} />
       <Link style={{ textDecoration: "none" }} to="/createteam">
@@ -78,20 +78,6 @@ const LandingHero: React.FC<Props> = (props) => {
         ></motion.div>
       </div>
     </AnimatePresence>
-  );
-
-  const heroPrompt = (
-    <div className={classes.myteamDiv}>
-      <MyTeamLists page="landing" team={currentTeamLists} />
-      <Link style={{ textDecoration: "none" }} to="/createteam">
-        <div className={classes.addTeam}>
-          <div className={classes.plus}>
-            <Plus />
-          </div>
-          <div className={classes.text}>CREATE YOUR NEW TEAM</div>
-        </div>
-      </Link>
-    </div>
   );
 
   return (
