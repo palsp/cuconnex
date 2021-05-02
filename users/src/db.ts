@@ -31,6 +31,8 @@ const initializeDB = async () => {
 
   await myDB.sequelize.sync({ logging: false });
 
+  console.log('Successfully connected to database')
+
   return myDB;
 };
 
