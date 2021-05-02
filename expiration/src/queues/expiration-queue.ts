@@ -1,23 +1,24 @@
 import Queue from 'bull';
-import { ExpirationCompletePublisher } from '../events/publisher/expiration-complete-publisher'
+import { EventEndPub } from '../events/publisher/event-end-pub'
 import { natsWrapper } from '../nats-wrapper';
 
 interface Payload {
-    orderId: string;
+    id : number,
 }
 
 
-const expirationQueue = new Queue<Payload>('order:expiration', {
+const expirationQueue = new Queue<Payload>('event:ended', {
     redis: {
-        host: process.env.REDIS_HOST
+        host: process.env.REDIS_HOST 
     }
 });
 
 
 expirationQueue.process(async (job) => {
-    console.log("I want to publish an expiration: complete event for orderId", job.data.orderId)
-    new ExpirationCompletePublisher(natsWrapper.client).publish({
-        orderId: job.data.orderId
+    console.log("I want to publish an expiration:  for event id", job.data.id)
+    new EventEndPub(natsWrapper.client).publish({
+        // orderId: job.data.orderId,
+        id : job.data.id
     })
 });
 

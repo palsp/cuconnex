@@ -3,23 +3,22 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"os"
-
 	nats "github.com/nats-io/nats.go"
 	stan "github.com/nats-io/stan.go"
+	"github.com/palsp/cuconnex/event-services/config"
+	"log"
 )
 
 var SC stan.Conn
 
 
 func InitStanClient() (stan.Conn , error){
-	nc ,err := nats.Connect(os.Getenv("NATS_URL"))
+	nc ,err := nats.Connect(config.SCconfig.URL)
 	if err != nil {
 		return nil , err
 	}
 	
-	sc , err := stan.Connect(os.Getenv("NATS_CLUSTER_ID"), os.Getenv("NATS_CLIENT_ID") , stan.NatsConn(nc));
+	sc , err := stan.Connect(config.SCconfig.ClusterID, config.SCconfig.ClientID , stan.NatsConn(nc));
 	if err != nil {
 		return nil , err
 	}
@@ -38,6 +37,7 @@ type EventCreatedData struct {
 	ID uint `json:"id"`
 	EventName string `json:"event-name"`
 	Registration bool `json:"registration"`
+	EndDate string    `json:"endDate"`
 }
 
 func PublishEventCreated( msg EventCreatedData) error {

@@ -5,22 +5,22 @@
             "bio" : "This is great",
             "registration" : true,
             "start-date" : {
-                     "month" : 1,
-                     "day" : 18,
+                     "month" : 5,
+                     "day" : 2,
                      "year" : 2021,
                      "time" : {
-                          "hour" : 12,
-                          "minute" : 0,
+                          "hour" : 23,
+                          "minute" : 57,
                           "second" : 0
                   }
             },
             "end-date" : {
-                "month" : 3,
-                "day" : 18,
+                "month" : 5,
+                "day" : 2,
                 "year" : 2021,
                 "time" : {
-                     "hour" : 12,
-                     "minute" : 0,
+                     "hour" : 23,
+                     "minute" : 59,
                      "second" : 0
              }
             }
