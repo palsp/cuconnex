@@ -1,4 +1,4 @@
-import { Business, Design, FriendStatus, Technology } from "@cuconnex/common";
+import { FriendStatus } from "@cuconnex/common";
 import { ITeamResponse } from "./team";
 
 export interface IUserRequest {
@@ -51,4 +51,9 @@ export interface IFindRelationResponse {
 
 export interface IRecommendTeam {
     teams : ITeamResponse[];
+}
+
+export interface IAddRatingRequest {
+    rateeId : string,
+    ratings : number,
 }
