@@ -2,7 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./SelectEventPage.module.css";
 import { Heading } from "@dumbComponents/UI";
-import { ArrowLeft, WebBuilder } from "@dumbComponents/UI/Icons";
+import {
+  ArrowLeft,
+  Coding,
+  Chatbot,
+  FinTech,
+  Startup,
+  Case,
+  Ecommerce,
+  Ads,
+  Blockchain,
+  Finance,
+} from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
 import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
@@ -11,8 +22,10 @@ import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
 //import mock types
 import mockEventTypes from "./mockEventType";
+import { eventNames } from "node:process";
 
 const SelectEventPage: React.FC = () => {
+  const [eventType, setEventType] = useState<string>("");
   const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
 
   const [showMockEventTypeModal, setShowMockEventTypeModal] = useState<boolean>(
@@ -30,7 +43,9 @@ const SelectEventPage: React.FC = () => {
     console.log("SUCCESS fetchDataHandler", eventsData.data.events);
     setEventLists(eventsData.data.events);
   };
-
+  const setEventTypeHandler = (type: string) => {
+    setEventType(type);
+  };
   const defaultPage = (
     <motion.div
       variants={containerVariants}
@@ -50,7 +65,7 @@ const SelectEventPage: React.FC = () => {
           </div>
           <Heading
             data-test="friends-page-header"
-            value="Technology"
+            value={eventType}
             size="small"
           />
           <Tag />
@@ -78,7 +93,7 @@ const SelectEventPage: React.FC = () => {
         <Heading
           data-test="friends-page-header"
           value="Choose event type"
-          size="smallMedium"
+          size="small"
         />
         <Tag />
       </div>
@@ -89,12 +104,31 @@ const SelectEventPage: React.FC = () => {
             <div key={key} className={classes.eventTypeCardContainer}>
               <div
                 className={classes.eventTypeCard}
-                onClick={() => mockEventModalClickHandler(false)}
+                onClick={() => {
+                  setEventTypeHandler(eventName);
+                  mockEventModalClickHandler(false);
+                }}
               >
                 <div className={classes.cardContent}>
                   {eventName}
                   <div className={classes.icon}>
-                    <WebBuilder />
+                    {eventName === "Technology" ? (
+                      <Coding />
+                    ) : eventName === "Business" ? (
+                      <Case />
+                    ) : eventName === "Startup" ? (
+                      <Startup />
+                    ) : eventName === "ECommerce" ? (
+                      <Ecommerce />
+                    ) : eventName === "Ads" ? (
+                      <Ads />
+                    ) : eventName === "Blockchain" ? (
+                      <Blockchain />
+                    ) : eventName === "Finance" ? (
+                      <Finance />
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </div>
