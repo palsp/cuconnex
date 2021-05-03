@@ -42,8 +42,11 @@ router.put(
   userController.editUser
 );
 
+router.get('/recommend-user' , requireUser , userController.getRecommendUser);
 
-router.get('/recommend-team/:eventId' , requireUser , userController.getRecommendTeam);
+router.get('/recommend-team' , requireUser , userController.getRecommendTeam);
+
+router.get('/recommend-team/:eventId' , requireUser , userController.getRecommendTeamByEvent);
 
 router.get('/:userId', requireUser, userController.viewUserProfile);
 
