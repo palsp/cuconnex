@@ -16,7 +16,6 @@ spec:
         - name: recommendation
           image: palsp/connex-recommendation
           env:
-          # add env var here 
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
