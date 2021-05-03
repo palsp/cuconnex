@@ -33,7 +33,10 @@ const HamburgerPrompt: React.FC = () => {
         <Link style={{ textDecoration: "none" }} to="/friendlists">
           <Heading value="My Connections" />
         </Link>
-        <Link to={{ pathname: "/profile", state: { users: userData } }}>
+        <Link
+          style={{ textDecoration: "none" }}
+          to={{ pathname: "/profile", state: { users: userData } }}
+        >
           <Heading value="Account Setting" />
         </Link>
         <div onClick={logoutHandler}>
