@@ -1,14 +1,16 @@
-import {  Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
-import { Team, IsMember, User , Interest , Event} from '../models';
+import { Team, IsMember, User, Interest, Event } from '../models';
 import { getUserWhoLike } from '../utils/recommend';
 import {
   IUserResponse,
   ITeamResponse,
   ITeamRequestResponse,
   IEventResponse,
+  ITeamRequest,
   IRecommendUserResponse,
 } from '../interfaces';
+import { deleteFile } from '../utils/file';
 
 require('express-async-errors');
 export const getTeam = async (req: Request, res: Response) => {
@@ -27,25 +29,70 @@ export const getTeam = async (req: Request, res: Response) => {
 };
 
 export const createTeam = async (req: Request, res: Response) => {
-  const { name, description } = req.body;
-  const user = req.user!;
+  const { name, description, currentRecruitment } = req.body;
+
+  let imagePath = '';
+  if (req.file) {
+    imagePath = req.file.path;
+  }
 
   const team = await Team.findOne({ where: { name } });
   if (team) {
     throw new BadRequestError('Team name already existed.');
   }
 
+  const user = req.user!;
   let newTeam;
   try {
-    newTeam = await user.createTeams({ name, description });
+    newTeam = await user.createTeams({ name, description, image: imagePath, currentRecruitment });
   } catch (err) {
-    throw new BadRequestError('Create Team Failed');
+    throw new BadRequestError(`Create Team Failed ${err.message}`);
   }
 
   await newTeam.fetchTeam();
   const response: ITeamResponse = newTeam.toJSON();
 
   res.status(201).send({ team: response });
+};
+
+export const editTeam = async (req: Request, res: Response) => {
+  const updatedTeam = req.body as ITeamRequest;
+  const team = await Team.findOne({ where: { name: updatedTeam.name } });
+  if (!team) {
+    throw new NotFoundError('Team');
+  }
+  // try {
+  //   await team.destroy();
+  //   return res.send();
+  // } catch (err) {
+  //   console.log('destroy err', err.message);
+  // }
+
+  if (req.user!.id !== team.creatorId) {
+    throw new BadRequestError('The requester is not the team creator.');
+  }
+
+  updatedTeam.file = { ...req.file };
+
+  if (req.file) {
+    if (team.image !== '') {
+      deleteFile(team.image);
+    }
+    team.image = updatedTeam.file.path;
+  }
+
+  team.description = updatedTeam.description;
+  team.currentRecruitment = updatedTeam.currentRecruitment;
+  team.lookingForMembers = updatedTeam.lookingForMembers;
+
+  try {
+    await team.save();
+    // await team.destroy();
+  } catch (err) {
+    throw new BadRequestError(`${err.message}`);
+  }
+
+  res.status(200).send();
 };
 
 export const getTeamMember = async (req: Request, res: Response) => {
@@ -167,67 +214,64 @@ export const getIncomingRequests = async (req: Request, res: Response) => {
   res.status(200).send({ incomingRequests: response });
 };
 
-
-export const getRecommendedUserForTeam = async (req : Request , res : Response) => {
+export const getRecommendedUserForTeam = async (req: Request, res: Response) => {
   const filterInterest = req.query.filter;
-  
-  const teamName  =  req.params.teamName;
 
-  const team = await Team.findOne({ where : { name : teamName} , include : ['owner' , 'member']});
+  const teamName = req.params.teamName;
 
-  if(!team){
-    throw new NotFoundError('Team')
+  const team = await Team.findOne({ where: { name: teamName }, include: ['owner', 'member'] });
+
+  if (!team) {
+    throw new NotFoundError('Team');
   }
 
   // TODO: check members credential;
 
-  if(typeof filterInterest !== "string" && filterInterest !== undefined ){
+  if (typeof filterInterest !== 'string' && filterInterest !== undefined) {
     throw new BadRequestError('invalid query params');
   }
-  
+
   const users = await getUserWhoLike(filterInterest);
 
   let result: {
-    user : User,
-    score : number
-  }[] = []
+    user: User;
+    score: number;
+  }[] = [];
 
-  for(let user of users){
+  for (let user of users) {
     const isMember = await team.findMember(user.id);
     let score: number;
-    if(!isMember){
+    if (!isMember) {
       score = await team.CalculateUserScore(user.id);
-      result.push({ user , score});
+      result.push({ user, score });
     }
   }
 
   // sort by score
-  result.sort((a , b) => b.score - a.score);
+  result.sort((a, b) => b.score - a.score);
 
   // TODO: create interface
-  const response : IRecommendUserResponse= { users : result.map(r => r.user.toJSON())};
+  const response: IRecommendUserResponse = { users: result.map((r) => r.user.toJSON()) };
 
-  res.status(200).send(response)
-}
-
-
+  res.status(200).send(response);
+};
 
 /**
- * Complex query 
- * @param req 
- * @param res 
+ * Complex query
+ * @param req
+ * @param res
  */
 // export const getRecommendedUserForTeam = async (req: Request , res : Response) => {
 //   const t0 = performance.now();
 //   const filterInterest = req.query.filter;
-  
+
 //   const teamName  =  req.params.teamName;
 //   // TODO: check members credential;
 
 //   if(typeof filterInterest !== "string" && filterInterest !== undefined ){
 //     throw new BadRequestError('invalid query params');
 //   }
-  
+
 //   const users = await getUserWhoLike(filterInterest);
 
 //   let result: {
@@ -236,7 +280,7 @@ export const getRecommendedUserForTeam = async (req : Request , res : Response) 
 //   }[] = []
 
 //   for(let user of users){
-//     const team = await Team.findOne({ 
+//     const team = await Team.findOne({
 //       where : { name : "test_team_0"},
 //       include : [
 //         { model : User , as : 'member' , attributes :["id"], include : [{model : User , as : "recommendation" , where : { id : user.id } , attributes :["id"] , through : { attributes : ["score"]}}]},
@@ -255,10 +299,10 @@ export const getRecommendedUserForTeam = async (req : Request , res : Response) 
 //       score = await team.CalculateUserScoreComplexQuery(user.id);
 //       result.push({ user , score});
 //     }
-//   } 
+//   }
 //   // sort by score
 //   result.sort((a , b) => b.score - a.score);
-  
+
 //   // TODO: create interface
 //   const response = { users : result.map(r => r.user)};
 //   const t1 = performance.now();
@@ -266,7 +310,6 @@ export const getRecommendedUserForTeam = async (req : Request , res : Response) 
 //   res.status(200).send(response)
 
 // }
-
 
 export const registerEvent = async (req: Request, res: Response) => {
   const user = req.user!;

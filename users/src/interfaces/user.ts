@@ -1,28 +1,27 @@
-import { FriendStatus } from "@cuconnex/common";
-import { ITeamResponse } from "./team";
+import { FriendStatus } from '@cuconnex/common';
+import { ITeamResponse } from './team';
 
 export interface IUserRequest {
-    name: string,
-    image: string,
-    role: string,
-    interests: InterestBody,
-    bio: string,
-    lookingForTeam: boolean,
-    file: any
+  name: string;
+  image: string;
+  role: string;
+  interests: InterestBody;
+  bio: string;
+  lookingForTeam: boolean;
+  file: any;
 }
 
 export interface IUserResponse {
-    id: string,
-    name: string,
-    image: string,
-    faculty?: string,
-    year?: string,
-    role: string,
-    bio: string,
-    lookingForTeam: boolean,
-    interests: IInterestResponse[];
+  id: string;
+  name: string;
+  image: string;
+  faculty?: string;
+  year?: string;
+  role: string;
+  bio: string;
+  lookingForTeam: boolean;
+  interests: IInterestResponse[];
 }
-
 
 // export type InterestBody = {
 //     Technology?: Technology[],
@@ -31,29 +30,28 @@ export interface IUserResponse {
 // }
 
 export interface InterestBody {
-    [key: string]: string[]
+  [key: string]: string[];
 }
 export type IInterestResponse = string;
 
 export interface IViewProfileResponse extends IUserResponse {
-    status: FriendStatus | null
+  status: FriendStatus | null;
 }
 
-
 export interface ISearchAllResponse {
-    users: IUserResponse[],
-    team: ITeamResponse
+  users: IUserResponse[];
+  team: ITeamResponse;
 }
 
 export interface IFindRelationResponse {
-    status: FriendStatus | null
+  status: FriendStatus | null;
 }
 
 export interface IRecommendTeam {
-    teams : ITeamResponse[];
+  teams: ITeamResponse[];
 }
 
 export interface IAddRatingRequest {
-    rateeId : string,
-    ratings : number,
+  rateeId: string;
+  ratings: number;
 }

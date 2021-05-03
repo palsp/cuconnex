@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useNavigation } from "framer";
 import { IFetchTeam, ITeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
@@ -57,25 +57,27 @@ const LandingHero: React.FC<Props> = (props) => {
       </Link>
     </div>
   ) : (
-    <div className={classes.buttonmainDiv}>
-      <div className={classes.recruitmemberDiv}>
-        <Link style={{ textDecoration: "none" }} to="/createteam">
-          <RecruitMemberLogo />
-        </Link>
+    <AnimatePresence>
+      <div className={classes.buttonmainDiv}>
+        <div className={classes.recruitmemberDiv}>
+          <Link style={{ textDecoration: "none" }} to="/createteam">
+            <RecruitMemberLogo />
+          </Link>
+        </div>
+        <div className={classes.findteamDiv}>
+          <Link style={{ textDecoration: "none" }} to="/selectevents">
+            <FindteamLogo />
+          </Link>
+        </div>
+        <motion.div
+          animate={{ rotate: 180 }}
+          transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+          style={{ bottom: marginHeight, position: "absolute" }}
+          className={classes.circle_overlay}
+          data-test="landing-hero-halfcircleoverlay"
+        ></motion.div>
       </div>
-      <div className={classes.findteamDiv}>
-        <Link style={{ textDecoration: "none" }} to="/selectevents">
-          <FindteamLogo />
-        </Link>
-      </div>
-      <motion.div
-        animate={{ rotate: 180 }}
-        transition={{ ease: "linear", duration: 4, repeat: Infinity }}
-        style={{ bottom: marginHeight, position: "absolute" }}
-        className={classes.circle_overlay}
-        data-test="landing-hero-halfcircleoverlay"
-      ></motion.div>
-    </div>
+    </AnimatePresence>
   );
 
   return (
