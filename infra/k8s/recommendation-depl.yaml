@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recommendation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recommendation
+  template:
+    metadata:
+      labels:
+        app: recommendation
+    spec:
+      containers:
+        - name: recommendation
+          image: palsp/connex-recommendation
+          env:
+          # add env var here 
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-host
+                  key: DB_HOST
+            - name: DB_USER
+              value: "root"
+            - name: DB_SCHEMA
+              value: "user_db"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: user-db-secret
+                  key: DB_PASSWORD
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recommendation-srv
+spec:
+  selector:
+    app: recommendation
+  ports:
+    - name: recommendation
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

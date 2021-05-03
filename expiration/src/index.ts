@@ -1,5 +1,5 @@
 import { natsWrapper } from './nats-wrapper'
-import { EventCreatedSub } from './events/listener/event-create-sub'
+import { EventExpirationSub } from './events/listener/expiration-start-sub'
 
 const start = async () => {
 
@@ -30,7 +30,7 @@ const start = async () => {
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
 
-        new EventCreatedSub(natsWrapper.client).listen();
+        new EventExpirationSub(natsWrapper.client).listen();
 
     } catch (err) {
         console.log(err);

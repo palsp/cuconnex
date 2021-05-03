@@ -1,8 +1,7 @@
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
-import { natsWrapper, EventCreatedSub , EventUpdatedSub, EventEndSub} from './nats';
-
+import { natsWrapper, EventCreatedSub , EventUpdatedSub} from './nats';
 
 
 const validateEnvAttr = () => {
@@ -41,8 +40,6 @@ if (!process.env.NATS_CLUSTER_ID) {
 }
 };
 
-
-
 const start = async () => {
   // check if all required env variable have been declared
   validateEnvAttr();
@@ -62,7 +59,6 @@ const start = async () => {
 
     new EventCreatedSub(natsWrapper.client).listen();
     new EventUpdatedSub(natsWrapper.client).listen();
-    new EventEndSub(natsWrapper.client).listen();
 
     await initializeDB();
 
