@@ -18,7 +18,6 @@ import {
   IAddRatingRequest,
   IRecommendTeam,
 } from '../interfaces';
-import { rawListeners } from 'node:process';
 
 /**
  * get current user profile
