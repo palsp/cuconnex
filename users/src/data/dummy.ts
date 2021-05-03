@@ -57,7 +57,7 @@ export const init = async () => {
     await createEventForTeam(teams)
     await createRecommendForDummyUsers(users);
 }
-const  createDummyUser =  async () : Promise<User[]> => {
+export const  createDummyUser =  async () : Promise<User[]> => {
     const users : User[] = [];
     for(let i = 0 ; i < 10 ; i++){
         users.push(await User.create({
@@ -68,7 +68,7 @@ const  createDummyUser =  async () : Promise<User[]> => {
     return users
 }
 
-const addInterestToDummyUsers = async (users : User[]) : Promise<void> => {
+export const addInterestToDummyUsers = async (users : User[]) : Promise<void> => {
 
     let interests = await Interest.findAll();
 
@@ -80,7 +80,7 @@ const addInterestToDummyUsers = async (users : User[]) : Promise<void> => {
     }
 }
 
-const createTeamForDummyUsers = async ( users : User[]) : Promise<Team[]> => {
+export const createTeamForDummyUsers = async ( users : User[]) : Promise<Team[]> => {
     let teams: Team[] = [];
     for(let i = 0 ; i < users.length ; i++){
         if( i === 0 || i === 5) {
@@ -95,7 +95,7 @@ const createTeamForDummyUsers = async ( users : User[]) : Promise<Team[]> => {
     return teams;
 }
 
-const createEventForTeam = async (teams : Team[]) : Promise<Event> => {
+export const createEventForTeam = async (teams : Team[]) : Promise<Event> => {
     const event = await Event.create({
         id : 1,
         eventName : "test_event",
@@ -109,7 +109,7 @@ const createEventForTeam = async (teams : Team[]) : Promise<Event> => {
     return event;
 }
 
-const createRecommendForDummyUsers = async (users : User[]) : Promise<void> => {
+export const createRecommendForDummyUsers = async (users : User[]) : Promise<void> => {
     for(let i = 0 ; i < users.length ; i++){
         let c = 0;
         for(let j = 0 ;  j < users.length ; j++){

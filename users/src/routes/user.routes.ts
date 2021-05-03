@@ -22,7 +22,7 @@ router.get('/get-my-requests', requireUser, userController.getMyRequests);
 
 router.get('/current-user', userController.getUser);
 
-
+router.get('/rate' , requireUser , userController.getRateUser);
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
 

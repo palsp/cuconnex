@@ -309,36 +309,7 @@ export const getTeamStatus = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
-export const addRatings = async (req: Request, res: Response) => {
-  const { rateeId , ratings} = req.body as IAddRatingRequest;
-  const ratee = await User.findByPk(rateeId);
-  
-  if(!ratee){
-    throw new BadRequestError('ratee does not existed');
-  }
 
-  if(ratee.id === req.user!.id){
-    throw new BadRequestError('cannot rate yourself');
-  }
-  
-  const rate = await Rating.findOne({ where : { raterId : req.user!.id , rateeId : ratee.id}});
-  
-  try{
-    if(!rate){
-
-      await req.user!.addRating(ratee , { through : { rating : ratings.toFixed(2) }})
-    }else{
-      rate.rating = +ratings.toFixed(2)
-      await rate.save();
-    }
-  }catch(err){
-
-    throw new InternalServerError();
-  }
-
-
-  res.status(201).send({})
-}
 
 export const getRecommendTeam = async (req : Request , res : Response) => {
     const eventId = req.params.eventId;
@@ -387,4 +358,46 @@ export const getRecommendTeam = async (req : Request , res : Response) => {
     const response : IRecommendTeam = { teams : result.map(r => r.team.toJSON())};
 
     res.status(200).send(response);
+}
+
+
+export const getRateUser = async (req : Request , res : Response) => {
+    const rates = await req.user!.getRatee();
+
+     const ratees = rates.filter(ratee => ratee.Rating!.isRate === false);
+     
+     const response = {
+       ratee : ratees.map(ratee => ratee.toJSON())
+     }
+    res.status(200).send(response);
+
+}
+
+export const addRatings = async (req: Request, res: Response) => {
+  const { rateeId , ratings} = req.body as IAddRatingRequest;
+  const ratee = await User.findByPk(rateeId);
+
+
+  
+  if(!ratee){
+    throw new BadRequestError('ratee does not existed');
+  }
+
+  if(ratee.id === req.user!.id){
+    throw new BadRequestError('cannot rate yourself');
+  }
+  
+  const rate = await Rating.findOne({ where : { raterId : req.user!.id , rateeId : ratee.id}});
+  
+  if(!rate){
+    throw new BadRequestError('please rate this user at the end of the event')
+  }
+  try{
+      rate.rating = +ratings.toFixed(2)
+      rate.isRate = true;
+      await rate.save();
+  }catch(err){
+    throw new InternalServerError();
+  }
+  res.status(201).send({})
 }

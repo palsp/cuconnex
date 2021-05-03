@@ -6,6 +6,7 @@ import { startDB } from '../models/initDB'
 import { TableName } from '../models/types';
 
 jest.mock('../db');
+jest.mock('../natsWrapper')
 
 declare global {
   namespace NodeJS {
