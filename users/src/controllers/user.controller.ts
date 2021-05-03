@@ -361,16 +361,19 @@ export const getRecommendTeam = async (req : Request , res : Response) => {
 }
 
 
+export const getRateTeam = async () => {
+    
+}
+
 export const getRateUser = async (req : Request , res : Response) => {
     const rates = await req.user!.getRatee();
 
-     const ratees = rates.filter(ratee => ratee.Rating!.isRate === false);
+    const ratees = rates.filter(ratee => ratee.Rating!.isRate === false);
      
-     const response = {
+    const response = {
        ratee : ratees.map(ratee => ratee.toJSON())
      }
     res.status(200).send(response);
-
 }
 
 export const addRatings = async (req: Request, res: Response) => {

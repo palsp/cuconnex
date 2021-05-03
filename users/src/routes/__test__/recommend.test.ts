@@ -4,6 +4,7 @@ import { getUserWhoLike } from '../../utils/recommend';
 import { User, Interest, Team, Event } from '../../models';
 import { TeamStatus, Technology } from '@cuconnex/common';
 
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
 const  createDummyUser =  async () : Promise<User[]> => {
     const users : User[] = [];
     for(let i = 0 ; i < 10 ; i++){
@@ -46,6 +47,7 @@ const createEventForTeam = async (teams : Team[]) : Promise<Event> => {
     const event = await Event.create({
         id : 1,
         eventName : "test_event",
+        status : EventStatus.ongoing,
         registration : true,
     });
 
@@ -163,6 +165,7 @@ describe( 'recommend team for user', () => {
             id : 1,
             eventName : "dummy_event",
             registration: true,
+            status : EventStatus.ongoing
         })
         const {body} = await request(app)
         .get('/api/users/recommend-team/1')
@@ -232,7 +235,7 @@ describe( 'recommend team for user', () => {
         });
 
         const t = await dummyUser.createTeams({ name : "dummy_team" , description : "idk"});
-        const e = await Event.create({ id : 2 , eventName : "dummy_event" , registration : true});
+        const e = await Event.create({ id : 2 , status : EventStatus.ongoing, eventName : "dummy_event" , registration : true});
         await t.register(e);
         
         const {body} = await request(app)
