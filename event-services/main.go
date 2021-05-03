@@ -1,11 +1,13 @@
 package main
 
 import (
+	"github.com/nats-io/stan.go"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
 )
 
