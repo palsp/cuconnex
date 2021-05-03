@@ -1,4 +1,4 @@
-import { Event, Team } from '../../models';
+import { Event } from '../../models';
 import { Listener, EventCreated, Subjects } from '@cuconnex/common';
 import { Message } from 'node-nats-streaming';
 import { queueGroupName } from '../queue-group-name';

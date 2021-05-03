@@ -1,13 +1,12 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/nats-io/stan.go"
-	"github.com/palsp/cuconnex/event-services/common"
-	"github.com/palsp/cuconnex/event-services/events"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/palsp/cuconnex/event-services/events"
 )
 
 func Migrate() {
@@ -16,7 +15,7 @@ func Migrate() {
 
 func main() {
 	sc ,err := common.InitStanClient()
-
+	
 	if err != nil {
 		log.Printf("error connect to nats: %v\n" , err)
 	}
@@ -34,32 +33,33 @@ func main() {
 		stan.AckWait(aw),
 		stan.DurableName("event-service"),
 		)
-
+	
 	if err != nil {
 		sc.Close()
 		log.Fatal(err)
 	}
-
-
+	
+	
 	// Create a router
 	r := gin.Default()
 	//config := cors.DefaultConfig()
 	//config.AllowAllOrigins = true
 	//r.Use(cors.New(config))
-
+	
 	r.Use(CustomHeaderAPI)
-
+	
 	testEvent := r.Group("/api/ping")
 	testEvent.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
 	})
-
+	
 	v1 := r.Group("/api/events")
 	events.EventRegister(v1)
-
+	
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
+
 }
 
 

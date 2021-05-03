@@ -44,9 +44,10 @@ type TimeForm struct {
 }
 
 // GetDate returns date in a yyyy-mm-dd hh:mm:ss + nsec format
-func (d DateForm) GetDate(loc time.Location) time.Time {
+func (d DateForm) GetDate() time.Time {
+	loc := time.FixedZone("UTC+7",7*60*60)
 	//return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, t.Location())
-	return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, time.Local)
+	return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, loc)
 }
 
 
@@ -62,11 +63,11 @@ func (self *EventModelValidator) Bind(c *gin.Context) error{
 	self.eventModel.Bio = self.Event.Bio
 	self.eventModel.Location = self.Event.Location.String()
 	if self.Event.StartDate != nil {
-		self.eventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location).UTC()
+		self.eventModel.StartDate = self.Event.StartDate.GetDate().UTC()
 	}
 
 	if self.Event.EndDate != nil {
-		self.eventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location).UTC()
+		self.eventModel.EndDate = self.Event.EndDate.GetDate().UTC()
 	}
 
 
