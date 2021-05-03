@@ -9,6 +9,7 @@ export * from './db-status/friend';
 export * from './db-status/team';
 export * from './db-status/interest';
 export * from './db-status/faculty';
+export * from './db-status/event';
 
 // nats-events
 export * from './nats/events/friend-added-event';

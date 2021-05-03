@@ -18,6 +18,7 @@ export interface EventUpdated {
         id : number,
         "event-name" : string,
         registration : boolean,
+        status : EventStatus,
         version : number,        
     }
 }
