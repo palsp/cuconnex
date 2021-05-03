@@ -5,6 +5,7 @@
 }
 
 .relativeArrow {
+  margin-top: 3.5vh;
   position: absolute;
   left: 5%;
   align-items: center;

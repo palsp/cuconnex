@@ -52,7 +52,9 @@ const RatingList: React.FC<Props> = (props) => {
               ratedUserHandler(rating)
             }
           ></RatingStar>
-          {console.log(`UserRating at RatingList: ${userRating}`)}
+          {console.log(
+            `${props.member?.name} UserRating at RatingList: ${userRating}`
+          )}
         </div>
       </div>
     </div>
