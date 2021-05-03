@@ -1,6 +1,8 @@
-.main {
+.page {
   width: 100vw;
   height: 100vh;
+  z-index: 3;
+  background: white;
   position: relative;
 }
 
@@ -22,6 +24,7 @@
 
 .head {
   border-bottom: 0.1px solid rgb(196, 194, 194);
+  height: 80px;
 }
 
 .tab {

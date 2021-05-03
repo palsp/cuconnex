@@ -127,12 +127,35 @@ const MyTeamPage: React.FC = () => {
     );
   }
 
+  const variants = {
+    hidden: {
+      opacity: 0.85,
+      y: 800,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+    exit: {
+      y: 800,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
   return (
     <motion.div
-      variants={containerVariants}
+      variants={variants}
+      key="myTeamPage"
+      initial="hidden"
+      animate="visible"
       exit="exit"
       data-test="myteam-page"
-      className={classes.main}
+      className={classes.page}
     >
       {myteamsPrompt}
     </motion.div>
