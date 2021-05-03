@@ -24,13 +24,34 @@ const FriendsPage: React.FC = () => {
     return friendsData.data.connections;
   };
 
+  const variants = {
+    hidden: {
+      opacity: 0.85,
+      y: 800,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+    exit: {
+      y: 800,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
   return (
     <motion.div
-      variants={containerVariants}
+      variants={variants}
       initial="hidden"
       animate="visible"
       exit="exit"
       data-test="friends-page"
+      className={classes.page}
     >
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>

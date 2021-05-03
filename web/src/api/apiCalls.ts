@@ -7,6 +7,7 @@ import {
   IUserSignup,
   IResultSigninSignup,
   IFetchEventsData,
+  ICreateEventData,
   IEventData,
   ICreateTeamData,
   IInviteData,
@@ -24,7 +25,6 @@ import {
   IGetTeam,
   ITeamMembers,
   IUserResponse,
-  ITeam,
   IFetchTeam,
   IFetchOutgoingTeamNotification,
   IUserRequest,
@@ -83,7 +83,7 @@ const fetchEventsDataAPI = async (): Promise<
   return eventsData;
 };
 const createEventsAPI = async (
-  eventsCreatedData: IEventData
+  eventsCreatedData: ICreateEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
     "/api/events",
@@ -95,8 +95,8 @@ const createTeamAPI = async (teamCreatedData: ICreateTeamData) => {
   const formData = new FormData();
   formData.append("name", teamCreatedData.name);
   formData.append("description", teamCreatedData.description);
-  // formData.append("currentRecruiment", teamCreatedData.currentRecruitment);
-  // formData.append("image", teamCreatedData.image ? teamCreatedData.image : "");
+  formData.append("currentRecruitment", teamCreatedData.currentRecruitment);
+  formData.append("image", teamCreatedData.image ? teamCreatedData.image : "");
   const createTeamData = await axios({
     method: "post",
     url: "/api/teams",

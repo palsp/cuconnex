@@ -25,9 +25,9 @@ const SuccessPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={classes.background}
+      className={classes.page}
     >
-      <Background data-test="auth-page-background">
+      <Background data-test="auth-page-background" hasNav={false}>
         <motion.div
           // animate={{y: -window.innerHeight*0.2}}
           // animate={{ y: -(window.innerHeight * 0.1) }}

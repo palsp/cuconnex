@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//const token =
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzMzMzMzMzQiLCJpYXQiOjE2MTk5NjY3OTJ9.t2-VG3yJ6u72PGW8Ae_k_X5Y9k7DVSpdCwaSv3FZRGI";
+// const token =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzQ0MzQzMzIiLCJpYXQiOjE2MjAwMzYwMDF9.0gQgdow9vJ4W6-vWDDL9FXL-nhMSDAUdSopIDwQyEs0";
 
 const axiosInstance = axios.create({
   baseURL: "https://www.cu-connex.com",
@@ -11,6 +11,12 @@ const axiosInstance = axios.create({
 // axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 export default axiosInstance;
+
+//in some teams
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzc3MzMzMjMiLCJpYXQiOjE2MTk5NzExOTB9.EyE0n7fQY1aS1gbqGHusfTZyqD3T1hVSymMkPtYXVm8"
+//not in any team
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzMyMzIzMjEiLCJpYXQiOjE2MjAwMjY0MDd9.84prTWP7OlkJBsD2VHV0jIfEzSUtbVyRAVXCGKFTAbk"
+
 //loong01
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYzMjEiLCJpYXQiOjE2MTk3OTc0MTJ9.BeMcj-CogN3IewAwd7ekZMwJIHebenhIw9IA3DmA5Rg"
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzcyNjM3MjEiLCJpYXQiOjE2MTk3NzQwMDd9.TvE3aIPUcjI8K068fNPkPKtFaveFK7gBoiENwlM8jbE"

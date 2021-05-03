@@ -30,18 +30,20 @@ export interface IUserFriend {
   image: string;
 }
 
-export interface ITeam {
-  name: string; // team name
-  creatorId: string;
-  description: string;
-  lookingForMembers: boolean;
-}
+// export interface ITeam {
+//   name: string; // team name
+//   creatorId: string;
+//   description: string;
+//   lookingForMembers: boolean;
+// }
 export interface IFetchTeam {
   name: string; // team name
   members: IUserFriend[];
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
+  image: string;
+  currentRecruitment: string;
 }
 
 export interface ISearchUserTeamEventResult {
@@ -124,6 +126,33 @@ export interface IFetchEventsData {
 export interface IFetchEventsDataResult {
   events: IEventData[];
 }
+
+export interface ICreateEventData {
+  "event-name": string;
+  bio: string;
+  location?: string;
+  registration: boolean;
+  "start-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+  "end-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+}
 export interface IEventData {
   id: number;
   "event-name": string;
@@ -154,7 +183,7 @@ export interface IEventData {
 }
 //team
 export interface IGetTeam {
-  team: ITeam;
+  team: IFetchTeam;
 }
 export interface ICreateTeamData {
   name: string;
@@ -182,7 +211,7 @@ export interface IInviteDataResult {
 }
 
 export interface ICallTeamOfUser {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 export interface IUserRequest {
   teamName: string;
@@ -232,7 +261,7 @@ export enum FacultyListsEnum {
 
 //Notifications
 export interface IFetchTeamNotification {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 export interface IFetchFriendNotification {
   requests: IUserFriend[];
@@ -271,7 +300,7 @@ export interface IFetchRateTeamNotification {
 //Search
 export interface ISearchGeneral {
   users: IUser[];
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 
 const containerVariants = {

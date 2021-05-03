@@ -21,7 +21,7 @@ const MemberList: React.FC<Props> = (props) => {
     <div className={classes.memberList} data-test="member-list">
       <div className={classes.leftFlex}>
         <div className={classes.profilePic}>
-          <ProfilePic />
+          <ProfilePic PicUrl={props.member.image} />
         </div>
       </div>
       <div className={classes.rightFlex}>

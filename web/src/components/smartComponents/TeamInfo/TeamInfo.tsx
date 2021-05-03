@@ -8,7 +8,7 @@ import {
   RecruitSign,
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
-import { IUserRequest } from "@src/models";
+import { IFetchTeam, IUserRequest } from "@src/models";
 import { userTeamRequestAPI } from "@src/api";
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
   status: string;
   inviteMembersClickedHandler: any;
   fetchRelationHandler: any;
+  teamInfo: IFetchTeam;
 }
 
 const TeamInfo: React.FC<Props> = (props) => {
@@ -29,16 +30,16 @@ const TeamInfo: React.FC<Props> = (props) => {
   return (
     <div className={classes.teamInfo}>
       <div className={classes.cover}>
-        <CoverPic url="" />
+        <CoverPic team url="" />
       </div>
       <div className={classes.teamprofile}>
         <div className={classes.flex}>
           <div className={classes.profilePic}>
-            <ProfilePic size="lwithborder" />
+            <ProfilePic PicUrl={props.teamInfo.image} size="lwithborder" />
           </div>
         </div>
         <div className={classes.namerole}>
-          <div className={classes.name}>{props.name}</div>
+          <div className={classes.name}>{props.teamInfo.name}</div>
           {props.isTeamOwner ? (
             <div className={classes.role}>You are team owner</div>
           ) : (
@@ -57,7 +58,7 @@ const TeamInfo: React.FC<Props> = (props) => {
         <div
           onClick={() => {
             const name = {
-              teamName: props.name,
+              teamName: props.teamInfo.name,
             };
             userRequestHandler(name);
             setTimeout(() => props.fetchRelationHandler(), 1000);

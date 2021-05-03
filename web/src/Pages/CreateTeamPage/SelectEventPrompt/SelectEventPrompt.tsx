@@ -67,10 +67,6 @@ const SelectEventPrompt: React.FC = () => {
             selectEventHandler={selectedEventHandler}
             events={eventLists}
           />
-          <EventListForPrompt
-            selectEventHandler={selectedEventHandler}
-            events={mockEventLists}
-          />
         </div>
       </div>
     ) : clickSelectMember === true ? (

@@ -28,7 +28,7 @@ import { ErrorContext } from "@context/ErrorContext";
 
 const App: React.FC = () => {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { setErrorHandler } = useContext(ErrorContext);
   const [heightStyle, setHeightStyle] = useState({});
 
@@ -48,7 +48,6 @@ const App: React.FC = () => {
       <Route path="/profile" exact component={ProfilePage} />
       <Route path="/selectevents" exact component={SelectEventPage} />
       <Route path="/selectteams" exact component={SelectTeamPage} />
-      <Route path="/post" exact component={PushPage} />
       <Route path="/selectmember" exact component={SelectMemberPage} />
       <Route path="/createteam" exact component={CreateTeamPage} />
       <Route path="/teamdetail" exact component={TeamDetail} />
@@ -57,6 +56,7 @@ const App: React.FC = () => {
       <Route path="/testprompt" exact component={CreateTeamPrompt} />
       <Route path="/rating" exact component={RatingPage} />
       <Route path="/test" exact component={TestPage} />
+      <Route path="/postevent" exact component={PushPage} />
       {/* <Route path="/findteams" exact component={FindTeamPage} /> */}
       {/* <Route path="/recruitmembers" exact component={RecruitMemberPage} /> */}
       {/* <Route path="/" component={LandingPage} /> */}
@@ -64,6 +64,7 @@ const App: React.FC = () => {
   ) : (
     <Switch location={location} key={location.pathname}>
       <Route path="/" exact component={AuthPage} />
+      <Route path="/postevent" exact component={PushPage} />
       <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
     </Switch>
   );
@@ -73,9 +74,7 @@ const App: React.FC = () => {
       <AuthenticatedContext.Provider
         value={{ isAuthenticated, setIsAuthenticated }}
       >
-        <AnimatePresence exitBeforeEnter initial={false}>
-          {routes}
-        </AnimatePresence>
+        <AnimatePresence initial={false}>{routes}</AnimatePresence>
       </AuthenticatedContext.Provider>
     </div>
   );
