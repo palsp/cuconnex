@@ -9,6 +9,11 @@ type DBConfig struct {
 	Password string
 }
 
+type StanConfig struct {
+	ClusterID string
+	ClientID string
+	URL string
+}
 
 var DB = DBConfig{
 	Name: os.Getenv("DB_NAME"),
@@ -18,9 +23,19 @@ var DB = DBConfig{
 }
 
 
+
+var SCconfig = StanConfig{
+		ClusterID: os.Getenv("NATS_CLUSTER_ID"),
+		ClientID: os.Getenv("NATS_CLIENT_ID"),
+		URL: os.Getenv("NATS_URL"),
+}
+
+
+
 var TestDB = DBConfig{
 	Name: "eventdb_test",
 	Host: "localhost",
 	User : "root",
 	Password: "password",
 }
+

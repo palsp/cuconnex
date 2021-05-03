@@ -9,7 +9,7 @@ import {
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./PositionList.module.css";
-import { IFetchTeam, ITeam } from "@src/models";
+import { IFetchTeam } from "@src/models";
 
 interface Props {
   teams: IFetchTeam;
@@ -21,7 +21,7 @@ const PositionList: React.FC<Props> = (props) => {
     <div className={classes.positionList} data-test="position-list">
       <div className={classes.leftFlex}>
         <div className={classes.profilePic}>
-          <ProfilePic />
+          <ProfilePic PicUrl={props.teams.image} />
         </div>
       </div>
       <div className={classes.rightFlex}>

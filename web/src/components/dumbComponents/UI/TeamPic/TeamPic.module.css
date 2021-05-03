@@ -8,14 +8,20 @@
   position: relative;
 }
 
-.pic {
+.teamPic {
+  background-size: cover;
+  opacity: 0.8;
   width: 120px;
   height: 150px;
+}
+
+.defaultPic {
   background-image: url("../../../../assets/tempTeam.png");
   background-size: cover;
-  opacity: 0.7;
-  position: relative;
-  display: flex;
+  opacity: 0.8;
+  width: 120px;
+  height: 150px;
+  /* display: flex; */
 }
 
 .triangle {

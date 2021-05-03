@@ -8,16 +8,16 @@ interface Props {
   bold?: boolean;
 }
 const Subtitle: React.FC<Props> = (props) => {
-  let cssArray = null;
+  const cssArray = [];
   switch (props.color) {
     case "pink":
-      cssArray = [classes.subtitlePagePink];
+      cssArray.push(classes.subtitlePagePink);
       break;
     case "black":
-      cssArray = [classes.subtitlePageBlack];
+      cssArray.push(classes.subtitlePageBlack);
       break;
     default:
-      cssArray = [classes.subtitle];
+      cssArray.push(classes.subtitle);
       break;
   }
   switch (props.size) {

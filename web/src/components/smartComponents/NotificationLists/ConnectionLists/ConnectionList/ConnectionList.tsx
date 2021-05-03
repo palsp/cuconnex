@@ -57,15 +57,10 @@ const ConnectionList: React.FC<Props> = (props) => {
     );
   } else if (clickAccept) {
     ButtonPrompt = (
-      <div 
-        className={classes.connectedSign} 
-        >
-          <RecruitSign
-            data-test="team-list-status"
-            value="Connected"
-          />
-    </div>
-    );   
+      <div className={classes.connectedSign}>
+        <RecruitSign data-test="team-list-status" value="Connected" />
+      </div>
+    );
   } else if (clickDecline) {
     ButtonPrompt = (
       <div className={classes.declineSign}>
@@ -78,7 +73,7 @@ const ConnectionList: React.FC<Props> = (props) => {
     <div className={classes.connectionList} data-test="connection-list">
       <div className={classes.leftFlex}>
         <div className={classes.profilePic}>
-          <ProfilePic />
+          <ProfilePic PicUrl={props.connection.image} />
         </div>
       </div>
       <div className={classes.midFlex}>
@@ -99,7 +94,9 @@ const ConnectionList: React.FC<Props> = (props) => {
           />
         </div>
         <div className={classes.smallFlex}>
-          <div className={classes.faculty}>{props.connection.faculty}</div>
+          <div className={classes.faculty}>
+            {props.connection.faculty}, {props.connection.year}
+          </div>
         </div>
       </div>
       <div className={classes.rightFlex}>{ButtonPrompt}</div>

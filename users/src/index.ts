@@ -68,8 +68,6 @@ const start = async () => {
 
     // TODO: delete dummy data 
     // await init();
-
-
   } catch (err) {
     console.log(err);
   }
