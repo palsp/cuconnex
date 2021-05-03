@@ -16,6 +16,20 @@ var EventStatus = struct{
 }
 
 
+var Category = struct{
+	Technology string
+	Business string
+	Ecommerce string
+	Startup string
+}{
+	Technology: "Technology",
+	Business: "Business",
+	Ecommerce: "Ecommerce",
+	Startup: "Startup",
+}
+
+
+
 
 // Bind returns somthing rather than 400 when binding failed
 func Bind(c *gin.Context , obj interface{}) error {
