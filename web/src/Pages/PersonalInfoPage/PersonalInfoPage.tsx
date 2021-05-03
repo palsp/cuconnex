@@ -67,7 +67,7 @@ const PersonalInfoPage: React.FC<Props> = (props) => {
     <div className={classes.main}>
       <div className={classes.container}>
         <div className={classes.background}>
-          <Background data-test="personal-info-background">
+          <Background hasNav={false} data-test="personal-info-background">
             <div className={classes.content}>
               <motion.div className={classes.motion}>
                 <div className={classes.titleDiv}>
