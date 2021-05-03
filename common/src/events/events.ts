@@ -20,8 +20,17 @@ export interface EventUpdated {
     }
 }
 
+export interface EventStarted {
+    subject : Subjects.EventStarted,
+    data : {
+        id : number,
+        startDate : string
+    }
+}
+
+
 export interface EventEnd {
-    subject : Subjects.EventEnded,
+subject : Subjects.EventEnded,
     data : {
         id : number,
     }

@@ -1,11 +1,6 @@
 import { natsWrapper } from './nats-wrapper'
 import { EventCreatedSub } from './events/listener/event-create-sub'
 
-process.env.NATS_CLUSTER_ID = "connex";
-process.env.NATS_CLIENT_ID = "4567";
-process.env.NATS_URL = "http://localhost:4222";
-process.env.REDIS_HOST = "http://localhost:6379";
-
 const start = async () => {
 
     // detect immediately if the secret key is not defined
