@@ -32,7 +32,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   // Rating M-M user
   User.belongsToMany(User, {
-    as: 'rating',
+    as: 'ratee',
     through: Rating,
     foreignKey: 'raterId',
     otherKey: 'rateeId',

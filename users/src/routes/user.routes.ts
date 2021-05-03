@@ -16,12 +16,15 @@ const router = express.Router();
 
 router.get('/notification/invite', requireUser, validateRequest, userController.getInvitationNoti);
 
+router.get('/teams/rate' , requireUser , userController.getRateTeam);
+
 router.get('/teams/:userId', requireUser, userController.getListofTeamsBelongsTo);
+
+router.get('/rate/:teamName' , requireUser , userController.getRateUserOfTeam);
 
 router.get('/get-my-requests', requireUser, userController.getMyRequests);
 
 router.get('/current-user', userController.getUser);
-
 
 
 router.get('/relation/:userId', requireUser, userController.findRelation);
@@ -39,8 +42,11 @@ router.put(
   userController.editUser
 );
 
+router.get('/recommend-user' , requireUser , userController.getRecommendUser);
 
-router.get('/recommend-team/:eventId' , requireUser , userController.getRecommendTeam);
+router.get('/recommend-team' , requireUser , userController.getRecommendTeam);
+
+router.get('/recommend-team/:eventId' , requireUser , userController.getRecommendTeamByEvent);
 
 router.get('/:userId', requireUser, userController.viewUserProfile);
 

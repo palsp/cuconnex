@@ -45,8 +45,9 @@ interface UserAttrs {
   friends?: User[];
   Connection?: Connection;
   IsMember?: IsMember;
-  Recommend?: Recommend;
-  recommendation?: User[];
+  Recommend? : Recommend;
+  recommendation? : User[];
+  Rating? : Rating;
 }
 
 interface UserCreationAttrs {
@@ -148,8 +149,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addRecommendation!: BelongsToManyAddAssociationMixin<User, { through: { score: number } }>;
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
-  public addRating!: BelongsToManyAddAssociationMixin<User, { through: { rating: number } }>;
-  public getRating!: BelongsToManyGetAssociationsMixin<User>;
+  public addRatee!: BelongsToManyAddAssociationMixin<User, { through: { rating: number} }>;
+  public getRatee!: BelongsToManyGetAssociationsMixin<User>;
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
@@ -426,6 +427,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     if (this.Connection) {
       delete values.Connection;
     }
+
+    delete values.Rating;
 
     return { ...values, interests };
   }

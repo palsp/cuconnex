@@ -1,6 +1,8 @@
 .TeamDetail {
   width: 100vw;
   position: relative;
+  background: white;
+  z-index: 2;
 }
 
 .relativeArrow {
@@ -61,4 +63,20 @@
   font-weight: 900;
   margin-left: 5%;
   margin-bottom: 5%;
+}
+
+.teamDescription {
+  display: flex;
+  flex-direction: column;
+  margin: 0 5% 12% 5%;
+  /* align-items: flex-start; */
+}
+
+.teamDescription > * {
+  width: 100%;
+  text-align: start;
+}
+
+.teamDescription > div > p {
+  margin: 0.5em 0;
 }

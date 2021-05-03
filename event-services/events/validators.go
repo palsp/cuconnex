@@ -46,7 +46,8 @@ type TimeForm struct {
 
 // GetDate returns date in a yyyy-mm-dd hh:mm:ss + nsec format
 func (d DateForm) GetDate(loc time.Location) time.Time {
-	return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, &loc)
+	//return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, t.Location())
+	return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, time.Local)
 }
 
 
@@ -61,14 +62,15 @@ func (self *EventModelValidator) Bind(c *gin.Context) error{
 	self.eventModel.Registration = self.Event.Registration
 	self.eventModel.Bio = self.Event.Bio
 	self.eventModel.Location = self.Event.Location.String()
+	fmt.Println("location" , self.Event.Location)
 	if self.Event.StartDate != nil {
-		self.eventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location)
-	}
-	if self.Event.EndDate != nil {
-		self.eventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location)
+		self.eventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location).UTC()
 	}
 
-	fmt.Printf("start at %s\n current time %s\n" , self.eventModel.StartDate.UTC() , time.Now().UTC())
+	if self.Event.EndDate != nil {
+		self.eventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location).UTC()
+	}
+
 
 	if self.eventModel.StartDate.After(self.eventModel.EndDate){
 		// TODO: implement custom error

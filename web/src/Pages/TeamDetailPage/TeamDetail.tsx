@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
-import { Heading } from "@dumbComponents/UI/index";
+import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft, Close, InviteMember, Mail } from "@icons/index";
 import {
   MemberPicList,
@@ -18,7 +18,6 @@ import containerVariants, {
   IUserFriend,
   IUserRequest,
 } from "@src/models/models";
-import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
 import {
   fetchTeamIncomingNotificationAPI,
@@ -153,11 +152,27 @@ const TeamDetail: React.FC<Props> = (props) => {
               inviteMembersClickedHandler={inviteMembersClickedHandler}
               status={relation}
               name={props.location.state.team.name}
+              teamInfo={props.location.state.team}
               isTeamOwner={isTeamOwner}
             />
           </div>
         </div>
 
+        <div className={classes.teamDescription}>
+          <Subtitle value="Team Description" bold size="small" color="black" />
+          <Heading value="About our team" size="small" />
+          <Subtitle
+            value={props.location.state.team.description}
+            size="small"
+            color="black"
+          />
+          <Heading value="Current Recruitment" size="small" />
+          <Subtitle
+            value={props.location.state.team.currentRecruitment}
+            size="small"
+            color="black"
+          />
+        </div>
         <div className={classes.memberpic}>
           <MemberPicList
             members={teamMembers}
