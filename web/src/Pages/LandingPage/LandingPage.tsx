@@ -138,6 +138,13 @@ const LandingPage: React.FC<Props> = (props) => {
       </div>
     </Background>
   );
+  const spinnerOne = [classes.inner];
+  const spinnerTwo = [classes.inner];
+  const spinnerThree = [classes.inner];
+
+  spinnerOne.push(classes.one);
+  spinnerTwo.push(classes.two);
+  spinnerThree.push(classes.three);
 
   return (
     <motion.div
@@ -171,7 +178,13 @@ const LandingPage: React.FC<Props> = (props) => {
           </div>
         </div>
       ) : (
-        <div>loading</div>
+        <div className={classes.spinnerBody}>
+          <div className={classes.spinner}>
+            <div className={spinnerOne.join(" ")}></div>
+            <div className={spinnerTwo.join(" ")}></div>
+            <div className={spinnerThree.join(" ")}></div>
+          </div>
+        </div>
       )}
     </motion.div>
   );
