@@ -22,7 +22,7 @@ const AuthPage: React.FC = () => {
   const [redirect, setRedirect] = useState<boolean>(false);
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
   const { fetchUserDataHandler } = useContext(UserContext);
-  const [timeOut, setTimeOut ] = useState<boolean>(false);
+  const [timeOut, setTimeOut] = useState<boolean>(false);
 
   const checkUserHasLogin = async () => {
     try {
@@ -79,27 +79,27 @@ const AuthPage: React.FC = () => {
 
   const circle_overlay = timeOut ? (
     <motion.div
-    // animate={{ y: -60 }}
-    transition={{
-      type: "spring",
-      delay: 0,
-      stiffness: 270,
-      damping: 29,
-      mass: 3.3,
-    }}
-    initial="hidden"
-    animate="visible"
-    variants={variants}
-    className={classes.circle_overlay}
-  ></motion.div>
-) : (
-<motion.div
-  animate={{ rotate: 360 }}
-  transition={{ delay: 2, ease: "linear", duration: 4, repeat: Infinity }}
-  style={{ bottom: -(window.innerHeight * 0.33) }}
-  className={classes.circle_overlay}
-  data-test="auth-page-halfcircleoverlay"
-></motion.div>
+      // animate={{ y: -60 }}
+      transition={{
+        type: "spring",
+        delay: 0,
+        stiffness: 270,
+        damping: 29,
+        mass: 3.3,
+      }}
+      initial="hidden"
+      animate="visible"
+      variants={variants}
+      className={classes.circle_overlay}
+    ></motion.div>
+  ) : (
+    <motion.div
+      animate={{ rotate: 360 }}
+      transition={{ delay: 2, ease: "linear", duration: 4, repeat: Infinity }}
+      style={{ bottom: -(window.innerHeight * 0.33) }}
+      className={classes.circle_overlay}
+      data-test="auth-page-halfcircleoverlay"
+    ></motion.div>
   );
 
   const authPrompt =
@@ -154,6 +154,7 @@ const AuthPage: React.FC = () => {
         initial="hidden"
         animate="visible"
         variants={variants}
+        data-test="auth-page-login-prompt"
         className={classes.loginPrompt}
       >
         <div className={classes.logo}>
