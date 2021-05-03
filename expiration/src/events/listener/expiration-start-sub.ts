@@ -8,7 +8,8 @@ export class EventExpirationSub extends Listener<EventExpirationStart> {
     queueGroupName = queueGroupName;
 
     async onMessage(data: EventExpirationStart['data'], msg: Message) {
-        console.log('expiration' , new Date(data.expirationDate).toString())
+        console.log('exp' , data.expirationDate);
+        console.log('expiration' , new Date(data.expirationDate).toUTCString())
         console.log('now' , new Date().toString())
         console.log('now UTC' , new Date().toUTCString())
 
