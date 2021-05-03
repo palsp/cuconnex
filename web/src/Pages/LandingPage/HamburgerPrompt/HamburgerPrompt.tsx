@@ -8,7 +8,8 @@ import { UserContext } from "@context/UserContext";
 const HamburgerPrompt: React.FC = () => {
   const [redirect, setRedirect] = useState<JSX.Element>();
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
-  const { clearUserDataHandler } = useContext(UserContext);
+  const { userData, clearUserDataHandler } = useContext(UserContext);
+
   const logoutHandler = async () => {
     try {
       //clear cookie first
@@ -32,7 +33,9 @@ const HamburgerPrompt: React.FC = () => {
         <Link style={{ textDecoration: "none" }} to="/friendlists">
           <Heading value="My Connections" />
         </Link>
-        <Heading value="Account Setting" />
+        <Link to={{ pathname: "/profile", state: { users: userData } }}>
+          <Heading value="Account Setting" />
+        </Link>
         <div onClick={logoutHandler}>
           <Heading value="Log out" />
         </div>
