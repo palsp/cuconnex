@@ -23,18 +23,18 @@ try:
     while True:
         cursor = connection.cursor(dictionary=True)
 
-        # Check for any changes in the rate table.
-        cursor.execute("CHECKSUM TABLE rate")
+        # Check for any changes in the rating table.
+        cursor.execute("CHECKSUM TABLE rating")
         new_checksum = cursor.fetchone()['Checksum']
         if new_checksum == checksum:
             cursor.close()
-            print("No update in rate table detected")
+            print("No update in rating table detected")
             # Check for update again after 60 seconds.
             sleep(60)
         else:
             checksum = new_checksum
-            # Fetch the data from the rate table.
-            cursor.execute("SELECT * FROM rate")
+            # Fetch the data from the rating table.
+            cursor.execute("SELECT * FROM rating")
             rows = cursor.fetchall()
             df = pd.DataFrame(rows)
 
@@ -42,7 +42,7 @@ try:
             reader = Reader(rating_scale=(1, 5))
 
             # The columns must correspond to rater id, ratee id and ratings (in that order).
-            data = Dataset.load_from_df(df[['raterid', 'rateeid', 'rating']], reader)
+            data = Dataset.load_from_df(df[['raterId', 'rateeId', 'rating']], reader)
 
             # Train an NMF algorithm on the dataset.
             trainset = data.build_full_trainset()
@@ -63,11 +63,11 @@ try:
                 est = float(est)
                 recommend.append((uid, iid, est))
 
-            # Update the recommend table.
-            mysql_replace_query = """REPLACE INTO recommend (userid, recommendeeid, score) VALUES (%s, %s, %s)"""
+            # Update the recommendations table.
+            mysql_replace_query = """REPLACE INTO recommendations (userId, recommendeeId, score) VALUES (%s, %s, %s)"""
             for row in recommend:
                 cursor.execute(mysql_replace_query, row)
-            print("Successfully updated recommend table")
+            print("Successfully updated recommendations table")
 
             # Close the cursor.
             cursor.close()
