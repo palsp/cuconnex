@@ -22,6 +22,18 @@ export interface EventUpdated {
     }
 }
 
+
+
+export interface EventExpirationStart {
+    subject : Subjects.Expiration,
+    data : {
+        id : number,
+        expirationDate: string
+    }
+
+}
+
+
 export interface EventStarted {
     subject : Subjects.EventStarted,
     data : {
@@ -31,8 +43,8 @@ export interface EventStarted {
 }
 
 
-export interface EventEnd {
-subject : Subjects.EventEnded,
+export interface EventCompleted {
+subject : Subjects.EventCompleted,
     data : {
         id : number,
     }
