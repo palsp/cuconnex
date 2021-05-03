@@ -89,45 +89,50 @@ const ExplorePage = () => {
   );
 
   const variants = {
-    hidden: { opacity: 0 },
+    hidden: { y: 850 },
     visible: {
-      opacity: 1,
+      y: 0,
       transition: {
-        duration: 0.2,
+        duration: 0.3,
       },
     },
     exit: {
-      opacity: 0,
+      y: 850,
+      transition: {
+        duration: 0.3,
+      },
     },
   };
   return (
     <motion.div
       variants={variants}
+      key="explorePage"
       initial="hidden"
       animate="visible"
       exit="exit"
+      className={classes.page}
     >
       {/* <Background> */}
       {/* Background has display: flex so this div is for that */}
-      <div>
-        <div className={classes.exploreHeader}>
-          <Link to="/landing">
-            <ArrowLeft />
-          </Link>
-          <SearchBar
-            setHasSearch={setHasSearch}
-            setNoSearchResult={setNoSearchResult}
-            setPeopleLists={setPeopleLists}
-            setTeamLists={setTeamLists}
-            setEventLists={setEventLists}
-            value="Explore"
-          />
-        </div>
-        {console.log("This is peopleLists", peopleLists)}
-        {console.log("This is teamLists", teamLists)}
-        {console.log("This is eventLists", eventLists)}
-        {explorePage}
+
+      <div className={classes.exploreHeader}>
+        <Link to="/landing">
+          <ArrowLeft />
+        </Link>
+        <SearchBar
+          setHasSearch={setHasSearch}
+          setNoSearchResult={setNoSearchResult}
+          setPeopleLists={setPeopleLists}
+          setTeamLists={setTeamLists}
+          setEventLists={setEventLists}
+          value="Explore"
+        />
       </div>
+      {console.log("This is peopleLists", peopleLists)}
+      {console.log("This is teamLists", teamLists)}
+      {console.log("This is eventLists", eventLists)}
+      {explorePage}
+
       {/* </Background> */}
     </motion.div>
   );

@@ -173,7 +173,7 @@ const AuthPage: React.FC = () => {
     );
 
   return (
-    <Background data-test="auth-page-background">
+    <Background data-test="auth-page-background" hasNav={false}>
       <motion.div
         exit={{
           opacity: 0.5,

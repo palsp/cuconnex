@@ -1,21 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
-import { ProfilePic } from "@smartComponents/index";
-import Hamburger from "@dumbComponents/UI/Hamburger/Hamburger";
-import { ArrowLeft, ArrowRight, Search } from "@dumbComponents/UI/Icons";
-import Mail from "@dumbComponents/UI/Icons/Mail/Mail";
-import { Link } from "react-router-dom";
 import Background from "../../components/dumbComponents/UI/Background/Background";
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import containerVariants, { ITeam } from "@src/models/models";
+import { IFetchTeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
-import { callTeamOfUserAPI, teamInvitationAPI } from "@src/api";
-import { Button } from "@material-ui/core";
+import { callTeamOfUserAPI } from "@src/api";
 import NavBar from "@smartComponents/NavBar/NavBar";
 import { AnimatePresence } from "framer-motion";
+import TeamList from "@smartComponents/MyTeamLists/MyTeamList/MyTeamList";
 
 interface Props {
   location: {
@@ -30,11 +25,13 @@ const LandingPage: React.FC<Props> = (props) => {
   const [displayHamburgerMenu, setDisplayHamburgerMenu] = useState<boolean>(
     hamburgerOn
   );
-  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
   const { setErrorHandler } = useContext(ErrorContext);
-  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   const [menuHeightStyle, setMenuHeightStyle] = useState({ height: "" });
+  const [dataFetched, setDataFetched] = useState<boolean>(false);
+
+  const motionKey = displayHamburgerMenu ? "hamburger" : "landing";
 
   useEffect(() => {
     fetchTeamHandler();
@@ -45,91 +42,75 @@ const LandingPage: React.FC<Props> = (props) => {
     const teamData = await callTeamOfUserAPI(userData.id);
     console.log("fetchTeamHandler", teamData.data);
     setMyTeamLists(teamData.data.teams);
+    console.log(teamData.data.teams);
+    setDataFetched(true);
   };
-  let hasTeam = false;
-  if (myTeamLists.length > 0) {
-    hasTeam = true;
-  }
-  console.log(hasTeam);
-
-  let marginHeight;
-  if (window.innerHeight > 800) {
-    marginHeight = window.innerHeight * 0.25;
-  } else {
-    marginHeight = window.innerHeight * 0.15;
-  }
 
   const landingVariants = {
-    hidden: { x: -400 },
-    visible: {
-      x: 0,
-      transition: {
-        duration: 0.4,
-      },
-    },
-    exit: { x: -400 },
+    hidden: { opacity: 0, x: -300 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.2 } },
+    exit: { opacity: 0, x: -300, transition: { duration: 0.2 } },
   };
 
   const hamburgerMenuVariants = {
-    hidden: { x: 400 },
-    visible: {
-      x: 0,
-      transition: {
-        duration: 0.4,
-      },
-    },
-    exit: { x: 400 },
+    hidden: { opacity: 0, x: 300 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.2 } },
+    exit: { opacity: 0, x: 300, transition: { duration: 0.2 } },
   };
 
+  const variants = displayHamburgerMenu
+    ? hamburgerMenuVariants
+    : landingVariants;
+
   const LandingPrompt = displayHamburgerMenu ? (
-    <AnimatePresence>
-      <motion.div
-        variants={hamburgerMenuVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-      >
-        <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
-          <HamburgerPrompt />
-        </div>
-      </motion.div>
-    </AnimatePresence>
+    <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
+      <HamburgerPrompt />
+    </div>
   ) : (
-    <motion.div
-      variants={landingVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      style={{ minHeight: `${window.innerHeight - 80}px` }}
-    >
-      <Background>
-        <div className={hasTeam ? classes.heroDivHasTeam : classes.heroDiv}>
-          <LandingHero
-            pageHeight={menuHeightStyle}
-            userData={userData}
-            hasTeam={hasTeam}
-          />
-        </div>
-      </Background>
-    </motion.div>
+    <Background hasNav={true}>
+      <div
+        className={
+          TeamList.length > 0 ? classes.heroDivHasTeam : classes.heroDiv
+        }
+      >
+        <LandingHero pageHeight={menuHeightStyle} myTeamList={myTeamLists} />
+      </div>
+    </Background>
   );
 
   return (
     <motion.div
-      exit={{
-        opacity: 0,
-        transition: {
-          duration: 0.2,
-        },
-      }}
+      key="landingPage"
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 1, transition: { duration: 1 } }}
+      exit={{ opacity: 1, transition: { duration: 0.5 } }}
+      className={classes.page}
     >
-      <div>
-        <NavBar
-          displayHamburgerMenu={displayHamburgerMenu}
-          setDisplayHamburgerMenu={setDisplayHamburgerMenu}
-        />
-        {LandingPrompt}
-      </div>
+      {dataFetched ? (
+        <div className={classes.landingPageContainer}>
+          <NavBar
+            displayHamburgerMenu={displayHamburgerMenu}
+            setDisplayHamburgerMenu={setDisplayHamburgerMenu}
+          />
+          <div className={classes.animateContainer}>
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={motionKey}
+                variants={variants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                style={{ minHeight: `${window.innerHeight - 80}px` }}
+                className={classes.motion}
+              >
+                {LandingPrompt}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      ) : (
+        <div>loading</div>
+      )}
     </motion.div>
   );
 };

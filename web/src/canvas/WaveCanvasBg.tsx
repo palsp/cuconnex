@@ -39,7 +39,6 @@ const WaveCanvasBg: React.FC<Props> = (props) => {
       setContext(ctx);
       //Our first draw
       if (context !== null) {
-        console.log("aye");
         requestRef.current = requestAnimationFrame(animate);
       }
       return () => cancelAnimationFrame(requestRef.current);

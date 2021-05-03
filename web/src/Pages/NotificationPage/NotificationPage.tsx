@@ -203,14 +203,21 @@ const NotificationPage: React.FC = () => {
     );
   }
 
+  const pageVariant = {
+    hidden: { x: 400, opacity: 0.5 },
+    visible: { x: 0, opacity: 1, transition: { duration: 0.3 } },
+    exit: { x: 400, opacity: 0.5, transition: { duration: 0.3 } },
+  };
+
   return (
     <motion.div
-      variants={containerVariants}
+      variants={pageVariant}
+      key="notificationPage"
       initial="hidden"
       animate="visible"
       exit="exit"
       data-test="Notification-page"
-      className={classes.main}
+      className={classes.page}
     >
       {NotificationsPrompt}
     </motion.div>
