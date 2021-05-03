@@ -20,8 +20,7 @@ const RatingList: React.FC<Props> = (props) => {
 
   useEffect(() => {
     setSubmit(props.submit);
-    console.log(props.submit);
-    console.log("haha");
+    console.log(`Submit state at RatingList: ${props.submit}`);
   });
 
   const voteSubmittedHandler = async () => {
@@ -43,10 +42,10 @@ const RatingList: React.FC<Props> = (props) => {
     }
   };
 
-  // if (props.submit) {
-  //   console.log("voteSubmittedHandler Called");
-  //   voteSubmittedHandler;
-  // }
+  if (props.submit) {
+    console.log("voteSubmittedHandler Called");
+    voteSubmittedHandler();
+  }
   return (
     <div className={classes.ratingList}>
       <div className={classes.divRatingList}>

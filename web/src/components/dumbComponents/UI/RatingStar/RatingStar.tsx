@@ -31,6 +31,7 @@ const RatingStar: React.FC<Props> = (props) => {
   return (
     <div>
       <StyledRating
+        name="userRating"
         size="large"
         value={value}
         precision={0.5}

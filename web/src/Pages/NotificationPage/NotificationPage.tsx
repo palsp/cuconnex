@@ -126,6 +126,9 @@ const NotificationPage: React.FC = () => {
   if (teamNoti != undefined) {
     incomingNoti = incomingNoti + teamNoti.length;
   }
+  if (rateTeamNoti != undefined) {
+    incomingNoti = incomingNoti + rateTeamNoti.length;
+  }
   if (friendNoti != undefined) {
     outgoingNoti = outgoingNoti + friendNoti.length;
   }
@@ -164,7 +167,7 @@ const NotificationPage: React.FC = () => {
           </div>
         </div>
         <div className={classes.teamRatingList}>
-          <TeamRatingLists teams={myTeamLists} />
+          {/* <TeamRatingLists teams={myTeamLists} /> */}
           <TeamRatingLists teams={rateTeamNoti} />
         </div>
         <div className={classes.teamInvitationList}>
