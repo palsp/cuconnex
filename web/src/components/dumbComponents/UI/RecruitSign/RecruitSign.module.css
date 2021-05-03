@@ -169,7 +169,7 @@
 }
 
 .accept {
-  margin: 1%;
+  margin: 1% 5%;
   width: 15vw;
   height: 2vh;
   background-color: #f33182;
@@ -181,7 +181,7 @@
   display: flex;
 }
 .reject {
-  margin: 1%;
+  margin: 1% 15%;
   width: 15vw;
   height: 2vh;
   background-color: grey;
