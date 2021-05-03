@@ -18,6 +18,8 @@ import {
   IAddRatingRequest,
   IRecommendTeam,
 } from '../interfaces';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
+import { identity } from 'lodash';
 
 /**
  * get current user profile
@@ -361,8 +363,34 @@ export const getRecommendTeam = async (req : Request , res : Response) => {
 }
 
 
-export const getRateTeam = async () => {
-    
+export const getRateTeam = async (req : Request , res : Response) => {
+  const events = await Event.findAll({ where : { status : EventStatus.closed} , include : [{ model : Team , as:  "candidate" }]});
+  let myTeamInEvent = [];
+  for(let event of events){
+      for(let candidate of event.candidate!){
+         // check if users is a member of the team 
+          const isMember = await candidate.findMember(req.user!.id)
+          if(isMember){
+              // check if user rate all the member of the team
+              const members = await candidate.getMembers();
+              let isRate = true;
+              for(let member of members){
+                  const rate = await Rating.isRate(req.user! , member);
+                  if(!rate){
+                      isRate = false;
+                      break;
+                  }
+              }
+              if(!isRate){
+                myTeamInEvent.push(candidate)
+              }
+              // stop iterate through candidates if users team is found
+              break;
+          }
+      }
+
+    }
+    res.send({ teams : myTeamInEvent});
 }
 
 export const getRateUser = async (req : Request , res : Response) => {

@@ -3,6 +3,7 @@ import { EventEndSub } from '../event-end-sub';
 import { EventEnd , TeamStatus} from '@cuconnex/common';
 import { Event, User , Team , Rating} from '../../../models';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
+import { utimes } from 'node:fs';
 
 const  createDummyUser =  async (num :number) : Promise<User[]> => {
     const users : User[] = [];
@@ -48,6 +49,17 @@ const setup = async () => {
     return { listener, event, data, msg }
 
 }
+
+it('should update event status' , async () => {
+    const { listener, event, data, msg } = await setup();
+
+    await listener.onMessage(data, msg);
+
+    const updatedEvent = await Event.findByPk(event.id);
+    expect(updatedEvent!.status).toEqual(EventStatus.closed);
+});
+
+
 it('add entry in rating table if it not exist', async () => {
     const { listener, event, data, msg } = await setup();
     const users = await createDummyUser(3);
