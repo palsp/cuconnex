@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./TeamRatingLists.module.css";
-import { IFetchTeam, IFetchRateTeamNotification } from "@src/models/index";
+import { IFetchTeam } from "@src/models/index";
 import { TeamRatingList } from "@smartComponents/index";
 
 interface Props {

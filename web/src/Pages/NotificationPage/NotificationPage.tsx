@@ -21,7 +21,6 @@ import {
   IUser,
   IUserFriend,
   IFetchTeam,
-  IFetchRateTeamNotification,
 } from "@src/models";
 import {
   callTeamOfUserAPI,
@@ -166,7 +165,7 @@ const NotificationPage: React.FC = () => {
         </div>
         <div className={classes.teamRatingList}>
           <TeamRatingLists teams={myTeamLists} />
-          {/* <TeamRatingLists teams={rateTeamNoti} /> */}
+          <TeamRatingLists teams={rateTeamNoti} />
         </div>
         <div className={classes.teamInvitationList}>
           <TeamInvitationLists

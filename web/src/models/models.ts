@@ -335,10 +335,10 @@ export interface IEducationData {
 //Rate
 
 export interface IFetchRateMember {
-  rates: IUser[];
+  ratees: IUser[];
 }
 
 export interface IRateUser {
-  rateId: string;
+  rateeId: string;
   ratings: number | null;
 }

@@ -36,8 +36,8 @@ const RatingPage: React.FC<Props> = (props) => {
     const teamData = await fetchRateTeamMembersAPI(
       props.location.state.team.name
     );
-    console.log("fetchTeamMembersHandler", teamData.data.rates);
-    return teamData.data.rates;
+    console.log("fetchTeamMembersHandler", teamData.data.ratees);
+    return teamData.data.ratees;
   };
   useEffect(() => {
     fetchTeamMembersHandler().then((value: IUser[] | []) =>
@@ -83,7 +83,7 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
         <RatingLists members={teamMemberLists} submit={submit} />
-        {/* <RatingLists members={rateTeamMemberLists} submit={submit} /> */}
+        <RatingLists members={rateTeamMemberLists} submit={submit} />
         {/* <Redirect to="/landing"> */}
         <Button value="Submit" onClick={onClickHandler} />
         {/* </Redirect> */}

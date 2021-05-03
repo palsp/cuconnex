@@ -18,21 +18,21 @@ const RatingList: React.FC<Props> = (props) => {
 
   const voteSubmittedHandler = async () => {
     const ratedUser: IRateUser = {
-      rateId: props.member?.id,
+      rateeId: props.member?.id,
       ratings: userRating,
     };
     console.log(
-      `User ID: ${ratedUser.rateId}, User Rating: ${ratedUser.ratings}`
+      `User ID: ${ratedUser.rateeId}, User Rating: ${ratedUser.ratings}`
     );
-    // try {
-    //   const resultResponse = await rateUserAPI(ratedUser);
-    //   console.log("Successfully rate a user in the team", resultResponse.data);
-    // } catch (e) {
-    //   console.log(
-    //     "ERRORS occured while sent a response to the user in the team",
-    //     e
-    //   );
-    // }
+    try {
+      const resultResponse = await rateUserAPI(ratedUser);
+      console.log("Successfully rate a user in the team", resultResponse.data);
+    } catch (e) {
+      console.log(
+        "ERRORS occured while sent a response to the user in the team",
+        e
+      );
+    }
   };
 
   if (props.submit) {

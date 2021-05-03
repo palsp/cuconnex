@@ -6,7 +6,7 @@ import {
   ChevronRight,
   CircleFilledGrey,
 } from "@dumbComponents/UI/Icons/index";
-import { IFetchRateTeamNotification, IFetchTeam } from "@src/models/index";
+import { IFetchTeam } from "@src/models/index";
 
 interface Props {
   team: IFetchTeam;
