@@ -82,8 +82,7 @@ const ExplorePage = () => {
         <div className={classes.exploreHeading}>
           <Heading value="Events" />
         </div>
-        {/* Should not be mocked will test later */}
-        {/* <EventLists events={mockEventLists} /> */}
+        <EventLists events={eventLists} />
       </div>
     </>
   );
