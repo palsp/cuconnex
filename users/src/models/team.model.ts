@@ -64,6 +64,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
         creatorId: {
           type: DataTypes.STRING(11),
           allowNull: false,
+          primaryKey: true,
           references: {
             model: User,
           },
