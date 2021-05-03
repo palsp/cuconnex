@@ -1,14 +1,13 @@
 import React from "react";
 import classes from "./NavBar.module.css";
 import { Link } from "react-router-dom";
-import { Mail, Search } from "@dumbComponents/UI/Icons";
+import { Close, Mail, Search } from "@dumbComponents/UI/Icons";
+import { Hamburger } from "@dumbComponents/UI";
 import SideNavToggle from "./SideNavToggle";
-import Badge from "@material-ui/core/Badge";
 
 interface Props {
   displayHamburgerMenu: boolean;
   setDisplayHamburgerMenu: React.Dispatch<React.SetStateAction<boolean>>;
-  badgeContent?: number;
 }
 
 const NavBar: React.FC<Props> = (props) => {
@@ -35,9 +34,7 @@ const NavBar: React.FC<Props> = (props) => {
           </Link> */}
         <div className={classes.mail}>
           <Link to="/notification">
-            <Badge badgeContent={props.badgeContent} color='secondary'>
-              <Mail />
-            </Badge> 
+            <Mail />
           </Link>
         </div>
 

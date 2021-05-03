@@ -3,23 +3,14 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import { IFetchTeam } from "@src/models/models";
+import containerVariants, { IFetchTeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
+import { callTeamOfUserAPI } from "@src/api";
 import NavBar from "@smartComponents/NavBar/NavBar";
 import { AnimatePresence } from "framer-motion";
 import TeamList from "@smartComponents/MyTeamLists/MyTeamList/MyTeamList";
-import {
-  callTeamOfUserAPI,
-  fetchFriendNotificationAPI,
-  fetchFriendReceivedNotificationAPI,
-  fetchTeamNotificationAPI,
-  fetchUserTeamRequestAPI,
-} from "@src/api/apiCalls";
-import {
-  IUserFriend,
-} from "@src/models";
 
 interface Props {
   location: {
@@ -41,27 +32,11 @@ const LandingPage: React.FC<Props> = (props) => {
   const [menuHeightStyle, setMenuHeightStyle] = useState({ height: "" });
   const [dataFetched, setDataFetched] = useState<boolean>(false);
 
-  const [teamNoti, setTeamNoti] = useState<IFetchTeam[] | []>([]);
-  const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<IFetchTeam[] | []>([]);
-  const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
-  const [friendReceivedNoti, setFriendReceivedNoti] = useState<IUserFriend[] | []>([]);
-
   const motionKey = displayHamburgerMenu ? "hamburger" : "landing";
 
   useEffect(() => {
     fetchTeamHandler();
     setMenuHeightStyle({ height: `${window.innerHeight - 80}px` });
-
-    fetchTeamNotiHandler().then((value: IFetchTeam[] | []) =>
-      setTeamNoti(value)
-    );
-    fetchFriendNotiHandler().then((value: IUserFriend[] | []) =>
-      setFriendNoti(value)
-    );
-    fetchFriendReceivedNotiHandler().then((value: IUserFriend[] | []) =>
-      setFriendReceivedNoti(value)
-    );
-    fetchOutgoingTeamNotiHandler();
   }, []);
 
   const fetchTeamHandler = async () => {
@@ -71,41 +46,6 @@ const LandingPage: React.FC<Props> = (props) => {
     console.log(teamData.data.teams);
     setDataFetched(true);
   };
-
-  const fetchTeamNotiHandler = async () => {
-    const teamNotiData = await fetchTeamNotificationAPI();
-    console.log("SUCCESS fetchTeamNotiHandler", teamNotiData.data.teams);
-    return teamNotiData.data.teams;
-  };
-
-  const fetchFriendNotiHandler = async () => {
-    const friendsData = await fetchFriendNotificationAPI();
-    return friendsData.data.requests;
-  };
-
-  const fetchOutgoingTeamNotiHandler = async () => {
-    const teamNotiData = await fetchUserTeamRequestAPI();
-    setOutgoingTeamNoti(teamNotiData.data.teams);
-  };
-
-  const fetchFriendReceivedNotiHandler = async () => {
-    const friendsReceivedData = await fetchFriendReceivedNotificationAPI();
-    return friendsReceivedData.data.requests;
-  };
-
-  let badgeContent = 0;
-  if (friendReceivedNoti != undefined) {
-    badgeContent = badgeContent + friendReceivedNoti.length;
-  }
-  if (teamNoti != undefined) {
-    badgeContent = badgeContent + teamNoti.length;
-  }
-  if (friendNoti != undefined) {
-    badgeContent = badgeContent + friendNoti.length;
-  }
-  if (outgoingTeamNoti != undefined) {
-    badgeContent = badgeContent + outgoingTeamNoti.length;
-  }
 
   const landingVariants = {
     hidden: { opacity: 0, x: -300 },
@@ -119,31 +59,13 @@ const LandingPage: React.FC<Props> = (props) => {
     exit: { opacity: 0, x: 300, transition: { duration: 0.2 } },
   };
 
-  const browserHeight = window.innerHeight < 800;
-  const circleAnimate = (
-    <motion.div
-      animate={{ rotate: 180 }}
-      transition={{ ease: "linear", duration: 4, repeat: Infinity }}
-      style= { displayHamburgerMenu ? (
-        { bottom: browserHeight ? ( -window.innerHeight * 0.35 ) : ( -window.innerHeight * 0.25 ) }
-      ) : (
-        { opacity: 0.5, zIndex: 1, bottom: browserHeight ? ( -window.innerHeight * 0.93 ) : ( -window.innerHeight * 0.8 ) }
-      )}
-      className={ classes.circle_overlay }
-      data-test="landing-page-halfcircleoverlay"
-    />
-  );
-
   const variants = displayHamburgerMenu
     ? hamburgerMenuVariants
     : landingVariants;
 
   const LandingPrompt = displayHamburgerMenu ? (
-    <div>
-      <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
-        <HamburgerPrompt />
-      </div>
-      {circleAnimate}
+    <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
+      <HamburgerPrompt />
     </div>
   ) : (
     <Background hasNav={true}>
@@ -154,7 +76,6 @@ const LandingPage: React.FC<Props> = (props) => {
       >
         <LandingHero pageHeight={menuHeightStyle} myTeamList={myTeamLists} />
       </div>
-      {circleAnimate}
     </Background>
   );
 
@@ -171,7 +92,6 @@ const LandingPage: React.FC<Props> = (props) => {
           <NavBar
             displayHamburgerMenu={displayHamburgerMenu}
             setDisplayHamburgerMenu={setDisplayHamburgerMenu}
-            badgeContent={badgeContent}
           />
           <div className={classes.animateContainer}>
             <AnimatePresence initial={false}>

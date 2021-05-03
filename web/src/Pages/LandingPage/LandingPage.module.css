@@ -30,14 +30,6 @@
   flex-direction: column;
 }
 
-.circle_overlay {
-  position: absolute;
-  background: white;
-  opacity: 0.5;
-  border-radius: 50%;
-  width: 250%;
-}
-
 .main {
   height: 100%;
 }
@@ -84,6 +76,8 @@
 }
 
 .promptDiv {
+  display: flex;
+  flex-direction: column;
   margin-top: 10%;
 }
 
@@ -93,7 +87,7 @@
 
 
 /* @media only screen and (max-width: 375px) {
-  iPhone X 
+  /* iPhone X 
 
   .main .container {
     width: 100vw;
@@ -169,13 +163,22 @@
 }
 .promptDiv {
   display: flex;
-  position: relative;
-  z-index: 2;
+  flex-direction: column;
+  margin-top: 10%;
 }
-
-.hamburgerPrompt {
-  height: 100%;
-  z-index: 2;
+.heroDiv{
+  margin-top:98px;
+}
+.searchDiv {
+  margin-right:25px;
+  zoom: 160%;
+  height: 30px;
+  width: 23px;
+  
+}
+.background {
+  width: 375px;
+  height: 812px;
 }
 
 */
