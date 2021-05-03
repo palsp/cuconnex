@@ -1,6 +1,8 @@
 .TeamDetail {
   width: 100vw;
   position: relative;
+  background: white;
+  z-index: 2;
 }
 
 .relativeArrow {

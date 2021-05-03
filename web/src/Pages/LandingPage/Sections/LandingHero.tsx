@@ -12,20 +12,18 @@ import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigation } from "framer";
-import { IFetchTeam, ITeam, IUser } from "@models/index";
+import { IFetchTeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
 import { UserContext } from "@context/UserContext";
 
 interface Props {
-  hasTeam: boolean;
-  userData: IUser;
+  myTeamList: IFetchTeam[] | [];
   pageHeight: {
     height: string;
   };
 }
 
 const LandingHero: React.FC<Props> = (props) => {
-  const [currentTeamLists, setCurrentTeamLists] = useState<IFetchTeam[]>([]);
   const { userData } = useContext(UserContext);
 
   let marginHeight;
@@ -35,32 +33,23 @@ const LandingHero: React.FC<Props> = (props) => {
     marginHeight = -(window.innerHeight * 0.9);
   }
 
-  useEffect(() => {
-    fetchTeamHandler();
-  }, []);
-  const fetchTeamHandler = async () => {
-    const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData);
-    setCurrentTeamLists(teamData.data.teams);
-  };
-
-  const heroPrompt = props.hasTeam ? (
-    <div className={classes.myteamDiv}>
-      <MyTeamLists page="landing" team={currentTeamLists} />
-      <Link style={{ textDecoration: "none" }} to="/createteam">
-        <div className={classes.addTeam}>
-          <div className={classes.plus}>
-            <Plus />
+  const heroPrompt =
+    props.myTeamList.length > 0 ? (
+      <div className={classes.myteamDiv}>
+        <MyTeamLists page="landing" team={props.myTeamList} />
+        <Link style={{ textDecoration: "none" }} to="/createteam">
+          <div className={classes.addTeam}>
+            <div className={classes.plus}>
+              <Plus />
+            </div>
+            <div className={classes.text}>CREATE YOUR NEW TEAM</div>
           </div>
-          <div className={classes.text}>CREATE YOUR NEW TEAM</div>
-        </div>
-      </Link>
-    </div>
-  ) : (
-    <AnimatePresence>
+        </Link>
+      </div>
+    ) : (
       <div className={classes.buttonmainDiv}>
         <div className={classes.recruitmemberDiv}>
-          <Link style={{ textDecoration: "none" }} to="/createteam">
+          <Link style={{ textDecoration: "none" }} to="/success">
             <RecruitMemberLogo />
           </Link>
         </div>
@@ -77,22 +66,21 @@ const LandingHero: React.FC<Props> = (props) => {
           data-test="landing-hero-halfcircleoverlay"
         ></motion.div>
       </div>
-    </AnimatePresence>
-  );
+    );
 
   return (
     <div className={classes.mainDiv}>
       <div className={classes.upperpartDiv}>
         <div className={classes.profileDiv}>
-          <Link to={{ pathname: "/profile", state: { users: props.userData } }}>
-            <ProfilePic size="s" PicUrl={props.userData.image} />
+          <Link to={{ pathname: "/profile", state: { users: userData } }}>
+            <ProfilePic size="s" PicUrl={userData.image} />
           </Link>
         </div>
         <div className={classes.subupperpartDiv}>
           <div className={classes.subtitleDiv}>
             <div className={classes.welcome}>Welcome,</div>
             <div className={classes.headingDiv}>
-              <Username value={props.userData.name} />
+              <Username value={userData.name} />
             </div>
           </div>
         </div>
