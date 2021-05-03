@@ -6,7 +6,7 @@ import {
   TeamStatus,
   InternalServerError,
 } from '@cuconnex/common';
-import { User, Team, Interest, IsMember, Category, Event, Rating } from '../models';
+import { User, Team, Interest, IsMember, Category, Event, Rating, Recommend } from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IFindRelationResponse,
@@ -18,6 +18,7 @@ import {
   IAddRatingRequest,
   IRecommendTeam,
   IGetRateTeamResponse,
+  IRecommendUserResponse,
   IGetRateUserOfTeamResponse,
 } from '../interfaces';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
@@ -313,9 +314,57 @@ export const getTeamStatus = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
+export const getRecommendUser = async (req : Request , res : Response) => {
+   const users = await User.findAll({ where : { id : { [Op.not] : req.user!.id}}})
+   let result: {
+    user: User;
+    score: number;
+  }[] = [];
+
+  for(let user of users){
+    const score = await Recommend.CalculateScore(req.user!.id , user.id);
+    result.push({user , score});
+  }
 
 
-export const getRecommendTeam = async (req : Request , res : Response) => {
+  // sort by score
+  result.sort((a, b) => b.score - a.score);
+
+  // TODO: create interface
+  const response: IRecommendUserResponse = { users: result.map((r) => r.user.toJSON()) };
+
+  res.status(200).send(response);
+
+}
+
+export const getRecommendTeam = async ( req: Request , res: Response) => {
+  const teams = await Team.findAll();
+
+  let result : {
+    team : Team,
+    score : number
+  }[] = [];
+
+  for(let team of teams){
+    // DO not predict user's team
+    const isMember = await team.findMember(req.user!.id);
+    if(isMember){
+      continue;
+    }
+    let score:number;
+    score = await req.user!.calculateTeamScore(team)
+    result.push({ team , score})
+  }
+
+    result.sort((a,b) => b.score - a.score)
+ 
+    const response : IRecommendTeam = { teams : result.map(r => r.team.toJSON())};
+
+    res.status(200).send(response);
+  
+}
+
+export const getRecommendTeamByEvent = async (req : Request , res : Response) => {
     const eventId = req.params.eventId;
     // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
     const event = await Event.findOne({
