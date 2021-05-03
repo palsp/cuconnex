@@ -14,7 +14,14 @@ import {
 
 import classes from "./SuccessPage.module.css";
 
-const SuccessPage: React.FC = () => {
+interface Props {
+  location?: {
+    state: {
+      name: string;
+    };
+  };
+}
+const SuccessPage: React.FC<Props> = (props) => {
   const variants = {
     visible: { y: 0 },
     hidden: { y: 100 },
@@ -46,7 +53,14 @@ const SuccessPage: React.FC = () => {
             data-test="success-page-halfcircleoverlay"
           ></motion.div>
           <div className={classes.divHeader}>
-            <Heading data-test="success-page-header" value="Welcome Suki!" />
+            {props.location ? (
+              <Heading
+                data-test="success-page-header"
+                value={props.location.state.name}
+              />
+            ) : (
+              <Heading data-test="success-page-header" value="Welcome Suki!" />
+            )}
             <Subtitle
               data-test="success-page-subtitle"
               value="Your sign up is successful"

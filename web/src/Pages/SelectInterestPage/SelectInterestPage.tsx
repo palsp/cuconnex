@@ -130,7 +130,16 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       console.log("POST createUserData to /api/users is successful", result);
       try {
         await fetchUserDataHandler();
-        setRedirect(<Redirect to="/success" />);
+        setRedirect(
+          <Redirect
+            to={{
+              pathname: "/success",
+              state: {
+                name: userData.name,
+              },
+            }}
+          />
+        );
       } catch (e) {
         setErrorHandler(e.response.data.errors[0].message);
         setRedirect(<Redirect to="/" />);
