@@ -1,4 +1,5 @@
 import { TeamStatus } from "@cuconnex/common";
+import { EventStatus } from "@cuconnex/common/build/db-status/event";
 import { Interest, User, Event, Team } from "../models"
 
 // export const init = async () => {
@@ -100,6 +101,7 @@ export const createEventForTeam = async (teams : Team[]) : Promise<Event> => {
         id : 1,
         eventName : "test_event",
         registration : true,
+        status : EventStatus.ongoing
     });
 
     for(let team of teams){
