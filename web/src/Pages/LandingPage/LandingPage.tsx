@@ -100,9 +100,9 @@ const LandingPage: React.FC<Props> = (props) => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={classes.main}
+      style={{ minHeight: `${window.innerHeight - 80}px` }}
     >
-      <Background hasTeam={hasTeam} heightStyle={menuHeightStyle}>
+      <Background>
         <div className={hasTeam ? classes.heroDivHasTeam : classes.heroDiv}>
           <LandingHero
             pageHeight={menuHeightStyle}
@@ -123,7 +123,7 @@ const LandingPage: React.FC<Props> = (props) => {
         },
       }}
     >
-      <div className={classes.main}>
+      <div>
         <NavBar
           displayHamburgerMenu={displayHamburgerMenu}
           setDisplayHamburgerMenu={setDisplayHamburgerMenu}
