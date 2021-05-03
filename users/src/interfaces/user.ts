@@ -55,3 +55,11 @@ export interface IAddRatingRequest {
   rateeId: string;
   ratings: number;
 }
+
+export interface IGetRateTeamResponse {
+  teams : ITeamResponse[];
+}
+
+export interface IGetRateUserOfTeamResponse{
+  ratees : IUserResponse[];
+}

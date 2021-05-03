@@ -20,11 +20,11 @@ router.get('/teams/rate' , requireUser , userController.getRateTeam);
 
 router.get('/teams/:userId', requireUser, userController.getListofTeamsBelongsTo);
 
+router.get('/rate/:teamName' , requireUser , userController.getRateUserOfTeam);
+
 router.get('/get-my-requests', requireUser, userController.getMyRequests);
 
 router.get('/current-user', userController.getUser);
-
-router.get('/team/rate' , requireUser , userController.getRateTeam);
 
 
 router.get('/relation/:userId', requireUser, userController.findRelation);

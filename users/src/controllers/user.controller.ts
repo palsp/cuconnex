@@ -17,6 +17,8 @@ import {
   IIsMemberResponse,
   IAddRatingRequest,
   IRecommendTeam,
+  IGetRateTeamResponse,
+  IGetRateUserOfTeamResponse,
 } from '../interfaces';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
 import { identity } from 'lodash';
@@ -375,7 +377,11 @@ export const getRateTeam = async (req : Request , res : Response) => {
               const members = await candidate.getMembers();
               let isRate = true;
               for(let member of members){
+
+                  if(member.id === req.user!.id) continue; // should not rate yourself
+
                   const rate = await Rating.isRate(req.user! , member);
+
                   if(!rate){
                       isRate = false;
                       break;
@@ -390,18 +396,47 @@ export const getRateTeam = async (req : Request , res : Response) => {
       }
 
     }
-    res.send({ teams : myTeamInEvent});
+    const response : IGetRateTeamResponse = {
+      teams : myTeamInEvent.map(team => team.toJSON())
+    }
+    res.send(response);
 }
 
-export const getRateUser = async (req : Request , res : Response) => {
-    const rates = await req.user!.getRatee();
+export const getRateUserOfTeam = async (req : Request , res : Response) => {
 
-    const ratees = rates.filter(ratee => ratee.Rating!.isRate === false);
-     
-    const response = {
-       ratee : ratees.map(ratee => ratee.toJSON())
-     }
-    res.status(200).send(response);
+    const team = await Team.findOne({ where : { name : req.params.teamName} , include : [ { model : User, as : "owner"} , { model : User , as : 'member'}]});
+
+    if(!team){
+      throw new BadRequestError('Team not existed');
+    }
+
+    const isMember = await team.findMember(req.user!.id);
+
+    if(!isMember){
+      throw new BadRequestError('You must be a part of the team in order to rate team members');
+    } 
+
+    const rateUsers : User[] = [];
+
+    if(team.owner!.id !== req.user!.id){
+
+      const rate = await Rating.isRate(req.user! , team.owner!);
+
+      if(!rate) rateUsers.push(team.owner!);
+    }
+
+    for(let member of team.member!){
+      if(member.id === req.user!.id) continue;
+      
+      const rate = await Rating.isRate(req.user! , member);
+
+      if(!rate) rateUsers.push(member);
+    }
+    
+    const response : IGetRateUserOfTeamResponse= {
+      ratees : rateUsers.map(user => user.toJSON())
+    }
+    res.status(200).send(response)
 }
 
 export const addRatings = async (req: Request, res: Response) => {
