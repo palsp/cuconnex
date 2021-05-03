@@ -29,6 +29,7 @@ import {
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
   fetchUserTeamRequestAPI,
+  fecthRateTeamAPI,
 } from "@src/api/apiCalls";
 import { isPropertySignature } from "typescript";
 
@@ -48,6 +49,7 @@ const NotificationPage: React.FC = () => {
   );
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
   const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const [rateTeamNoti, setRateTeamNoti] = useState<ITeam[] | []>([]);
   const { userData } = useContext(UserContext);
   const [friendReceivedNoti, setFriendReceivedNoti] = useState<
     IUserFriend[] | []
@@ -63,6 +65,9 @@ const NotificationPage: React.FC = () => {
     fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
     fetchTeamHandler();
     fetchOutgoingTeamNotiHandler();
+    fetchRateTeamNotiHandler().then((value: ITeam[] | []) =>
+      setRateTeamNoti(value)
+    );
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
@@ -93,6 +98,14 @@ const NotificationPage: React.FC = () => {
       friendsReceivedData.data.requests
     );
     return friendsReceivedData.data.requests;
+  };
+  const fetchRateTeamNotiHandler = async () => {
+    const teamRateNotiData = await fecthRateTeamAPI();
+    console.log(
+      "SUCCESS fetchRateTeamNotiHandler",
+      teamRateNotiData.data.teams
+    );
+    return teamRateNotiData.data.teams;
   };
   const incomingButtonHandler = () => {
     setIncoming(true);
@@ -152,6 +165,7 @@ const NotificationPage: React.FC = () => {
         </div>
         <div className={classes.teamRatingList}>
           <TeamRatingLists teams={myTeamLists} />
+          {/* <TeamRatingLists teams={rateTeamNoti} /> */}
         </div>
         <div className={classes.teamInvitationList}>
           <TeamInvitationLists

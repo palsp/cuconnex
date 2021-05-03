@@ -116,6 +116,7 @@ export interface IFetchTeams {
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }
+
 //events
 export interface IFetchEventsData {
   events: IEventData[];
@@ -263,6 +264,9 @@ export interface IRegisterTeamEvent {
 export interface IFetchTeamEvent {
   events: IEventData[];
 }
+export interface IFetchRateTeamNotification {
+  teams: ITeam[];
+}
 
 //Search
 export interface ISearchGeneral {
@@ -290,6 +294,8 @@ const containerVariants = {
   },
 };
 
+export default containerVariants;
+
 //Education
 
 export interface IEducationData {
@@ -297,4 +303,13 @@ export interface IEducationData {
   year: string;
 }
 
-export default containerVariants;
+//Rate
+
+export interface IFetchRateMember {
+  rates: IUser[];
+}
+
+export interface IRateUser {
+  rateId: string;
+  ratings: number | null;
+}

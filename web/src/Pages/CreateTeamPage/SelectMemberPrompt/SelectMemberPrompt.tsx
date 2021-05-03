@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
@@ -74,9 +74,9 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
         <div className={classes.divHeading}>
           <div className={classes.divFixed}>
             <div className={classes.relativeArrow}>
-              <Redirect to="/createteam">
+              <Link to="/createteam">
                 <ArrowLeft />
-              </Redirect>
+              </Link>
             </div>
             <Heading value="Select Members" size="small-medium" />
             <button

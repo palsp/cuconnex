@@ -6,6 +6,7 @@ import { UserContext } from "@src/context/UserContext";
 
 interface Props {
   members: IUser[];
+  submit?: boolean;
   // location: {
   //   state: {
   //     members: IUser[];
@@ -19,7 +20,13 @@ const RatingLists: React.FC<Props> = (props) => {
     <div>
       {props.members?.map((member: IUser, index: number) => {
         if (member?.id !== userData.id) {
-          return <RatingList key={index} member={member}></RatingList>;
+          return (
+            <RatingList
+              key={index}
+              member={member}
+              submit={props.submit}
+            ></RatingList>
+          );
         }
       })}
     </div>
