@@ -13,14 +13,14 @@ import {
 } from "@src/api";
 import {
   IGetTeam,
-  ITeam,
   ITeamMembers,
   IUser,
   IUserResponse,
+  IFetchTeam,
 } from "@src/models";
 
 interface Props {
-  teams: ITeam;
+  teams: IFetchTeam;
 }
 
 const TeamInvitationList: React.FC<Props> = (props) => {
@@ -42,7 +42,7 @@ const TeamInvitationList: React.FC<Props> = (props) => {
       <div className={classes.teamContainer}>
         <div className={classes.leftFlex}>
           <div className={classes.teampic}>
-            <TeamPic />
+            <TeamPic PicUrl={props.teams.image} />
           </div>
         </div>
         <div className={classes.rightFlex}>
@@ -65,8 +65,8 @@ const TeamInvitationList: React.FC<Props> = (props) => {
               <div className={classes.groupAmount}>5</div>
               <Group />
               <div className={classes.teamFriends}>
-                <ProfilePic size="xs" />
-                <ProfilePic size="xs" />
+                <ProfilePic PicUrl={props.teams.members[0].image} size="xs" />
+                {/* <ProfilePic size="xs" /> */}
                 <div className={classes.moreFriends}>
                   <p>7+</p>
                 </div>
