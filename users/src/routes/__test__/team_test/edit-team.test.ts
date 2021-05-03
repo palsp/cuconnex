@@ -4,9 +4,10 @@ import { User, Event } from '../../../models';
 import { Business } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
 import { deleteFile } from '../../../utils/file';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
 
 const setup = async () => {
-  const event = await Event.create({ id: 1, eventName: 'testEvent', registration: true });
+  const event = await Event.create({ id: 1, status : EventStatus.ongoing ,eventName: 'testEvent', registration: true });
 
   const user = await User.create({ id: '6131707021', name: 'bird' });
   const interest = await Interest.findOne({

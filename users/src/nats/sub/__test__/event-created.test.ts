@@ -2,6 +2,7 @@ import { natsWrapper } from '../../../natsWrapper';
 import { EventCreatedSub  } from '../event-created-sub';
 import { EventCreated } from '@cuconnex/common';
 import { Event } from '../../../models';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
 
 const setup = async () => {
     // create an instance of the listener
@@ -12,7 +13,8 @@ const setup = async () => {
         id : 1,
         "event-name" : "test_event",
         registration : true,
-        endDate : (new Date()).toString()
+        endDate : (new Date()).toString(),
+        status : EventStatus.ongoing,
     }
     // create a fake message object
     // @ts-ignore

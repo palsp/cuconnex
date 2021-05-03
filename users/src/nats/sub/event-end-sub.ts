@@ -2,6 +2,7 @@ import { Event , Rating, Team} from '../../models';
 import { Listener, EventEnd, Subjects } from '@cuconnex/common';
 import { Message } from 'node-nats-streaming';
 import { queueGroupName } from '../queue-group-name';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
 
 
 export class EventEndSub extends Listener<EventEnd> {
@@ -20,13 +21,18 @@ export class EventEndSub extends Listener<EventEnd> {
     });
 
 
+
     if(!event){
         throw new Error('event not found');
     }
+
+    event.status = EventStatus.closed;
       
     for(let team of event.candidate!){
         await Rating.addRateNotification(team)
     }
+    
+    await event.save();
 
     msg.ack();
   }

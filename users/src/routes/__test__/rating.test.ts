@@ -1,6 +1,10 @@
 import { app } from '../../app';
 import request from 'supertest';
-import { User , Rating } from '../../models';
+import { User , Rating, Team,Event } from '../../models';
+import { TeamStatus, } from '@cuconnex/common';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
+
+
 
 const setupRater = async (id? : string ) => {
     
@@ -11,6 +15,32 @@ const setupRater = async (id? : string ) => {
 const setupRatee = async (id? : string) => {
     const ratee = await User.create({ id : id || "6131886921" , name : "ratee"});
     return ratee ;
+}
+
+const createTeamForDummyUsers = async ( users : User[]) : Promise<Team[]> => {
+    let teams: Team[] = [];
+    for(let i = 0 ; i < users.length ; i++){
+        if( i === 0 || i === 5) {
+            const team = await users[i].createTeams({ name : `test_team_${i}` , description : "test team"})
+            for(let j = i + 1 ; j < i + 5 ; j++){
+                await team.addMember(users[j] , { through : { status : TeamStatus.Accept , sender : 'team'}});
+            }
+            teams.push(team);
+        }
+    }
+
+    return teams;
+}
+
+const  createDummyUser =  async () : Promise<User[]> => {
+const users : User[] = [];
+    for(let i = 0 ; i < 10 ; i++){
+        users.push(await User.create({
+            id : `6131776${i}21`,
+            name : `test_user_${i}`
+        }))
+    }
+    return users
 }
 
 describe('add rating' , () => {
@@ -124,21 +154,158 @@ describe('add rating' , () => {
 
 describe('get Rating' ,  () => {
     
-    it('should not return user who rating is true' , async () => {
+
+    it('should return 400 if team not found' , async () => {
         const rater = await setupRater();
-        const ratee = await setupRatee();
-        const ratee2 = await setupRatee("6131111121");
-        await rater.addRatee(ratee , { through : { isRate : false,}});
-        await rater.addRatee(ratee2 , { through : { isRate : true}});
 
         const {body} = await request(app)
-            .get('/api/users/rate')
+            .get('/api/users/rate/not_found')
             .set('Cookie' , global.signin(rater.id))
             .send()
+            .expect(400)
+        
+        expect(body.errors[0].message).toEqual('Team not existed')
 
-        expect(body.ratee.length).toEqual(1);
-        expect(body.ratee[0].id).toEqual(ratee.id);
     });
 
 
+    it('should return 400 if users is not a member of the team' , async () => {
+        const users = await createDummyUser()
+
+        const team = await users[0].createTeams({ name : "teat_team_1" , description : "this is great"});
+        await team.addMember(users[1] , {through : { status : TeamStatus.Reject , sender : 'team'}});
+
+        const {body} = await request(app)
+        .get(`/api/users/rate/${team.name}`)
+        .set('Cookie' , global.signin(users[1].id))
+        .send()
+        .expect(400)
+              
+    expect(body.errors[0].message).toEqual('You must be a part of the team in order to rate team members')
+
+    });
+
+    it('should not include users in the returned users' , async () => {
+        const users = await createDummyUser()
+
+        const team = await users[0].createTeams({ name : "teat_team_1" , description : "this is great"});
+        await team.addMember(users[1] , {through : { status : TeamStatus.Accept , sender : 'team'}});
+
+        const {body} = await request(app)
+        .get(`/api/users/rate/${team.name}`)
+        .set('Cookie' , global.signin(users[1].id))
+        .send()
+        .expect(200)
+
+        expect(body.ratees.length).toEqual(1)
+        expect(body.ratees[0].id).not.toEqual(users[1].id);
+    });
+
+    it('should not return any members if all of them are rated ' , async () => {
+        const users = await createDummyUser()
+
+        const team = await users[0].createTeams({ name : "teat_team_1" , description : "this is great"});
+        await team.addMember(users[1] , {through : { status : TeamStatus.Accept , sender : 'team'}});
+
+        await users[1].addRatee(users[0] , { through : { isRate : true}});
+
+        const {body} = await request(app)
+        .get(`/api/users/rate/${team.name}`)
+        .set('Cookie' , global.signin(users[1].id))
+        .send()
+        .expect(200)
+
+        expect(body.ratees.length).toEqual(0)
+    });
+
 })
+
+
+describe('get team rate' , () => {
+
+
+    it('should return only team that participate in an event that is closed' , async () => {
+
+        const users = await createDummyUser()
+        
+        const ongoingTeam = await users[0].createTeams({ name : "teat_team_1" , description : "this should not be included"});
+        const closedTeam = await users[0].createTeams({ name : "teat_team_2" , description : "this should be included"});
+
+        await ongoingTeam.addMember(users[1] , {through : { status : TeamStatus.Accept , sender : 'team'}});
+        await closedTeam.addMember(users[2], {through : {  status : TeamStatus.Accept, sender : 'team' }});
+
+
+        const ongoing = await Event.create({
+            id : 1,
+            eventName : "test_event",
+            registration : true,
+            status : EventStatus.ongoing,
+        })
+
+        const closed = await Event.create({
+            id : 2,
+            eventName : "test_event_2",
+            registration : false,
+            status : EventStatus.closed,
+        })
+        
+        await ongoingTeam.register(ongoing);
+        await closedTeam.register(closed);
+        const {body} =await request(app)
+            .get('/api/users/teams/rate')
+            .set('Cookie' , global.signin(users[0].id))
+            .send({})
+            .expect(200)
+
+        expect(body.teams).toHaveLength(1);
+        expect(body.teams[0].name).toEqual(closedTeam.name);
+
+    });
+
+    it('should not return team that all members is rated' , async () => {
+        const users = await createDummyUser();
+        const closedTeam = await users[0].createTeams({ name : "teat_team_2" , description : "this should be included"});
+        const closed = await Event.create({
+            id : 2,
+            eventName : "test_event_2",
+            registration : false,
+            status : EventStatus.closed,
+        });
+
+        await closedTeam.addMember(users[2], {through : {  status : TeamStatus.Accept, sender : 'team' }});
+
+        await users[0].addRatee(users[2] , { through : { isRate : true }})
+
+        await closedTeam.register(closed);
+
+        const {body} =await request(app)
+            .get('/api/users/teams/rate')
+            .set('Cookie' , global.signin(users[0].id))
+            .send({})
+
+        expect(body.teams.length).toEqual(0);
+    })
+
+
+
+
+    it('should return users team ' , async () => {
+        const users = await createDummyUser()
+        const team = await createTeamForDummyUsers(users)
+        const event = await Event.create({
+            id : 1,
+            eventName : "test_event",
+            registration : false,
+            status : EventStatus.closed,
+        })
+
+        await team[0].register(event)
+        const {body} =await request(app)
+            .get('/api/users/teams/rate')
+            .set('Cookie' , global.signin(users[0].id))
+            .send({})
+
+        expect(body.teams.length).toEqual(1);
+    })
+
+});

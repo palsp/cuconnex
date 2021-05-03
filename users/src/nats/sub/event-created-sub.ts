@@ -14,6 +14,7 @@ export class EventCreatedSub extends Listener<EventCreated> {
      await Event.create({
         id : data.id,
         eventName : data['event-name'],
+        status : data.status,
         registration : data.registration,
       });
       
