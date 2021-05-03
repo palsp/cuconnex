@@ -55,13 +55,13 @@ const LandingHero: React.FC<Props> = (props) => {
             <FindteamLogo />
           </Link>
         </div>
-        <motion.div
+        {/* <motion.div
           animate={{ rotate: 180 }}
           transition={{ ease: "linear", duration: 4, repeat: Infinity }}
           style={{ bottom: marginHeight, position: "absolute" }}
           className={classes.circle_overlay}
           data-test="landing-hero-halfcircleoverlay"
-        ></motion.div>
+        ></motion.div> */}
       </div>
     );
 
