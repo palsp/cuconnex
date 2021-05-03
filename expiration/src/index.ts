@@ -1,5 +1,10 @@
 import { natsWrapper } from './nats-wrapper'
-import { EventCreatedSub } from './events/listener/event-create-sub'
+import { EventExpirationSub } from './events/listener/event-create-sub'
+
+process.env.NATS_CLIENT_ID = "4567"
+process.env.NATS_URL = "http://localhost:4222"
+process.env.NATS_CLUSTER_ID = "connex";
+process.env.REDIS_HOST  = "http://localhost:6379"
 
 const start = async () => {
 
@@ -30,7 +35,7 @@ const start = async () => {
         process.on('SIGINT', () => natsWrapper.client.close());
         process.on('SIGTERM', () => natsWrapper.client.close());
 
-        new EventCreatedSub(natsWrapper.client).listen();
+        new EventExpirationSub(natsWrapper.client).listen();
 
     } catch (err) {
         console.log(err);

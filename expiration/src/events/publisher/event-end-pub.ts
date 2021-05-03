@@ -1,7 +1,7 @@
-import { Subjects, EventEnd, Publisher } from '@cuconnex/common';
+import { Subjects, EventCompleted, Publisher } from '@cuconnex/common';
 
 
 
-export class EventEndPub extends Publisher<EventEnd>{
-    readonly subject = Subjects.EventEnded;
+export class EventCompletedPub extends Publisher<EventCompleted>{
+    readonly subject = Subjects.EventCompleted;
 }

@@ -1,7 +1,5 @@
 package config
 
-import "os"
-
 type DBConfig struct {
 	Name string
 	Host string
@@ -15,17 +13,30 @@ type StanConfig struct {
 	URL string
 }
 
+//var DB = DBConfig{
+//	Name: os.Getenv("DB_NAME"),
+//	Host: os.Getenv("DB_HOST"),
+//	User: os.Getenv("DB_USER"),
+//	Password: os.Getenv("DB_PASSWORD"),
+//}
+
 var DB = DBConfig{
-	Name: os.Getenv("DB_NAME"),
-	Host: os.Getenv("DB_HOST"),
-	User: os.Getenv("DB_USER"),
-	Password: os.Getenv("DB_PASSWORD"),
+	Name: "eventdb",
+	Host: "localhost",
+	User: "root",
+	Password: "liulaks123",
 }
 
+//var SCconfig = StanConfig{
+//		ClusterID: os.Getenv("NATS_CLUSTER_ID"),
+//		ClientID: os.Getenv("NATS_CLIENT_ID"),
+//		URL: os.Getenv("NATS_URL"),
+//}
+
 var SCconfig = StanConfig{
-		ClusterID: os.Getenv("NATS_CLUSTER_ID"),
-		ClientID: os.Getenv("NATS_CLIENT_ID"),
-		URL: os.Getenv("NATS_URL"),
+	ClusterID: "connex",
+	ClientID: "1234",
+	URL: "http://localhost:4222",
 }
 
 

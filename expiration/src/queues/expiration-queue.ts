@@ -1,5 +1,5 @@
 import Queue from 'bull';
-import { EventEndPub } from '../events/publisher/event-end-pub'
+import { EventCompletedPub } from '../events/publisher/event-end-pub'
 import { natsWrapper } from '../nats-wrapper';
 
 interface Payload {
@@ -16,8 +16,7 @@ const expirationQueue = new Queue<Payload>('event:ended', {
 
 expirationQueue.process(async (job) => {
     console.log("I want to publish an expiration:  for event id", job.data.id)
-    new EventEndPub(natsWrapper.client).publish({
-        // orderId: job.data.orderId,
+    new EventCompletedPub(natsWrapper.client).publish({
         id : job.data.id
     })
 });

@@ -2,10 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/nats-io/stan.go"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
 	"log"
 	"net/http"
+	"time"
 )
 
 func Migrate() {
@@ -13,7 +15,7 @@ func Migrate() {
 }
 
 func main() {
-	_ ,err := common.InitStanClient()
+	sc ,err := common.InitStanClient()
 
 	if err != nil {
 		log.Printf("error connect to nats: %v\n" , err)
@@ -23,8 +25,20 @@ func main() {
 		log.Fatalf("db err: %v\n", err)
 	}
 		Migrate()
+	aw , _ := time.ParseDuration("5000ms")
+	_, err  = sc.QueueSubscribe("event:completed",
+		"evet-service",
+		events.SubscribeEventCompleted ,
+		stan.DeliverAllAvailable() ,
+		stan.SetManualAckMode(),
+		stan.AckWait(aw),
+		stan.DurableName("event-service"),
+		)
 
-
+	if err != nil {
+		sc.Close()
+		log.Fatal(err)
+	}
 
 
 	// Create a router
@@ -45,9 +59,7 @@ func main() {
 	v1 := r.Group("/api/events")
 	events.EventRegister(v1)
 
-
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
-
 }
 
 
