@@ -18,7 +18,6 @@ interface Props {
 }
 const SearchBar: React.FC<Props> = (props) => {
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<any>();
   const debouncedTerm = useDebounce(searchTerm, 1000);
 
   const onChangeHandler = (

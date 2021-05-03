@@ -1,6 +1,15 @@
 .coverPic {
-  background-image: url("../../../../assets/tempActivityBackground.jpg");
+  background-image: url("../../../../assets/piccover.png");
   position: absolute;
   width: 100%;
+  background-size: cover;
+  min-height: 18vh;
+}
+
+.coverPicTeam {
+  background-image: url("../../../../assets/piccoverteam.png");
+  position: absolute;
+  width: 100%;
+  background-size: cover;
   min-height: 18vh;
 }

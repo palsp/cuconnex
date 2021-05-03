@@ -10,19 +10,17 @@ const TeamPic: React.FC<Props> = (props) => {
   if (props.PicUrl) {
     teamCSS = [classes.teamPic];
   }
-  const url = "https://www.cu-connex.com/api/users" + props.PicUrl;
+  const url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
   return (
-    <div className={classes.teamPic}>
-      <div className={classes.container}>
-        <div className={classes.pic}>
-          {props.PicUrl ? (
-            <img src={url} className={classes.teamPic} alt="teampic" />
-          ) : (
-            <div className={classes.defaultPic}></div>
-          )}
-        </div>
-        <div className={classes.triangle}></div>
+    <div className={classes.container}>
+      <div className={teamCSS.join(" ")}>
+        {props.PicUrl ? (
+          <img src={url} className={classes.teamPic} alt="teampic" />
+        ) : (
+          <div className={classes.defaultPic}></div>
+        )}
       </div>
+      <div className={classes.triangle}></div>
     </div>
   );
 };

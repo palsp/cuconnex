@@ -127,9 +127,6 @@ const ExplorePage = () => {
           value="Explore"
         />
       </div>
-      {console.log("This is peopleLists", peopleLists)}
-      {console.log("This is teamLists", teamLists)}
-      {console.log("This is eventLists", eventLists)}
       {explorePage}
 
       {/* </Background> */}
