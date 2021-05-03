@@ -76,6 +76,7 @@ func CreateEvent(c *gin.Context) {
 		ID: response.ID,
 		EventName: response.EventName,
 		Registration: response.Registration,
+		EndDate: response.EndDate.String(),
 	})
 	if err != nil {
 		log.Printf("error publish event:created : %v" , err)
