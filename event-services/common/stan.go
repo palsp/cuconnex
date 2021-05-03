@@ -3,10 +3,11 @@ package common
 import (
 	"encoding/json"
 	"fmt"
+	"log"
+
 	nats "github.com/nats-io/nats.go"
 	stan "github.com/nats-io/stan.go"
 	"github.com/palsp/cuconnex/event-services/config"
-	"log"
 )
 
 var SC stan.Conn
@@ -37,6 +38,7 @@ type EventCreatedData struct {
 	ID uint `json:"id"`
 	EventName string `json:"event-name"`
 	Registration bool `json:"registration"`
+	Status string `json:"status"`
 	EndDate string    `json:"endDate"`
 }
 
@@ -62,6 +64,7 @@ type EventUpdatedData struct {
 	ID uint 			`json:"id"`
 	EventName string 	`json:"event-name"`
 	Registration bool 	`json:"registration"`
+	Status string 		`json:"status"`
 	Version int        	`json:"version"`
 }
 
