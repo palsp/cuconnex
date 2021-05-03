@@ -1,10 +1,9 @@
-import { IEventData } from "@src/models";
+import { ICreateEventData } from "@src/models";
 
-const mockEventLists: IEventData[] | [] = [
+const mockEventLists: ICreateEventData[] | [] = [
   {
-    id: 123,
-    "event-name": "BSAC Hackathon",
-    bio: "Biggest competition in BSAC",
+    "event-name": "CUCONNEX Hackathon",
+    bio: "Biggest competition in the world",
     location: "Chula",
     registration: true,
     "start-date": {
@@ -27,25 +26,13 @@ const mockEventLists: IEventData[] | [] = [
         second: 0,
       },
     },
-    status: "Ongoing",
   },
   {
-    id: 124,
-    "event-name": "BSAC Hackathonss",
-    bio: "Biggest competition in BSAC",
+    "event-name": "ISE rally",
+    bio: "Biggest rally in ISE",
     location: "Chula",
     registration: true,
     "start-date": {
-      month: 5,
-      day: 14,
-      year: 2021,
-      time: {
-        hour: 12,
-        minute: 0,
-        second: 0,
-      },
-    },
-    "end-date": {
       month: 6,
       day: 14,
       year: 2021,
@@ -55,7 +42,42 @@ const mockEventLists: IEventData[] | [] = [
         second: 0,
       },
     },
-    status: "Ongoing",
+    "end-date": {
+      month: 7,
+      day: 14,
+      year: 2021,
+      time: {
+        hour: 12,
+        minute: 0,
+        second: 0,
+      },
+    },
+  },
+  {
+    "event-name": "CHULA Business Case",
+    bio: "Biggest Business Case in Chula",
+    location: "Chula",
+    registration: true,
+    "start-date": {
+      month: 6,
+      day: 19,
+      year: 2021,
+      time: {
+        hour: 12,
+        minute: 0,
+        second: 0,
+      },
+    },
+    "end-date": {
+      month: 7,
+      day: 14,
+      year: 2021,
+      time: {
+        hour: 12,
+        minute: 0,
+        second: 0,
+      },
+    },
   },
 ];
 

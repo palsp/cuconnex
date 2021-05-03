@@ -12,7 +12,7 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./MyTeamList.module.css";
 import { Ecommerce, Group } from "@dumbComponents/UI/Icons";
-import { IFetchTeam, IFetchTeams, ITeam, IUserFriend } from "@src/models";
+import { IFetchTeam, IFetchTeams, IUserFriend } from "@src/models";
 import { Link } from "react-router-dom";
 
 interface Props {

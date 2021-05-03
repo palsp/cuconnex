@@ -6,7 +6,7 @@ import classes from "./SearchBar.module.css";
 import { Search } from "@icons/index";
 import useDebounce from "@hooks/useDebounce";
 import { searchUserTeamEvent } from "@api/index";
-import { IEventData, IFetchTeam, ITeam, IUser } from "@src/models";
+import { IEventData, IFetchTeam, IUser } from "@src/models";
 
 interface Props {
   value: string;

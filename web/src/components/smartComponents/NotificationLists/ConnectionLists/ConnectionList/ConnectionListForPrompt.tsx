@@ -9,7 +9,7 @@ import {
 } from "@dumbComponents/UI/index";
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./ConnectionList.module.css";
-import { IFetchTeam, ITeam, IUser, IUserFriend } from "@src/models";
+import { IFetchTeam, IUser, IUserFriend } from "@src/models";
 import { Accept, Check, Decline } from "@dumbComponents/UI/Icons";
 import { addFriendResponseAPI, teamOwnerResponseAPI } from "@src/api";
 interface Props {
