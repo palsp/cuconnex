@@ -1,3 +1,9 @@
+.page {
+  z-index: 3;
+  position: relative;
+  background: white;
+}
+
 .divHeading {
   display: flex;
   flex-direction: column;
