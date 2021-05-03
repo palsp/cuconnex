@@ -1,8 +1,3 @@
-.container {
-  position: relative;
-  width: 100%;
-}
-
 .heroDiv {
   display: flex;
   flex-direction: column;
@@ -10,7 +5,6 @@
   width: 100vw;
   justify-content: center;
 }
-
 .topicDiv {
   width: auto;
   height: auto;
@@ -24,7 +18,6 @@
   font-size: 20px;
   color: var(--icon, #555555);
 }
-
 .scopeDiv {
   margin: 10%;
   width: auto;
@@ -39,7 +32,6 @@
   line-height: 1.2;
   font-size: 18px;
 }
-
 .headerContainer {
   display: flex;
   justify-content: center;
@@ -57,20 +49,8 @@
   border-left-width: 0px;
   border-right-width: 0px;
 }
-
 .closeDiv {
   margin-left: 80vw;
   width: 25px;
   height: 50px;
-}
-
-.circle_overlay {
-  position: absolute;
-  background: #f33182;
-  opacity: 0.25;
-  border-radius: 50%;
-  width: 250%;
-  height: 100%;
-  right: -75%;
-  align-items: center;
 }
