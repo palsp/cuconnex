@@ -1,3 +1,4 @@
+import { EventStatus } from '../db-status/event';
 import { Subjects } from './subjects';
 
 export interface EventCreated {
@@ -7,6 +8,7 @@ export interface EventCreated {
         "event-name" : string,
         registration : boolean,
         endDate : string,
+        status : EventStatus
     }
 }
 
