@@ -9,12 +9,11 @@
   top: 0;
   left: 0;
   width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .animateContainer {
   position: relative;
-  height: 100%;
   width: 100%;
 }
 

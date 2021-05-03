@@ -1,5 +1,5 @@
 import classes from "./LandingHero.module.css";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import "react-toggle/style.css";
 import {
   FindteamLogo,
@@ -9,12 +9,9 @@ import {
 import { Link } from "react-router-dom";
 import { MyTeamLists, ProfilePic } from "@smartComponents/index";
 import { Plus } from "@icons/index";
-import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
-import { AnimatePresence, motion } from "framer-motion";
-import { useNavigation } from "framer";
-import { IFetchTeam, IUser } from "@models/index";
-import { callTeamOfUserAPI } from "@src/api";
+import { IFetchTeam } from "@models/index";
 import { UserContext } from "@context/UserContext";
+import { motion } from "framer-motion";
 
 interface Props {
   myTeamList: IFetchTeam[] | [];
@@ -49,7 +46,7 @@ const LandingHero: React.FC<Props> = (props) => {
     ) : (
       <div className={classes.buttonmainDiv}>
         <div className={classes.recruitmemberDiv}>
-          <Link style={{ textDecoration: "none" }} to="/success">
+          <Link style={{ textDecoration: "none" }} to="/createteam">
             <RecruitMemberLogo />
           </Link>
         </div>
