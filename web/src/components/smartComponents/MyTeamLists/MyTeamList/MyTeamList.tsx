@@ -61,7 +61,11 @@ const TeamList: React.FC<Props> = (props) => {
           <div className={classes.leftFlex}>
             <div className={classes.teampic}>
               {/* <TeamPic/> */}
-              {props.landingexplore ? <TeamPic /> : <ProfilePic />}
+              {props.landingexplore ? (
+                <TeamPic PicUrl={props.team.image} />
+              ) : (
+                <ProfilePic />
+              )}
             </div>
           </div>
           <div className={classes.rightFlex}>

@@ -91,7 +91,7 @@ const createTeamAPI = async (teamCreatedData: ICreateTeamData) => {
   const formData = new FormData();
   formData.append("name", teamCreatedData.name);
   formData.append("description", teamCreatedData.description);
-  formData.append("currentRecruiment", teamCreatedData.currentRecruitment);
+  formData.append("currentRecruitment", teamCreatedData.currentRecruitment);
   formData.append("image", teamCreatedData.image ? teamCreatedData.image : "");
   const createTeamData = await axios({
     method: "post",
