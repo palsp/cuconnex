@@ -4,7 +4,6 @@ const mockEventLists: ICreateEventData[] | [] = [
   {
     "event-name": "CUCONNEX Hackathon",
     bio: "Biggest competition in the world",
-    location: "Chula",
     registration: true,
     "start-date": {
       month: 5,
@@ -30,7 +29,6 @@ const mockEventLists: ICreateEventData[] | [] = [
   {
     "event-name": "ISE rally",
     bio: "Biggest rally in ISE",
-    location: "Chula",
     registration: true,
     "start-date": {
       month: 6,
@@ -56,7 +54,6 @@ const mockEventLists: ICreateEventData[] | [] = [
   {
     "event-name": "CHULA Business Case",
     bio: "Biggest Business Case in Chula",
-    location: "Chula",
     registration: true,
     "start-date": {
       month: 6,
