@@ -64,7 +64,7 @@ const TeamList: React.FC<Props> = (props) => {
               {props.landingexplore ? (
                 <TeamPic PicUrl={props.team.image} />
               ) : (
-                <ProfilePic />
+                <ProfilePic PicUrl={props.team.image} />
               )}
             </div>
           </div>
