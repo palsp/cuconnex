@@ -9,10 +9,10 @@
 }
 
 .teamPic {
+  background-size: cover;
   opacity: 0.8;
   width: 120px;
   height: 150px;
-  background-size: cover;
 }
 
 .defaultPic {
