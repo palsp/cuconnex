@@ -27,7 +27,7 @@ import { ErrorContext } from "@context/ErrorContext";
 
 const App: React.FC = () => {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { setErrorHandler } = useContext(ErrorContext);
   const [heightStyle, setHeightStyle] = useState({});
 
