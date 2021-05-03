@@ -30,7 +30,7 @@ const TeamInfo: React.FC<Props> = (props) => {
   return (
     <div className={classes.teamInfo}>
       <div className={classes.cover}>
-        <CoverPic url="" />
+        <CoverPic team url="" />
       </div>
       <div className={classes.teamprofile}>
         <div className={classes.flex}>

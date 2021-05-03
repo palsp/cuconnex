@@ -5,3 +5,11 @@
   background-size: cover;
   min-height: 18vh;
 }
+
+.coverPicTeam {
+  background-image: url("../../../../assets/piccoverteam.png");
+  position: absolute;
+  width: 100%;
+  background-size: cover;
+  min-height: 18vh;
+}
