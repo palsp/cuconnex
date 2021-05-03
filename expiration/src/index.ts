@@ -1,10 +1,5 @@
 import { natsWrapper } from './nats-wrapper'
-import { EventExpirationSub } from './events/listener/event-create-sub'
-
-process.env.NATS_CLIENT_ID = "4567"
-process.env.NATS_URL = "http://localhost:4222"
-process.env.NATS_CLUSTER_ID = "connex";
-process.env.REDIS_HOST  = "http://localhost:6379"
+import { EventExpirationSub } from './events/listener/expiration-start-sub'
 
 const start = async () => {
 

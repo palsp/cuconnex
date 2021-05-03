@@ -8,8 +8,6 @@ export class EventExpirationSub extends Listener<EventExpirationStart> {
     queueGroupName = queueGroupName;
 
     async onMessage(data: EventExpirationStart['data'], msg: Message) {
-        console.log(new Date(data.expirationDate).toString())
-        console.log(new Date().toString())
         const delay = new Date(data.expirationDate).getTime() - new Date().getTime();
         console.log(`Waiting ${delay} milliseconds to process the job`)
         await expirationQueue.add({
