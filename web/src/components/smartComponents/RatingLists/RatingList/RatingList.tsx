@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ProfilePic } from "@smartComponents/index";
 import { RatingStar } from "@dumbComponents/UI/index";
 import classes from "./RatingList.module.css";
@@ -7,14 +7,22 @@ import { rateUserAPI } from "@api/index";
 
 interface Props {
   member: IUser;
-  submit?: boolean;
+  submit: boolean;
+  // ratedUserHandler: (rating: number | null) => void;
 }
 
 const RatingList: React.FC<Props> = (props) => {
   const [userRating, setUserRating] = useState<number | null>(null);
+  const [submit, setSubmit] = useState<boolean>(false);
   const ratedUserHandler = (rating: number | null) => {
     setUserRating(rating);
   };
+
+  useEffect(() => {
+    setSubmit(props.submit);
+    console.log(props.submit);
+    console.log("haha");
+  });
 
   const voteSubmittedHandler = async () => {
     const ratedUser: IRateUser = {
@@ -35,10 +43,10 @@ const RatingList: React.FC<Props> = (props) => {
     }
   };
 
-  if (props.submit) {
-    console.log("voteSubmittedHandler Called");
-    voteSubmittedHandler;
-  }
+  // if (props.submit) {
+  //   console.log("voteSubmittedHandler Called");
+  //   voteSubmittedHandler;
+  // }
   return (
     <div className={classes.ratingList}>
       <div className={classes.divRatingList}>

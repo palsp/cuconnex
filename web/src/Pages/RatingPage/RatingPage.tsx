@@ -24,6 +24,7 @@ const RatingPage: React.FC<Props> = (props) => {
     []
   );
   const [submit, setSubmit] = useState<boolean>(false);
+  const [submitText, setSubmitText] = useState<string>("");
   const goBackPreviousPageHandler = () => {
     props.history.goBack();
   };
@@ -47,9 +48,9 @@ const RatingPage: React.FC<Props> = (props) => {
       setRateTeamMemberLists(value)
     );
   }, []);
-  const onClickHandler = () => {
-    // setSubmit((prevState) => !prevState);
-    console.log("huh");
+  const onSubmitHandler = () => {
+    setSubmit(true);
+    setSubmitText("Submitted");
   };
   return (
     <div>
@@ -83,9 +84,9 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
         <RatingLists members={teamMemberLists} submit={submit} />
-        <RatingLists members={rateTeamMemberLists} submit={submit} />
+        {/* <RatingLists members={rateTeamMemberLists} submit={submit} /> */}
         {/* <Redirect to="/landing"> */}
-        <Button value="Submit" onClick={onClickHandler} />
+        <Button value="Submit" onClick={onSubmitHandler} />
         {/* </Redirect> */}
 
         <div className={classes.ratingDetail}>
