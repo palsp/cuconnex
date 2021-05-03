@@ -35,31 +35,34 @@ import { motion } from "framer-motion";
 import containerVariants, {
   IFetchOutgoingTeamNotification,
   IFetchTeam,
-  ITeam,
 } from "@src/models/models";
 
 const NotificationPage: React.FC = () => {
   const [clickConnection, setConnection] = useState(true);
   const [clickActivity, setActivity] = useState(false);
-  const [teamNoti, setTeamNoti] = useState<ITeam[] | []>([]);
+  const [teamNoti, setTeamNoti] = useState<IFetchTeam[] | []>([]);
   const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<IFetchTeam[] | []>(
     []
   );
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
-  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   const [friendReceivedNoti, setFriendReceivedNoti] = useState<
     IUserFriend[] | []
   >([]);
   useEffect(() => {
-    fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
+    fetchTeamNotiHandler().then((value: IFetchTeam[] | []) =>
+      setTeamNoti(value)
+    );
     fetchFriendNotiHandler().then((value: IUserFriend[] | []) =>
       setFriendNoti(value)
     );
     fetchFriendReceivedNotiHandler().then((value: IUserFriend[] | []) =>
       setFriendReceivedNoti(value)
     );
-    fetchTeamNotiHandler().then((value: ITeam[] | []) => setTeamNoti(value));
+    fetchTeamNotiHandler().then((value: IFetchTeam[] | []) =>
+      setTeamNoti(value)
+    );
     fetchTeamHandler();
     fetchOutgoingTeamNotiHandler();
   }, []);

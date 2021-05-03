@@ -3,10 +3,10 @@ import classes from "./TeamInvitationLists.module.css";
 import { TeamInvitationListsData } from "@src/mockData/Models";
 import mockTeamInvitationLists from "@src/mockData/mockTeamInvitationListsData";
 import TeamInvitationList from "@smartComponents/TeamInvitationLists/TeamInvitationList/TeamInvitationList";
-import { ITeam } from "@src/models";
+import { IFetchTeam } from "@src/models";
 
 interface Props {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 
 const TeamInvitationLists: React.FC<Props> = (props) => {
@@ -14,7 +14,7 @@ const TeamInvitationLists: React.FC<Props> = (props) => {
     <div className={classes.TeamInvitationLists}>
       <div className={classes.listHeader}>Team Invitations</div>
       <div className={classes.list}>
-        {props.teams?.map((TeamInvitation: ITeam, index: number) => {
+        {props.teams?.map((TeamInvitation: IFetchTeam, index: number) => {
           return (
             <div key={index}>
               <TeamInvitationList key={index} teams={TeamInvitation} />

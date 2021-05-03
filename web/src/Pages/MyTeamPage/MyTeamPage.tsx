@@ -11,7 +11,7 @@ import classes from "./MyTeamPage.module.css";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { motion } from "framer-motion";
 
-import containerVariants, { IFetchTeam, ITeam } from "@src/models/models";
+import containerVariants, { IFetchTeam } from "@src/models/models";
 
 import { UserContext } from "@context/UserContext";
 

@@ -10,7 +10,7 @@ import {
   PositionsInActivityNotificationList,
 } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI";
-import { IFetchTeam, ITeam, IUser, IUserFriend } from "@src/models";
+import { IFetchTeam, IUser, IUserFriend } from "@src/models";
 import { UserContext } from "@context/UserContext";
 
 interface Props {

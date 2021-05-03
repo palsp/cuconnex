@@ -24,7 +24,6 @@ import {
   IGetTeam,
   ITeamMembers,
   IUserResponse,
-  ITeam,
   IFetchTeam,
   IFetchOutgoingTeamNotification,
   IUserRequest,

@@ -12,7 +12,7 @@ import { Plus } from "@icons/index";
 import mockMyTeamListsData from "@src/mockData/mockMyTeamListsData";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigation } from "framer";
-import { IFetchTeam, ITeam, IUser } from "@models/index";
+import { IFetchTeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
 import { UserContext } from "@context/UserContext";
 

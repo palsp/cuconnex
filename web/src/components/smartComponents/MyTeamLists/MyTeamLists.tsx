@@ -2,7 +2,7 @@ import React from "react";
 import MyTeamList from "@smartComponents/MyTeamLists/MyTeamList/MyTeamList";
 import classes from "./MyTeamLists.module.css";
 import { MyTeamListsData } from "@src/mockData/Models";
-import { IFetchTeam, ITeam } from "@src/models";
+import { IFetchTeam } from "@src/models";
 
 interface Props {
   page?: string;

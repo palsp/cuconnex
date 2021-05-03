@@ -12,7 +12,7 @@ import { Heading, Subtitle, Tag } from "@dumbComponents/UI";
 import { Link } from "react-router-dom";
 import mockEventLists from "@src/mockData/mockEventLists";
 import mockActivityBoxes from "@src/mockData/mockActivitiesBoxes";
-import { IEventData, ITeam, IUser } from "@src/models";
+import { IEventData, IUser } from "@src/models";
 import { motion } from "framer-motion";
 import containerVariants, { IFetchTeam } from "@src/models/models";
 import { UserContext } from "@context/UserContext";
@@ -70,7 +70,6 @@ const ExplorePage = () => {
   ) : (
     <>
       <Tag />
-
       <div className={classes.exploreContent}>
         <div className={classes.exploreHeading}>
           <Heading value="People" />

@@ -30,12 +30,12 @@ export interface IUserFriend {
   image: string;
 }
 
-export interface ITeam {
-  name: string; // team name
-  creatorId: string;
-  description: string;
-  lookingForMembers: boolean;
-}
+// export interface ITeam {
+//   name: string; // team name
+//   creatorId: string;
+//   description: string;
+//   lookingForMembers: boolean;
+// }
 export interface IFetchTeam {
   name: string; // team name
   members: IUserFriend[];
@@ -155,7 +155,7 @@ export interface IEventData {
 }
 //team
 export interface IGetTeam {
-  team: ITeam;
+  team: IFetchTeam;
 }
 export interface ICreateTeamData {
   name: string;
@@ -183,7 +183,7 @@ export interface IInviteDataResult {
 }
 
 export interface ICallTeamOfUser {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 export interface IUserRequest {
   teamName: string;
@@ -233,7 +233,7 @@ export enum FacultyListsEnum {
 
 //Notifications
 export interface IFetchTeamNotification {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 export interface IFetchFriendNotification {
   requests: IUserFriend[];
@@ -269,7 +269,7 @@ export interface IFetchTeamEvent {
 //Search
 export interface ISearchGeneral {
   users: IUser[];
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 
 const containerVariants = {

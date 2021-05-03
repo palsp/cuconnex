@@ -8,7 +8,7 @@ import Background from "../../components/dumbComponents/UI/Background/Background
 import HamburgerPrompt from "./HamburgerPrompt/HamburgerPrompt";
 import classes from "./LandingPage.module.css";
 import LandingHero from "./Sections/LandingHero";
-import containerVariants, { ITeam } from "@src/models/models";
+import containerVariants, { IFetchTeam } from "@src/models/models";
 import { motion } from "framer-motion";
 import { UserContext } from "@context/UserContext";
 import { ErrorContext } from "@context/ErrorContext";
@@ -30,9 +30,9 @@ const LandingPage: React.FC<Props> = (props) => {
   const [displayHamburgerMenu, setDisplayHamburgerMenu] = useState<boolean>(
     hamburgerOn
   );
-  const [currentTeamLists, setCurrentTeamLists] = useState<ITeam[]>([]);
+  const [currentTeamLists, setCurrentTeamLists] = useState<IFetchTeam[]>([]);
   const { setErrorHandler } = useContext(ErrorContext);
-  const [myTeamLists, setMyTeamLists] = useState<ITeam[] | []>([]);
+  const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   const [menuHeightStyle, setMenuHeightStyle] = useState({ height: "" });
 

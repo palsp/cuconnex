@@ -18,7 +18,6 @@ import containerVariants, {
   IUserFriend,
   IUserRequest,
 } from "@src/models/models";
-import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
 import {
   fetchTeamIncomingNotificationAPI,
