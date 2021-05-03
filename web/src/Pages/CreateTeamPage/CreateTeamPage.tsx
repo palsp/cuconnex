@@ -60,6 +60,13 @@ const CreateTeamPage: React.FC = () => {
             </div>
           </div>
         </div>
+        <motion.div 
+            animate={{ rotate: 180 }}
+            transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+            style={{ bottom: -window.innerHeight*0.9 }}
+            className={classes.circle_overlay}
+            data-test="landing-hero-halfcircleoverlay"
+          ></motion.div>
       </div>
     ) : clickSelectEvent === true ? (
       <div>
@@ -75,6 +82,7 @@ const CreateTeamPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
+      className={classes.container}
     >
       {createPrompt}
     </motion.div>
