@@ -22,11 +22,14 @@ var DB = DBConfig{
 	Password: os.Getenv("DB_PASSWORD"),
 }
 
+
+
 var SCconfig = StanConfig{
 		ClusterID: os.Getenv("NATS_CLUSTER_ID"),
 		ClientID: os.Getenv("NATS_CLIENT_ID"),
 		URL: os.Getenv("NATS_URL"),
 }
+
 
 
 var TestDB = DBConfig{

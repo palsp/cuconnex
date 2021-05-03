@@ -13,7 +13,7 @@ const setup = async () => {
         id : 1,
         "event-name" : "test_event",
         registration : true,
-        endDate : (new Date()).toString(),
+        expirationDate : (new Date()).toString(),
         status : EventStatus.ongoing,
     }
     // create a fake message object

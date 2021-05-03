@@ -1,7 +1,6 @@
 package events
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -62,7 +61,6 @@ func (self *EventModelValidator) Bind(c *gin.Context) error{
 	self.eventModel.Registration = self.Event.Registration
 	self.eventModel.Bio = self.Event.Bio
 	self.eventModel.Location = self.Event.Location.String()
-	fmt.Println("location" , self.Event.Location)
 	if self.Event.StartDate != nil {
 		self.eventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location).UTC()
 	}

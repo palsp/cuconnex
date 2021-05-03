@@ -1,6 +1,7 @@
 package events
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -72,21 +73,41 @@ func CreateEvent(c *gin.Context) {
 	c.Set("my_event_model" , eventModelValidator.eventModel)
 	serializer := EventSerializer{c}
 	response := serializer.Response()
-	err := common.PublishEventCreated(common.EventCreatedData{
+	fmt.Println("here" , response.Status)
+	var expiration string
+	if response.Status != common.EventStatus.Closed {
+		if response.Status == common.EventStatus.Upcoming{
+			expiration = response.StartDate.String()
+		}else{
+			expiration = response.EndDate.String()
+		}
+		PublishEventExpiration(EventExpirationData{
+			ID: response.ID,
+			ExpirationDate: expiration,
+		})
+	}
+
+
+
+	err := PublishEventCreated(EventCreatedData{
 		ID: response.ID,
 		EventName: response.EventName,
 		Registration: response.Registration,
 		Status : response.Status,
-		EndDate: response.EndDate.String(),
+		ExpirationDate: expiration,
 	})
 	if err != nil {
 		log.Printf("error publish event:created : %v" , err)
 	}else{
 		log.Printf("Event published to subject %v" , "event:created")
 	}
+
 	c.JSON(http.StatusCreated, response)
 
 }
+
+
+
 
 // UpdatedEvent handle PUT
 func UpdatedEvent(c *gin.Context){
@@ -118,7 +139,7 @@ func UpdatedEvent(c *gin.Context){
 	c.Set("my_event_model" , *e)
 	serializer := EventSerializer{c}
 	response := serializer.Response()
-	err = common.PublishEventUpdated(common.EventUpdatedData{
+	err = PublishEventUpdated(EventUpdatedData{
 		ID: e.ID,
 		EventName: e.EventName,
 		Registration: e.Registration,

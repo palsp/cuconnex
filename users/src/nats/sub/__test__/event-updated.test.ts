@@ -1,6 +1,6 @@
 import { natsWrapper } from '../../../natsWrapper';
-import { EventEndSub } from '../event-end-sub';
-import { EventEnd , TeamStatus} from '@cuconnex/common';
+import { EventUpdatedSub } from '../event-updated-sub';
+import { EventUpdated , TeamStatus} from '@cuconnex/common';
 import { Event, User , Team , Rating} from '../../../models';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
 import { utimes } from 'node:fs';
@@ -27,47 +27,63 @@ export const createTeamForDummyUsers = async ( users : User[]) : Promise<Team> =
 
 const setup = async () => {
     // create an instance of the listener
-    const listener = new EventEndSub(natsWrapper.client)
+    const listener = new EventUpdatedSub(natsWrapper.client)
 
     const event = await Event.create({
         id : 1,
         eventName : "test_event",
         registration : true,
-        status : EventStatus.ongoing,
+        status : EventStatus.upcoming,
     })
 
-    // create a fake data event
-    const data: EventEnd['data'] = {
-        id : 1,
-    }
     // create a fake message object
     // @ts-ignore
     const msg: Message = {
         ack: jest.fn(),
     }
 
-    return { listener, event, data, msg }
+    return { listener, event,  msg }
 
 }
 
 it('should update event status' , async () => {
-    const { listener, event, data, msg } = await setup();
+    const { listener, event,  msg } = await setup();
+
+
+    // create a fake data event
+    const data: EventUpdated['data'] = {
+        id : 1,
+        "event-name" : "test_event",
+        version : 1,
+        registration : true,
+        status : EventStatus.ongoing,
+    }
 
     await listener.onMessage(data, msg);
 
     const updatedEvent = await Event.findByPk(event.id);
-    expect(updatedEvent!.status).toEqual(EventStatus.closed);
+    expect(updatedEvent!.status).toEqual(EventStatus.ongoing);
 });
 
 
 it('add entry in rating table if it not exist', async () => {
-    const { listener, event, data, msg } = await setup();
+    const { listener, event, msg } = await setup();
     const users = await createDummyUser(3);
     const team = await createTeamForDummyUsers(users);
     await team.register(event);
 
     let rates = await Rating.findAll()
     expect(rates.length).toEqual(0);
+
+
+    // create a fake data event
+    const data: EventUpdated['data'] = {
+        id : 1,
+        "event-name" : "test_event",
+        version : 1,
+        registration : true,
+        status : EventStatus.closed,
+    }
 
     await listener.onMessage(data, msg);
 
@@ -77,7 +93,16 @@ it('add entry in rating table if it not exist', async () => {
 });
 
 it('update entry in rating table if it existed', async () => {
-    const { listener, event, data, msg } = await setup();
+    const { listener, event,  msg } = await setup();
+        // create a fake data event
+        const data: EventUpdated['data'] = {
+            id : 1,
+            "event-name" : "test_event",
+            version : 1,
+            registration : true,
+            status : EventStatus.closed,
+        }
+    
     const users = await createDummyUser(3);
     const team = await createTeamForDummyUsers(users);
     await team.register(event);
@@ -94,8 +119,42 @@ it('update entry in rating table if it existed', async () => {
     expect(rate!.rating).toEqual(4);
 })
 
+it('not add entry in rating table if updated event is not closed', async () => {
+    const { listener, event,  msg } = await setup();
+        // create a fake data event
+        const data: EventUpdated['data'] = {
+            id : 1,
+            "event-name" : "test_event",
+            version : 1,
+            registration : true,
+            status : EventStatus.ongoing,
+        }
+    
+    const users = await createDummyUser(3);
+    const team = await createTeamForDummyUsers(users);
+    await team.register(event);
+    
+
+    await listener.onMessage(data, msg);
+
+    const rates = await Rating.findAll()
+
+    expect(rates.length).toEqual(0);
+})
+
+
 it('acks the message', async () => {
-    const { listener, data, msg } = await setup();
+    const { listener,  msg } = await setup();
+
+        // create a fake data event
+        const data: EventUpdated['data'] = {
+            id : 1,
+            "event-name" : "test_event",
+            version : 1,
+            registration : true,
+            status : EventStatus.closed,
+        }
+    
 
     await listener.onMessage(data, msg);
 

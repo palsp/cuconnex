@@ -7,7 +7,7 @@ export interface EventCreated {
         id : number,
         "event-name" : string,
         registration : boolean,
-        endDate : string,
+        expirationDate : string,
         status : EventStatus
     }
 }
@@ -18,9 +18,22 @@ export interface EventUpdated {
         id : number,
         "event-name" : string,
         registration : boolean,
+        status : EventStatus,
         version : number,        
     }
 }
+
+
+
+export interface EventExpirationStart {
+    subject : Subjects.Expiration,
+    data : {
+        id : number,
+        expirationDate: string
+    }
+
+}
+
 
 export interface EventStarted {
     subject : Subjects.EventStarted,
@@ -31,8 +44,8 @@ export interface EventStarted {
 }
 
 
-export interface EventEnd {
-subject : Subjects.EventEnded,
+export interface EventCompleted {
+subject : Subjects.EventCompleted,
     data : {
         id : number,
     }
