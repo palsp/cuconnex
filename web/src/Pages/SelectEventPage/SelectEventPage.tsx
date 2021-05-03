@@ -66,7 +66,7 @@ const SelectEventPage: React.FC = () => {
           <Heading
             data-test="friends-page-header"
             value={eventType}
-            size="small"
+            size="smallMedium"
           />
           <Tag />
         </div>
@@ -93,7 +93,7 @@ const SelectEventPage: React.FC = () => {
         <Heading
           data-test="friends-page-header"
           value="Choose event type"
-          size="small"
+          size="smallMedium"
         />
         <Tag />
       </div>
