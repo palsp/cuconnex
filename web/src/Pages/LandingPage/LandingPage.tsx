@@ -52,15 +52,6 @@ const LandingPage: React.FC<Props> = (props) => {
   }
   console.log(hasTeam);
 
-  let marginHeight, circleHeight;
-  if (window.innerHeight > 800) {
-    marginHeight = -window.innerHeight * 0.25;
-    circleHeight = -window.innerHeight * 0.8;
-  } else {
-    marginHeight = -window.innerHeight * 0.15;
-    circleHeight = -window.innerHeight * 0.93;
-  }
-
   const landingVariants = {
     hidden: { x: -400 },
     visible: {
@@ -83,6 +74,21 @@ const LandingPage: React.FC<Props> = (props) => {
     exit: { x: 400 },
   };
 
+  const browserHeight = window.innerHeight < 800;
+  const circleAnimate = (
+    <motion.div
+      animate={{ rotate: 180 }}
+      transition={{ ease: "linear", duration: 4, repeat: Infinity }}
+      style= { displayHamburgerMenu ? (
+        { bottom: browserHeight ? ( -window.innerHeight * 0.35 ) : ( -window.innerHeight * 0.25 ) }
+      ) : (
+        { opacity: 0.5, zIndex: 1, bottom: browserHeight ? ( -window.innerHeight * 0.93 ) : ( -window.innerHeight * 0.8 ) }
+      )}
+      className={ classes.circle_overlay }
+      data-test="landing-page-halfcircleoverlay"
+    />
+  );
+
   const LandingPrompt = displayHamburgerMenu ? (
     <AnimatePresence>
       <motion.div
@@ -91,9 +97,12 @@ const LandingPage: React.FC<Props> = (props) => {
         animate="visible"
         exit="exit"
       >
-        <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
-          <HamburgerPrompt />
-        </div>
+        <Background heightStyle={menuHeightStyle}>
+          <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
+            <HamburgerPrompt />
+          </div>
+          {circleAnimate}
+        </Background>
       </motion.div>
     </AnimatePresence>
   ) : (
@@ -112,6 +121,7 @@ const LandingPage: React.FC<Props> = (props) => {
             hasTeam={hasTeam}
           />
         </div>
+        {circleAnimate}
       </Background>
     </motion.div>
   );

@@ -6,15 +6,6 @@
 .circle_overlay {
   position: absolute;
   background: white;
-  opacity: 1;
-  border-radius: 50%;
-  width: 250%;
-  height: 100%;
-}
-
-.promptDiv .circle_overlay {
-  position: absolute;
-  background: white;
   opacity: 0.5;
   border-radius: 50%;
   width: 250%;
@@ -74,4 +65,5 @@
 
 .hamburgerPrompt {
   height: 100%;
+  z-index: 2;
 }
