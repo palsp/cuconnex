@@ -31,6 +31,12 @@ var SCconfig = StanConfig{
 }
 
 
+// var SCconfig = StanConfig{
+// 	ClusterID: "connex",
+// 	ClientID: "1234",
+// 	URL: "http://localhost:4222",
+// }
+
 
 var TestDB = DBConfig{
 	Name: "eventdb_test",
