@@ -16,9 +16,9 @@ const TeamPic: React.FC<Props> = (props) => {
       <div className={classes.container}>
         <div className={classes.pic}>
           {props.PicUrl ? (
-            <div className={classes.defaultPic}></div>
-          ) : (
             <img src={url} className={classes.teamPic} alt="teampic" />
+          ) : (
+            <div className={classes.defaultPic}></div>
           )}
         </div>
         <div className={classes.triangle}></div>

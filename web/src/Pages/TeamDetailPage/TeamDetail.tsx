@@ -153,6 +153,7 @@ const TeamDetail: React.FC<Props> = (props) => {
               inviteMembersClickedHandler={inviteMembersClickedHandler}
               status={relation}
               name={props.location.state.team.name}
+              teamInfo={props.location.state.team}
               isTeamOwner={isTeamOwner}
             />
           </div>
