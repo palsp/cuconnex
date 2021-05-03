@@ -1,12 +1,26 @@
 import React from "react";
 import { AppLogo } from "..";
 import classes from "./TeamPic.module.css";
-
-const TeamPic: React.FC = () => {
+interface Props {
+  PicUrl?: string;
+}
+const TeamPic: React.FC<Props> = (props) => {
+  let teamCSS;
+  teamCSS = [classes.defaultPic];
+  if (props.PicUrl) {
+    teamCSS = [classes.teamPic];
+  }
+  const url = "https://www.cu-connex.com/api/users" + props.PicUrl;
   return (
     <div className={classes.teamPic}>
       <div className={classes.container}>
-        <div className={classes.pic}></div>
+        <div className={classes.pic}>
+          {props.PicUrl ? (
+            <div className={classes.defaultPic}></div>
+          ) : (
+            <img src={url} className={classes.teamPic} alt="teampic" />
+          )}
+        </div>
         <div className={classes.triangle}></div>
       </div>
     </div>

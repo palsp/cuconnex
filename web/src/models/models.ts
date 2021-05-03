@@ -42,6 +42,7 @@ export interface IFetchTeam {
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
+  image: string;
 }
 
 export interface ISearchUserTeamEventResult {
