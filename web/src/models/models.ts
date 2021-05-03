@@ -125,6 +125,33 @@ export interface IFetchEventsData {
 export interface IFetchEventsDataResult {
   events: IEventData[];
 }
+
+export interface ICreateEventData {
+  "event-name": string;
+  bio: string;
+  location?: string;
+  registration: boolean;
+  "start-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+  "end-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+}
 export interface IEventData {
   id: number;
   "event-name": string;

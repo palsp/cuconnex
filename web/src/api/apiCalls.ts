@@ -7,6 +7,7 @@ import {
   IUserSignup,
   IResultSigninSignup,
   IFetchEventsData,
+  ICreateEventData,
   IEventData,
   ICreateTeamData,
   IInviteData,
@@ -79,7 +80,7 @@ const fetchEventsDataAPI = async (): Promise<
   return eventsData;
 };
 const createEventsAPI = async (
-  eventsCreatedData: IEventData
+  eventsCreatedData: ICreateEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
     "/api/events",
