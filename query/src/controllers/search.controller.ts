@@ -37,9 +37,9 @@ export const searchHandler = async (req: Request, res: Response) => {
     const userResult = userResp ? userResp.data : { users: [], team: [] };
     let eventResult = [];
     if(eventResp){
-        if(eventResp.data){
-            eventResult = eventResp.data
-        }
+        if(eventResp.data.events){
+            eventResult = eventResp.data.events
+        }   
     }
     // const eventResult = eventResp ? eventResp.data : { events: [] };
     res.status(200).send({ ...userResult, events : eventResult });
