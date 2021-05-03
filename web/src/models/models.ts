@@ -294,7 +294,7 @@ export interface IFetchTeamEvent {
   events: IEventData[];
 }
 export interface IFetchRateTeamNotification {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 
 //Search

@@ -46,9 +46,7 @@ const NotificationPage: React.FC = () => {
   );
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
   const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
-  const [rateTeamNoti, setRateTeamNoti] = useState<
-    IFetchRateTeamNotification[] | []
-  >([]);
+  const [rateTeamNoti, setRateTeamNoti] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   const [friendReceivedNoti, setFriendReceivedNoti] = useState<
     IUserFriend[] | []
@@ -68,8 +66,8 @@ const NotificationPage: React.FC = () => {
     );
     fetchTeamHandler();
     fetchOutgoingTeamNotiHandler();
-    fetchRateTeamNotiHandler().then(
-      (value: IFetchRateTeamNotification[] | []) => setRateTeamNoti(value)
+    fetchRateTeamNotiHandler().then((value: IFetchTeam[] | []) =>
+      setRateTeamNoti(value)
     );
   }, []);
   const fetchTeamHandler = async () => {

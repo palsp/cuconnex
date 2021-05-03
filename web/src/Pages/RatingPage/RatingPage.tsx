@@ -4,13 +4,13 @@ import classes from "./RatingPage.module.css";
 import { RatingLists } from "@smartComponents/index";
 import { Heading, Button } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons/index";
-import { ITeam, IUser } from "@src/models";
+import { IFetchTeam, IUser, IFetchRateTeamNotification } from "@src/models";
 import { fetchTeamMembersAPI, fetchRateTeamMembersAPI } from "@api/index";
 
 interface Props {
   location: {
     state: {
-      team: ITeam;
+      team: IFetchTeam;
     };
   };
   history: {

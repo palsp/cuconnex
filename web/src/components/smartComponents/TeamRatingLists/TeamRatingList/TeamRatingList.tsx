@@ -6,10 +6,10 @@ import {
   ChevronRight,
   CircleFilledGrey,
 } from "@dumbComponents/UI/Icons/index";
-import { ITeam } from "@src/models/index";
+import { IFetchRateTeamNotification, IFetchTeam } from "@src/models/index";
 
 interface Props {
-  team: ITeam;
+  team: IFetchTeam;
 }
 const TeamRatingList: React.FC<Props> = (props) => {
   return (
