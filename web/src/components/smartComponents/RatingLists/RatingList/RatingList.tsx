@@ -9,17 +9,18 @@ import { Rating } from "@pages/RatingPage/RatingPage";
 interface Props {
   rating: Rating;
   submit: boolean;
-  key: number;
   // ratedUserHandler: (rating: number | null) => void;
 }
 
 const RatingList: React.FC<Props> = (props) => {
-  const { rating, key } = props;
+  const { rating } = props;
   console.log("RatingList: ", rating);
+
   const ratedUserHandler = (score: number | null) => {
     rating.setRating((prev) => {
-      prev[key].rating = score;
-      return prev;
+      const newArr = prev;
+      newArr[rating.ratingId].rating = score;
+      return newArr;
     });
   };
 

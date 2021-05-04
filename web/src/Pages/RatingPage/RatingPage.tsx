@@ -22,6 +22,7 @@ interface Props {
 export interface Rating {
   user: IUser;
   rating: number | null;
+  ratingId: number;
   setRating: React.Dispatch<React.SetStateAction<Rating[]>>;
 }
 
@@ -60,20 +61,20 @@ const RatingPage: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    fetchTeamMembersHandler().then((value: IUser[]) =>
-      value.forEach((user: IUser, index: number) => {
-        if (user.id !== userData.id) {
-          setRatings((prev) => {
-            prev[index] = {
-              user: user,
-              rating: null,
-              setRating: setRatings,
-            };
-            return prev;
-          });
-        }
-      })
-    );
+    fetchTeamMembersHandler().then((users: IUser[]) => {
+      const newRatings: Rating[] = [];
+      const notMe = users.filter((user) => user.id !== userData.id);
+      notMe.forEach((user: IUser, index: number) => {
+        const newUser = {
+          user: user,
+          rating: null,
+          ratingId: index,
+          setRating: setRatings,
+        };
+        newRatings.push(newUser);
+      });
+      setRatings(newRatings);
+    });
     console.log("Rating: ", ratings);
     // ratings.forEach((value) => {
     //   if (value.rating === null) {
@@ -125,8 +126,12 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
         {/* <RatingLists members={teamMemberLists} submit={submit} /> */}
-        <RatingLists ratings={ratings} submit={submit} />
-        {console.log(ratings)}
+        {ratings.length > 0 ? (
+          <RatingLists ratings={ratings} submit={submit} />
+        ) : (
+          "loading"
+        )}
+
         <Button value="Submit" disabled={allRated} onClick={onSubmitHandler} />
         {redirect}
         <div className={classes.ratingDetail}>

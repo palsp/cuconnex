@@ -21,12 +21,11 @@ const StyledRating = withStyles({
 })(Rating);
 
 const RatingStar: React.FC<Props> = (props) => {
-  const [value, setValue] = React.useState<number | null>(0);
   const [hover, setHover] = React.useState(-1);
 
-  useEffect(() => {
-    props.ratedStarHandler(value);
-  }, [value]);
+  const onChangehandler = (changeEvent: React.ChangeEvent, value: number) => {
+    ratedStarHandler(changeEvent.target.va);
+  };
 
   return (
     <div>
@@ -35,9 +34,7 @@ const RatingStar: React.FC<Props> = (props) => {
         size="large"
         value={value}
         precision={0.5}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
+        onChange={onChangehandler}
         onChangeActive={(event, newHover) => {
           setHover(newHover);
         }}
