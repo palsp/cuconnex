@@ -1,3 +1,10 @@
+.page {
+  width: 100%;
+  position: relative;
+  background: white;
+  z-index: 3;
+}
+
 .mainDiv {
   width: 100vw;
   display: flex;

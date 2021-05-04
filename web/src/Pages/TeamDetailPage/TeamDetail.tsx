@@ -28,6 +28,7 @@ import {
 } from "@src/api";
 import RequestPrompt from "./RequestPrompt/RequestPrompt";
 import InviteMembersPrompt from "./InviteMembersPrompt/InviteMembersPrompt";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
 interface Props {
   location: {
@@ -96,9 +97,11 @@ const TeamDetail: React.FC<Props> = (props) => {
   }
   // Is team already exist ? (create team process)
   const isTeamExist = true;
-  const goBackPreviousPageHandler = () => {
+
+  const goBack = () => {
     props.history.goBack();
   };
+
   const inviteMembersClickedHandler = () => {
     setClickInviteMembers(true);
     setClickTeamDetail(false);
@@ -118,31 +121,7 @@ const TeamDetail: React.FC<Props> = (props) => {
         className={classes.TeamDetail}
       >
         <div className={classes.header}>
-          {isTeamExist ? (
-            <div
-              onClick={goBackPreviousPageHandler}
-              className={classes.relativeArrow}
-            >
-              <ArrowLeft data-test="team-detail-page-arrow-left" />
-            </div>
-          ) : (
-            // <div className={classes.closeLeft}>
-            //   <Close data-test="team-detail-page-close-left" />
-            // </div>
-            <div />
-          )}
-
-          <div className={classes.head}>
-            <Heading data-test="team-detail-page-header" value="Team details" />
-          </div>
-          {isTeamOwner ? (
-            <div />
-          ) : (
-            // <div className={classes.closeRight}>
-            //   <Close data-test="team-detail-page-close-right" />
-            // </div>
-            <div />
-          )}
+          <PageTitle text="Team Details" size="medium" goBack={goBack} />
         </div>
 
         <div className={classes.info}>

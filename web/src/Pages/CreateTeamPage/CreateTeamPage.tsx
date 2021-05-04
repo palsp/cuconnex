@@ -75,6 +75,7 @@ const CreateTeamPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
+      className={classes.page}
     >
       {createPrompt}
     </motion.div>

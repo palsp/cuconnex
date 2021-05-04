@@ -16,8 +16,15 @@ import containerVariants, { IFetchTeam } from "@src/models/models";
 import { UserContext } from "@context/UserContext";
 
 import { callTeamOfUserAPI, fetchTeamNotificationAPI } from "@api/index";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
-const MyTeamPage: React.FC = () => {
+interface Props {
+  history: {
+    goBack: () => void;
+  };
+}
+
+const MyTeamPage: React.FC<Props> = (props) => {
   const [teamLists, setTeamLists] = useState<IFetchTeam[] | []>([]);
   let ongoingTeamLists: IFetchTeam[] | [] = [];
   let finishedTeamLists: IFetchTeam[] | [] = [];
@@ -51,21 +58,14 @@ const MyTeamPage: React.FC = () => {
     }
   }
 
+  const goBack = () => {
+    props.history.goBack();
+  };
+
   let myteamsPrompt = null;
   if (clickOnGoing === true) {
     myteamsPrompt = (
       <div className={classes.tabOngoing}>
-        <div className={classes.relativeArrow}>
-          <Link
-            data-test="myteam-page-back-link"
-            to={{ pathname: "/landing", state: { hamburgerOn: true } }}
-          >
-            <ArrowLeft data-test="myteam-page-arrow-left" />
-          </Link>
-        </div>
-        <div className={classes.head}>
-          <Heading data-test="myteam-page-header" value="My teams" />
-        </div>
         <div className={classes.tab}>
           <div className={classes.ongoing}>
             <Tab
@@ -93,14 +93,6 @@ const MyTeamPage: React.FC = () => {
   } else if (clickOnGoing === false) {
     myteamsPrompt = (
       <div className={classes.tabFinished}>
-        <div className={classes.relativeArrow}>
-          <Link data-test="myteam-page-back-link" to="/landing">
-            <ArrowLeft data-test="myteam-page-arrow-left" />
-          </Link>
-        </div>
-        <div className={classes.head}>
-          <Heading data-test="myteam-page-header" value="My teams" />
-        </div>
         <div className={classes.tab}>
           <div className={classes.ongoing}>
             <Tab
@@ -157,6 +149,7 @@ const MyTeamPage: React.FC = () => {
       data-test="myteam-page"
       className={classes.page}
     >
+      <PageTitle goBack={goBack} size="small-medium" text="My Teams" />
       {myteamsPrompt}
     </motion.div>
   );

@@ -26,24 +26,22 @@ const HamburgerPrompt: React.FC = () => {
   };
   return (
     <div className={classes.container}>
-      <div className={classes.main}>
-        <Link style={{ textDecoration: "none" }} to="/myteams">
-          <Heading value="My Teams" />
-        </Link>
-        <Link style={{ textDecoration: "none" }} to="/friendlists">
-          <Heading value="My Connections" />
-        </Link>
-        <Link
-          style={{ textDecoration: "none" }}
-          to={{ pathname: "/profile", state: { users: userData } }}
-        >
-          <Heading value="Account Setting" />
-        </Link>
-        <div onClick={logoutHandler}>
-          <Heading value="Log out" />
-        </div>
-        {redirect}
+      <Link style={{ textDecoration: "none" }} to="/myteams">
+        <Heading value="My Teams" />
+      </Link>
+      <Link style={{ textDecoration: "none" }} to="/friendlists">
+        <Heading value="My Connections" />
+      </Link>
+      <Link
+        style={{ textDecoration: "none" }}
+        to={{ pathname: "/profile", state: { users: userData } }}
+      >
+        <Heading value="Account Setting" />
+      </Link>
+      <div className={classes.logout} onClick={logoutHandler}>
+        <Heading value="Log out" />
       </div>
+      {redirect}
     </div>
   );
 };
