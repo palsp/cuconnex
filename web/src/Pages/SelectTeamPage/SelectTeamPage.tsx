@@ -6,38 +6,11 @@ import { Link } from "react-router-dom";
 import { Heading } from "@dumbComponents/UI";
 import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 import { fetchEventTeamAPI, fetchTeamEventAPI } from "@src/api";
-import { IFetchTeam, IFetchTeams } from "@src/models";
+import { IFetchTeam, IEventData } from "@src/models";
 interface Props {
   location: {
     state: {
-      events: {
-        id: number;
-        "event-name": string;
-        bio: string;
-        location: string;
-        registration: boolean;
-        "start-date": {
-          month: number;
-          day: number;
-          year: number;
-          time: {
-            hour: number;
-            minute: number;
-            second: number;
-          };
-        };
-        "end-date": {
-          month: number;
-          day: number;
-          year: number;
-          time: {
-            hour: number;
-            minute: number;
-            second: number;
-          };
-        };
-        status?: string;
-      };
+      events: IEventData;
     };
   };
   history: {

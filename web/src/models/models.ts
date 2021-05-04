@@ -191,6 +191,7 @@ export interface IEventData {
     };
   };
   status?: string;
+  image: string;
 }
 export interface ITeamEventData {
   Candidate: {

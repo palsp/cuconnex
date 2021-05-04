@@ -194,11 +194,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           <Heading size="small" value="Back" />
         </div>
         <DotMorePage data-test="dot-icon" amount={3} />
-        <div>
-          <Link to="/success">
-            <div className={classes.emptyDiv}></div>
-          </Link>
-        </div>
+        <div></div>
       </div>
     );
   }
