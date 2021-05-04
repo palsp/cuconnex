@@ -15,7 +15,7 @@ interface Props {
 
 const RatingList: React.FC<Props> = (props) => {
   const { rating, key } = props;
-
+  console.log("RatingList: ", rating);
   const ratedUserHandler = (score: number | null) => {
     rating.setRating((prev) => {
       prev[key].rating = score;
@@ -23,10 +23,10 @@ const RatingList: React.FC<Props> = (props) => {
     });
   };
 
-  useEffect(() => {
-    setSubmit(props.submit);
-    console.log(`Submit state at RatingList: ${props.submit}`);
-  });
+  // useEffect(() => {
+  //   setSubmit(props.submit);
+  //   console.log(`Submit state at RatingList: ${props.submit}`);
+  // });
 
   const voteSubmittedHandler = async () => {
     const ratedUser: IRateUser = {
@@ -56,17 +56,17 @@ const RatingList: React.FC<Props> = (props) => {
     <div className={classes.ratingList}>
       <div className={classes.divRatingList}>
         <div>
-          <ProfilePic PicUrl={props.member?.image} />
+          <ProfilePic PicUrl={rating.user?.image} />
         </div>
         <div className={classes.UserInfo}>
-          <div className={classes.divUsernameInfo}>{props.member?.name}</div>
+          <div className={classes.divUsernameInfo}>{rating.user?.name}</div>
           <RatingStar
             ratedStarHandler={(rating: number | null) =>
               ratedUserHandler(rating)
             }
           ></RatingStar>
           {console.log(
-            `${props.member?.name} UserRating at RatingList: ${userRating}`
+            `${rating.user?.name} UserRating at RatingList: ${rating.rating}`
           )}
         </div>
       </div>

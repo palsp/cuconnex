@@ -166,6 +166,9 @@ const NotificationPage: React.FC<Props> = (props) => {
           />
         </div>
       </div>
+      <div className={classes.teamRatingList}>
+        <TeamRatingLists teams={myTeamLists} />
+      </div>
       <div className={classes.teamInvitationList}>
         <TeamInvitationLists
           data-test="Notification-page-team-invitation-lists"

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import classes from "./RatingPage.module.css";
 import { RatingLists } from "@smartComponents/index";
 import { Heading, Button } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons/index";
-import { IFetchTeam, IUser, IFetchRateTeamNotification } from "@src/models";
+import { IFetchTeam, IUser } from "@src/models";
 import { fetchTeamMembersAPI, fetchRateTeamMembersAPI } from "@api/index";
+import { UserContext } from "@src/context/UserContext";
 
 interface Props {
   location: {
@@ -25,9 +26,14 @@ export interface Rating {
 }
 
 const RatingPage: React.FC<Props> = (props) => {
-  // const [rateTeamMemberLists, setRateTeamMemberLists] = useState<IUser[] | []>(
-  //   []
-  // );
+  const [rateTeamMemberLists, setRateTeamMemberLists] = useState<IUser[] | []>(
+    []
+  );
+  const [teamMemberLists, setTeamMemberLists] = useState<IUser[] | []>([]);
+
+  const { userData } = useContext(UserContext);
+
+  const [allRated, setAllRated] = useState<boolean>(true);
 
   const [submit, setSubmit] = useState<boolean>(false);
 
@@ -47,10 +53,37 @@ const RatingPage: React.FC<Props> = (props) => {
     return teamData.data.ratees;
   };
 
+  const fetchTeamMembersHandler = async () => {
+    const teamData = await fetchTeamMembersAPI(props.location.state.team.name);
+    console.log("fetchTeamMembersHandler", teamData.data.users);
+    return teamData.data.users;
+  };
+
   useEffect(() => {
-    fetchRateTeamMembersHandler().then((value: IUser[] | []) =>
-      setRateTeamMemberLists(value)
+    fetchTeamMembersHandler().then((value: IUser[]) =>
+      value.forEach((user: IUser, index: number) => {
+        if (user.id !== userData.id) {
+          setRatings((prev) => {
+            prev[index] = {
+              user: user,
+              rating: null,
+              setRating: setRatings,
+            };
+            return prev;
+          });
+        }
+      })
     );
+    console.log("Rating: ", ratings);
+    // ratings.forEach((value) => {
+    //   if (value.rating === null) {
+    //     setAllRated((prevState) => (prevState = prevState && false));
+    //   }
+    // });
+
+    // fetchTeamMembersHandler().then((value: IUser[] | []) =>
+    //   setTeamMemberLists(value)
+    // );
   }, []);
 
   const onSubmitHandler = () => {
@@ -92,8 +125,9 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
         {/* <RatingLists members={teamMemberLists} submit={submit} /> */}
-        <RatingLists members={ratings} submit={submit} />
-        <Button value="Submit" onClick={onSubmitHandler} />
+        <RatingLists ratings={ratings} submit={submit} />
+        {console.log(ratings)}
+        <Button value="Submit" disabled={allRated} onClick={onSubmitHandler} />
         {redirect}
         <div className={classes.ratingDetail}>
           {
