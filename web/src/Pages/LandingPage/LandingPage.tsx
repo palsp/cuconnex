@@ -116,12 +116,7 @@ const LandingPage: React.FC<Props> = (props) => {
   if (teamNoti != undefined) {
     badgeContent = badgeContent + teamNoti.length;
   }
-  if (friendNoti != undefined) {
-    badgeContent = badgeContent + friendNoti.length;
-  }
-  // if (outgoingTeamNoti != undefined) {
-  //   badgeContent = badgeContent + outgoingTeamNoti.length;
-  // }
+
   if (rateTeamNoti !== undefined) {
     badgeContent = badgeContent + rateTeamNoti.length;
   }
