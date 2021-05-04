@@ -154,6 +154,8 @@
   width: 100%;
   height: 150px;
   margin-bottom: 5%;
+  position: relative;
+  z-index: 1;
 }
 
 .landingDiv .teamContainer {
