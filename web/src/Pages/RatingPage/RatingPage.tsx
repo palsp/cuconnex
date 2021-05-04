@@ -141,14 +141,19 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.rateTeammates}>Rate Your Teammates</div>
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
-        {ratings.length > 0 ? <RatingLists ratings={ratings} /> : "loading"}
+        <div className={classes.ratingLists}>
+          {ratings.length > 0 ? <RatingLists ratings={ratings} /> : "loading"}
+        </div>
 
         {/* <Button value="Submit" disabled={allRated} onClick={onSubmitHandler} /> */}
-        <Button
-          value="Submit"
-          disabled={enableCheckHandler()}
-          onClick={onSubmitHandler}
-        />
+        <div className={classes.submitButton}>
+          <Button
+            value="Submit"
+            disabled={enableCheckHandler()}
+            onClick={onSubmitHandler}
+          />
+        </div>
+
         {redirect}
         <div className={classes.ratingDetail}>
           {

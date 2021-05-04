@@ -16,7 +16,7 @@
 }
 
 .textBox {
-  margin: 1vh 10vw;
+  margin: 3vh 10vw;
   text-align: left;
 }
 
@@ -97,6 +97,13 @@
   /* background-color: rgba(128, 128, 128, 0.33); */
 }
 
+/* .ratingLists {
+  margin: 2vh 0;
+} */
+.submitButton {
+  margin-top: 2vh;
+}
+
 .ratingDetail {
   width: auto; /* 240px */
   height: auto; /* 28px */
@@ -110,4 +117,5 @@
   font-weight: 400;
   font-style: normal;
   font-family: "Nunito", serif;
+  margin: 2vh 0;
 }

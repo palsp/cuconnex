@@ -1,4 +1,4 @@
-.eventPic {
+/* .eventPic {
   width: 100%;
   height: 100%;
 }
@@ -26,4 +26,31 @@
   border-left: 21px solid transparent;
   overflow: hidden;
   position: absolute;
+} */
+.container {
+  display: flex;
+  position: relative;
+}
+
+.defaultPic {
+  background-image: url("../../../../assets/tempEventProfile.jpg");
+  background-size: contain;
+  border-radius: 50%;
+  opacity: 1;
+  width: 57px;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.eventPic {
+  background-size: contain;
+  border-radius: 50%;
+  opacity: 1;
+  width: 57px;
+  height: 57px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
