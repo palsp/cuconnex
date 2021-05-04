@@ -91,7 +91,7 @@
   -moz-box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
   box-shadow: 0px 4px 15px -7px rgba(0, 0, 0, 0.66);
   position: relative;
-  z-index: 10;
+  z-index: 1;
   overflow: hidden;
 }
 
