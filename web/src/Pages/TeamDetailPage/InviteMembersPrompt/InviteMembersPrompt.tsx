@@ -151,42 +151,40 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   const selectPrompt = (
     <div>
       <div className={classes.divHeading}>
-        <div className={classes.divHeading}>
-          <div className={classes.divFixed}>
-            <div className={classes.relativeArrow}>
-              <Link to="/">
-                <ArrowLeft />
-              </Link>
-            </div>
-            <Heading value="Select Members" size="small-medium" />
-            <button className={classes.noStyleButton}>Invite</button>
-            <SearchBar value="Search By Name" />
+        <div className={classes.divFixed}>
+          <div className={classes.relativeArrow}>
+            <Link to="/">
+              <ArrowLeft />
+            </Link>
           </div>
+          <Heading value="Invite Members" size="small-medium" />
+          <button className={classes.noStyleButton}>Invite</button>
+          <SearchBar value="Search By Name" />
         </div>
-        <div className={classes.divInfo}>
-          <div className={classes.divLeft}>
-            {/* <p>My Connection</p> */}
-            <Subtitle value="My connection" color="black" size="small-medium" />
-          </div>
-          <div className={classes.divRight}>
-            <Subtitle
-              value={`${memberArray.length} member selected`}
-              color="black"
-              size="smaller"
-            />
-          </div>
+      </div>
+      <div className={classes.divInfo}>
+        <div className={classes.divLeft}>
+          {/* <p>My Connection</p> */}
+          <Subtitle value="My connection" color="black" size="small-medium" />
         </div>
-        <div className={classes.memberListsDiv}>
-          <MemberListsForPrompt
-            clicked={clicked}
-            team={props.teams}
-            memberlist={friendsNotInTeam}
-            selectMemberListsHandler={selectMemberHandler}
-            personHandler={selectPersonHandler}
+        <div className={classes.divRight}>
+          <Subtitle
+            value={`${memberArray.length} member selected`}
+            color="black"
+            size="smaller"
           />
-          {console.log("SelectedArray Contain: ", selectedMemberArray)}
-          {console.log("AllArray Contain: ", memberArray)}
         </div>
+      </div>
+      <div className={classes.memberListsDiv}>
+        <MemberListsForPrompt
+          clicked={clicked}
+          team={props.teams}
+          memberlist={friendsNotInTeam}
+          selectMemberListsHandler={selectMemberHandler}
+          personHandler={selectPersonHandler}
+        />
+        {console.log("SelectedArray Contain: ", selectedMemberArray)}
+        {console.log("AllArray Contain: ", memberArray)}
       </div>
     </div>
   );
