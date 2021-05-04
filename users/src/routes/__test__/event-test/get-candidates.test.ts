@@ -3,9 +3,10 @@ import { app } from '../../../app';
 import { User, Event } from '../../../models';
 import { Business } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
 
 const setup = async () => {
-  const event = await Event.create({ id: 1, eventName: 'testEvent', registration: true });
+  const event = await Event.create({ id: 1, status : EventStatus.ongoing ,eventName: 'testEvent', registration: true });
 
   const user = await User.create({ id: '6131707021', name: 'bird' });
   const interest = await Interest.findOne({
@@ -43,8 +44,8 @@ describe('Get List of Teams', () => {
       .send({})
       .expect(200);
 
-    expect(res.body.length).toEqual(2);
-    expect(res.body[0].name).toEqual(team.name);
-    expect(res.body[1].name).toEqual(team2.name);
+    expect(res.body.teams.length).toEqual(2);
+    expect(res.body.teams[0].name).toEqual(team.name);
+    expect(res.body.teams[1].name).toEqual(team2.name);
   });
 });

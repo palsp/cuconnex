@@ -1,12 +1,17 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
+import { NotFoundError, BadRequestError, TeamStatus, InternalServerError, getFacultyCodeFromId } from '@cuconnex/common';
 import {
-  NotFoundError,
-  BadRequestError,
-  TeamStatus,
-  InternalServerError,
-} from '@cuconnex/common';
-import { User, Team, Interest, IsMember, Category, Event } from '../models';
+  User,
+  Team,
+  Interest,
+  IsMember,
+  Category,
+  Event,
+  Rating,
+  Recommend,
+  Faculty,
+} from '../models';
 import { deleteFile } from '../utils/file';
 import {
   IFindRelationResponse,
@@ -15,9 +20,14 @@ import {
   ITeamResponse,
   IUserRequest,
   IIsMemberResponse,
-  IRecommendUserResponse,
+  IAddRatingRequest,
   IRecommendTeam,
+  IGetRateTeamResponse,
+  IRecommendUserResponse,
+  IGetRateUserOfTeamResponse,
 } from '../interfaces';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
+import { includes } from 'lodash';
 
 /**
  * get current user profile
@@ -75,7 +85,23 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     throw new BadRequestError('User already existed');
   }
 
-  user = await User.create({ id: req.currentUser!.id, name, role, bio, image: imagePath });
+
+  user = await User.create({
+    id: req.currentUser!.id,
+    name,
+    role,
+    bio,
+    image: imagePath,
+  });
+
+  const facultyCode = getFacultyCodeFromId(req.currentUser!.id);
+
+  const faculty = await Faculty.findOne({ where: { code: facultyCode } });
+
+  if(faculty){
+    await faculty.addEnroll(user);
+  }
+
   if (!user) {
     throw new InternalServerError();
   }
@@ -85,18 +111,16 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
   } catch (err) {
     await user.destroy();
     throw new InternalServerError();
-  } 
-  
+  }
 
   const response: IUserResponse = {
     ...user!.toJSON(),
+    faculty : faculty ? faculty.name : "",
     interests,
   };
 
   res.status(201).send(response);
 };
-
-
 
 /**
  * Method for editing any field of the user with the specified id.
@@ -106,12 +130,15 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
  * @param req
  * @param res
  */
- export const editUser = async (req: Request, res: Response) => {
+export const editUser = async (req: Request, res: Response) => {
   const updatedUser = req.body as IUserRequest;
   updatedUser.file = { ...req.file };
 
+  const user = await User.findOne({ where: { id: req.user!.id }, include : [Faculty] });
   if (req.file) {
-    deleteFile(req.user!.image);
+    if (user!.image !== '') {
+      deleteFile(req.user!.image);
+    }
     req.user!.image = updatedUser.file.path;
   }
 
@@ -128,14 +155,12 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     throw new InternalServerError();
   }
 
-
   const response: IUserResponse = {
     ...req.user!.toJSON(),
   };
 
   res.status(200).send(response);
 };
-
 
 export const search = async (req: Request, res: Response) => {
   const keyword = req.query.keyword;
@@ -150,19 +175,21 @@ export const search = async (req: Request, res: Response) => {
    */
   const teamConstraint = { name: { [Op.startsWith]: keyword } };
 
-  let users: User[];
-  let team: Team[];
+  let users: User[] = [];
+  let team: Team[] = [];
   try {
-    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: Interest});
-    team = await Team.findAll({ where: teamConstraint });
+    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: [Interest,Faculty] });
+    team = await Team.findAll({ where: teamConstraint  , include : [{ model : User , as : 'member' , include : [Faculty]}]});
   } catch (err) {
     console.log(err);
   }
 
-  res.status(200).send({
-    users: users! || [],
-    team: team! || [],
-  });
+  const response = {
+    users : users.map(user => user.toJSON()),
+    team: team.map(team => team.toJSON()),
+  }
+
+  res.status(200).send(response);
 };
 
 export const findRelation = async (req: Request, res: Response) => {
@@ -246,6 +273,7 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   const teamsResponse: ITeamResponse[] = [];
   for (let team of teams) {
     await team.fetchTeam();
+    
     teamsResponse.push(team.toJSON());
   }
 
@@ -311,52 +339,197 @@ export const getTeamStatus = async (req: Request, res: Response) => {
   res.status(200).send(response);
 };
 
+export const getRecommendUser = async (req: Request, res: Response) => {
+  const users = await User.findAll({ where: { id: { [Op.not]: req.user!.id } } , include : [Faculty] });
+  let result: {
+    user: User;
+    score: number;
+  }[] = [];
 
-export const getRecommendTeam = async (req : Request , res : Response) => {
-    const eventId = req.params.eventId;
-    // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
-    const event = await Event.findOne({
-      where : { id : eventId } , 
-      include : { 
-        model : Team ,
-        as : 'candidate',
-        attributes : { include : ["name"] },
-        include : [
-            { model : User, 
-              as: 'owner', 
-              attributes :  ["id"],
-            },
-            { model : User, 
-              as : 'member' , 
-              attributes : ["id"] , 
-            }
-        ]
-      }
-    })
+  for (let user of users) {
+    const score = await Recommend.CalculateScore(req.user!.id, user.id);
+    result.push({ user, score });
+  }
 
-    if(!event){
-      throw new NotFoundError("Event");
+  // sort by score
+  result.sort((a, b) => b.score - a.score);
+
+  // TODO: create interface
+  const response: IRecommendUserResponse = { users: result.map((r) => r.user.toJSON()) };
+
+  res.status(200).send(response);
+};
+
+export const getRecommendTeam = async (req: Request, res: Response) => {
+  const teams = await Team.findAll({ include : [{ model : User , as : 'member'}]});
+
+  let result: {
+    team: Team;
+    score: number;
+  }[] = [];
+
+  for (let team of teams) {
+    // DO not predict user's team
+    const isMember = await team.findMember(req.user!.id);
+    if (isMember) {
+      continue;
     }
-    let result : {
-      team : Team,
-      score : number
-    }[] = [];
+    let score: number;
+    score = await req.user!.calculateTeamScore(team);
+    result.push({ team, score });
+  }
 
-    for(let team of event.candidate!){
-      // DO not predict user's team
-      const isMember = await team.findMember(req.user!.id);
-      if(isMember){
-        continue;
-      }
-      let score:number;
-      score = await req.user!.calculateTeamScore(team)
-      result.push({ team , score})
+  result.sort((a, b) => b.score - a.score);
+
+  const response: IRecommendTeam = { teams: result.map((r) => r.team.toJSON()) };
+
+  res.status(200).send(response);
+};
+
+export const getRecommendTeamByEvent = async (req: Request, res: Response) => {
+  const eventId = req.params.eventId;
+  // const event = await Event.findOne({ where : { id : eventId} , include : [{ model : Team , as : "candidate", include : ['owner','member']}]})
+  const event = await Event.findOne({
+    where: { id: eventId },
+    include: {
+      model: Team,
+      as: 'candidate',
+      attributes: { include: ['name'] },
+      include: [
+        { model: User, as: 'owner', attributes: ['id'] },
+        { model: User, as: 'member', attributes: ['id'] },
+      ],
+    },
+  });
+
+  if (!event) {
+    throw new NotFoundError('Event');
+  }
+  let result: {
+    team: Team;
+    score: number;
+  }[] = [];
+
+  for (let team of event.candidate!) {
+    // DO not predict user's team
+    const isMember = await team.findMember(req.user!.id);
+    if (isMember) {
+      continue;
     }
+    let score: number;
+    score = await req.user!.calculateTeamScore(team);
+    result.push({ team, score });
+  }
 
-    result.sort((a,b) => b.score - a.score)
- 
+  result.sort((a, b) => b.score - a.score);
 
-    const response : IRecommendTeam = { teams : result.map(r => r.team.toJSON())};
+  const response: IRecommendTeam = { teams: result.map((r) => r.team.toJSON()) };
 
-    res.status(200).send(response);
-}
+  res.status(200).send(response);
+};
+
+export const getRateTeam = async (req: Request, res: Response) => {
+  const events = await Event.findAll({
+    where: { status: EventStatus.closed },
+    include: [{ model: Team, as: 'candidate' }],
+  });
+  let myTeamInEvent = [];
+  for (let event of events) {
+    for (let candidate of event.candidate!) {
+      // check if users is a member of the team
+      const isMember = await candidate.findMember(req.user!.id);
+      if (isMember) {
+        // check if user rate all the member of the team
+        const members = await candidate.getMembers();
+        let isRate = true;
+        for (let member of members) {
+          if (member.id === req.user!.id) continue; // should not rate yourself
+
+          const rate = await Rating.isRate(req.user!, member);
+
+          if (!rate) {
+            isRate = false;
+            break;
+          }
+        }
+        if (!isRate) {
+          myTeamInEvent.push(candidate);
+        }
+        // stop iterate through candidates if users team is found
+        break;
+      }
+    }
+  }
+  const response: IGetRateTeamResponse = {
+    teams: myTeamInEvent.map((team) => team.toJSON()),
+  };
+  res.send(response);
+};
+
+export const getRateUserOfTeam = async (req: Request, res: Response) => {
+  const team = await Team.findOne({
+    where: { name: req.params.teamName },
+    include: [
+      { model: User, as: 'owner' },
+      { model: User, as: 'member' },
+    ],
+  });
+
+  if (!team) {
+    throw new BadRequestError('Team not existed');
+  }
+
+  const isMember = await team.findMember(req.user!.id);
+
+  if (!isMember) {
+    throw new BadRequestError('You must be a part of the team in order to rate team members');
+  }
+
+  const rateUsers: User[] = [];
+
+  if (team.owner!.id !== req.user!.id) {
+    const rate = await Rating.isRate(req.user!, team.owner!);
+
+    if (!rate) rateUsers.push(team.owner!);
+  }
+
+  for (let member of team.member!) {
+    if (member.id === req.user!.id) continue;
+
+    const rate = await Rating.isRate(req.user!, member);
+
+    if (!rate) rateUsers.push(member);
+  }
+
+  const response: IGetRateUserOfTeamResponse = {
+    ratees: rateUsers.map((user) => user.toJSON()),
+  };
+  res.status(200).send(response);
+};
+
+export const addRatings = async (req: Request, res: Response) => {
+  const { rateeId, ratings } = req.body as IAddRatingRequest;
+  const ratee = await User.findByPk(rateeId);
+
+  if (!ratee) {
+    throw new BadRequestError('ratee does not existed');
+  }
+
+  if (ratee.id === req.user!.id) {
+    throw new BadRequestError('cannot rate yourself');
+  }
+
+  const rate = await Rating.findOne({ where: { raterId: req.user!.id, rateeId: ratee.id } });
+
+  if (!rate) {
+    throw new BadRequestError('please rate this user at the end of the event');
+  }
+  try {
+    rate.rating = +ratings.toFixed(2);
+    rate.isRate = true;
+    await rate.save();
+  } catch (err) {
+    throw new InternalServerError();
+  }
+  res.status(201).send({});
+};

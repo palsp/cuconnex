@@ -7,8 +7,9 @@ import {
   IUserSignup,
   IResultSigninSignup,
   IFetchEventsData,
+  ICreateEventData,
   IEventData,
-  ITeamData,
+  ICreateTeamData,
   IInviteData,
   IInviteDataResult,
   ISearchUserTeamEventResult,
@@ -24,7 +25,6 @@ import {
   IGetTeam,
   ITeamMembers,
   IUserResponse,
-  ITeam,
   IFetchTeam,
   IFetchOutgoingTeamNotification,
   IUserRequest,
@@ -36,6 +36,8 @@ import {
   IFetchTeams,
   IRegisterTeamEvent,
   IFetchTeamEvent,
+  IFetchRecommendedUser,
+  IFetchRecommendedTeam,
 } from "@src/models";
 
 //Auth Services
@@ -74,29 +76,51 @@ const fetchEventsDataAPI = async (): Promise<
   AxiosResponse<IFetchEventsData>
 > => {
   const eventsData: AxiosResponse<IFetchEventsData> = await axios.get(
-    "/api/events"
+    "/api/events/"
   );
 
   return eventsData;
 };
+
+const fetchRecommendedUser = async (): Promise<
+  AxiosResponse<IFetchRecommendedUser>
+> => {
+  const recommendedUsers: AxiosResponse<IFetchRecommendedUser> = await axios.get(
+    "/api/users/recommend-user"
+  );
+  return recommendedUsers;
+};
+
+const fetchRecommendedTeam = async (): Promise<
+  AxiosResponse<IFetchRecommendedTeam>
+> => {
+  const recommendedTeams: AxiosResponse<IFetchRecommendedTeam> = await axios.get(
+    "/api/users/recommend-team"
+  );
+  return recommendedTeams;
+};
 const createEventsAPI = async (
-  eventsCreatedData: IEventData
+  eventsCreatedData: ICreateEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
-    "/api/events",
+    "/api/events/",
     eventsCreatedData
   );
   return createEventsData;
 };
-const createTeamAPI = async (
-  teamCreatedData: ITeamData
-): Promise<AxiosResponse<ITeamData>> => {
-  const createTeamData: AxiosResponse<ITeamData> = await axios.post(
-    "/api/teams",
-    teamCreatedData
-  );
-  console.log("eiei111", createTeamData);
-
+const createTeamAPI = async (teamCreatedData: ICreateTeamData) => {
+  const formData = new FormData();
+  formData.append("name", teamCreatedData.name);
+  formData.append("description", teamCreatedData.description);
+  formData.append("currentRecruitment", teamCreatedData.currentRecruitment);
+  formData.append("image", teamCreatedData.image ? teamCreatedData.image : "");
+  const createTeamData = await axios({
+    method: "post",
+    url: "/api/teams",
+    data: formData,
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  // const createTeamData = await axios.post("/api/teams", teamCreatedData);
   return createTeamData;
 };
 
@@ -318,7 +342,6 @@ const fetchEventTeamAPI = async (
   return teamData;
 };
 
-
 export {
   fetchUserDataAPI,
   userLogoutAPI,
@@ -350,4 +373,6 @@ export {
   registerTeamEventAPI,
   fetchTeamEventAPI,
   fetchEventTeamAPI,
+  fetchRecommendedUser,
+  fetchRecommendedTeam,
 };

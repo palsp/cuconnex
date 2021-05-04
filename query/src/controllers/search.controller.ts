@@ -7,7 +7,7 @@ require('express-async-errors');
 const cookie = 'express:sess=eyJqd3QiOiJleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJall4TXpFeE1qRXhNakVpTENKcFlYUWlPakUyTVRnMU1UZzBOemw5LkJTOUlwcTB4WDYyU0lPbmpwT0l5X3hpbnVWRkxIQmk0ODh1X2Y5LUo4SHMifQ=='
 
 /**
- * Forward the to user and team services, mearge two response back to single response before send back to user
+ * Forward the to user and team services, merge two response back to single response before send back to user
  * @param req 
  * @param res 
  */
@@ -35,6 +35,12 @@ export const searchHandler = async (req: Request, res: Response) => {
 
     // if fetch from any service failed, it should be replace with default response
     const userResult = userResp ? userResp.data : { users: [], team: [] };
-    const eventResult = eventResp ? eventResp.data : { events: [] };
-    res.status(200).send({ ...userResult, ...eventResult });
+    let eventResult = [];
+    if(eventResp){
+        if(eventResp.data.events){
+            eventResult = eventResp.data.events
+        }   
+    }
+    // const eventResult = eventResp ? eventResp.data : { events: [] };
+    res.status(200).send({ ...userResult, events : eventResult });
 }

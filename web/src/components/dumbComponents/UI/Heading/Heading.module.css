@@ -1,3 +1,16 @@
+.headingContainer {
+  margin: 5px;
+}
+
+.headingContainer > p {
+  margin: 0
+}
+
+.backArrow {
+  position: absolute;
+  left: 5vw;
+}
+
 .titlePage {
   /* width: 106px; */
   /* height: 1.7rem; */
@@ -49,3 +62,4 @@
 .bold {
   font-weight: 600;
 }
+

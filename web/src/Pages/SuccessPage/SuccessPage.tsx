@@ -14,7 +14,14 @@ import {
 
 import classes from "./SuccessPage.module.css";
 
-const SuccessPage: React.FC = () => {
+interface Props {
+  location?: {
+    state: {
+      name: string;
+    };
+  };
+}
+const SuccessPage: React.FC<Props> = (props) => {
   const variants = {
     visible: { y: 0 },
     hidden: { y: 100 },
@@ -25,9 +32,9 @@ const SuccessPage: React.FC = () => {
       initial="hidden"
       animate="visible"
       exit="exit"
-      className={classes.background}
+      className={classes.page}
     >
-      <Background data-test="auth-page-background">
+      <Background data-test="auth-page-background" hasNav={false}>
         <motion.div
           // animate={{y: -window.innerHeight*0.2}}
           // animate={{ y: -(window.innerHeight * 0.1) }}
@@ -46,7 +53,14 @@ const SuccessPage: React.FC = () => {
             data-test="success-page-halfcircleoverlay"
           ></motion.div>
           <div className={classes.divHeader}>
-            <Heading data-test="success-page-header" value="Welcome Suki!" />
+            {props.location ? (
+              <Heading
+                data-test="success-page-header"
+                value={`Welcome ${props.location.state.name}!`}
+              />
+            ) : (
+              <Heading data-test="success-page-header" value="Welcome Suki!" />
+            )}
             <Subtitle
               data-test="success-page-subtitle"
               value="Your sign up is successful"

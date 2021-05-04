@@ -4,11 +4,14 @@ import { BelongsToManyGetAssociationsMixin } from 'sequelize';
 import { Team } from './team.model';
 import { IEventResponse } from '../interfaces/event';
 import { ITeamResponse } from '../interfaces';
+import { EventStatus } from '@cuconnex/common/build/db-status/event';
 
 interface EventAttrs {
   id: number;
   eventName: string;
   registration: boolean;
+  status : EventStatus;
+  image? : string;
   candidate? : Team[];
   version?: number;
 }
@@ -16,6 +19,7 @@ interface EventAttrs {
 interface EventCreationAttrs {
   id: number;
   eventName: string;
+  status: EventStatus;
   registration: boolean;
 }
 
@@ -23,6 +27,8 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
   public id!: number;
   public eventName!: string;
   public registration!: boolean;
+  public status! : EventStatus;
+  public image? : string;
   public candidate? : Team[];
 
   public version?: number;
@@ -49,6 +55,14 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
           type: DataTypes.INTEGER,
           primaryKey: true,
         },
+        status : {
+          type: DataTypes.ENUM,
+          allowNull : false,
+          values: Object.values(EventStatus) 
+        },
+        image : {
+          type : DataTypes.STRING(255),
+        },
         eventName: {
           type: DataTypes.STRING(255),
           allowNull: false,
@@ -73,6 +87,10 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
     let candidate : ITeamResponse[] = []
     if(this.candidate){
      candidate = this.candidate.map(c => c.toJSON())
+    }
+
+    if(!values.image){
+      values.image = "";
     }
 
     return { ...values , candidate };

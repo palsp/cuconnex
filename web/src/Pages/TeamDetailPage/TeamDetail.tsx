@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import classes from "./TeamDetail.module.css";
 import { Link } from "react-router-dom";
-import { Heading } from "@dumbComponents/UI/index";
+import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft, Close, InviteMember, Mail } from "@icons/index";
 import {
   MemberPicList,
@@ -18,7 +18,6 @@ import containerVariants, {
   IUserFriend,
   IUserRequest,
 } from "@src/models/models";
-import { ITeam } from "@src/models/index";
 import { UserContext } from "@context/UserContext";
 import {
   fetchTeamIncomingNotificationAPI,
@@ -29,6 +28,7 @@ import {
 } from "@src/api";
 import RequestPrompt from "./RequestPrompt/RequestPrompt";
 import InviteMembersPrompt from "./InviteMembersPrompt/InviteMembersPrompt";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
 interface Props {
   location: {
@@ -46,7 +46,6 @@ const TeamDetail: React.FC<Props> = (props) => {
   const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
   const [clickTeamDetail, setClickTeamDetail] = useState<boolean>(true);
   const [clickInviteMembers, setClickInviteMembers] = useState<boolean>(false);
-
   const [incomingTeamNoti, setIncomingTeamNoti] = useState<IUserFriend[] | []>(
     []
   );
@@ -59,34 +58,52 @@ const TeamDetail: React.FC<Props> = (props) => {
   }, []);
   const myTeamName = props.location.state.team.name;
   const fetchOutgoingTeamNotiHandler = async () => {
-    const teamOutgoingNotiData = await fetchTeamOutgoingNotificationAPI(
-      myTeamName
-    );
-    console.log(
-      "SUCCESS pendingMember",
-      teamOutgoingNotiData.data.outgoingRequests.pendingUsers
-    );
-    setPendingMembers(teamOutgoingNotiData.data.outgoingRequests.pendingUsers);
+    try {
+      const teamOutgoingNotiData = await fetchTeamOutgoingNotificationAPI(
+        myTeamName
+      );
+      console.log(
+        "SUCCESS pendingMember",
+        teamOutgoingNotiData.data.outgoingRequests.pendingUsers
+      );
+      setPendingMembers(
+        teamOutgoingNotiData.data.outgoingRequests.pendingUsers
+      );
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchIncomingTeamNotiHandler = async () => {
-    const requestData = await fetchTeamIncomingNotificationAPI(
-      props.location.state.team.name
-    );
-    console.log(
-      "SUCCESS Incoming team request =",
-      requestData.data.incomingRequests.pendingUsers
-    );
-    setIncomingTeamNoti(requestData.data.incomingRequests.pendingUsers);
+    try {
+      const requestData = await fetchTeamIncomingNotificationAPI(
+        props.location.state.team.name
+      );
+      console.log(
+        "SUCCESS Incoming team request =",
+        requestData.data.incomingRequests.pendingUsers
+      );
+      setIncomingTeamNoti(requestData.data.incomingRequests.pendingUsers);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchTeamMembersHandler = async () => {
-    const teamMembersData = await fetchTeamMembersAPI(myTeamName);
-    console.log("SUCCESS members =", teamMembersData.data.users);
-    setTeamMembers(teamMembersData.data.users);
+    try {
+      const teamMembersData = await fetchTeamMembersAPI(myTeamName);
+      console.log("SUCCESS members =", teamMembersData.data.users);
+      setTeamMembers(teamMembersData.data.users);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchRelationHandler = async () => {
-    const relationData = await userTeamRelationAPI(myTeamName);
-    console.log("SUCCESS relation =", relationData.data);
-    setRelation(relationData.data.status);
+    try {
+      const relationData = await userTeamRelationAPI(myTeamName);
+      console.log("SUCCESS relation =", relationData.data);
+      setRelation(relationData.data.status);
+    } catch (e) {
+      console.log(e);
+    }
   };
   console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
@@ -96,10 +113,10 @@ const TeamDetail: React.FC<Props> = (props) => {
     isTeamOwner = true;
   }
   // Is team already exist ? (create team process)
-  const isTeamExist = true;
-  const goBackPreviousPageHandler = () => {
+  const goBack = () => {
     props.history.goBack();
   };
+
   const inviteMembersClickedHandler = () => {
     setClickInviteMembers(true);
     setClickTeamDetail(false);
@@ -119,31 +136,7 @@ const TeamDetail: React.FC<Props> = (props) => {
         className={classes.TeamDetail}
       >
         <div className={classes.header}>
-          {isTeamExist ? (
-            <div
-              onClick={goBackPreviousPageHandler}
-              className={classes.relativeArrow}
-            >
-              <ArrowLeft data-test="team-detail-page-arrow-left" />
-            </div>
-          ) : (
-            // <div className={classes.closeLeft}>
-            //   <Close data-test="team-detail-page-close-left" />
-            // </div>
-            <div />
-          )}
-
-          <div className={classes.head}>
-            <Heading data-test="team-detail-page-header" value="Team details" />
-          </div>
-          {isTeamOwner ? (
-            <div />
-          ) : (
-            // <div className={classes.closeRight}>
-            //   <Close data-test="team-detail-page-close-right" />
-            // </div>
-            <div />
-          )}
+          <PageTitle text="Team Details" size="medium" goBack={goBack} />
         </div>
 
         <div className={classes.info}>
@@ -153,11 +146,27 @@ const TeamDetail: React.FC<Props> = (props) => {
               inviteMembersClickedHandler={inviteMembersClickedHandler}
               status={relation}
               name={props.location.state.team.name}
+              teamInfo={props.location.state.team}
               isTeamOwner={isTeamOwner}
             />
           </div>
         </div>
 
+        <div className={classes.teamDescription}>
+          <Subtitle value="Team Description" bold size="small" color="black" />
+          <Heading value="About our team" size="small" />
+          <Subtitle
+            value={props.location.state.team.description}
+            size="small"
+            color="black"
+          />
+          <Heading value="Current Recruitment" size="small" />
+          <Subtitle
+            value={props.location.state.team.currentRecruitment}
+            size="small"
+            color="black"
+          />
+        </div>
         <div className={classes.memberpic}>
           <MemberPicList
             members={teamMembers}

@@ -9,6 +9,12 @@ type DBConfig struct {
 	Password string
 }
 
+type StanConfig struct {
+	ClusterID string
+	ClientID string
+	URL string
+}
+
 
 var DB = DBConfig{
 	Name: os.Getenv("DB_NAME"),
@@ -17,6 +23,33 @@ var DB = DBConfig{
 	Password: os.Getenv("DB_PASSWORD"),
 }
 
+type S3Config struct {
+	Bucket string
+	Region string
+	Credential string
+	AccessKeyID  string
+	SecretAccessKey  string
+}
+
+
+var S3 = S3Config{
+	Bucket: os.Getenv("AWS_BUCKET"),
+	Region: os.Getenv("AWS_REGION"),
+	AccessKeyID : os.Getenv("AWS_ACCESS_KEY"),
+	SecretAccessKey : os.Getenv("AWS_SECRET_ACCESS_KEY"),
+}
+
+
+
+var SCconfig = StanConfig{
+		ClusterID: os.Getenv("NATS_CLUSTER_ID"),
+		ClientID: os.Getenv("NATS_CLIENT_ID"),
+		URL: os.Getenv("NATS_URL"),
+}
+
+
+
+
 
 var TestDB = DBConfig{
 	Name: "eventdb_test",
@@ -24,3 +57,4 @@ var TestDB = DBConfig{
 	User : "root",
 	Password: "password",
 }
+

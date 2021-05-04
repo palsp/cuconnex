@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
 import { Team, Event } from '../models';
-import { ITeamResponse } from '../interfaces';
+import { IGetRegisterTeamResponse, ITeamResponse } from '../interfaces';
 
 export const getRegisteredTeams = async (req: Request, res: Response) => {
   const { eventId } = req.params;
@@ -12,10 +12,13 @@ export const getRegisteredTeams = async (req: Request, res: Response) => {
   }
 
   const teams: Team[] = await event.getMyCandidates();
-  const response: ITeamResponse[] = [];
+  const response: IGetRegisterTeamResponse = {
+    teams : teams.map(team => team.toJSON())
+  };
 
-  for (let team of teams) {
-    response.push(team.toJSON());
-  }
+  // for (let team of teams) {
+  //   response.push(team.toJSON());
+  // }
+  
   res.status(200).send(response);
 };

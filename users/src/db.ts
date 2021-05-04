@@ -29,7 +29,9 @@ const initializeDB = async () => {
 
   autoMigrate(myDB.sequelize);
 
-  await myDB.sequelize.sync({ logging: false });
+  await myDB.sequelize.sync({ logging: false});
+
+  console.log('Successfully connected to database')
 
   return myDB;
 };

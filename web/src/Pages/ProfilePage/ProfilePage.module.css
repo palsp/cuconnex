@@ -1,6 +1,9 @@
 .main {
   width: 100vw;
   position: relative;
+  background: white;
+  position: relative;
+  z-index: 2;
 }
 
 .relativeArrow {
@@ -26,7 +29,7 @@
   position: absolute;
   overflow: hidden;
   right: 5%;
-  top: 25%;
+  top: 33%;
 }
 
 .editAbout {

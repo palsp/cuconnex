@@ -1,0 +1,15 @@
+.pageTitleContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  position: relative;
+  height: 20vw !important;
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.backArrow {
+  position: absolute;
+  left: 5vw;
+}

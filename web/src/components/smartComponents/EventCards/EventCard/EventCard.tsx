@@ -2,9 +2,11 @@ import React from "react";
 import classes from "./EventCard.module.css";
 interface Props {
   events: {
+    id: number;
     "event-name": string;
     bio: string;
-    status?: string;
+    location: string;
+    registration: boolean;
     "start-date": {
       month: number;
       day: number;
@@ -25,6 +27,7 @@ interface Props {
         second: number;
       };
     };
+    status?: string;
   };
 }
 
@@ -55,7 +58,11 @@ const EventCard: React.FC<Props> = (props) => {
           {props.events?.["event-name"]}
         </div>
         <div className={classes.eventdescriptionDiv}>{props.events?.bio}</div>
-        <div className={cssArrayEvent.join(" ")}>{props.events?.status}</div>
+        <div className={classes.status}>
+          <div className={cssArrayEvent.join(" ")}>{props.events?.status}</div>
+          <div className={classes.date}>1 April 2021 - 30 june 2021</div>
+        </div>
+
         <div className={classes.eventPic}></div>
       </div>
     </div>

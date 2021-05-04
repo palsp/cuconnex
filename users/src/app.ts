@@ -1,27 +1,28 @@
 import express from 'express';
-require('express-async-errors');
+import 'express-async-errors';
 import session from 'cookie-session';
 import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 import cors from 'cors';
-import { fetchUser } from './middlewares';
 import * as router from './routes';
-import { eventRouter, connectionRouter, userRouter, teamRouter, interestRouter } from './routes';
+import { eventRouter,connectionRouter, userRouter, teamRouter, interestRouter } from './routes';
+import { fetchUser } from './middlewares';
 require('./config/multer.config');
 
 const app = express();
 
 app.use(cors());
+
 app.set('trust proxy', true);
 
-app.use(json());
+app.use(json({ limit : '1gb' }));
 
-app.use(urlencoded({ extended: true, limit: '800mb' }));
+app.use(urlencoded({ extended: true, limit: '1gb' }));
 
 app.use(
   session({
     signed: false,
-    secure: false,
+    secure: process.env.NODE_ENV !== 'test',
   })
 );
 

@@ -14,11 +14,11 @@ it("should render friends page", () => {
   expect(friendsPage.length).toBe(1);
 });
 
-it("should render arrowLeft", () => {
-  const wrapper = setup();
-  const arrowLeft = findByTestAttr(wrapper, "friends-page-arrow-left");
-  expect(arrowLeft.length).toBe(1);
-});
+// it("should render arrowLeft", () => {
+//   const wrapper = setup();
+//   const arrowLeft = findByTestAttr(wrapper, "friends-page-arrow-left");
+//   expect(arrowLeft.length).toBe(1);
+// });
 
 it("should render header", () => {
   const wrapper = setup();
@@ -32,11 +32,11 @@ it("should render searchBar", () => {
   expect(searchBar.length).toBe(1);
 });
 
-it("should render backLink", () => {
-  const wrapper = setup();
-  const backLink = findByTestAttr(wrapper, "friends-page-back-link");
-  expect(backLink.length).toBe(1);
-});
+// it("should render backLink", () => {
+//   const wrapper = setup();
+//   const backLink = findByTestAttr(wrapper, "friends-page-back-link");
+//   expect(backLink.length).toBe(1);
+// });
 
 it("should render friendList", () => {
   const wrapper = setup();

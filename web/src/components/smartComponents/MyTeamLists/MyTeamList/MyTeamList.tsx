@@ -12,7 +12,7 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./MyTeamList.module.css";
 import { Ecommerce, Group } from "@dumbComponents/UI/Icons";
-import { IFetchTeam, IFetchTeams, ITeam, IUserFriend } from "@src/models";
+import { IFetchTeam, IFetchTeams, IUserFriend } from "@src/models";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -61,7 +61,11 @@ const TeamList: React.FC<Props> = (props) => {
           <div className={classes.leftFlex}>
             <div className={classes.teampic}>
               {/* <TeamPic/> */}
-              {props.landingexplore ? <TeamPic /> : <ProfilePic />}
+              {props.landingexplore ? (
+                <TeamPic PicUrl={props.team.image} />
+              ) : (
+                <ProfilePic PicUrl={props.team.image} />
+              )}
             </div>
           </div>
           <div className={classes.rightFlex}>

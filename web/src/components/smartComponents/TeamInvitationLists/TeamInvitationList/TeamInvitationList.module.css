@@ -50,6 +50,7 @@
 .teamEvent {
   text-align: start;
   margin-right: 3%;
+  white-space: nowrap;
 }
 
 .flex {

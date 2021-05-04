@@ -52,7 +52,8 @@
   left: 4.8vw;
 }
 .searchDiv {
-  width: 100vw;
+  width: 95vw;
+  margin: auto;
 }
 .memberListsDiv {
   display: flex;

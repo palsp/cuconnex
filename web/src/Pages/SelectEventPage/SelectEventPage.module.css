@@ -1,3 +1,10 @@
+.page {
+  width: 100%;
+  position: relative;
+  background: white;
+  z-index: 3;
+}
+
 .mainDiv {
   width: 100vw;
   display: flex;
@@ -45,7 +52,7 @@
 .relativeArrow {
   position: absolute;
   left: 4.8vw;
-  top: 3.201vh;
+  top: 3.3vh;
 }
 
 .eventTypeListContainer {

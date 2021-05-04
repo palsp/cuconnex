@@ -2,27 +2,25 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  text-align: left;
   width: 100vw;
-  height: 11vh;
   border-color: #bdbbbb;
   border-style: solid;
   border-top-width: 0px;
   border-bottom-width: 0.02px;
   border-left-width: 0px;
   border-right-width: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .textbodyDiv {
-  height: 11.1vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   width: 88.8vw;
-  height: 11vh;
 }
 .profileContainer {
-  margin-left: 5%;
+  margin-left: 7vw;
+  margin-right: 5vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -39,6 +37,7 @@
   align-items: center;
 }
 .eventnameDiv {
+  text-align: left;
   overflow: visible;
   white-space: pre;
   color: var(--black, #000000);
@@ -264,4 +263,7 @@
   text-align: center;
   color: var(--white, #ffffff);
   font-size: 10px;
+}
+.notInCategoryDiv {
+  text-align: left;
 }

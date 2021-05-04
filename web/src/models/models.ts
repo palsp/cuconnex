@@ -30,20 +30,29 @@ export interface IUserFriend {
   image: string;
 }
 
-export interface ITeam {
-  name: string; // team name
-  creatorId: string;
-  description: string;
-  lookingForMembers: boolean;
-}
+// export interface ITeam {
+//   name: string; // team name
+//   creatorId: string;
+//   description: string;
+//   lookingForMembers: boolean;
+// }
 export interface IFetchTeam {
   name: string; // team name
   members: IUserFriend[];
   creatorId: string;
   description: string;
   lookingForMembers: boolean;
+  image: string;
+  currentRecruitment: string;
 }
 
+export interface IFetchRecommendedUser {
+  users: IUser[];
+}
+
+export interface IFetchRecommendedTeam {
+  teams: IFetchTeam[];
+}
 export interface ISearchUserTeamEventResult {
   users: IUser[];
   team: IFetchTeam[];
@@ -109,9 +118,8 @@ export interface ICreateUserData {
   role: string;
 }
 
-
 export interface IFetchTeams {
-  teams :IFetchTeam[];
+  teams: IFetchTeam[];
 }
 
 export interface IFetchFriendsData {
@@ -124,10 +132,13 @@ export interface IFetchEventsData {
 export interface IFetchEventsDataResult {
   events: IEventData[];
 }
-export interface IEventData {
+
+export interface ICreateEventData {
   "event-name": string;
   bio: string;
-  status?: string;
+  location?: string;
+  interests: string[];
+  registration: boolean;
   "start-date": {
     month: number;
     day: number;
@@ -149,13 +160,43 @@ export interface IEventData {
     };
   };
 }
+export interface IEventData {
+  id: number;
+  "event-name": string;
+  bio: string;
+  location: string;
+  registration: boolean;
+  "start-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+  "end-date": {
+    month: number;
+    day: number;
+    year: number;
+    time: {
+      hour: number;
+      minute: number;
+      second: number;
+    };
+  };
+  status?: string;
+}
 //team
 export interface IGetTeam {
-  team: ITeam;
+  team: IFetchTeam;
 }
-export interface ITeamData {
+export interface ICreateTeamData {
   name: string;
   description: string;
+  currentRecruitment: string;
+  image: File | undefined;
 }
 
 export interface ITeamDataResult {
@@ -177,7 +218,7 @@ export interface IInviteDataResult {
 }
 
 export interface ICallTeamOfUser {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 export interface IUserRequest {
   teamName: string;
@@ -200,7 +241,6 @@ export interface IUserRelationTeam {
 export interface IUserFriendExtended extends IUserFriend {
   status: "notInvited" | "invited" | "requestedToJoin" | "inTeam";
 }
-
 
 export enum FacultyListsEnum {
   AlliedHealthSciences = "Allied Health Sciences", // สหเวช
@@ -228,7 +268,7 @@ export enum FacultyListsEnum {
 
 //Notifications
 export interface IFetchTeamNotification {
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 export interface IFetchFriendNotification {
   requests: IUserFriend[];
@@ -253,18 +293,18 @@ export interface ITeamCreatorResponse {
   teamName: string;
   status: string;
 }
-export interface IRegisterTeamEvent{
-  teamName:string;
-  eventId:number;
+export interface IRegisterTeamEvent {
+  teamName: string;
+  eventId: number;
 }
-export interface IFetchTeamEvent{
-  events:IEventData[];
+export interface IFetchTeamEvent {
+  events: IEventData[];
 }
 
 //Search
 export interface ISearchGeneral {
   users: IUser[];
-  teams: ITeam[];
+  teams: IFetchTeam[];
 }
 
 const containerVariants = {

@@ -18,6 +18,10 @@
   height: inherit;
 }
 
+.divFriendList > * {
+  width: 100%;
+}
+
 .divUsernameInfo {
   width: auto;
   height: auto;
@@ -53,7 +57,7 @@
   width: auto;
   height: auto;
   overflow: visible;
-  white-space: pre;
+
   letter-spacing: 0px;
   line-height: 1.2;
   color: var(--search_bar, #c2c2c2);
@@ -69,7 +73,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  margin-top: -3.7vh;
+  margin-left: 5vw;
+  margin-top: -1.7vh;
+
   /* width: 0.4vw; */
 }
 

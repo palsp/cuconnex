@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 
 import { User } from './user.model';
+import { Faculty } from './faculty.model';
 import { Interest } from './interest.model';
 import { UserInterest } from './UserInterest.model';
 import { Category } from './category.model';
@@ -8,16 +9,30 @@ import { Connection } from './connection.model';
 import { Recommend } from './recommend.model';
 import { Team } from './team.model';
 import { IsMember } from './isMember.model';
+import { Rating } from './rating.model';
 import { Event } from './event.model';
 import { Candidate } from './candidate.model';
 
-export { User, Interest, UserInterest, Category, Team, IsMember , Event, Recommend , Candidate};
+export {
+  User,
+  Faculty,
+  Interest,
+  UserInterest,
+  Category,
+  Team,
+  IsMember,
+  Event,
+  Rating,
+  Recommend,
+  Candidate,
+};
 
 // TODO: add version key
 
 export const autoMigrate = (sequelize: Sequelize) => {
   // -------------------- User and Interest -----------------------------------
   User.autoMigrate(sequelize);
+  Faculty.autoMigrate(sequelize);
   Interest.autoMigrate(sequelize);
   Event.autoMigrate(sequelize);
   Team.autoMigrate(sequelize);
@@ -26,9 +41,18 @@ export const autoMigrate = (sequelize: Sequelize) => {
   IsMember.autoMigrate(sequelize);
   Connection.autoMigrate(sequelize);
   Recommend.autoMigrate(sequelize);
+  Rating.autoMigrate(sequelize);
   Candidate.autoMigrate(sequelize);
 
-  // // M-M user and interest
+  // Rating M-M user
+  User.belongsToMany(User, {
+    as: 'ratee',
+    through: Rating,
+    foreignKey:  'raterId',
+    otherKey: 'rateeId',
+  });
+
+  // M-M user and interest
   User.belongsToMany(Interest, {
     through: UserInterest,
     foreignKey: 'userId',
@@ -59,7 +83,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
     as: 'recommendation',
     through: Recommend,
     foreignKey: 'userId',
-    otherKey: 'recommenderId',
+    otherKey: 'recommendeeId',
   });
 
   // define relation for connection
@@ -72,18 +96,17 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   // -------------------- User and Team -----------------------------------
 
-
   User.hasMany(Team, {
     sourceKey: 'id',
-    as : 'teams',
+    as: 'teams',
     foreignKey: 'creatorId',
     onDelete: 'CASCADE',
   });
 
-  Team.belongsTo(User,{
-    as : 'owner',
-    foreignKey : 'creatorId'
-  })
+  Team.belongsTo(User, {
+    as: 'owner',
+    foreignKey: 'creatorId',
+  });
 
   // M-M
   Team.belongsToMany(User, {
@@ -96,7 +119,21 @@ export const autoMigrate = (sequelize: Sequelize) => {
   User.belongsToMany(Team, { as: 'member', through: IsMember, foreignKey: 'userId' });
 
   // -------------------- Team and Event -----------------------------------
-
+  // M-M
   Team.belongsToMany(Event, { as: 'candidate', through: Candidate, foreignKey: 'teamName' });
   Event.belongsToMany(Team, { as: 'candidate', through: Candidate, foreignKey: 'eventId' });
+
+  // -------------------- User and Faculty -----------------------------------
+  // 1-M
+
+  Faculty.hasMany(User, {
+    as: 'enroll',
+    sourceKey: 'code',
+    foreignKey: 'facultyCode',
+    onDelete: 'SET NULL',
+  });
+  
+  User.belongsTo(Faculty, {
+    foreignKey : 'facultyCode'
+  });
 };

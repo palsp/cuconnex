@@ -9,15 +9,14 @@ import {
   Association,
   Sequelize,
   BelongsToManySetAssociationsMixin,
+  BelongsToGetAssociationMixin,
 } from 'sequelize';
 import {
   BadRequestError,
   TeamStatus,
   FriendStatus,
-  faculty,
   getCurrentYear,
   getYearFromId,
-  getFacultyCodeFromId,
   InternalServerError,
   InterestDescription,
 } from '@cuconnex/common';
@@ -29,23 +28,30 @@ import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
 import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
 import { Recommend } from './recommend.model';
+import { Rating } from './rating.model';
+import { Faculty } from './faculty.model';
+import { fakeServerWithClock } from 'sinon';
 
 // All attributes in user model
 interface UserAttrs {
   id: string;
   name: string;
   image: string;
-  faculty?: string;
+  facultyCode?: string;
+  facultyImage?: string;
   year?: string;
   role: string;
   bio: string;
+  faculty? : string;
   lookingForTeam: boolean;
   Interests?: Interest[];
   friends?: User[];
   Connection?: Connection;
   IsMember?: IsMember;
-  Recommend? : Recommend;
-  recommendation? : User[];
+  Recommend?: Recommend;
+  recommendation?: User[];
+  Rating?: Rating;
+  Faculty? : Faculty;
 }
 
 interface UserCreationAttrs {
@@ -55,24 +61,28 @@ interface UserCreationAttrs {
   lookingForTeam?: boolean;
   role?: string;
   bio?: string;
+  faculty?: string;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
 
-  public faculty!: string;
+  public faculty? : string;
+  public facultyCode?: string;
   public image!: string;
   public lookingForTeam: boolean = true;
   public year!: string;
   public role!: string;
   public bio!: string;
-  public recommendation? : User[];
+  public recommendation?: User[];
 
   public Interests?: Interest[];
   public Connection?: Connection;
   public IsMember?: IsMember;
-  public Recommend? : Recommend;
+  public Recommend?: Recommend;
+  public Rating?: Rating;
+  public Faculty? : Faculty;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -89,11 +99,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         name: {
           type: DataTypes.STRING(255),
           allowNull: false,
-        },
-        faculty: {
-          type: DataTypes.ENUM,
-          // allowNull: false,
-          values: Object.values(faculty),
         },
         year: {
           type: DataTypes.STRING(1),
@@ -126,23 +131,29 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     User.beforeCreate(async (user) => {
       // insert faculty and year according to user id
       const year = +getCurrentYear() - +getYearFromId(user.id);
-      const fname = faculty[getFacultyCodeFromId(user.id)];
+      // const fname = faculty[getFacultyCodeFromId(user.id)];
 
       user.year = year.toString();
-      user.faculty = fname;
+      // user.faculty = fname;
     });
   }
 
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
-  public addConnection!: BelongsToManyAddAssociationMixin<User, { through : {status: FriendStatus }}>;
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>;
+  public addConnection!: BelongsToManyAddAssociationMixin<
+    User,
+    { through: { status: FriendStatus } }
+  >;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
-  public getRecommendation! : BelongsToManyGetAssociationsMixin<User>;
-  public addRecommendation!: BelongsToManyAddAssociationMixin<User , { through : { score : number}}>
+  public getRecommendation!: BelongsToManyGetAssociationsMixin<User>;
+  public addRecommendation!: BelongsToManyAddAssociationMixin<User, { through: { score: number } }>;
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
+  public addRatee!: BelongsToManyAddAssociationMixin<User, { through: { rating: number } }>;
+  public getRatee!: BelongsToManyGetAssociationsMixin<User>;
+  public getFaculty!: BelongsToGetAssociationMixin<Faculty>
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
@@ -180,7 +191,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include:Interest });
+    return User.findOne({ where: { id: userId }, include: [Interest,Faculty] });
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -229,7 +240,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.addConnection(user);
   }
 
-    /**
+  /**
    * A function for accepting the friend request. It first checks if the user whose id was passed in has sent
    * a friend request to the current user or not. If so, then it changes the friendStatus of the two according to the
    * passed in accepted parameter.
@@ -238,47 +249,47 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
 
-     public async acceptConnection(sendUser: User, accepted: Boolean): Promise<FriendStatus> {
-      let relations = await Connection.findAll({
-        where: { senderId: sendUser.id, receiverId: this.id },
-      });
-  
-      if (relations.length === 0) {
-        throw new BadRequestError('User has not send a request yet');
-      }
-  
-      if (accepted) {
-        await this.addConnection(sendUser);
-        const recentAddedConn = await Connection.findAll({
-          where: { senderId: this.id, receiverId: sendUser.id },
-        });
-        relations = relations.concat(recentAddedConn);
-      }
-  
-      const status = accepted ? FriendStatus.Accept : FriendStatus.toBeDefined;
-  
-      for (let relation of relations) {
-        if (accepted) {
-          relation.status = status;
-        } else {
-          relation.status = status;
-        }
-  
-        try {
-          await relation.save();
-        } catch (err) {
-          throw new InternalServerError();
-        }
-      }
-  
-      return status;
+  public async acceptConnection(sendUser: User, accepted: Boolean): Promise<FriendStatus> {
+    let relations = await Connection.findAll({
+      where: { senderId: sendUser.id, receiverId: this.id },
+    });
+
+    if (relations.length === 0) {
+      throw new BadRequestError('User has not send a request yet');
     }
 
-  public async getAllConnectionWithStatus(status : FriendStatus): Promise<User[]>{
-    let connections = await this.getConnection({ include : [Interest]});
+    if (accepted) {
+      await this.addConnection(sendUser);
+      const recentAddedConn = await Connection.findAll({
+        where: { senderId: this.id, receiverId: sendUser.id },
+      });
+      relations = relations.concat(recentAddedConn);
+    }
 
-  
-    connections = connections.filter(conn => conn.Connection!.status === status);
+    const status = accepted ? FriendStatus.Accept : FriendStatus.toBeDefined;
+
+    for (let relation of relations) {
+      if (accepted) {
+        relation.status = status;
+      } else {
+        relation.status = status;
+      }
+
+      try {
+        await relation.save();
+      } catch (err) {
+        throw new InternalServerError();
+      }
+    }
+
+    return status;
+  }
+
+  public async getAllConnectionWithStatus(status: FriendStatus): Promise<User[]> {
+
+    let connections = await this.getConnection({ include: [Interest,Faculty] });
+
+    connections = connections.filter((conn) => conn.Connection!.status === status);
 
     return connections;
   }
@@ -290,9 +301,9 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public async getReceivedFriendRequests() {
     const result: User[] = [];
     const constraint = { receiverId: this.id, status: FriendStatus.Pending };
-    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint});
+    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
     for (let conn of receivedRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId } , include : Interest});
+      const user = await User.findOne({ where: { id: conn.senderId }, include: [Interest,Faculty] });
       if (user) {
         result.push(user);
       }
@@ -313,6 +324,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.createTeam({
       name: attrs.name,
       description: attrs.description,
+      image: attrs.image,
+      currentRecruitment: attrs.currentRecruitment,
     });
   }
 
@@ -370,24 +383,24 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return teams;
   }
 
-  public async calculateTeamScore(team : Team){
-    if(!team.owner){
+  public async calculateTeamScore(team: Team) {
+    if (!team.owner) {
       team.owner = await team.getOwner();
     }
 
-    if(!team.member){
+    if (!team.member) {
       team.member = await team.getMember();
     }
 
     // TODO: double check with bird whether owner is in isMember Table
-    let meanScore = await Recommend.CalculateScore(this.id , team.owner.id);
+    // let meanScore = await Recommend.CalculateScore(this.id, team.owner.id);
+    let meanScore = 0;
 
-    for(let member of team.member){
-        meanScore += await Recommend.CalculateScore(this.id , member.id);
+    for (let member of team.member) {
+      meanScore += await Recommend.CalculateScore(this.id, member.id);
     }
 
-    return meanScore / (team.member.length + 1)
-
+    return meanScore / (team.member.length + 1);
   }
 
   public async getMyStatusWith(team: Team): Promise<IIsMemberResponse> {
@@ -414,11 +427,22 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       interests = this.Interests.map((interest) => interest.serializer());
     }
 
-    delete values.Interests
+    delete values.Interests;
 
     if (this.Connection) {
       delete values.Connection;
     }
+
+    if(this.Faculty){
+      values.faculty = this.Faculty.name
+      values.facultyImage = this.Faculty.image
+    }else{
+      values.faculty = ""
+      values.facultyImage = "assets/faculties/default_faculty.jpeg"
+    }
+
+    delete values.Faculty;
+    delete values.Rating;
 
     return { ...values, interests };
   }
@@ -428,7 +452,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     connection: Association<User, User>;
     teams: Association<User, Team>;
     member: Association<User, Team>;
-    recommendation : Association < User,User>
+    recommendation: Association<User, User>;
   };
 }
 
