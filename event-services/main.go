@@ -1,14 +1,12 @@
 package main
 
 import (
-	"github.com/nats-io/stan.go"
-	"log"
-	"net/http"
-	"time"
-
 	"github.com/gin-gonic/gin"
+	"github.com/nats-io/stan.go"
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/events"
+	"log"
+	"time"
 )
 
 func Migrate() {
@@ -17,7 +15,7 @@ func Migrate() {
 
 func main() {
 	sc ,err := common.InitStanClient()
-	
+
 	if err != nil {
 		log.Printf("error connect to nats: %v\n" , err)
 	}
@@ -35,31 +33,27 @@ func main() {
 		stan.AckWait(aw),
 		stan.DurableName("event-service"),
 		)
-	
+
 	if err != nil {
 		sc.Close()
 		log.Fatal(err)
 	}
-	
+
 	
 	// Create a router
 	r := gin.Default()
-	//config := cors.DefaultConfig()
-	//config.AllowAllOrigins = true
-	//r.Use(cors.New(config))
-	
+
 	r.Use(CORSMiddleware())
 	
-	testEvent := r.Group("/api/ping")
-	testEvent.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
-	
+	//testEvent := r.Group("/api/ping")
+	//testEvent.GET("/", func(c *gin.Context) {
+	//	c.JSON(http.StatusOK, gin.H{
+	//		"message": "pong",
+	//	})
+	//})
+	//
 	v1 := r.Group("/api/events")
 	events.EventRegister(v1)
-	
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
 
 }
@@ -77,12 +71,12 @@ func main() {
 func CORSMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		//c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT")
 
 		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(204)
+			c.AbortWithStatus(200)
 			return
 		}
 
