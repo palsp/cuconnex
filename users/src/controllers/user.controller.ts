@@ -28,6 +28,7 @@ import {
 } from '../interfaces';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
 import { includes } from 'lodash';
+import { Connection } from '../models/connection.model';
 
 /**
  * get current user profile
@@ -347,9 +348,16 @@ export const getRecommendUser = async (req: Request, res: Response) => {
   }[] = [];
 
   for (let user of users) {
+    const status = await Connection.findConnection(req.user!.id , user.id);
+    if(Connection.isConnection(status)){
+      continue;
+    }
+
+
     const score = await Recommend.CalculateScore(req.user!.id, user.id);
     result.push({ user, score });
   }
+
 
   // sort by score
   result.sort((a, b) => b.score - a.score);
