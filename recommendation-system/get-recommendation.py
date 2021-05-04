@@ -3,7 +3,7 @@ import mysql.connector
 from time import sleep
 import os
 
-from surprise import SVD
+from surprise import NMF
 from surprise import Dataset
 from surprise import Reader
 
