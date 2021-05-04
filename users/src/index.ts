@@ -65,6 +65,9 @@ const start = async () => {
     // initial data for interest and category
     // it should be run only once
     await startDB();
+
+
+    
     await insertFaculties();
     
   // console.log(u)
