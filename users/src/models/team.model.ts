@@ -19,6 +19,7 @@ import { TeamStatus, BadRequestError } from '@cuconnex/common';
 import { ITeamResponse, IUserResponse, ITeamRequestResponse, IEventResponse } from '../interfaces';
 import { Recommend } from './recommend.model';
 import { Connection } from './connection.model';
+import { Faculty } from './faculty.model';
 
 // keep member array as id of user
 export interface TeamAttrs {
@@ -64,6 +65,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
         creatorId: {
           type: DataTypes.STRING(11),
           allowNull: false,
+          primaryKey: true,
           references: {
             model: User,
           },
@@ -219,7 +221,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
   // get accepted members
   public async getMembers(): Promise<User[]> {
-    const membersWithAllStatus: User[] = await this.getMember();
+    const membersWithAllStatus: User[] = await this.getMember({ include : [Faculty]});
 
     const acceptedUsers = membersWithAllStatus.filter((member: User) => {
       if (member.IsMember!.status === TeamStatus.Accept) {
@@ -276,7 +278,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     }
 
     if (!this.member) {
-      this.member = await this.getMember();
+      this.member = await this.getMember({include : [Faculty]});
     }
 
     // score from team owner
@@ -325,10 +327,12 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     const values = { ...this.get() };
 
     let returnMembers: IUserResponse[] = [];
+    
     if (this.members) {
       returnMembers = this.members.map((member: User) => member.toJSON());
     }
 
+    delete values.member;
     // let returnEvents: IEventResponse[] = [];
     // if (this.eventsParticipating) {
     //   returnEvents = this.eventsParticipating.map((event: Event) => event.toJSON());

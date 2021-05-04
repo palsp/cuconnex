@@ -44,8 +44,8 @@ describe('Get List of Teams', () => {
       .send({})
       .expect(200);
 
-    expect(res.body.length).toEqual(2);
-    expect(res.body[0].name).toEqual(team.name);
-    expect(res.body[1].name).toEqual(team2.name);
+    expect(res.body.teams.length).toEqual(2);
+    expect(res.body.teams[0].name).toEqual(team.name);
+    expect(res.body.teams[1].name).toEqual(team2.name);
   });
 });

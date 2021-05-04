@@ -27,6 +27,7 @@ import containerVariants, {
   IEducationData,
   IUserFriend,
 } from "@src/models/models";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 interface Props {
   location: {
     state: {
@@ -42,11 +43,14 @@ const ProfilePage: React.FC<Props> = (props) => {
   const [isFriend, setIsFriend] = useState<string>("");
   const [clickEditProfile, setClickEdit] = useState(false);
   const [clickEditOption, setClickEditOption] = useState(false); // true == 'Profile', false = 'About'
+  const [dataFetched, setDataFetched] = useState(false);
   const { userData } = useContext(UserContext);
+
+  useEffect(() => {
+    fetchRelationHandler(props.location.state.users.id);
+  }, []);
+
   console.log(userData);
-  const friendId = {
-    userId: props.location.state.users.id,
-  };
   const backButtonClickedHandler = () => {
     setClickEdit(false);
   };
@@ -61,15 +65,17 @@ const ProfilePage: React.FC<Props> = (props) => {
     setClickEdit(true);
   };
 
-  const goBackPreviousPageHandler = () => {
+  const goBack = () => {
     props.history.goBack();
   };
   const fetchRelationHandler = async (userId: string) => {
     const relationResult = await fetchRelationAPI(userId);
     console.log(relationResult.data.status);
     setIsFriend(relationResult.data.status);
+    setDataFetched(true);
     return relationResult;
   };
+
   const addFriendHandler = async (addData: IAddFriend) => {
     try {
       const resultAdd = await addFriendAPI(addData);
@@ -85,14 +91,13 @@ const ProfilePage: React.FC<Props> = (props) => {
   if (isFriend == null) {
     console.log("This is user's own profile", { isFriend });
   }
-  let isMyProfile = false;
-  if (props.location) {
-    isMyProfile = props.location.state.users.id == userData.id;
-  }
-  const isMyFriend = fetchRelationHandler(props.location.state.users.id);
-  console.log(props.location.state.users.interests);
-
   // Is it my profile ?
+  const userId = props.location.state.users.id;
+  const isMyProfile = userId === userData.id;
+  const pageTitle = isMyProfile
+    ? "My Profile"
+    : props.location.state.users.name;
+
   const selectBusinessInterestHandler = () => {
     console.log("clicked");
   };
@@ -108,17 +113,7 @@ const ProfilePage: React.FC<Props> = (props) => {
   if (clickEditProfile === false) {
     profilePrompt = (
       <div className={classes.profile}>
-        <div className={classes.header}>
-          <div
-            onClick={goBackPreviousPageHandler}
-            className={classes.relativeArrow}
-          >
-            <ArrowLeft data-test="profile-page-arrow-left" />
-          </div>
-          <div className={classes.head}>
-            <Heading data-test="profile-page-header" value="My Profile" />
-          </div>
-        </div>
+        <PageTitle goBack={goBack} size="medium" text={pageTitle} />
 
         <div className={classes.info}>
           <div className={classes.profileInfo}>
@@ -137,7 +132,7 @@ const ProfilePage: React.FC<Props> = (props) => {
           <div className={classes.addDiv}>
             {isFriend == "toBedefined" ? (
               <div
-                onClick={() => addFriendHandler(friendId)}
+                onClick={() => addFriendHandler({ userId: userId })}
                 className={classes.buttonDiv}
               >
                 <div className={classes.buttonTextDiv}>Connect</div>
@@ -192,7 +187,7 @@ const ProfilePage: React.FC<Props> = (props) => {
                 <Link
                   to={{
                     pathname: "/selectinterests",
-                    state: { users: userData },
+                    state: { users: userData, page: "profile" },
                   }}
                 >
                   <PlusCircle />{" "}
@@ -326,20 +321,11 @@ const ProfilePage: React.FC<Props> = (props) => {
   } else {
     profilePrompt = (
       <div className={classes.editPrompt}>
-        <div className={classes.header}>
-          <div
-            className={classes.relativeArrow}
-            onClick={backButtonClickedHandler}
-          >
-            <ArrowLeft data-test="profile-page-arrow-left" />
-          </div>
-          <div className={classes.head}>
-            <Heading data-test="profile-page-header" value="Edit Profile" />
-          </div>
-          <div className={classes.saveBtn} data-test="profile-page-save-btn">
-            Save
-          </div>
-        </div>
+        <PageTitle
+          goBack={backButtonClickedHandler}
+          size="medium"
+          text="Edit Profile"
+        />
         <EditPrompt
           displayName={props.location.state.users.name}
           role={props.location.state.users.role}
@@ -360,7 +346,11 @@ const ProfilePage: React.FC<Props> = (props) => {
       exit="exit"
       className={classes.main}
     >
-      <div className={classes.container}>{profilePrompt}</div>
+      {dataFetched ? (
+        <div className={classes.container}>{profilePrompt}</div>
+      ) : (
+        "loading"
+      )}
     </motion.div>
   );
 };

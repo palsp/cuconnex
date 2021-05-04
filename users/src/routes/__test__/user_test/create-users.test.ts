@@ -1,7 +1,14 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { User, Interest } from '../../../models';
-import { InterestDescription, Technology, getCurrentYear, getYearFromId, faculty } from '@cuconnex/common';
+import { User, Interest, Faculty } from '../../../models';
+import {
+  InterestDescription,
+  Technology,
+  getCurrentYear,
+  getYearFromId,
+  faculty,
+} from '@cuconnex/common';
+import { insertFaculties } from '../../../utils/insertFaculties';
 
 it('should return 400 if users send invalid type of interest list', async () => {
   await request(app)
@@ -108,8 +115,6 @@ it('should not save duplicate interest list', async () => {
   expect(await currentUser?.getInterests()).toHaveLength(1);
 });
 
-
-
 it('should create user successfully with optional field', async () => {
   const id = '6131776621';
   const user = {
@@ -129,17 +134,21 @@ it('should create user successfully with optional field', async () => {
     })
     .expect(201);
 
-
-
-  const saveUser = await User.findOne({ where: { id } , include : Interest});
+  const saveUser = await User.findOne({ where: { id }, include: [Interest,Faculty] });
   expect(saveUser).not.toBeNull();
-  const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString()
+  const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString();
   expect(saveUser!.name).toEqual(user.name);
   expect(saveUser!.year).toEqual(year);
-  expect(saveUser!.faculty).toEqual(faculty["21"])
+  expect(saveUser!.Faculty!.name).toEqual(faculty['21']);
   expect(saveUser!.role).toEqual(user.role);
   expect(saveUser!.bio).toEqual(user.bio);
-
 });
 
 it.todo('add interest by category');
+
+// it('should get faculty image', async () => {
+//   await insertFaculties();
+
+//   const fac = await Faculty.findAll();
+//   console.log(fac);
+// });

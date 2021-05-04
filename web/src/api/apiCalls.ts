@@ -36,6 +36,8 @@ import {
   IFetchTeams,
   IRegisterTeamEvent,
   IFetchTeamEvent,
+  IFetchRecommendedUser,
+  IFetchRecommendedTeam,
 } from "@src/models";
 
 //Auth Services
@@ -74,16 +76,34 @@ const fetchEventsDataAPI = async (): Promise<
   AxiosResponse<IFetchEventsData>
 > => {
   const eventsData: AxiosResponse<IFetchEventsData> = await axios.get(
-    "/api/events"
+    "/api/events/"
   );
 
   return eventsData;
+};
+
+const fetchRecommendedUser = async (): Promise<
+  AxiosResponse<IFetchRecommendedUser>
+> => {
+  const recommendedUsers: AxiosResponse<IFetchRecommendedUser> = await axios.get(
+    "/api/users/recommend-user"
+  );
+  return recommendedUsers;
+};
+
+const fetchRecommendedTeam = async (): Promise<
+  AxiosResponse<IFetchRecommendedTeam>
+> => {
+  const recommendedTeams: AxiosResponse<IFetchRecommendedTeam> = await axios.get(
+    "/api/users/recommend-team"
+  );
+  return recommendedTeams;
 };
 const createEventsAPI = async (
   eventsCreatedData: ICreateEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
-    "/api/events",
+    "/api/events/",
     eventsCreatedData
   );
   return createEventsData;
@@ -353,4 +373,6 @@ export {
   registerTeamEventAPI,
   fetchTeamEventAPI,
   fetchEventTeamAPI,
+  fetchRecommendedUser,
+  fetchRecommendedTeam,
 };

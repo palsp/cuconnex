@@ -21,3 +21,9 @@
   width: auto;
   width: 45vw;
 }
+
+.divInterest > div > p {
+  width: auto;
+  width: 45vw;
+  font-size: 0.8rem;
+}

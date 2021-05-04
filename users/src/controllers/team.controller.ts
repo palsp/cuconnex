@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
-import { Team, IsMember, User, Interest, Event } from '../models';
+import { Team, IsMember, User, Interest, Event, Faculty } from '../models';
 import { getUserWhoLike } from '../utils/recommend';
 import {
   IUserResponse,
@@ -9,6 +9,7 @@ import {
   IEventResponse,
   ITeamRequest,
   IRecommendUserResponse,
+  IGetRegisterEventResponse,
 } from '../interfaces';
 import { deleteFile } from '../utils/file';
 
@@ -219,7 +220,7 @@ export const getRecommendedUserForTeam = async (req: Request, res: Response) => 
 
   const teamName = req.params.teamName;
 
-  const team = await Team.findOne({ where: { name: teamName }, include: ['owner', 'member'] });
+  const team = await Team.findOne({ where: { name: teamName }, include: ['owner', { model : User , as : 'member' , include : [Faculty]}] });
 
   if (!team) {
     throw new NotFoundError('Team');
@@ -343,10 +344,12 @@ export const getRegisteredEvents = async (req: Request, res: Response) => {
   }
 
   const events: Event[] = await team.getMyEvents();
-  const response: IEventResponse[] = [];
+  const response: IGetRegisterEventResponse = {
+    events : events.map(event => event.toJSON())
+  };
 
-  for (let event of events) {
-    response.push(event.toJSON());
-  }
+  // for (let event of events) {
+  //   response.push(event.toJSON());
+  // }
   res.status(200).send(response);
 };

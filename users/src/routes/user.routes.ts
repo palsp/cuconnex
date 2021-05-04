@@ -3,7 +3,6 @@ import express from 'express';
 import { upload } from '../config/multer.config';
 import * as userController from '../controllers/user.controller';
 import { requireUser, transformRequest } from '../middlewares';
-import { User } from '../models';
 import {
   requestToJoinTeamValidator,
   postUserValidator,

@@ -11,6 +11,7 @@ import { UsersData } from "@src/mockData/Models";
 import { IEventData, IUser, IUserFriend } from "@src/models";
 import { fetchFriendsDataAPI } from "@src/api";
 import SelectEventPrompt from "../SelectEventPrompt/SelectEventPrompt";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
 interface Props {
   event?: IEventData;
@@ -51,9 +52,9 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     } else {
       const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
-      // setSelectedMemberArray(
-      //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
-      // );
+      setSelectedMemberArray(
+        (selectedMemberArray) => (selectedMemberArray = newMemberArray)
+      );
       setSelectedMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
@@ -64,7 +65,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     } else {
       const newMemberArray = [...memberArray];
       newMemberArray.splice(positionOfE, 1);
-      // setMemberArray((memberArray) => (memberArray = newMemberArray));
+      setMemberArray((memberArray) => (memberArray = newMemberArray));
       setMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
@@ -73,21 +74,17 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
       <div>
         <div className={classes.divHeading}>
           <div className={classes.divFixed}>
-            <div className={classes.relativeArrow}>
-              <Redirect to="/createteam">
-                <ArrowLeft />
-              </Redirect>
-            </div>
-            <Heading value="Select Members" size="small-medium" />
+            <PageTitle
+              text="Select Members"
+              size="small-medium"
+              goBack={backClickedHandler}
+            />
             <button
               onClick={inviteClickedHandler}
               className={classes.noStyleButton}
             >
               Invite
             </button>
-            <div onClick={backClickedHandler} className={classes.arrowDiv}>
-              <ArrowLeft />
-            </div>
             <div className={classes.searchDiv}>
               <SearchBar value="Search By Name" />
             </div>

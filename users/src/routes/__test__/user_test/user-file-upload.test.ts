@@ -26,6 +26,7 @@ describe('The /api/upload', () => {
   });
 
   it('should return 201 if there is a valid file uploaded', async () => {
+
     const { body: res } = await request(app)
       .post('/api/users')
       .set('Cookie', global.signin())

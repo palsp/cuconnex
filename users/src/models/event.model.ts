@@ -10,7 +10,8 @@ interface EventAttrs {
   id: number;
   eventName: string;
   registration: boolean;
-  status : EventStatus
+  status : EventStatus;
+  image? : string;
   candidate? : Team[];
   version?: number;
 }
@@ -27,6 +28,7 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
   public eventName!: string;
   public registration!: boolean;
   public status! : EventStatus;
+  public image? : string;
   public candidate? : Team[];
 
   public version?: number;
@@ -58,6 +60,9 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
           allowNull : false,
           values: Object.values(EventStatus) 
         },
+        image : {
+          type : DataTypes.STRING(255),
+        },
         eventName: {
           type: DataTypes.STRING(255),
           allowNull: false,
@@ -82,6 +87,10 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
     let candidate : ITeamResponse[] = []
     if(this.candidate){
      candidate = this.candidate.map(c => c.toJSON())
+    }
+
+    if(!values.image){
+      values.image = "";
     }
 
     return { ...values , candidate };

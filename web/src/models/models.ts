@@ -46,6 +46,13 @@ export interface IFetchTeam {
   currentRecruitment: string;
 }
 
+export interface IFetchRecommendedUser {
+  users: IUser[];
+}
+
+export interface IFetchRecommendedTeam {
+  teams: IFetchTeam[];
+}
 export interface ISearchUserTeamEventResult {
   users: IUser[];
   team: IFetchTeam[];
@@ -130,6 +137,7 @@ export interface ICreateEventData {
   "event-name": string;
   bio: string;
   location?: string;
+  interests: string[];
   registration: boolean;
   "start-date": {
     month: number;

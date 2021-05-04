@@ -20,6 +20,7 @@ export class EventUpdatedSub extends Listener<EventUpdated> {
     event.eventName = data['event-name'];
     event.registration = data.registration;
     event.status = data.status;
+    event.image = data.image;
     
     await event.save();
     

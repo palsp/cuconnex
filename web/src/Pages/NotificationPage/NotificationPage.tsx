@@ -36,10 +36,16 @@ import containerVariants, {
   IFetchOutgoingTeamNotification,
   IFetchTeam,
 } from "@src/models/models";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
-const NotificationPage: React.FC = () => {
-  const [clickConnection, setConnection] = useState(true);
-  const [clickActivity, setActivity] = useState(false);
+interface Props {
+  history: {
+    goBack: () => void;
+  };
+}
+
+const NotificationPage: React.FC<Props> = (props) => {
+  const [clickIncoming, setTab] = useState(true);
   const [teamNoti, setTeamNoti] = useState<IFetchTeam[] | []>([]);
   const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<IFetchTeam[] | []>(
     []
@@ -96,16 +102,14 @@ const NotificationPage: React.FC = () => {
     );
     return friendsReceivedData.data.requests;
   };
-  const connectionButtonHandler = () => {
-    setConnection(true);
-    setActivity(false);
-    console.log("setConnection");
-  };
 
-  const activityButtonHandler = () => {
-    setConnection(false);
-    setActivity(true);
-    console.log("setActivity");
+  const incomingButtonHandler = () => {
+    setTab(true);
+    console.log("Incoming Tab");
+  };
+  const outgoingButtonHandler = () => {
+    setTab(false);
+    console.log("Outgoing Tab");
   };
   let incomingNoti = 0;
   let outgoingNoti = 0;
@@ -122,89 +126,73 @@ const NotificationPage: React.FC = () => {
     outgoingNoti = outgoingNoti + outgoingTeamNoti.length;
   }
   console.log(incomingNoti, outgoingNoti);
-  let NotificationsPrompt = null;
-  if (clickConnection === true) {
-    NotificationsPrompt = (
-      <div className={classes.tabConnection}>
-        <div className={classes.relativeArrow}>
-          <Link data-test="Notification-page-back-link" to="/landing">
-            <ArrowLeft data-test="Notification-page-arrow-left" />
-          </Link>
-        </div>
-        <div className={classes.head}>
-          <Heading data-test="Notification-page-header" value="Requests" />
-        </div>
-        <div className={classes.tab}>
-          <div className={classes.connection}>
-            <Tab
-              data-test="Notification-page-Incoming"
-              onClick={connectionButtonHandler}
-              value="Incoming"
-              number={incomingNoti + ""}
-            />
-          </div>
-          <div className={classes.activity}>
-            <Tab
-              data-test="Notification-page-Outgoing"
-              onClick={activityButtonHandler}
-              value="Outgoing"
-              number={outgoingNoti + ""}
-            />
-          </div>
-        </div>
-        <div className={classes.teamInvitationList}>
-          <TeamInvitationLists
-            data-test="Notification-page-team-invitation-lists"
-            teams={teamNoti}
+
+  const goBack = () => {
+    props.history.goBack();
+  };
+
+  const NotificationsPrompt = clickIncoming ? (
+    <div className={classes.tabConnection}>
+      <div className={classes.tab}>
+        <div className={classes.connection}>
+          <Tab
+            data-test="Notification-page-Incoming"
+            onClick={incomingButtonHandler}
+            value="Incoming"
+            number={incomingNoti + ""}
           />
         </div>
-        <div className={classes.connectionList}>
-          <ConnectionLists
-            data-test="Notification-page-team-lists"
-            requests={friendReceivedNoti}
+        <div className={classes.activity}>
+          <Tab
+            data-test="Notification-page-Outgoing"
+            onClick={outgoingButtonHandler}
+            value="Outgoing"
+            number={outgoingNoti + ""}
           />
         </div>
       </div>
-    );
-  } else if (clickActivity === true) {
-    NotificationsPrompt = (
-      <div className={classes.tabActivity}>
-        <div className={classes.relativeArrow}>
-          <Link data-test="Notification-page-back-link" to="/landing">
-            <ArrowLeft data-test="Notification-page-arrow-left" />
-          </Link>
+      <div className={classes.teamInvitationList}>
+        <TeamInvitationLists
+          data-test="Notification-page-team-invitation-lists"
+          teams={teamNoti}
+        />
+      </div>
+      <div className={classes.connectionList}>
+        <ConnectionLists
+          data-test="Notification-page-team-lists"
+          requests={friendReceivedNoti}
+        />
+      </div>
+    </div>
+  ) : (
+    <div className={classes.tabActivity}>
+      <div className={classes.tab}>
+        <div className={classes.connection}>
+          <Tab
+            data-test="Notification-page-Incoming"
+            onClick={incomingButtonHandler}
+            value="Incoming"
+            number={incomingNoti + ""}
+          />
         </div>
-        <div className={classes.head}>
-          <Heading data-test="Notification-page-header" value="Requests" />
-        </div>
-        <div className={classes.tab}>
-          <div className={classes.connection}>
-            <Tab
-              data-test="Notification-page-Incoming"
-              onClick={connectionButtonHandler}
-              value="Incoming"
-              number={incomingNoti + ""}
-            />
-          </div>
-          <div className={classes.activity}>
-            <Tab
-              data-test="Notification-page-Outgoing"
-              onClick={activityButtonHandler}
-              value="Outgoing"
-              number={outgoingNoti + ""}
-            />
-          </div>
-        </div>
-        <div className={classes.activityList}>
-          <ActivityNotificationLists
-            data-test="Notification-page-team-lists"
-            Memberlist={friendNoti}
-            requestedTeamList={outgoingTeamNoti}
+        <div className={classes.activity}>
+          <Tab
+            data-test="Notification-page-Outgoing"
+            onClick={outgoingButtonHandler}
+            value="Outgoing"
+            number={outgoingNoti + ""}
           />
         </div>
       </div>
-    );
-  }
+      <div className={classes.activityList}>
+        <ActivityNotificationLists
+          data-test="Notification-page-team-lists"
+          Memberlist={friendNoti}
+          requestedTeamList={outgoingTeamNoti}
+        />
+      </div>
+    </div>
+  );
 
   const pageVariant = {
     hidden: { x: 400, opacity: 0.5 },
@@ -222,6 +210,7 @@ const NotificationPage: React.FC = () => {
       data-test="Notification-page"
       className={classes.page}
     >
+      <PageTitle goBack={goBack} size="small-medium" text="Requests" />
       {NotificationsPrompt}
     </motion.div>
   );

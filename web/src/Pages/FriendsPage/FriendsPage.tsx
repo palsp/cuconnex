@@ -9,8 +9,15 @@ import containerVariants, { IUser, IUserFriend } from "@src/models/models";
 
 import classes from "./FriendsPage.module.css";
 import { fetchFriendsDataAPI } from "@src/api";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
-const FriendsPage: React.FC = () => {
+interface Props {
+  history: {
+    goBack: () => void;
+  };
+}
+
+const FriendsPage: React.FC<Props> = (props) => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
@@ -44,6 +51,10 @@ const FriendsPage: React.FC = () => {
     },
   };
 
+  const goBack = () => {
+    props.history.goBack();
+  };
+
   return (
     <motion.div
       variants={variants}
@@ -55,18 +66,11 @@ const FriendsPage: React.FC = () => {
     >
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
-          <div className={classes.relativeArrow}>
-            <Link
-              data-test="friends-page-back-link"
-              to={{ pathname: "/landing", state: { hamburgerOn: true } }}
-            >
-              <ArrowLeft data-test="friends-page-arrow-left" />
-            </Link>
-          </div>
-          <Heading
+          <PageTitle
+            goBack={goBack}
+            size="small-medium"
+            text="My Connections"
             data-test="friends-page-header"
-            value="My connections"
-            size="medium"
           />
           <div className={classes.searchDiv}>
             <SearchBar

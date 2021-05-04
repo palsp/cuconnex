@@ -21,3 +21,7 @@ export interface ITeamRequest {
 export interface IRecommendUserResponse {
   users : IUserResponse[];
 }
+
+export interface IGetRegisterTeamResponse{
+  teams : ITeamResponse[]
+}
