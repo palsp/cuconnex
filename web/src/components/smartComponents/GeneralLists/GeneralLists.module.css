@@ -37,6 +37,7 @@
   align-items: center;
 }
 .eventnameDiv {
+  text-align: left;
   overflow: visible;
   white-space: pre;
   color: var(--black, #000000);
@@ -262,4 +263,7 @@
   text-align: center;
   color: var(--white, #ffffff);
   font-size: 10px;
+}
+.notInCategoryDiv {
+  text-align: left;
 }
