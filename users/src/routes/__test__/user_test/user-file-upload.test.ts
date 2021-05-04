@@ -27,7 +27,7 @@ describe('The /api/upload', () => {
   });
 
   it('should return 201 if there is a valid file uploaded', async () => {
-    await insertFaculties();
+    // await insertFaculties();
 
     const { body: res } = await request(app)
       .post('/api/users')
@@ -36,13 +36,13 @@ describe('The /api/upload', () => {
         name: 'Anon',
         interests: JSON.stringify({ Technology: [Technology.Coding] }),
       })
-      // .attach('image', 'src/routes/__test__/test_images/testImage2.png')
-      .attach('image', 'src/assets/faculties/college_of_population_studies.png')
+      .attach('image', 'src/routes/__test__/test_images/testImage2.png')
+      // .attach('image', 'src/assets/faculties/college_of_population_studies.png')
       .expect(201);
     // console.log('rr', res);
 
     expect(res.image).not.toEqual('');
-    // deleteFile(res.image);
+    deleteFile(res.image);
   });
 
   it('should create user although file is not attached', async () => {

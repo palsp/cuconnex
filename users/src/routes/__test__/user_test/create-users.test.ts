@@ -146,9 +146,9 @@ it('should create user successfully with optional field', async () => {
 
 it.todo('add interest by category');
 
-it('should get faculty image', async () => {
-  await insertFaculties();
+// it('should get faculty image', async () => {
+//   await insertFaculties();
 
-  const fac = await Faculty.findAll();
-  console.log(fac);
-});
+//   const fac = await Faculty.findAll();
+//   console.log(fac);
+// });
