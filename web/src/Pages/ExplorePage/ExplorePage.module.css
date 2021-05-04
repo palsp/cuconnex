@@ -27,7 +27,11 @@
 .exploreSubtitle,
 .exploreHeading {
   display: flex;
-  justify-content: left;
+  justify-content: start;
+}
+
+.exploreHeading > div {
+  margin: 1rem 0;
 }
 
 .overflowY {
