@@ -46,6 +46,13 @@ export interface IFetchTeam {
   currentRecruitment: string;
 }
 
+export interface IFetchRecommendedUser {
+  users: IUser[];
+}
+
+export interface IFetchRecommendedTeam {
+  teams: IFetchTeam[];
+}
 export interface ISearchUserTeamEventResult {
   users: IUser[];
   team: IFetchTeam[];
