@@ -24,6 +24,18 @@
   width: 100%;
 }
 
+.waveBg {
+  position: absolute;
+  top: 30%;
+  left: 0;
+  z-index: 1;
+}
+
+.hamburgerPrompt .waveBg {
+  top: -15%;
+  z-index: -1;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -43,12 +55,6 @@
 
 .heroDivHasTeam {
   margin-top: 50px;
-}
-
-.content .searchDiv {
-  zoom: 160%;
-  margin-left: -10%;
-  margin-right: 53%;
 }
 
 .flexDiv {
@@ -83,6 +89,7 @@
 .hamburgerPrompt {
   height: 100%;
 }
+
 .spinnerBody {
   display: flex;
   justify-content: center;

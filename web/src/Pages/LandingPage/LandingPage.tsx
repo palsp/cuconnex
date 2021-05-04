@@ -18,6 +18,8 @@ import {
   fetchUserTeamRequestAPI,
 } from "@src/api/apiCalls";
 import { IUserFriend } from "@src/models";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
+
 interface Props {
   location: {
     state?: {
@@ -125,6 +127,9 @@ const LandingPage: React.FC<Props> = (props) => {
 
   const LandingPrompt = displayHamburgerMenu ? (
     <div className={classes.hamburgerPrompt} style={menuHeightStyle}>
+      <div className={classes.waveBg}>
+          <WaveCanvasBg width={window.innerWidth} height={window.innerHeight} />
+      </div>
       <HamburgerPrompt />
     </div>
   ) : (
@@ -134,6 +139,9 @@ const LandingPage: React.FC<Props> = (props) => {
           TeamList.length > 0 ? classes.heroDivHasTeam : classes.heroDiv
         }
       >
+        <div className={classes.waveBg}>
+          <WaveCanvasBg width={window.innerWidth} height={window.innerHeight} />
+        </div>
         <LandingHero pageHeight={menuHeightStyle} myTeamList={myTeamLists} />
       </div>
     </Background>
@@ -145,6 +153,7 @@ const LandingPage: React.FC<Props> = (props) => {
   spinnerOne.push(classes.one);
   spinnerTwo.push(classes.two);
   spinnerThree.push(classes.three);
+
 
   return (
     <motion.div
