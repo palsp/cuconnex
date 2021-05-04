@@ -118,9 +118,17 @@ func UploadImage(c *gin.Context) {
 		ID: e.ID,
 		EventName: e.EventName,
 		Registration: e.Registration,
+		Image: e.Image,
 		Status: e.Status,
 		Version: e.Version,
 	})
+
+	if err != nil {
+		log.Printf("error publish event:updated : %v" , err)
+	}else{
+		log.Printf("Event published to subject %v" , "event:updated" , "file upload")
+	}
+
 
 	c.JSON(http.StatusOK, gin.H{
 		"filepath": filepath,
