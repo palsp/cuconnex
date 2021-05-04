@@ -112,7 +112,7 @@ func UploadImage(c *gin.Context) {
 		return
 	}
 
-	filepath := "https://" + config.S3.Bucket + "." + "s3-website-" + config.S3.Region + ".amazonaws.com/" + filename
+	filepath := "http://" + config.S3.Bucket + "." + "s3-website-" + config.S3.Region + ".amazonaws.com/" + filename
 
 	e.Image = filepath
 
