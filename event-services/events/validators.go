@@ -1,7 +1,6 @@
 package events
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,6 +21,7 @@ type Event struct {
 	EventName string        `json:"event-name"`
 	Bio       string        `json:"bio"`
 	Location  time.Location `json:"location"`
+	Interests  []string      `json:"interests"`
 	Registration bool       `json:"registration"`
 	StartDate *DateForm     `json:"start-date,omitempty"`
 	EndDate   *DateForm     `json:"end-date,omit-empty"`
@@ -45,8 +45,10 @@ type TimeForm struct {
 }
 
 // GetDate returns date in a yyyy-mm-dd hh:mm:ss + nsec format
-func (d DateForm) GetDate(loc time.Location) time.Time {
-	return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, &loc)
+func (d DateForm) GetDate() time.Time {
+	loc := time.FixedZone("UTC+7",7*60*60)
+	//return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, t.Location())
+	return time.Date(d.Year, d.Month, d.Day, d.Time.Hour, d.Time.Minute, d.Time.Second, d.Time.NanoSecond, loc)
 }
 
 
@@ -62,13 +64,13 @@ func (self *EventModelValidator) Bind(c *gin.Context) error{
 	self.eventModel.Bio = self.Event.Bio
 	self.eventModel.Location = self.Event.Location.String()
 	if self.Event.StartDate != nil {
-		self.eventModel.StartDate = self.Event.StartDate.GetDate(self.Event.Location)
-	}
-	if self.Event.EndDate != nil {
-		self.eventModel.EndDate = self.Event.EndDate.GetDate(self.Event.Location)
+		self.eventModel.StartDate = self.Event.StartDate.GetDate().UTC()
 	}
 
-	fmt.Printf("start at %s\n current time %s\n" , self.eventModel.StartDate.UTC() , time.Now().UTC())
+	if self.Event.EndDate != nil {
+		self.eventModel.EndDate = self.Event.EndDate.GetDate().UTC()
+	}
+
 
 	if self.eventModel.StartDate.After(self.eventModel.EndDate){
 		// TODO: implement custom error

@@ -12,6 +12,6 @@ export const axiosUserInstance = axios.create({
  * axios instance for fetching from event service endpoint
  */
 export const axiosEventInstance = axios.create({
-    baseURL: process.env.USER_SRV_ENDPOINT,
+    baseURL: process.env.EVENT_SRV_ENDPOINT,
     timeout: 3000
 })

@@ -5,29 +5,51 @@ const MAX_FILE_SIZE_IN_BYTES = 1000000000;
 
 //Storage config
 export const storage = multer.diskStorage({
-    destination: './assets',
-    filename: function (req, file, cb) {
-        // console.log(req.body);
-        let extension = '.' + file.mimetype.split('/')[1];
-        let fileName;
+  destination: './assets/users',
+  filename: function (req, file, cb) {
+    let extension = '.' + file.mimetype.split('/')[1];
+    let fileName;
 
-        fileName = req.currentUser!.id + "_profile_pic_" + (Date.now()).toString();
+    fileName = req.currentUser!.id + '_profile_pic_' + Date.now().toString();
 
-        cb(null, fileName + extension)
-    }
-})
+    cb(null, fileName + extension);
+  },
+});
+
+export const teamStorage = multer.diskStorage({
+  destination: './assets/teams',
+  filename: function (req, file, cb) {
+    let extension = '.' + file.mimetype.split('/')[1];
+    let fileName;
+    fileName = req.currentUser!.id + '_team_pic_' + Date.now().toString();
+
+    cb(null, fileName + extension);
+  },
+});
 
 //Filters for only image files
 const fileFilter = (req: any, file: any, cb: any) => {
-    //Only accept files smaller than 1 GB, adjust file size (in bytes) here
-    if (file.mimetype === "image/jpg" || file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-        cb(null, true);
-
-    } else {
-        cb(new BadRequestError("Image uploaded is not of type jpg/jpeg or png"), false);
-    }
-}
+  //Only accept files smaller than 1 GB, adjust file size (in bytes) here
+  if (
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/png'
+  ) {
+    cb(null, true);
+  } else {
+    cb(new BadRequestError('Image uploaded is not of type jpg/jpeg or png'), false);
+  }
+};
 
 // var limits = { fileSize: 1024 * 1024 * 1024 }
-export const upload = multer({ storage: storage, fileFilter: fileFilter, limits: { fileSize: 1 * MAX_FILE_SIZE_IN_BYTES } });
+export const upload = multer({
+  storage: storage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 1 * MAX_FILE_SIZE_IN_BYTES },
+});
 
+export const teamUpload = multer({
+  storage: teamStorage,
+  fileFilter: fileFilter,
+  limits: { fileSize: 1 * MAX_FILE_SIZE_IN_BYTES },
+});

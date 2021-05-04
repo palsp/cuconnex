@@ -1,8 +1,9 @@
 import request from 'supertest';
 import { app } from '../../../app';
-import { User, IsMember } from '../../../models';
-import { Business, TeamStatus } from '@cuconnex/common';
+import { User } from '../../../models';
+import { Business } from '@cuconnex/common';
 import { Interest } from '../../../models/interest.model';
+import { deleteFile } from '../../../utils/file';
 
 const setupTeam = async () => {
   const user = await User.create({
@@ -73,28 +74,23 @@ describe('Create a Team Test', () => {
     });
     await user.addInterest(interest!);
 
-    const team = {
-      name: 'newTeam',
-      description: 'my new team',
-    };
-
     const { body } = await request(app)
       .post('/api/teams')
       .set('Cookie', global.signin(user.id))
-      .send({
-        name: team.name,
-        description: team.description,
-      })
+      .field({ name: 'newTeam', description: 'my new team', currentRecruitment: 'Developers' })
+      .attach('image', 'src/routes/__test__/test_images/testImage.jpg')
       .expect(201);
 
     const myTeam = await user.getMyTeams();
     expect(myTeam.length).toEqual(1);
     expect(myTeam[0].creatorId).toEqual(user.id);
     expect(myTeam[0].name).toEqual('newTeam');
+    expect(myTeam[0].image).not.toEqual('');
+    expect(myTeam[0].currentRecruitment).toEqual('Developers');
 
-    expect(body.creatorId).toEqual(user.id);
-    expect(body.name).toEqual('newTeam');
-    // expect(body.dataValues.creatorId).toEqual(user.id);
-    // expect(body.dataValues.name).toEqual('newTeam');
+    expect(body.team.creatorId).toEqual(user.id);
+    expect(body.team.name).toEqual('newTeam');
+
+    deleteFile(body.team.image);
   });
 });

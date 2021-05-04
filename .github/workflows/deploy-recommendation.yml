@@ -36,7 +36,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./recommendation
+          context: ./recommendation-system
           push: true
           tags: palsp/connex-recommendation
           cache-from: type=local,src=/tmp/recommendation/.buildx-cache

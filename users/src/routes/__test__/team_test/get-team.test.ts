@@ -36,10 +36,7 @@ describe('Get Team Test', () => {
       .send({})
       .expect(200);
 
-    // expect(res.body.dataValues.name).toEqual(team.name);
-    // expect(res.body.dataValues.creatorId).toEqual(user.id);
-
-    expect(res.body.name).toEqual(team.name);
-    expect(res.body.creatorId).toEqual(user.id);
+    expect(res.body.team.name).toEqual(team.name);
+    expect(res.body.team.creatorId).toEqual(user.id);
   });
 });

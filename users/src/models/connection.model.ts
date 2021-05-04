@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes } from 'sequelize'
+import { Sequelize, Model, DataTypes, Op} from 'sequelize'
 import { FriendStatus } from '@cuconnex/common'
 import { TableName } from './types';
 
@@ -47,6 +47,27 @@ class Connection extends Model<ConnectionAttrs, ConnectionCreationAttrs> impleme
         });
     }
 
+    public static async findConnection(senderId: string , receiverId : string) : Promise<FriendStatus>{
+        const connection = await Connection.findOne({
+            where :{
+                [Op.or] : 
+                    [{
+                        senderId,
+                        receiverId
+                    },{ 
+                        senderId : receiverId,
+                        receiverId : senderId,                        
+                    }]
+
+            }
+        })
+
+        return connection ? connection.status : FriendStatus.toBeDefined;
+    }
+
+    public static isConnection(status : FriendStatus) : boolean {
+        return status === FriendStatus.Accept;
+    }
 }
 
 

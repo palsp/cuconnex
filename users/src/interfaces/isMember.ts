@@ -1,16 +1,12 @@
 import { TeamStatus } from '@cuconnex/common';
-import { ITeamResponse } from './team';
 import { IUserResponse } from './user';
 
 export interface IIsMemberResponse {
-  teamName: string;
-  relations: {
-    users: IUserResponse[];
-    status: TeamStatus;
-  };
+  status: TeamStatus | null;
+  sender: string;
 }
 
-export interface IOutgoingRequestResponse {
+export interface ITeamRequestResponse {
   teamName: string;
   pendingUsers: IUserResponse[];
 }
