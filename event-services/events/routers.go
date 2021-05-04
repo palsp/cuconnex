@@ -17,9 +17,13 @@ func EventRegister(router *gin.RouterGroup) {
 	router.PUT("/:id",UpdatedEvent)
 
 	// TODO: Must be removed in production
-	router.OPTIONS("/" , func (ctx *gin.Context){
-		ctx.JSON(http.StatusOK,gin.H{})
-	})
+	//router.OPTIONS("/" , func (ctx *gin.Context){
+	//	ctx.Header("Access-Control-Allow-Origin", "*")
+	//	ctx.Header("Access-Control-Allow-Methods", "GET , POST , PUT , PATCH , DELETE")
+	//	ctx.Header("Access-Control-Allow-Headers","Content-Type,Authorization")
+	//
+	//	ctx.JSON(http.StatusOK,gin.H{})
+	//})
 
 }
 
