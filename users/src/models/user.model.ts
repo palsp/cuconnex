@@ -285,7 +285,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   }
 
   public async getAllConnectionWithStatus(status: FriendStatus): Promise<User[]> {
-    let connections = await this.getConnection({ include: [Interest] });
+
+    let connections = await this.getConnection({ include: [Interest,Faculty] });
 
     connections = connections.filter((conn) => conn.Connection!.status === status);
 
@@ -301,7 +302,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     const constraint = { receiverId: this.id, status: FriendStatus.Pending };
     const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
     for (let conn of receivedRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId }, include: Interest });
+      const user = await User.findOne({ where: { id: conn.senderId }, include: [Interest,Faculty] });
       if (user) {
         result.push(user);
       }
