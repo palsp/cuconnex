@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNDc3MjIyMzIiLCJpYXQiOjE2MjAxNTIyMTZ9.ufQ18TJfRt3bqwom0nYCuK2gKBUQZhIsHa0pXLQ_JfU";
+// const token =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNDc3MjIyMzIiLCJpYXQiOjE2MjAxNTIyMTZ9.ufQ18TJfRt3bqwom0nYCuK2gKBUQZhIsHa0pXLQ_JfU";
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc";
 
 // ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc");
 const axiosInstance = axios.create({
-  baseURL: "https://www.cu-connex.com",
-  // baseURL: window.location.origin,
+  // baseURL: "https://www.cu-connex.com",
+  baseURL: window.location.origin,
 });
 
-axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+// axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 export default axiosInstance;
 
 //in some teams

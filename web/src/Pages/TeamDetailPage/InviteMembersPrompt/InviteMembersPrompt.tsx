@@ -74,8 +74,9 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       const recommendedUsers = await fetchRecommendUserForTeam(
         props.teams.name
       );
-      setRecommendLists(recommendedUsers.data.users);
       console.log("fetchRecommendedUserForTeam", recommendedUsers);
+
+      setRecommendLists(recommendedUsers.data.users);
     } catch (e) {
       console.log(e);
     }
@@ -195,8 +196,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
           />
-          {console.log("SelectedArray Contain: ", selectedMemberArray)}
-          {console.log("AllArray Contain: ", memberArray)}
+
           {/* <div className={classes.divRight}>
             <Subtitle
               value={`${memberArray.length} member selected`}
