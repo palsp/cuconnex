@@ -2,10 +2,11 @@ import request from 'supertest';
 import { app } from '../../app';
 import { getUserWhoLike } from '../../utils/recommend';
 import { User, Interest, Team, Event } from '../../models';
-import { TeamStatus, Technology } from '@cuconnex/common';
+import { FriendStatus, TeamStatus, Technology } from '@cuconnex/common';
 
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
 import { floor } from 'lodash';
+import { Connection } from '../../models/connection.model';
 
 const  createDummyUser =  async (num: number = 10) : Promise<User[]> => {
     const users : User[] = [];
@@ -273,7 +274,25 @@ describe('recommend user for user' ,  () => {
 
 
     });
+
+    it('should not include connection is recommend list' , async () => {
+        const users = await createDummyUser(2);
+         await users[0].addConnection(users[1] , { through : { status : FriendStatus.Accept}});
+
+
+        const {body} = await request(app)
+            .get('/api/users/recommend-user')
+            .set('Cookie', global.signin(users[0].id))
+            .send()
+            .expect(200);
+
+            expect(body.users.length).toEqual(0);
+
+
+    });
 });
+
+
 
 describe('recommend team for user' , () => {
         it('should not return the team where user is in' , async () => {
