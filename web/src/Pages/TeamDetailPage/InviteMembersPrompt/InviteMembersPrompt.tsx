@@ -16,6 +16,8 @@ import {
 } from "@src/models";
 import {
   fetchFriendsDataAPI,
+  fetchRecommendedUser,
+  fetchRecommendUserForTeam,
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
   fetchUserTeamRequestAPI,
@@ -37,12 +39,14 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   const [selectedMemberArray, setSelectedMemberArray] = useState<IUserFriend[]>(
     []
   );
+  const [recommendLists, setRecommendLists] = useState<IUser[]>([]);
   const [friendsNotInTeam, setFriendsNotInTeam] = useState<
     IUserFriendExtended[]
   >([]);
   // const [newFriendLists, setNewFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
     fetchFriendsHandler();
+    fetchRecommendedUserHandler();
   }, []);
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
@@ -64,6 +68,17 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       console.log("POST /members/invite/", props.teams.name, members.id);
       setClicked(true);
     });
+  };
+  const fetchRecommendedUserHandler = async () => {
+    try {
+      const recommendedUsers = await fetchRecommendUserForTeam(
+        props.teams.name
+      );
+      setRecommendLists(recommendedUsers.data.users);
+      console.log("fetchRecommendedUserForTeam", recommendedUsers);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -123,12 +138,12 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
     setFriendsNotInTeam(extendedFriendsNotInTeam);
   };
 
-  const selectPersonHandler = (e: IUserFriend) => {
+  const selectPersonHandler = (e: any) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
+      const newMemberArray = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       // setSelectedMemberArray(
       //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
@@ -149,35 +164,46 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   };
 
   const selectPrompt = (
-    <div>
+    <>
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
+          <div className={classes.relativeArrow}>
+            <Link to="/">
+              <ArrowLeft />
+            </Link>
+          </div>
           <Heading value="Invite Members" size="small-medium" />
-          <div onClick={() => inviteMember()} className={classes.noStyleButton}>
-            Invite
-          </div>
-          {/* <div onClick={() => props.backHandler()} className={classes.arrowDiv}>
-            <ArrowLeft />
-          </div> */}
-          <div className={classes.arrowDiv} onClick={props.backHandler()}>
-            <ArrowLeft></ArrowLeft>
-          </div>
-          <div className={classes.searchDiv}>
-            <SearchBar value="Search By Name" />
-          </div>
+          <button className={classes.noStyleButton}>Invite</button>
+          <SearchBar value="Search By Name" />
         </div>
-        <div className={classes.divInfo}>
-          <div className={classes.divLeft}>
-            {/* <p>My Connection</p> */}
-            <Subtitle value="My connection" color="black" size="small-medium" />
-          </div>
-          <div className={classes.divRight}>
+      </div>
+      <div className={classes.divInfo}>
+        <div className={classes.memberListsDiv}>
+          <Heading size="smallMedium" value="Connections" />
+          <MemberListsForPrompt
+            clicked={clicked}
+            team={props.teams}
+            memberlist={friendsNotInTeam}
+            selectMemberListsHandler={selectMemberHandler}
+            personHandler={selectPersonHandler}
+          />
+          <Heading size="smallMedium" value="Recommended Users" />
+          <MemberListsForPrompt
+            clicked={clicked}
+            team={props.teams}
+            memberlist={recommendLists}
+            selectMemberListsHandler={selectMemberHandler}
+            personHandler={selectPersonHandler}
+          />
+          {console.log("SelectedArray Contain: ", selectedMemberArray)}
+          {console.log("AllArray Contain: ", memberArray)}
+          {/* <div className={classes.divRight}>
             <Subtitle
               value={`${memberArray.length} member selected`}
               color="black"
               size="smaller"
             />
-          </div>
+          </div> */}
         </div>
         <div className={classes.memberListsDiv}>
           <MemberListsForPrompt
@@ -191,8 +217,9 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
           {console.log("AllArray Contain: ", memberArray)}
         </div>
       </div>
-    </div>
+    </>
   );
+
   return <div>{selectPrompt}</div>;
 };
 

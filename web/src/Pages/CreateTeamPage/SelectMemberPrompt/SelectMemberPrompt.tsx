@@ -28,7 +28,6 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
   const [recommendLists, setRecommendLists] = useState<IUser[]>([]);
   useEffect(() => {
     fetchFriendsHandler();
-
     fetchRecommendedUserHandler();
   }, []);
   const fetchRecommendedUserHandler = async () => {
@@ -65,7 +64,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
+      const newMemberArray = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       setSelectedMemberArray(
         (selectedMemberArray) => (selectedMemberArray = newMemberArray)
