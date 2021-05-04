@@ -18,54 +18,48 @@ interface Props {
   };
 }
 
+export interface Rating {
+  user: IUser;
+  rating: number | null;
+  setRating: React.Dispatch<React.SetStateAction<Rating[]>>;
+}
+
 const RatingPage: React.FC<Props> = (props) => {
-  // const [teamMemberLists, setTeamMemberLists] = useState<IUser[] | []>([]);
-  const [rateTeamMemberLists, setRateTeamMemberLists] = useState<IUser[] | []>(
-    []
-  );
+  // const [rateTeamMemberLists, setRateTeamMemberLists] = useState<IUser[] | []>(
+  //   []
+  // );
+
   const [submit, setSubmit] = useState<boolean>(false);
+
   const [redirect, setRedirect] = useState<JSX.Element>();
+
+  const [ratings, setRatings] = useState<Rating[]>([]);
+
   const goBackPreviousPageHandler = () => {
     props.history.goBack();
   };
-  // const fetchTeamMembersHandler = async () => {
-  //   const teamData = await fetchTeamMembersAPI(props.location.state.team.name);
-  //   console.log("fetchTeamMembersHandler", teamData.data.users);
-  //   return teamData.data.users;
-  // };
+
   const fetchRateTeamMembersHandler = async () => {
-    // try {
-    //   const teamData = await fetchRateTeamMembersAPI(
-    //     props.location.state.team.name
-    //   );
-    //   console.log(
-    //     "Successfully fetch a user to rate in the team",
-    //     teamData.data.ratees
-    //   );
-    //   return teamData.data.ratees;
-    // } catch (e) {
-    //   console.log("ERRORS occured while fetch a response from the server", e);
-    // }
     const teamData = await fetchRateTeamMembersAPI(
       props.location.state.team.name
     );
     console.log("fetchTeamMembersHandler", teamData.data.ratees);
     return teamData.data.ratees;
   };
+
   useEffect(() => {
-    // fetchTeamMembersHandler().then((value: IUser[] | []) =>
-    //   setTeamMemberLists(value)
-    // );
     fetchRateTeamMembersHandler().then((value: IUser[] | []) =>
       setRateTeamMemberLists(value)
     );
   }, []);
+
   const onSubmitHandler = () => {
     setTimeout(() => {
       setRedirect(<Redirect to={{ pathname: "/landing" }} />);
     }, 1500);
     setSubmit(true);
   };
+
   return (
     <div>
       <div className={classes.header}>
@@ -98,7 +92,7 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
         {/* <RatingLists members={teamMemberLists} submit={submit} /> */}
-        <RatingLists members={rateTeamMemberLists} submit={submit} />
+        <RatingLists members={ratings} submit={submit} />
         <Button value="Submit" onClick={onSubmitHandler} />
         {redirect}
         <div className={classes.ratingDetail}>
