@@ -27,6 +27,7 @@ import {
   IGetRateUserOfTeamResponse,
 } from '../interfaces';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
+import { includes } from 'lodash';
 
 /**
  * get current user profile
@@ -174,19 +175,21 @@ export const search = async (req: Request, res: Response) => {
    */
   const teamConstraint = { name: { [Op.startsWith]: keyword } };
 
-  let users: User[];
-  let team: Team[];
+  let users: User[] = [];
+  let team: Team[] = [];
   try {
     users = await User.findAll({ where: { [Op.or]: userConstraint }, include: [Interest,Faculty] });
-    team = await Team.findAll({ where: teamConstraint });
+    team = await Team.findAll({ where: teamConstraint  , include : [{ model : User , as : 'member' , include : [Faculty]}]});
   } catch (err) {
     console.log(err);
   }
 
-  res.status(200).send({
-    users: users! || [],
-    team: team! || [],
-  });
+  const response = {
+    users : users.map(user => user.toJSON()),
+    team: team.map(team => team.toJSON()),
+  }
+
+  res.status(200).send(response);
 };
 
 export const findRelation = async (req: Request, res: Response) => {
@@ -336,7 +339,7 @@ export const getTeamStatus = async (req: Request, res: Response) => {
 };
 
 export const getRecommendUser = async (req: Request, res: Response) => {
-  const users = await User.findAll({ where: { id: { [Op.not]: req.user!.id } } });
+  const users = await User.findAll({ where: { id: { [Op.not]: req.user!.id } } , include : [Faculty] });
   let result: {
     user: User;
     score: number;
@@ -357,7 +360,7 @@ export const getRecommendUser = async (req: Request, res: Response) => {
 };
 
 export const getRecommendTeam = async (req: Request, res: Response) => {
-  const teams = await Team.findAll();
+  const teams = await Team.findAll({ include : [{ model : User , as : 'member'}]});
 
   let result: {
     team: Team;
