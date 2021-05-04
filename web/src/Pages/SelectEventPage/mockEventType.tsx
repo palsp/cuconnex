@@ -1,6 +1,4 @@
 const mockEventTypes = [
-  "Technology",
-  "Business",
   "ECommerce",
   "Blockchain",
   "Ads",

@@ -20,6 +20,7 @@ import {
 } from "@src/api/apiCalls";
 import { IUserFriend } from "@src/models";
 import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
+
 interface Props {
   location: {
     state?: {

@@ -13,6 +13,7 @@ export interface IUser {
   role: string;
   bio: string;
   image: string;
+  facultyImage: string;
 }
 export interface IUserFriend {
   id: string;
@@ -28,6 +29,7 @@ export interface IUserFriend {
   role: string;
   bio: string;
   image: string;
+  facultyImage: string;
 }
 
 // export interface ITeam {
@@ -189,6 +191,22 @@ export interface IEventData {
   };
   status?: string;
 }
+export interface ITeamEventData {
+  Candidate:{
+    eventId:number;
+    isCompete:boolean
+    teamName:string;
+  }
+  candidate:string[];
+  eventName: string;
+  id:number;
+  registration:boolean;
+  version:number;
+  status: string;
+}
+export interface IFetchTeamEventData {
+  events:ITeamEventData[];
+}
 //team
 export interface IGetTeam {
   team: IFetchTeam;
@@ -338,6 +356,7 @@ export default containerVariants;
 export interface IEducationData {
   faculty: string;
   year: string;
+  image: string;
 }
 
 //Rate

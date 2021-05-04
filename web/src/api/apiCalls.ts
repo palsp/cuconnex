@@ -41,6 +41,7 @@ import {
   IRateUser,
   IFetchRecommendedUser,
   IFetchRecommendedTeam,
+  IFetchTeamEventData,
 } from "@src/models";
 
 //Auth Services
@@ -336,6 +337,14 @@ const fetchTeamEventAPI = async (
   );
   return eventData;
 };
+const fetchRegisteredEventAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchTeamEventData>> => {
+  const eventData: AxiosResponse<IFetchTeamEventData> = await axios.get(
+    `/api/teams/events/${teamName}`
+  );
+  return eventData;
+};
 const fetchEventTeamAPI = async (
   eventId: number
 ): Promise<AxiosResponse<IFetchTeams>> => {
@@ -401,4 +410,5 @@ export {
   rateUserAPI,
   fetchRecommendedUser,
   fetchRecommendedTeam,
+  fetchRegisteredEventAPI,
 };

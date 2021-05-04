@@ -76,8 +76,9 @@
   width: 100%;
   text-align: start;
 }
-
+.teamDescription > div {
+  margin: 0;
+}
 .teamDescription > div > p {
-  margin: 0.5em 0;
   font-size: 1.1rem;
 }

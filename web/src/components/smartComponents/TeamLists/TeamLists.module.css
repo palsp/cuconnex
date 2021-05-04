@@ -4,5 +4,6 @@
   width: 375px;
   height: 128px;
 }
-.listDiv {
+.listDiv a {
+  text-decoration: none;
 }

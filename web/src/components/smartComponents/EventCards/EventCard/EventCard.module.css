@@ -59,7 +59,7 @@
 }
 .upcomingDiv {
   margin-top: 1vh;
-  width:  14.1vw;
+  width: 14.1vw;
   height: 2vh;
   background-color: var(--green_toggle, #00c300);
   overflow: visible;
@@ -102,11 +102,11 @@
   margin-bottom: 5%;
 }
 
-.status{
+.status {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin-top: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 5px;
   margin-bottom: 15px;
 }
 

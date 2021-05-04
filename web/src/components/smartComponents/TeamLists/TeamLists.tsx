@@ -1,6 +1,8 @@
 import classes from "./TeamLists.module.css";
 import React from "react";
 import GeneralLists from "@smartComponents/GeneralLists/GeneralLists";
+import { IFetchTeam, IFetchTeams } from "@src/models";
+import { Link } from "react-router-dom";
 const eventArray = [
   {
     name: "Lawtech",
@@ -47,13 +49,25 @@ const eventArray = [
     },
   },
 ];
-const TeamLists: React.FC = () => {
+interface Props {
+  teams: IFetchTeam[];
+}
+const TeamLists: React.FC<Props> = (props) => {
   return (
     <div className={classes.mainDiv}>
-      {eventArray.map((sampleteam, index) => {
+      {props.teams.map((team, index) => {
         return (
           <div key={index} className={classes.listDiv}>
-            <GeneralLists team={sampleteam} />
+            <Link
+              to={{
+                pathname: "/teamdetail",
+                state: {
+                  team: props.teams[index],
+                },
+              }}
+            >
+              <GeneralLists team={team} />
+            </Link>
           </div>
         );
       })}

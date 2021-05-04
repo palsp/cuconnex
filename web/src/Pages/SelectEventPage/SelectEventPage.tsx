@@ -34,15 +34,23 @@ interface Props {
   history: {
     goBack: () => void;
   };
+  location: {
+    state: {
+      typeEvent?: string;
+    };
+  };
 }
 
 const SelectEventPage: React.FC<Props> = (props) => {
-  const [eventType, setEventType] = useState<string>("");
+  const [eventType, setEventType] = useState<string | undefined>(
+    props.location.state ? props.location.state.typeEvent : ""
+  );
   const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
 
   const [showMockEventTypeModal, setShowMockEventTypeModal] = useState<boolean>(
-    true
+    props.location.state ? false : true
   );
+  // console.log(props.history.state.typeEvent);
   const mockEventModalClickHandler = (state: boolean) => {
     setShowMockEventTypeModal(state);
   };
@@ -67,7 +75,7 @@ const SelectEventPage: React.FC<Props> = (props) => {
       <PageTitle
         goBack={() => mockEventModalClickHandler(true)}
         size="small-medium"
-        text={"Some Event"}
+        text={`${eventType} Event`}
       />
 
       <div className={classes.eventDiv}>
