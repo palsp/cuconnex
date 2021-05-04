@@ -75,6 +75,72 @@ const ExplorePage = () => {
     }
   };
 
+  const activityPrompt = (
+    <div className={classes.eventTypeListContainer}>
+      <div className={classes.eventTypeList}>
+        {mockEventTypes.map((eventName, key) => (
+          <div
+            onClick={() => {
+              console.log("clickedddd", eventName);
+              setRedirect(
+                <Redirect
+                  to={{
+                    pathname: "/selectevents",
+                    state: {
+                      typeEvent: eventName,
+                    },
+                  }}
+                />
+              );
+            }}
+            key={key}
+            className={classes.eventTypeCardContainer}
+          >
+            <div className={classes.eventTypeCard}>
+              <div className={classes.cardContent}>
+                {eventName}
+                <div className={classes.icon}>
+                  {eventName === "Technology" ? (
+                    <Coding />
+                  ) : eventName === "Business" ? (
+                    <Case />
+                  ) : eventName === "Startup" ? (
+                    <Startup />
+                  ) : eventName === "ECommerce" ? (
+                    <Ecommerce />
+                  ) : eventName === "Ads" ? (
+                    <Ads />
+                  ) : eventName === "Blockchain" ? (
+                    <Blockchain />
+                  ) : eventName === "Finance" ? (
+                    <Finance />
+                  ) : eventName === "Web Builder" ? (
+                    <WebBuilder />
+                  ) : eventName === "Chatbot" ? (
+                    <Chatbot />
+                  ) : eventName === "Coding" ? (
+                    <Coding />
+                  ) : eventName === "FinTech" ? (
+                    <FinTech />
+                  ) : eventName === "Graphic" ? (
+                    <Graphic />
+                  ) : eventName === "Fashion" ? (
+                    <Fashion />
+                  ) : eventName === "Marketing" ? (
+                    <Marketing />
+                  ) : eventName === "UX/UI" ? (
+                    <UXUI />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
   const explorePage = !hasSearch ? (
     <>
       <div className={classes.exploreContent}>
@@ -86,7 +152,7 @@ const ExplorePage = () => {
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
         </div>
-        <ActivityBoxes activitybox={mockActivityBoxes} />
+        {activityPrompt}
       </div>
     </>
   ) : noSearchResult ? (
@@ -105,71 +171,7 @@ const ExplorePage = () => {
       <div className={classes.exploreSubtitle}>
         <Subtitle value="Find from your interest..." bold />
       </div>
-      {/* <ActivityBoxes activitybox={mockActivityBoxes} /> */}
-      {/* <div className={classes.eventTypeListContainer}>
-        <div className={classes.eventTypeList}>
-          {mockEventTypes.map((eventName, key) => (
-            <div
-              onClick={() => {
-                console.log("clickedddd");
-                setRedirect(
-                  <Redirect
-                    to={{
-                      pathname: "/selectevents",
-                      state: {
-                        typeEvent: eventName,
-                      },
-                    }}
-                  />
-                );
-              }}
-              key={key}
-              className={classes.eventTypeCardContainer}
-            >
-              <div className={classes.eventTypeCard}>
-                <div className={classes.cardContent}>
-                  {eventName}
-                  <div className={classes.icon}>
-                    {eventName === "Technology" ? (
-                      <Coding />
-                    ) : eventName === "Business" ? (
-                      <Case />
-                    ) : eventName === "Startup" ? (
-                      <Startup />
-                    ) : eventName === "ECommerce" ? (
-                      <Ecommerce />
-                    ) : eventName === "Ads" ? (
-                      <Ads />
-                    ) : eventName === "Blockchain" ? (
-                      <Blockchain />
-                    ) : eventName === "Finance" ? (
-                      <Finance />
-                    ) : eventName === "Web Builder" ? (
-                      <WebBuilder />
-                    ) : eventName === "Chatbot" ? (
-                      <Chatbot />
-                    ) : eventName === "Coding" ? (
-                      <Coding />
-                    ) : eventName === "FinTech" ? (
-                      <FinTech />
-                    ) : eventName === "Graphic" ? (
-                      <Graphic />
-                    ) : eventName === "Fashion" ? (
-                      <Fashion />
-                    ) : eventName === "Marketing" ? (
-                      <Marketing />
-                    ) : eventName === "UX/UI" ? (
-                      <UXUI />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div> */}
+      {activityPrompt}
     </div>
   ) : (
     <>
@@ -187,7 +189,6 @@ const ExplorePage = () => {
           <Heading value="Events" />
         </div>
         <EventLists events={eventLists} />
-        {redirect}
       </div>
     </>
   );
@@ -233,6 +234,7 @@ const ExplorePage = () => {
         />
       </div>
       {explorePage}
+      {redirect}
 
       {/* </Background> */}
     </motion.div>
