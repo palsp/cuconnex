@@ -11,10 +11,12 @@ import (
 )
 
 func EventRegister(router *gin.RouterGroup) {
-	router.GET("/:event_name", GetEvent)
+	router.GET("/:name", GetEvent)
+	router.GET("/:name/interest" , GetEventByInterest)
 	router.GET("/", GetAllEvent)
 	router.POST("/", CreateEvent)
 	router.PUT("/:id",UpdatedEvent)
+
 
 	// TODO: Must be removed in production
 	//router.OPTIONS("/" , func (ctx *gin.Context){
@@ -30,7 +32,7 @@ func EventRegister(router *gin.RouterGroup) {
 
 // GetEvent returns event(s) according to search keyword
 func GetEvent(c *gin.Context) {
-	eventName := c.Param("event_name")
+	eventName := c.Param("name")
 	events , err := SearchByName(eventName)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -56,6 +58,36 @@ func GetAllEvent(c *gin.Context) {
 	c.JSON(http.StatusOK , serializer.Response())
 }
 
+// GetEventByInterest handle the GET event which classified with some interest
+func GetEventByInterest(c *gin.Context){
+	interest := c.Param("name")
+
+	interest = common.URLDecoder(interest)
+
+	i , err := GetInterestByName(interest)
+
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"messages" : "interest not found",
+		})
+		return
+	}
+
+	es , err := i.GetEventByInterest()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"messages" : "something went wrong",
+		})
+		return
+	}
+
+	c.Set("my_events_model" , es)
+	serializer := EventsSerializer{c}
+	c.JSON(http.StatusOK , serializer.Response())
+
+}
+
+
 // CreateEvent handles the POST
 func CreateEvent(c *gin.Context) {
 	 eventModelValidator := NewEventModelValidator()
@@ -66,11 +98,18 @@ func CreateEvent(c *gin.Context) {
 		return
 	}
 
+
+
 	if err := SaveOne(&eventModelValidator.eventModel) ; err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{
 			"errors" : err.Error(),
 		})
 		return
+	}
+
+	// classify event with an interest
+	for _, v := range eventModelValidator.Interests {
+		eventModelValidator.eventModel.AddEventToInterest(v)
 	}
 
 
