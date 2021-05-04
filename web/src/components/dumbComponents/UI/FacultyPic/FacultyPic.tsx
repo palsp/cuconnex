@@ -12,7 +12,8 @@ const FacultyPic: React.FC<Props> = (props) => {
   if (props.PicUrl) {
     facultyCSS = [classes.facultyPic];
   }
-  const url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+  // const url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+  const url = props.PicUrl;
 
   const imageErrorHandler = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = tempFacultyPic;

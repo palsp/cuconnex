@@ -1,34 +1,8 @@
 import React from "react";
+import { IEventData } from "@src/models/index";
 import classes from "./EventCard.module.css";
 interface Props {
-  events: {
-    id: number;
-    "event-name": string;
-    bio: string;
-    location: string;
-    registration: boolean;
-    "start-date": {
-      month: number;
-      day: number;
-      year: number;
-      time: {
-        hour: number;
-        minute: number;
-        second: number;
-      };
-    };
-    "end-date": {
-      month: number;
-      day: number;
-      year: number;
-      time: {
-        hour: number;
-        minute: number;
-        second: number;
-      };
-    };
-    status?: string;
-  };
+  events: IEventData;
 }
 
 const EventCard: React.FC<Props> = (props) => {
