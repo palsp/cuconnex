@@ -7,6 +7,7 @@ export interface IUser {
   //   Business: string[];
   //   Design: string[];
   // };
+
   interests: string[];
   faculty: string;
   year: string;
@@ -192,20 +193,20 @@ export interface IEventData {
   status?: string;
 }
 export interface ITeamEventData {
-  Candidate:{
-    eventId:number;
-    isCompete:boolean
-    teamName:string;
-  }
-  candidate:string[];
+  Candidate: {
+    eventId: number;
+    isCompete: boolean;
+    teamName: string;
+  };
+  candidate: string[];
   eventName: string;
-  id:number;
-  registration:boolean;
-  version:number;
+  id: number;
+  registration: boolean;
+  version: number;
   status: string;
 }
 export interface IFetchTeamEventData {
-  events:ITeamEventData[];
+  events: ITeamEventData[];
 }
 //team
 export interface IGetTeam {
