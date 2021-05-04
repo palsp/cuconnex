@@ -130,6 +130,7 @@ export interface ICreateEventData {
   "event-name": string;
   bio: string;
   location?: string;
+  interests: string[];
   registration: boolean;
   "start-date": {
     month: number;
