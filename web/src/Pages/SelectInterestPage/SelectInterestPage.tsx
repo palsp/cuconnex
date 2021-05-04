@@ -146,7 +146,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
         console.log("POST signup success but failed GET fetching");
       }
     } catch (e) {
-      setErrorHandler(e.response.data.errors[0].message);
+      // setErrorHandler(e.response.data.errors[0].message);
       console.log("SelectInterestPage Error setting users data", e);
       setRedirect(<Redirect to="/" />);
     }
