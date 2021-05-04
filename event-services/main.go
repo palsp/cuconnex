@@ -1,6 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"log"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -10,10 +16,6 @@ import (
 	"github.com/palsp/cuconnex/event-services/common"
 	"github.com/palsp/cuconnex/event-services/config"
 	"github.com/palsp/cuconnex/event-services/events"
-	"log"
-	"net/http"
-	"os"
-	"time"
 )
 
 func Migrate() {
@@ -66,6 +68,8 @@ func main() {
 	events.EventRegister(v1)
 
 	v1.POST("/upload/:id",UploadImage)
+
+	fmt.Println("start listening")
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
 
 }

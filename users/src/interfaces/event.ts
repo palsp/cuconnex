@@ -9,6 +9,6 @@ export interface IEventResponse {
   version?: number | undefined;
 }
 
-export interface IGetRegisterEventResponse{
+export interface IGetRegisterEventResponse {
     events : IEventResponse[];
 }

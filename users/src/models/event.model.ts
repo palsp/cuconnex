@@ -89,6 +89,10 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
      candidate = this.candidate.map(c => c.toJSON())
     }
 
+    if(!values.image){
+      values.image = "";
+    }
+
     return { ...values , candidate };
   }
 }

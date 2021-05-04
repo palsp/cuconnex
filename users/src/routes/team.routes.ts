@@ -69,6 +69,7 @@ router.put(
   teamController.editTeam
 );
 
+
 router.get('/outgoing-requests/:name', requireUser, teamController.getOutgoingRequests);
 
 router.get('/incoming-requests/:name', requireUser, teamController.getIncomingRequests);
