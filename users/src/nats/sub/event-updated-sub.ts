@@ -1,4 +1,4 @@
-import { Event, Team, Rating } from '../../models';
+import { Event, Team, Rating, User } from '../../models';
 import { Listener, EventUpdated, Subjects, EventStatus } from '@cuconnex/common';
 import { Message } from 'node-nats-streaming';
 import { queueGroupName } from '../queue-group-name';
@@ -11,7 +11,7 @@ export class EventUpdatedSub extends Listener<EventUpdated> {
 
   async onMessage(data: EventUpdated['data'], msg: Message) {
     console.log("message received" , data);
-    const event = await Event.findOne({ where : { id : data.id , version : data.version - 1 } , include : [{ model : Team , as: 'candidate' }]});
+    const event = await Event.findOne({ where : { id : data.id , version : data.version - 1 } , include : [{ model : Team , as: 'candidate' , include : [{ model : User , as : 'owner'}]}] });
     
     if(!event){
         throw new Error('Event not found')

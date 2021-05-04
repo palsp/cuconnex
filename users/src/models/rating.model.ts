@@ -39,6 +39,12 @@ export class Rating
 	public static async addRateNotification(team : Team){
 		const members = await team.getMembers();
 
+		if(!team.owner){
+			team.owner = await team.getOwner();
+		}
+
+		members.push(team.owner);
+
 		for(let i = 0 ; i < members.length ; i++){
 			for(let j = 0 ; j < members.length ; j++){
 			  if(i === j){
