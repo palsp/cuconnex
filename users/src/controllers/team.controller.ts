@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BadRequestError, NotFoundError } from '@cuconnex/common';
-import { Team, IsMember, User, Interest, Event } from '../models';
+import { Team, IsMember, User, Interest, Event, Faculty } from '../models';
 import { getUserWhoLike } from '../utils/recommend';
 import {
   IUserResponse,
@@ -219,7 +219,7 @@ export const getRecommendedUserForTeam = async (req: Request, res: Response) => 
 
   const teamName = req.params.teamName;
 
-  const team = await Team.findOne({ where: { name: teamName }, include: ['owner', 'member'] });
+  const team = await Team.findOne({ where: { name: teamName }, include: ['owner', { model : User , as : 'member' , include : [Faculty]}] });
 
   if (!team) {
     throw new NotFoundError('Team');
