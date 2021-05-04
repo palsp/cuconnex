@@ -48,7 +48,7 @@ const App: React.FC = () => {
       <Route path="/profile" exact component={ProfilePage} />
       <Route path="/selectevents" exact component={SelectEventPage} />
       <Route path="/selectteams" exact component={SelectTeamPage} />
-      <Route path="/selectmember" exact component={SelectMemberPage} />
+      {/* <Route path="/selectmember" exact component={SelectMemberPage} /> */}
       <Route path="/createteam" exact component={CreateTeamPage} />
       <Route path="/teamdetail" exact component={TeamDetail} />
       <Route path="/explore" exact component={ExplorePage} />

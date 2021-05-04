@@ -49,7 +49,6 @@ const SelectMemberPage: React.FC = () => {
         </div>
       </div>
 
-    
       {console.log("Array Contain: ", memberArray)}
     </div>
   );
