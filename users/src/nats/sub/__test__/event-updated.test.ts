@@ -55,6 +55,7 @@ it('should update event status' , async () => {
         id : 1,
         "event-name" : "test_event",
         version : 1,
+        image : "",
         registration : true,
         status : EventStatus.ongoing,
     }
@@ -81,6 +82,7 @@ it('add entry in rating table if it not exist', async () => {
         id : 1,
         "event-name" : "test_event",
         version : 1,
+        image : "",
         registration : true,
         status : EventStatus.closed,
     }
@@ -99,6 +101,7 @@ it('update entry in rating table if it existed', async () => {
             id : 1,
             "event-name" : "test_event",
             version : 1,
+            image : "",
             registration : true,
             status : EventStatus.closed,
         }
@@ -126,6 +129,7 @@ it('not add entry in rating table if updated event is not closed', async () => {
             id : 1,
             "event-name" : "test_event",
             version : 1,
+            image : "",
             registration : true,
             status : EventStatus.ongoing,
         }
@@ -151,6 +155,7 @@ it('acks the message', async () => {
             id : 1,
             "event-name" : "test_event",
             version : 1,
+            image : "",
             registration : true,
             status : EventStatus.closed,
         }

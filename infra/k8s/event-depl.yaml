@@ -43,6 +43,27 @@ spec:
                   fieldPath: metadata.name
             - name:  NATS_CLUSTER_ID
               value: 'connex'
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-access-key
+                  key: AWS_ACCESS_KEY
+            - name: AWS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: aws_region
+                  key: AWS_REGION
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: aws-secret-key
+                  key: AWS_SECRET_ACCESS_KEY
+            - name: AWS_BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: aws-bucket
+                  key: AWS_BUCKET
+
       # initContainers:
       #   - name: init-wait
       #     image: alpine

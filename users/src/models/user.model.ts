@@ -438,7 +438,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       values.facultyImage = this.Faculty.image
     }else{
       values.faculty = ""
-      values.facultyImage = "assets/faculties/default_faculty.jpg"
+      values.facultyImage = "assets/faculties/default_faculty.jpeg"
     }
 
     delete values.Faculty;
