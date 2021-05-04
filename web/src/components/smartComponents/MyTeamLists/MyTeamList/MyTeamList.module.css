@@ -50,9 +50,11 @@
 .team .teamEvent {
   text-align: start;
   margin-right: 3%;
-  white-space: nowrap;
 }
 
+.teamEvent {
+  white-space: nowrap;
+}
 .team .teamStatus {
   margin-top: 7%;
 }
