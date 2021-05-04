@@ -3,3 +3,4 @@ export * from './team.routes';
 export * from './connection.routes';
 export * from './interest.routes';
 export * from './search';
+export * from './event.routes';

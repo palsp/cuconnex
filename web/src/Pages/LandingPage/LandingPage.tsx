@@ -18,6 +18,7 @@ import {
   fetchUserTeamRequestAPI,
 } from "@src/api/apiCalls";
 import { IUserFriend } from "@src/models";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
 interface Props {
   location: {
     state?: {
@@ -128,15 +129,23 @@ const LandingPage: React.FC<Props> = (props) => {
       <HamburgerPrompt />
     </div>
   ) : (
-    <Background hasNav={true}>
-      <div
-        className={
-          TeamList.length > 0 ? classes.heroDivHasTeam : classes.heroDiv
-        }
-      >
-        <LandingHero pageHeight={menuHeightStyle} myTeamList={myTeamLists} />
+    <div className={classes.relativeDiv}>
+      <div className={classes.waveBg}>
+        <WaveCanvasBg
+          width={window.innerWidth}
+          height={window.innerHeight * 0.7}
+        />
       </div>
-    </Background>
+      <Background hasNav={true}>
+        <div
+          className={
+            TeamList.length > 0 ? classes.heroDivHasTeam : classes.heroDiv
+          }
+        >
+          <LandingHero pageHeight={menuHeightStyle} myTeamList={myTeamLists} />
+        </div>
+      </Background>
+    </div>
   );
   const spinnerOne = [classes.inner];
   const spinnerTwo = [classes.inner];

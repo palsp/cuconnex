@@ -5,6 +5,18 @@
   z-index: 3;
 }
 
+.relativeDiv {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+.waveBg {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  z-index: -1;
+}
+
 .heroDiv {
   display: flex;
   flex-direction: column;

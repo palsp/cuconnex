@@ -187,7 +187,7 @@ const ProfilePage: React.FC<Props> = (props) => {
                 <Link
                   to={{
                     pathname: "/selectinterests",
-                    state: { users: userData },
+                    state: { users: userData, page: "profile" },
                   }}
                 >
                   <PlusCircle />{" "}

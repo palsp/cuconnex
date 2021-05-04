@@ -1,3 +1,5 @@
+import React, { useState, useContext } from "react";
+import * as yup from "yup";
 import { Button, InputField } from "@dumbComponents/UI";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import MemberTags from "@smartComponents/MemberTag/MemberTags";
@@ -18,7 +20,6 @@ import {
 } from "@src/models";
 import { Field, Form, Formik } from "formik";
 import { motion } from "framer-motion";
-import React, { useState, useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import classes from "./CreateTeamPrompt.module.css";
@@ -30,6 +31,21 @@ interface Props {
   members: IUserFriend[] | [];
   event?: IEventData;
 }
+
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .required("Team name is requried")
+    .matches(/^[A-Za-z0-9]+$/, "Only characters and numbers allow"),
+  description: yup
+    .string()
+    .required("Team description is requried")
+    .matches(/^[A-Za-z0-9]+$/, "Only characters and numbers allow"),
+  currentRecruitment: yup
+    .string()
+    .required("Please tell us who you are looking for")
+    .matches(/^[A-Za-z0-9]+$/, "Only characters and numbers allow"),
+});
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
   const [clickCreateTeam, setClickCreateTeam] = useState<boolean>(true);
@@ -151,13 +167,13 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
                 thisEventId = props.event.id;
               }
               const teamCreateData = {
-                name: data.name.replace(/\s/g, ""),
+                name: data.name,
                 description: data.description,
                 currentRecruitment: data.currentRecruitment,
                 image: imageRaw,
               };
               const registerEventData = {
-                teamName: data.name.replace(/\s/g, ""),
+                teamName: data.name,
                 eventId: thisEventId,
               };
               console.log(
@@ -175,6 +191,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
               setSubmitting(true);
               resetForm();
             }}
+            validationSchema={validationSchema}
           >
             {({ isSubmitting, values }) => (
               <Form>

@@ -3,8 +3,10 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/*
-      - ./infra/k8s-dev/*
+      - ./infra/k8s/event-depl.yaml
+      - ./infra/k8s/expiration-depl.yaml
+      - ./infra/k8s/users-depl.yaml
+      - ./infra/k8s-dev/ingress.yaml
 build:
   local:
     push: false
@@ -17,14 +19,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: palsp/connex-auth
-      context: auth
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: 'src/**/*.ts'
-            dest: .
+    # - image: palsp/connex-auth
+    #   context: auth
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: 'src/**/*.ts'
+    #         dest: .
     - image: palsp/connex-event
       context: event-services
       docker:
@@ -33,11 +35,19 @@ build:
         manual:
           - src: 'src/**/*.go'
             dest: .
-    - image: palsp/connex-web
-      context: web
+    - image: palsp/connex-expiration
+      context: expiration
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '**/*.ts'
-            dest: . 
+          - src: 'src/**/*.ts'
+            dest: .
+    # - image: palsp/connex-web
+    #   context: web
+    #   docker:
+    #     dockerfile: Dockerfile
+    #   sync:
+    #     manual:
+    #       - src: '**/*.ts'
+    #         dest: . 

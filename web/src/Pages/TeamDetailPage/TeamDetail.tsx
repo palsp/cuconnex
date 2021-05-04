@@ -46,7 +46,6 @@ const TeamDetail: React.FC<Props> = (props) => {
   const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
   const [clickTeamDetail, setClickTeamDetail] = useState<boolean>(true);
   const [clickInviteMembers, setClickInviteMembers] = useState<boolean>(false);
-
   const [incomingTeamNoti, setIncomingTeamNoti] = useState<IUserFriend[] | []>(
     []
   );
@@ -59,34 +58,52 @@ const TeamDetail: React.FC<Props> = (props) => {
   }, []);
   const myTeamName = props.location.state.team.name;
   const fetchOutgoingTeamNotiHandler = async () => {
-    const teamOutgoingNotiData = await fetchTeamOutgoingNotificationAPI(
-      myTeamName
-    );
-    console.log(
-      "SUCCESS pendingMember",
-      teamOutgoingNotiData.data.outgoingRequests.pendingUsers
-    );
-    setPendingMembers(teamOutgoingNotiData.data.outgoingRequests.pendingUsers);
+    try {
+      const teamOutgoingNotiData = await fetchTeamOutgoingNotificationAPI(
+        myTeamName
+      );
+      console.log(
+        "SUCCESS pendingMember",
+        teamOutgoingNotiData.data.outgoingRequests.pendingUsers
+      );
+      setPendingMembers(
+        teamOutgoingNotiData.data.outgoingRequests.pendingUsers
+      );
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchIncomingTeamNotiHandler = async () => {
-    const requestData = await fetchTeamIncomingNotificationAPI(
-      props.location.state.team.name
-    );
-    console.log(
-      "SUCCESS Incoming team request =",
-      requestData.data.incomingRequests.pendingUsers
-    );
-    setIncomingTeamNoti(requestData.data.incomingRequests.pendingUsers);
+    try {
+      const requestData = await fetchTeamIncomingNotificationAPI(
+        props.location.state.team.name
+      );
+      console.log(
+        "SUCCESS Incoming team request =",
+        requestData.data.incomingRequests.pendingUsers
+      );
+      setIncomingTeamNoti(requestData.data.incomingRequests.pendingUsers);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchTeamMembersHandler = async () => {
-    const teamMembersData = await fetchTeamMembersAPI(myTeamName);
-    console.log("SUCCESS members =", teamMembersData.data.users);
-    setTeamMembers(teamMembersData.data.users);
+    try {
+      const teamMembersData = await fetchTeamMembersAPI(myTeamName);
+      console.log("SUCCESS members =", teamMembersData.data.users);
+      setTeamMembers(teamMembersData.data.users);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchRelationHandler = async () => {
-    const relationData = await userTeamRelationAPI(myTeamName);
-    console.log("SUCCESS relation =", relationData.data);
-    setRelation(relationData.data.status);
+    try {
+      const relationData = await userTeamRelationAPI(myTeamName);
+      console.log("SUCCESS relation =", relationData.data);
+      setRelation(relationData.data.status);
+    } catch (e) {
+      console.log(e);
+    }
   };
   console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
@@ -96,8 +113,6 @@ const TeamDetail: React.FC<Props> = (props) => {
     isTeamOwner = true;
   }
   // Is team already exist ? (create team process)
-  const isTeamExist = true;
-
   const goBack = () => {
     props.history.goBack();
   };

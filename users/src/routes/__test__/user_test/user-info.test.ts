@@ -74,24 +74,21 @@ describe('USER--INFO: Get list of teams from user', () => {
     const team3 = await user2.createTeams({ name: 'testTeam3', description: '' });
     await team3.invite(user1);
 
-    const { body: teams } = await request(app)
+    const { body } = await request(app)
       .get(`/api/users/teams/${user1.id}`)
       .set('Cookie', global.signin(user1.id))
       .send()
       .expect(200);
 
-    // console.log(res.body);
-    expect(teams.length).toEqual(2);
+    expect(body.teams.length).toEqual(2);
 
-    expect(teams[0].name).toEqual(team1.name);
-    expect(teams[0].members.length).toEqual(1);
-    expect(teams[0].members[0].id).toEqual(user1.id);
+    expect(body.teams[0].name).toEqual(team1.name);
+    expect(body.teams[0].members.length).toEqual(1);
+    expect(body.teams[0].members[0].id).toEqual(user1.id);
 
-    expect(teams[1].name).toEqual(team2.name);
-    expect(teams[1].members.length).toEqual(2);
-    expect(teams[1].members[0].id).toEqual(user2.id);
-    expect(teams[1].members[1].id).toEqual(user1.id);
-
-    // expect(res.body[1].members[0].id).toEqual(user1.id);
+    expect(body.teams[1].name).toEqual(team2.name);
+    expect(body.teams[1].members.length).toEqual(2);
+    expect(body.teams[1].members[0].id).toEqual(user2.id);
+    expect(body.teams[1].members[1].id).toEqual(user1.id);
   });
 });

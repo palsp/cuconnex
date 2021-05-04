@@ -38,7 +38,6 @@ export const editUserValidator = [
       // check if key in interests filed is existed in InterestDescription
       for (let key in input) {
         valid = valid && (key in InterestDescription)
-        console.log(valid)
         if (input[key]) {
           valid = valid && Array.isArray(input[key])
         }
@@ -75,10 +74,19 @@ export const addFreindResultValidator = [
 ];
 
 export const manageUserStatusValidator = [
-  body('teamName').notEmpty().isAlphanumeric(),
-  body('newStatusFromUser').notEmpty(),
+  body('teamName').notEmpty().isAlphanumeric().withMessage('Team id must be supplied'),
+  body('newStatusFromUser').notEmpty().withMessage('status must be supplied'),
 ];
 
 export const requestToJoinTeamValidator = [
   body('teamName').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
+];
+
+export const addRatingValidator = [
+  body('rateeId').notEmpty().isAlphanumeric().withMessage('Ratee id is not valid'),
+  body('ratings')
+    .notEmpty()
+    .isNumeric()
+    .custom((input : number) => input >= 0 && input <= 5)
+    .withMessage('Ratings must be a number and its value must be between 0 and 5 inclusively'),
 ];

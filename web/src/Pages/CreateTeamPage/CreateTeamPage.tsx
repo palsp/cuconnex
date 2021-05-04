@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import containerVariants, { IUser } from "@src/models/models";
 import SelectEventPrompt from "./SelectEventPrompt/SelectEventPrompt";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
 
 const CreateTeamPage: React.FC = () => {
   const [clickSelectScope, setClickSelectScope] = useState<boolean>(true);
@@ -29,7 +30,13 @@ const CreateTeamPage: React.FC = () => {
 
   const createPrompt =
     clickSelectScope === true ? (
-      <div>
+      <div className={classes.relativeDiv}>
+        <div className={classes.waveBg}>
+          <WaveCanvasBg
+            width={window.innerWidth}
+            height={window.innerHeight * 0.95}
+          />
+        </div>
         <div className={classes.headerContainer}>
           <div className={classes.closeDiv}>
             <Link to="landing">

@@ -1,58 +1,78 @@
 import pandas as pd
 import mysql.connector
+from time import sleep
+import os
 
-from surprise import SVD
+from surprise import NMF
 from surprise import Dataset
 from surprise import Reader
 
-# Connect to MySQL database.
+def get_connection():
+    "Connect to MySQL database."
+    try:
+        return mysql.connector.connect(host=os.environ['DB_HOST'],
+                                       database=os.environ['DB_SCHEMA'],
+                                       user=os.environ['DB_USER'],
+                                       password=os.environ['DB_PASSWORD'],
+                                       autocommit=True)
+    except mysql.connector.Error as e:
+        print("Error while connecting to MySQL", e)
+
+connection = get_connection()
 try:
-    connection = mysql.connector.connect(host=DB_HOST,
-                                         database=DB_SCHEMA,
-                                         user=DB_USER,
-                                         password=DB_PASSWORD)
+    checksum = 0
+    while True:
+        cursor = connection.cursor(dictionary=True)
 
-except mysql.connector.Error as e:
-    print("Error while connecting to MySQL", e)
+        # Check for any changes in the rating table.
+        cursor.execute("CHECKSUM TABLE rating")
+        new_checksum = cursor.fetchone()['Checksum']
+        if new_checksum == checksum:
+            cursor.close()
+            print("No update in rating table detected")
+            # Check for update again after 60 seconds.
+            sleep(60)
+        else:
+            checksum = new_checksum
+            # Fetch the data from the rating table.
+            cursor.execute("SELECT * FROM rating")
+            rows = cursor.fetchall()
+            df = pd.DataFrame(rows)
 
-# Fetch the data from the rating table.
-cursor = connection.cursor(dictionary=True)
-cursor.execute("select * from rate")
-rows = cursor.fetchall()
-df = pd.DataFrame(rows)
+            # A reader is needed but only the rating_scale param is required.
+            reader = Reader(rating_scale=(1, 5))
 
-# A reader is needed but only the rating_scale param is required.
-reader = Reader(rating_scale=(1, 5))
+            # The columns must correspond to rater id, ratee id and ratings (in that order).
+            data = Dataset.load_from_df(df[['raterId', 'rateeId', 'rating']], reader)
 
-# The columns must correspond to rater id, ratee id and ratings (in that order).
-data = Dataset.load_from_df(df[['raterid', 'rateeid', 'rating']], reader)
+            # Train an NMF algorithm on the dataset.
+            trainset = data.build_full_trainset()
+            algo = NMF()
+            algo.fit(trainset)
 
-# Train an SVD algorithm on the dataset.
-trainset = data.build_full_trainset()
-algo = SVD()
-algo.fit(trainset)
+            # Predict ratings for all pairs (u, i) where u != i.
+            antiset = trainset.build_anti_testset()
+            testset = []
+            for (uid, iid, r) in antiset:
+                if uid != iid:
+                    testset.append((uid, iid, r))
+            testset.extend(trainset.build_testset())
+            predictions = algo.test(testset)
 
-# Predict ratings for all pairs (u, i) that are NOT in the training set.
-anti_trainset = trainset.build_anti_testset()
-testset = []
-for (uid, iid, r) in anti_trainset:
-    if uid != iid:
-        testset.append((uid, iid, r))
-predictions = algo.test(testset)
+            recommend = []
+            for uid, iid, true_r, est, _ in predictions:
+                est = float(est)
+                recommend.append((uid, iid, est))
 
-recommend = []
-for uid, iid, true_r, est, _ in predictions:
-    est = float(est)
-    recommend.append((uid, iid, est))
+            # Update the recommendations table.
+            mysql_replace_query = """REPLACE INTO recommendations (userId, recommendeeId, score) VALUES (%s, %s, %s)"""
+            for row in recommend:
+                cursor.execute(mysql_replace_query, row)
+            print("Successfully updated recommendations table")
 
-# Update the recommend table.
-mysql_replace_query = """REPLACE INTO recommend (userid, recommendeeid, score) VALUES (%s, %s, %s)"""
-for row in recommend:
-    cursor.execute(mysql_replace_query, row)
-connection.commit()
-print("Successfully updated recommend table")
-
-# Close the connection.
-cursor.close()
-connection.close()
-print("MySQL connection is closed")
+            # Close the cursor.
+            cursor.close()
+            
+finally:
+    connection.close()
+    print("MySQL connection is closed")
