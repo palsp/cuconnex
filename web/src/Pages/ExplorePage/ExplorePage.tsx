@@ -44,7 +44,7 @@ const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
   const [noSearchResult, setNoSearchResult] = useState<boolean>(false);
   const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
-  const [teamLists, setTeamLists] = useState<IFetchTeam[]>([]);
+  const [teamLists, setTeamLists] = useState<IFetchTeam[] | []>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
   const [recommendedPeopleLists, setRecommendedPeopleLists] = useState<IUser[]>(
     []

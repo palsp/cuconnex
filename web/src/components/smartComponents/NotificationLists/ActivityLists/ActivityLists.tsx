@@ -12,6 +12,7 @@ import {
 import { Heading, Subtitle } from "@dumbComponents/UI";
 import { IFetchTeam, IUser, IUserFriend } from "@src/models";
 import { UserContext } from "@context/UserContext";
+import { Link } from "react-router-dom";
 
 interface Props {
   Memberlist: IUserFriend[] | [];
@@ -26,12 +27,22 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
         <div className={classes.listHeader}>Pending Team</div>
         {props.requestedTeamList.map((position: IFetchTeam, index: number) => {
           return (
-            <div key={index}>
-              <PositionsInActivityNotificationList
+            <div className={classes.linkDiv} key={index}>
+              <Link
                 key={index}
-                position={userData.role}
-                teams={position}
-              />
+                to={{
+                  pathname: "/teamdetail",
+                  state: {
+                    team: props.requestedTeamList[index],
+                  },
+                }}
+              >
+                <PositionsInActivityNotificationList
+                  key={index}
+                  position={userData.role}
+                  teams={position}
+                />
+              </Link>
             </div>
           );
         })}
@@ -40,8 +51,18 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
         <div className={classes.listHeader}>Pending Connections</div>
         {props.Memberlist.map((person: IUserFriend, index: number) => {
           return (
-            <div key={index}>
-              <MemberInActivityNotificationList key={index} member={person} />
+            <div className={classes.linkDiv} key={index}>
+              <Link
+                key={index}
+                to={{
+                  pathname: "/profile",
+                  state: {
+                    users: props.Memberlist[index],
+                  },
+                }}
+              >
+                <MemberInActivityNotificationList key={index} member={person} />
+              </Link>
             </div>
           );
         })}

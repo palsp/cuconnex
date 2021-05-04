@@ -23,3 +23,7 @@
 .positionlist {
   margin-bottom: 5%;
 }
+
+.linkDiv a {
+  text-decoration: none;
+}
