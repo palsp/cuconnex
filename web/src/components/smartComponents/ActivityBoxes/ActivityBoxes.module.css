@@ -3,4 +3,5 @@
   align-content: flex-start;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  padding-bottom: 3vh;
 }
