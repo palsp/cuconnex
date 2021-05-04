@@ -19,6 +19,7 @@ type EventResponse struct {
 	StartDate time.Time `json:"start-date"`
 	EndDate   time.Time `json:"end-date"`
 	Status    string `json:"status"`
+	Image    string   `json:"image"`
 	Registration bool `json:"registration"`
 }
 
@@ -31,6 +32,7 @@ func (self *EventSerializer) Response() EventResponse {
 		Location:  EventModel.Location,
 		StartDate: EventModel.StartDate,
 		EndDate:   EventModel.EndDate,
+		Image :    EventModel.Image,
 		Status:    EventModel.Status,
 		Registration: EventModel.Registration,
 	}
@@ -65,6 +67,7 @@ func (self *EventsSerializer) Response() EventsResponse {
 				Location:  model.Location,
 				StartDate: model.StartDate,
 				EndDate:   model.EndDate,
+				Image :    model.Image,
 				Status: model.Status,
 				Registration: model.Registration,
 
