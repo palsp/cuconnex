@@ -16,6 +16,8 @@ import {
 } from "@src/models";
 import {
   fetchFriendsDataAPI,
+  fetchRecommendedUser,
+  fetchRecommendUserForTeam,
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
   fetchUserTeamRequestAPI,
@@ -37,12 +39,14 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   const [selectedMemberArray, setSelectedMemberArray] = useState<IUserFriend[]>(
     []
   );
+  const [recommendLists, setRecommendLists] = useState<IUser[]>([]);
   const [friendsNotInTeam, setFriendsNotInTeam] = useState<
     IUserFriendExtended[]
   >([]);
   // const [newFriendLists, setNewFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
     fetchFriendsHandler();
+    fetchRecommendedUserHandler();
   }, []);
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
@@ -64,6 +68,17 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       console.log("POST /members/invite/", props.teams.name, members.id);
       setClicked(true);
     });
+  };
+  const fetchRecommendedUserHandler = async () => {
+    try {
+      const recommendedUsers = await fetchRecommendUserForTeam(
+        props.teams.name
+      );
+      setRecommendLists(recommendedUsers.data.users);
+      console.log("fetchRecommendedUserForTeam", recommendedUsers);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -123,12 +138,12 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
     setFriendsNotInTeam(extendedFriendsNotInTeam);
   };
 
-  const selectPersonHandler = (e: IUserFriend) => {
+  const selectPersonHandler = (e: any) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
+      const newMemberArray = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       // setSelectedMemberArray(
       //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
@@ -180,10 +195,19 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
           </div>
         </div>
         <div className={classes.memberListsDiv}>
+          <Heading size="smallMedium" value="Connections" />
           <MemberListsForPrompt
             clicked={clicked}
             team={props.teams}
             memberlist={friendsNotInTeam}
+            selectMemberListsHandler={selectMemberHandler}
+            personHandler={selectPersonHandler}
+          />
+          <Heading size="smallMedium" value="Recommended Users" />
+          <MemberListsForPrompt
+            clicked={clicked}
+            team={props.teams}
+            memberlist={recommendLists}
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
           />

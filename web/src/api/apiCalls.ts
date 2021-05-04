@@ -95,6 +95,14 @@ const fetchRecommendedUser = async (): Promise<
   return recommendedUsers;
 };
 
+const fetchRecommendUserForTeam = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchRecommendedUser>> => {
+  const recommendedUsersForTeam: AxiosResponse<IFetchRecommendedUser> = await axios.get(
+    `/api/teams/recommended-user/${teamName}/`
+  );
+  return recommendedUsersForTeam;
+};
 const fetchRecommendedTeam = async (): Promise<
   AxiosResponse<IFetchRecommendedTeam>
 > => {
@@ -355,7 +363,7 @@ const fetchEventTeamAPI = async (
 };
 const fecthRateTeamAPI = async (): Promise<
   AxiosResponse<IFetchRateTeamNotification>
- > => {
+> => {
   const rateTeamData: AxiosResponse<IFetchRateTeamNotification> = await axios.get(
     "/api/users/teams/rate"
   );
@@ -409,6 +417,7 @@ export {
   fetchRateTeamMembersAPI,
   rateUserAPI,
   fetchRecommendedUser,
+  fetchRecommendUserForTeam,
   fetchRecommendedTeam,
   fetchRegisteredEventAPI,
 };

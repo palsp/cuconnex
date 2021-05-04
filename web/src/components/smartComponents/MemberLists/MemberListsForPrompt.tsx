@@ -16,9 +16,9 @@ import MemberListForPrompt from "./MemberList/MemberListForPrompt";
 interface Props {
   clicked: boolean;
   team: IFetchTeam;
-  memberlist: IUserFriendExtended[] | [];
+  memberlist: any;
   selectMemberListsHandler: (e: number) => void;
-  personHandler: (e: IUserFriend) => void;
+  personHandler: (e: any) => void;
 }
 const MemberListsForPrompt: React.FC<Props> = (props) => {
   // const fetchFriendsList:member[] = async () => {
@@ -31,7 +31,7 @@ const MemberListsForPrompt: React.FC<Props> = (props) => {
   const selectMemberListHandler = (
     checked: boolean,
     index: number,
-    person: IUserFriendExtended
+    person: any
   ) => {
     if (checked) {
       props.selectMemberListsHandler(index);
@@ -42,7 +42,7 @@ const MemberListsForPrompt: React.FC<Props> = (props) => {
     <div>
       {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
       {props.memberlist.map((person: MemberListsData, index: number) => { */}
-      {props.memberlist.map((person: IUserFriendExtended, index: number) => {
+      {props.memberlist.map((person: any, index: number) => {
         return (
           <div key={index}>
             <MemberListForPrompt

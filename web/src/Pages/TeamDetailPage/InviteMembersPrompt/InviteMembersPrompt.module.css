@@ -58,6 +58,12 @@
 .memberListsDiv {
   display: flex;
   justify-content: center;
-  margin-top: 7vh;
+  flex-direction: column;
+  margin-top: 10vh;
   width: 100vw;
+}
+
+.memberListsDiv > div > p {
+  text-align: start;
+  margin: 0 0.3rem;
 }
