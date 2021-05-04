@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { MemberLists, SearchBar } from "@smartComponents/index";
-import { Heading, Subtitle } from "@dumbComponents/UI/index";
+import { Heading, PageTitle, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 import classes from "./InviteMembersPrompt.module.css";
 import { motion } from "framer-motion";
@@ -28,11 +28,11 @@ import MemberListsForPrompt from "@smartComponents/MemberLists/MemberListsForPro
 
 interface Props {
   teams: IFetchTeam;
-  backHandler: any;
+  backHandler: () => void;
   incomingRequest: IUserFriend[] | [];
 }
 
-const inviteMembersPrompt: React.FC<Props> = (props) => {
+const InviteMembersPrompt: React.FC<Props> = (props) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
   const [numberFriends, setNumberFriends] = useState<number>(0);
@@ -59,6 +59,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       console.log("ERRORS occured while POST /api/teams/invite-member", e);
     }
   };
+
   const inviteMember = () => {
     selectedMemberArray.forEach((members) => {
       invitationHandler({
@@ -69,6 +70,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       setClicked(true);
     });
   };
+
   const fetchRecommendedUserHandler = async () => {
     try {
       const recommendedUsers = await fetchRecommendUserForTeam(
@@ -152,6 +154,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       setSelectedMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
+
   const selectMemberHandler = (e: number) => {
     const positionOfE = memberArray.indexOf(e);
     if (positionOfE === -1) {
@@ -168,13 +171,14 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
     <>
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
-          <div className={classes.relativeArrow}>
-            <Link to="/">
-              <ArrowLeft />
-            </Link>
-          </div>
-          <Heading value="Invite Members" size="small-medium" />
-          <button className={classes.noStyleButton}>Invite</button>
+          <PageTitle
+            text="Invite Members"
+            size="small-medium"
+            goBack={props.backHandler}
+          />
+          <button className={classes.noStyleButton} onClick={inviteMember}>
+            Invite
+          </button>
           <SearchBar value="Search By Name" />
         </div>
       </div>
@@ -220,7 +224,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
     </>
   );
 
-  return <div>{selectPrompt}</div>;
+  return <>{selectPrompt}</>;
 };
 
-export default inviteMembersPrompt;
+export default InviteMembersPrompt;

@@ -21,7 +21,11 @@ import {
 } from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
-import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
+import {
+  fetchEventDataByInterestAPI,
+  fetchEventsDataAPI,
+  fetchUserDataAPI,
+} from "@api/index";
 import { IEventData } from "@src/models";
 import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
@@ -60,12 +64,29 @@ const SelectEventPage: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    fetchEventsHandler();
+    if (props.location.state) {
+      fetchEventByInterestHandler(eventType);
+    }
   }, []);
+  const fetchEventByInterestHandler = async (interestName: any) => {
+    try {
+      const eventsDataInterest = await fetchEventDataByInterestAPI(
+        interestName
+      );
+      console.log("fetchEventByInterestHandler");
+      setEventLists(eventsDataInterest.data.events);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const fetchEventsHandler = async () => {
-    const eventsData = await fetchEventsDataAPI();
-    console.log("SUCCESS fetchDataHandler", eventsData.data.events);
-    setEventLists(eventsData.data.events);
+    try {
+      const eventsData = await fetchEventsDataAPI();
+      console.log("SUCCESS fetchDataHandler", eventsData.data.events);
+      setEventLists(eventsData.data.events);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const setEventTypeHandler = (type: string) => {
     setEventType(type);
