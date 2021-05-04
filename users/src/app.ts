@@ -4,9 +4,9 @@ import session from 'cookie-session';
 import { json, urlencoded } from 'body-parser';
 import { currentUser, errorHandling, requireAuth, NotFoundError } from '@cuconnex/common';
 import cors from 'cors';
-import { fetchUser } from './middlewares';
 import * as router from './routes';
 import { eventRouter,connectionRouter, userRouter, teamRouter, interestRouter } from './routes';
+import { fetchUser } from './middlewares';
 require('./config/multer.config');
 
 const app = express();
