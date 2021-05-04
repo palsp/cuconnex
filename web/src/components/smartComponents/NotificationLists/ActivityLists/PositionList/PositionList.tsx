@@ -10,6 +10,7 @@ import {
 import { ProfilePic } from "@smartComponents/index";
 import classes from "./PositionList.module.css";
 import { IFetchTeam } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
   teams: IFetchTeam;
@@ -21,7 +22,16 @@ const PositionList: React.FC<Props> = (props) => {
     <div className={classes.positionList} data-test="position-list">
       <div className={classes.leftFlex}>
         <div className={classes.profilePic}>
-          <ProfilePic PicUrl={props.teams.image} />
+          <Link
+            to={{
+              pathname: "/teamdetail",
+              state: {
+                team: props.teams,
+              },
+            }}
+          >
+            <ProfilePic PicUrl={props.teams.image} />
+          </Link>
         </div>
       </div>
       <div className={classes.rightFlex}>
