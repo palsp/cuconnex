@@ -35,7 +35,7 @@ try:
         else:
             checksum = new_checksum
             # Fetch the data from the rating table.
-            cursor.execute("SELECT * FROM rating")
+            cursor.execute("SELECT * FROM rating WHERE rating > 0")
             rows = cursor.fetchall()
             df = pd.DataFrame(rows)
 
