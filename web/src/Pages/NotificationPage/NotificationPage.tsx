@@ -10,6 +10,7 @@ import {
   ActivityNotificationLists,
   ConnectionLists,
   TeamInvitationLists,
+  TeamRatingLists,
 } from "@smartComponents/index";
 import { UserContext } from "@context/UserContext";
 import mockPositionsInActivityNotification from "@src/mockData/mockPositionsInActivityNotificationData";
@@ -19,6 +20,7 @@ import {
   IFetchTeamNotification,
   IUser,
   IUserFriend,
+  IFetchTeam,
 } from "@src/models";
 import {
   callTeamOfUserAPI,
@@ -28,14 +30,12 @@ import {
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
   fetchUserTeamRequestAPI,
+  fecthRateTeamAPI,
 } from "@src/api/apiCalls";
 import { isPropertySignature } from "typescript";
 
 import { motion } from "framer-motion";
-import containerVariants, {
-  IFetchOutgoingTeamNotification,
-  IFetchTeam,
-} from "@src/models/models";
+
 import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
 interface Props {
@@ -52,6 +52,7 @@ const NotificationPage: React.FC<Props> = (props) => {
   );
   const [friendNoti, setFriendNoti] = useState<IUserFriend[] | []>([]);
   const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
+  const [rateTeamNoti, setRateTeamNoti] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   const [friendReceivedNoti, setFriendReceivedNoti] = useState<
     IUserFriend[] | []
@@ -71,6 +72,9 @@ const NotificationPage: React.FC<Props> = (props) => {
     );
     fetchTeamHandler();
     fetchOutgoingTeamNotiHandler();
+    fetchRateTeamNotiHandler().then((value: IFetchTeam[] | []) =>
+      setRateTeamNoti(value)
+    );
   }, []);
   const fetchTeamHandler = async () => {
     const teamData = await callTeamOfUserAPI(userData.id);
@@ -102,6 +106,14 @@ const NotificationPage: React.FC<Props> = (props) => {
     );
     return friendsReceivedData.data.requests;
   };
+  const fetchRateTeamNotiHandler = async () => {
+    const teamRateNotiData = await fecthRateTeamAPI();
+    console.log(
+      "SUCCESS fetchRateTeamNotiHandler",
+      teamRateNotiData.data.teams
+    );
+    return teamRateNotiData.data.teams;
+  };
 
   const incomingButtonHandler = () => {
     setTab(true);
@@ -118,6 +130,9 @@ const NotificationPage: React.FC<Props> = (props) => {
   }
   if (teamNoti != undefined) {
     incomingNoti = incomingNoti + teamNoti.length;
+  }
+  if (rateTeamNoti != undefined) {
+    incomingNoti = incomingNoti + rateTeamNoti.length;
   }
   if (friendNoti != undefined) {
     outgoingNoti = outgoingNoti + friendNoti.length;
@@ -150,6 +165,9 @@ const NotificationPage: React.FC<Props> = (props) => {
             number={outgoingNoti + ""}
           />
         </div>
+      </div>
+      <div className={classes.teamRatingList}>
+        <TeamRatingLists teams={rateTeamNoti} />
       </div>
       <div className={classes.teamInvitationList}>
         <TeamInvitationLists

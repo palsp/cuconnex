@@ -19,6 +19,7 @@ import {
   NotificationPage,
   CreateTeamPage,
   PushPage,
+  RatingPage,
 } from "@pages/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import classes from "./App.module.css";
@@ -53,6 +54,7 @@ const App: React.FC = () => {
       <Route path="/explore" exact component={ExplorePage} />
       <Route path="/notification" exact component={NotificationPage} />
       <Route path="/testprompt" exact component={CreateTeamPrompt} />
+      <Route path="/rating" exact component={RatingPage} />
       <Route path="/test" exact component={TestPage} />
       <Route path="/postevent" exact component={PushPage} />
       {/* <Route path="/findteams" exact component={FindTeamPage} /> */}

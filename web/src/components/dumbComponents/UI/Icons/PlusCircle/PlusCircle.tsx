@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./PlusCircle.module.css";
-const PlusCircle = () => {
+const PlusCircle: React.FC = () => {
   return (
     <svg
       className={classes.PlusCircle}

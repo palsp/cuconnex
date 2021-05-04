@@ -36,6 +36,9 @@ import {
   IFetchTeams,
   IRegisterTeamEvent,
   IFetchTeamEvent,
+  IFetchRateTeamNotification,
+  IFetchRateMember,
+  IRateUser,
   IFetchRecommendedUser,
   IFetchRecommendedTeam,
   IFetchTeamEventData,
@@ -350,6 +353,26 @@ const fetchEventTeamAPI = async (
   );
   return teamData;
 };
+const fecthRateTeamAPI = async (): Promise<
+  AxiosResponse<IFetchRateTeamNotification>
+ > => {
+  const rateTeamData: AxiosResponse<IFetchRateTeamNotification> = await axios.get(
+    "/api/users/teams/rate"
+  );
+  return rateTeamData;
+};
+const fetchRateTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchRateMember>> => {
+  const rateMemberData: AxiosResponse<IFetchRateMember> = await axios.get(
+    `/api/users/rate/${teamName}`
+  );
+  return rateMemberData;
+};
+const rateUserAPI = async (rateUserData: IRateUser) => {
+  const ratedUserData = await axios.post("/api/users/rate", rateUserData);
+  return ratedUserData;
+};
 
 export {
   fetchUserDataAPI,
@@ -382,6 +405,9 @@ export {
   registerTeamEventAPI,
   fetchTeamEventAPI,
   fetchEventTeamAPI,
+  fecthRateTeamAPI,
+  fetchRateTeamMembersAPI,
+  rateUserAPI,
   fetchRecommendedUser,
   fetchRecommendedTeam,
   fetchRegisteredEventAPI,

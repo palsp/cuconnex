@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./CircleFilled.module.css";
 
-const CircleFilled = () => {
+const CircleFilled: React.FC = () => {
   return (
     <svg
       aria-hidden="true"

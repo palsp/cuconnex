@@ -38,3 +38,7 @@ export { default as MemberInActivityNotificationList } from "@smartComponents/No
 export { default as PositionsInActivityNotificationList } from "@smartComponents/NotificationLists/ActivityLists/PositionList/PositionList";
 export { default as TeamInvitationList } from "@smartComponents/TeamInvitationLists/TeamInvitationList/TeamInvitationList";
 export { default as TeamInvitationLists } from "@smartComponents/TeamInvitationLists/TeamInvitationLists";
+export { default as RatingList } from "@smartComponents/RatingLists/RatingList/RatingList";
+export { default as RatingLists } from "@smartComponents/RatingLists/RatingLists";
+export { default as TeamRatingList } from "@smartComponents/TeamRatingLists/TeamRatingList/TeamRatingList";
+export { default as TeamRatingLists } from "@smartComponents/TeamRatingLists/TeamRatingLists";

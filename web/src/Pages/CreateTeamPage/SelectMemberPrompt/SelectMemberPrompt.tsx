@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
