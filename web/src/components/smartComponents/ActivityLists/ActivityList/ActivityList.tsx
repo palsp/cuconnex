@@ -1,22 +1,21 @@
 import React from "react";
 import classes from "./ActivityList.module.css";
-import { Logo, RecruitSign } from "@dumbComponents/UI";
+import { ActivityListsData } from "@src/mockData/Models";
+import { Logo, RecruitSign, ActivityPic } from "@dumbComponents/UI/index";
+// import { ProfilePic } from "@smartComponents/index";
 
 interface Props {
-  activityBox: {
-    activityPic: any;
-    name: string;
-    role: string;
-    status: string;
-  };
+  activityBox: ActivityListsData;
 }
 
 const ActivityList: React.FC<Props> = (props) => {
+  console.log(`Image at ActivityList ${props.activityBox.activityPic}`);
   return (
     <div data-test="activity-list" className={classes.activityList}>
       <div className={classes.activityContainer}>
         <div className={classes.activityLogo}>
-          <Logo />
+          <ActivityPic PicUrl={props.activityBox.activityPic} />
+          {/* <Logo /> */}
         </div>
         <div className={classes.activityInfo}>
           <div className={classes.name}>{props.activityBox.name}</div>
