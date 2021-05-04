@@ -15,6 +15,7 @@ import { useNavigation } from "framer";
 import { IFetchTeam, IUser } from "@models/index";
 import { callTeamOfUserAPI } from "@src/api";
 import { UserContext } from "@context/UserContext";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
 
 interface Props {
   myTeamList: IFetchTeam[] | [];
@@ -85,6 +86,7 @@ const LandingHero: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
+
       {heroPrompt}
     </div>
   );

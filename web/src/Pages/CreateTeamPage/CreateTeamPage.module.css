@@ -1,3 +1,22 @@
+.page {
+  background: white;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
+.relativeDiv {
+  position: relative;
+  overflow: hidden;
+  min-height: 100%;
+}
+.waveBg {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  z-index: 1;
+}
+
 .heroDiv {
   display: flex;
   flex-direction: column;

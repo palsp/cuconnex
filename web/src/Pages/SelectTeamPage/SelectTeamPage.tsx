@@ -4,6 +4,7 @@ import { TeamLists, EventCards } from "@smartComponents/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons";
 import { Link } from "react-router-dom";
 import { Heading } from "@dumbComponents/UI";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 interface Props {
   location: {
     state: {
@@ -37,26 +38,19 @@ interface Props {
       };
     };
   };
+  history: {
+    goBack: () => void;
+  };
 }
 const SelectTeamPage: React.FC<Props> = (props) => {
+  const goBack = () => {
+    props.history.goBack();
+  };
   return (
-    <>
-      <div className={classes.divHeading}>
-        <div className={classes.divFixed}>
-          <div className={classes.relativeArrow}>
-            <Link to="/selectevents">
-              <ArrowLeft />
-            </Link>
-          </div>
-          <Heading
-            data-test="friends-page-header"
-            value="Team List"
-            size="medium"
-          />
-        </div>
-        <div className={classes.eventcardsDiv}>
-          <EventCards events={props.location?.state?.events}></EventCards>
-        </div>
+    <div className={classes.page}>
+      <PageTitle goBack={goBack} size="small-medium" text={"Team List"} />
+      <div className={classes.eventcardsDiv}>
+        <EventCards events={props.location?.state?.events}></EventCards>
       </div>
       <div className={classes.teamContainer}>
         <div className={classes.teamDiv}>Teams</div>
@@ -64,7 +58,7 @@ const SelectTeamPage: React.FC<Props> = (props) => {
       <div className={classes.teamListsDiv}>
         <TeamLists />
       </div>
-    </>
+    </div>
   );
 };
 

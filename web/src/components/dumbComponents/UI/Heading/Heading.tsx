@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowLeft } from "../Icons";
 import classes from "./Heading.module.css";
 interface Props {
   value: string;
@@ -43,7 +44,7 @@ const Heading: React.FC<Props> = (props) => {
     cssArray.push(classes.bold);
   }
   return (
-    <div data-test="heading-title">
+    <div data-test="heading-title" className={classes.headingContainer}>
       <p data-test="heading-prop-value" className={cssArray.join(" ")}>
         {props.value}
       </p>

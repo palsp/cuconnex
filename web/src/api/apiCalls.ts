@@ -74,7 +74,7 @@ const fetchEventsDataAPI = async (): Promise<
   AxiosResponse<IFetchEventsData>
 > => {
   const eventsData: AxiosResponse<IFetchEventsData> = await axios.get(
-    "/api/events"
+    "/api/events/"
   );
 
   return eventsData;
@@ -83,7 +83,7 @@ const createEventsAPI = async (
   eventsCreatedData: ICreateEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
-    "/api/events",
+    "/api/events/",
     eventsCreatedData
   );
   return createEventsData;

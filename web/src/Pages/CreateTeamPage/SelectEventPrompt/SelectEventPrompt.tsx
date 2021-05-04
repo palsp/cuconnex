@@ -10,6 +10,7 @@ import SelectMemberPrompt from "../SelectMemberPrompt/SelectMemberPrompt";
 import EventListForPrompt from "@smartComponents/EventLists/EventListForPrompt";
 import { mockEventLists } from "@src/mockData";
 import { createEventsAPI, fetchEventsDataAPI } from "@src/api";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
 const SelectEventPrompt: React.FC = () => {
   const [clickSelectEvent, setClickSelectEvent] = useState<boolean>(true);
@@ -45,22 +46,13 @@ const SelectEventPrompt: React.FC = () => {
   const selectPrompt =
     clickSelectEvent === true ? (
       <div>
-        <div className={classes.divHeading}>
-          <div className={classes.divFixed}>
-            <div className={classes.relativeArrow}>
-              <Redirect to="/createteam">
-                <ArrowLeft />
-              </Redirect>
-            </div>
-            <Heading value="Select Events" size="small-medium" />
-
-            <div onClick={backClickedHandler} className={classes.arrowDiv}>
-              <ArrowLeft />
-            </div>
-            <div className={classes.searchDiv}>
-              <SearchBar value="Search By Event Name" />
-            </div>
-          </div>
+        <PageTitle
+          goBack={backClickedHandler}
+          size="small-medium"
+          text="Select Events"
+        />
+        <div className={classes.searchDiv}>
+          <SearchBar value="Search By Event Name" />
         </div>
         <div className={classes.memberListsDiv}>
           <EventListForPrompt

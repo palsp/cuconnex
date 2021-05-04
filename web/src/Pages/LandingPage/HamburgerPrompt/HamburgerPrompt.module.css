@@ -4,10 +4,18 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: -5vh;
+  position: relative;
+  overflow: hidden;
 }
 
-.main {
-  display: flex;
-  flex-direction: column;
+.waveBg {
+  position: absolute;
+  top: 65%;
+  z-index: 1;
+}
+
+.container > a,
+.logout {
+  margin-top: 20px;
+  margin-bottom: 20px;
 }

@@ -56,7 +56,7 @@ const SuccessPage: React.FC<Props> = (props) => {
             {props.location ? (
               <Heading
                 data-test="success-page-header"
-                value={props.location.state.name}
+                value={`Welcome ${props.location.state.name}!`}
               />
             ) : (
               <Heading data-test="success-page-header" value="Welcome Suki!" />

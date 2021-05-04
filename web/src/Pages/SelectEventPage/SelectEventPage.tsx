@@ -23,8 +23,15 @@ import containerVariants from "@src/models/models";
 //import mock types
 import mockEventTypes from "./mockEventType";
 import { eventNames } from "node:process";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
-const SelectEventPage: React.FC = () => {
+interface Props {
+  history: {
+    goBack: () => void;
+  };
+}
+
+const SelectEventPage: React.FC<Props> = (props) => {
   const [eventType, setEventType] = useState<string>("");
   const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
 
@@ -33,6 +40,10 @@ const SelectEventPage: React.FC = () => {
   );
   const mockEventModalClickHandler = (state: boolean) => {
     setShowMockEventTypeModal(state);
+  };
+
+  const goBack = () => {
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -47,56 +58,21 @@ const SelectEventPage: React.FC = () => {
     setEventType(type);
   };
   const defaultPage = (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
-      <div className={classes.divHeading}>
-        <div className={classes.divFixed}>
-          <div className={classes.relativeArrow}>
-            {/* <Link to="/landing">
-              <ArrowLeft />
-            </Link> */}
-            <div onClick={() => mockEventModalClickHandler(true)}>
-              <ArrowLeft />
-            </div>
-          </div>
-          <Heading
-            data-test="friends-page-header"
-            value={eventType}
-            size="small"
-          />
-          <Tag />
-        </div>
-      </div>
+    <>
+      <PageTitle
+        goBack={() => mockEventModalClickHandler(true)}
+        size="small-medium"
+        text={"Some Event"}
+      />
 
       <div className={classes.eventDiv}>
         <EventLists events={eventLists}></EventLists>
       </div>
-    </motion.div>
+    </>
   );
   const mockEventTypeModal = (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
-      <div className={classes.divHeading}>
-        <div className={classes.relativeArrow}>
-          <Link to="/landing">
-            <ArrowLeft />
-          </Link>
-        </div>
-        <Heading
-          data-test="friends-page-header"
-          value="Choose event type"
-          size="small"
-        />
-        <Tag />
-      </div>
+    <>
+      <PageTitle goBack={goBack} size="small-medium" text="Select Events" />
 
       <div className={classes.eventTypeListContainer}>
         <div className={classes.eventTypeList}>
@@ -136,10 +112,21 @@ const SelectEventPage: React.FC = () => {
           ))}
         </div>
       </div>
-    </motion.div>
+    </>
   );
   const pageDisplay = showMockEventTypeModal ? mockEventTypeModal : defaultPage;
-  return pageDisplay;
+  return (
+    <motion.div
+      variants={containerVariants}
+      key="selectEventPage"
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className={classes.page}
+    >
+      {pageDisplay}
+    </motion.div>
+  );
 };
 
 export default SelectEventPage;
