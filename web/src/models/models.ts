@@ -188,6 +188,22 @@ export interface IEventData {
   };
   status?: string;
 }
+export interface ITeamEventData {
+  Candidate:{
+    eventId:number;
+    isCompete:boolean
+    teamName:string;
+  }
+  candidate:string[];
+  eventName: string;
+  id:number;
+  registration:boolean;
+  version:number;
+  status: string;
+}
+export interface IFetchTeamEventData {
+  events:ITeamEventData[];
+}
 //team
 export interface IGetTeam {
   team: IFetchTeam;

@@ -1,15 +1,15 @@
 import axios from "axios";
 
 const token =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYxMjEiLCJpYXQiOjE2MjAxMzM5MzB9.SHW-RFOUhIuTAizJxV0Cm7n-pMntFWNPwO-U_TsB2yc";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYxMjEiLCJpYXQiOjE2MjAxMzQ5MDR9.0hyD5CZHmtoiyOQoWR2iI_vdQhY4dBag5G6cS7qJlKc";
 
 
 const axiosInstance = axios.create({
-  // baseURL: "https://www.cu-connex.com",
-  baseURL: window.location.origin,
+   baseURL: "https://www.cu-connex.com",
+  //baseURL: window.location.origin,
 });
 
-// axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+ axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 export default axiosInstance;
 
 //in some teams
