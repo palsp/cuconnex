@@ -194,7 +194,7 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
           <Heading size="small" value="Back" />
         </div>
         <DotMorePage data-test="dot-icon" amount={3} />
-        <div>
+        <div style={{ width: "71px" }}>
           <Link to="/" />
         </div>
       </div>
