@@ -106,7 +106,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     {
       faculty: props.location.state.users.faculty,
       year: props.location.state.users.year,
-      image: props.location.state.users.image,
+      image: props.location.state.users.facultyImage,
     },
   ];
 

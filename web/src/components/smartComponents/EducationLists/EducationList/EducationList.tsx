@@ -21,7 +21,7 @@ const EducationList: React.FC<Props> = (props) => {
     <div data-test="education-list" className={classes.educationList}>
       <div className={classes.educationContainer}>
         <div className={classes.educationLogo}>
-          <ProfilePic size="lwithborder" PicUrl={props.educationBox.image} />
+          <ProfilePic size="m" PicUrl={props.educationBox.image} />
         </div>
         <div className={classes.educationInfo}>
           <div className={classes.faculty}>{props.educationBox.faculty}</div>

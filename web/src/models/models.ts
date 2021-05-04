@@ -13,6 +13,7 @@ export interface IUser {
   role: string;
   bio: string;
   image: string;
+  facultyImage: string;
 }
 export interface IUserFriend {
   id: string;
@@ -28,6 +29,7 @@ export interface IUserFriend {
   role: string;
   bio: string;
   image: string;
+  facultyImage: string;
 }
 
 // export interface ITeam {

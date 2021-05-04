@@ -32,6 +32,7 @@ export const UserContextProvider: React.FC<Props> = (props) => {
     role: "",
     bio: "",
     image: "",
+    facultyImage: "",
   });
 
   const fetchUserDataHandler = async () => {
@@ -59,8 +60,11 @@ export const UserContextProvider: React.FC<Props> = (props) => {
       // },
       interests: updatedUserData.interests || prevState.interests,
       faculty: updatedUserData.faculty || prevState.faculty,
-      image: updatedUserData.image || prevState.image,
+      year: updatedUserData.year || prevState.year,
       role: updatedUserData.role || prevState.role,
+      bio: updatedUserData.bio || prevState.bio,
+      image: updatedUserData.image || prevState.image,
+      facultyImage: updatedUserData.facultyImage || prevState.facultyImage,
     }));
     console.log("setUserDataHandler data is...", updatedUserData);
   };
@@ -75,6 +79,7 @@ export const UserContextProvider: React.FC<Props> = (props) => {
       role: "",
       bio: "",
       image: "",
+      facultyImage: "",
     });
   };
   return (
