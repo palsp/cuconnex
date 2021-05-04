@@ -151,18 +151,15 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   const selectPrompt = (
     <div>
       <div className={classes.divHeading}>
-        <div className={classes.divFixed}>
-          <Heading value="Invite Members" size="small-medium" />
-          <div onClick={() => inviteMember()} className={classes.noStyleButton}>
-            Invite
-          </div>
-          {/* <div onClick={() => props.backHandler()} className={classes.arrowDiv}>
-            <ArrowLeft />
-          </div> */}
-          <div className={classes.arrowDiv} onClick={props.backHandler()}>
-            <ArrowLeft></ArrowLeft>
-          </div>
-          <div className={classes.searchDiv}>
+        <div className={classes.divHeading}>
+          <div className={classes.divFixed}>
+            <div className={classes.relativeArrow}>
+              <Link to="/">
+                <ArrowLeft />
+              </Link>
+            </div>
+            <Heading value="Select Members" size="small-medium" />
+            <button className={classes.noStyleButton}>Invite</button>
             <SearchBar value="Search By Name" />
           </div>
         </div>
