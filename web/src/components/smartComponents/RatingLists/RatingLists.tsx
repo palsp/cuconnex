@@ -3,9 +3,10 @@ import classes from "./RatingLists.module.css";
 import { RatingList } from "@smartComponents/index";
 import { IUser } from "@models/index";
 import { UserContext } from "@src/context/UserContext";
+import { Rating } from "@pages/RatingPage/RatingPage";
 
 interface Props {
-  members: IUser[];
+  ratings: Rating[];
   submit: boolean;
 }
 
@@ -14,10 +15,10 @@ const RatingLists: React.FC<Props> = (props) => {
 
   return (
     <div>
-      {props.members?.map((member: IUser, index: number) => {
-        if (member?.id !== userData.id) {
+      {props.ratings?.map((rating: Rating, index: number) => {
+        if (rating.user?.id !== userData.id) {
           return (
-            <RatingList key={index} member={member} submit={props.submit} />
+            <RatingList key={index} rating={rating} submit={props.submit} />
           );
         }
       })}

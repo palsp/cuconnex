@@ -4,18 +4,23 @@ import { RatingStar } from "@dumbComponents/UI/index";
 import classes from "./RatingList.module.css";
 import { IUser, IRateUser } from "@models/index";
 import { rateUserAPI } from "@api/index";
+import { Rating } from "@pages/RatingPage/RatingPage";
 
 interface Props {
-  member: IUser;
+  rating: Rating;
   submit: boolean;
+  key: number;
   // ratedUserHandler: (rating: number | null) => void;
 }
 
 const RatingList: React.FC<Props> = (props) => {
-  const [userRating, setUserRating] = useState<number | null>(null);
-  const [submit, setSubmit] = useState<boolean>(false);
-  const ratedUserHandler = (rating: number | null) => {
-    setUserRating(rating);
+  const { rating, key } = props;
+
+  const ratedUserHandler = (score: number | null) => {
+    rating.setRating((prev) => {
+      prev[key].rating = score;
+      return prev;
+    });
   };
 
   useEffect(() => {
@@ -25,8 +30,8 @@ const RatingList: React.FC<Props> = (props) => {
 
   const voteSubmittedHandler = async () => {
     const ratedUser: IRateUser = {
-      rateeId: props.member?.id,
-      ratings: userRating,
+      rateeId: rating.user.id,
+      ratings: rating.rating,
     };
     console.log(
       `User ID: ${ratedUser.rateeId}, User Rating: ${ratedUser.ratings}`
@@ -46,6 +51,7 @@ const RatingList: React.FC<Props> = (props) => {
     console.log("voteSubmittedHandler Called");
     voteSubmittedHandler();
   }
+
   return (
     <div className={classes.ratingList}>
       <div className={classes.divRatingList}>
