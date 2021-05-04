@@ -68,8 +68,8 @@ func main() {
 func CustomHeaderAPI(c *gin.Context) {
 	// Add CORS headers
 	c.Header("Access-Control-Allow-Origin", "*")
-	c.Header("Access-Control-Allow-Methods", "*")
-	c.Header("Access-Control-Allow-Headers","Content-Type")
+	c.Header("Access-Control-Allow-Methods", "GET , POST , PUT , PATCH , DELETE")
+	c.Header("Access-Control-Allow-Headers","Content-Type,Authorization")
 
 	c.Next()
 }
