@@ -19,6 +19,7 @@ import {
 } from "@src/api/apiCalls";
 import { IUserFriend } from "@src/models";
 import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
+
 interface Props {
   location: {
     state?: {
@@ -101,12 +102,12 @@ const LandingPage: React.FC<Props> = (props) => {
   if (teamNoti != undefined) {
     badgeContent = badgeContent + teamNoti.length;
   }
-  if (friendNoti != undefined) {
-    badgeContent = badgeContent + friendNoti.length;
-  }
-  if (outgoingTeamNoti != undefined) {
-    badgeContent = badgeContent + outgoingTeamNoti.length;
-  }
+  // if (friendNoti != undefined) {
+  //   badgeContent = badgeContent + friendNoti.length;
+  // }
+  // if (outgoingTeamNoti != undefined) {
+  //   badgeContent = badgeContent + outgoingTeamNoti.length;
+  // }
 
   const landingVariants = {
     hidden: { opacity: 0, x: -300 },

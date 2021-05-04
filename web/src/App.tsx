@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation, Redirect } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import {
   AuthPage,
@@ -27,7 +27,7 @@ import { ErrorContext } from "@context/ErrorContext";
 
 const App: React.FC = () => {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const { setErrorHandler } = useContext(ErrorContext);
   const [heightStyle, setHeightStyle] = useState({});
 
@@ -63,7 +63,8 @@ const App: React.FC = () => {
     <Switch location={location} key={location.pathname}>
       <Route path="/" exact component={AuthPage} />
       <Route path="/postevent" exact component={PushPage} />
-      <Route path="/" render={() => <h1>Nothing to see here!!!</h1>} />
+      <Redirect to="/" />
+      {/* <Route render={() => <Redirect to="/" />} /> */}
     </Switch>
   );
 
