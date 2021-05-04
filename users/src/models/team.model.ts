@@ -238,7 +238,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
     const events: Event[] = await this.getCandidate();
-    this.members = members;
+    this.member = members;
     this.eventsParticipating = events;
   }
 
@@ -328,16 +328,12 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
 
     let returnMembers: IUserResponse[] = [];
     
-    if (this.members) {
-      returnMembers = this.members.map((member: User) => member.toJSON());
+    if (this.member) {
+      returnMembers = this.member.map((member: User) => member.toJSON());
     }
 
     delete values.member;
-    // let returnEvents: IEventResponse[] = [];
-    // if (this.eventsParticipating) {
-    //   returnEvents = this.eventsParticipating.map((event: Event) => event.toJSON());
-    // }
-
+  
     // return { ...values, members: returnMembers, eventsParticipating: returnEvents };
     return { ...values, members: returnMembers };
   }

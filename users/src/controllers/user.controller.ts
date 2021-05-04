@@ -273,6 +273,7 @@ export const getListofTeamsBelongsTo = async (req: Request, res: Response) => {
   const teamsResponse: ITeamResponse[] = [];
   for (let team of teams) {
     await team.fetchTeam();
+    
     teamsResponse.push(team.toJSON());
   }
 
