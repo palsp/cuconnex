@@ -3,7 +3,6 @@ import { Rating } from "@material-ui/lab";
 import { withStyles } from "@material-ui/core/styles";
 
 interface Props {
-  // value: number | null;
   ratedStarHandler: (e: number | null) => void;
 }
 
@@ -21,10 +20,15 @@ const StyledRating = withStyles({
 })(Rating);
 
 const RatingStar: React.FC<Props> = (props) => {
+  const [value, setValue] = React.useState<number | null>(0);
   const [hover, setHover] = React.useState(-1);
 
-  const onChangehandler = (changeEvent: React.ChangeEvent, value: number) => {
-    ratedStarHandler(changeEvent.target.va);
+  const onChangehandler = (
+    event: React.ChangeEvent<Object>,
+    value: number | null
+  ) => {
+    setValue(value);
+    props.ratedStarHandler(value);
   };
 
   return (

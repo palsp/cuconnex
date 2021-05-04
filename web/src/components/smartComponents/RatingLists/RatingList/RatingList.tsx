@@ -29,29 +29,29 @@ const RatingList: React.FC<Props> = (props) => {
   //   console.log(`Submit state at RatingList: ${props.submit}`);
   // });
 
-  const voteSubmittedHandler = async () => {
-    const ratedUser: IRateUser = {
-      rateeId: rating.user.id,
-      ratings: rating.rating,
-    };
-    console.log(
-      `User ID: ${ratedUser.rateeId}, User Rating: ${ratedUser.ratings}`
-    );
-    try {
-      const resultResponse = await rateUserAPI(ratedUser);
-      console.log("Successfully rate a user in the team", resultResponse.data);
-    } catch (e) {
-      console.log(
-        "ERRORS occured while sent a response to the user in the team",
-        e
-      );
-    }
-  };
+  // const voteSubmittedHandler = async () => {
+  //   const ratedUser: IRateUser = {
+  //     rateeId: rating.user.id,
+  //     ratings: rating.rating,
+  //   };
+  //   console.log(
+  //     `User ID: ${ratedUser.rateeId}, User Rating: ${ratedUser.ratings}`
+  //   );
+  //   try {
+  //     const resultResponse = await rateUserAPI(ratedUser);
+  //     console.log("Successfully rate a user in the team", resultResponse.data);
+  //   } catch (e) {
+  //     console.log(
+  //       "ERRORS occured while sent a response to the user in the team",
+  //       e
+  //     );
+  //   }
+  // };
 
-  if (props.submit) {
-    console.log("voteSubmittedHandler Called");
-    voteSubmittedHandler();
-  }
+  // if (props.submit) {
+  //   console.log("voteSubmittedHandler Called");
+  //   voteSubmittedHandler();
+  // }
 
   return (
     <div className={classes.ratingList}>

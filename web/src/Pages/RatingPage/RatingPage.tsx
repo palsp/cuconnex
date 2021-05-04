@@ -4,8 +4,12 @@ import classes from "./RatingPage.module.css";
 import { RatingLists } from "@smartComponents/index";
 import { Heading, Button } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons/index";
-import { IFetchTeam, IUser } from "@src/models";
-import { fetchTeamMembersAPI, fetchRateTeamMembersAPI } from "@api/index";
+import { IFetchTeam, IUser, IRateUser } from "@src/models";
+import {
+  fetchTeamMembersAPI,
+  fetchRateTeamMembersAPI,
+  rateUserAPI,
+} from "@api/index";
 import { UserContext } from "@src/context/UserContext";
 
 interface Props {
@@ -88,6 +92,27 @@ const RatingPage: React.FC<Props> = (props) => {
   }, []);
 
   const onSubmitHandler = () => {
+    ratings.forEach(async (rating: Rating) => {
+      const ratedUser: IRateUser = {
+        rateeId: rating.user.id,
+        ratings: rating.rating,
+      };
+      console.log(
+        `User ID: ${ratedUser.rateeId}, User Rating: ${ratedUser.ratings}`
+      );
+      try {
+        const resultResponse = await rateUserAPI(ratedUser);
+        console.log(
+          "Successfully rate a user in the team",
+          resultResponse.data
+        );
+      } catch (e) {
+        console.log(
+          "ERRORS occured while sent a response to the user in the team",
+          e
+        );
+      }
+    });
     setTimeout(() => {
       setRedirect(<Redirect to={{ pathname: "/landing" }} />);
     }, 1500);
