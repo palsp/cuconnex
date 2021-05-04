@@ -6,9 +6,10 @@ import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
 import { IUser, IUserFriend, IUserFriendExtended } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
-  memberlist: IUserFriend[] | [];
+  memberlist: any;
   selectMemberListsHandler: (e: number) => void;
   personHandler: (e: IUserFriend) => void;
 }
@@ -23,7 +24,7 @@ const MemberLists: React.FC<Props> = (props) => {
   const selectMemberListHandler = (
     checked: boolean,
     index: number,
-    person: IUserFriend
+    person: any
   ) => {
     if (checked) {
       props.selectMemberListsHandler(index);
@@ -34,9 +35,9 @@ const MemberLists: React.FC<Props> = (props) => {
     <div>
       {/* New feature-web/nat BUT FAILED!!!!!!!!! PLS fix
       {props.memberlist.map((person: MemberListsData, index: number) => { */}
-      {props.memberlist.map((person: IUserFriend, index: number) => {
+      {props.memberlist.map((person: any, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className={classes.linkDiv}>
             <MemberList
               key={index}
               members={person}

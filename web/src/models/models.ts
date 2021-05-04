@@ -7,6 +7,7 @@ export interface IUser {
   //   Business: string[];
   //   Design: string[];
   // };
+
   interests: string[];
   faculty: string;
   year: string;

@@ -11,6 +11,7 @@ import { Search } from "@icons/index";
 import classes from "./MemberList.module.css";
 import { UsersData } from "@src/mockData/Models";
 import { IUser, IUserFriend } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
   members: IUserFriend;
@@ -31,14 +32,32 @@ const MemberList: React.FC<Props> = (props) => {
     <div className={classes.memberList}>
       <div className={classes.divFriendList}>
         <div>
-          <ProfilePic PicUrl={props.members.image} />
+          <Link
+            to={{
+              pathname: "/profile",
+              state: {
+                users: props.members,
+              },
+            }}
+          >
+            <ProfilePic PicUrl={props.members.image} />
+          </Link>
         </div>
         <div className={classes.userInfo}>
-          <div className={classes.divUsernameInfo}>{props.members.name}</div>
-          <div className={classes.divRoleInfo}>{props.members.role}</div>
-          <div className={classes.divFacultyInfo}>
-            {props.members.faculty + ", " + props.members.year}
-          </div>
+          <Link
+            to={{
+              pathname: "/profile",
+              state: {
+                users: props.members,
+              },
+            }}
+          >
+            <div className={classes.divUsernameInfo}>{props.members.name}</div>
+            <div className={classes.divRoleInfo}>{props.members.role}</div>
+            <div className={classes.divFacultyInfo}>
+              {props.members.faculty + ", " + props.members.year}
+            </div>
+          </Link>
         </div>
         <div className={classes.checkboxDiv} onClick={checkedMemberHandler}>
           <CheckBox />

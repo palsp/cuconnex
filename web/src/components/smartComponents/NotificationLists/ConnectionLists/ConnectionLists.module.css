@@ -16,3 +16,6 @@
   text-align: start;
   margin-left: 5%;
 }
+.linkDiv a {
+  text-decoration: none;
+}
