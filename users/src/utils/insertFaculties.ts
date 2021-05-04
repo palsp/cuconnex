@@ -7,7 +7,7 @@ export const insertFaculties = async () => {
     let name = faculty[key];
     let imageName = name.toLowerCase().split(" ").join("_")
 
-    let image = `assets/faculties/${imageName}.jpg`;
+    let image = `https://cuconnex-image.s3-ap-southeast-1.amazonaws.com/${imageName}.jpg`;
     await Faculty.create({ code, name, image  });
   }
 };
