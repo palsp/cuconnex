@@ -28,22 +28,20 @@ const ExplorePage = () => {
   const [peopleLists, setPeopleLists] = useState<IUser[]>([]);
   const [teamLists, setTeamLists] = useState<IFetchTeam[]>([]);
   const [eventLists, setEventLists] = useState<IEventData[]>([]);
-  const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
-  const { userData } = useContext(UserContext);
+  const [recommendedPeopleLists, setRecommendedPeopleLists] = useState<IUser[]>(
+    []
+  );
+  const [recommendedTeamLists, setRecommendedTeamLists] = useState<
+    IFetchTeam[] | []
+  >([]);
   useEffect(() => {
-    // fetchTeamHandler();
     fetchRecommendedUserHandler();
     fetchRecommendedTeamHandler();
   }, []);
-  // const fetchTeamHandler = async () => {
-  //   const teamData = await callTeamOfUserAPI(userData.id);
-  //   console.log("fetchTeamHandler", teamData.data);
-  //   setMyTeamLists(teamData.data.teams);
-  // };
   const fetchRecommendedUserHandler = async () => {
     try {
       const recommendedUsers = await fetchRecommendedUser();
-      setPeopleLists(recommendedUsers.data.users);
+      setRecommendedPeopleLists(recommendedUsers.data.users);
       console.log("fetchRecommendedUser", recommendedUsers);
     } catch (e) {
       console.log(e);
@@ -52,7 +50,7 @@ const ExplorePage = () => {
   const fetchRecommendedTeamHandler = async () => {
     try {
       const recommendedTeams = await fetchRecommendedTeam();
-      setMyTeamLists(recommendedTeams.data.teams);
+      setRecommendedTeamLists(recommendedTeams.data.teams);
       console.log("fetchRecommendedTeam", recommendedTeams);
     } catch (e) {
       console.log(e);
@@ -65,10 +63,8 @@ const ExplorePage = () => {
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Suggested for you" bold />
         </div>
-
-        <PeopleLists peoplelist={peopleLists} />
-
-        <MyTeamLists page="explore" team={myTeamLists} />
+        <PeopleLists peoplelist={recommendedPeopleLists} />
+        <MyTeamLists page="explore" team={recommendedTeamLists} />
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
         </div>
@@ -86,6 +82,8 @@ const ExplorePage = () => {
       <div className={classes.exploreSubtitle}>
         <Subtitle value="Try something that might interest you" bold />
       </div>
+      <PeopleLists peoplelist={recommendedPeopleLists} />
+      <MyTeamLists page="explore" team={recommendedTeamLists} />
       <div className={classes.exploreSubtitle}>
         <Subtitle value="Find from your interest..." bold />
       </div>
