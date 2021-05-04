@@ -8,34 +8,40 @@ import { Rating } from "@pages/RatingPage/RatingPage";
 
 interface Props {
   rating: Rating;
+  index: number;
   // ratedUserHandler: (rating: number | null) => void;
 }
 
 const RatingList: React.FC<Props> = (props) => {
-  const { rating } = props;
-  console.log("RatingList: ", rating);
+  const { rating, index } = props;
+  console.log("RatingList: ", rating, "index", props.index);
 
-  const ratedUserHandler = (score: number | null) => {
+  const ratedUserHandler = (score: number, key: number) => {
+    console.log("testfucker", rating);
     rating.setRating((prev) => {
       const newArr = prev;
-      newArr[rating.ratingId].rating = score;
-      console.log("RatingList ratedUserHandler: ", score);
+      console.log("key", key);
+      newArr[key].rating = score;
+      console.log(`RatingList ratedUserHandler user:${key}: `, score);
       return newArr;
     });
   };
 
   return (
-    <div className={classes.ratingList}>
+    <div
+      className={classes.ratingList}
+      onClick={() => console.log(rating.ratingId)}
+    >
       <div className={classes.divRatingList}>
         <div>
           <ProfilePic PicUrl={rating.user?.image} />
         </div>
-        <div className={classes.UserInfo}>
+        <div className={classes.userInfo}>
           <div className={classes.divUsernameInfo}>{rating.user?.name}</div>
           <RatingStar
-            ratedStarHandler={(rating: number | null) =>
-              ratedUserHandler(rating)
-            }
+            rating={rating}
+            index={index}
+            ratedStarHandler={ratedUserHandler}
           />
           {console.log(
             `${rating.user?.name} UserRating at RatingList: ${rating.rating}`
