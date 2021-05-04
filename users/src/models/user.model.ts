@@ -391,7 +391,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
 
     // TODO: double check with bird whether owner is in isMember Table
-    let meanScore = await Recommend.CalculateScore(this.id, team.owner.id);
+    // let meanScore = await Recommend.CalculateScore(this.id, team.owner.id);
+    let meanScore = 0;
 
     for (let member of team.member) {
       meanScore += await Recommend.CalculateScore(this.id, member.id);
