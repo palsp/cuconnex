@@ -13,13 +13,17 @@ import mockTeamActivitiesData from "@src/mockData/mockTeamActivitiesData";
 import { motion } from "framer-motion";
 
 import containerVariants, {
+  IEventData,
   IFetchTeam,
+  ITeamEventData,
   IUser,
   IUserFriend,
   IUserRequest,
 } from "@src/models/models";
 import { UserContext } from "@context/UserContext";
 import {
+  fetchRegisteredEventAPI,
+  fetchTeamEventAPI,
   fetchTeamIncomingNotificationAPI,
   fetchTeamMembersAPI,
   fetchTeamOutgoingNotificationAPI,
@@ -41,8 +45,15 @@ interface Props {
   };
 }
 
+interface teamActivity {
+  teamActivityPic: string;
+  name: string;
+  event: string;
+  status?: string;
+}
 const TeamDetail: React.FC<Props> = (props) => {
   const [teamMembers, setTeamMembers] = useState<IUser[] | []>([]);
+  const [teamEvent, setTeamEvent] = useState<ITeamEventData[] | []>([]);
   const [pendingMembers, setPendingMembers] = useState<IUser[] | []>([]);
   const [clickTeamDetail, setClickTeamDetail] = useState<boolean>(true);
   const [clickInviteMembers, setClickInviteMembers] = useState<boolean>(false);
@@ -55,6 +66,7 @@ const TeamDetail: React.FC<Props> = (props) => {
     fetchTeamMembersHandler();
     fetchRelationHandler();
     fetchIncomingTeamNotiHandler();
+    fetchTeamEventHandler();
   }, []);
   const myTeamName = props.location.state.team.name;
   const fetchOutgoingTeamNotiHandler = async () => {
@@ -105,6 +117,15 @@ const TeamDetail: React.FC<Props> = (props) => {
       console.log(e);
     }
   };
+  const fetchTeamEventHandler = async () => {
+    try {
+      const eventData = await fetchRegisteredEventAPI(myTeamName);
+      console.log("SUCCESS event =", eventData.data.events);
+      setTeamEvent(eventData.data.events);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   console.log(pendingMembers, "these guy are invited");
   const { userData } = useContext(UserContext);
   // Is user be team owner ?
@@ -136,7 +157,7 @@ const TeamDetail: React.FC<Props> = (props) => {
         className={classes.TeamDetail}
       >
         <div className={classes.header}>
-          <PageTitle text="Team Details" size="medium" goBack={goBack} />
+          <PageTitle text="Team Details" size="smallMedium" goBack={goBack} />
         </div>
 
         <div className={classes.info}>
@@ -174,7 +195,10 @@ const TeamDetail: React.FC<Props> = (props) => {
           />
         </div>
         <div className={classes.activity}>
-          <TeamActivityLists activity={mockTeamActivitiesData} />
+          <TeamActivityLists
+            events={teamEvent}
+            team={props.location.state.team}
+          />
         </div>
         {isTeamOwner ? (
           <RequestPrompt

@@ -7,7 +7,7 @@
   background: white;
 }
 
-.tabConnection {
+.tabIncoming {
   width: 100%;
   height: 100%;
 }
@@ -32,21 +32,21 @@
   justify-content: center;
 }
 
-.connection {
+.incoming {
   width: 50%;
   overflow: hidden;
 }
 
-.activity {
+.outgoing {
   width: 50%;
   overflow: hidden;
 }
 
-.tabConnection .connection {
+.tabIncoming .incoming {
   border-bottom: 5px solid rgb(196, 194, 194);
 }
 
-.tabActivity .activity {
+.tabOutgoing .outgoing {
   border-bottom: 5px solid rgb(196, 194, 194);
 }
 
@@ -59,5 +59,9 @@
 }
 
 .activityList {
+  margin-top: 5%;
+}
+
+.teamRatingList {
   margin-top: 5%;
 }

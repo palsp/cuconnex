@@ -13,6 +13,7 @@ export interface IUser {
   role: string;
   bio: string;
   image: string;
+  facultyImage: string;
 }
 export interface IUserFriend {
   id: string;
@@ -28,6 +29,7 @@ export interface IUserFriend {
   role: string;
   bio: string;
   image: string;
+  facultyImage: string;
 }
 
 // export interface ITeam {
@@ -125,6 +127,7 @@ export interface IFetchTeams {
 export interface IFetchFriendsData {
   connections: IUserFriend[];
 }
+
 //events
 export interface IFetchEventsData {
   events: IEventData[];
@@ -187,6 +190,22 @@ export interface IEventData {
     };
   };
   status?: string;
+}
+export interface ITeamEventData {
+  Candidate:{
+    eventId:number;
+    isCompete:boolean
+    teamName:string;
+  }
+  candidate:string[];
+  eventName: string;
+  id:number;
+  registration:boolean;
+  version:number;
+  status: string;
+}
+export interface IFetchTeamEventData {
+  events:ITeamEventData[];
 }
 //team
 export interface IGetTeam {
@@ -300,6 +319,9 @@ export interface IRegisterTeamEvent {
 export interface IFetchTeamEvent {
   events: IEventData[];
 }
+export interface IFetchRateTeamNotification {
+  teams: IFetchTeam[];
+}
 
 //Search
 export interface ISearchGeneral {
@@ -327,11 +349,23 @@ const containerVariants = {
   },
 };
 
+export default containerVariants;
+
 //Education
 
 export interface IEducationData {
   faculty: string;
   year: string;
+  image: string;
 }
 
-export default containerVariants;
+//Rate
+
+export interface IFetchRateMember {
+  ratees: IUser[];
+}
+
+export interface IRateUser {
+  rateeId: string;
+  ratings: number | null;
+}

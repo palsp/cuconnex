@@ -16,6 +16,7 @@ const mockConnectionListsData: IUserFriend[] = [
     role: "Developer",
     bio: "Hi",
     image: "",
+    facultyImage: "",
   },
 ];
 

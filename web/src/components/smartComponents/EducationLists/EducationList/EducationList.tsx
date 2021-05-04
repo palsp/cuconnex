@@ -1,7 +1,8 @@
 import React from "react";
 import classes from "./EducationList.module.css";
-import { Logo } from "@dumbComponents/UI/index";
 import { IEducationData } from "@src/models/index";
+import { ProfilePic } from "@smartComponents/index";
+import { FacultyPic } from "@dumbComponents/UI/index";
 
 interface Props {
   // educationBox?: {
@@ -21,7 +22,7 @@ const EducationList: React.FC<Props> = (props) => {
     <div data-test="education-list" className={classes.educationList}>
       <div className={classes.educationContainer}>
         <div className={classes.educationLogo}>
-          <Logo />
+          {<FacultyPic PicUrl={props.educationBox.image} />}
         </div>
         <div className={classes.educationInfo}>
           <div className={classes.faculty}>{props.educationBox.faculty}</div>

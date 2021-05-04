@@ -106,6 +106,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     {
       faculty: props.location.state.users.faculty,
       year: props.location.state.users.year,
+      image: props.location.state.users.facultyImage,
     },
   ];
 
@@ -113,7 +114,7 @@ const ProfilePage: React.FC<Props> = (props) => {
   if (clickEditProfile === false) {
     profilePrompt = (
       <div className={classes.profile}>
-        <PageTitle goBack={goBack} size="medium" text={pageTitle} />
+        <PageTitle goBack={goBack} size="smallMedium" text={pageTitle} />
 
         <div className={classes.info}>
           <div className={classes.profileInfo}>

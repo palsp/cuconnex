@@ -1,15 +1,16 @@
 import axios from "axios";
 
 const token =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYxMjEiLCJpYXQiOjE2MjAxMzM5MzB9.SHW-RFOUhIuTAizJxV0Cm7n-pMntFWNPwO-U_TsB2yc";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzI0NTI2MjEiLCJpYXQiOjE2MjAxMzIxOTh9.S2Me_4v9h1X5PmDwRsZFq9deVFQlGB90JJpDkTrBhl0";
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc";
 
-
+// ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc");
 const axiosInstance = axios.create({
-  // baseURL: "https://www.cu-connex.com",
-  baseURL: window.location.origin,
+  baseURL: "https://www.cu-connex.com",
+  // baseURL: window.location.origin,
 });
 
-// axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 export default axiosInstance;
 
 //in some teams
@@ -27,4 +28,3 @@ export default axiosInstance;
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzM4NDczMjQiL CJpYXQiOjE2MTk3MzI4OTJ9.zUOpLehL2E0w5G09aAx_Dmx2-j5L4iC9Nxpg_PRCATA"
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzI1MzY0MjUiLCJpYXQiOjE2MTk3MzAwNzd9.NmzR-aQ0cTXf_oSBY7SgUHOkf1Qe3eVUGH8IbPNAZFI"
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzQ2NTc0MjQiLCJpYXQiOjE2MTk3Mjc1NTF9.lj34-XRjR2wynIbslS292_OYpWTpvWqCwLp0rZeN4AA"
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzQ1NjM3MjEiLCJpYXQiOjE2MTk3MTUzMDJ9.S8TRYPPLmF2-Qn9N1mrV7GHH5068tO1yS-5XXG7yqq8"
