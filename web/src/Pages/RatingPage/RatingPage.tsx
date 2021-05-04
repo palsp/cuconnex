@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Redirect } from "react-router-dom";
 import classes from "./RatingPage.module.css";
 import { RatingLists } from "@smartComponents/index";
-import { Heading, Button } from "@dumbComponents/UI/index";
+import { Heading, Button, PageTitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons/index";
 import { IFetchTeam, IUser, IRateUser } from "@src/models";
 import { fetchRateTeamMembersAPI, rateUserAPI } from "@api/index";
@@ -34,7 +34,7 @@ const RatingPage: React.FC<Props> = (props) => {
 
   // const [allRated, setAllRated] = useState<boolean>(true);
 
-  // const [rated, setRated] = useState<boolean>(false);
+  const [rated, setRated] = useState<boolean>(false);
 
   const [redirect, setRedirect] = useState<JSX.Element>();
 
@@ -67,13 +67,15 @@ const RatingPage: React.FC<Props> = (props) => {
       });
       setRatings(newRatings);
     });
-
-    // ratings.forEach((value) => {
-    //   if (value.rating === null) {
-    //     return false;
-    //   }
-    // });
   }, []);
+
+  const enableCheckHandler = () => {
+    let enable = true;
+    ratings.forEach((rating) => {
+      enable = enable && rating.rating != null;
+    });
+    return enable;
+  };
 
   const onSubmitHandler = () => {
     ratings.forEach(async (rating: Rating) => {
@@ -105,7 +107,12 @@ const RatingPage: React.FC<Props> = (props) => {
 
   return (
     <div>
-      <div className={classes.header}>
+      <PageTitle
+        goBack={goBackPreviousPageHandler}
+        size="small-medium"
+        text="Congratulations!"
+      />
+      {/* <div className={classes.header}>
         <div
           onClick={goBackPreviousPageHandler}
           className={classes.relativeArrow}
@@ -115,7 +122,7 @@ const RatingPage: React.FC<Props> = (props) => {
         <div className={classes.head}>
           <Heading value="Congratulations!" />
         </div>
-      </div>
+      </div> */}
       <div>
         <div className={classes.textBox}>
           <div className={classes.teamHeading}>
@@ -137,7 +144,11 @@ const RatingPage: React.FC<Props> = (props) => {
         {ratings.length > 0 ? <RatingLists ratings={ratings} /> : "loading"}
 
         {/* <Button value="Submit" disabled={allRated} onClick={onSubmitHandler} /> */}
-        <Button value="Submit" onClick={onSubmitHandler} />
+        <Button
+          value="Submit"
+          disabled={enableCheckHandler()}
+          onClick={onSubmitHandler}
+        />
         {redirect}
         <div className={classes.ratingDetail}>
           {

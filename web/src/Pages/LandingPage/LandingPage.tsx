@@ -121,9 +121,9 @@ const LandingPage: React.FC<Props> = (props) => {
   // if (outgoingTeamNoti != undefined) {
   //   badgeContent = badgeContent + outgoingTeamNoti.length;
   // }
-  // if (rateTeamNoti !== undefined) {
-  //   badgeContent = badgeContent + rateTeamNoti.length;
-  // }
+  if (rateTeamNoti !== undefined) {
+    badgeContent = badgeContent + rateTeamNoti.length;
+  }
 
   const landingVariants = {
     hidden: { opacity: 0, x: -300 },
