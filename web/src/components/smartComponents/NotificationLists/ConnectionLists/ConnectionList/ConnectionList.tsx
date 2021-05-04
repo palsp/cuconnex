@@ -12,6 +12,7 @@ import classes from "./ConnectionList.module.css";
 import { IUser, IUserFriend } from "@src/models";
 import { Accept, Check, Decline } from "@dumbComponents/UI/Icons";
 import { addFriendResponseAPI } from "@src/api";
+import { Link } from "react-router-dom";
 interface Props {
   connection: IUserFriend;
 }
@@ -73,7 +74,16 @@ const ConnectionList: React.FC<Props> = (props) => {
     <div className={classes.connectionList} data-test="connection-list">
       <div className={classes.leftFlex}>
         <div className={classes.profilePic}>
-          <ProfilePic PicUrl={props.connection.image} />
+          <Link
+            to={{
+              pathname: "/profile",
+              state: {
+                users: props.connection,
+              },
+            }}
+          >
+            <ProfilePic PicUrl={props.connection.image} />
+          </Link>
         </div>
       </div>
       <div className={classes.midFlex}>

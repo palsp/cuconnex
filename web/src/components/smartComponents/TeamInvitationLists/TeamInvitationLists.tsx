@@ -18,17 +18,7 @@ const TeamInvitationLists: React.FC<Props> = (props) => {
         {props.teams?.map((TeamInvitation: IFetchTeam, index: number) => {
           return (
             <div className={classes.linkDiv} key={index}>
-              <Link
-                key={index}
-                to={{
-                  pathname: "/teamdetail",
-                  state: {
-                    team: props.teams[index],
-                  },
-                }}
-              >
-                <TeamInvitationList key={index} teams={TeamInvitation} />
-              </Link>
+              <TeamInvitationList key={index} teams={TeamInvitation} />
             </div>
           );
         })}

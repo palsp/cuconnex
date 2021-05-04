@@ -28,21 +28,11 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
         {props.requestedTeamList.map((position: IFetchTeam, index: number) => {
           return (
             <div className={classes.linkDiv} key={index}>
-              <Link
+              <PositionsInActivityNotificationList
                 key={index}
-                to={{
-                  pathname: "/teamdetail",
-                  state: {
-                    team: props.requestedTeamList[index],
-                  },
-                }}
-              >
-                <PositionsInActivityNotificationList
-                  key={index}
-                  position={userData.role}
-                  teams={position}
-                />
-              </Link>
+                position={userData.role}
+                teams={position}
+              />
             </div>
           );
         })}
@@ -52,17 +42,7 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
         {props.Memberlist.map((person: IUserFriend, index: number) => {
           return (
             <div className={classes.linkDiv} key={index}>
-              <Link
-                key={index}
-                to={{
-                  pathname: "/profile",
-                  state: {
-                    users: props.Memberlist[index],
-                  },
-                }}
-              >
-                <MemberInActivityNotificationList key={index} member={person} />
-              </Link>
+              <MemberInActivityNotificationList key={index} member={person} />
             </div>
           );
         })}
