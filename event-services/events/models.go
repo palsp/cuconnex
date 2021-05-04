@@ -19,6 +19,7 @@ type EventModel struct {
 	EndDate   time.Time `gorm:"column:end-date"`
 	Status 	  string    `gorm:"column:status"`
 	Registration bool   `gorm:"column:registration"`
+	Image     string     `gorm:"column:image"`
 	Interest  []*InterestModel `gorm:"many2many:interest_event;association_jointable_foreignkey:eventId""`
 	Version int
 }

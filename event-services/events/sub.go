@@ -48,6 +48,7 @@ func SubscribeEventCompleted(msg *stan.Msg) {
 		EventName: e.EventName,
 		Registration: e.Registration,
 		Status: e.Status,
+		Image: e.Image,
 		Version: e.Version,
 	})
 

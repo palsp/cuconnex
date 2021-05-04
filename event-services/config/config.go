@@ -15,12 +15,30 @@ type StanConfig struct {
 	URL string
 }
 
+
 var DB = DBConfig{
 	Name: os.Getenv("DB_NAME"),
 	Host: os.Getenv("DB_HOST"),
 	User: os.Getenv("DB_USER"),
 	Password: os.Getenv("DB_PASSWORD"),
 }
+
+type S3Config struct {
+	Bucket string
+	Region string
+	Credential string
+	AccessKeyID  string
+	SecretAccessKey  string
+}
+
+
+var S3 = S3Config{
+	Bucket: os.Getenv("AWS_BUCKET"),
+	Region: os.Getenv("AWS_REGION"),
+	AccessKeyID : os.Getenv("AWS_ACCESS_KEY"),
+	SecretAccessKey : os.Getenv("AWS_SECRET_ACCESS_KEY"),
+}
+
 
 
 var SCconfig = StanConfig{

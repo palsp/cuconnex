@@ -1,11 +1,18 @@
 package main
 
 import (
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/gin-gonic/gin"
 	"github.com/nats-io/stan.go"
 	"github.com/palsp/cuconnex/event-services/common"
+	"github.com/palsp/cuconnex/event-services/config"
 	"github.com/palsp/cuconnex/event-services/events"
 	"log"
+	"net/http"
+	"os"
 	"time"
 )
 
@@ -43,23 +50,122 @@ func main() {
 	}
 
 
+	sess := ConnectAws()
+
 	// Create a router
 	r := gin.Default()
 
 	r.Use(CORSMiddleware())
 
-	//testEvent := r.Group("/api/ping")
-	//testEvent.GET("/", func(c *gin.Context) {
-	//	c.JSON(http.StatusOK, gin.H{
-	//		"message": "pong",
-	//	})
-	//})
-	//
+	r.Use(func(c *gin.Context) {
+		c.Set("sess", sess)
+		c.Next()
+	})
+
 	v1 := r.Group("/api/events")
 	events.EventRegister(v1)
+
+	v1.POST("/upload/:id",UploadImage)
 	r.Run(":3000") // listen and serve on 0.0.0.0:3000
 
 }
+
+func UploadImage(c *gin.Context) {
+	db := common.GetDB()
+
+	eventId := c.Param("id")
+
+	var e = &events.EventModel{}
+
+	err := db.First(e , eventId).Error
+	if err != nil{
+		c.JSON(http.StatusNotFound, gin.H{
+			"error":    "event not found",
+		})
+		return
+	}
+
+	// codes that will parse file and upload to amazon s3 bucket
+	sess := c.MustGet("sess").(*session.Session)
+	uploader := s3manager.NewUploader(sess)
+
+	file, header, err := c.Request.FormFile("image")
+	filename := header.Filename
+
+	//upload to the s3 bucket
+	up, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(config.S3.Bucket),
+		Key:    aws.String( filename ),
+		ContentType: aws.String("image/png"),
+		Body:   file,
+	})
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error":    "Failed to upload file",
+			"uploader": up,
+		})
+		return
+	}
+
+	filepath := "http://" + config.S3.Bucket + "." + "s3-website-" + config.S3.Region + ".amazonaws.com/" + filename
+
+	e.Image = filepath
+
+	db.Save(e)
+
+	err = events.PublishEventUpdated(events.EventUpdatedData{
+		ID: e.ID,
+		EventName: e.EventName,
+		Registration: e.Registration,
+		Status: e.Status,
+		Version: e.Version,
+	})
+
+	c.JSON(http.StatusOK, gin.H{
+		"filepath": filepath,
+	})
+
+}
+
+
+
+func ConnectAws() *session.Session {
+	sess , err := session.NewSession(
+		&aws.Config{
+			Region: aws.String(config.S3.Region),
+			Credentials: credentials.NewStaticCredentials(
+				config.S3.AccessKeyID,
+				config.S3.SecretAccessKey,
+				"", // a token will be created when the session it's used.
+			),
+		})
+	if err != nil {
+		panic(err)
+	}
+	return sess
+}
+
+
+
+func UploadFileToS3(uploader *s3manager.Uploader , fileDir string) error{
+	file, err := os.Open(fileDir)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+
+	//upload to the s3 bucket
+	_, err = uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(config.S3.Bucket),
+		Key:    aws.String( file.Name()),
+		ContentType: aws.String("image/png"),
+		Body:   file,
+	})
+	return err
+
+}
+
 
 
 //func CustomHeaderAPI(c *gin.Context) {

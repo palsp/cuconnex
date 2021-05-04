@@ -3,6 +3,7 @@ module github.com/palsp/cuconnex/event-services
 go 1.15
 
 require (
+	github.com/aws/aws-sdk-go v1.38.31 // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/nats-io/nats-server/v2 v2.2.2 // indirect

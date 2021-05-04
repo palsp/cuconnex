@@ -39,6 +39,7 @@ type EventUpdatedData struct {
 	EventName string 	`json:"event-name"`
 	Registration bool 	`json:"registration"`
 	Status string 		`json:"status"`
+	Image  string        `json:"image"`
 	Version int        	`json:"version"`
 }
 
