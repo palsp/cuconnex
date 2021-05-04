@@ -24,9 +24,9 @@ interface Props {
       year: string;
       profilePic: File;
       role: string;
+      page?: string;
     };
   };
-  page?: string;
   history: { goBack: () => void };
 }
 
@@ -158,7 +158,16 @@ const SelectInterestPage: React.FunctionComponent<Props> = (props) => {
       interestArray.Design.length !== 0) &&
     props.location.state
   ) {
-    saveButton = <Button onClick={setUserDataFirstTime} value="SAVE" />;
+    if (props.location.state.page === "profile") {
+      saveButton = (
+        <Button
+          onClick={() => setRedirect(<Redirect to="/landing" />)}
+          value="SAVE"
+        />
+      );
+    } else {
+      saveButton = <Button onClick={setUserDataFirstTime} value="SAVE" />;
+    }
   } else {
     saveButton = null;
   }

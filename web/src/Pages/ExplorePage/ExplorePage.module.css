@@ -27,7 +27,7 @@
 .exploreSubtitle,
 .exploreHeading {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .exploreHeading > div {
