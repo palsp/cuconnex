@@ -38,6 +38,7 @@ interface UserAttrs {
   name: string;
   image: string;
   facultyCode?: string;
+  facultyImage?: string;
   year?: string;
   role: string;
   bio: string;
@@ -434,10 +435,12 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
 
     if(this.Faculty){
       values.faculty = this.Faculty.name
+      values.facultyImage = this.Faculty.image
     }else{
       values.faculty = ""
+      values.facultyImage = "assets/faculties/default_faculty.jpg"
     }
-  
+
     delete values.Faculty;
     delete values.Rating;
 
