@@ -49,6 +49,8 @@ var SCconfig = StanConfig{
 
 
 
+
+
 var TestDB = DBConfig{
 	Name: "eventdb_test",
 	Host: "localhost",
