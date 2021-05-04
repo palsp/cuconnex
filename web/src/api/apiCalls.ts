@@ -83,7 +83,7 @@ const createEventsAPI = async (
   eventsCreatedData: ICreateEventData
 ): Promise<AxiosResponse<IEventData>> => {
   const createEventsData: AxiosResponse<IEventData> = await axios.post(
-    "/api/events",
+    "/api/events/",
     eventsCreatedData
   );
   return createEventsData;
