@@ -45,7 +45,7 @@ describe('Get List of Events', () => {
       .expect(200);
 
     expect(res.body.length).toEqual(2);
-    expect(res.body[0].eventName).toEqual(event.eventName);
-    expect(res.body[1].eventName).toEqual(event2.eventName);
+    expect(res.body.events[0].eventName).toEqual(event.eventName);
+    expect(res.body.events[1].eventName).toEqual(event2.eventName);
   });
 });
