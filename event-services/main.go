@@ -130,7 +130,7 @@ func UploadImage(c *gin.Context) {
 	if err != nil {
 		log.Printf("error publish event:updated : %v" , err)
 	}else{
-		log.Printf("Event published to subject %v" , "event:updated" , "file upload")
+		log.Printf("Event published to subject %v %v" , "event:updated" , "file upload")
 	}
 
 
