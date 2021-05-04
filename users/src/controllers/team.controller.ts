@@ -9,6 +9,7 @@ import {
   IEventResponse,
   ITeamRequest,
   IRecommendUserResponse,
+  IGetRegisterEventResponse,
 } from '../interfaces';
 import { deleteFile } from '../utils/file';
 
@@ -343,10 +344,12 @@ export const getRegisteredEvents = async (req: Request, res: Response) => {
   }
 
   const events: Event[] = await team.getMyEvents();
-  const response: IEventResponse[] = [];
+  const response: IGetRegisterEventResponse = {
+    events : events.map(event => event.toJSON())
+  };
 
-  for (let event of events) {
-    response.push(event.toJSON());
-  }
+  // for (let event of events) {
+  //   response.push(event.toJSON());
+  // }
   res.status(200).send(response);
 };

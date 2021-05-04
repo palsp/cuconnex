@@ -7,3 +7,7 @@ export interface IEventResponse {
   candidate?: ITeamResponse[],
   version?: number | undefined;
 }
+
+export interface IGetRegisterEventResponse{
+    events : IEventResponse[];
+}
