@@ -10,7 +10,8 @@ interface EventAttrs {
   id: number;
   eventName: string;
   registration: boolean;
-  status : EventStatus
+  status : EventStatus;
+  image? : string;
   candidate? : Team[];
   version?: number;
 }
@@ -27,6 +28,7 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
   public eventName!: string;
   public registration!: boolean;
   public status! : EventStatus;
+  public image? : string;
   public candidate? : Team[];
 
   public version?: number;
@@ -57,6 +59,9 @@ class Event extends Model<EventAttrs, EventCreationAttrs> {
           type: DataTypes.ENUM,
           allowNull : false,
           values: Object.values(EventStatus) 
+        },
+        image : {
+          type : DataTypes.STRING(255),
         },
         eventName: {
           type: DataTypes.STRING(255),
