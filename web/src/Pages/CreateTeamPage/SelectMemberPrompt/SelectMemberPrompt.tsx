@@ -52,9 +52,9 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     } else {
       const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
-      // setSelectedMemberArray(
-      //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
-      // );
+      setSelectedMemberArray(
+        (selectedMemberArray) => (selectedMemberArray = newMemberArray)
+      );
       setSelectedMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
@@ -65,7 +65,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     } else {
       const newMemberArray = [...memberArray];
       newMemberArray.splice(positionOfE, 1);
-      // setMemberArray((memberArray) => (memberArray = newMemberArray));
+      setMemberArray((memberArray) => (memberArray = newMemberArray));
       setMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
