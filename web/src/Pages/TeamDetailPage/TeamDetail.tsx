@@ -212,7 +212,7 @@ const TeamDetail: React.FC<Props> = (props) => {
     ) : (
       <InviteMembersPrompt
         incomingRequest={incomingTeamNoti}
-        backHandler={() => backClickedHandler}
+        backHandler={backClickedHandler}
         teams={props.location.state.team}
       />
     );
