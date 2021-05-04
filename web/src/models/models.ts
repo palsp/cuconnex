@@ -332,6 +332,7 @@ const containerVariants = {
 export interface IEducationData {
   faculty: string;
   year: string;
+  image: string;
 }
 
 export default containerVariants;
