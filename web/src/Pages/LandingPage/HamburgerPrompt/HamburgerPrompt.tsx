@@ -5,6 +5,7 @@ import { Heading } from "@dumbComponents/UI";
 import { userLogoutAPI } from "@api/index";
 import { AuthenticatedContext } from "@hooks/AuthenticatedContext";
 import { UserContext } from "@context/UserContext";
+import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
 const HamburgerPrompt: React.FC = () => {
   const [redirect, setRedirect] = useState<JSX.Element>();
   const { setIsAuthenticated } = useContext(AuthenticatedContext);
@@ -26,6 +27,12 @@ const HamburgerPrompt: React.FC = () => {
   };
   return (
     <div className={classes.container}>
+      <div className={classes.waveBg}>
+        <WaveCanvasBg
+          width={window.innerWidth}
+          height={window.innerHeight * 0.4}
+        />
+      </div>
       <Link style={{ textDecoration: "none" }} to="/myteams">
         <Heading value="My Teams" />
       </Link>
