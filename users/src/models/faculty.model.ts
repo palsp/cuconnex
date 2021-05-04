@@ -9,6 +9,8 @@ interface FacultyAttrs {
 
 interface FacultyCreationAttrs {
   code: string;
+  name: string;
+  image: string;
 }
 
 class Faculty extends Model<FacultyAttrs, FacultyCreationAttrs> {

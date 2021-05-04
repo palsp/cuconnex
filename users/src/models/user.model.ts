@@ -45,9 +45,9 @@ interface UserAttrs {
   friends?: User[];
   Connection?: Connection;
   IsMember?: IsMember;
-  Recommend? : Recommend;
-  recommendation? : User[];
-  Rating? : Rating;
+  Recommend?: Recommend;
+  recommendation?: User[];
+  Rating?: Rating;
 }
 
 interface UserCreationAttrs {
@@ -57,6 +57,7 @@ interface UserCreationAttrs {
   lookingForTeam?: boolean;
   role?: string;
   bio?: string;
+  faculty?: string;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
@@ -149,7 +150,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public addRecommendation!: BelongsToManyAddAssociationMixin<User, { through: { score: number } }>;
   public createTeam!: HasManyCreateAssociationMixin<Team>;
   public getTeams!: HasManyGetAssociationsMixin<Team>;
-  public addRatee!: BelongsToManyAddAssociationMixin<User, { through: { rating: number} }>;
+  public addRatee!: BelongsToManyAddAssociationMixin<User, { through: { rating: number } }>;
   public getRatee!: BelongsToManyGetAssociationsMixin<User>;
 
   /**
