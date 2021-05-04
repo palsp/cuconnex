@@ -126,23 +126,17 @@ const SelectEventPage: React.FC<Props> = (props) => {
                 <div className={classes.cardContent}>
                   {eventName}
                   <div className={classes.icon}>
-                    {eventName === "Technology" ? (
-                      <Coding />
-                    ) : eventName === "Business" ? (
-                      <Case />
-                    ) : eventName === "Startup" ? (
+                    {eventName === "Startup" ? (
                       <Startup />
                     ) : eventName === "ECommerce" ? (
                       <Ecommerce />
                     ) : eventName === "Ads" ? (
                       <Ads />
-                    ) : eventName === "Blockchain" ? (
-                      <Blockchain />
                     ) : eventName === "Finance" ? (
                       <Finance />
                     ) : eventName === "Web Builder" ? (
                       <WebBuilder />
-                    ) : eventName === "Chatbot" ? (
+                    ) : eventName === "ChatBot" ? (
                       <Chatbot />
                     ) : eventName === "Coding" ? (
                       <Coding />
@@ -154,7 +148,7 @@ const SelectEventPage: React.FC<Props> = (props) => {
                       <Fashion />
                     ) : eventName === "Marketing" ? (
                       <Marketing />
-                    ) : eventName === "UX/UI" ? (
+                    ) : eventName === "UXUI" ? (
                       <UXUI />
                     ) : (
                       ""
