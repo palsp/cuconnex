@@ -22,7 +22,7 @@ interface Props {
 
 export interface Rating {
   user: IUser;
-  rating: number | null;
+  rating: number;
   ratingId: number;
   setRating: React.Dispatch<React.SetStateAction<Rating[]>>;
 }
@@ -59,7 +59,7 @@ const RatingPage: React.FC<Props> = (props) => {
       notMe.forEach((user: IUser, index: number) => {
         const newUser = {
           user: user,
-          rating: null,
+          rating: 0,
           ratingId: index,
           setRating: setRatings,
         };
@@ -69,15 +69,17 @@ const RatingPage: React.FC<Props> = (props) => {
     });
   }, []);
 
-  const enableCheckHandler = () => {
-    let enable = true;
-    ratings.forEach((rating) => {
-      enable = enable && rating.rating != null;
-    });
-    return enable;
-  };
+  // const enableCheckHandler = () => {
+  //   let enable = true;
+  //   ratings.forEach((rating) => {
+  //     enable = enable && rating.rating != null;
+  //   });
+  //   return enable;
+  // };
 
   const onSubmitHandler = () => {
+    console.log("submit");
+    console.log(ratings);
     ratings.forEach(async (rating: Rating) => {
       const ratedUser: IRateUser = {
         rateeId: rating.user.id,
@@ -149,7 +151,7 @@ const RatingPage: React.FC<Props> = (props) => {
         <div className={classes.submitButton}>
           <Button
             value="Submit"
-            disabled={enableCheckHandler()}
+            // disabled={enableCheckHandler()}
             onClick={onSubmitHandler}
           />
         </div>

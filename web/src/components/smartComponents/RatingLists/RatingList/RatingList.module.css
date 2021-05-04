@@ -13,7 +13,6 @@
 
 .divRatingList {
   display: flex;
-  justify-content: space-around;
   align-items: center;
   height: inherit;
 }
@@ -25,6 +24,7 @@
   align-items: flex-start;
   margin-top: -3.7vh;
   width: 0.4vw;
+  margin-left: 30px;
 }
 
 .divUsernameInfo {
