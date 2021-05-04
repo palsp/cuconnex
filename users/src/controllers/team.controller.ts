@@ -12,6 +12,7 @@ import {
   IGetRegisterEventResponse,
 } from '../interfaces';
 import { deleteFile } from '../utils/file';
+import { Connection } from '../models/connection.model';
 
 require('express-async-errors');
 export const getTeam = async (req: Request, res: Response) => {
@@ -222,7 +223,7 @@ export const getRecommendedUserForTeam = async (req: Request, res: Response) => 
 
   const team = await Team.findOne({ where: { name: teamName }, include: ['owner', { model : User , as : 'member' , include : [Faculty]}] });
 
-  if (!team) {
+  if (!team) { 
     throw new NotFoundError('Team');
   }
 
@@ -240,6 +241,13 @@ export const getRecommendedUserForTeam = async (req: Request, res: Response) => 
   }[] = [];
 
   for (let user of users) {
+
+    const status = await Connection.findConnection(req.user!.id , user.id);
+
+    if(Connection.isConnection(status)){
+        continue;
+    }
+    
     const isMember = await team.findMember(user.id);
     let score: number;
     if (!isMember) {
