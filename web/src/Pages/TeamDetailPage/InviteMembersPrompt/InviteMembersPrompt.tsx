@@ -59,6 +59,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       console.log("ERRORS occured while POST /api/teams/invite-member", e);
     }
   };
+
   const inviteMember = () => {
     selectedMemberArray.forEach((members) => {
       invitationHandler({
@@ -69,6 +70,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       setClicked(true);
     });
   };
+
   const fetchRecommendedUserHandler = async () => {
     try {
       const recommendedUsers = await fetchRecommendUserForTeam(
@@ -174,7 +176,9 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
             </Link>
           </div>
           <Heading value="Invite Members" size="small-medium" />
-          <button className={classes.noStyleButton}>Invite</button>
+          <button className={classes.noStyleButton} onClick={inviteMember}>
+            Invite
+          </button>
           <SearchBar value="Search By Name" />
         </div>
       </div>
