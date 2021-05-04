@@ -117,6 +117,7 @@ const SelectEventPage: React.FC<Props> = (props) => {
                 onClick={() => {
                   setEventTypeHandler(eventName);
                   mockEventModalClickHandler(false);
+                  fetchEventByInterestHandler(eventType);
                 }}
               >
                 <div className={classes.cardContent}>
