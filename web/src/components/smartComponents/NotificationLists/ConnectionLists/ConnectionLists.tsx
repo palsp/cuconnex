@@ -16,19 +16,19 @@ const ConnectionLists: React.FC<Props> = (props) => {
       <div className={classes.listHeader}>Connections</div>
       {props.requests.map((friendNoti: IUserFriend, index: number) => {
         return (
-          <Link
-            key={index}
-            to={{
-              pathname: "/profile",
-              state: {
-                users: props.requests[index],
-              },
-            }}
-          >
-            <div className={classes.linkDiv} key={index}>
+          <div className={classes.linkDiv} key={index}>
+            <Link
+              key={index}
+              to={{
+                pathname: "/profile",
+                state: {
+                  users: props.requests[index],
+                },
+              }}
+            >
               <ConnectionList key={index} connection={friendNoti} />
-            </div>
-          </Link>
+            </Link>
+          </div>
         );
       })}
     </div>
