@@ -238,7 +238,7 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
   public async fetchTeam() {
     const members: User[] = await this.getMembers();
     const events: Event[] = await this.getCandidate();
-    this.members = members;
+    this.member = members;
     this.eventsParticipating = events;
   }
 
