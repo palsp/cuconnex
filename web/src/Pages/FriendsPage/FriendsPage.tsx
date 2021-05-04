@@ -70,6 +70,7 @@ const FriendsPage: React.FC<Props> = (props) => {
             goBack={goBack}
             size="small-medium"
             text="My Connections"
+            data-test="friends-page-header"
           />
           <div className={classes.searchDiv}>
             <SearchBar
