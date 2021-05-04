@@ -107,6 +107,10 @@
   width: 110%;
 }
 
+.footerNavigation > svg {
+  margin-top: -0.5rem;
+}
+
 .backNavigation {
   position: absolute;
   top: 10%;
