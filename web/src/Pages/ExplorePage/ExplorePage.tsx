@@ -16,7 +16,11 @@ import { IEventData, IUser } from "@src/models";
 import { motion } from "framer-motion";
 import containerVariants, { IFetchTeam } from "@src/models/models";
 import { UserContext } from "@context/UserContext";
-import { callTeamOfUserAPI } from "@src/api";
+import {
+  callTeamOfUserAPI,
+  fetchRecommendedTeam,
+  fetchRecommendedUser,
+} from "@src/api";
 
 const ExplorePage = () => {
   const [hasSearch, setHasSearch] = useState<boolean>(false);
@@ -27,12 +31,32 @@ const ExplorePage = () => {
   const [myTeamLists, setMyTeamLists] = useState<IFetchTeam[] | []>([]);
   const { userData } = useContext(UserContext);
   useEffect(() => {
-    fetchTeamHandler();
+    // fetchTeamHandler();
+    fetchRecommendedUserHandler();
+    fetchRecommendedTeamHandler();
   }, []);
-  const fetchTeamHandler = async () => {
-    const teamData = await callTeamOfUserAPI(userData.id);
-    console.log("fetchTeamHandler", teamData.data);
-    setMyTeamLists(teamData.data.teams);
+  // const fetchTeamHandler = async () => {
+  //   const teamData = await callTeamOfUserAPI(userData.id);
+  //   console.log("fetchTeamHandler", teamData.data);
+  //   setMyTeamLists(teamData.data.teams);
+  // };
+  const fetchRecommendedUserHandler = async () => {
+    try {
+      const recommendedUsers = await fetchRecommendedUser();
+      setPeopleLists(recommendedUsers.data.users);
+      console.log("fetchRecommendedUser", recommendedUsers);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const fetchRecommendedTeamHandler = async () => {
+    try {
+      const recommendedTeams = await fetchRecommendedTeam();
+      setMyTeamLists(recommendedTeams.data.teams);
+      console.log("fetchRecommendedTeam", recommendedTeams);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const explorePage = !hasSearch ? (
@@ -42,8 +66,8 @@ const ExplorePage = () => {
           <Subtitle value="Suggested for you" bold />
         </div>
 
-        {/*Loong's work*/}
-        {/* <MyTeamLists page="landing" team={currentTeamLists} /> */}
+        <PeopleLists peoplelist={peopleLists} />
+
         <MyTeamLists page="explore" team={myTeamLists} />
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
