@@ -327,10 +327,12 @@ class Team extends Model<TeamAttrs, TeamCreationAttrs> {
     const values = { ...this.get() };
 
     let returnMembers: IUserResponse[] = [];
+    
     if (this.members) {
       returnMembers = this.members.map((member: User) => member.toJSON());
     }
 
+    delete values.member;
     // let returnEvents: IEventResponse[] = [];
     // if (this.eventsParticipating) {
     //   returnEvents = this.eventsParticipating.map((event: Event) => event.toJSON());
