@@ -4,6 +4,7 @@
             "event-name" : "Test",
             "bio" : "This is great",
             "registration" : true,
+            "interests" : ["Coding","Web Builder"],
             "start-date" : {
                      "month" : 5,
                      "day" : 2,

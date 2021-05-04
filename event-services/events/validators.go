@@ -21,6 +21,7 @@ type Event struct {
 	EventName string        `json:"event-name"`
 	Bio       string        `json:"bio"`
 	Location  time.Location `json:"location"`
+	Interests  []string      `json:"interests"`
 	Registration bool       `json:"registration"`
 	StartDate *DateForm     `json:"start-date,omitempty"`
 	EndDate   *DateForm     `json:"end-date,omit-empty"`
