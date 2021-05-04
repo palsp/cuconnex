@@ -13,6 +13,11 @@ import {
   Ads,
   Blockchain,
   Finance,
+  WebBuilder,
+  Graphic,
+  Fashion,
+  Marketing,
+  UXUI,
 } from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
@@ -102,6 +107,22 @@ const SelectEventPage: React.FC<Props> = (props) => {
                       <Blockchain />
                     ) : eventName === "Finance" ? (
                       <Finance />
+                    ) : eventName === "Web Builder" ? (
+                      <WebBuilder />
+                    ) : eventName === "Chatbot" ? (
+                      <Chatbot />
+                    ) : eventName === "Coding" ? (
+                      <Coding />
+                    ) : eventName === "FinTech" ? (
+                      <FinTech />
+                    ) : eventName === "Graphic" ? (
+                      <Graphic />
+                    ) : eventName === "Fashion" ? (
+                      <Fashion />
+                    ) : eventName === "Marketing" ? (
+                      <Marketing />
+                    ) : eventName === "UX/UI" ? (
+                      <UXUI />
                     ) : (
                       ""
                     )}

@@ -50,6 +50,30 @@ const mockActivityBoxes: ActivityBoxesData[] = [
     activitySubHeading1: "CaseClub12",
     activitySubHeading2: "Saosaosao",
   },
+  {
+    activityName: activityName.businessCase,
+    activityPic: "",
+    activitySubHeading1: "CaseClub12",
+    activitySubHeading2: "Saosaosao",
+  },
+  {
+    activityName: activityName.startup,
+    activityPic: "",
+    activitySubHeading1: "UXWOW",
+    activitySubHeading2: "UIPeeps",
+  },
+  {
+    activityName: activityName.ecommerce,
+    activityPic: "",
+    activitySubHeading1: "CaseClub12",
+    activitySubHeading2: "Saosaosao",
+  },
+  {
+    activityName: activityName.uxui,
+    activityPic: "",
+    activitySubHeading1: "CaseClub12",
+    activitySubHeading2: "Saosaosao",
+  },
 ];
 
 export default mockActivityBoxes;

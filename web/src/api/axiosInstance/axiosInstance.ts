@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
   //baseURL: window.location.origin,
 });
 
-axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+// axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 
 export default axiosInstance;
 
