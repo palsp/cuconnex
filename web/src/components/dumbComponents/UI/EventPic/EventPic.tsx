@@ -1,15 +1,46 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { AppLogo } from "..";
+import tempEvent from "@assets/tempEvent.png";
 import classes from "./EventPic.module.css";
 
-const EventPic: React.FC = () => {
+interface Props {
+  PicUrl?: string;
+}
+
+const EventPic: React.FC<Props> = (props) => {
+  let eventCSS;
+  eventCSS = [classes.defaultPic];
+  if (props.PicUrl) {
+    eventCSS = [classes.eventPic];
+  }
+  // const url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+  const url = props.PicUrl;
+
+  const imageErrorHandler = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = tempEvent;
+  };
   return (
-    <div className={classes.eventPic}>
-      <div className={classes.container}>
-        <div className={classes.pic}></div>
-        <div className={classes.triangle}></div>
+    <div className={classes.container}>
+      <div className={eventCSS.join(" ")}>
+        {props.PicUrl ? (
+          <img
+            src={url}
+            className={classes.eventPic}
+            onError={imageErrorHandler}
+            alt="eventPic"
+          />
+        ) : (
+          <div className={classes.defaultPic}></div>
+        )}
       </div>
+      {/* <div className={classes.triangle}></div> */}
     </div>
+    // <div className={classes.eventPic}>
+    //   <div className={classes.container}>
+    //     <div className={classes.pic}></div>
+    //     <div className={classes.triangle}></div>
+    //   </div>
+    // </div>
   );
 };
 
