@@ -148,7 +148,7 @@ const ExplorePage = () => {
           <Subtitle value="Suggested for you" bold />
         </div>
         <PeopleLists peoplelist={recommendedPeopleLists} />
-        <MyTeamLists page="explore" team={recommendedTeamLists} />
+        <MyTeamLists page="landing" team={recommendedTeamLists} />
         <div className={classes.exploreSubtitle}>
           <Subtitle value="Find from your interest..." bold />
         </div>
@@ -167,7 +167,7 @@ const ExplorePage = () => {
         <Subtitle value="Try something that might interest you" bold />
       </div>
       <PeopleLists peoplelist={recommendedPeopleLists} />
-      <MyTeamLists page="explore" team={recommendedTeamLists} />
+      <MyTeamLists page="landing" team={recommendedTeamLists} />
       <div className={classes.exploreSubtitle}>
         <Subtitle value="Find from your interest..." bold />
       </div>
