@@ -70,7 +70,8 @@ const SelectEventPage: React.FC<Props> = (props) => {
     if (eventType !== undefined) {
       fetchEventByInterestHandler(eventType);
     }
-  }, []);
+  }, [eventType]);
+
   const fetchEventByInterestHandler = async (interestName: any) => {
     try {
       const eventsDataInterest = await fetchEventDataByInterestAPI(
