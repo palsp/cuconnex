@@ -20,6 +20,7 @@ export interface IUserResponse {
   role: string;
   bio: string;
   lookingForTeam: boolean;
+  facultyImage?: string;
   interests: IInterestResponse[];
 }
 
