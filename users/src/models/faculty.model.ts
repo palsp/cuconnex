@@ -1,4 +1,5 @@
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import { DataTypes, HasManyAddAssociationMixin, Model, Sequelize } from 'sequelize';
+import { User } from "./user.model";
 import { TableName } from './types';
 
 interface FacultyAttrs {
@@ -17,6 +18,8 @@ class Faculty extends Model<FacultyAttrs, FacultyCreationAttrs> {
   code!: string;
   name!: string;
   image!: string;
+
+  public addEnroll!: HasManyAddAssociationMixin<User , "id">
 
   public static autoMigrate(sequelize: Sequelize): void {
     Faculty.init(

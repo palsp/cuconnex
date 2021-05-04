@@ -1,7 +1,9 @@
+
 import { app } from './app';
 import { initializeDB } from './db';
 import { startDB } from './models/initDB';
 import { natsWrapper, EventCreatedSub, EventUpdatedSub } from './nats';
+import { insertFaculties } from './utils/insertFaculties';
 
 const validateEnvAttr = () => {
   if (!process.env.DB_HOST) {
@@ -63,7 +65,9 @@ const start = async () => {
     // initial data for interest and category
     // it should be run only once
     await startDB();
-
+    await insertFaculties();
+    
+  // console.log(u)
     // TODO: delete dummy data
     // await init();
   } catch (err) {

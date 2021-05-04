@@ -134,21 +134,21 @@ it('should create user successfully with optional field', async () => {
     })
     .expect(201);
 
-  const saveUser = await User.findOne({ where: { id }, include: Interest });
+  const saveUser = await User.findOne({ where: { id }, include: [Interest,Faculty] });
   expect(saveUser).not.toBeNull();
   const year = (+getCurrentYear() - +getYearFromId(saveUser!.id)).toString();
   expect(saveUser!.name).toEqual(user.name);
   expect(saveUser!.year).toEqual(year);
-  expect(saveUser!.faculty).toEqual(faculty['21']);
+  expect(saveUser!.Faculty!.name).toEqual(faculty['21']);
   expect(saveUser!.role).toEqual(user.role);
   expect(saveUser!.bio).toEqual(user.bio);
 });
 
 it.todo('add interest by category');
 
-it('should get faculty image', async () => {
-  await insertFaculties();
+// it('should get faculty image', async () => {
+//   await insertFaculties();
 
-  const fac = await Faculty.findAll();
-  console.log(fac);
-});
+//   const fac = await Faculty.findAll();
+//   console.log(fac);
+// });

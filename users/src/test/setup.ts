@@ -4,6 +4,7 @@ import { Connection } from 'mysql2/promise';
 import jwt from 'jsonwebtoken';
 import { startDB } from '../models/initDB'
 import { TableName } from '../models/types';
+import { insertFaculties } from '../utils/insertFaculties';
 
 jest.mock('../db');
 jest.mock('../natsWrapper')
@@ -33,6 +34,8 @@ beforeAll(async () => {
 
     await startDB();
 
+    await insertFaculties();
+
   } catch (err) {
     console.log(err);
     throw new Error('Initialized databae failed');
@@ -42,7 +45,7 @@ beforeAll(async () => {
 beforeEach(async () => {
   const models = Object.values(testDB.sequelize!.models);
   for (let model of models) {
-    if (model.tableName != TableName.interests && model.tableName != TableName.category) {
+    if (model.tableName != TableName.interests && model.tableName != TableName.category && model.tableName !== TableName.faculty) {
       await model.destroy({ where: {} });
     }
   }

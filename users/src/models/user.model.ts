@@ -9,15 +9,14 @@ import {
   Association,
   Sequelize,
   BelongsToManySetAssociationsMixin,
+  BelongsToGetAssociationMixin,
 } from 'sequelize';
 import {
   BadRequestError,
   TeamStatus,
   FriendStatus,
-  faculty,
   getCurrentYear,
   getYearFromId,
-  getFacultyCodeFromId,
   InternalServerError,
   InterestDescription,
 } from '@cuconnex/common';
@@ -29,17 +28,20 @@ import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
 import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
 import { Recommend } from './recommend.model';
-import { Rating, RatingCreationAttrs } from './rating.model';
+import { Rating } from './rating.model';
+import { Faculty } from './faculty.model';
+import { fakeServerWithClock } from 'sinon';
 
 // All attributes in user model
 interface UserAttrs {
   id: string;
   name: string;
   image: string;
-  faculty?: string;
+  facultyCode?: string;
   year?: string;
   role: string;
   bio: string;
+  faculty? : string;
   lookingForTeam: boolean;
   Interests?: Interest[];
   friends?: User[];
@@ -48,6 +50,7 @@ interface UserAttrs {
   Recommend?: Recommend;
   recommendation?: User[];
   Rating?: Rating;
+  Faculty? : Faculty;
 }
 
 interface UserCreationAttrs {
@@ -64,7 +67,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
 
-  public faculty!: string;
+  public faculty? : string;
+  public facultyCode?: string;
   public image!: string;
   public lookingForTeam: boolean = true;
   public year!: string;
@@ -77,6 +81,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public IsMember?: IsMember;
   public Recommend?: Recommend;
   public Rating?: Rating;
+  public Faculty? : Faculty;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -93,11 +98,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         name: {
           type: DataTypes.STRING(255),
           allowNull: false,
-        },
-        faculty: {
-          type: DataTypes.ENUM,
-          // allowNull: false,
-          values: Object.values(faculty),
         },
         year: {
           type: DataTypes.STRING(1),
@@ -130,10 +130,10 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     User.beforeCreate(async (user) => {
       // insert faculty and year according to user id
       const year = +getCurrentYear() - +getYearFromId(user.id);
-      const fname = faculty[getFacultyCodeFromId(user.id)];
+      // const fname = faculty[getFacultyCodeFromId(user.id)];
 
       user.year = year.toString();
-      user.faculty = fname;
+      // user.faculty = fname;
     });
   }
 
@@ -152,6 +152,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
   public getTeams!: HasManyGetAssociationsMixin<Team>;
   public addRatee!: BelongsToManyAddAssociationMixin<User, { through: { rating: number } }>;
   public getRatee!: BelongsToManyGetAssociationsMixin<User>;
+  public getFaculty!: BelongsToGetAssociationMixin<Faculty>
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
@@ -189,7 +190,7 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return User.findOne({ where: { id: userId }, include: Interest });
+    return User.findOne({ where: { id: userId }, include: [Interest,Faculty] });
   }
 
   //Method for finding a relation attached here to minimize hassle
@@ -429,6 +430,13 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
       delete values.Connection;
     }
 
+    if(this.Faculty){
+      values.faculty = this.Faculty.name
+    }else{
+      values.faculty = ""
+    }
+  
+    delete values.Faculty;
     delete values.Rating;
 
     return { ...values, interests };

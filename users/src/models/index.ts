@@ -48,7 +48,7 @@ export const autoMigrate = (sequelize: Sequelize) => {
   User.belongsToMany(User, {
     as: 'ratee',
     through: Rating,
-    foreignKey: 'raterId',
+    foreignKey:  'raterId',
     otherKey: 'rateeId',
   });
 
@@ -125,11 +125,15 @@ export const autoMigrate = (sequelize: Sequelize) => {
 
   // -------------------- User and Faculty -----------------------------------
   // 1-M
+
   Faculty.hasMany(User, {
+    as: 'enroll',
     sourceKey: 'code',
-    as: 'faculty',
-    foreignKey: 'studentId',
+    foreignKey: 'facultyCode',
     onDelete: 'SET NULL',
   });
-  User.belongsTo(Faculty);
+  
+  User.belongsTo(Faculty, {
+    foreignKey : 'facultyCode'
+  });
 };

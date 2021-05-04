@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Op } from 'sequelize';
-import { NotFoundError, BadRequestError, TeamStatus, InternalServerError } from '@cuconnex/common';
+import { NotFoundError, BadRequestError, TeamStatus, InternalServerError, getFacultyCodeFromId } from '@cuconnex/common';
 import {
   User,
   Team,
@@ -27,7 +27,6 @@ import {
   IGetRateUserOfTeamResponse,
 } from '../interfaces';
 import { EventStatus } from '@cuconnex/common/build/db-status/event';
-import { identity } from 'lodash';
 
 /**
  * get current user profile
@@ -85,20 +84,22 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     throw new BadRequestError('User already existed');
   }
 
-  const facultyCode = req.currentUser!.id.substring(8);
-  const faculty = await Faculty.findOne({ where: { code: facultyCode } });
-  if (!faculty) {
-    throw new BadRequestError(`Please update faculty database for code: ${facultyCode}`);
-  }
 
   user = await User.create({
     id: req.currentUser!.id,
     name,
     role,
     bio,
-    faculty: faculty.name,
     image: imagePath,
   });
+
+  const facultyCode = getFacultyCodeFromId(req.currentUser!.id);
+
+  const faculty = await Faculty.findOne({ where: { code: facultyCode } });
+
+  if(faculty){
+    await faculty.addEnroll(user);
+  }
 
   if (!user) {
     throw new InternalServerError();
@@ -113,6 +114,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
 
   const response: IUserResponse = {
     ...user!.toJSON(),
+    faculty : faculty ? faculty.name : "",
     interests,
   };
 
@@ -131,7 +133,7 @@ export const editUser = async (req: Request, res: Response) => {
   const updatedUser = req.body as IUserRequest;
   updatedUser.file = { ...req.file };
 
-  const user = await User.findOne({ where: { id: req.user!.id } });
+  const user = await User.findOne({ where: { id: req.user!.id }, include : [Faculty] });
   if (req.file) {
     if (user!.image !== '') {
       deleteFile(req.user!.image);
@@ -175,7 +177,7 @@ export const search = async (req: Request, res: Response) => {
   let users: User[];
   let team: Team[];
   try {
-    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: Interest });
+    users = await User.findAll({ where: { [Op.or]: userConstraint }, include: [Interest,Faculty] });
     team = await Team.findAll({ where: teamConstraint });
   } catch (err) {
     console.log(err);
