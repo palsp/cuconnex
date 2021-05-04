@@ -51,7 +51,7 @@ spec:
             - name: AWS_REGION
               valueFrom:
                 secretKeyRef:
-                  name: aws_region
+                  name: aws-region
                   key: AWS_REGION
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
