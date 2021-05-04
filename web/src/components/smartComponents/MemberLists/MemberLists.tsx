@@ -6,6 +6,7 @@ import classes from "./MemberLists.module.css";
 
 import { UsersData } from "@src/mockData/Models";
 import { IUser, IUserFriend, IUserFriendExtended } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
   memberlist: any;
@@ -36,7 +37,7 @@ const MemberLists: React.FC<Props> = (props) => {
       {props.memberlist.map((person: MemberListsData, index: number) => { */}
       {props.memberlist.map((person: any, index: number) => {
         return (
-          <div key={index}>
+          <div key={index} className={classes.linkDiv}>
             <MemberList
               key={index}
               members={person}
