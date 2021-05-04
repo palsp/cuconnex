@@ -11,13 +11,21 @@ export class EventCreatedSub extends Listener<EventCreated> {
   async onMessage(data: EventCreated['data'], msg: Message) {
     console.log('message received from subject', this.subject , data)
     
-     await Event.create({
-        id : data.id,
-        eventName : data['event-name'],
-        status : data.status,
-        registration : data.registration,
-      });
-      
+    const event = await Event.findOne({ where : { id : data.id}});
+
+    if(event){
+      await event.destroy();
+    }
+    try{
+      await Event.create({
+         id : data.id,
+         eventName : data['event-name'],
+         status : data.status,
+         registration : data.registration,
+       });
+    }catch (e){
+      console.error(e);
+    }
       msg.ack();
   }
 }
