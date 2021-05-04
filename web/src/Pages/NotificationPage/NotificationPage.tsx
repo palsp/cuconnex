@@ -36,8 +36,15 @@ import containerVariants, {
   IFetchOutgoingTeamNotification,
   IFetchTeam,
 } from "@src/models/models";
+import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
-const NotificationPage: React.FC = () => {
+interface Props {
+  history: {
+    goBack: () => void;
+  };
+}
+
+const NotificationPage: React.FC<Props> = (props) => {
   const [clickIncoming, setTab] = useState(true);
   const [teamNoti, setTeamNoti] = useState<IFetchTeam[] | []>([]);
   const [outgoingTeamNoti, setOutgoingTeamNoti] = useState<IFetchTeam[] | []>(
@@ -119,16 +126,13 @@ const NotificationPage: React.FC = () => {
     outgoingNoti = outgoingNoti + outgoingTeamNoti.length;
   }
   console.log(incomingNoti, outgoingNoti);
+
+  const goBack = () => {
+    props.history.goBack();
+  };
+
   const NotificationsPrompt = clickIncoming ? (
     <div className={classes.tabConnection}>
-      <div className={classes.relativeArrow}>
-        <Link data-test="Notification-page-back-link" to="/landing">
-          <ArrowLeft data-test="Notification-page-arrow-left" />
-        </Link>
-      </div>
-      <div className={classes.head}>
-        <Heading data-test="Notification-page-header" value="Requests" />
-      </div>
       <div className={classes.tab}>
         <div className={classes.connection}>
           <Tab
@@ -162,14 +166,6 @@ const NotificationPage: React.FC = () => {
     </div>
   ) : (
     <div className={classes.tabActivity}>
-      <div className={classes.relativeArrow}>
-        <Link data-test="Notification-page-back-link" to="/landing">
-          <ArrowLeft data-test="Notification-page-arrow-left" />
-        </Link>
-      </div>
-      <div className={classes.head}>
-        <Heading data-test="Notification-page-header" value="Requests" />
-      </div>
       <div className={classes.tab}>
         <div className={classes.connection}>
           <Tab
@@ -214,6 +210,7 @@ const NotificationPage: React.FC = () => {
       data-test="Notification-page"
       className={classes.page}
     >
+      <PageTitle goBack={goBack} size="small-medium" text="Requests" />
       {NotificationsPrompt}
     </motion.div>
   );

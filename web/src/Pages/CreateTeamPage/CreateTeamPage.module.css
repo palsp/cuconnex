@@ -1,3 +1,10 @@
+.page {
+  background: white;
+  width: 100%;
+  position: relative;
+  z-index: 3;
+}
+
 .heroDiv {
   display: flex;
   flex-direction: column;

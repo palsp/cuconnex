@@ -16,7 +16,6 @@
   font-family: "Nunito", serif;
 }
 .teamContainer {
-  margin-top: 40vh;
   margin-bottom: 2vh;
   display: flex;
   justify-content: flex-start;
@@ -76,4 +75,8 @@
   position: absolute;
   left: 18px;
   top: 5vh;
+}
+
+.eventcardsDiv {
+  margin-top: 5vw;
 }

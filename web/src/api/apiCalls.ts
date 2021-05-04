@@ -74,7 +74,7 @@ const fetchEventsDataAPI = async (): Promise<
   AxiosResponse<IFetchEventsData>
 > => {
   const eventsData: AxiosResponse<IFetchEventsData> = await axios.get(
-    "/api/events"
+    "/api/events/"
   );
 
   return eventsData;
