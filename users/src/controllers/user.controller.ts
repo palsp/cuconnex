@@ -85,7 +85,7 @@ export const createUser = async (req: Request, res: Response): Promise<void> => 
     throw new BadRequestError('User already existed');
   }
 
-  const facultyCode = req.currentUser!.id.substring(9);
+  const facultyCode = req.currentUser!.id.substring(8);
   const faculty = await Faculty.findOne({ where: { code: facultyCode } });
   if (!faculty) {
     throw new BadRequestError(`Please update faculty database for code: ${facultyCode}`);

@@ -2,6 +2,7 @@ import { Technology } from '@cuconnex/common';
 import request from 'supertest';
 import { app } from '../../../app';
 import { deleteFile } from '../../../utils/file';
+import { insertFaculties } from '../../../utils/insertFaculties';
 
 describe('The /api/upload', () => {
   it('should return 401 - Not Auhtorized if user is not signin', async () => {
@@ -26,6 +27,8 @@ describe('The /api/upload', () => {
   });
 
   it('should return 201 if there is a valid file uploaded', async () => {
+    await insertFaculties();
+
     const { body: res } = await request(app)
       .post('/api/users')
       .set('Cookie', global.signin())
@@ -33,11 +36,13 @@ describe('The /api/upload', () => {
         name: 'Anon',
         interests: JSON.stringify({ Technology: [Technology.Coding] }),
       })
-      .attach('image', 'src/routes/__test__/test_images/testImage2.png')
+      // .attach('image', 'src/routes/__test__/test_images/testImage2.png')
+      .attach('image', 'src/assets/faculties/college_of_population_studies.png')
       .expect(201);
+    // console.log('rr', res);
 
     expect(res.image).not.toEqual('');
-    deleteFile(res.image);
+    // deleteFile(res.image);
   });
 
   it('should create user although file is not attached', async () => {

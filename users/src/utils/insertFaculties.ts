@@ -5,7 +5,7 @@ export const insertFaculties = async () => {
   for (let key of Object.keys(faculty)) {
     let code = key;
     let name = `${faculty[key]}`;
-    let imagePath = name.toLowerCase();
+    let imagePath = name.toLowerCase().replaceAll(' ', '_');
     let image = `src/assets/faculties/${imagePath}.png`;
     await Faculty.create({ code, name, image });
   }
