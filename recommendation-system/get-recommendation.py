@@ -1,18 +1,19 @@
 import pandas as pd
 import mysql.connector
 from time import sleep
+import os
 
-from surprise import SVD
+from surprise import NMF
 from surprise import Dataset
 from surprise import Reader
 
 def get_connection():
     "Connect to MySQL database."
     try:
-        return mysql.connector.connect(host=DB_HOST,
-                                       database=DB_SCHEMA,
-                                       user=DB_USER,
-                                       password=DB_PASSWORD,
+        return mysql.connector.connect(host=os.environ['DB_HOST'],
+                                       database=os.environ['DB_SCHEMA'],
+                                       user=os.environ['DB_USER'],
+                                       password=os.environ['DB_PASSWORD'],
                                        autocommit=True)
     except mysql.connector.Error as e:
         print("Error while connecting to MySQL", e)

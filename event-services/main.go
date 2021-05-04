@@ -24,6 +24,9 @@ func main() {
 		log.Fatalf("db err: %v\n", err)
 	}
 		Migrate()
+
+	events.InitInterest()
+
 	aw , _ := time.ParseDuration("5000ms")
 	_, err  = sc.QueueSubscribe("event:completed",
 		"evet-service",
@@ -39,12 +42,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	
+
 	// Create a router
 	r := gin.Default()
 
 	r.Use(CORSMiddleware())
-	
+
 	//testEvent := r.Group("/api/ping")
 	//testEvent.GET("/", func(c *gin.Context) {
 	//	c.JSON(http.StatusOK, gin.H{
