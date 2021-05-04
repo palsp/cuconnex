@@ -74,12 +74,12 @@ export const addFreindResultValidator = [
 ];
 
 export const manageUserStatusValidator = [
-  body('teamId').notEmpty().isNumeric().withMessage('Team name must be supplied'),
+  body('teamName').notEmpty().isAlphanumeric().withMessage('Team id must be supplied'),
   body('newStatusFromUser').notEmpty().withMessage('status must be supplied'),
 ];
 
 export const requestToJoinTeamValidator = [
-  body('teamId').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
+  body('teamName').notEmpty().isAlphanumeric().withMessage('Team name must be supplied'),
 ];
 
 export const addRatingValidator = [
