@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes } from 'sequelize';
 import { InterestDescription } from '@cuconnex/common';
 import { TableName } from './types';
+import { Interest } from './interest.model';
 
 let desc: any[] = [];
 
@@ -11,7 +12,6 @@ for (let key in InterestDescription) {
 
 
 interface UserInterestAttrs {
-
   interest: string;
   userId: string;
 }
@@ -21,6 +21,7 @@ interface UserInterestCreationAttrs { }
 class UserInterest extends Model<UserInterestAttrs, UserInterestCreationAttrs>
   implements UserInterestAttrs {
   public interest!: string;
+  public categoryId! : number;
   public userId!: string;
 
   /**
@@ -33,7 +34,12 @@ class UserInterest extends Model<UserInterestAttrs, UserInterestCreationAttrs>
         interest: {
           type: DataTypes.ENUM,
           values: desc,
-          primaryKey: true
+          primaryKey: true,
+          references : {
+            model : Interest,
+            key : 'description'
+          },
+
         },
         userId: {
           type: DataTypes.STRING(10),

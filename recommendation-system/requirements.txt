@@ -1,0 +1,5 @@
+numpy
+scikit-surprise
+pandas
+mysql-connector-python
+scipy

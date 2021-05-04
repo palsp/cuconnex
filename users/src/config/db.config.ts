@@ -6,7 +6,8 @@ export default {
 };
 
 
-/*TODO: chnage this back to default settings after development*/
+
+/*TODO: change this back to default settings after development*/
 export const test_config = {
   host: 'localhost',
   user: 'root',

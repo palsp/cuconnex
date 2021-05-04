@@ -6,21 +6,17 @@ import {
   BelongsToManyGetAssociationsMixin,
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
-  HasManyAddAssociationMixin,
   Association,
   Sequelize,
   BelongsToManySetAssociationsMixin,
+  BelongsToGetAssociationMixin,
 } from 'sequelize';
 import {
   BadRequestError,
-  NotFoundError,
   TeamStatus,
   FriendStatus,
-  Description,
-  faculty,
   getCurrentYear,
   getYearFromId,
-  getFacultyCodeFromId,
   InternalServerError,
   InterestDescription,
 } from '@cuconnex/common';
@@ -30,22 +26,31 @@ import { Team, TeamCreationAttrs } from './team.model';
 import { Interest } from './interest.model';
 import { Connection } from './connection.model';
 import { IsMember } from './isMember.model';
-import { InterestBody, IUserResponse } from '../interfaces';
+import { IIsMemberResponse, InterestBody, IUserResponse } from '../interfaces';
+import { Recommend } from './recommend.model';
+import { Rating } from './rating.model';
+import { Faculty } from './faculty.model';
+import { fakeServerWithClock } from 'sinon';
 
 // All attributes in user model
 interface UserAttrs {
   id: string;
   name: string;
   image: string;
-  faculty?: string;
+  facultyCode?: string;
   year?: string;
   role: string;
   bio: string;
+  faculty? : string;
   lookingForTeam: boolean;
-  interests?: Interest[];
+  Interests?: Interest[];
   friends?: User[];
-  connections?: Connection;
-  isMembers?: IsMember;
+  Connection?: Connection;
+  IsMember?: IsMember;
+  Recommend?: Recommend;
+  recommendation?: User[];
+  Rating?: Rating;
+  Faculty? : Faculty;
 }
 
 interface UserCreationAttrs {
@@ -55,22 +60,28 @@ interface UserCreationAttrs {
   lookingForTeam?: boolean;
   role?: string;
   bio?: string;
+  faculty?: string;
 }
 
 class User extends Model<UserAttrs, UserCreationAttrs> {
   public id!: string;
   public name!: string;
 
-  public faculty!: string;
+  public faculty? : string;
+  public facultyCode?: string;
   public image!: string;
   public lookingForTeam: boolean = true;
   public year!: string;
   public role!: string;
   public bio!: string;
+  public recommendation?: User[];
 
-  public interests?: Interest[];
-  public connections?: Connection;
-  public isMembers?: IsMember;
+  public Interests?: Interest[];
+  public Connection?: Connection;
+  public IsMember?: IsMember;
+  public Recommend?: Recommend;
+  public Rating?: Rating;
+  public Faculty? : Faculty;
 
   /**
    * Automatically migrate schema, to keep your schema up to date.
@@ -87,11 +98,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         name: {
           type: DataTypes.STRING(255),
           allowNull: false,
-        },
-        faculty: {
-          type: DataTypes.ENUM,
-          // allowNull: false,
-          values: Object.values(faculty),
         },
         year: {
           type: DataTypes.STRING(1),
@@ -124,19 +130,29 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     User.beforeCreate(async (user) => {
       // insert faculty and year according to user id
       const year = +getCurrentYear() - +getYearFromId(user.id);
-      const fname = faculty[getFacultyCodeFromId(user.id)];
+      // const fname = faculty[getFacultyCodeFromId(user.id)];
 
       user.year = year.toString();
-      user.faculty = fname;
+      // user.faculty = fname;
     });
   }
 
   // user add existing interest
   public addInterest!: BelongsToManyAddAssociationMixin<Interest, User>;
   public getInterests!: BelongsToManyGetAssociationsMixin<Interest>;
-  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>
-  public addConnection!: BelongsToManyAddAssociationMixin<User, { status: FriendStatus }>;
+  public setInterests!: BelongsToManySetAssociationsMixin<Interest, User>;
+  public addConnection!: BelongsToManyAddAssociationMixin<
+    User,
+    { through: { status: FriendStatus } }
+  >;
   public getConnection!: BelongsToManyGetAssociationsMixin<User>;
+  public getRecommendation!: BelongsToManyGetAssociationsMixin<User>;
+  public addRecommendation!: BelongsToManyAddAssociationMixin<User, { through: { score: number } }>;
+  public createTeam!: HasManyCreateAssociationMixin<Team>;
+  public getTeams!: HasManyGetAssociationsMixin<Team>;
+  public addRatee!: BelongsToManyAddAssociationMixin<User, { through: { rating: number } }>;
+  public getRatee!: BelongsToManyGetAssociationsMixin<User>;
+  public getFaculty!: BelongsToGetAssociationMixin<Faculty>
 
   /**
    * Adds interest from a given Array of InterestCreationAttrs to the user who calls this method.
@@ -145,14 +161,16 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @param {Description[]} interests - The array of interests the user is interested in.
    */
   public async addInterests(interests: InterestBody): Promise<Interest[]> {
-
     const result: Interest[] = [];
 
     for (let category in interests) {
       // select only valid interest description
-      interests[category] = Interest.validateDescription(interests[category], Object.values(InterestDescription[category]));
+      interests[category] = Interest.validateDescription(
+        interests[category],
+        Object.values(InterestDescription[category])
+      );
       for (let interest of interests[category]) {
-        const addedInterest = await Interest.findOne({ where: { description: interest } })
+        const addedInterest = await Interest.findOne({ where: { description: interest } });
 
         // skip if interest not found
         if (!addedInterest) {
@@ -162,7 +180,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
         await this.addInterest(addedInterest);
         result.push(addedInterest);
       }
-
     }
     return result;
   }
@@ -173,10 +190,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
    * @returns
    */
   public static async fetchUser(userId: string): Promise<User | null> {
-    return await User.findOne({ where: { id: userId }, include: 'interests' });
+    return User.findOne({ where: { id: userId }, include: [Interest,Faculty] });
   }
-
-
 
   //Method for finding a relation attached here to minimize hassle
   /**A method to check if the current user has a relationship with the user with specified id.
@@ -222,55 +237,6 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     }
 
     return this.addConnection(user);
-  }
-  /**
-   * Get all pending connection requests
-   *
-   */
-  public async getRequestConnection(): Promise<User[]> {
-    const result: User[] = [];
-    const connections = await this.getConnection();
-    for (let conn of connections) {
-      const status = await this.findRelation(conn.id);
-      if (status === FriendStatus.Pending) {
-        result.push(conn);
-      }
-    }
-    return result;
-  }
-  /**
-   * Method for finding all pending friend requests this user has received
-   * @returns {User[]} - Array of all users who have send a friend request to current user
-   */
-  public async getReceivedFriendRequests() {
-    const result: User[] = [];
-    const constraint = { receiverId: this.id, status: FriendStatus.Pending };
-    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
-    for (let conn of receivedRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId } });
-      if (user) {
-        result.push(user);
-      }
-    }
-
-    return result;
-  }
-  /**
-   * Method for finding all pending friend requests this user has send
-   * @returns {User[]} - Array of all users who have received a friend request from current user
-   */
-  public async getSendFriendRequests() {
-    const result: User[] = [];
-    const constraint = { senderId: this.id, status: FriendStatus.Pending };
-    const sendRequests: Connection[] = await Connection.findAll({ where: constraint });
-    for (let conn of sendRequests) {
-      const user = await User.findOne({ where: { id: conn.senderId } });
-      if (user) {
-        result.push(user);
-      }
-    }
-
-    return result;
   }
 
   /**
@@ -318,29 +284,31 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return status;
   }
 
-  /**
-   * Method for finding a user with the specified userId.
-   * Returns a promise that resolves if a user is found.
-   *
-   * if the user is not found, throws a new NotFoundError
-   * @param userId - The id of the user we wish to find
-   * @throws {NotFoundError} - if the user is not found
-   * @return {User}`user` - the found user, if it exists
-   */
-  public static async findUser(userId: string): Promise<User> {
-    const user = await User.findByPk(userId);
+  public async getAllConnectionWithStatus(status: FriendStatus): Promise<User[]> {
+    let connections = await this.getConnection({ include: [Interest] });
 
-    // check if user who is added exists in the database
-    if (!user) {
-      throw new NotFoundError();
-    }
+    connections = connections.filter((conn) => conn.Connection!.status === status);
 
-    return user;
+    return connections;
   }
 
+  /**
+   * Method for finding all pending friend requests this user has received
+   * @returns {User[]} - Array of all users who have send a friend request to current user
+   */
+  public async getReceivedFriendRequests() {
+    const result: User[] = [];
+    const constraint = { receiverId: this.id, status: FriendStatus.Pending };
+    const receivedRequests: Connection[] = await Connection.findAll({ where: constraint });
+    for (let conn of receivedRequests) {
+      const user = await User.findOne({ where: { id: conn.senderId }, include: Interest });
+      if (user) {
+        result.push(user);
+      }
+    }
 
-  public createTeam!: HasManyCreateAssociationMixin<Team>;
-  public getTeams!: HasManyGetAssociationsMixin<Team>;
+    return result;
+  }
 
   /**
    * Creates Team with the specified name and description
@@ -354,6 +322,8 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return this.createTeam({
       name: attrs.name,
       description: attrs.description,
+      image: attrs.image,
+      currentRecruitment: attrs.currentRecruitment,
     });
   }
 
@@ -391,25 +361,93 @@ class User extends Model<UserAttrs, UserCreationAttrs> {
     return teams;
   }
 
+  public async getMyPendingRequestsTeams(): Promise<Team[]> {
+    let teams: Team[] = [];
+    const isMembers = await IsMember.findAll({
+      where: { userId: this.id, status: TeamStatus.Pending, sender: 'user' },
+    });
+
+    if (!isMembers) {
+      return teams;
+    }
+
+    for (let i = 0; i < isMembers.length; i++) {
+      let team = await Team.findOne({ where: { name: isMembers[i].teamName } });
+      if (team) {
+        teams.push(team);
+      }
+    }
+
+    return teams;
+  }
+
+  public async calculateTeamScore(team: Team) {
+    if (!team.owner) {
+      team.owner = await team.getOwner();
+    }
+
+    if (!team.member) {
+      team.member = await team.getMember();
+    }
+
+    // TODO: double check with bird whether owner is in isMember Table
+    let meanScore = await Recommend.CalculateScore(this.id, team.owner.id);
+
+    for (let member of team.member) {
+      meanScore += await Recommend.CalculateScore(this.id, member.id);
+    }
+
+    return meanScore / (team.member.length + 1);
+  }
+
+  public async getMyStatusWith(team: Team): Promise<IIsMemberResponse> {
+    if (this.id === team.creatorId) {
+      return { status: TeamStatus.Accept, sender: '' };
+    }
+    const isMember = await IsMember.findOne({ where: { userId: this.id, teamName: team.name } });
+    if (!isMember) {
+      return { status: null, sender: '' };
+    }
+
+    const response: IIsMemberResponse = {
+      status: isMember.status,
+      sender: isMember.sender,
+    };
+
+    return response;
+  }
+
   public toJSON(): IUserResponse {
     const values = { ...this.get() };
     let interests: string[] = [];
-    if (this.interests) {
-      interests = this.interests.map((interest) => interest.serializer());
+    if (this.Interests) {
+      interests = this.Interests.map((interest) => interest.serializer());
     }
 
-    if (this.connections) {
-      delete values.connections;
+    delete values.Interests;
+
+    if (this.Connection) {
+      delete values.Connection;
     }
+
+    if(this.Faculty){
+      values.faculty = this.Faculty.name
+    }else{
+      values.faculty = ""
+    }
+  
+    delete values.Faculty;
+    delete values.Rating;
 
     return { ...values, interests };
   }
 
   public static associations: {
     interests: Association<Interest>;
-    friend: Association<User, User>;
+    connection: Association<User, User>;
     teams: Association<User, Team>;
     member: Association<User, Team>;
+    recommendation: Association<User, User>;
   };
 }
 

@@ -85,6 +85,7 @@ it('should include all if both service is available', async () => {
         .get("/api/query/:api")
         .send({})
 
+
     expect(body.users).toHaveLength(1)
     expect(body.events).toHaveLength(1)
     expect(body.team).toHaveLength(1)
