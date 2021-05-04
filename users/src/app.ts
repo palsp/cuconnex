@@ -21,7 +21,7 @@ app.use(urlencoded({ extended: true, limit: '800mb' }));
 app.use(
   session({
     signed: false,
-    secure: false,
+    secure: process.env.NODE_ENV !== 'test',
   })
 );
 

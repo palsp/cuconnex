@@ -29,7 +29,7 @@ app.use(urlencoded({ extended: true }));
 
 app.use(Session({
     signed: false,
-    secure: false,
+    secure: process.env.NODE_ENV !== 'test',
 }))
 
 /* Initialize all the handler */
