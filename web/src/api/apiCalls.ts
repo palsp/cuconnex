@@ -346,9 +346,9 @@ const fetchEventTeamAPI = async (
 };
 const fecthRateTeamAPI = async (): Promise<
   AxiosResponse<IFetchRateTeamNotification>
-> => {
+ > => {
   const rateTeamData: AxiosResponse<IFetchRateTeamNotification> = await axios.get(
-    "/api/users/team/rates"
+    "/api/users/teams/rate"
   );
   return rateTeamData;
 };

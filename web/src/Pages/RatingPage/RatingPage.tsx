@@ -5,12 +5,9 @@ import { RatingLists } from "@smartComponents/index";
 import { Heading, Button } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@dumbComponents/UI/Icons/index";
 import { IFetchTeam, IUser, IRateUser } from "@src/models";
-import {
-  fetchTeamMembersAPI,
-  fetchRateTeamMembersAPI,
-  rateUserAPI,
-} from "@api/index";
-import { UserContext } from "@src/context/UserContext";
+import { fetchRateTeamMembersAPI, rateUserAPI } from "@api/index";
+import { UserContext } from "@context/UserContext";
+import { ErrorContext } from "@context/ErrorContext";
 
 interface Props {
   location: {
@@ -31,16 +28,13 @@ export interface Rating {
 }
 
 const RatingPage: React.FC<Props> = (props) => {
-  const [rateTeamMemberLists, setRateTeamMemberLists] = useState<IUser[] | []>(
-    []
-  );
-  const [teamMemberLists, setTeamMemberLists] = useState<IUser[] | []>([]);
-
   const { userData } = useContext(UserContext);
 
-  const [allRated, setAllRated] = useState<boolean>(true);
+  const { setErrorHandler } = useContext(ErrorContext);
 
-  const [submit, setSubmit] = useState<boolean>(false);
+  // const [allRated, setAllRated] = useState<boolean>(true);
+
+  // const [rated, setRated] = useState<boolean>(false);
 
   const [redirect, setRedirect] = useState<JSX.Element>();
 
@@ -58,14 +52,8 @@ const RatingPage: React.FC<Props> = (props) => {
     return teamData.data.ratees;
   };
 
-  const fetchTeamMembersHandler = async () => {
-    const teamData = await fetchTeamMembersAPI(props.location.state.team.name);
-    console.log("fetchTeamMembersHandler", teamData.data.users);
-    return teamData.data.users;
-  };
-
   useEffect(() => {
-    fetchTeamMembersHandler().then((users: IUser[]) => {
+    fetchRateTeamMembersHandler().then((users: IUser[]) => {
       const newRatings: Rating[] = [];
       const notMe = users.filter((user) => user.id !== userData.id);
       notMe.forEach((user: IUser, index: number) => {
@@ -79,16 +67,12 @@ const RatingPage: React.FC<Props> = (props) => {
       });
       setRatings(newRatings);
     });
-    console.log("Rating: ", ratings);
+
     // ratings.forEach((value) => {
     //   if (value.rating === null) {
-    //     setAllRated((prevState) => (prevState = prevState && false));
+    //     return false;
     //   }
     // });
-
-    // fetchTeamMembersHandler().then((value: IUser[] | []) =>
-    //   setTeamMemberLists(value)
-    // );
   }, []);
 
   const onSubmitHandler = () => {
@@ -111,12 +95,12 @@ const RatingPage: React.FC<Props> = (props) => {
           "ERRORS occured while sent a response to the user in the team",
           e
         );
+        setErrorHandler(e.response.data.errors[0].message);
       }
     });
     setTimeout(() => {
       setRedirect(<Redirect to={{ pathname: "/landing" }} />);
     }, 1500);
-    setSubmit(true);
   };
 
   return (
@@ -150,14 +134,10 @@ const RatingPage: React.FC<Props> = (props) => {
           <div className={classes.rateTeammates}>Rate Your Teammates</div>
           <div className={classes.noThanks}>No, Thanks</div>
         </div>
-        {/* <RatingLists members={teamMemberLists} submit={submit} /> */}
-        {ratings.length > 0 ? (
-          <RatingLists ratings={ratings} submit={submit} />
-        ) : (
-          "loading"
-        )}
+        {ratings.length > 0 ? <RatingLists ratings={ratings} /> : "loading"}
 
-        <Button value="Submit" disabled={allRated} onClick={onSubmitHandler} />
+        {/* <Button value="Submit" disabled={allRated} onClick={onSubmitHandler} /> */}
+        <Button value="Submit" onClick={onSubmitHandler} />
         {redirect}
         <div className={classes.ratingDetail}>
           {

@@ -167,7 +167,7 @@ const NotificationPage: React.FC<Props> = (props) => {
         </div>
       </div>
       <div className={classes.teamRatingList}>
-        <TeamRatingLists teams={myTeamLists} />
+        <TeamRatingLists teams={rateTeamNoti} />
       </div>
       <div className={classes.teamInvitationList}>
         <TeamInvitationLists

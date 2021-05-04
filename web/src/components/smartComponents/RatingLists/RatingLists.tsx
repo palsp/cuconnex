@@ -6,7 +6,6 @@ import { Rating } from "@pages/RatingPage/RatingPage";
 
 interface Props {
   ratings: Rating[];
-  submit: boolean;
 }
 
 const RatingLists: React.FC<Props> = (props) => {
@@ -15,7 +14,7 @@ const RatingLists: React.FC<Props> = (props) => {
     <div>
       {props.ratings?.map((rating: Rating, index: number) => {
         console.log("RatingListsIndex: ", index);
-        return <RatingList key={index} rating={rating} submit={props.submit} />;
+        return <RatingList key={index} rating={rating} />;
       })}
     </div>
   );

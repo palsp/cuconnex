@@ -24,9 +24,10 @@ const RatingStar: React.FC<Props> = (props) => {
   const [hover, setHover] = React.useState(-1);
 
   const onChangehandler = (
-    event: React.ChangeEvent<Object>,
+    event: React.ChangeEvent<any>,
     value: number | null
   ) => {
+    console.log("Value at RatingStar: ", value);
     setValue(value);
     props.ratedStarHandler(value);
   };
