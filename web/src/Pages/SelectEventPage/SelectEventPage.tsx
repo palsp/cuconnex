@@ -32,12 +32,17 @@ import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
 interface Props {
   history: {
+    state: {
+      typeEvent?: string;
+    };
     goBack: () => void;
   };
 }
 
 const SelectEventPage: React.FC<Props> = (props) => {
-  const [eventType, setEventType] = useState<string>("");
+  const [eventType, setEventType] = useState<string | undefined>(
+    props.history.state ? props.history.state.typeEvent : ""
+  );
   const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
 
   const [showMockEventTypeModal, setShowMockEventTypeModal] = useState<boolean>(
@@ -67,7 +72,7 @@ const SelectEventPage: React.FC<Props> = (props) => {
       <PageTitle
         goBack={() => mockEventModalClickHandler(true)}
         size="small-medium"
-        text={"Some Event"}
+        text={`${eventType} Event`}
       />
 
       <div className={classes.eventDiv}>

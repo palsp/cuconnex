@@ -157,7 +157,7 @@ const TeamDetail: React.FC<Props> = (props) => {
         className={classes.TeamDetail}
       >
         <div className={classes.header}>
-          <PageTitle text="Team Details" size="medium" goBack={goBack} />
+          <PageTitle text="Team Details" size="smallMedium" goBack={goBack} />
         </div>
 
         <div className={classes.info}>

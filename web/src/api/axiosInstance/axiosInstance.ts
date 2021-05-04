@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIzMzQzMzIiLCJpYXQiOjE2MjAxNDI2MTN9.230CqQB4ePA92vN_Xe_qqlhBTUo1lg9qv7rw0b7QJ44";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzM0MzIzMjIiLCJpYXQiOjE2MjAxNDM0ODN9.Jmqh5GZQvu6sVS0j-HZtMMk82n_iRWOuJl817RrUyBs";
 
 const axiosInstance = axios.create({
   baseURL: "https://www.cu-connex.com",
