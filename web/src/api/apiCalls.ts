@@ -86,6 +86,15 @@ const fetchEventsDataAPI = async (): Promise<
   return eventsData;
 };
 
+const fetchEventDataByInterestAPI = async (
+  interestName: string
+): Promise<AxiosResponse<IFetchEventsData>> => {
+  const eventsDataByInterest: AxiosResponse<IFetchEventsData> = await axios.get(
+    `/api/events/${interestName}/interest/`
+  );
+  return eventsDataByInterest;
+};
+
 const fetchRecommendedUser = async (): Promise<
   AxiosResponse<IFetchRecommendedUser>
 > => {
@@ -420,4 +429,5 @@ export {
   fetchRecommendUserForTeam,
   fetchRecommendedTeam,
   fetchRegisteredEventAPI,
+  fetchEventDataByInterestAPI,
 };
