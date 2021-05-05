@@ -5,11 +5,15 @@ import { Subtitle, EventPic } from "@dumbComponents/UI/index";
 interface Props {
   events?: IEventData;
   team?: IFetchTeam;
+  grey?: boolean;
 }
 const GeneralLists: React.FC<Props> = (props) => {
   let cssArrayTeam = null;
   let cssArrayEvent = null;
-
+  const mainDivCSS = [classes.mainDiv];
+  if (props.grey) {
+    mainDivCSS.push(classes.grey);
+  }
   switch (props.events?.status) {
     case "Open for application":
       cssArrayEvent = [classes.eventstatusDiv];
@@ -150,7 +154,7 @@ const GeneralLists: React.FC<Props> = (props) => {
     }
   }
   return (
-    <div className={classes.mainDiv}>
+    <div className={mainDivCSS.join(" ")}>
       <div className={classes.profileContainer}>
         <EventPic PicUrl={props.events?.image} />
         {/* <div className={classes.profileDiv}> </div> */}
