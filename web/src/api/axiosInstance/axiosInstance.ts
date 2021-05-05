@@ -1,17 +1,17 @@
 import axios from "axios";
 
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE4MjQ3MjEiLCJpYXQiOjE2MjAxODUxODN9.S7ShM-ShOD3q8ZTM-z5QIKldjFh9ewfxv4xn5iS4VZs";
+// const token =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE4MjQ3MjEiLCJpYXQiOjE2MjAxODUxODN9.S7ShM-ShOD3q8ZTM-z5QIKldjFh9ewfxv4xn5iS4VZs";
 //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE4NDg4MjEiLCJpYXQiOjE2MjAxNTU1MDR9.UjTWXqFFxaV8xN75WWWpugFMq1piSI1xupx-AxgCkV4";
 //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc";
 
 // ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc");
 const axiosInstance = axios.create({
-  baseURL: "https://www.cu-connex.com",
-  // baseURL: window.location.origin,
+  // baseURL: "https://www.cu-connex.com",
+  baseURL: window.location.origin,
 });
 
-axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
+// axiosInstance.defaults.headers.common["Authorization"] = "Bearer " + token;
 export default axiosInstance;
 
 //in some teams
