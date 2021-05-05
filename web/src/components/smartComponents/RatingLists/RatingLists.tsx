@@ -14,7 +14,7 @@ const RatingLists: React.FC<Props> = (props) => {
     <div>
       {props.ratings?.map((rating: Rating, index: number) => {
         console.log("RatingListsIndex: ", index);
-        return <RatingList key={index} rating={rating} />;
+        return <RatingList key={index} index={index} rating={rating} />;
       })}
     </div>
   );
