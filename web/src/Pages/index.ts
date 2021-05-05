@@ -17,3 +17,4 @@ export { default as ExplorePage } from "@pages/ExplorePage/ExplorePage";
 export { default as NotificationPage } from "@pages/NotificationPage/NotificationPage";
 export { default as PushPage } from "@pages/PushPage/PushPage";
 export { default as CreateTeamPage } from "@pages/CreateTeamPage/CreateTeamPage";
+export { default as RatingPage } from "@pages/RatingPage/RatingPage";

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { MemberLists, SearchBar } from "@smartComponents/index";
-import { Heading, Subtitle } from "@dumbComponents/UI/index";
+import { Heading, PageTitle, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
 import classes from "./InviteMembersPrompt.module.css";
 import { motion } from "framer-motion";
@@ -16,6 +16,8 @@ import {
 } from "@src/models";
 import {
   fetchFriendsDataAPI,
+  fetchRecommendedUser,
+  fetchRecommendUserForTeam,
   fetchTeamNotificationAPI,
   fetchTeamOutgoingNotificationAPI,
   fetchUserTeamRequestAPI,
@@ -26,23 +28,25 @@ import MemberListsForPrompt from "@smartComponents/MemberLists/MemberListsForPro
 
 interface Props {
   teams: IFetchTeam;
-  backHandler: any;
+  backHandler: () => void;
   incomingRequest: IUserFriend[] | [];
 }
 
-const inviteMembersPrompt: React.FC<Props> = (props) => {
+const InviteMembersPrompt: React.FC<Props> = (props) => {
   const [clicked, setClicked] = useState<boolean>(false);
   const [memberArray, setMemberArray] = useState<number[]>([]);
   const [numberFriends, setNumberFriends] = useState<number>(0);
   const [selectedMemberArray, setSelectedMemberArray] = useState<IUserFriend[]>(
     []
   );
+  const [recommendLists, setRecommendLists] = useState<IUser[]>([]);
   const [friendsNotInTeam, setFriendsNotInTeam] = useState<
     IUserFriendExtended[]
   >([]);
   // const [newFriendLists, setNewFriendLists] = useState<IUserFriend[] | []>([]);
   useEffect(() => {
     fetchFriendsHandler();
+    fetchRecommendedUserHandler();
   }, []);
   const invitationHandler = async (inviteData: IInviteData) => {
     try {
@@ -55,6 +59,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       console.log("ERRORS occured while POST /api/teams/invite-member", e);
     }
   };
+
   const inviteMember = () => {
     selectedMemberArray.forEach((members) => {
       invitationHandler({
@@ -64,6 +69,19 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       console.log("POST /members/invite/", props.teams.name, members.id);
       setClicked(true);
     });
+  };
+
+  const fetchRecommendedUserHandler = async () => {
+    try {
+      const recommendedUsers = await fetchRecommendUserForTeam(
+        props.teams.name
+      );
+      console.log("fetchRecommendedUserForTeam", recommendedUsers);
+
+      setRecommendLists(recommendedUsers.data.users);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const fetchFriendsHandler = async () => {
     const friendsData = await fetchFriendsDataAPI();
@@ -123,12 +141,12 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
     setFriendsNotInTeam(extendedFriendsNotInTeam);
   };
 
-  const selectPersonHandler = (e: IUserFriend) => {
+  const selectPersonHandler = (e: any) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
+      const newMemberArray = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       // setSelectedMemberArray(
       //   (selectedMemberArray) => (selectedMemberArray = newMemberArray)
@@ -136,6 +154,7 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
       setSelectedMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
+
   const selectMemberHandler = (e: number) => {
     const positionOfE = memberArray.indexOf(e);
     if (positionOfE === -1) {
@@ -149,35 +168,46 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
   };
 
   const selectPrompt = (
-    <div>
+    <>
       <div className={classes.divHeading}>
         <div className={classes.divFixed}>
-          <Heading value="Invite Members" size="small-medium" />
-          <div onClick={() => inviteMember()} className={classes.noStyleButton}>
+          <PageTitle
+            text="Invite Members"
+            size="small-medium"
+            goBack={props.backHandler}
+          />
+          <button className={classes.noStyleButton} onClick={inviteMember}>
             Invite
-          </div>
-          {/* <div onClick={() => props.backHandler()} className={classes.arrowDiv}>
-            <ArrowLeft />
-          </div> */}
-          <div className={classes.arrowDiv} onClick={props.backHandler()}>
-            <ArrowLeft></ArrowLeft>
-          </div>
-          <div className={classes.searchDiv}>
-            <SearchBar value="Search By Name" />
-          </div>
+          </button>
+          <SearchBar value="Search By Name" />
         </div>
-        <div className={classes.divInfo}>
-          <div className={classes.divLeft}>
-            {/* <p>My Connection</p> */}
-            <Subtitle value="My connection" color="black" size="small-medium" />
-          </div>
-          <div className={classes.divRight}>
+      </div>
+      <div className={classes.divInfo}>
+        <div className={classes.memberListsDiv}>
+          <Heading size="smallMedium" value="Connections" />
+          <MemberListsForPrompt
+            clicked={clicked}
+            team={props.teams}
+            memberlist={friendsNotInTeam}
+            selectMemberListsHandler={selectMemberHandler}
+            personHandler={selectPersonHandler}
+          />
+          <Heading size="smallMedium" value="Recommended Users" />
+          <MemberListsForPrompt
+            clicked={clicked}
+            team={props.teams}
+            memberlist={recommendLists}
+            selectMemberListsHandler={selectMemberHandler}
+            personHandler={selectPersonHandler}
+          />
+
+          {/* <div className={classes.divRight}>
             <Subtitle
               value={`${memberArray.length} member selected`}
               color="black"
               size="smaller"
             />
-          </div>
+          </div> */}
         </div>
         <div className={classes.memberListsDiv}>
           <MemberListsForPrompt
@@ -191,9 +221,10 @@ const inviteMembersPrompt: React.FC<Props> = (props) => {
           {console.log("AllArray Contain: ", memberArray)}
         </div>
       </div>
-    </div>
+    </>
   );
-  return <div>{selectPrompt}</div>;
+
+  return <>{selectPrompt}</>;
 };
 
-export default inviteMembersPrompt;
+export default InviteMembersPrompt;

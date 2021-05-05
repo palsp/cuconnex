@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MemberLists, SearchBar } from "@smartComponents/index";
 import { Heading, Subtitle } from "@dumbComponents/UI/index";
 import { ArrowLeft } from "@icons/index";
@@ -9,7 +9,7 @@ import CreateTeamPage from "../CreateTeamPage";
 import { motion } from "framer-motion";
 import { UsersData } from "@src/mockData/Models";
 import { IEventData, IUser, IUserFriend } from "@src/models";
-import { fetchFriendsDataAPI } from "@src/api";
+import { fetchFriendsDataAPI, fetchRecommendedUser } from "@src/api";
 import SelectEventPrompt from "../SelectEventPrompt/SelectEventPrompt";
 import PageTitle from "@dumbComponents/UI/PageTitle/PageTitle";
 
@@ -25,16 +25,30 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     []
   );
   const [friendLists, setFriendLists] = useState<IUserFriend[] | []>([]);
+  const [recommendLists, setRecommendLists] = useState<IUser[]>([]);
   useEffect(() => {
-    fetchFriendsHandler().then((value: IUserFriend[] | []) =>
-      setFriendLists(value)
-    );
+    fetchFriendsHandler();
+    fetchRecommendedUserHandler();
   }, []);
-  const fetchFriendsHandler = async () => {
-    const friendsData = await fetchFriendsDataAPI();
-    console.log("SUCCESS fetchFriendsHandler", friendsData.data);
-    return friendsData.data.connections;
+  const fetchRecommendedUserHandler = async () => {
+    try {
+      const recommendedUsers = await fetchRecommendedUser();
+      setRecommendLists(recommendedUsers.data.users);
+      console.log("fetchRecommendedUser", recommendedUsers);
+    } catch (e) {
+      console.log(e);
+    }
   };
+  const fetchFriendsHandler = async () => {
+    try {
+      const friendsData = await fetchFriendsDataAPI();
+      console.log("SUCCESS fetchFriendsHandler", friendsData.data);
+      setFriendLists(friendsData.data.connections);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const inviteClickedHandler = () => {
     setClickSelectMember(false);
     setClickCreateTeam(true);
@@ -45,12 +59,12 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
     setClickSelectMember(false);
     setClickCreateTeam(false);
   };
-  const selectPersonHandler = (e: IUserFriend) => {
+  const selectPersonHandler = (e: any) => {
     const positionOfE = selectedMemberArray.indexOf(e);
     if (positionOfE === -1) {
       setSelectedMemberArray([...selectedMemberArray, e]);
     } else {
-      const newMemberArray: IUserFriend[] | [] = [...selectedMemberArray];
+      const newMemberArray = [...selectedMemberArray];
       newMemberArray.splice(positionOfE, 1);
       setSelectedMemberArray(
         (selectedMemberArray) => (selectedMemberArray = newMemberArray)
@@ -69,6 +83,7 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
       setMemberArray(newMemberArray); // Mon: The above code I commented out is ngong mak. I think you can't reassign previous state.
     }
   };
+
   const selectPrompt =
     clickSelectMember === true ? (
       <div>
@@ -104,11 +119,20 @@ const SelectMemberPrompt: React.FC<Props> = (props) => {
           </div>
         </div>
         <div className={classes.memberListsDiv}>
+          <Heading size="smallMedium" value="Connections" />
           <MemberLists
             memberlist={friendLists}
             selectMemberListsHandler={selectMemberHandler}
             personHandler={selectPersonHandler}
           />
+          <Heading size="smallMedium" value="Recommended Users" />
+
+          <MemberLists
+            memberlist={recommendLists}
+            selectMemberListsHandler={selectMemberHandler}
+            personHandler={selectPersonHandler}
+          />
+
           {console.log("Array Contain: ", selectedMemberArray)}
           {console.log("Array Contain: ", memberArray)}
         </div>

@@ -1,9 +1,11 @@
 import axios from "axios";
 
-const token =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE3MzYxMjEiLCJpYXQiOjE2MjAxMzM5MzB9.SHW-RFOUhIuTAizJxV0Cm7n-pMntFWNPwO-U_TsB2yc";
+// const token =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE4MjQ3MjEiLCJpYXQiOjE2MjAxODUxODN9.S7ShM-ShOD3q8ZTM-z5QIKldjFh9ewfxv4xn5iS4VZs";
+//    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMzE4NDg4MjEiLCJpYXQiOjE2MjAxNTU1MDR9.UjTWXqFFxaV8xN75WWWpugFMq1piSI1xupx-AxgCkV4";
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc";
 
-
+// ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxMjM1NDUyMjEiLCJpYXQiOjE2MjAxMjA2NjF9.iflXZWetqTw77sGMPb4Bq4Qod6ykJdKMVIOoAqhiBvc");
 const axiosInstance = axios.create({
   // baseURL: "https://www.cu-connex.com",
   baseURL: window.location.origin,
@@ -27,4 +29,3 @@ export default axiosInstance;
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNzM4NDczMjQiL CJpYXQiOjE2MTk3MzI4OTJ9.zUOpLehL2E0w5G09aAx_Dmx2-j5L4iC9Nxpg_PRCATA"
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMzI1MzY0MjUiLCJpYXQiOjE2MTk3MzAwNzd9.NmzR-aQ0cTXf_oSBY7SgUHOkf1Qe3eVUGH8IbPNAZFI"
 //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzQ2NTc0MjQiLCJpYXQiOjE2MTk3Mjc1NTF9.lj34-XRjR2wynIbslS292_OYpWTpvWqCwLp0rZeN4AA"
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzQ1NjM3MjEiLCJpYXQiOjE2MTk3MTUzMDJ9.S8TRYPPLmF2-Qn9N1mrV7GHH5068tO1yS-5XXG7yqq8"

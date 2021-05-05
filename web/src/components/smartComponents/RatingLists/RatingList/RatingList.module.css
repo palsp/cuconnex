@@ -1,0 +1,44 @@
+.ratingList {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 15.763vh;
+  overflow: visible;
+  border-color: #808080;
+  border-style: solid;
+  border-top-width: 0px;
+  border-bottom-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+.divRatingList {
+  display: flex;
+  align-items: center;
+  height: inherit;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: -3.7vh;
+  width: 0.4vw;
+  margin-left: 30px;
+}
+
+.divUsernameInfo {
+  width: auto;
+  height: auto;
+  margin-top: 2vh;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  color: var(--black, #000000);
+  font-size: 20px;
+  text-align: left;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}

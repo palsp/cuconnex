@@ -1,39 +1,19 @@
 import classes from "./GeneralLists.module.css";
 import React, { useEffect, useState } from "react";
-import { IFetchTeam } from "@src/models";
-import { Subtitle } from "@dumbComponents/UI";
+import { IEventData, IFetchTeam } from "@src/models";
+import { Subtitle, EventPic } from "@dumbComponents/UI/index";
 interface Props {
-  events?: {
-    "event-name": string;
-    bio: string;
-    status?: string;
-    "start-date": {
-      month: number;
-      day: number;
-      year: number;
-      time: {
-        hour: number;
-        minute: number;
-        second: number;
-      };
-    };
-    "end-date": {
-      month: number;
-      day: number;
-      year: number;
-      time: {
-        hour: number;
-        minute: number;
-        second: number;
-      };
-    };
-  };
+  events?: IEventData;
   team?: IFetchTeam;
+  grey?: boolean;
 }
 const GeneralLists: React.FC<Props> = (props) => {
   let cssArrayTeam = null;
   let cssArrayEvent = null;
-
+  const mainDivCSS = [classes.mainDiv];
+  if (props.grey) {
+    mainDivCSS.push(classes.grey);
+  }
   switch (props.events?.status) {
     case "Open for application":
       cssArrayEvent = [classes.eventstatusDiv];
@@ -174,9 +154,10 @@ const GeneralLists: React.FC<Props> = (props) => {
     }
   }
   return (
-    <div className={classes.mainDiv}>
+    <div className={mainDivCSS.join(" ")}>
       <div className={classes.profileContainer}>
-        <div className={classes.profileDiv}> </div>
+        <EventPic PicUrl={props.events?.image} />
+        {/* <div className={classes.profileDiv}> </div> */}
       </div>
       <div className={classes.textbodyDiv}>
         <div className={classes.eventnameDiv}>

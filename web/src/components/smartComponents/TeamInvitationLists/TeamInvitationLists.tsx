@@ -4,6 +4,7 @@ import { TeamInvitationListsData } from "@src/mockData/Models";
 import mockTeamInvitationLists from "@src/mockData/mockTeamInvitationListsData";
 import TeamInvitationList from "@smartComponents/TeamInvitationLists/TeamInvitationList/TeamInvitationList";
 import { IFetchTeam } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
   teams: IFetchTeam[];
@@ -16,7 +17,7 @@ const TeamInvitationLists: React.FC<Props> = (props) => {
       <div className={classes.list}>
         {props.teams?.map((TeamInvitation: IFetchTeam, index: number) => {
           return (
-            <div key={index}>
+            <div className={classes.linkDiv} key={index}>
               <TeamInvitationList key={index} teams={TeamInvitation} />
             </div>
           );

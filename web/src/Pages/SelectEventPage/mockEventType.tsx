@@ -1,18 +1,15 @@
 const mockEventTypes = [
-  "Technology",
-  "Business",
   "ECommerce",
-  "Blockchain",
   "Ads",
   "Startup",
   "Web Builder",
-  "Chatbot",
+  "ChatBot",
   "Coding",
   "FinTech",
   "Graphic",
   "Fashion",
   "Marketing",
-  "UX/UI",
+  "UXUI",
 ];
 
 export default mockEventTypes;

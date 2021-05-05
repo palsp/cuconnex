@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Search.module.css";
-const Search = () => {
+const Search: React.FC = () => {
   return (
     <svg
       className={classes.search}

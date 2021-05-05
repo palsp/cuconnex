@@ -20,3 +20,8 @@ export { default as Tag } from "@dumbComponents/UI/Tag/Tag";
 export { default as FindteamLogo } from "@dumbComponents/UI/FindteamLogo/FindteamLogo";
 export { default as Hamburger } from "@dumbComponents/UI/Hamburger/Hamburger";
 export { default as RecruitMemberLogo } from "@dumbComponents/UI/RecruitmemberLogo/RecruitmemberLogo";
+export { default as RatingStar } from "@dumbComponents/UI/RatingStar/RatingStar";
+export { default as PageTitle } from "@dumbComponents/UI/PageTitle/PageTitle";
+export { default as FacultyPic } from "@dumbComponents/UI/FacultyPic/FacultyPic";
+export { default as EventPic } from "@dumbComponents/UI/EventPic/EventPic";
+export { default as ActivityPic } from "@dumbComponents/UI/ActivityPic/ActivityPic";

@@ -12,6 +12,7 @@ import {
 import { Heading, Subtitle } from "@dumbComponents/UI";
 import { IFetchTeam, IUser, IUserFriend } from "@src/models";
 import { UserContext } from "@context/UserContext";
+import { Link } from "react-router-dom";
 
 interface Props {
   Memberlist: IUserFriend[] | [];
@@ -26,7 +27,7 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
         <div className={classes.listHeader}>Pending Team</div>
         {props.requestedTeamList.map((position: IFetchTeam, index: number) => {
           return (
-            <div key={index}>
+            <div className={classes.linkDiv} key={index}>
               <PositionsInActivityNotificationList
                 key={index}
                 position={userData.role}
@@ -40,7 +41,7 @@ const ActivityNotificationLists: React.FC<Props> = (props) => {
         <div className={classes.listHeader}>Pending Connections</div>
         {props.Memberlist.map((person: IUserFriend, index: number) => {
           return (
-            <div key={index}>
+            <div className={classes.linkDiv} key={index}>
               <MemberInActivityNotificationList key={index} member={person} />
             </div>
           );

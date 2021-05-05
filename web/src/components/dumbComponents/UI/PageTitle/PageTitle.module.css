@@ -11,5 +11,6 @@
 
 .backArrow {
   position: absolute;
+  margin-top: 0.8vh;
   left: 5vw;
 }

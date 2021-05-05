@@ -36,8 +36,12 @@ import {
   IFetchTeams,
   IRegisterTeamEvent,
   IFetchTeamEvent,
+  IFetchRateTeamNotification,
+  IFetchRateMember,
+  IRateUser,
   IFetchRecommendedUser,
   IFetchRecommendedTeam,
+  IFetchTeamEventData,
 } from "@src/models";
 
 //Auth Services
@@ -82,6 +86,15 @@ const fetchEventsDataAPI = async (): Promise<
   return eventsData;
 };
 
+const fetchEventDataByInterestAPI = async (
+  interestName: string
+): Promise<AxiosResponse<IFetchEventsData>> => {
+  const eventsDataByInterest: AxiosResponse<IFetchEventsData> = await axios.get(
+    `/api/events/${interestName}/interest/`
+  );
+  return eventsDataByInterest;
+};
+
 const fetchRecommendedUser = async (): Promise<
   AxiosResponse<IFetchRecommendedUser>
 > => {
@@ -91,6 +104,14 @@ const fetchRecommendedUser = async (): Promise<
   return recommendedUsers;
 };
 
+const fetchRecommendUserForTeam = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchRecommendedUser>> => {
+  const recommendedUsersForTeam: AxiosResponse<IFetchRecommendedUser> = await axios.get(
+    `/api/teams/recommended-user/${teamName}/`
+  );
+  return recommendedUsersForTeam;
+};
 const fetchRecommendedTeam = async (): Promise<
   AxiosResponse<IFetchRecommendedTeam>
 > => {
@@ -333,6 +354,14 @@ const fetchTeamEventAPI = async (
   );
   return eventData;
 };
+const fetchRegisteredEventAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchTeamEventData>> => {
+  const eventData: AxiosResponse<IFetchTeamEventData> = await axios.get(
+    `/api/teams/events/${teamName}`
+  );
+  return eventData;
+};
 const fetchEventTeamAPI = async (
   eventId: number
 ): Promise<AxiosResponse<IFetchTeams>> => {
@@ -340,6 +369,26 @@ const fetchEventTeamAPI = async (
     `/api/teams/events/candidates/${eventId}`
   );
   return teamData;
+};
+const fecthRateTeamAPI = async (): Promise<
+  AxiosResponse<IFetchRateTeamNotification>
+> => {
+  const rateTeamData: AxiosResponse<IFetchRateTeamNotification> = await axios.get(
+    "/api/users/teams/rate"
+  );
+  return rateTeamData;
+};
+const fetchRateTeamMembersAPI = async (
+  teamName: string
+): Promise<AxiosResponse<IFetchRateMember>> => {
+  const rateMemberData: AxiosResponse<IFetchRateMember> = await axios.get(
+    `/api/users/rate/${teamName}`
+  );
+  return rateMemberData;
+};
+const rateUserAPI = async (rateUserData: IRateUser) => {
+  const ratedUserData = await axios.post("/api/users/rate", rateUserData);
+  return ratedUserData;
 };
 
 export {
@@ -373,6 +422,12 @@ export {
   registerTeamEventAPI,
   fetchTeamEventAPI,
   fetchEventTeamAPI,
+  fecthRateTeamAPI,
+  fetchRateTeamMembersAPI,
+  rateUserAPI,
   fetchRecommendedUser,
+  fetchRecommendUserForTeam,
   fetchRecommendedTeam,
+  fetchRegisteredEventAPI,
+  fetchEventDataByInterestAPI,
 };

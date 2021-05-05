@@ -12,22 +12,36 @@ const EventLists: React.FC<Props> = (props) => {
   const mappeddefault = (
     <div className={classes.mainDiv}>
       {props.events?.map((eventpulled: IEventData, index: number) => {
-        return (
-          <div key={index} className={classes.deleteunderlineDiv}>
-            <Link
-              to={{
-                pathname: "/selectteams",
-                state: {
-                  events: props.events[index],
-                },
-              }}
-            >
+        if (eventpulled.status === "Closed") {
+          return (
+            <div key={index} className={classes.deleteunderlineDiv}>
               <div className={classes.listDiv}>
-                <GeneralLists key={index} events={eventpulled}></GeneralLists>
+                <GeneralLists
+                  grey
+                  key={index}
+                  events={eventpulled}
+                ></GeneralLists>
               </div>
-            </Link>
-          </div>
-        );
+            </div>
+          );
+        } else {
+          return (
+            <div key={index} className={classes.deleteunderlineDiv}>
+              <Link
+                to={{
+                  pathname: "/selectteams",
+                  state: {
+                    events: props.events[index],
+                  },
+                }}
+              >
+                <div className={classes.listDiv}>
+                  <GeneralLists key={index} events={eventpulled}></GeneralLists>
+                </div>
+              </Link>
+            </div>
+          );
+        }
       })}
     </div>
   );

@@ -21,7 +21,11 @@ import {
 } from "@dumbComponents/UI/Icons";
 import EventLists from "@smartComponents/EventLists/EventLists";
 import Tag from "@dumbComponents/UI/Tag/Tag";
-import { fetchEventsDataAPI, fetchUserDataAPI } from "@api/index";
+import {
+  fetchEventDataByInterestAPI,
+  fetchEventsDataAPI,
+  fetchUserDataAPI,
+} from "@api/index";
 import { IEventData } from "@src/models";
 import { motion } from "framer-motion";
 import containerVariants from "@src/models/models";
@@ -34,15 +38,23 @@ interface Props {
   history: {
     goBack: () => void;
   };
+  location: {
+    state: {
+      typeEvent?: string;
+    };
+  };
 }
 
 const SelectEventPage: React.FC<Props> = (props) => {
-  const [eventType, setEventType] = useState<string>("");
+  const [eventType, setEventType] = useState<string | undefined>(
+    props.location.state ? props.location.state.typeEvent : ""
+  );
   const [eventLists, setEventLists] = useState<IEventData[] | []>([]);
 
   const [showMockEventTypeModal, setShowMockEventTypeModal] = useState<boolean>(
-    true
+    props.location.state ? false : true
   );
+  // console.log(props.history.state.typeEvent);
   const mockEventModalClickHandler = (state: boolean) => {
     setShowMockEventTypeModal(state);
   };
@@ -52,12 +64,33 @@ const SelectEventPage: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    fetchEventsHandler();
-  }, []);
+    if (props.location.state) {
+      fetchEventByInterestHandler(eventType);
+    }
+    if (eventType !== undefined) {
+      fetchEventByInterestHandler(eventType);
+    }
+  }, [eventType]);
+
+  const fetchEventByInterestHandler = async (interestName: any) => {
+    try {
+      const eventsDataInterest = await fetchEventDataByInterestAPI(
+        interestName
+      );
+      console.log("fetchEventByInterestHandler");
+      setEventLists(eventsDataInterest.data.events);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const fetchEventsHandler = async () => {
-    const eventsData = await fetchEventsDataAPI();
-    console.log("SUCCESS fetchDataHandler", eventsData.data.events);
-    setEventLists(eventsData.data.events);
+    try {
+      const eventsData = await fetchEventsDataAPI();
+      console.log("SUCCESS fetchDataHandler", eventsData.data.events);
+      setEventLists(eventsData.data.events);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const setEventTypeHandler = (type: string) => {
     setEventType(type);
@@ -67,7 +100,7 @@ const SelectEventPage: React.FC<Props> = (props) => {
       <PageTitle
         goBack={() => mockEventModalClickHandler(true)}
         size="small-medium"
-        text={"Some Event"}
+        text={`${eventType} Event`}
       />
 
       <div className={classes.eventDiv}>
@@ -93,23 +126,17 @@ const SelectEventPage: React.FC<Props> = (props) => {
                 <div className={classes.cardContent}>
                   {eventName}
                   <div className={classes.icon}>
-                    {eventName === "Technology" ? (
-                      <Coding />
-                    ) : eventName === "Business" ? (
-                      <Case />
-                    ) : eventName === "Startup" ? (
+                    {eventName === "Startup" ? (
                       <Startup />
                     ) : eventName === "ECommerce" ? (
                       <Ecommerce />
                     ) : eventName === "Ads" ? (
                       <Ads />
-                    ) : eventName === "Blockchain" ? (
-                      <Blockchain />
                     ) : eventName === "Finance" ? (
                       <Finance />
                     ) : eventName === "Web Builder" ? (
                       <WebBuilder />
-                    ) : eventName === "Chatbot" ? (
+                    ) : eventName === "ChatBot" ? (
                       <Chatbot />
                     ) : eventName === "Coding" ? (
                       <Coding />
@@ -121,7 +148,7 @@ const SelectEventPage: React.FC<Props> = (props) => {
                       <Fashion />
                     ) : eventName === "Marketing" ? (
                       <Marketing />
-                    ) : eventName === "UX/UI" ? (
+                    ) : eventName === "UXUI" ? (
                       <UXUI />
                     ) : (
                       ""

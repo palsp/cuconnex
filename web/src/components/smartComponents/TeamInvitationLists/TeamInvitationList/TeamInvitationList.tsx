@@ -18,6 +18,7 @@ import {
   IUserResponse,
   IFetchTeam,
 } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
   teams: IFetchTeam;
@@ -65,7 +66,16 @@ const TeamInvitationList: React.FC<Props> = (props) => {
               <div className={classes.groupAmount}>5</div>
               <Group />
               <div className={classes.teamFriends}>
-                <ProfilePic PicUrl={props.teams.members[0].image} size="xs" />
+                <Link
+                  to={{
+                    pathname: "/teamdetail",
+                    state: {
+                      team: props.teams,
+                    },
+                  }}
+                >
+                  <ProfilePic PicUrl={props.teams.members[0].image} size="xs" />
+                </Link>
                 {/* <ProfilePic size="xs" /> */}
                 <div className={classes.moreFriends}>
                   <p>7+</p>

@@ -65,6 +65,9 @@ const start = async () => {
     // initial data for interest and category
     // it should be run only once
     await startDB();
+
+
+    
     await insertFaculties();
     
   // console.log(u)
@@ -75,7 +78,7 @@ const start = async () => {
   }
 
   app.listen(3000, () => {
-    console.log('Listening on port 3000');
+    console.log('Listening on port 3000..');
   });
 };
 

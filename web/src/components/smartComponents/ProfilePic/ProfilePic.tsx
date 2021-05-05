@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import classes from "./ProfilePic.module.css";
 import tempProfile from "@assets/tempProfile.png";
 interface Props {
@@ -30,6 +30,8 @@ const ProfilePic: React.FC<Props> = (props) => {
   } else if (props.size === "xs") {
     //xs xs
     cssArray = [classes.profileMini];
+  } else if (props.size === "rating") {
+    cssArray = [classes.profileRating];
   } else {
     cssArray = [classes.profile];
   }
@@ -46,6 +48,10 @@ const ProfilePic: React.FC<Props> = (props) => {
     url = props.PicUrl;
   }
 
+  const imageErrorHandler = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = tempProfile;
+  };
+
   return (
     // <div className={classes.test}>
     <div data-test="profile-pic" className={cssArray.join(" ")}>
@@ -54,7 +60,7 @@ const ProfilePic: React.FC<Props> = (props) => {
           <img
             src={url}
             className={profileArray.join(" ")}
-            // onError={tempProfile}
+            onError={imageErrorHandler}
             // style={{
             //   objectFit: "cover",
             //   width: "200px",

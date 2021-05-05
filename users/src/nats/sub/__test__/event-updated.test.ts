@@ -46,55 +46,108 @@ const setup = async () => {
 
 }
 
-it('should update event status' , async () => {
-    const { listener, event,  msg } = await setup();
+// it('should update event status' , async () => {
+//     const { listener, event,  msg } = await setup();
 
 
-    // create a fake data event
-    const data: EventUpdated['data'] = {
-        id : 1,
-        "event-name" : "test_event",
-        version : 1,
-        image : "",
-        registration : true,
-        status : EventStatus.ongoing,
-    }
+//     // create a fake data event
+//     const data: EventUpdated['data'] = {
+//         id : 1,
+//         "event-name" : "test_event",
+//         version : 1,
+//         image : "",
+//         registration : true,
+//         status : EventStatus.ongoing,
+//     }
 
-    await listener.onMessage(data, msg);
+//     await listener.onMessage(data, msg);
 
-    const updatedEvent = await Event.findByPk(event.id);
-    expect(updatedEvent!.status).toEqual(EventStatus.ongoing);
-});
-
-
-it('add entry in rating table if it not exist', async () => {
-    const { listener, event, msg } = await setup();
-    const users = await createDummyUser(3);
-    const team = await createTeamForDummyUsers(users);
-    await team.register(event);
-
-    let rates = await Rating.findAll()
-    expect(rates.length).toEqual(0);
+//     const updatedEvent = await Event.findByPk(event.id);
+//     expect(updatedEvent!.status).toEqual(EventStatus.ongoing);
+// });
 
 
-    // create a fake data event
-    const data: EventUpdated['data'] = {
-        id : 1,
-        "event-name" : "test_event",
-        version : 1,
-        image : "",
-        registration : true,
-        status : EventStatus.closed,
-    }
+// it('add entry in rating table if it not exist', async () => {
+//     const { listener, event, msg } = await setup();
+//     const users = await createDummyUser(3);
+//     const team = await createTeamForDummyUsers(users);
+//     await team.register(event);
 
-    await listener.onMessage(data, msg);
+//     let rates = await Rating.findAll()
+//     expect(rates.length).toEqual(0);
 
-    rates = await Rating.findAll()
 
-    expect(rates.length).toEqual(Math.pow(users.length,2) - users.length);
-});
+//     // create a fake data event
+//     const data: EventUpdated['data'] = {
+//         id : 1,
+//         "event-name" : "test_event",
+//         version : 1,
+//         image : "",
+//         registration : true,
+//         status : EventStatus.closed,
+//     }
 
-it('update entry in rating table if it existed', async () => {
+//     await listener.onMessage(data, msg);
+
+//     rates = await Rating.findAll()
+
+//     expect(rates.length).toEqual(Math.pow(users.length,2) - users.length);
+// });
+
+// it('update entry in rating table if it existed', async () => {
+//     const { listener, event,  msg } = await setup();
+//         // create a fake data event
+//         const data: EventUpdated['data'] = {
+//             id : 1,
+//             "event-name" : "test_event",
+//             version : 1,
+//             image : "",
+//             registration : true,
+//             status : EventStatus.closed,
+//         }
+    
+//     const users = await createDummyUser(3);
+//     const team = await createTeamForDummyUsers(users);
+//     await team.register(event);
+    
+//     await users[0].addRatee(users[1], { through : { rating : 4 , isRate: true }});
+
+//     await listener.onMessage(data, msg);
+
+//     const rates = await Rating.findAll()
+
+//     expect(rates.length).toEqual(Math.pow(users.length,2) - users.length);
+//     const rate = rates.find(rate => rate.raterId === users[0].id && rate.rateeId === users[1].id)
+//     expect(rate!.isRate).toEqual(false);
+//     expect(rate!.rating).toEqual(4);
+// })
+
+// it('not add entry in rating table if updated event is not closed', async () => {
+//     const { listener, event,  msg } = await setup();
+//         // create a fake data event
+//         const data: EventUpdated['data'] = {
+//             id : 1,
+//             "event-name" : "test_event",
+//             version : 1,
+//             image : "",
+//             registration : true,
+//             status : EventStatus.ongoing,
+//         }
+    
+//     const users = await createDummyUser(3);
+//     const team = await createTeamForDummyUsers(users);
+//     await team.register(event);
+    
+
+//     await listener.onMessage(data, msg);
+
+//     const rates = await Rating.findAll()
+
+//     expect(rates.length).toEqual(0);
+// })
+
+
+it('should add team owner in rating table', async () => {
     const { listener, event,  msg } = await setup();
         // create a fake data event
         const data: EventUpdated['data'] = {
@@ -110,58 +163,31 @@ it('update entry in rating table if it existed', async () => {
     const team = await createTeamForDummyUsers(users);
     await team.register(event);
     
-    await users[0].addRatee(users[1], { through : { rating : 4 , isRate: true }});
+
 
     await listener.onMessage(data, msg);
 
-    const rates = await Rating.findAll()
+    const rate = await Rating.findOne({ where : { rateeId : users[0].id}})
 
-    expect(rates.length).toEqual(Math.pow(users.length,2) - users.length);
-    const rate = rates.find(rate => rate.raterId === users[0].id && rate.rateeId === users[1].id)
-    expect(rate!.isRate).toEqual(false);
-    expect(rate!.rating).toEqual(4);
-})
-
-it('not add entry in rating table if updated event is not closed', async () => {
-    const { listener, event,  msg } = await setup();
-        // create a fake data event
-        const data: EventUpdated['data'] = {
-            id : 1,
-            "event-name" : "test_event",
-            version : 1,
-            image : "",
-            registration : true,
-            status : EventStatus.ongoing,
-        }
-    
-    const users = await createDummyUser(3);
-    const team = await createTeamForDummyUsers(users);
-    await team.register(event);
-    
-
-    await listener.onMessage(data, msg);
-
-    const rates = await Rating.findAll()
-
-    expect(rates.length).toEqual(0);
+    expect(rate).toBeDefined();
 })
 
 
-it('acks the message', async () => {
-    const { listener,  msg } = await setup();
+// it('acks the message', async () => {
+//     const { listener,  msg } = await setup();
 
-        // create a fake data event
-        const data: EventUpdated['data'] = {
-            id : 1,
-            "event-name" : "test_event",
-            version : 1,
-            image : "",
-            registration : true,
-            status : EventStatus.closed,
-        }
+//         // create a fake data event
+//         const data: EventUpdated['data'] = {
+//             id : 1,
+//             "event-name" : "test_event",
+//             version : 1,
+//             image : "",
+//             registration : true,
+//             status : EventStatus.closed,
+//         }
     
 
-    await listener.onMessage(data, msg);
+//     await listener.onMessage(data, msg);
 
-    expect(msg.ack).toHaveBeenCalled();
-})
+//     expect(msg.ack).toHaveBeenCalled();
+// })

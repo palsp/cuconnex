@@ -1,5 +1,6 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { AppLogo } from "..";
+import tempProfile from "@assets/tempProfile.png";
 import classes from "./TeamPic.module.css";
 interface Props {
   PicUrl?: string;
@@ -11,11 +12,20 @@ const TeamPic: React.FC<Props> = (props) => {
     teamCSS = [classes.teamPic];
   }
   const url = "https://www.cu-connex.com/api/users/" + props.PicUrl;
+
+  const imageErrorHandler = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = tempProfile;
+  };
   return (
     <div className={classes.container}>
       <div className={teamCSS.join(" ")}>
         {props.PicUrl ? (
-          <img src={url} className={classes.teamPic} alt="teampic" />
+          <img
+            src={url}
+            className={classes.teamPic}
+            onError={imageErrorHandler}
+            alt="teampic"
+          />
         ) : (
           <div className={classes.defaultPic}></div>
         )}

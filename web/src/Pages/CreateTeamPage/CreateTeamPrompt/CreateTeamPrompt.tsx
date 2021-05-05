@@ -36,15 +36,18 @@ const validationSchema = yup.object({
   name: yup
     .string()
     .required("Team name is requried")
-    .matches(/^[A-Za-z0-9]+$/, "Only characters and numbers allow"),
+    .matches(
+      /^[A-Za-z0-9]+$/,
+      "Only characters and numbers allow, and no spaces please!"
+    ),
   description: yup
     .string()
     .required("Team description is requried")
-    .matches(/^[A-Za-z0-9]+$/, "Only characters and numbers allow"),
+    .matches(/^[A-Za-z0-9 ]+$/, "Only characters and numbers allow"),
   currentRecruitment: yup
     .string()
     .required("Please tell us who you are looking for")
-    .matches(/^[A-Za-z0-9]+$/, "Only characters and numbers allow"),
+    .matches(/^[A-Za-z0-9 ]+$/, "Only characters and numbers allow"),
 });
 const CreateTeamPrompt: React.FC<Props> = (props) => {
   const [clickSelectMember, setClickSelectMember] = useState<boolean>(false);
@@ -77,6 +80,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
   const createTeamHandler = async (teamData: ICreateTeamData) => {
     try {
       const resultTeam = await createTeamAPI(teamData);
+      setRedirect(true);
       console.log("Successfully sent a POST request to teams", resultTeam);
     } catch (e) {
       setErrorHandler(e.response.data.errors[0].message);
@@ -102,7 +106,6 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         "Successful POST request to /api/teams/invite-member",
         resultInvitation
       );
-      setRedirect(true);
     } catch (e) {
       setErrorHandler(e.response.data.errors[0].message);
       console.log("ERRORS occured while POST /api/teams/invite-member", e);

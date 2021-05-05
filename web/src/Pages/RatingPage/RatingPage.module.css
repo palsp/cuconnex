@@ -1,0 +1,121 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.relativeArrow {
+  margin-top: 3.5vh;
+  position: absolute;
+  left: 5%;
+  align-items: center;
+}
+
+.head {
+  border-bottom: 0.1px solid rgb(196, 194, 194);
+}
+
+.textBox {
+  margin: 3vh 10vw;
+  text-align: left;
+}
+
+.teamHeading {
+  width: auto; /* 273px */
+  height: auto; /* 52px */
+  overflow: visible;
+  white-space: pre;
+  color: var(--main_pink, #f33182);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 20px;
+  font-weight: 600;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.teamName {
+  width: auto; /* 138px */
+  height: auto; /* 80px */
+  overflow: visible;
+  white-space: pre;
+  color: var(--main_pink, #f33182);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 24px;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.teamSubHeading {
+  width: auto; /* 273px */
+  height: auto; /* 38px */
+  overflow: visible;
+  white-space: pre;
+  color: var(--edit_grey, #767474);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Nunito", serif;
+}
+
+.textFlex {
+  display: flex;
+  justify-content: space-around;
+}
+
+.rateTeammates {
+  width: auto; /* 182px */
+  height: auto; /* 21px */
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 700;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  color: var(--border_grey, #636363);
+  font-size: 18px;
+}
+
+.noThanks {
+  width: auto; /* 70px */
+  height: auto; /* 16px */
+  overflow: visible;
+  white-space: pre;
+  color: var(--border_grey, #636363);
+  letter-spacing: 0px;
+  line-height: 1.2;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  font-size: 14px;
+  text-decoration: underline;
+  /* background-color: rgba(128, 128, 128, 0.33); */
+}
+
+/* .ratingLists {
+  margin: 2vh 0;
+} */
+.submitButton {
+  margin-top: 2vh;
+}
+
+.ratingDetail {
+  width: auto; /* 240px */
+  height: auto; /* 28px */
+  overflow: visible;
+  white-space: pre;
+  color: var(--edit_grey, #767474);
+  font-size: 12px;
+  letter-spacing: 0px;
+  line-height: 1.2;
+  text-align: center;
+  font-weight: 400;
+  font-style: normal;
+  font-family: "Nunito", serif;
+  margin: 2vh 0;
+}

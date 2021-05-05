@@ -11,6 +11,7 @@ import { ProfilePic } from "@smartComponents/index";
 
 import classes from "./MemberList.module.css";
 import { IUser, IUserFriend } from "@src/models";
+import { Link } from "react-router-dom";
 
 interface Props {
   member: IUserFriend;
@@ -21,7 +22,16 @@ const MemberList: React.FC<Props> = (props) => {
     <div className={classes.memberList} data-test="member-list">
       <div className={classes.leftFlex}>
         <div className={classes.profilePic}>
-          <ProfilePic PicUrl={props.member.image} />
+          <Link
+            to={{
+              pathname: "/profile",
+              state: {
+                users: props.member,
+              },
+            }}
+          >
+            <ProfilePic PicUrl={props.member.image} />
+          </Link>
         </div>
       </div>
       <div className={classes.rightFlex}>

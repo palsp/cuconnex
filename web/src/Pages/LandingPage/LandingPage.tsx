@@ -16,9 +16,11 @@ import {
   fetchFriendReceivedNotificationAPI,
   fetchTeamNotificationAPI,
   fetchUserTeamRequestAPI,
+  fecthRateTeamAPI,
 } from "@src/api/apiCalls";
 import { IUserFriend } from "@src/models";
 import WaveCanvasBg from "@src/canvas/WaveCanvasBg";
+
 interface Props {
   location: {
     state?: {
@@ -47,6 +49,7 @@ const LandingPage: React.FC<Props> = (props) => {
   const [friendReceivedNoti, setFriendReceivedNoti] = useState<
     IUserFriend[] | []
   >([]);
+  const [rateTeamNoti, setRateTeamNoti] = useState<IFetchTeam[] | []>([]);
   const motionKey = displayHamburgerMenu ? "hamburger" : "landing";
 
   useEffect(() => {
@@ -63,6 +66,9 @@ const LandingPage: React.FC<Props> = (props) => {
       setFriendReceivedNoti(value)
     );
     fetchOutgoingTeamNotiHandler();
+    fetchRateTeamNotiHandler().then((value: IFetchTeam[] | []) =>
+      setRateTeamNoti(value)
+    );
   }, []);
 
   const fetchTeamHandler = async () => {
@@ -94,6 +100,15 @@ const LandingPage: React.FC<Props> = (props) => {
     return friendsReceivedData.data.requests;
   };
 
+  const fetchRateTeamNotiHandler = async () => {
+    const teamRateNotiData = await fecthRateTeamAPI();
+    console.log(
+      "SUCCESS fetchRateTeamNotiHandler",
+      teamRateNotiData.data.teams
+    );
+    return teamRateNotiData.data.teams;
+  };
+
   let badgeContent = 0;
   if (friendReceivedNoti != undefined) {
     badgeContent = badgeContent + friendReceivedNoti.length;
@@ -101,11 +116,9 @@ const LandingPage: React.FC<Props> = (props) => {
   if (teamNoti != undefined) {
     badgeContent = badgeContent + teamNoti.length;
   }
-  if (friendNoti != undefined) {
-    badgeContent = badgeContent + friendNoti.length;
-  }
-  if (outgoingTeamNoti != undefined) {
-    badgeContent = badgeContent + outgoingTeamNoti.length;
+
+  if (rateTeamNoti !== undefined) {
+    badgeContent = badgeContent + rateTeamNoti.length;
   }
 
   const landingVariants = {
