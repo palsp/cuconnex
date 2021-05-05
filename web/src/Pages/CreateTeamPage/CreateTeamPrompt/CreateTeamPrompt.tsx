@@ -80,6 +80,7 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
   const createTeamHandler = async (teamData: ICreateTeamData) => {
     try {
       const resultTeam = await createTeamAPI(teamData);
+      setRedirect(true);
       console.log("Successfully sent a POST request to teams", resultTeam);
     } catch (e) {
       setErrorHandler(e.response.data.errors[0].message);
@@ -105,7 +106,6 @@ const CreateTeamPrompt: React.FC<Props> = (props) => {
         "Successful POST request to /api/teams/invite-member",
         resultInvitation
       );
-      setRedirect(true);
     } catch (e) {
       setErrorHandler(e.response.data.errors[0].message);
       console.log("ERRORS occured while POST /api/teams/invite-member", e);

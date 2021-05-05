@@ -33,10 +33,10 @@ const RatingList: React.FC<Props> = (props) => {
       onClick={() => console.log(rating.ratingId)}
     >
       <div className={classes.divRatingList}>
-        <div>
-          <ProfilePic PicUrl={rating.user?.image} />
+        <div style={{ marginLeft: "10vw" }}>
+          <ProfilePic size="rating" PicUrl={rating.user?.image} />
         </div>
-        <div className={classes.userInfo}>
+        <div className={classes.userInfo} style={{ marginLeft: "15vw" }}>
           <div className={classes.divUsernameInfo}>{rating.user?.name}</div>
           <RatingStar
             rating={rating}
