@@ -18,6 +18,19 @@ const EventLists: React.FC<Props> = (props) => {
   const mappeddefault = (
     <div className={classes.mainDiv}>
       {props.events?.map((eventpulled: IEventData, index: number) => {
+        if (eventpulled.status === "Closed") {
+          return (
+            <div key={index} className={classes.deleteunderlineDivClosed}>
+              <div className={classes.promptListDiv}>
+                <GeneralLists
+                  grey
+                  key={index}
+                  events={eventpulled}
+                ></GeneralLists>
+              </div>
+            </div>
+          );
+        }
         return (
           <div key={index} className={classes.deleteunderlineDiv}>
             <div

@@ -12,6 +12,9 @@
   padding-top: 10px;
   padding-bottom: 10px;
 }
+.grey {
+  background: rgba(190, 179, 179, 0.39);
+}
 .textbodyDiv {
   display: flex;
   flex-direction: column;
