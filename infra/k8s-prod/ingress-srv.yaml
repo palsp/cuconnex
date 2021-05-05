@@ -5,6 +5,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 1g
+    nginx.org/client-max-body-size: 1g
 spec:
   rules:
     - host: www.cu-connex.com
