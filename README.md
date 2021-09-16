@@ -15,7 +15,7 @@ This project is a part of the following courses:
 - `2143399 ICE Capstone`
 - `2190422 Database Systems`
 
-Developed by @pestobaimon, @palsp, @mickyngub, @birdglove2, @Chavin2543, @6131866021, @climaxhome, @xlububankx, @punpat2000, 
+Developed by @pestobaimon, @palsp, @mickyngub, @birdglove2, @Chavin2543, @6131866021, @climaxhome, @xlububankx, @punpat2000, @matoommatom, and @AlphaNiner1415
 
 ## Demo
 
