@@ -27,6 +27,8 @@ Developed by @pestobaimon, @palsp, @mickyngub, @birdglove2, @Chavin2543, @613186
 
 - `React`
 - `TypeScript`
+- `Golang`
+- `Python`
 
 
 CUCONNEX, Let's Connect.
